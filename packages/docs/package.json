@@ -1,0 +1,16 @@
+{
+  "name": "oruga-docs",
+  "version": "0.1.0",
+  "homepage": "https://oruga.io",
+  "description": "UI components for Vue.js and CSS framework agnostic",
+  "author": "Walter Tommasi <tommsi20@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev",
+    "docs:build": "vuepress build"
+  },
+  "devDependencies": {
+    "markdown-it-include": "^1.1.1",
+    "vuepress": "^1.5.0"
+  }
+}
