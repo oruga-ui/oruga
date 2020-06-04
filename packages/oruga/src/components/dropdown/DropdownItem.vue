@@ -11,10 +11,13 @@
 
 <script>
 import config from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
+import { getValueByPath, getCssClass } from '../../utils/helpers'
 
 export default {
     name: 'ODropdownItem',
+    inject: {
+        $dropdown: { name: '$dropdown', default: false }
+    },
     props: {
         value: {
             type: [String, Number, Boolean, Object, Array, Function],
@@ -25,7 +28,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.itemClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-item')
+                return getCssClass(clazz, override, 'o-dropdown-item')
             }
         },
         itemActiveClass: {
@@ -33,7 +36,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.itemActiveClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-item-active')
+                return getCssClass(clazz, override, 'o-dropdown-item-active')
             }
         },
         itemDisabledClass: {
@@ -41,7 +44,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.itemDisabledClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-item-disabled')
+                return getCssClass(clazz, override, 'o-dropdown-item-disabled')
             }
         },
         disabled: Boolean,
@@ -56,9 +59,12 @@ export default {
         }
     },
     computed: {
+        parent() {
+            return this.$dropdown
+        },
         rootClasses() {
             return [this.itemClass,
-                (this.$parent.disabled || this.disabled) && this.itemDisabledClass,
+                (this.parent.disabled || this.disabled) && this.itemDisabledClass,
                 this.isActive && this.itemActiveClass
             ]
         },
@@ -66,12 +72,12 @@ export default {
             return this.ariaRole === 'menuitem' || this.ariaRole === 'listitem' ? this.ariaRole : null
         },
         isClickable() {
-            return !this.$parent.disabled && !this.disabled && !this.custom
+            return !this.parent.disabled && !this.disabled && !this.custom
         },
         isActive() {
-            if (this.$parent.selected === null) return false
-            if (this.$parent.multiple) return this.$parent.selected.indexOf(this.value) >= 0
-            return this.value === this.$parent.selected
+            if (this.parent.selected === null) return false
+            if (this.parent.multiple) return this.parent.selected.indexOf(this.value) >= 0
+            return this.value === this.parent.selected
         }
     },
     methods: {
@@ -81,12 +87,12 @@ export default {
         selectItem() {
             if (!this.isClickable) return
 
-            this.$parent.selectItem(this.value)
+            this.parent.selectItem(this.value)
             this.$emit('click')
         }
     },
     created() {
-        if (!this.$parent.$data._isDropdown) {
+        if (!this.parent) {
             this.$destroy()
             throw new Error('You should wrap oDropdownItem on a oDropdown')
         }

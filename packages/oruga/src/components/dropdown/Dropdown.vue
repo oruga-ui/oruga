@@ -27,15 +27,11 @@
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
                 :class="menuClass"
-                :style="style"
                 :aria-hidden="!isActive"
+                :role="ariaRole"
+                :style="menuStyle"
                 v-trap-focus="trapFocus">
-                <div
-                    :class="contentClass"
-                    :role="ariaRole"
-                    :style="contentStyle">
-                    <slot/>
-                </div>
+                <slot/>
             </div>
         </transition>
     </div>
@@ -44,7 +40,7 @@
 <script>
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
-import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
+import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath, getCssClass } from '../../utils/helpers'
 
 export default {
     name: 'ODropdown',
@@ -62,7 +58,9 @@ export default {
         scrollable: Boolean,
         maxHeight: {
             type: [String, Number],
-            default: 200
+            default: () => {
+                return getValueByPath(config, 'dropdown.maxHeight', 200)
+            }
         },
         position: {
             type: String,
@@ -78,7 +76,7 @@ export default {
         mobileModal: {
             type: Boolean,
             default: () => {
-                return config.defaultDropdownMobileModal
+                return getValueByPath(config, 'dropdown.mobileModal', true)
             }
         },
         ariaRole: {
@@ -94,13 +92,15 @@ export default {
         },
         animation: {
             type: String,
-            default: 'fade'
+            default: () => {
+                return getValueByPath(config, 'dropdown.animation')
+            }
         },
         multiple: Boolean,
         trapFocus: {
             type: Boolean,
             default: () => {
-                return config.defaultTrapFocus
+                return getValueByPath(config, 'dropdown.trapFocus', true)
             }
         },
         closeOnClick: {
@@ -119,7 +119,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.rootClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown o-dropdown-menu-animation')
+                return getCssClass(clazz, override, 'o-dropdown')
             }
         },
         triggerClass: {
@@ -127,7 +127,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.triggerClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-trigger')
+                return getCssClass(clazz, override, 'o-dropdown-trigger')
             }
         },
         backgroundClass: {
@@ -135,7 +135,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.backgroundClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-background')
+                return getCssClass(clazz, override, 'o-dropdown-background')
             }
         },
         menuClass: {
@@ -143,15 +143,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.menuClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-menu')
-            }
-        },
-        contentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override')
-                const clazz = getValueByPath(config, 'dropdown.contentClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-content')
+                return getCssClass(clazz, override, 'o-dropdown-menu o-dropdown-menu-animation')
             }
         },
         disabledClass: {
@@ -159,30 +151,66 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'dropdown.override', false)
                 const clazz = getValueByPath(config, 'dropdown.disabledClass', '')
-                return (clazz ? (clazz + ' ') : '') + (override ? '' : 'o-dropdown-disabled')
+                return getCssClass(clazz, override, 'o-dropdown-disabled')
             }
+        },
+        activeClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'dropdown.override', false)
+                const clazz = getValueByPath(config, 'dropdown.activeClass', '')
+                return getCssClass(clazz, override, 'o-dropdown-active')
+            }
+        },
+        hoverableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'dropdown.override', false)
+                const clazz = getValueByPath(config, 'dropdown.hoverableClass', '')
+                return getCssClass(clazz, override, 'o-dropdown-hoverable')
+            }
+        },
+        inlineClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'dropdown.override', false)
+                const clazz = getValueByPath(config, 'dropdown.inlineClass', '')
+                return getCssClass(clazz, override, 'o-dropdown-inline')
+            }
+        },
+        mobileClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'dropdown.override', false)
+                const clazz = getValueByPath(config, 'dropdown.mobileClass', '')
+                return getCssClass(clazz, override, 'o-dropdown-mobile')
+            }
+        }
+    },
+    provide() {
+        return {
+            $dropdown: this
         }
     },
     data() {
         return {
             selected: this.value,
-            style: {},
             isActive: false,
             isHoverable: this.hoverable,
-            _isDropdown: true, // Used internally by DropdownItem
             _bodyEl: undefined // Used to append to body
         }
     },
     computed: {
         rootClasses() {
-            return [this.rootClass,
+            return [
+                this.rootClass,
                 this.disabled && this.disabledClass, 
-                this.position && ('o-dropdown-' + this.position), {
-                'o-dropdown-hoverable': this.hoverable,
-                'o-dropdown-inline': this.inline,
-                'o-dropdown-active': this.isActive || this.inline,
-                'o-dropdown-mobile': this.isMobileModal,
-            }]
+                this.position && ('o-dropdown-' + this.position),
+                (this.isActive || this.inline) && this.activeClass, 
+                this.hoverable && this.hoverableClass,
+                this.inline && this.inlineClass,
+                this.isMobileModal && this.mobileClass
+            ]
         },
         isMobileModal() {
             return this.mobileModal && !this.inline && !this.hoverable
@@ -194,7 +222,7 @@ export default {
                     : []
                 : this.canClose
         },
-        contentStyle() {
+        menuStyle() {
             return {
                 maxHeight: this.scrollable ? toCssDimension(this.maxHeight) : null,
                 overflow: this.scrollable ? 'auto' : null
@@ -347,9 +375,7 @@ export default {
                     const parentNode = this.$refs.dropdown.parentNode
                     const parent = this.$data._bodyEl
                     parent.classList.forEach((item) => parent.classList.remove(item))
-                    parentNode.classList.forEach((item) => {
-                        parent.classList.add(item)
-                    })
+                    parentNode.classList.forEach((item) => parent.classList.add(item))
                 }
                 const rect = trigger.getBoundingClientRect()
                 let top = rect.top + window.scrollY
@@ -362,12 +388,10 @@ export default {
                 if (this.position && this.position.indexOf('left') >= 0) {
                     left -= (dropdownMenu.clientWidth - trigger.clientWidth)
                 }
-                this.style = {
-                    position: 'absolute',
-                    top: `${top}px`,
-                    left: `${left}px`,
-                    zIndex: '99'
-                }
+                dropdownMenu.style.position = 'absolute'
+                dropdownMenu.style.top = `${top}px`
+                dropdownMenu.style.left = `${left}px`
+                dropdownMenu.style.zIndex = '9999'
             }
         }
     },
@@ -396,30 +420,12 @@ export default {
 </script>
 
 <style lang="scss">
-$dropdown-disabled-opacity: 0.5 !default;
-$dropdown-mobile-breakpoint: 1024px !default;
-$dropdown-mobile-overlay-color: rgba(black, 0.86) !default;
-$dropdown-mobile-overlay-zindex: 40!default;
-$dropdown-mobile-max-width: 460px !default;
-$dropdown-mobile-width: calc(100vw - 40px) !default;
-$dropdown-mobile-zindex: 50 !default;
-$dropdown-menu-width: 12rem !default;
-$dropdown-menu-padding: .5rem 0 .5rem 0 !default;
-$dropdown-menu-zindex: 20 !default;
-$dropdown-menu-background: #ffffff !default;
-$dropdown-menu-border-radius: 4px !default;
-$dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !important;
-$dropdown-item-color: #4a4a4a !default;
-$dropdown-item-padding: .375rem 1rem !default;
-$dropdown-item-font-size: .875rem !default;
-$dropdown-item-line-height: 1.5 !default;
-$dropdown-item-color-active: #ffffff !default;
-$dropdown-item-background-active: #3273dc !default;
-$dropdown-item-disabled-opacity: 0.5 !default;
+@import "../../scss/variables.scss";
 
 .o-dropdown {
     display: inline-flex;
     position: relative;
+    vertical-align: top;
     .o-dropdown-background {
         position: fixed;
         bottom: 0;
@@ -433,23 +439,19 @@ $dropdown-item-disabled-opacity: 0.5 !default;
             display: none;
         }
     }
-    &.o-dropdown-menu-animation {
-        .o-dropdown-menu {
-            display: block;
-        }
-    }
     .o-dropdown-menu {
-        left: 0;
-        // padding: $dropdown-menu-padding;
         position: absolute;
+        left: 0;
         top: 100%;
         min-width: $dropdown-menu-width;
         z-index: $dropdown-menu-zindex;
-        .o-dropdown-content {
-            background-color: $dropdown-menu-background;
-            border-radius: $dropdown-menu-border-radius;
-            box-shadow: $dropdown-menu-box-shadow;
-            padding: $dropdown-menu-padding;
+        background-color: $dropdown-menu-background;
+        border-radius: $dropdown-menu-border-radius;
+        box-shadow: $dropdown-menu-box-shadow;
+        padding: $dropdown-menu-padding;
+        margin: $dropdown-menu-margin;
+        &.o-dropdown-menu-animation {
+            display: block;
         }
         .o-dropdown-item {
             display: block;
@@ -475,7 +477,7 @@ $dropdown-item-disabled-opacity: 0.5 !default;
     &.o-dropdown-hoverable {
         &:hover {
             .o-dropdown-menu {
-                display: inherit;
+                display: block;
             }
         }
     }
@@ -513,7 +515,6 @@ $dropdown-item-disabled-opacity: 0.5 !default;
         .o-dropdown-menu {
             position: static;
             display: inline-block;
-            padding: 0;
         }
     }
     &.o-dropdown-top-right {
@@ -542,14 +543,14 @@ $dropdown-item-disabled-opacity: 0.5 !default;
                 position: fixed;
                 width: $dropdown-mobile-width;
                 max-width: $dropdown-mobile-max-width;
-                // max-height: calc(100vh - 120px);
+                max-height: $dropdown-mobile-max-height;
                 top: 25%;
                 left: 50%;
                 bottom: auto;
                 right: auto;
                 transform: translate3d(-50%, -25%, 0);
                 overflow-y: auto;
-                z-index: 50;
+                z-index: $dropdown-mobile-zindex;
             }
         }
     }
