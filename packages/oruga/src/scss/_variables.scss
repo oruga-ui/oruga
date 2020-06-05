@@ -1,0 +1,55 @@
+// Colors
+
+$white: #ffffff;
+$primary: #7957d5;
+$twitter: #4099FF;
+$discord: #7289DA;
+$patreon: #f96854;
+
+$colors: (
+    "primary": ($primary, $white),
+    "twitter": ($twitter, $white),
+    "discord": ($discord, $white),
+    "patreon": ($patreon, $white)
+);
+
+// Dropdown
+
+$dropdown-disabled-opacity: 0.5 !default;
+$dropdown-mobile-breakpoint: 1024px !default;
+$dropdown-mobile-overlay-color: rgba(#000000, 0.86) !default;
+$dropdown-mobile-overlay-zindex: 40!default;
+$dropdown-mobile-max-width: 460px !default;
+$dropdown-mobile-width: calc(100vw - 40px) !default;
+$dropdown-mobile-max-height: calc(100vh - 120px) !default;
+$dropdown-mobile-zindex: 50 !default;
+$dropdown-menu-width: 12rem !default;
+$dropdown-menu-padding: .5rem 0 .5rem 0 !default;
+$dropdown-menu-margin: 0 !default;
+$dropdown-menu-zindex: 20 !default;
+$dropdown-menu-background: #ffffff !default;
+$dropdown-menu-border-radius: 4px !default;
+$dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !important;
+$dropdown-item-color: #000000 !default;
+$dropdown-item-padding: .375rem 1rem !default;
+$dropdown-item-font-size: 1rem !default;
+$dropdown-item-line-height: 1.5 !default;
+$dropdown-item-color-active: #ffffff !default;
+$dropdown-item-background-active: #3273dc !default;
+$dropdown-item-disabled-opacity: 0.5 !default;
+
+// Tooltip
+
+$tooltip-arrow-size: 5px !default;
+$tooltip-arrow-margin: 2px !default;
+$tooltip-content-zindex: 37 !default;
+$tooltip-content-max-width: 300px !default;
+$tooltip-content-radius-large: 6px !default;
+$tooltip-content-weight-normal: 400 !default;
+$tooltip-content-padding: 0.35rem 0.75rem !default;
+$tooltip-content-font-size: 0.85rem !default;
+$tooltip-content-zindex: 38 !default;
+$tooltip-content-box-shadow: 0px 1px 2px 1px rgba(0, 1, 0, 0.2) !default;
+$tooltip-content-multiline-width: 300px;
+$tooltip-background-color: #000000 !default;
+$tooltip-color: #ffffff !default;
