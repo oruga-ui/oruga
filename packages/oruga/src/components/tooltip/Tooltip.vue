@@ -93,6 +93,22 @@ export default {
                 return getCssClass(clazz, override, 'o-tooltip-trigger')
             }
         },
+        multilineClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'tooltip.override', false)
+                const clazz = getValueByPath(config, 'tooltip.multilineClass', '')
+                return getCssClass(clazz, override, 'o-tooltip-multiline')
+            }
+        },
+        alwaysClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'tooltip.override', false)
+                const clazz = getValueByPath(config, 'tooltip.alwaysClass', '')
+                return getCssClass(clazz, override, 'o-tooltip-always')
+            }
+        }
     },
     data() {
         return {
@@ -105,10 +121,10 @@ export default {
             return [
                 this.rootClass,
                 this.variant && ('o-color-' + this.variant),
-                this.multiline && 'o-tooltip-multiline',
-                `o-tooltip-${this.position}`, {
-                'o-tooltip-always': this.always
-            }]
+                this.multiline && this.multilineClass,
+                this.position && (this.rootClass + '-' + this.position),
+                this.always && this.alwaysClass
+            ]
         },
         newAnimation() {
             return this.animated ? this.animation : undefined
