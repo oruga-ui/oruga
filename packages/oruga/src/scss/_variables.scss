@@ -13,6 +13,16 @@ $colors: (
     "patreon": ($patreon, $white)
 );
 
+// Sizes
+
+$base-font-size: 1rem;
+
+$sizes: (
+    "small": .75rem,
+    "medium": 1.25rem,
+    "large": 1.5rem
+);
+
 // Dropdown
 
 $dropdown-disabled-opacity: 0.5 !default;
@@ -32,10 +42,10 @@ $dropdown-menu-border-radius: 4px !default;
 $dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !important;
 $dropdown-item-color: #000000 !default;
 $dropdown-item-padding: .375rem 1rem !default;
-$dropdown-item-font-size: 1rem !default;
+$dropdown-item-font-size: $base-font-size !default;
 $dropdown-item-line-height: 1.5 !default;
 $dropdown-item-color-active: #ffffff !default;
-$dropdown-item-background-active: #3273dc !default;
+$dropdown-item-background-active: #000000 !default;
 $dropdown-item-disabled-opacity: 0.5 !default;
 
 // Tooltip
@@ -53,3 +63,16 @@ $tooltip-content-box-shadow: 0px 1px 2px 1px rgba(0, 1, 0, 0.2) !default;
 $tooltip-content-multiline-width: 300px;
 $tooltip-background-color: #000000 !default;
 $tooltip-color: #ffffff !default;
+
+// Button
+
+$button-background-color: #ffffff !default;
+$button-color: #000000 !default;
+$button-padding: calc(.375em - 1px) .75em !default;
+$button-border: 1px solid #000000 !default;
+$button-border-radius: 4px !default;
+$button-box-shadow: none !default;
+$button-font-size: $base-font-size !default;
+$button-line-height: 1.5 !default;
+$button-margin-border-to-icon: calc(-.375em - 1px) !default;
+$button-margin-icon-to-text: .1875em !default;

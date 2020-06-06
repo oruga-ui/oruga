@@ -3,4 +3,4 @@
 ## Packages for Oruga
 
 1. **docs** - Oruga documentation
-2. **oruga** - main source code for Oruga
+2. **oruga** - Main source code for Oruga

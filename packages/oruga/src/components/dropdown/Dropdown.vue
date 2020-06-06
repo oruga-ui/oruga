@@ -185,6 +185,14 @@ export default {
                 const clazz = getValueByPath(config, 'dropdown.mobileClass', '')
                 return getCssClass(clazz, override, 'o-dropdown-mobile')
             }
+        },
+        expandedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'dropdown.override', false)
+                const clazz = getValueByPath(config, 'dropdown.expandedClass', '')
+                return getCssClass(clazz, override, 'o-dropdown-expanded')
+            }
         }
     },
     provide() {
@@ -205,11 +213,12 @@ export default {
             return [
                 this.rootClass,
                 this.disabled && this.disabledClass, 
-                this.position && ('o-dropdown-' + this.position),
+                this.position && (this.rootClass + '-' + this.position),
                 (this.isActive || this.inline) && this.activeClass, 
                 this.hoverable && this.hoverableClass,
                 this.inline && this.inlineClass,
-                this.isMobileModal && this.mobileClass
+                this.isMobileModal && this.mobileClass,
+                this.expanded && this.expandedClass
             ]
         },
         isMobileModal() {
