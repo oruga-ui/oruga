@@ -1,16 +1,18 @@
+* {
+    box-sizing: inherit;
+}
+
 // Colors
 
-$white: #ffffff;
-$primary: #7957d5;
-$twitter: #4099FF;
-$discord: #7289DA;
-$patreon: #f96854;
+$white: #ffffff !default;
+$grey: hsl(0, 0%, 21%) !default;
+$primary: #94C11F !default;
+$primary-invert: $white !default;
+$danger: #ff3860 !default;
 
 $colors: (
     "primary": ($primary, $white),
-    "twitter": ($twitter, $white),
-    "discord": ($discord, $white),
-    "patreon": ($patreon, $white)
+    "danger" : ($danger, $white)
 );
 
 // Sizes
@@ -22,6 +24,248 @@ $sizes: (
     "medium": 1.25rem,
     "large": 1.5rem
 );
+
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+$easing: ease-out !default;
+
+$control-border-width: 1px !default;
+$control-padding-horizontal: calc(0.625em - #{$control-border-width}) !default;
+
+// Some of the animations are from animate.css (https://daneden.github.io/animate.css)
+
+// Fade out
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.fadeOut {
+    animation-name: fadeOut;
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+}
+.fadeOutDown {
+    animation-name: fadeOutDown;
+}
+
+@keyframes fadeOutUp {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+}
+.fadeOutUp {
+    animation-name: fadeOutUp;
+}
+
+// Fade In
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+.fadeInUp {
+    animation-name: fadeInUp;
+}
+
+/**
+ * Vue Transitions
+ */
+
+// Fade
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity $speed-slow $easing;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// Zoom In
+.zoom-in-enter-active,
+.zoom-in-leave-active {
+    transition: opacity $speed-slow $easing;
+    .animation-content,
+    .animation-content {
+        transition: transform $speed-slow $easing;
+    }
+}
+.zoom-in-enter,
+.zoom-in-leave-active {
+    opacity: 0;
+    .animation-content,
+    .animation-content {
+        transform: scale(0.95);
+    }
+}
+
+
+// Zoom Out
+.zoom-out-enter-active,
+.zoom-out-leave-active {
+    transition: opacity $speed-slow $easing;
+    .animation-content,
+    .animation-content {
+        transition: transform $speed-slow $easing;
+    }
+}
+.zoom-out-enter,
+.zoom-out-leave-active {
+    opacity: 0;
+    .animation-content,
+    .animation-content {
+        transform: scale(1.05);
+    }
+}
+
+// Slide
+.slide-next-enter-active,
+.slide-next-leave-active,
+.slide-prev-enter-active,
+.slide-prev-leave-active {
+    transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+.slide-prev-leave-to, .slide-next-enter {
+    transform: translate3d(-100%, 0, 0);
+    position: absolute;
+    width: 100%;
+}
+.slide-prev-enter, .slide-next-leave-to {
+    transform: translate3d(100%, 0, 0);
+    position: absolute;
+    width: 100%;
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active,
+.slide-up-enter-active,
+.slide-up-leave-active {
+    transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+.slide-up-leave-to, .slide-down-enter {
+    transform: translate3d(0, -100%, 0);
+    position: absolute;
+    height: 100%;
+}
+.slide-up-enter, .slide-down-leave-to {
+    transform: translate3d(0, 100%, 0);
+    position: absolute;
+    height: 100%;
+}
+
+.slide-enter-active {
+    transition: $speed-slow $easing;
+}
+.slide-leave-active {
+    transition: $speed-slow $easing;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.slide-enter-to, .slide-leave {
+    max-height: 100px;
+    overflow: hidden;
+}
+.slide-enter, .slide-leave-to {
+    overflow: hidden;
+    max-height: 0;
+}
+
+
+// Helper function to replace characters in a string
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+    @return if($index,
+        str-slice($string, 1, $index - 1) + $replace +
+        str-replace(str-slice($string, $index +
+        str-length($search)), $search, $replace),
+        $string);
+}
+
+// Encode svg function by http://codepen.io/jakob-e/pen/doMoML
+@function svg-encode($svg){
+    // Chunk up string in order to avoid "stack level too deep" error
+    $encoded:'';
+    $slice: 2000;
+    $index: 0;
+    $loops: ceil(str-length($svg)/$slice);
+    @for $i from 1 through $loops {
+        $chunk: str-slice($svg, $index, $index + $slice - 1);
+        // Encode
+        $chunk: str-replace($chunk, '"', '\'');
+        $chunk: str-replace($chunk, '%', '%25');
+        $chunk: str-replace($chunk, '#', '%23');
+        $chunk: str-replace($chunk, '{', '%7B');
+        $chunk: str-replace($chunk, '}', '%7D');
+        $chunk: str-replace($chunk, '<', '%3C');
+        $chunk: str-replace($chunk, '>', '%3E');
+
+        $encoded: #{$encoded}#{$chunk};
+        $index: $index + $slice;
+    }
+    @return "data:image/svg+xml,#{$encoded}";
+}
+
+@function checkmark($color) {
+    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
+    $content: '<path style="fill:#{$color}" d="M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z"></path>';
+    $end: '</svg>';
+
+    @return svg-encode("#{$start}#{$content}#{$end}");
+}
+
+@function indeterminate($color) {
+    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
+    $content: '<rect style="fill:#{$color}" width="0.7" height="0.2" x=".15" y=".4"></rect>';
+    $end: '</svg>';
+
+    @return svg-encode("#{$start}#{$content}#{$end}");
+}
 
 // Dropdown
 
@@ -39,7 +283,7 @@ $dropdown-menu-margin: 0 !default;
 $dropdown-menu-zindex: 20 !default;
 $dropdown-menu-background: #ffffff !default;
 $dropdown-menu-border-radius: 4px !default;
-$dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !important;
+$dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default;
 $dropdown-item-color: #000000 !default;
 $dropdown-item-padding: .375rem 1rem !default;
 $dropdown-item-font-size: $base-font-size !default;
@@ -47,6 +291,23 @@ $dropdown-item-line-height: 1.5 !default;
 $dropdown-item-color-active: #ffffff !default;
 $dropdown-item-background-active: #000000 !default;
 $dropdown-item-disabled-opacity: 0.5 !default;
+
+// Autocomplete
+
+$autocomplete-menu-max-height: 200px !default;
+$autocomplete-item-hover-background-color: grey !default;
+$autocomplete-item-hover-color: #000000 !default;
+$autocomplete-menu-zindex : 20 !default;
+$autocomplete-menu-background: #ffffff !default;
+$autocomplete-menu-border-radius: 4px !default;
+$autocomplete-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default;
+$autocomplete-menu-padding: .5rem 0 .5rem 0 !default;
+$autocomplete-menu-margin: 0 !default;
+$autocomplete-item-color: #000000 !default;
+$autocomplete-item-font-size: $base-font-size !default;
+$autocomplete-item-line-height: 1.5 !default;
+$autocomplete-item-padding: .375rem 1rem !default;
+$autocomplete-item-disabled-opacity: 0.5 !default;
 
 // Tooltip
 
@@ -76,3 +337,51 @@ $button-font-size: $base-font-size !default;
 $button-line-height: 1.5 !default;
 $button-margin-border-to-icon: calc(-.375em - 1px) !default;
 $button-margin-icon-to-text: .1875em !default;
+
+// Input
+
+$input-control-icon-zindex: 4 !default;
+$input-height: 2em;
+$input-box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1) !default;
+$input-max-width: 100% !default;
+$input-width: 100% !default;
+$input-background-color: #ffffff !default;
+$input-border-color: #dbdbdb !default;
+$input-border-radius: 4px !default;
+$input-color: #363636 !default;
+$input-border: 1px solid transparent !default;
+$input-line-height: 1.5 !default;
+$input-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
+$input-textarea-padding: 0.625em !default;
+$input-textarea-max-height: 600px !default;
+$input-textarea-min-height: 120px !default;
+$input-counter-font-size: .75rem !default;
+$input-counter-margin: .25rem 0 0 .5rem !default;
+
+// Checkbox
+
+$checkbox-active-background-color: $primary !default;
+$checkbox-background-color: transparent !default;
+$checkbox-border-color: $grey !default;
+$checkbox-border-radius: 4px !default;
+$checkbox-border-width: 2px !default;
+$checkbox-checkmark-color: $primary-invert !default;
+$checkbox-size: 1.25em !default;
+$checkbox-margin-right: 0.5em !default;
+$checkbox-focus-box-shadow: 0 0 0.5em rgba($grey, 0.8) !default;
+
+// Radio
+$radio-active-background-color: $primary !default;
+$radio-size: 1.25em !default;
+$radio-margin-right: 0.5em !default;
+$radio-focus-box-shadow: 0 0 0.5em rgba($grey, 0.8) !default;
+
+// Field
+
+$field-margin-bottom: .75rem !default;
+$field-label-color: #363636 !default;
+$field-label-font-size: $base-font-size !default;
+$field-label-font-weight: 600 !default;
+$field-message-font-size: .75rem !default;
+$field-message-margin-top: .25rem !default;
+

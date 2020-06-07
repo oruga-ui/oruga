@@ -2,7 +2,7 @@ export default {
     props: {
         value: [String, Number, Boolean, Function, Object, Array],
         nativeValue: [String, Number, Boolean, Function, Object, Array],
-        type: String,
+        variant: String,
         disabled: Boolean,
         required: Boolean,
         name: String,

@@ -28,6 +28,7 @@ export default {
         size: String,
         customSize: String,
         customClass: String,
+        clickable: Boolean,
         rootClass: {
             type: String,
             default: () => {
@@ -36,12 +37,21 @@ export default {
                 return getCssClass(clazz, override, 'o-icon')
             }
         },
+        clickableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'icon.override', false)
+                const clazz = getValueByPath(config, 'icon.clickableClass', '')
+                return getCssClass(clazz, override, 'o-icon-clickable')
+            }
+        },
         both: Boolean // This is used internally to show both MDI and FA icon
     },
     computed: {
         rootClasses() {
             return [
                 this.rootClass,
+                this.clickable && this.clickableClass,
                 this.size && ('o-size-' + this.size),
                 this.newVariant && ('o-color-' + this.newVariant)
             ]
@@ -118,6 +128,9 @@ export default {
 @import "../../scss/variables.scss";
 
 .o-icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
             font-size: $value;
@@ -128,6 +141,10 @@ export default {
         &.o-color-#{$name} {
             color: $color;
         }
+    }
+    &.o-icon-clickable {
+        pointer-events: auto;
+        cursor: pointer;
     }
 }
 </style>

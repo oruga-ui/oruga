@@ -3,6 +3,7 @@ import node from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
+import clear from 'rollup-plugin-clear'
 
 import fs from 'fs'
 import path from 'path'
@@ -80,7 +81,11 @@ export default () => {
                     styleToImports: true
                 }),
                 babel(),
-                cjs()
+                cjs(),
+                clear({
+                    targets: ['dist/esm'],
+                    watch: false
+                })
             ]
         },
         {
@@ -99,7 +104,11 @@ export default () => {
                     styleToImports: true
                 }),
                 babel(),
-                cjs()
+                cjs(),
+                clear({
+                    targets: ['dist/cjs'],
+                    watch: false
+                })
             ]
         },
         /*

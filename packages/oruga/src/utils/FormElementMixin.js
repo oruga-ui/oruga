@@ -1,7 +1,11 @@
 import config from '../utils/config'
-import { isVueComponent } from './helpers'
+import { isVueComponent, getValueByPath } from './helpers'
 
 export default {
+    inject: {
+        $field: { name: '$field', default: false },
+        $elementRef: { name: '$elementRef', default: false }
+    },
     props: {
         size: String,
         expanded: Boolean,
@@ -14,7 +18,7 @@ export default {
         maxlength: [Number, String],
         useHtml5Validation: {
             type: Boolean,
-            default: () => config.defaultUseHtml5Validation
+            default: () => getValueByPath(config, 'useHtml5Validation', true)
         },
         validationMessage: String
     },
@@ -26,30 +30,21 @@ export default {
         }
     },
     computed: {
-        /**
-         * Find parent Field, max 3 levels deep.
-         */
         parentField() {
-            let parent = this.$parent
-            for (let i = 0; i < 3; i++) {
-                if (parent && !parent.$data._isField) {
-                    parent = parent.$parent
-                }
-            }
-            return parent
+            return this.$field
         },
 
         /**
          * Get the type prop from parent if it's a Field.
          */
-        statusType() {
+        statusVariant() {
             if (!this.parentField) return
-            if (!this.parentField.newType) return
-            if (typeof this.parentField.newType === 'string') {
-                return this.parentField.newType
+            if (!this.parentField.newVariant) return
+            if (typeof this.parentField.newVariant === 'string') {
+                return this.parentField.newVariant
             } else {
-                for (let key in this.parentField.newType) {
-                    if (this.parentField.newType[key]) {
+                for (let key in this.parentField.newVariant) {
+                    if (this.parentField.newVariant[key]) {
                         return key
                     }
                 }
@@ -63,19 +58,6 @@ export default {
             if (!this.parentField) return
 
             return this.parentField.newMessage || this.parentField.$slots.message
-        },
-
-        /**
-         * Fix icon size for inputs, large was too big
-         */
-        iconSize() {
-            switch (this.size) {
-                case 'is-small': return this.size
-                case 'is-medium': return
-                case 'is-large': return this.newIconPack === 'mdi'
-                    ? 'is-medium'
-                    : ''
-            }
         }
     },
     methods: {
@@ -103,25 +85,25 @@ export default {
         },
 
         getElement() {
-            let el = this.$refs[this.$data._elementRef]
+            let el = this.$refs[this.$elementRef]
             while (isVueComponent(el)) {
-                el = el.$refs[el.$data._elementRef]
+                el = el.$refs[el.$elementRef]
             }
             return el
         },
 
         setInvalid() {
-            let type = 'is-danger'
+            let variant = 'danger'
             let message = this.validationMessage || this.getElement().validationMessage
-            this.setValidity(type, message)
+            this.setValidity(variant, message)
         },
 
-        setValidity(type, message) {
+        setValidity(variant, message) {
             this.$nextTick(() => {
                 if (this.parentField) {
                     // Set type only if not defined
-                    if (!this.parentField.type) {
-                        this.parentField.newType = type
+                    if (!this.parentField.variant) {
+                        this.parentField.newVariant = variant
                     }
                     // Set message only if not defined
                     if (!this.parentField.message) {
@@ -133,7 +115,7 @@ export default {
 
         /**
          * Check HTML5 validation, set isValid property.
-         * If validation fail, send 'is-danger' type,
+         * If validation fail, send 'danger' type,
          * and error message to parent if it's a Field.
          */
         checkHtml5Validity() {
