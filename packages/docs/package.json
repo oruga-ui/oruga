@@ -6,11 +6,23 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "vuepress dev",
-    "docs:build": "vuepress build"
+    "preinstall": "npx npm-force-resolutions",
+    "docs:dev": "npm link oruga && vuepress dev --host localhost",
+    "docs:build": "vuepress build",
+    "docs:dev1": "npm link oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
+    "docs:build1": "vue-docgen && vuepress buildnossr"
   },
   "devDependencies": {
+    "@vuepress/plugin-register-components": "^1.5.1",
+    "concurrently": "^5.2.0",
     "markdown-it-include": "^1.1.1",
-    "vuepress": "^1.5.0"
+    "vue-docgen-cli": "^4.24.0",
+    "vuepress": "^1.5.0",
+    "vuepress-plugin-container": "^2.1.4",
+    "vuepress-plugin-demo-code": "^0.5.0",
+    "vuepress-plugin-live": "^1.5.3"
+  },
+  "resolutions": {
+    "watchpack": "1.6.1"
   }
 }
