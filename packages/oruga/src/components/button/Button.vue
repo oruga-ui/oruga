@@ -160,6 +160,7 @@ export default {
     box-shadow: $button-box-shadow;
     font-size: $button-font-size;
     line-height: $button-line-height;
+    margin: $button-margin;
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         $color-invert: nth($pair, 2);

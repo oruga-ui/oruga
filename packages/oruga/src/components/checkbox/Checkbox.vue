@@ -33,11 +33,11 @@ export default {
     props: {
         indeterminate: Boolean,
         trueValue: {
-            type: [String, Number, Boolean, Function, Object, Array],
+            type: [String, Number, Boolean],
             default: true
         },
         falseValue: {
-            type: [String, Number, Boolean, Function, Object, Array],
+            type: [String, Number, Boolean],
             default: false
         },
         rootClass: {
@@ -84,7 +84,7 @@ export default {
         checkClasses() {
             return [
                 this.checkClass,
-                this.variant && ('o-variant-' + this.variant)
+                this.variant && ('o-color-' + this.variant)
             ]
         }
     }

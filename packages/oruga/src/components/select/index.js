@@ -1,10 +1,10 @@
-import Rate from './Rate'
+import Select from './Select'
 
 import { use, registerComponent } from '../../utils/plugins'
 
 const Plugin = {
     install(Vue) {
-        registerComponent(Vue, Rate)
+        registerComponent(Vue, Select)
     }
 }
 
@@ -13,5 +13,5 @@ use(Plugin)
 export default Plugin
 
 export {
-    Rate as BRate
+    Select as OSelect
 }

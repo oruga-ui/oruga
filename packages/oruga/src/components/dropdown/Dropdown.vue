@@ -47,6 +47,11 @@ export default {
     directives: {
         trapFocus
     },
+    provide() {
+        return {
+            $dropdown: this
+        }
+    },
     props: {
         value: {
             type: [String, Number, Boolean, Object, Array, Function],
@@ -193,11 +198,6 @@ export default {
                 const clazz = getValueByPath(config, 'dropdown.expandedClass', '')
                 return getCssClass(clazz, override, 'o-dropdown-expanded')
             }
-        }
-    },
-    provide() {
-        return {
-            $dropdown: this
         }
     },
     data() {
@@ -475,6 +475,16 @@ export default {
             &.o-dropdown-item-active {
                 background-color: $dropdown-item-background-active;
                 color: $dropdown-item-color-active;
+            }
+        }
+        a {
+            &.o-dropdown-item {
+                cursor: pointer;
+                text-decoration: none;
+                &:hover {
+                    background-color: $dropdown-item-hover-background-color;
+                    color: $dropdown-item-hover-color;
+                }
             }
         }
     }

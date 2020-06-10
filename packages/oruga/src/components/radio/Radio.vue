@@ -72,7 +72,7 @@ export default {
         checkClasses() {
             return [
                 this.checkClass,
-                this.variant && ('o-variant-' + this.variant)
+                this.variant && ('o-color-' + this.variant)
             ]
         }
     }
