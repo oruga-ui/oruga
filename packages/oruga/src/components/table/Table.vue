@@ -65,11 +65,10 @@
                             :style="column.style"
                             @click.stop="sort(column, null, $event)">
                             <div
-                                class="o-table-th-wrap"
-                                :class="{
+                                :class="[ thWrapClass, {
                                     'o-table-th-right': column.numeric,
                                     'o-table-th-center': column.centered
-                            }">
+                            }]">
                                 <template v-if="column.$scopedSlots && column.$scopedSlots.header">
                                     <b-slot-component
                                         :component="column"
@@ -283,8 +282,6 @@
                         />
                     </template>
 
-                    <slot v-if="loading" name="loading"/>
-
                     <tr
                         v-if="!visibleData.length"
                         class="o-table-empty">
@@ -305,6 +302,12 @@
                 </tfoot>
             </table>
         </div>
+
+        <template v-if="loading">
+            <slot name="loading">
+                <o-loading :full-page="false" :active.sync="loading" />
+            </slot>
+        </template>
 
         <template v-if="(checkable && hasBottomLeftSlot()) ||
             (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
@@ -334,6 +337,7 @@ import Checkbox from '../checkbox/Checkbox'
 import Icon from '../icon/Icon'
 import Input from '../input/Input'
 import Pagination from '../pagination/Pagination'
+import Loading from '../loading/Loading'
 import SlotComponent from '../../utils/SlotComponent'
 import TableMobileSort from './TableMobileSort'
 import TableColumn from './TableColumn'
@@ -347,6 +351,7 @@ export default {
         [Icon.name]: Icon,
         [Input.name]: Input,
         [Pagination.name]: Pagination,
+        [Loading.name]: Loading,
         [SlotComponent.name]: SlotComponent,
         [TableMobileSort.name]: TableMobileSort,
         [TableColumn.name]: TableColumn,
@@ -513,6 +518,94 @@ export default {
                 const clazz = getValueByPath(config, 'table.rootClass', '')
                 return getCssClass(clazz, override, 'o-table')
             }
+        },
+        wrapperClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.wrapperClass', '')
+                return getCssClass(clazz, override, 'o-table-wrapper')
+            }
+        },
+        borderedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.borderedClass', '')
+                return getCssClass(clazz, override, 'o-table-bordered')
+            }
+        },
+        stripedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.stripedClass', '')
+                return getCssClass(clazz, override, 'o-table-striped')
+            }
+        },
+        narrowClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.narrowClass', '')
+                return getCssClass(clazz, override, 'o-table-narrow')
+            }
+        },
+        hoverableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.hoverableClass', '')
+                return getCssClass(clazz, override, 'o-table-hoverable')
+            }
+        },
+        thWrapClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thWrapClass', '')
+                return getCssClass(clazz, override, 'o-table-th-wrap')
+            }
+        },
+        mobileCardsClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.mobileCardsClass', '')
+                return getCssClass(clazz, override, 'o-table-mobile-cards')
+            }
+        },
+        stickyHeaderClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.stickyHeaderClass', '')
+                return getCssClass(clazz, override, 'o-table-sticky-header')
+            }
+        },
+        mobileCardsClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.mobileCardsClass', '')
+                return getCssClass(clazz, override, 'o-table-mobile-cards')
+            }
+        },
+        cardsClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.cardsClass', '')
+                return getCssClass(clazz, override, 'o-table-cards')
+            }
+        },
+        scrollableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.scrollableClass', '')
+                return getCssClass(clazz, override, 'o-table-scrollable')
+            }
         }
     },
     data() {
@@ -535,25 +628,19 @@ export default {
     computed: {
         tableClasses() {
             return [
-                'o-table-table', {
-                    'o-table-bordered': this.bordered,
-                    'o-table-striped': this.striped,
-                    'o-table-narrow': this.narrowed,
-                    'o-table-hoverable': (
-                        (this.hoverable || this.focusable) &&
-                        this.visibleData.length
-                    )
-                }
+                this.bordered && this.borderedClass,
+                this.striped && this.stripedClass,
+                this.narrowed && this.narrowClass,
+                ((this.hoverable || this.focusable) && this.visibleData.length) && this.hoverableClass
             ]
         },
         tableWrapperClasses() {
             return [
-                'o-table-wrapper', {
-                    'o-table-mobile-cards': this.mobileCards,
-                    'o-table-sticky-header': this.stickyHeader,
-                    'o-table-cards': this.cardLayout,
-                    'o-table-scrollable': this.isScrollable
-                }
+                this.wrapperClass,
+                this.mobileCards && this.mobileCardsClass,
+                this.stickyHeader && this.stickyHeaderClass,
+                this.cardLayout && this.cardsClass,
+                this.isScrollable && this.scrollableClass
             ]
         },
         tableWrapperStyle() {
@@ -1251,11 +1338,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
-
-$table-card-cell-padding: 0 0.5em 0 0 !default;
-$table-card-cell-font-weight: $table-th-font-weight !default;
-$table-card-cell-text-align: left !default;
+@import "../../scss/oruga.scss";
 
 @mixin table-cards {
     thead {
@@ -1309,14 +1392,8 @@ $table-card-cell-text-align: left !default;
 
 .o-table {
     transition: opacity $speed $easing;
+    position: relative;
     .o-table-wrapper {
-        .o-table-table {
-            display: table;
-            margin-bottom: 0;
-        }
-        &:not(:last-child) {
-            margin-bottom: 1.5rem;
-        }
         &.o-table-sticky-header {
             height: $table-sticky-header-height;
             overflow-y: auto;
@@ -1331,7 +1408,7 @@ $table-card-cell-text-align: left !default;
                     position: -webkit-sticky;
                     position: sticky;
                     top: 0;
-                    z-index: 2;
+                    z-index: $table-sticky-zindex + 1;
                     background: $table-background-color;
                 }
             }
@@ -1343,6 +1420,12 @@ $table-card-cell-text-align: left !default;
         }
         &.o-table-cards {
             @include table-cards
+        }
+        &.o-table-scrollable {
+            -webkit-overflow-scrolling: touch;
+            overflow: auto;
+            overflow-y: hidden;
+            max-width: 100%;
         }
     }
 
@@ -1368,26 +1451,23 @@ $table-card-cell-text-align: left !default;
         }
     }
 
-    .o-table-table {
+    table {
+        display: table;
         width: 100%;
-        border: 1px solid transparent;
+        border: $table-boder;
         border-radius: $table-border-radius;
         border-collapse: separate;
         border-spacing: 0;
-        background-color: #fff;
-        color: #363636;
-        thead, tbody {
-            background-color: transparent;
-        }
+        background-color: $table-background-color;
+        color: $table-color;
         tr {
             th {
                 font-weight: $table-th-font-weight;
-                border-width: 0 0 2px;
-                color: #363636;
-                // border-: 1px solid #dbdbdb;
-                border-color: #dbdbdb;
-                border-style: solid;
-                padding: 0.5em 0.75em;
+                border-width: $table-th-border-width;
+                color: $table-th-color;
+                border-color: $table-th-border-color;
+                border-style: $table-th-border-style;
+                padding: $table-th-padding;
                 vertical-align: top;
                 &:not([align]) {
                     text-align: left;
@@ -1396,16 +1476,15 @@ $table-card-cell-text-align: left !default;
                     display: flex;
                     align-items: center;
                     .o-icon {
-                        margin-left: 0.5rem;
+                        margin-left: $table-th-wrap-icon-margin;
                         margin-right: 0;
-                        // font-size: 1rem;
                     }
                     &.o-table-th-right {
                         flex-direction: row-reverse;
                         text-align: right;
                         .o-icon {
                             margin-left: 0;
-                            margin-right: 0.5rem;
+                            margin-right: $table-th-wrap-icon-margin;
                         }
                     }
                     &.o-table-th-center {
@@ -1417,11 +1496,11 @@ $table-card-cell-text-align: left !default;
                     }
                 }
                 &.o-table-current-sort {
-                    border-color: $grey;
+                    border-color: $table-current-sort-border-color;
                     font-weight: $table-current-sort-font-weight;
                 }
                 &.o-table-sortable:hover {
-                    border-color: $grey;
+                    border-color: $table-current-sort-hover-border-color;
                 }
                 &.o-table-sortable,
                 &.o-table-sortable .th-wrap {
@@ -1433,30 +1512,30 @@ $table-card-cell-text-align: left !default;
                     transform: translateY(50%);
                 }
                 .o-icon-sort-multi-cancel-icon {
-                    margin-left: 10px;
+                    margin: $table-multi-column-reset-icon-margin;
                 }
                 &.o-table-sticky {
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    z-index: 3 !important;
+                    z-index: $table-sticky-zindex + 2;
                     background: $table-background-color;
                 }
                 &.o-table-th-unselectable {
-                    user-select: none;
+                   @include unselectable;
                 }
             }
             td {
-                border-color: #dbdbdb;
-                border-style: solid;
-                border-width: 0 0 1px;
-                padding: .5em .75em;
+                border-color :$table-td-border-color;
+                border-style: $table-td-border-style;
+                border-width: $table-td-border-width;
+                padding: $table-td-padding;
                 vertical-align: top;
                 &.o-table-sticky {
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    z-index: 1;
+                    z-index: $table-sticky-zindex;
                     background: $table-background-color;
                 }
                 &.o-table-td-right {
@@ -1486,7 +1565,7 @@ $table-card-cell-text-align: left !default;
             }
             .o-table-chevron-cell {
                 vertical-align: middle;
-                width: 40px;
+                width: $table-detail-chevron-width;
                 > a {
                     color: $table-detail-chevron-color;
                 }
@@ -1534,6 +1613,34 @@ $table-card-cell-text-align: left !default;
                 background-color: $table-hoverable-background-color;
             }
         }
+    }
+    .o-pagination-wrapper {
+        align-items: center;
+        justify-content: space-between;
+        @media screen and (min-width: $table-mobile-breakpoint) {
+            display: flex;
+        }
+    }
+    .o-pagination-wrapper-left {
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .o-pagination-wrapper-left {
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .o-pagination-wrapper-left, .o-pagination-wrapper-right {
+        flex-basis: auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+    .o-pagination-wrapper-item {
+        align-items: center;
+        display: flex;
+        flex-basis: auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+        justify-content: center;
     }
 }
 

@@ -1,12 +1,10 @@
 
-*[class="^o-"] {
+*, :after, :before {
     box-sizing: inherit;
-    &::before {
-        box-sizing: inherit;
-    }
-    &::after {
-        box-sizing: inherit;
-    }
+}
+ 
+html {
+    box-sizing: border-box;
 }
 
 // Colors
@@ -26,7 +24,7 @@ $colors: (
 
 // Sizes
 
-$base-font-size: 1rem;
+$base-font-size: 1rem !default;
 
 $sizes: (
     "small": .75rem,
@@ -41,241 +39,6 @@ $easing: ease-out !default;
 
 $control-border-width: 1px !default;
 $control-padding-horizontal: calc(0.625em - #{$control-border-width}) !default;
-
-// Some of the animations are from animate.css (https://daneden.github.io/animate.css)
-
-// Fade out
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-.fadeOut {
-    animation-name: fadeOut;
-}
-
-@keyframes fadeOutDown {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-        transform: translate3d(0, 100%, 0);
-    }
-}
-.fadeOutDown {
-    animation-name: fadeOutDown;
-}
-
-@keyframes fadeOutUp {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-        transform: translate3d(0, -100%, 0);
-    }
-}
-.fadeOutUp {
-    animation-name: fadeOutUp;
-}
-
-// Fade In
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.fadeIn {
-    animation-name: fadeIn;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translate3d(0, -100%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-.fadeInDown {
-    animation-name: fadeInDown;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 100%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-.fadeInUp {
-    animation-name: fadeInUp;
-}
-
-/**
- * Vue Transitions
- */
-
-// Fade
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity $speed-slow $easing;
-}
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-
-// Zoom In
-.zoom-in-enter-active,
-.zoom-in-leave-active {
-    transition: opacity $speed-slow $easing;
-    .animation-content,
-    .animation-content {
-        transition: transform $speed-slow $easing;
-    }
-}
-.zoom-in-enter,
-.zoom-in-leave-active {
-    opacity: 0;
-    .animation-content,
-    .animation-content {
-        transform: scale(0.95);
-    }
-}
-
-
-// Zoom Out
-.zoom-out-enter-active,
-.zoom-out-leave-active {
-    transition: opacity $speed-slow $easing;
-    .animation-content,
-    .animation-content {
-        transition: transform $speed-slow $easing;
-    }
-}
-.zoom-out-enter,
-.zoom-out-leave-active {
-    opacity: 0;
-    .animation-content,
-    .animation-content {
-        transform: scale(1.05);
-    }
-}
-
-// Slide
-.slide-next-enter-active,
-.slide-next-leave-active,
-.slide-prev-enter-active,
-.slide-prev-leave-active {
-    transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
-}
-.slide-prev-leave-to, .slide-next-enter {
-    transform: translate3d(-100%, 0, 0);
-    position: absolute;
-    width: 100%;
-}
-.slide-prev-enter, .slide-next-leave-to {
-    transform: translate3d(100%, 0, 0);
-    position: absolute;
-    width: 100%;
-}
-
-.slide-down-enter-active,
-.slide-down-leave-active,
-.slide-up-enter-active,
-.slide-up-leave-active {
-    transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
-}
-.slide-up-leave-to, .slide-down-enter {
-    transform: translate3d(0, -100%, 0);
-    position: absolute;
-    height: 100%;
-}
-.slide-up-enter, .slide-down-leave-to {
-    transform: translate3d(0, 100%, 0);
-    position: absolute;
-    height: 100%;
-}
-
-.slide-enter-active {
-    transition: $speed-slow $easing;
-}
-.slide-leave-active {
-    transition: $speed-slow $easing;
-    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-}
-.slide-enter-to, .slide-leave {
-    max-height: 100px;
-    overflow: hidden;
-}
-.slide-enter, .slide-leave-to {
-    overflow: hidden;
-    max-height: 0;
-}
-
-
-// Helper function to replace characters in a string
-@function str-replace($string, $search, $replace: '') {
-    $index: str-index($string, $search);
-    @return if($index,
-        str-slice($string, 1, $index - 1) + $replace +
-        str-replace(str-slice($string, $index +
-        str-length($search)), $search, $replace),
-        $string);
-}
-
-// Encode svg function by http://codepen.io/jakob-e/pen/doMoML
-@function svg-encode($svg){
-    // Chunk up string in order to avoid "stack level too deep" error
-    $encoded:'';
-    $slice: 2000;
-    $index: 0;
-    $loops: ceil(str-length($svg)/$slice);
-    @for $i from 1 through $loops {
-        $chunk: str-slice($svg, $index, $index + $slice - 1);
-        // Encode
-        $chunk: str-replace($chunk, '"', '\'');
-        $chunk: str-replace($chunk, '%', '%25');
-        $chunk: str-replace($chunk, '#', '%23');
-        $chunk: str-replace($chunk, '{', '%7B');
-        $chunk: str-replace($chunk, '}', '%7D');
-        $chunk: str-replace($chunk, '<', '%3C');
-        $chunk: str-replace($chunk, '>', '%3E');
-
-        $encoded: #{$encoded}#{$chunk};
-        $index: $index + $slice;
-    }
-    @return "data:image/svg+xml,#{$encoded}";
-}
-
-@function checkmark($color) {
-    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
-    $content: '<path style="fill:#{$color}" d="M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z"></path>';
-    $end: '</svg>';
-
-    @return svg-encode("#{$start}#{$content}#{$end}");
-}
-
-@function indeterminate($color) {
-    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
-    $content: '<rect style="fill:#{$color}" width="0.7" height="0.2" x=".15" y=".4"></rect>';
-    $end: '</svg>';
-
-    @return svg-encode("#{$start}#{$content}#{$end}");
-}
 
 // Dropdown
 
@@ -350,6 +113,11 @@ $button-line-height: 1.5 !default;
 $button-margin: 0 !default;
 $button-margin-border-to-icon: calc(-.375em - 1px) !default;
 $button-margin-icon-to-text: .1875em !default;
+$button-rounded-border-radius: 9999px !default;
+
+// Icon
+
+$icon-spin-duration: 2s !default;
 
 // Input
 
@@ -381,15 +149,78 @@ $checkbox-border-radius: 4px !default;
 $checkbox-border-width: 2px !default;
 $checkbox-checkmark-color: $primary-invert !default;
 $checkbox-size: 1.25em !default;
-$checkbox-margin-right: 0.5em !default;
-$checkbox-focus-box-shadow: 0 0 0.5em rgba($grey, 0.8) !default;
+$checkbox-margin-sibiling: 0.5em !default;
+$checkbox-checked-box-shadow-length: 0 0 0.5em !default;
+$checkbox-checked-box-shadow-color: $checkbox-active-background-color !default;
+$checkbox-checked-box-shadow-opacity: 0.8 !default;
+$checkbox-focus-sibiling-box-shadow: $checkbox-checked-box-shadow-length rgba($grey, $checkbox-checked-box-shadow-opacity) !default;
+$checkbox-disabled-opacity: 0.5 !default;
+$checkbox-label-padding: $control-padding-horizontal 0 0 0 !default;
 
 // Radio
 
 $radio-active-background-color: $primary !default;
 $radio-size: 1.25em !default;
-$radio-margin-right: 0.5em !default;
-$radio-focus-box-shadow: 0 0 0.5em rgba($grey, 0.8) !default;
+$radio-border: 2px solid $grey !default;
+$radio-margin-sibiling: 0.5em !default;
+$radio-checked-box-shadow-length: 0 0 0.5em !default;
+$radio-checked-box-shadow-color: $radio-active-background-color !default;
+$radio-checked-box-shadow-opacity: 0.8 !default;
+$radio-focus-sibiling-box-shadow: $radio-checked-box-shadow-length rgba($grey, $radio-checked-box-shadow-opacity) !default;
+$radio-disabled-opacity: 0.5 !default;
+$radio-label-padding: $control-padding-horizontal 0 0 0 !default;
+
+// Switch
+
+$switch-width-number: 2.75 !default;
+$switch-width: $switch-width-number * 1em !default;
+$switch-padding: 0.2em !default;
+$switch-margin-sibling: 0.5em !default;
+$switch-background: $grey !default;
+$switch-border-radius: 9999px !default;
+$switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
+$switch-active-background-color: $primary !default;
+$switch-active-box-shadow-length: 0 0 0.5em !default;
+$switch-active-box-shadow-color: $grey !default;
+$switch-active-box-shadow-opacity: 0.6 !default;
+$switch-active-background-color-opacity: 0.9 !default;
+$switch-checked-box-shadow-length: 0 0 0.5em !default;
+$switch-checked-box-shadow-color: $switch-active-background-color !default;
+$switch-checked-box-shadow-opacity: 0.8 !default;
+$switch-label-padding: $control-padding-horizontal 0 0 0 !default;
+$switch-hover-background: rgba($grey-light, 0.9) !default;
+$switch-disabled-opacity: 0.5 !default;
+$switch-rounded-border-radius: 9999px !default;
+$switch-hover-border-color: $grey-light !default;
+$switch-hover-border-color-opacity: 0.9 !default;
+$switch-outlined-background: $grey-light !default;
+$switch-outlined-border-color-opacity: 0.9 !default;
+$switch-outlined-border-width: .1rem !default;
+$switch-outlined-border-style: solid !default;
+$switch-outlined-border-color: $switch-outlined-background !default;
+
+// Select
+
+$select-control-icon-zindex: 4 !default;
+$select-font-size: 1em !default;
+$select-max-width: 100% !default;
+$select-background-color: #fff !default;
+$select-border-color: #dbdbdb !default;
+$select-border-radius: 4px !default;
+$select-color: #363636 !default;
+$select-margin: 0 !default;
+$select-box-shadow: none !default;
+$select-height: 2.5em !default;
+$select-line-height: 1.5 !default;
+$select-padding: calc(.5em - 1px) 2em calc(.5em - 1px) calc(.75em - 1px) !default;
+$select-option-disabled-opacity: 0.5 !default;
+$select-empty-color: rgba($grey, 0.7) !default;
+$select-optgroup-color: $grey-light !default;
+$select-optgroup-font-weight: 500 !default;
+$select-optgroup-font-style: normal !default;
+$select-optgroup-padding: 0.25em 0 !default;
+$select-option-color: #4a4a4a !default;
+$select-option-padding: .25em .5em !default;
 
 // Modal
 
@@ -409,7 +240,8 @@ $table-sticky-header-height: 300px !default;
 $table-mobile-breakpoint: 1024px !default;
 $table-border-radius: 4px !default;
 $table-background: #f5f5f5 !default;
-$table-background-color: grey !default;
+$table-background-color: #fff !default;
+$table-color: black !default;
 $table-th-font-weight: 600 !default;
 $table-current-sort-font-weight: 700 !default;
 $table-row-active-background-color: $primary !default;
@@ -428,6 +260,47 @@ $table-bordered-bottom-color: $grey !default;
 $table-narrow-padding: .25em .5em !default;
 $table-striped-background-color: #fafafa !default;
 $table-hoverable-background-color: #fafafa !default;
+$table-current-sort-border-color: $grey !default;
+$table-current-sort-hover-border-color: $grey !default;
+$table-multi-column-reset-icon-margin: 0 0 0 10px !default;
+$table-sticky-zindex: 1 !default;
+$table-card-cell-padding: 0 0.5em 0 0 !default;
+$table-card-cell-font-weight: $table-th-font-weight !default;
+$table-card-cell-text-align: left !default;
+$table-boder: 1px solid transparent !default;
+$table-th-border-width: 0 0 2px 0 !default;
+$table-th-border-color: #dbdbdb !default;
+$table-th-border-style: solid !default;
+$table-th-color: #363636 !default;
+$table-th-padding: 0.5em 0.75em !default;
+$table-td-border-color: #dbdbdb !default;
+$table-td-border-style: solid !default;
+$table-td-border-width: 0 0 1px !default;
+$table-td-padding: .5em .75em !default;
+$table-detail-chevron-width: 40px !default;
+$table-th-wrap-icon-margin: 0.5rem !default;
+
+// Pagination
+
+$pagination-link-current-background-color: $primary !default;
+$pagination-link-current-border-color: $primary !default;
+$pagination-link-current-color: #fff !default;
+$pagination-link-line-height: 1.5 !default;
+$pagination-link-border: 1px solid transparent !default;
+$pagination-link-border-radius: 4px !default;
+$pagination-link-border-color: #dbdbdb !default;
+$pagination-link-color: #363636 !default;
+$pagination-link-min-width: 2.25em !default;
+$pagination-link-height: 2.25em !default;
+$pagination-link-hover-border-color: #b5b5b5 !default;
+$pagination-link-hover-color: #363636 !default;
+$pagination-disabled-opacity: 0.5 !default;
+$pagination-mobile-breakpoint: 1024px !default;
+$pagination-font-size: 1rem !default;
+$pagination-margin: -.25rem !default;
+$pagination-rounded-border-radius: 9999px !default;
+$pagination-link-margin: .25rem !default;
+$pagination-ellipsis-color: #b5b5b5 !default;
 
 // Field
 

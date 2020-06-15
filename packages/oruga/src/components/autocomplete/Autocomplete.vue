@@ -604,7 +604,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-autocomplete {
     position: relative;
@@ -638,7 +638,7 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             &.o-autocomplete-item-disabled {
-                cursor: not-allowed;
+                pointer-events: none;
                 opacity: $autocomplete-item-disabled-opacity;
             }
             &.o-autocomplete-item-hovered {

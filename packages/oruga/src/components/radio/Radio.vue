@@ -80,18 +80,17 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-radio {
     outline: none;
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    &:not(.radio-button) {
-        margin-right: $radio-margin-right;
-        & + .o-radio:last-child {
-            margin-right: 0;
-        }
+    @include unselectable;
+    margin-right: $radio-margin-sibiling;
+    & + .o-radio:last-child {
+        margin-right: 0;
     }
     input[type=radio] {
         position: absolute;
@@ -108,7 +107,7 @@ export default {
             height: $radio-size;
             transition: background $speed-slow $easing;
             border-radius: 50%;
-            border: 2px solid $grey;
+            border: $radio-border;
             &:before {
                 content: "";
                 display: flex;
@@ -145,27 +144,27 @@ export default {
         }
         &:focus {
             + .o-radio-check {
-                box-shadow: $radio-focus-box-shadow;
+                box-shadow: $radio-focus-sibiling-box-shadow;
             }
             &:checked + .o-radio-check {
-                box-shadow: 0 0 0.5em rgba($radio-active-background-color, 0.8);
+                box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color#{$name} {
-                        box-shadow: 0 0 0.5em rgba($color, 0.8);
+                        box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
                     }
                 }
             }
         }
     }
     .o-radio-label {
-        padding-left: $control-padding-horizontal;
+        padding: $radio-label-padding;
     }
     &.o-radio-button {
         display: flex;
     }
     &[disabled] {
-        opacity: 0.5;
+        opacity: $radio-disabled-opacity;
     }
     &:hover {
         input[type=radio]:not(:disabled) + .o-radio-check {

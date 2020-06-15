@@ -1,7 +1,7 @@
 export default {
     props: {
-        value: [String, Number, Boolean, Function, Object, Array],
-        nativeValue: [String, Number, Boolean, Function, Object, Array],
+        value: [String, Number, Boolean],
+        nativeValue: [String, Number, Boolean],
         variant: String,
         disabled: Boolean,
         required: Boolean,

@@ -7,9 +7,8 @@
             :type="newType"
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
-            :value="computedValue"
             v-bind="$attrs"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus">
 
@@ -18,9 +17,8 @@
             ref="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
-            :value="computedValue"
             v-bind="$attrs"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"/>
 
@@ -224,18 +222,6 @@ export default {
             })
         },
 
-        /**
-        * Input's 'input' event listener, 'nextTick' is used to prevent event firing
-        * before ui update, helps when using masks (Cleavejs and potentially others).
-        */
-        onInput(event) {
-            this.$nextTick(() => {
-                if (event.target) {
-                    this.computedValue = event.target.value
-                }
-            })
-        },
-
         iconClick(emit, event) {
             this.$emit(emit, event)
             this.$nextTick(() => {
@@ -255,11 +241,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-control-input {
     position: relative;
-    box-sizing: border-box;
     font-size: $base-font-size;
     &.o-control-input-icons-right .o-icon.o-icon-right {
         right: 0;

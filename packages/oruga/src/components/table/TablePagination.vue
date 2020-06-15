@@ -1,10 +1,10 @@
 <template>
-    <div class="top level">
-        <div class="level-left">
+    <div class="o-pagination-wrapper">
+        <div class="o-pagination-wrapper-left">
             <slot />
         </div>
-        <div class="level-right">
-            <div v-if="paginated" class="level-item">
+        <div class="o-pagination-wrapper-right">
+            <div v-if="paginated" class="o-pagination-wrapper-item">
                 <o-pagination
                     :icon-pack="iconPack"
                     :total="total"

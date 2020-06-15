@@ -157,19 +157,18 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
-
-$switch-width-number: 2.75 !default;
-$switch-width: $switch-width-number * 1em !default;
-$switch-padding: 0.2em !default;
-$switch-active-background-color: $primary !default;
-$switch-background: grey !default;
+@import "../../scss/oruga.scss";
 
 .o-switch {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     position: relative;
+    @include unselectable;
+    margin-right: $switch-margin-sibling;
+    & + .o-switch:last-child {
+        margin-right: 0;
+    }
     input[type=checkbox] {
         position: absolute;
         left: 0;
@@ -183,33 +182,30 @@ $switch-background: grey !default;
             width: $switch-width;
             height: #{$switch-width / 2 + $switch-padding};
             padding: $switch-padding;
-            background: $grey-light;
-            border-radius: 9999px;
+            background: $switch-background;
+            border-radius: $switch-border-radius;
             transition: background $speed-slow $easing, box-shadow $speed-slow $easing;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.color-#{$name}-passive, &:hover {
                     background: $color;
                 }
-                &.input[type=checkbox] + &.check {
-                    background: 'pink';
-                }
             }    
             &:before {
                 content: "";
                 display: block;
-                border-radius: 9999px;
+                border-radius: $switch-border-radius;
                 width: #{($switch-width - $switch-padding * 2) / 2};
                 height: #{($switch-width - $switch-padding * 2) / 2};
                 background: $switch-background;
-                box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+                box-shadow: $switch-box-shadow;
                 transition: transform $speed-slow $easing;
                 will-change: transform;
                 transform-origin: left;
             }
             &.o-switch-elastic:before {
                 transform: scaleX(1.5);
-                border-radius: 9999px;
+                border-radius: $switch-border-radius;
             }
         }
         &:checked + .o-switch-check {
@@ -231,44 +227,44 @@ $switch-background: grey !default;
         &:focus, &:active {
             outline: none;
             + .o-switch-check {
-                box-shadow: 0 0 0.5em rgba($grey, 0.6);
+                box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
-                    &.o-color-#{$name}o- {
-                        box-shadow: 0 0 0.5em rgba($color, 0.8);
+                    &.o-color-#{$name} {
+                        box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
                     }
                 }
             }
             &:checked + .o-switch-check {
-                box-shadow: 0 0 0.5em rgba($switch-active-background-color, 0.8);
+                box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
-                        box-shadow: 0 0 0.5em rgba($color, 0.8);
+                        box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
                     }
                 }
             }
         }
     }
     .o-switch-label {
-        padding-left: $control-padding-horizontal;
+        padding: $switch-label-padding;
     }
     &:hover {
         input[type=checkbox] + .o-switch-check {
-            background: rgba($grey-light, 0.9);
+            background: $switch-hover-background;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name}o- {
-                    background: rgba($color, 0.9);
+                    background: rgba($color, $switch-active-background-color-opacity);
                 }
             }
         }
         input[type=checkbox]:checked + .o-switch-check {
-            background: rgba($switch-active-background-color, 0.9);
+            background: rgba($switch-active-background-color, $switch-active-background-color-opacity);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.color-#{$name} {
-                    background: rgba($color, 0.9);
+                    background: rgba($color, $switch-active-background-color-opacity);
                 }
             }
         }
@@ -276,14 +272,14 @@ $switch-background: grey !default;
     &.o-switch-rounded {
         input[type=checkbox] {
             + .o-switch-check {
-                border-radius: 9999px;
+                border-radius: $switch-rounded-border-radius;
                 &:before {
-                    border-radius: 9999px;
+                    border-radius: $switch-rounded-border-radius;
                 }
             }
             &.o-switch-elastic:before {
                 transform: scaleX(1.5);
-                border-radius: 9999px;
+                border-radius: $switch-rounded-border-radius;
             }
         }
     }
@@ -291,21 +287,21 @@ $switch-background: grey !default;
         input[type=checkbox] {
             + .o-switch-check {
                 background: transparent;
-                border: .1rem solid $grey-light;
+                border: $switch-outlined-border-width $switch-outlined-border-style $switch-outlined-border-color;
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name}o- {
-                        border: .1rem solid rgba($color, 0.9);
+                        border-color: rgba($color, $switch-outlined-border-color-opacity);
                         &:before {
-                            background: $color
+                            background: $color;
                         }
                         &:hover {
-                            border-color: rgba($color, 0.9);
+                            border-color: rgba($color, $switch-outlined-border-color-opacity);
                         }
                     }
                 }
                 &:before {
-                    background: $grey-light;
+                    background: $switch-outlined-background;
                 }
             }
             &:checked + .o-switch-check {
@@ -328,15 +324,15 @@ $switch-background: grey !default;
         &:hover {
             input[type=checkbox] + .o-switch-check {
                 background: transparent;
-                border-color: rgba($grey-light, 0.9);
+                border-color: rgba($switch-hover-border-color, $switch-hover-border-color-opacity);
             }
             input[type=checkbox]:checked + .o-switch-check {
                 background: transparent;
-                border-color: rgba($switch-active-background-color, 0.9);
+                border-color: rgba($switch-active-background-color, $switch-hover-border-color-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.is-#{$name} {
-                        border-color: rgba($color, 0.9);
+                        border-color: rgba($color, $switch-hover-border-color-opacity);
                     }
                 }
             }
@@ -348,9 +344,7 @@ $switch-background: grey !default;
         }
     }
     &[disabled] {
-        opacity: 0.5;
-        cursor: not-allowed;
-        color: $grey;
+        opacity: $switch-disabled-opacity;
     }
 }
 

@@ -1,45 +1,51 @@
 <template>
-    <div
-        class="control"
-        :class="{ 'is-expanded': expanded, 'has-icons-left': icon }">
-        <span class="select" :class="spanClasses">
+    <div :class="rootClasses">
+        <select
+            :class="selectClasses"
+            v-model="computedValue"
+            ref="select"
+            :multiple="multiple"
+            :size="nativeSize"
+            v-bind="$attrs"
+            @blur="$emit('blur', $event) && checkHtml5Validity()"
+            @focus="$emit('focus', $event)">
 
-            <select
-                v-model="computedValue"
-                ref="select"
-                :multiple="multiple"
-                :size="nativeSize"
-                v-bind="$attrs"
-                @blur="$emit('blur', $event) && checkHtml5Validity()"
-                @focus="$emit('focus', $event)">
+            <template v-if="placeholder">
+                <option
+                    v-if="computedValue == null"
+                    :value="null"
+                    disabled
+                    hidden>
+                    {{ placeholder }}
+                </option>
+            </template>
 
-                <template v-if="placeholder">
-                    <option
-                        v-if="computedValue == null"
-                        :value="null"
-                        disabled
-                        hidden>
-                        {{ placeholder }}
-                    </option>
-                </template>
+            <slot/>
 
-                <slot/>
-
-            </select>
-        </span>
+        </select>
 
         <o-icon
             v-if="icon"
-            class="is-left"
+            class="o-icon-left"
             :icon="icon"
             :pack="iconPack"
             :size="size"/>
+
+         <o-icon
+            v-if="iconRight"
+            class="o-icon-right"
+            :icon="iconRight"
+            :pack="iconPack"
+            :size="size"
+            both />
     </div>
 </template>
 
 <script>
 import Icon from '../icon/Icon'
 import FormElementMixin from '../../utils/FormElementMixin'
+import config from '../../utils/config'
+import { getValueByPath, getCssClass } from '../../utils/helpers'
 
 export default {
     name: 'OSelect',
@@ -50,12 +56,56 @@ export default {
     inheritAttrs: false,
     props: {
         value: {
-            type: [String, Number, Boolean, Object, Array, Function],
+            type: [String, Number, Boolean, Object, Array],
             default: null
+        },
+        iconRight: {
+            type: String,
+            default: 'caret-down'
         },
         placeholder: String,
         multiple: Boolean,
-        nativeSize: [String, Number]
+        nativeSize: [String, Number],
+        rootClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.inputClass', '')
+                return getCssClass(clazz, override, 'o-control-select')
+            }
+        },
+        selectClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.selectClass', '')
+                return getCssClass(clazz, override, 'o-select')
+            }
+        },
+        roundedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.roundedClass', '')
+                return getCssClass(clazz, override, 'o-select-rounded')
+            }
+        },
+        multipleClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.multipleClass', '')
+                return getCssClass(clazz, override, 'o-select-multiple')
+            }
+        },
+        emptyClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.emptyClass', '')
+                return getCssClass(clazz, override, 'o-select-empty')
+            }
+        }
     },
     data() {
         return {
@@ -64,6 +114,25 @@ export default {
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.rootClass,
+                this.icon && 'o-control-select-icons-left',
+                this.iconRight && 'o-control-select-icons-right',
+                this.expanded && 'o-control-select-expanded'
+            ]
+        },
+        selectClasses() {
+            return [
+                this.selectClass,
+                this.size && 'o-size',
+                this.statusVariant && 'o-color-' + this.statusVariant, 
+                this.rounded && this.roundedClass, 
+                this.selected === null && this.emtpyClass, 
+                this.multiple && this.multipleClass, 
+                this.expanded && 'o-select-expanded'
+            ]
+        },
         computedValue: {
             get() {
                 return this.selected
@@ -74,17 +143,6 @@ export default {
                 !this.isValid && this.checkHtml5Validity()
             }
         },
-        spanClasses() {
-            return [
-                this.size && 'o-size',
-                this.statusVariant && 'o-color-' + this.statusVariant, {
-                'is-fullwidth': this.expanded,
-                'is-loading': this.loading,
-                'is-multiple': this.multiple,
-                'is-rounded': this.rounded,
-                'is-empty': this.selected === null
-            }]
-        }
     },
     watch: {
         /**
@@ -101,36 +159,70 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
-$select-arrow-color: $primary !default;
-
-.select {
-    display: inline-block;
-    max-width: 100%;
+.o-control-select {
+    display: inline-flex;
     position: relative;
-    vertical-align: top;
-    &:not(.is-multiple) {
-        height: 2.5em;
+    font-size: $base-font-size;
+    &.o-control-select-icons-right .o-icon.o-icon-right {
+        right: 0;
+        height: $select-height;
+        position: absolute;
+        top: 0;
+        width: $select-height;
+        z-index: $select-control-icon-zindex;
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
     }
-    &:not(.is-multiple):not(.is-loading)::after {
-        border-color: #3273dc;
-        right: 1.125em;
-        z-index: 4;
-        border: 3px solid transparent;
-        border-radius: 2px;
-        border-right: 0;
-        border-top: 0;
-        content: " ";
-        display: block;
-        height: .625em;
-        margin-top: -.4375em;
+    &.o-control-select-icons-left .o-icon.o-icon-left {
+        left: 0;
+        height: $select-height;
         pointer-events: none;
         position: absolute;
-        top: 50%;
-        transform: rotate(-45deg);
-        transform-origin: center;
-        width: .625em;
+        top: 0;
+        width: $select-height;
+        z-index: $select-control-icon-zindex;
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
+    }
+    &.o-control-select-icons-left .o-select {
+        padding-left: $select-height;
+    }
+    &.o-control-select-icons-right .o-select {
+        padding-right: $select-height;
+    }
+    &.o-control-select-expanded {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+}
+
+.o-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    cursor: pointer;
+    justify-content: flex-start;
+    align-items: center;
+    outline: 0;
+    font-size: $select-font-size;
+    max-width: $select-max-width;
+    background-color: $select-background-color;
+    border-color: $select-border-color;
+    border-radius: $select-border-radius;
+    color: $select-color;
+    margin: $select-margin;
+    box-shadow: $select-box-shadow;
+    height: $select-height;
+    line-height: $select-line-height;
+    padding: $select-padding;
+    &:not(.o-select-multiple) {
+        height: $select-height;
     }
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
@@ -140,61 +232,27 @@ $select-arrow-color: $primary !default;
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.o-color-#{$name} {
-            select {
-                border-color: $color;
-            }
+            border-color: $color;
         }
+    } 
+    option {
+        color: $select-option-color;
+        padding: $select-option-padding;
     }
-    select {
-        cursor: pointer;
-        display: block;
-        font-size: 1em;
-        max-width: 100%;
-        outline: 0;
-        background-color: #fff;
-        border-color: #dbdbdb;
-        border-radius: 4px;
-        color: #363636;
-        padding-right: 2em;
-        margin: 0;
-        -moz-appearance: none;
-        -webkit-appearance: none;
-        align-items: center;
-        box-shadow: none;
-        // height: 2em;
-        justify-content: flex-start;
-        line-height: 1.5;
-        padding-bottom: calc(.5em - 1px);
-        padding-left: calc(.75em - 1px);
-        padding-top: calc(.5em - 1px);
-        position: relative;
-        option {
-            // color: $grey-dark;
-           //  padding: $control-padding-vertical $control-padding-horizontal;
-        }
-        option:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-        optgroup {
-            // color: $grey-light;
-            font-weight: 500;
-            font-style: normal;
-            padding: 0.25em 0;
-        }
+    option:disabled {
+        opacity: $select-option-disabled-opacity;
     }
-    &.is-empty select {
-        color: rgba($grey, 0.7);
+    optgroup {
+        color: $select-optgroup-color;
+        font-weight: $select-optgroup-font-weight;
+        font-style: $select-optgroup-font-style;
+        padding: $select-optgroup-padding;
     }
-    &:not(.is-loading) {
-        &::after {
-            border-color: $select-arrow-color !important;
-        }
+    &.o-select-empty select {
+        color: $select-empty-color;
     }
-    // fix Bulma 0.8.2
-    &.is-loading::after {
-        top: calc(50% - (1em / 2));
-        right: calc((2.5em / 2) - .5em);
+    &.o-select-expanded {
+        width: 100%;
     }
 }
 

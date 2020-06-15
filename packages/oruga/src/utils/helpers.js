@@ -12,7 +12,7 @@ export const sign = Math.sign || signPoly
  */
 export function getValueByPath(obj, path, defaultValue = null) {
     const value = path.split('.').reduce((o, i) => o ? o[i] : defaultValue, obj)
-    return value
+    return value ? value : defaultValue
 }
 
 /**

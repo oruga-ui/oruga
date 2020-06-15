@@ -137,11 +137,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-button {
     -moz-appearance: none;
     -webkit-appearance: none;
+    @include unselectable;
     display: inline-flex;
     position: relative;
     cursor: pointer;
@@ -150,7 +151,6 @@ export default {
     align-items: center;
     justify-content: center;
     vertical-align: top;
-    user-select: none;
     text-decoration: none;
     background-color: $button-background-color;
     color: $button-color;
@@ -218,7 +218,7 @@ export default {
         width: 100%;
     }
     &.o-button-rounded {
-        border-radius: 9999px;
+        border-radius: $button-rounded-border-radius;
     }
     > .o-icon:first-child:not(:last-child) {
         margin-left: $button-margin-border-to-icon;

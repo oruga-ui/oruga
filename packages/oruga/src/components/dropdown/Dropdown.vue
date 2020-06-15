@@ -429,7 +429,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-dropdown {
     display: inline-flex;
@@ -470,7 +470,7 @@ export default {
             line-height: $dropdown-item-line-height;
             padding: $dropdown-item-padding;
             &.o-dropdown-item-disabled {
-                cursor: not-allowed;
+                pointer-events: none;
             }
             &.o-dropdown-item-active {
                 background-color: $dropdown-item-background-active;
@@ -525,7 +525,6 @@ export default {
     }
     &.o-dropdown-disabled {
         opacity: $dropdown-disabled-opacity;
-        cursor: not-allowed;
         .o-dropdown-trigger {
             pointer-events: none;
         }

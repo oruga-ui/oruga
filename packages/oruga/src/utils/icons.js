@@ -29,10 +29,12 @@ const faIcons = () => {
             'chevron-right': 'angle-right',
             'chevron-left': 'angle-left',
             'chevron-down': 'angle-down',
+            'chevron-up': 'angle-up',
             'eye-off': 'eye-slash',
             'menu-down': 'caret-down',
             'menu-up': 'caret-up',
-            'close-circle': 'times-circle'
+            'close-circle': 'times-circle',
+            'spin': 'circle-notch'
         }
     }
 }

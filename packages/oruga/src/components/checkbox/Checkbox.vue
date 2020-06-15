@@ -92,18 +92,17 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
 
 .o-checkbox {
     outline: none;
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    &:not(.o-checkbox-button) {
-        margin-right: 0.5em;
-        & + .o-checkbox:last-child {
-            margin-right: 0;
-        }
+    @include unselectable;
+    margin-right: $checkbox-margin-sibiling;
+    & + .o-checkbox:last-child {
+        margin-right: 0;
     }
     input[type=checkbox] {
         position: absolute;
@@ -146,27 +145,27 @@ export default {
         }
         &:focus {
             + .o-checkbox-check {
-                box-shadow: 0 0 0.5em rgba($grey, 0.8);
+                box-shadow: $checkbox-focus-sibiling-box-shadow;
             }
             &:checked + .o-checkbox-check {
-                box-shadow: 0 0 0.5em rgba($checkbox-active-background-color, 0.8);
+                box-shadow: $checkbox-checked-box-shadow-length rgba($checkbox-active-background-color, $checkbox-checked-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        box-shadow: 0 0 0.5em rgba($color, 0.8);
+                    &.o-color#{$name} {
+                        box-shadow: $checkbox-checked-box-shadow-length rgba($color, $checkbox-checked-box-shadow-opacity);
                     }
                 }
             }
         }
     }
     .o-checkbox-label {
-        padding-left: $control-padding-horizontal;
+        padding: $checkbox-label-padding;
     }
     &.o-checkbox-button {
         display: flex;
     }
     &[disabled] {
-        opacity: 0.5;
+        opacity: $checkbox-disabled-opacity;
     }
     &:hover {
         input[type=checkbox]:not(:disabled) + .o-checkbox-check {

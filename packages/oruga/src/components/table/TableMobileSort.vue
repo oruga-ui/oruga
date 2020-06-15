@@ -1,5 +1,5 @@
 <template>
-    <div class="field o-table-mobile-sort">
+    <div class="o-table-mobile-sort">
         <div class="field has-addons">
             <o-select
                 v-model="sortMultipleSelect"
@@ -108,7 +108,7 @@ export default {
         },
         sortIconSize: {
             type: String,
-            default: 'is-small'
+            default: 'small'
         },
         sortMultiple: {
             type: Boolean,

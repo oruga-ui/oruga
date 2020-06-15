@@ -29,6 +29,7 @@ export default {
         customSize: String,
         customClass: String,
         clickable: Boolean,
+        spin: Boolean,
         rootClass: {
             type: String,
             default: () => {
@@ -45,6 +46,14 @@ export default {
                 return getCssClass(clazz, override, 'o-icon-clickable')
             }
         },
+        spinClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'icon.override', false)
+                const clazz = getValueByPath(config, 'icon.spinClass', '')
+                return getCssClass(clazz, override, 'o-icon-spin')
+            }
+        },
         both: Boolean // This is used internally to show both MDI and FA icon
     },
     computed: {
@@ -52,6 +61,7 @@ export default {
             return [
                 this.rootClass,
                 this.clickable && this.clickableClass,
+                this.spin && this.spinClass,
                 this.size && ('o-size-' + this.size),
                 this.newVariant && ('o-color-' + this.newVariant)
             ]
@@ -75,7 +85,7 @@ export default {
             return `${this.iconPrefix}${this.getEquivalentIconOf(this.icon)}`
         },
         newPack() {
-            return this.pack || getValueByPath(config, 'iconPack')
+            return this.pack || getValueByPath(config, 'iconPack', 'mdi')
         },
         newVariant() {
             if (!this.variant) return
@@ -125,7 +135,18 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/variables.scss";
+@import "../../scss/oruga.scss";
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
 
 .o-icon {
     align-items: center;
@@ -145,6 +166,9 @@ export default {
     &.o-icon-clickable {
         pointer-events: auto;
         cursor: pointer;
+    }
+    &.o-icon-spin {
+        animation: spin $icon-spin-duration infinite linear;
     }
 }
 </style>
