@@ -25,7 +25,7 @@ title: Table
                 <option value="20">20 per page</option>
             </o-select>
             <div class="control">
-                <button class="button" @click="currentPage = 2" :disabled="!isPaginated">Set page to 2</button>
+                <o-button @click="currentPage = 2" :disabled="!isPaginated">Set page to 2</o-button>
             </div>
             <div class="control is-flex">
                 <o-switch v-model="isPaginated">Paginated</o-switch>
@@ -44,10 +44,10 @@ title: Table
                 <option value="chevron-up">Chevron sort icon </option>
             </o-select>
             <o-select v-model="sortIconSize">
-                <option value="is-small">Small sort icon</option>
+                <option value="small">Small sort icon</option>
                 <option value="">Regular sort icon</option>
-                <option value="is-medium">Medium sort icon</option>
-                <option value="is-large">Large sort icon</option>
+                <option value="medium">Medium sort icon</option>
+                <option value="large">Large sort icon</option>
             </o-select>
         </o-field>
         <o-table

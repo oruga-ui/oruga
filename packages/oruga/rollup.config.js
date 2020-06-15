@@ -30,6 +30,10 @@ const entries = {
     }, {})
 }
 
+const babelOptions = {
+    babelHelpers: 'bundled'
+}
+
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
@@ -59,7 +63,7 @@ export default () => {
                     vue({
                         styleToImports: true
                     }),
-                    babel()
+                    babel(babelOptions)
                 ]
             }
         ]
@@ -80,7 +84,7 @@ export default () => {
                 vue({
                     styleToImports: true
                 }),
-                babel(),
+                babel(babelOptions),
                 cjs(),
                 clear({
                     targets: ['dist/esm'],
@@ -103,7 +107,7 @@ export default () => {
                 vue({
                     styleToImports: true
                 }),
-                babel(),
+                babel(babelOptions),
                 cjs(),
                 clear({
                     targets: ['dist/cjs'],
@@ -130,7 +134,7 @@ export default () => {
                     extensions: ['.vue', '.js']
                 }),
                 vue({}),
-                babel(),
+                babel(babelOptions),
                 cjs()
             ]
         },
@@ -147,7 +151,7 @@ export default () => {
                     extensions: ['.vue', '.js']
                 }),
                 vue({}),
-                babel(),
+                babel(babelOptions),
                 cjs()
             ]
         },
