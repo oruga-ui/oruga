@@ -76,7 +76,7 @@ export default {
                 const clazz = getValueByPath(config, 'loading.iconClass', '')
                 return getCssClass(clazz, override, 'o-loading-icon')
             }
-        },
+        }
     },
     data() {
         return {

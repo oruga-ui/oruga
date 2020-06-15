@@ -13,6 +13,7 @@ $white: #ffffff !default;
 $black: #000000 !default;
 $grey: #7a7a7a !default;
 $grey-light: #7a7a7a !default;
+$grey-lighter: #dbdbdb !default;
 $primary: #94C11F !default;
 $primary-invert: $white !default;
 $danger: #ff3860 !default;
@@ -176,24 +177,24 @@ $switch-width-number: 2.75 !default;
 $switch-width: $switch-width-number * 1em !default;
 $switch-padding: 0.2em !default;
 $switch-margin-sibling: 0.5em !default;
-$switch-background: $grey !default;
+$switch-background: #b5b5b5 !default;
 $switch-border-radius: 9999px !default;
 $switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
 $switch-active-background-color: $primary !default;
 $switch-active-box-shadow-length: 0 0 0.5em !default;
-$switch-active-box-shadow-color: $grey !default;
+$switch-active-box-shadow-color: #b5b5b5 !default;
 $switch-active-box-shadow-opacity: 0.6 !default;
 $switch-active-background-color-opacity: 0.9 !default;
 $switch-checked-box-shadow-length: 0 0 0.5em !default;
 $switch-checked-box-shadow-color: $switch-active-background-color !default;
 $switch-checked-box-shadow-opacity: 0.8 !default;
 $switch-label-padding: $control-padding-horizontal 0 0 0 !default;
-$switch-hover-background: rgba($grey-light, 0.9) !default;
+$switch-hover-background: rgba(#b5b5b5, 0.9) !default;
 $switch-disabled-opacity: 0.5 !default;
 $switch-rounded-border-radius: 9999px !default;
-$switch-hover-border-color: $grey-light !default;
+$switch-hover-border-color: #b5b5b5 !default;
 $switch-hover-border-color-opacity: 0.9 !default;
-$switch-outlined-background: $grey-light !default;
+$switch-outlined-background: #b5b5b5 !default;
 $switch-outlined-border-color-opacity: 0.9 !default;
 $switch-outlined-border-width: .1rem !default;
 $switch-outlined-border-style: solid !default;
@@ -301,6 +302,23 @@ $pagination-margin: -.25rem !default;
 $pagination-rounded-border-radius: 9999px !default;
 $pagination-link-margin: .25rem !default;
 $pagination-ellipsis-color: #b5b5b5 !default;
+
+// Skeleton
+
+$skeleton-background: linear-gradient(90deg, $grey-lighter 25%, rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%);
+$skeleton-border-radius: 4px !default;
+$skeleton-duration: 1.5s !default;
+$skeleton-margin-top: .5rem !default;
+
+// Sidebar
+
+$sidebar-content-background-color: $grey-lighter !default;
+$sidebar-background: $modal-background-color !default;
+$sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
+$sidebar-width: 260px !default;
+$sidebar-mobile-width: 80px !default;
+$sidebar-mobile-breakpoint: 1024px !default;
+$sidebar-zindex: 40 !default;
 
 // Field
 

@@ -137,7 +137,7 @@ export default {
 <style lang="scss">
 @import "../../scss/oruga.scss";
 
-@keyframes spin {
+@keyframes icon-spin {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
