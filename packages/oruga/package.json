@@ -67,6 +67,7 @@
     "rollup": "2.12.0",
     "rollup-copy-plugin": "0.1.0",
     "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-scss": "^2.5.0",
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-vue": "5.1.9",
     "typescript": "3.8.3",

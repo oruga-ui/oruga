@@ -4,6 +4,7 @@ import cjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
 import clear from 'rollup-plugin-clear'
+import scss from 'rollup-plugin-scss'
 
 import fs from 'fs'
 import path from 'path'
@@ -56,6 +57,10 @@ export default () => {
                     }
                 },
                 plugins: [
+                    scss({
+                        output: 'dist/bundle.css',
+                        sass: require('sass')
+                    }),
                     node({
                         extensions: ['.vue', '.js']
                     }),
@@ -101,6 +106,11 @@ export default () => {
                 exports: 'named'
             },
             plugins: [
+                scss({
+                    output: 'dist/bundle.css',
+                    sass: require('sass'),
+                    watch: 'src/components',
+                }),
                 node({
                     extensions: ['.vue', '.js']
                 }),

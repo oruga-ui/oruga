@@ -2,3 +2,4 @@
 node_modules
 packages/docs/.vuepress/dist/
 packages/storybook/.dist/
+packages/storybook/*

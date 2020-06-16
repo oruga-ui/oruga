@@ -188,7 +188,7 @@ $switch-active-background-color-opacity: 0.9 !default;
 $switch-checked-box-shadow-length: 0 0 0.5em !default;
 $switch-checked-box-shadow-color: $switch-active-background-color !default;
 $switch-checked-box-shadow-opacity: 0.8 !default;
-$switch-label-padding: $control-padding-horizontal 0 0 0 !default;
+$switch-label-padding: 0 0 0 .5em !default;
 $switch-hover-background: rgba(#b5b5b5, 0.9) !default;
 $switch-disabled-opacity: 0.5 !default;
 $switch-rounded-border-radius: 9999px !default;
@@ -329,3 +329,27 @@ $field-label-font-weight: 600 !default;
 $field-message-font-size: .75rem !default;
 $field-message-margin-top: .25rem !default;
 
+$css-vars: true !default;
+$variable-prefix: '--oruga-' !default;
+
+@function variable($variable) {
+    @if $css-vars == true {
+        @return var(#{$variable-prefix}#{$variable});
+    } @else {
+        @return map-get($variables, $variable);
+    }
+}
+
+$variables: (
+    "button-background-color": $button-background-color,
+    "button-color": $button-color,
+    "button-padding": $button-padding
+);
+
+@if $css-vars == true {
+    :root {
+        @each $name, $variable in $variables {
+            #{$variable-prefix}#{$name}: $variable;
+        }
+    }
+}

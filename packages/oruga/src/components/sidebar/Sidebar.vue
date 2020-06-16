@@ -79,7 +79,103 @@ export default {
                 const clazz = getValueByPath(config, 'sidebar.contentClass', '')
                 return getCssClass(clazz, override, 'o-sidebar-content')
             }
-        }
+        },
+        fixedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.fixedClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-fixed')
+            }
+        },
+        staticClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.staticClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-static')
+            }
+        },
+        absoluteClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.absoluteClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-absolute')
+            }
+        },
+        fullheightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.fullheightClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-fullheight')
+            }
+        },
+        fullwidthClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.fullwidthClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-fullwidth')
+            }
+        },
+        rightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.rightClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-right')
+            }
+        },
+        reduceClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.reduceClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-mini')
+            }
+        },
+        expandOnHoverClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.expandOnHoverClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-expand-hover')
+            }
+        },
+        expandOnHoverFixedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.expandOnHoverFixedClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-expand-hover-fixed')
+            }
+        },
+        mobileReduceClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.mobileReduceClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-mini-mobile')
+            }
+        },
+        mobileHideClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.mobileHideClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-hidden-mobile')
+            }
+        },
+        mobileFullwidthClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'sidebar.override', false)
+                const clazz = getValueByPath(config, 'sidebar.mobileFullwidthClass', '')
+                return getCssClass(clazz, override, 'o-sidebar-mini-fullwidth')
+            }
+        },
     },
     data() {
         return {
@@ -93,20 +189,18 @@ export default {
             return [
                 this.contentClass,
                 this.variant && ('o-color-' + this.variant),
-                {
-                    'o-sidebar-fixed': this.isFixed,
-                    'o-sidebar-static': this.isStatic,
-                    'o-sidebar-absolute': this.isAbsolute,
-                    'o-sidebar-fullheight': this.fullheight,
-                    'o-sidebar-fullwidth': this.fullwidth,
-                    'o-sidebar-right': this.right,
-                    'o-sidebar-mini': this.reduce,
-                    'o-sidebar-mini-expand': this.expandOnHover,
-                    'o-sidebar-mini-expand-fixed': this.expandOnHover && this.expandOnHoverFixed,
-                    'o-sidebar-mini-mobile': this.mobile === 'reduce',
-                    'o-sidebar-hidden-mobile': this.mobile === 'hide',
-                    'o-sidebar-fullwidth-mobile': this.mobile === 'fullwidth'
-                }
+                this.isFixed && this.fixedClass,
+                this.isStatic && this.staticClass,
+                this.isAbsolute && this.absoluteClass,
+                this.fullheight && this.fullheightClass,
+                this.fullwidth && this.fullwidthClass,
+                this.right && this.rightClass,
+                this.reduce && this.reduceClass,
+                this.expandOnHover && this.expandOnHoverClass,
+                (this.expandOnHover && this.expandOnHoverFixed) && this.expandOnHoverFixedClass,
+                this.mobile === 'reduce' && this.mobileReduceClass,
+                this.mobile === 'hide' && this.mobileHideClass,
+                this.mobile === 'fullwidth' && this.mobileFullwidthClass
             ]
         },
         cancelOptions() {
@@ -327,8 +421,8 @@ export default {
         left: 0;
         right: 0;
         top: 0;
-        background: $sidebar-background;
         position: fixed;
+        background: $sidebar-background;
         z-index: $sidebar-zindex;
     }
 }

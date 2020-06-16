@@ -152,9 +152,9 @@ export default {
     justify-content: center;
     vertical-align: top;
     text-decoration: none;
-    background-color: $button-background-color;
-    color: $button-color;
-    padding: $button-padding;
+    background-color: variable('button-background-color');
+    color: variable('button-color');
+    padding: variable('button-padding');
     border: $button-border;
     border-radius: $button-border-radius;
     box-shadow: $button-box-shadow;

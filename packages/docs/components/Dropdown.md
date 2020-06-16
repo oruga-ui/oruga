@@ -66,7 +66,7 @@ export default {
             aria-role="list">
             <o-button type="button" slot="trigger">
                 <span>Selected ({{ selectedOptions.length }})</span>
-                <o-icon icon="menu-down"></o-icon>
+                <o-icon icon="caret-down"></o-icon>
             </o-button>
             <o-dropdown-item value="option1" aria-role="listitem">
                 <span>Option 1</span>

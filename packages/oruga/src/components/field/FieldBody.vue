@@ -21,7 +21,7 @@ export default {
                 message = this.parent.newMessage
                 first = false
             }
-            return createElement(this.parent.rootClass, { attrs: { type: this.parent.newType, message } }, [element])
+            return createElement(this.parent.rootClass, { attrs: { type: this.parent.newVariant, message } }, [element])
         }))
     }
 }

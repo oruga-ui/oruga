@@ -1,6 +1,6 @@
 <template>
     <div class="o-table-mobile-sort">
-        <div class="field has-addons">
+        <o-field>
             <o-select
                 v-model="sortMultipleSelect"
                 expanded
@@ -41,45 +41,43 @@
                     {{ column.label }}
                 </option>
             </o-select>
-            <div class="control">
-                <template
-                    v-if="sortMultiple && sortMultipleData.length > 0" >
-                    <button
-                        variant="primary"
-                        @click="sort">
-                        <o-icon
-                            :class="{ 'o-sort-icon-desc': columnIsDesc(sortMultipleSelect) }"
-                            :icon="sortIcon"
-                            :pack="iconPack"
-                            :size="sortIconSize"
-                            both
-                        />
-                    </button>
-                    <o-button
-                        variant="primary"
-                        @click="removePriority">
-                        <o-icon
-                            icon="delete"
-                            :size="sortIconSize"
-                            both
-                        />
-                    </o-button>
-                </template>
-                <o-button
-                    v-else-if="!sortMultiple"
+            <template
+                v-if="sortMultiple && sortMultipleData.length > 0" >
+                <button
                     variant="primary"
                     @click="sort">
                     <o-icon
-                        v-show="currentSortColumn === mobileSort"
-                        :class="{ 'o-sort-icon-desc': !isAsc }"
+                        :class="{ 'o-icon-sort-desc': columnIsDesc(sortMultipleSelect) }"
                         :icon="sortIcon"
                         :pack="iconPack"
                         :size="sortIconSize"
                         both
                     />
+                </button>
+                <o-button
+                    variant="primary"
+                    @click="removePriority">
+                    <o-icon
+                        icon="delete"
+                        :size="sortIconSize"
+                        both
+                    />
                 </o-button>
-            </div>
-        </div>
+            </template>
+            <o-button
+                v-else-if="!sortMultiple"
+                variant="primary"
+                @click="sort">
+                <o-icon
+                    v-show="currentSortColumn === mobileSort"
+                    :class="{ 'o-icon-sort-desc': !isAsc }"
+                    :icon="sortIcon"
+                    :pack="iconPack"
+                    :size="sortIconSize"
+                    both
+                />
+            </o-button>
+        </o-field>
     </div>
 </template>
 
@@ -87,13 +85,15 @@
 import Button from '../button/Button'
 import Select from '../select/Select'
 import Icon from '../icon/Icon'
+import Field from '../field/Field'
 
 export default {
     name: 'OTableMobileSort',
     components: {
         [Button.name]: Button,
         [Select.name]: Select,
-        [Icon.name]: Icon
+        [Icon.name]: Icon,
+        [Field.name]: Field
     },
     props: {
         currentSortColumn: Object,

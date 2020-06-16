@@ -126,8 +126,8 @@ export default {
                 this.rootClass,
                 this.horizontal && this.horizontalClass,
                 {
-                    'is-expanded': this.expanded,
-                    'is-grouped-multiline': this.groupMultiline
+                    'o-field-expanded': this.expanded,
+                    'o-field-grouped-multiline': this.groupMultiline
                 }
             ]
         },
@@ -167,17 +167,17 @@ export default {
         * Is a method to be called when component re-render.
         */
         fieldType() {
-            if (this.grouped) return 'is-grouped'
+            if (this.grouped) return 'o-field-grouped'
             let renderedNode = 0
             if (this.$slots.default) {
                 renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             if (
-                renderedNode > 1 &&
+                // renderedNode > 1 &&
                 this.addons &&
                 !this.horizontal
             ) {
-                return 'has-addons'
+                return 'o-field-addons'
             }
         }
     }
@@ -211,6 +211,56 @@ export default {
             $color: nth($pair, 1);
             &.o-color-#{$name} {
                 color: $color;
+            }
+        }
+    }
+    &.o-field-addons {
+        display: flex;
+        justify-content: flex-start;
+        *:first-child:not(:only-child) button,
+        button:first-child:not(:only-child),
+        *:first-child:not(:only-child) input,
+        input:first-child:not(:only-child),
+        *:first-child:not(:only-child) select,
+        select:first-child:not(:only-child) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+        *:last-child:not(:only-child) button,
+        button:last-child:not(:only-child),
+        *:last-child:not(:only-child) input,
+        input:last-child:not(:only-child), 
+        *:last-child:not(:only-child) select,
+        select:last-child:not(:only-child) {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+        > *[class$="-expanded"] {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+    }
+    &.o-field-grouped {
+        display: flex;
+        justify-content: flex-start;
+        > * {
+            flex-shrink: 0;
+        }
+        > *:not(:last-child) {
+            margin-bottom: 0;
+            margin-right: .75rem;
+        }
+        > *[class$="-expanded"] {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        &.o-field-grouped-multiline {
+            flex-wrap: wrap;
+            &:last-child {
+                margin-bottom: -.75rem;
+            }
+            > *:not(:last-child) {
+                margin-bottom: .75rem;
             }
         }
     }
