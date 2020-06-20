@@ -45,7 +45,7 @@
                 <thead v-if="newColumns.length && showHeader">
                     <tr>
                         <th v-if="showDetailRowIcon" width="40px"/>
-                        <th class="o-table-checkbox-cell" v-if="checkable && checkboxPosition === 'left'">
+                        <th :class="thCheckboxClass" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
                                     :value="isAllChecked"
@@ -56,21 +56,20 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
-                            :class="[column.headerClass, {
-                                'o-table-current-sort': !sortMultiple && currentSortColumn === column,
-                                'o-table-sortable': column.sortable,
-                                'o-table-sticky': column.sticky,
-                                'o-table-th-unselectable': column.isHeaderUnSelectable
-                            }]"
+                            :class="[column.headerClass,
+                                (!sortMultiple && currentSortColumn === column) && thCurrentSortClass,
+                                column.sortable && thSortableClass,
+                                column.sticky && thStickyClass,
+                                column.isHeaderUnSelectable && thUnselectableClass
+                            ]"
                             :style="column.style"
                             @click.stop="sort(column, null, $event)">
-                            <div
-                                :class="[ thWrapClass, {
-                                    'o-table-th-right': column.numeric,
-                                    'o-table-th-center': column.centered
+                            <div :class="[ thWrapClass, {
+                                [thRightClass]: column.numeric,
+                                [thCenteredClass]: column.centered
                             }]">
                                 <template v-if="column.$scopedSlots && column.$scopedSlots.header">
-                                    <b-slot-component
+                                    <o-slot-component
                                         :component="column"
                                         scoped
                                         name="header"
@@ -79,27 +78,25 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    <span class="o-table-th-content">
+                                    <span :class="thContentClass">
                                         {{ column.label }}
                                         <template
                                             v-if="sortMultiple &&
                                                 sortMultipleDataComputed &&
                                                 sortMultipleDataComputed.length > 0 &&
-                                                sortMultipleDataComputed.filter(i =>
-                                            i.field === column.field).length > 0">
+                                                sortMultipleDataComputed.filter(i => i.field === column.field).length > 0">
                                             <o-icon
                                                 :icon="sortIcon"
                                                 :pack="iconPack"
                                                 both
                                                 :size="sortIconSize"
-                                                :class="{
-                                                    'o-icon-sort-desc': sortMultipleDataComputed.filter(i =>
-                                                i.field === column.field)[0].order === 'desc'}"
+                                                :class="{[iconSortDescClass]: sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'}"
                                             />
                                             {{ findIndexOfSortData(column) }}
                                             <o-button
-                                                class="delete o-size-small multi-sort-cancel-icon"
-                                                native-type="this.detailed"
+                                                :class="multiColumnSortDeleteIconClass"
+                                                native-type="button"
+                                                size="small"
                                                 @click.stop="removeSortingPriority(column)"/>
                                         </template>
 
@@ -109,17 +106,16 @@
                                             :pack="iconPack"
                                             both
                                             :size="sortIconSize"
-                                            class="o-icon-sort"
-                                            :class="{
-                                                'o-icon-sort-desc': !isAsc,
-                                                'o-icon-sort-invisible': currentSortColumn !== column
-                                            }"
+                                            :class="[ iconSortClass, {
+                                                [iconSortDescClass]: !isAsc,
+                                                [iconSortInvisibleClass]: currentSortColumn !== column
+                                            }]"
                                         />
                                     </span>
                                 </template>
                             </div>
                         </th>
-                        <th class="checkbox-cell" v-if="checkable && checkboxPosition === 'right'">
+                        <th :class="thCheckboxClass" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
                                     :value="isAllChecked"
@@ -128,23 +124,21 @@
                             </template>
                         </th>
                     </tr>
-                    <tr v-if="hasCustomSubheadings" class="o-table-subheading">
-                        <th v-if="showDetailRowIcon" width="40px"/>
+                    <tr v-if="hasCustomSubheadings" :class="subheadingClass">
+                        <th v-if="showDetailRowIcon" :class="thDetailedClass" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
                             :style="column.style">
-                            <div
-                                class="o-table-th-wrap"
-                                :class="{
-                                    'o-table-th-numeric': column.numeric,
-                                    'o-table-th-centered': column.centered
-                            }">
+                            <div :class="[ thWrapClass, {
+                                [thRightClass]: column.numeric,
+                                [thCenteredClass]: column.centered
+                            }]">
                                 <template
                                     v-if="column.$scopedSlots && column.$scopedSlots.subheading"
                                 >
-                                    <b-slot-component
+                                    <o-slot-component
                                         :component="column"
                                         scoped
                                         name="subheading"
@@ -158,18 +152,18 @@
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                     <tr v-if="hasSearchablenewColumns">
-                        <th v-if="showDetailRowIcon" width="40px"/>
+                        <th v-if="showDetailRowIcon" :class="thDetailedClass" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
                             :style="column.style">
-                            <div class="o-table-th-wrap">
+                            <div :class="thWrapClass">
                                 <template v-if="column.searchable">
                                     <template
                                         v-if="column.$scopedSlots
                                         && column.$scopedSlots.searchable">
-                                        <b-slot-component
+                                        <o-slot-component
                                             :component="column"
                                             :scoped="true"
                                             name="searchable"
@@ -193,7 +187,7 @@
                         <tr
                             :key="customRowKey ? row[customRowKey] : index"
                             :class="[rowClass(row, index), {
-                                'o-table-row-selected': row === selected
+                                [tdSelectedClass]: row === selected
                             }]"
                             @click="selectRow(row)"
                             @dblclick="$emit('dblclick', row)"
@@ -209,7 +203,7 @@
 
                             <td
                                 v-if="showDetailRowIcon"
-                                class="o-table-chevron-cell"
+                                :class="detailedChevronClass"
                             >
                                 <a
                                     v-if="hasDetailedVisible(row)"
@@ -219,12 +213,12 @@
                                         icon="chevron-right"
                                         :pack="iconPack"
                                         both
-                                        :class="{'o-table-detail-icon-expanded': isVisibleDetailRow(row)}"/>
+                                        :class="{[detailedIconExpandedClass]: isVisibleDetailRow(row)}"/>
                                 </a>
                             </td>
 
                             <td
-                                class="o-table-checkbox-cell"
+                                :class="tdCheckboxCell"
                                 v-if="checkable && checkboxPosition === 'left'">
                                 <o-checkbox
                                     :disabled="!isRowCheckable(row)"
@@ -236,7 +230,7 @@
                             <template v-for="(column, index) in visibleColumns">
 
                                 <template v-if="column.$scopedSlots && column.$scopedSlots.default">
-                                    <b-slot-component
+                                    <o-slot-component
                                         :key="(column.customKey || column.label) + index"
                                         :component="column"
                                         scoped
@@ -251,7 +245,7 @@
                             </template>
 
                             <td
-                                class="o-table-checkbox-cell"
+                                :class="tdCheckboxCell"
                                 v-if="checkable && checkboxPosition === 'right'">
                                 <o-checkbox
                                     :disabled="!isRowCheckable(row)"
@@ -264,14 +258,12 @@
                         <tr
                             v-if="isActiveDetailRow(row)"
                             :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                            class="o-table-detail">
+                            :class="detailedClass">
                             <td :colspan="columnCount">
-                                <div class="o-table-detail-container">
-                                    <slot
-                                        name="detail"
-                                        :row="row"
-                                        :index="index"/>
-                                </div>
+                                <slot
+                                    name="detail"
+                                    :row="row"
+                                    :index="index"/>
                             </td>
                         </tr>
                         <slot
@@ -284,7 +276,7 @@
 
                     <tr
                         v-if="!visibleData.length"
-                        class="o-table-empty">
+                        :class="emptyClass">
                         <td :colspan="columnCount">
                             <slot name="empty"/>
                         </td>
@@ -293,7 +285,7 @@
                 </tbody>
 
                 <tfoot v-if="$slots.footer !== undefined">
-                    <tr class="o-table-footer">
+                    <tr :class="footerClass">
                         <slot name="footer" v-if="hasCustomFooterSlot()"/>
                         <th :colspan="columnCount" v-else>
                             <slot name="footer"/>
@@ -527,6 +519,46 @@ export default {
                 return getCssClass(clazz, override, 'o-table-wrapper')
             }
         },
+        footerClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.footerClass', '')
+                return getCssClass(clazz, override, 'o-table-footer')
+            }
+        },
+        emptyClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.emptyClass', '')
+                return getCssClass(clazz, override, 'o-table-empty')
+            }
+        },
+        detailedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.detailedClass', '')
+                return getCssClass(clazz, override, 'o-table-detail')
+            }
+        },
+        detailedChevronClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.detailedChevronClass', '')
+                return getCssClass(clazz, override, 'o-table-chevron-cell')
+            }
+        },
+        detailedIconExpandedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.detailedIconExpandedClass', '')
+                return getCssClass(clazz, override, 'o-table-detail-icon-expanded')
+            }
+        },
         borderedClass: {
             type: String,
             default: () => {
@@ -567,12 +599,124 @@ export default {
                 return getCssClass(clazz, override, 'o-table-th-wrap')
             }
         },
-        mobileCardsClass: {
+        thContentClass: {
             type: String,
             default: () => {
                 const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.mobileCardsClass', '')
-                return getCssClass(clazz, override, 'o-table-mobile-cards')
+                const clazz = getValueByPath(config, 'table.thContentClass', '')
+                return getCssClass(clazz, override, 'o-table-th-content')
+            }
+        },
+        thRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thRightClass', '')
+                return getCssClass(clazz, override, 'o-table-th-right')
+            }
+        },
+        thCenteredClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thCenteredClass', '')
+                return getCssClass(clazz, override, 'o-table-th-centered')
+            }
+        },
+        thStickyClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thStickyClass', '')
+                return getCssClass(clazz, override, 'o-table-th-sticky')
+            }
+        },
+        thCheckboxClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thCheckboxClass', '')
+                return getCssClass(clazz, override, 'o-table-th-checkbox')
+            }
+        },
+        thCurrentSortClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thCurrentSortClass', '')
+                return getCssClass(clazz, override, 'o-table-th-current-sort')
+            }
+        },
+        thSortableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thSortableClass', '')
+                return getCssClass(clazz, override, 'o-table-th-sortable')
+            }
+        },
+        thUnselectableClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thUnselectableClass', '')
+                return getCssClass(clazz, override, 'o-table-th-unselectable')
+            }
+        },
+        thDetailedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.thDetailedClass', '')
+                return getCssClass(clazz, override, 'o-table-th-detail')
+            }
+        },
+        tdRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.tdRightClass', '')
+                return getCssClass(clazz, override, 'o-table-td-right')
+            }
+        },
+        tdCenteredClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.tdCenteredClass', '')
+                return getCssClass(clazz, override, 'o-table-td-centered')
+            }
+        },
+        tdStickyClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.tdStickyClass', '')
+                return getCssClass(clazz, override, 'o-table-td-sticky')
+            }
+        },
+        tdCheckboxCell: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.tdCheckboxCell', '')
+                return getCssClass(clazz, override, 'o-table-checkbox-cell')
+            }
+        },
+        tdSelectedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.tdSelectedClass', '')
+                return getCssClass(clazz, override, 'o-table-row-selected')
+            }
+        },
+        subheadingClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.subheadingClass', '')
+                return getCssClass(clazz, override, 'o-table-subheading')
             }
         },
         stickyHeaderClass: {
@@ -606,7 +750,47 @@ export default {
                 const clazz = getValueByPath(config, 'table.scrollableClass', '')
                 return getCssClass(clazz, override, 'o-table-scrollable')
             }
-        }
+        },
+        mobileSortClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.mobileSortClass', '')
+                return getCssClass(clazz, override, 'o-table-mobile-sort')
+            }
+        },
+        iconSortDescClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.iconSortDesc', '')
+                return getCssClass(clazz, override, 'o-icon-sort-desc')
+            }
+        },
+        iconSortClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.iconSortClass', '')
+                return getCssClass(clazz, override, 'o-icon-sort')
+            }
+        },
+        iconSortInvisibleClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.iconSortInvisibleClass', '')
+                return getCssClass(clazz, override, 'o-icon-sort-invisible')
+            }
+        },
+        multiColumnSortDeleteIconClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'table.override', false)
+                const clazz = getValueByPath(config, 'table.multiColumnSortDeleteIconClass', '')
+                return getCssClass(clazz, override, 'delete multi-sort-cancel-icon')
+            }
+        },
     },
     data() {
         return {
@@ -776,8 +960,8 @@ export default {
             return this.defaultSlots
                 .filter((vnode) =>
                     vnode.componentInstance &&
-                    vnode.componentInstance.$data &&
-                    vnode.componentInstance.$data._isTableColumn)
+                    vnode.componentInstance.$options &&
+                    vnode.componentInstance.$options.name === 'OTableColumn')
                 .map((vnode) => vnode.componentInstance)
         },
 
@@ -865,7 +1049,7 @@ export default {
             this.$emit(`filters-event-${this.filtersEvent}`, { event, filters: this.filters })
         },
         findIndexOfSortData(column) {
-            let sortObj = this.sortMultipleDataComputed.filter((i) =>
+            const sortObj = this.sortMultipleDataComputed.filter((i) =>
                 i.field === column.field)[0]
             return this.sortMultipleDataComputed.indexOf(sortObj) + 1
         },
@@ -876,7 +1060,7 @@ export default {
                 this.sortMultipleDataLocal = this.sortMultipleDataLocal.filter(
                     (priority) => priority.field !== column.field)
 
-                let formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
+                const formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
                     return (i.order && i.order === 'desc' ? '-' : '') + i.field
                 })
                 this.newData = multiColumnSort(this.newData, formattedSortingPriority)
@@ -930,7 +1114,7 @@ export default {
         sortMultiColumn(column) {
             this.currentSortColumn = {}
             if (!this.backendSorting) {
-                let existingPriority = this.sortMultipleDataLocal.filter((i) =>
+                const existingPriority = this.sortMultipleDataLocal.filter((i) =>
                     i.field === column.field)[0]
                 if (existingPriority) {
                     existingPriority.order = existingPriority.order === 'desc' ? 'asc' : 'desc'
@@ -944,7 +1128,7 @@ export default {
         },
 
         doSortMultiColumn() {
-            let formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
+            const formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
                 return (i.order && i.order === 'desc' ? '-' : '') + i.field
             })
             this.newData = multiColumnSort(this.newData, formattedSortingPriority)
@@ -1085,7 +1269,7 @@ export default {
         * Emit all necessary events.
         */
         selectRow(row, index) {
-            this.$emit('click', row)
+            this.$emit('click', row, index)
 
             if (this.selected === row) return
             if (!this.isRowSelectable(row)) return
@@ -1165,7 +1349,7 @@ export default {
         * If not, use the object reference by default.
         */
         handleDetailKey(index) {
-            const key = this.o-table-detailKey
+            const key = this.detailKey
             return !key.length || !index
                 ? index
                 : index[key]
@@ -1173,7 +1357,7 @@ export default {
 
         checkPredefinedDetailedRows() {
             const defaultExpandedRowsDefined = this.openedDetailed.length > 0
-            if (defaultExpandedRowsDefined && !this.o-table-detailKey.length) {
+            if (defaultExpandedRowsDefined && !this.detailKey.length) {
                 throw new Error('If you set a predefined opened-detailed, you must provide a unique key using the prop "detail-key"')
             }
         },
@@ -1336,312 +1520,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-@mixin table-cards {
-    thead {
-        display: none;
-    }
-    tfoot {
-         th {
-            border: 0;
-            display: inherit;
-         }
-    }
-    tr {
-        box-shadow: $table-card-box-shadow;
-        max-width: 100%;
-        position: relative;
-        display: block;
-        background: inherit;
-        td {
-            border: 0;
-            display: inherit;
-            &:last-child {
-                border-bottom: 0;
-            }
-        }
-        &:not(:last-child) {
-            margin: $table-card-margin;
-        }
-        &:hover {
-            background-color: inherit;
-        }
-        &.o-table-detail {
-            margin: $table-card-detail-margin;
-        }
-    }
-    tr:not(.o-table-detail):not(.o-table-empty):not(.o-table-footer) {
-        td {
-            display: flex;
-            width: auto;
-            justify-content: space-between;
-            text-align: right;
-            border-bottom: 1px solid $table-background;
-            &:before {
-                content: attr(data-label);
-                font-weight: $table-card-cell-font-weight;
-                padding-right: $table-card-cell-padding;
-                text-align: $table-card-cell-text-align;
-            }
-        }
-    }
-}
-
-.o-table {
-    transition: opacity $speed $easing;
-    position: relative;
-    .o-table-wrapper {
-        &.o-table-sticky-header {
-            height: $table-sticky-header-height;
-            overflow-y: auto;
-            &.o-table-mobile-cards {
-                @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-                    height: initial !important;
-                    overflow-y: initial !important;
-                }
-            }
-            tr:first-child {
-                th {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    top: 0;
-                    z-index: $table-sticky-zindex + 1;
-                    background: $table-background-color;
-                }
-            }
-        }
-        &.o-table-mobile-cards {
-            @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-                @include table-cards
-            }
-        }
-        &.o-table-cards {
-            @include table-cards
-        }
-        &.o-table-scrollable {
-            -webkit-overflow-scrolling: touch;
-            overflow: auto;
-            overflow-y: hidden;
-            max-width: 100%;
-        }
-    }
-
-    .o-table-mobile-sort {
-        @media screen and (min-width: $table-mobile-breakpoint) {
-            display: none;
-        }
-    }
-
-    .o-icon {
-        transition: transform $speed-slow $easing, opacity $speed $easing;
-        &.o-icon-sort-desc {
-            transform: rotate(180deg);
-        }
-        &.o-icon-sort-expanded {
-            transform: rotate(90deg);
-        }
-        &.o-icon-sort-invisible {
-            visibility: hidden;
-        }
-        &.o-icon-sort-desc &.o-icon-sort {
-            transform: rotate(180deg) translateY(-50%);
-        }
-    }
-
-    table {
-        display: table;
-        width: 100%;
-        border: $table-boder;
-        border-radius: $table-border-radius;
-        border-collapse: separate;
-        border-spacing: 0;
-        background-color: $table-background-color;
-        color: $table-color;
-        tr {
-            th {
-                font-weight: $table-th-font-weight;
-                border-width: $table-th-border-width;
-                color: $table-th-color;
-                border-color: $table-th-border-color;
-                border-style: $table-th-border-style;
-                padding: $table-th-padding;
-                vertical-align: top;
-                &:not([align]) {
-                    text-align: left;
-                }
-                .o-table-th-wrap {
-                    display: flex;
-                    align-items: center;
-                    .o-icon {
-                        margin-left: $table-th-wrap-icon-margin;
-                        margin-right: 0;
-                    }
-                    &.o-table-th-right {
-                        flex-direction: row-reverse;
-                        text-align: right;
-                        .o-icon {
-                            margin-left: 0;
-                            margin-right: $table-th-wrap-icon-margin;
-                        }
-                    }
-                    &.o-table-th-center {
-                        justify-content: center;
-                        text-align: center;
-                    }
-                    .o-table-th-content {
-                        position: relative;
-                    }
-                }
-                &.o-table-current-sort {
-                    border-color: $table-current-sort-border-color;
-                    font-weight: $table-current-sort-font-weight;
-                }
-                &.o-table-sortable:hover {
-                    border-color: $table-current-sort-hover-border-color;
-                }
-                &.o-table-sortable,
-                &.o-table-sortable .th-wrap {
-                    cursor: pointer;
-                }
-                .o-icon-sort, .o-icon-sort-multi-cancel-icon {
-                    position: absolute;
-                    bottom: 50%;
-                    transform: translateY(50%);
-                }
-                .o-icon-sort-multi-cancel-icon {
-                    margin: $table-multi-column-reset-icon-margin;
-                }
-                &.o-table-sticky {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    left: 0;
-                    z-index: $table-sticky-zindex + 2;
-                    background: $table-background-color;
-                }
-                &.o-table-th-unselectable {
-                   @include unselectable;
-                }
-            }
-            td {
-                border-color :$table-td-border-color;
-                border-style: $table-td-border-style;
-                border-width: $table-td-border-width;
-                padding: $table-td-padding;
-                vertical-align: top;
-                &.o-table-sticky {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    left: 0;
-                    z-index: $table-sticky-zindex;
-                    background: $table-background-color;
-                }
-                &.o-table-td-right {
-                    text-align: right;
-                }
-                &.o-table-td-center {
-                    text-align: center;
-                }
-            }
-            &.o-table-row-selected {
-                .o-checkbox input {
-                    &:checked + .o-checkbox-check {
-                        background: $table-row-active-color url(checkmark($table-row-active-background-color)) no-repeat center center;
-                    }
-                    + .o-checkbox-check {
-                        border-color: $table-row-active-color;
-                    }
-                }
-            }
-            &.o-table-empty:hover {
-                background-color: transparent;
-            }
-            &:last-child {
-                td {
-                    border-bottom-width: 0;
-                }
-            }
-            .o-table-chevron-cell {
-                vertical-align: middle;
-                width: $table-detail-chevron-width;
-                > a {
-                    color: $table-detail-chevron-color;
-                }
-                .o-checkbox {
-                    vertical-align: middle;
-                    .o-checkbox-check {
-                        transition: none;
-                    }
-                }
-            }
-            .o-table-detail {
-                box-shadow: $table-detail-box-shadow;
-                background: $table-detail-background;
-                .o-table-detail-container {
-                    padding: $table-detail-padding;
-                }
-            }
-        }
-        &:focus {
-            border-color: $table-focus-border-color;
-            box-shadow: $table-focus-box-shadow;
-        }
-        &.o-table-bordered {
-            tr:last-child {
-                td, th {
-                    border-bottom-width: $table-bordered-border-width;
-                }
-            }
-            td, th {
-                border-width: $table-bordered-border-width;
-            }
-        }
-        &.o-table-striped {
-            tbody tr:not(.o-table-row-selected):nth-child(2n) {
-                background-color: $table-striped-background-color;
-            }
-        }
-        &.o-table-narrow {
-            td, th {
-                padding: $table-narrow-padding;
-            }
-        }
-        &.o-table-hoverable {
-            tbody tr:not(.o-table-row-selected):hover {
-                background-color: $table-hoverable-background-color;
-            }
-        }
-    }
-    .o-pagination-wrapper {
-        align-items: center;
-        justify-content: space-between;
-        @media screen and (min-width: $table-mobile-breakpoint) {
-            display: flex;
-        }
-    }
-    .o-pagination-wrapper-left {
-        align-items: center;
-        justify-content: flex-start;
-    }
-    .o-pagination-wrapper-left {
-        align-items: center;
-        justify-content: flex-end;
-    }
-    .o-pagination-wrapper-left, .o-pagination-wrapper-right {
-        flex-basis: auto;
-        flex-grow: 0;
-        flex-shrink: 0;
-    }
-    .o-pagination-wrapper-item {
-        align-items: center;
-        display: flex;
-        flex-basis: auto;
-        flex-grow: 0;
-        flex-shrink: 0;
-        justify-content: center;
-    }
-}
-
-</style>

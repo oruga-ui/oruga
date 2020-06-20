@@ -15,7 +15,7 @@
 
 <script>
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 export default {
     name: 'OPaginationButton',
@@ -27,7 +27,7 @@ export default {
         tag: {
             type: String,
             default: 'a',
-            validator: (value) => getValueByPath(config, 'linkTags', 'a, button, input, router-link, nuxt-link').indexOf(value) >= 0
+            validator: (value) => getValueByPath(config, 'linkTags', ['a', 'button', 'input', 'router-link', 'nuxt-link']).indexOf(value) >= 0
         },
         disabled: {
             type: Boolean,
@@ -48,6 +48,7 @@ export default {
             if (this.tag === 'a') {
                 return '#'
             }
+            return ''
         },
         isDisabled() {
             return this.disabled || this.page.disabled

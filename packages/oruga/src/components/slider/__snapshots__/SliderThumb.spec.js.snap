@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OSliderThumb render correctly 1`] = `
+<div class="o-slider-thumb-wrapper">
+    <o-tooltip-stub active="true" label="0" position="top" triggers="hover" animated="true" animation="fade" autoclose="true" rootclass="o-tooltip" contentclass="o-tooltip-content" triggerclass="o-tooltip-trigger" multilineclass="o-tooltip-multiline" alwaysclass="o-tooltip-always" type="">
+        <div tabindex="0" class="o-slider-thumb"></div>
+    </o-tooltip-stub>
+</div>
+`;

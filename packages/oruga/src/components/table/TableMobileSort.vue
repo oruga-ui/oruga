@@ -1,5 +1,5 @@
 <template>
-    <div class="o-table-mobile-sort">
+    <div :class="$table.mobileSortClass">
         <o-field>
             <o-select
                 v-model="sortMultipleSelect"
@@ -47,7 +47,7 @@
                     variant="primary"
                     @click="sort">
                     <o-icon
-                        :class="{ 'o-icon-sort-desc': columnIsDesc(sortMultipleSelect) }"
+                        :class="{ [$table.iconSortDesc]: columnIsDesc(sortMultipleSelect) }"
                         :icon="sortIcon"
                         :pack="iconPack"
                         :size="sortIconSize"
@@ -70,7 +70,7 @@
                 @click="sort">
                 <o-icon
                     v-show="currentSortColumn === mobileSort"
-                    :class="{ 'o-icon-sort-desc': !isAsc }"
+                    :class="{ [$table.iconSortDesc]: !isAsc }"
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"
@@ -94,6 +94,9 @@ export default {
         [Select.name]: Select,
         [Icon.name]: Icon,
         [Field.name]: Field
+    },
+    inject: {
+        $table: { name: '$table', default: false }
     },
     props: {
         currentSortColumn: Object,
@@ -161,7 +164,7 @@ export default {
             // The sort event is already triggered by the emit
             this.ignoreSort = true
             // Select one of the other options when we reset one
-            let remainingFields = this.sortMultipleData.filter((data) =>
+            const remainingFields = this.sortMultipleData.filter((data) =>
                 data.field !== this.sortMultipleSelect.field)
                 .map((data) => data.field)
             this.sortMultipleSelect = this.columns.filter((column) =>
@@ -172,14 +175,14 @@ export default {
                 i.field === column.field)[0]
         },
         columnIsDesc(column) {
-            let sortingObject = this.getSortingObjectOfColumn(column)
+            const sortingObject = this.getSortingObjectOfColumn(column)
             if (sortingObject) {
                 return !!(sortingObject.order && sortingObject.order === 'desc')
             }
             return true
         },
         getLabel(column) {
-            let sortingObject = this.getSortingObjectOfColumn(column)
+            const sortingObject = this.getSortingObjectOfColumn(column)
             if (sortingObject) {
                 return column.label + '(' + (this.sortMultipleData.indexOf(sortingObject) + 1) + ')'
             }

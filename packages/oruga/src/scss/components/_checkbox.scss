@@ -1,0 +1,91 @@
+
+.o-checkbox {
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    @include unselectable;
+    @include variable('margin-right', 'checkbox-margin-sibiling', $checkbox-margin-sibiling);
+    & + .o-checkbox:last-child {
+        margin-right: 0;
+    }
+    input[type=checkbox] {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        outline: none;
+        z-index: -1;
+        + .o-checkbox-check {
+            @include variable('width', 'checkbox-size', $checkbox-size);
+            @include variable('height', 'checkbox-size', $checkbox-size);
+            flex-shrink: 0;
+            @include variable('border-radius', 'checkbox-border-radius', $checkbox-border-radius);
+            border: $checkbox-border-width solid $checkbox-border-color;
+            transition: background $speed-slow $easing;
+            background: $checkbox-background-color
+        }
+        &:checked + .o-checkbox-check {
+            background: $checkbox-active-background-color url(checkmark($checkbox-checkmark-color)) no-repeat center center;
+            @include variable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                $color-invert: nth($pair, 2);
+                &.o-color-#{$name} {
+                    background: $color url(checkmark($color-invert)) no-repeat center center;
+                    @include variable('border-color', ('color-' + #{$name}), $color);
+                }
+            }
+        }
+        &:indeterminate + .o-checkbox-check {
+            background: $checkbox-active-background-color url(indeterminate($checkbox-checkmark-color)) no-repeat center center;
+            @include variable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                $color-invert: nth($pair, 2);
+                &.o-color-#{$name} {
+                    background: $color url(indeterminate($color-invert)) no-repeat center center;
+                    @include variable('border-color', ('color-' + #{$name}), $color);
+                }
+            }
+        }
+        &:focus {
+            + .o-checkbox-check {
+                @include variable('box-shadow', 'checkbox-focus-sibiling-box-shadow', $checkbox-focus-sibiling-box-shadow);
+            }
+            &:checked + .o-checkbox-check {
+                box-shadow: $checkbox-checked-box-shadow-length rgba($checkbox-active-background-color, $checkbox-checked-box-shadow-opacity);
+                @each $name, $pair in $colors {
+                    $color: nth($pair, 1);
+                    &.o-color#{$name} {
+                        box-shadow: $checkbox-checked-box-shadow-length rgba($color, $checkbox-checked-box-shadow-opacity);
+                    }
+                }
+            }
+        }
+    }
+    .o-checkbox-label {
+        @include variable('padding', 'checkbox-label-padding', $checkbox-label-padding);
+    }
+    &.o-checkbox-button {
+        display: flex;
+    }
+    &[disabled] {
+        @include variable('opacity', 'checkbox-disabled-opacity', $checkbox-disabled-opacity);
+    }
+    &:hover {
+        input[type=checkbox]:not(:disabled) + .o-checkbox-check {
+            @include variable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &.o-color-#{$name} {
+                    @include variable('border-color', ('color-' + #{$name}), $color);
+                }
+            }
+        }
+    }
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include variable('font-size', ('checkbox-font-size-' + #{$name}), $value);
+        }
+    }
+}

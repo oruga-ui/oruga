@@ -54,6 +54,11 @@ export default {
     },
     mixins: [FormElementMixin],
     inheritAttrs: false,
+    provide() {
+        return {
+            $elementRef: 'select'
+        }
+    },
     props: {
         value: {
             type: [String, Number, Boolean, Object, Array],
@@ -109,8 +114,7 @@ export default {
     },
     data() {
         return {
-            selected: this.value,
-            _elementRef: 'select'
+            selected: this.value
         }
     },
     computed: {
@@ -157,103 +161,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-control-select {
-    display: inline-flex;
-    position: relative;
-    font-size: $base-font-size;
-    &.o-control-select-icons-right .o-icon.o-icon-right {
-        right: 0;
-        height: $select-height;
-        position: absolute;
-        top: 0;
-        width: $select-height;
-        z-index: $select-control-icon-zindex;
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-    }
-    &.o-control-select-icons-left .o-icon.o-icon-left {
-        left: 0;
-        height: $select-height;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        width: $select-height;
-        z-index: $select-control-icon-zindex;
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-    }
-    &.o-control-select-icons-left .o-select {
-        padding-left: $select-height;
-    }
-    &.o-control-select-icons-right .o-select {
-        padding-right: $select-height;
-    }
-    &.o-control-select-expanded {
-        flex-grow: 1;
-        flex-shrink: 1;
-    }
-}
-
-.o-select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    cursor: pointer;
-    justify-content: flex-start;
-    align-items: center;
-    outline: 0;
-    font-size: $select-font-size;
-    max-width: $select-max-width;
-    background-color: $select-background-color;
-    border-color: $select-border-color;
-    border-radius: $select-border-radius;
-    color: $select-color;
-    margin: $select-margin;
-    box-shadow: $select-box-shadow;
-    height: $select-height;
-    line-height: $select-line-height;
-    padding: $select-padding;
-    &:not(.o-select-multiple) {
-        height: $select-height;
-    }
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            font-size: $value;
-        }
-    }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        &.o-color-#{$name} {
-            border-color: $color;
-        }
-    } 
-    option {
-        color: $select-option-color;
-        padding: $select-option-padding;
-    }
-    option:disabled {
-        opacity: $select-option-disabled-opacity;
-    }
-    optgroup {
-        color: $select-optgroup-color;
-        font-weight: $select-optgroup-font-weight;
-        font-style: $select-optgroup-font-style;
-        padding: $select-optgroup-padding;
-    }
-    &.o-select-empty select {
-        color: $select-empty-color;
-    }
-    &.o-select-expanded {
-        width: 100%;
-    }
-}
-
-</style>

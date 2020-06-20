@@ -1,0 +1,95 @@
+
+.o-control-select {
+    display: inline-flex;
+    position: relative;
+    @include variable('font-size', 'base-font-size', $base-font-size);
+    &.o-control-select-icons-right .o-icon.o-icon-right {
+        right: 0;
+        @include variable('height', 'select-height', $select-height);
+        position: absolute;
+        top: 0;
+        @include variable('width', 'select-height', $select-height);
+        @include variable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
+    }
+    &.o-control-select-icons-left .o-icon.o-icon-left {
+        left: 0;
+        @include variable('height', 'select-height', $select-height);
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        @include variable('width', 'select-height', $select-height);
+        @include variable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
+    }
+    &.o-control-select-icons-left .o-select {
+        @include variable('padding-left', 'select-height', $select-height);
+    }
+    &.o-control-select-icons-right .o-select {
+        @include variable('padding-right', 'select-height', $select-height);
+    }
+    &.o-control-select-expanded {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+}
+
+.o-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    cursor: pointer;
+    justify-content: flex-start;
+    align-items: center;
+    outline: 0;
+    @include variable('font-size', 'select-font-size', $select-font-size);
+    @include variable('max-width', 'select-max-width', $select-max-width);
+    @include variable('background-color', 'select-background-color', $select-background-color);
+    @include variable('border-color', 'select-border-color', $select-border-color);
+    @include variable('border-radius', 'select-border-radius', $select-border-radius);
+    @include variable('color', 'select-color', $select-color);
+    @include variable('margin', 'select-margin', $select-margin);
+    @include variable('box-shadow', 'select-box-shadow', $select-box-shadow);
+    @include variable('height', 'select-height', $select-height);
+    @include variable('line-height', 'select-line-height', $select-line-height);
+    @include variable('padding', 'select-padding', $select-padding);
+    &:not(.o-select-multiple) {
+        @include variable('height', 'select-height', $select-height);
+    }
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include variable('font-size', ('select-font-size-' + #{$name}), $value);
+        }
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &.o-color-#{$name} {
+            @include variable('border-color', ('color-' + #{$name}), $color);
+        }
+    } 
+    option {
+        @include variable('color', 'select-option-color', $select-option-color);
+        @include variable('padding', 'select-option-padding', $select-option-padding);
+    }
+    option:disabled {
+        @include variable('opacity', 'select-option-disabled-opacity', $select-option-disabled-opacity);
+    }
+    optgroup {
+        @include variable('color', 'select-optgroup-color', $select-optgroup-color);
+        @include variable('font-weight', 'select-optgroup-font-weight', $select-optgroup-font-weight);
+        @include variable('font-style', 'select-optgroup-font-style', $select-optgroup-font-style);
+        @include variable('padding', 'select-optgroup-padding', $select-optgroup-padding);
+    }
+    &.o-select-empty select {
+        @include variable('color', 'select-empty-color', $select-empty-color);
+    }
+    &.o-select-expanded {
+        width: 100%;
+    }
+}

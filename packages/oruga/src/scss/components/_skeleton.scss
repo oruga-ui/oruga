@@ -1,0 +1,61 @@
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+@mixin steps-size($size, $name: null) {
+    > .o-skeleton-item {
+        @if ($name != null) {
+            @include variable('line-height', ('skeleton-font-size-' + #{$name}), $size);
+        } @else {
+            @include variable('line-height', 'skeleton-font-size', $size);
+        }
+    }
+}
+
+.o-skeleton {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    width: 100%;
+    > .o-skeleton-item {
+        @include variable('background', 'skeleton-background', $skeleton-background);
+        background-size: 400% 100%;
+        width: 100%;
+        &.o-skeleton-rounded {
+            @include variable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
+        }
+        &::after {
+            content: "\00a0";
+        }
+        + .o-skeleton-item {
+            @include variable('margin', 'skeleton-margin', $skeleton-margin);
+        }
+    }
+    &.o-skeleton-animated {
+        > .o-skeleton-item {
+            @include variable('animation', 'skeleton-duration infinite', (skeleton-loading $skeleton-duration infinite));
+        }
+    }
+    &.o-skeleton-centered {
+        align-items: center;
+    }
+    &.o-skeleton-right {
+        align-items: flex-end;
+    }
+    + .o-skeleton {
+        @include variable('margin', 'skeleton-margin', $skeleton-margin);
+    }
+    @include steps-size($base-font-size);
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include steps-size($value, $name);
+        }
+    }
+}
+

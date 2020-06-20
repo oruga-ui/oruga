@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OTable render correctly 1`] = `
+<div class="o-table">
+    <!---->
+    <!---->
+    <div class="o-table-wrapper o-table-mobile-cards">
+        <table class="">
+            <!---->
+            <tbody>
+                <tr class="o-table-empty">
+                    <td colspan="0"></td>
+                </tr>
+            </tbody>
+            <!---->
+        </table>
+    </div>
+    <!---->
+    <!---->
+</div>
+`;

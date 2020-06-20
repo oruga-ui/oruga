@@ -3,6 +3,10 @@ module.exports = {
   roots: [
     '<rootDir>/src'
   ],
+  testMatch: [
+    '<rootDir>/src/components/**/*.spec.[jt]s?(x)',
+    '<rootDir>/src/utils/*.spec.[jt]s?(x)'
+  ],
   moduleFileExtensions: [
       'js',
       'vue'

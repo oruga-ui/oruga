@@ -1,0 +1,48 @@
+.o-autocomplete {
+    position: relative;
+    .o-autocomplete-menu {
+        display: block;
+        min-width: 100%;
+        max-width: 100%;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        overflow: auto;
+        @include variable('z-index', 'autocomplete-menu-zindex', $autocomplete-menu-zindex);
+        @include variable('background-color', 'autocomplete-menu-background', $autocomplete-menu-background);
+        @include variable('border-radius', 'autocomplete-menu-border-radius', $autocomplete-menu-border-radius);
+        @include variable('box-shadow', 'autocomplete-menu-box-shadow', $autocomplete-menu-box-shadow);
+        @include variable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
+        @include variable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
+        @include variable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
+        &.o-autocomplete-opened-top {
+            top: auto;
+            bottom: 100%;
+        }
+        .o-autocomplete-item {
+            display: block;
+            position: relative;
+            @include variable('color', 'autocomplete-item-color', $autocomplete-item-color);
+            @include variable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
+            @include variable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
+            @include variable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            &.o-autocomplete-item-disabled {
+                pointer-events: none;
+                @include variable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
+            }
+            &.o-autocomplete-item-hovered {
+                @include variable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
+                @include variable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
+            }
+        }
+    }
+    &.o-autocomplete-expanded {
+        width: 100%;
+        .o-autocomplete-menu {
+            width: 100%;
+        }
+    }
+}

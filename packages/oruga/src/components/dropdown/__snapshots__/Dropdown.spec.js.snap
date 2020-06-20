@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BDropdown render correctly 1`] = `
+<div class="o-dropdown o-dropdown-mobile">
+    <div role="button" aria-haspopup="true" class="o-dropdown-trigger"></div>
+    <transition-stub>
+        <div aria-hidden="true" class="o-dropdown-background" style="display: none;"></div>
+    </transition-stub>
+    <transition-stub>
+        <div aria-hidden="true" class="o-dropdown-menu o-dropdown-menu-animation" style="display: none;"></div>
+    </transition-stub>
+</div>
+`;

@@ -171,6 +171,7 @@ export default {
                 case 'danger': return 'alert-circle'
                 case 'info': return 'information'
                 case 'warning': return 'alert'
+                default: return ''
             }
         },
 
@@ -239,102 +240,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-control-input {
-    position: relative;
-    font-size: $base-font-size;
-    &.o-control-input-icons-right .o-icon.o-icon-right {
-        right: 0;
-        height: $input-height;
-        position: absolute;
-        top: 0;
-        width: $input-height;
-        z-index: $input-control-icon-zindex;
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-    }
-    &.o-control-input-icons-left .o-icon.o-icon-left {
-        left: 0;
-        height: $input-height;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        width: $input-height;
-        z-index: $input-control-icon-zindex;
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-    }
-    &.o-control-input-icons-left .o-input {
-        padding-left: $input-height;
-    }
-    &.o-control-input-icons-right .o-input {
-        padding-right: $input-height;
-    }
-    &.o-control-input-expanded {
-        flex-grow: 1;
-        flex-shrink: 1;
-    }
-}
-
-.o-input {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    display: inline-flex;
-    position: relative;
-    vertical-align: top;
-    box-shadow: $input-box-shadow;
-    max-width: $input-max-width;
-    width: $input-width;
-    background-color: $input-background-color;
-    border-color: $input-border-color;
-    border-radius:$input-border-radius;
-    color: $input-color;
-    border: $input-border;
-    font-size: $base-font-size;
-    height: $input-height;
-    line-height: $input-line-height;
-    padding: $input-padding;
-    margin: $input-margin;
-    &.o-input-rounded {
-        border-radius: 9999px;
-    }
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            font-size: $value;
-        }
-    }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        &.o-color-#{$name} {
-            border-color: $color;
-        }
-    }
-    @at-root {
-        textarea#{&} {
-            display: block;
-            max-width: 100%;
-            min-width: 100%;
-            padding: $input-textarea-padding;
-            resize: vertical;
-            &:not([rows]) {
-                max-height: $input-textarea-max-height;
-                min-height: $input-textarea-min-height;
-            }
-        }
-    }
-    .o-input-counter {
-        display: block;
-        float: right;
-        font-size: $input-counter-font-size;
-        margin: $input-counter-margin;
-        &.o-input-counter-invisible {
-            visibility: hidden;
-        }
-    }
-}
-</style>

@@ -7,7 +7,7 @@ describe('FormElementMixin', () => {
     HTMLElement.prototype.insertAdjacentElement = jest.fn()
     beforeEach(() => {
         const component = {
-            template: '<div class="b-component"></div>'
+            template: '<div class="o-component"></div>'
         }
         wrapper = shallowMount(component, {
             attachToDocument: true,

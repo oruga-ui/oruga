@@ -47,14 +47,14 @@ export default {
     },
     render(createElement) {
         const trigger = createElement('div', {
-            staticClass: 'collapse-trigger', on: { click: this.toggle }
+            staticClass: 'o-collapse-trigger', on: { click: this.toggle }
         }, this.$scopedSlots.trigger
             ? [this.$scopedSlots.trigger({ open: this.isOpen })]
             : [this.$slots.trigger]
         )
         const content = createElement('transition', { props: { name: this.animation } }, [
             createElement('div', {
-                staticClass: 'collapse-content',
+                staticClass: 'o-collapse-content',
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
@@ -62,20 +62,8 @@ export default {
                 }]
             }, this.$slots.default)
         ])
-        return createElement('div', { staticClass: 'collapse' },
+        return createElement('div', { staticClass: 'o-collapse' },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 }
 </script>
-
-<style lang="scss">
-.collapse {
-    .collapse-trigger {
-        display: inline;
-        cursor: pointer;
-    }
-    .collapse-content {
-        display: inherit;
-    }
-}
-</style>

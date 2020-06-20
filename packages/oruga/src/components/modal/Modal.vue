@@ -38,7 +38,7 @@
 
 <script>
 import trapFocus from '../../directives/trapFocus'
-import { removeElement } from '../../utils/helpers'
+import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
 import config from '../../utils/config'
 
 export default {
@@ -65,7 +65,7 @@ export default {
         canCancel: {
             type: [Array, Boolean],
             default: () => {
-                return config.defaultModalCanCancel
+                getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
             }
         },
         onCancel: {
@@ -75,31 +75,23 @@ export default {
         scroll: {
             type: String,
             default: () => {
-                return config.defaultModalScroll
-                    ? config.defaultModalScroll
-                    : 'clip'
+                return getValueByPath(config, 'modal.scroll', 'keep')
             },
             validator: (value) => {
-                return [
-                    'clip',
-                    'keep'
-                ].indexOf(value) >= 0
+                return [ 'clip', 'keep' ].indexOf(value) >= 0
             }
         },
         fullScreen: Boolean,
         trapFocus: {
             type: Boolean,
             default: () => {
-                return config.defaultTrapFocus
+                return getValueByPath(config, 'modal.trapFocus', true)
             }
         },
         ariaRole: {
             type: String,
             validator: (value) => {
-                return [
-                    'dialog',
-                    'alertdialog'
-                ].indexOf(value) >= 0
+                return [ 'dialog', 'alertdialog' ].indexOf(value) >= 0
             }
         },
         ariaModal: Boolean,
@@ -169,7 +161,7 @@ export default {
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
                 ? this.canCancel
-                    ? config.defaultModalCanCancel
+                    ? getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
                     : []
                 : this.canCancel
         },
@@ -317,81 +309,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: $modal-zindex;
-    &.o-modal-full-screen {
-        > .o-modal-content {
-            width: 100%;
-            height: 100%;
-            max-height: 100vh;
-            margin: 0;
-            background-color: $modal-content-fullscreen-background-color;
-        }
-    }
-    .o-modal-background {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        background-color: $modal-background-color;
-    }
-    .o-modal-content {
-        margin: 0 20px;
-        @media screen and (max-width: $modal-mobile-breakpoint - 1px) {
-            width: 100%;
-        }
-    }
-    .o-modal-close {
-        background: none;
-        position: fixed;
-        border: none;
-        cursor: pointer;
-        pointer-events: auto;
-        display: inline-block;
-        flex-grow: 0;
-        flex-shrink: 0;
-        font-size: 0;
-        outline: none;
-        vertical-align: top;
-        border-radius: $modal-close-border-radius;
-        right: $modal-close-right;
-        top: $modal-close-top;
-        height: $modal-close-height;
-        width: $modal-close-width;
-        &:before, &:after {
-            background-color: #fff;
-            content: "";
-            display: block;
-            left: 50%;
-            position: absolute;
-            top: 50%;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            transform-origin: center center;
-        }
-        &:before {
-            height: 2px;
-            width: 50%;
-        }
-        &:before {
-            height: 50%;
-            width: 2px;
-        }
-    }
-}
-
-</style>

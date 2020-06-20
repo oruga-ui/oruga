@@ -1,0 +1,143 @@
+
+.o-dropdown {
+    display: inline-flex;
+    position: relative;
+    vertical-align: top;
+    .o-dropdown-background {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+        @include variable('background-color', 'dropdown-mobile-overlay-color', $dropdown-mobile-overlay-color);
+        @include variable('z-index', 'dropdown-mobile-overlay-zindex', $dropdown-mobile-overlay-zindex);
+        @media screen and (min-width: $dropdown-mobile-breakpoint) {
+            display: none;
+        }
+    }
+    .o-dropdown-menu {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        @include variable('min-width', 'dropdown-menu-width', $dropdown-menu-width);
+        @include variable('z-index', 'dropdown-menu-zindex', $dropdown-menu-zindex);
+        @include variable('background-color', 'dropdown-menu-background', $dropdown-menu-background);
+        @include variable('border-radius', 'dropdown-menu-border-radius', $dropdown-menu-border-radius);
+        @include variable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
+        @include variable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
+        @include variable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
+        &.o-dropdown-menu-animation {
+            display: block;
+        }
+        .o-dropdown-item {
+            display: block;
+            position: relative;
+            @include variable('color', 'dropdown-item-color', $dropdown-item-color);
+            @include variable('font-size', 'dropdown-item-font-size', $dropdown-item-font-size);
+            @include variable('line-height', 'dropdown-item-line-height', $dropdown-item-line-height);
+            @include variable('padding', 'dropdown-item-padding', $dropdown-item-padding);
+            &.o-dropdown-item-disabled {
+                pointer-events: none;
+            }
+            &.o-dropdown-item-active {
+                @include variable('background-color', 'dropdown-item-background-active', $dropdown-item-background-active);
+                @include variable('color', 'dropdown-item-color-active', $dropdown-item-color-active);
+            }
+        }
+        a {
+            &.o-dropdown-item {
+                cursor: pointer;
+                text-decoration: none;
+                &:hover {
+                    @include variable('background-color', 'dropdown-item-hover-background-color', $dropdown-item-hover-background-color);
+                    @include variable('color', 'dropdown-item-hover-color', $dropdown-item-hover-color);
+                }
+            }
+        }
+    }
+    &.o-dropdown-hoverable:not(.o-dropdown-active) {
+        .o-dropdown-menu {
+            display: none;
+        }
+    }
+    &.o-dropdown-hoverable {
+        &:hover {
+            .o-dropdown-menu {
+                display: block;
+            }
+        }
+    }
+    &.o-dropdown-expanded {
+        width: 100%;
+        .o-dropdown-trigger {
+            width: 100%;
+        }
+        .o-dropdown-menu {
+            width: 100%;
+        }
+        &.o-dropdown-mobile {
+            .o-dropdown-menu {
+                max-width: 100%;
+            }
+        }
+    }
+    &:not(.o-dropdown-disabled) {
+        .o-dropdown-menu {
+            .o-dropdown-item {
+                &.o-dropdown-item-disabled {
+                    @include variable('opacity', 'dropdown-item-disabled-opacity', $dropdown-item-disabled-opacity);
+                }
+            }
+        }
+    }
+    &.o-dropdown-disabled {
+        @include variable('opacity', 'dropdown-disabled-opacity', $dropdown-disabled-opacity);
+        .o-dropdown-trigger {
+            pointer-events: none;
+        }
+    }
+    &.o-dropdown-inline {
+        .o-dropdown-menu {
+            position: static;
+            display: inline-block;
+        }
+    }
+    &.o-dropdown-top-right {
+        .o-dropdown-menu {
+            top: auto;
+            bottom: 100%;
+        }
+    }
+    &.o-dropdown-top-left {
+        .o-dropdown-menu {
+            top: auto;
+            bottom: 100%;
+            right: 0;
+            left: auto;
+        }
+    }
+    &.o-dropdown-bottom-left {
+        .o-dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+    }
+    @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
+        &.o-dropdown-mobile {
+            > .o-dropdown-menu {
+                position: fixed;
+                @include variable('width', 'dropdown-mobile-width', $dropdown-mobile-width);
+                @include variable('max-width', 'dropdown-mobile-max-width', $dropdown-mobile-max-width);
+                @include variable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height);
+                top: 25%;
+                left: 50%;
+                bottom: auto;
+                right: auto;
+                transform: translate3d(-50%, -25%, 0);
+                overflow-y: auto;
+                @include variable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+
+.o-field {
+    &:not(:last-child) {
+        @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
+    }
+    > .o-field-label {
+        display: block;
+        @include variable('color', 'field-label-color', $field-label-color);
+        @include variable('font-size', 'field-label-font-size', $field-label-font-size);
+        @include variable('font-weight', 'field-label-font-weight', $field-label-font-weight);
+        @each $name, $value in $sizes {
+            &.o-size-#{$name} {
+                @include variable('font-size', ('field-font-size-' + #{$name}), $value);
+            }
+        }
+    }
+    > .o-field-message {
+        display: block;
+        @include variable('font-size', 'field-message-font-size', $field-message-font-size);
+        @include variable('margin-top', 'field-message-margin-top', $field-message-margin-top);
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            &.o-color-#{$name} {
+                @include variable('color', ('color-' + #{$name}), $color);
+            }
+        }
+    }
+    &.o-field-addons {
+        display: flex;
+        justify-content: flex-start;
+        *:first-child:not(:only-child) button,
+        button:first-child:not(:only-child),
+        *:first-child:not(:only-child) input,
+        input:first-child:not(:only-child),
+        *:first-child:not(:only-child) select,
+        select:first-child:not(:only-child) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+        *:last-child:not(:only-child) button,
+        button:last-child:not(:only-child),
+        *:last-child:not(:only-child) input,
+        input:last-child:not(:only-child), 
+        *:last-child:not(:only-child) select,
+        select:last-child:not(:only-child) {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+        > *[class$="-expanded"] {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+    }
+    &.o-field-grouped {
+        display: flex;
+        justify-content: flex-start;
+        > * {
+            flex-shrink: 0;
+        }
+        > *:not(:last-child) {
+            margin-bottom: 0;
+            @include variable('margin-right', 'field-margin-bottom', $field-margin-bottom);
+        }
+        > *[class$="-expanded"] {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        &.o-field-grouped-multiline {
+            flex-wrap: wrap;
+            &:last-child {
+                @include variable('margin-bottom', 'field-margin-bottom', -$field-margin-bottom);
+            }
+            > *:not(:last-child) {
+                @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
+            }
+        }
+    }
+}

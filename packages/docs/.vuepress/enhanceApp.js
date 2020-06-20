@@ -1,5 +1,6 @@
   
 import Oruga from 'oruga';
+import 'oruga/dist/oruga.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 // internal icons

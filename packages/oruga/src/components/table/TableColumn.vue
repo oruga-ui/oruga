@@ -29,17 +29,17 @@ export default {
     },
     data() {
         return {
-            newKey: this.customKey || this.label,
-            _isTableColumn: true
+            newKey: this.customKey || this.label
         }
     },
     computed: {
         rootClasses() {
-            return [this.cellClass, {
-                'o-table-td-right': this.numeric && !this.centered,
-                'o-table-td-center': this.centered,
-                'o-table-sticky': this.sticky
-            }]
+            return [
+                this.cellClass, 
+                (this.numeric && !this.centered) && this.$table.tdRightClass,
+                this.centered && this.$table.tdCenteredClass,
+                this.sticky && this.$table.tdStickyClass
+            ]
         },
         style() {
             return {
@@ -63,7 +63,7 @@ export default {
         }
         this.$table.refreshSlots()
     },
-    render(createElement) {
+    render() {
         // renderless
         return null
     }

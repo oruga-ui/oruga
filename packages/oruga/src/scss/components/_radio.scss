@@ -1,0 +1,102 @@
+
+.o-radio {
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    @include unselectable;
+    @include variable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
+    & + .o-radio:last-child {
+        margin-right: 0;
+    }
+    input[type=radio] {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        outline: none;
+        z-index: -1;
+        + .o-radio-check {
+            display: flex;
+            flex-shrink: 0;
+            position: relative;
+            cursor: pointer;
+            @include variable('width', 'radio-size', $radio-size);
+            @include variable('height', 'radio-size', $radio-size);
+            transition: background $speed-slow $easing;
+            border-radius: 50%;
+            @include variable('border', 'radio-border', $radio-border);
+            &:before {
+                content: "";
+                display: flex;
+                position: absolute;
+                left: 50%;
+                margin-left: calc(-#{$radio-size}/2);
+                bottom: 50%;
+                margin-bottom: calc(-#{$radio-size}/2);
+                @include variable('width', 'radio-size', $radio-size);
+                @include variable('height', 'radio-size', $radio-size);
+                transition: transform $speed-slow $easing;
+                border-radius: 50%;
+                transform: scale(0);
+                @include variable('background-color', 'radio-active-background-color', $radio-active-background-color);
+            }
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &.o-color#{$name}:before {
+                    @include variable('background', ('color-' + #{$name}), $color);
+                }
+            }
+        }
+        &:checked + .o-radio-check {
+            @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &.o-color#{$name} {
+                    @include variable('border-color', ('color-' + #{$name}), $color);
+                }
+            }
+            &:before {
+                transform: scale(.5);
+            }
+        }
+        &:focus {
+            + .o-radio-check {
+                @include variable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
+            }
+            &:checked + .o-radio-check {
+                box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
+                @each $name, $pair in $colors {
+                    $color: nth($pair, 1);
+                    &.o-color#{$name} {
+                        box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
+                    }
+                }
+            }
+        }
+    }
+    .o-radio-label {
+        @include variable('padding', 'radio-label-padding', $radio-label-padding);
+    }
+    &.o-radio-button {
+        display: flex;
+    }
+    &[disabled] {
+        @include variable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
+    }
+    &:hover {
+        input[type=radio]:not(:disabled) + .o-radio-check {
+            @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &.o-color#{$name} {
+                    @include variable('border-color', ('color-' + #{$name}), $color);
+                }
+            }
+        }
+    }
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include variable('font-size', ('radio-font-size-' + #{$name}), $value);
+        }
+    }
+}

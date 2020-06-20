@@ -1,0 +1,144 @@
+
+@mixin slider-size($size, $name: nul) {
+	$track-height: $size / $slider-thumb-to-track-ratio;
+	$tick-height: $track-height * $slider-tick-to-track-ratio;
+	$thumb-size: $size;
+
+    .o-slider-track {
+        @if ($name != null) {
+            @include variable('height', ('slider-track-height-' + #{$name}), $track-height);
+        } @else {
+            @include variable('height', 'slider-track-height', $track-height);
+        }
+    }
+
+	.o-slider-thumb {
+        @if ($name != null) {
+            @include variable('height', 'slider-thumb-size-' + #{$name}, $thumb-size);
+            @include variable('width', 'slider-thumb-size-' + #{$name}, $thumb-size);
+        } @else {
+            @include variable('height', 'slider-thumb-size', $thumb-size);
+            @include variable('width', 'slider-thumb-size', $thumb-size);
+        }
+    }
+
+    .o-slider-tick {
+        @if ($name != null) {
+            @include variable('height', 'slider-tick-height-' + #{$name}, $tick-height);
+        } @else {
+            @include variable('height', 'slider-tick-height', $tick-height);
+        }
+    }
+
+    .o-slider-tick-label {
+        @if ($name != null) {
+            @include variable('font-size', 'slider-mark-size-' + #{$name}, $slider-mark-size);
+        } @else {
+            @include variable('font-size', 'slider-mark-size', $slider-mark-size);
+        }
+        position: absolute;
+        top: calc(#{$track-height} / 2 + 2px);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.o-slider {
+    @include variable('margin', 'slider-margin', $slider-margin);
+    @include variable('background', 'slider-background', $slider-background);
+    width: 100%;
+    .o-slider-track {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        @include variable('background', 'slider-track-background', $slider-track-background);
+        @include variable('border-radius', 'slider-track-border-radius', $slider-track-border-radius);
+    }
+    .o-slider-fill {
+        position: absolute;
+        height: 100%;
+        @include variable('box-shadow', 'slider-track-shadow', $slider-track-shadow);
+        @include variable('background', 'slider-track-background', $slider-track-background);
+        @include variable('border-radius', 'slider-track-radius', $slider-track-radius);
+        @include variable('border', 'slider-track-border', $slider-track-border);
+        // Fix alignment in IE 11. Cancel out for others
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .o-slider-thumb-wrapper {
+        display: inline-flex;
+        align-items: center;
+        position: absolute;
+        cursor: grab;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        flex-direction: column; // Fix shrinked thumb at the end in IE 11
+
+        .o-slider-thumb {
+            @include variable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
+            @include variable('border', 'slider-thumb-border', $slider-thumb-border);
+            @include variable('border-radius', 'slider-thumb-radius', $slider-thumb-radius);
+            @include variable('background', 'slider-thumb-background', $slider-thumb-background);
+            &:focus {
+                @include variable('transform', 'slider-thumb-transform', $slider-thumb-transform);
+            }
+        }
+
+        &.o-slider-dragging {
+            cursor: grabbing;
+            .o-slider-thumb {
+                @include variable('transform', 'slider-thumb-transform', $slider-thumb-transform);
+            }
+        }
+    }
+
+    &.o-slider-focus{
+        @include variable('padding', 'slider-focus-padding', $slider-focus-padding);
+        @include variable('margin', 'slider-focus-margin', $slider-focus-margin);
+        cursor: pointer;
+    }
+
+    &.o-slider-rounded {
+        .o-slider-thumb {
+            @include variable('border-radius', 'slider-rounded-borded-radius', $slider-rounded-borded-radius);
+        }
+    }
+    &.o-slider-disabled {
+        .o-slider-track {
+            cursor: not-allowed;
+            @include variable('opacity', 'slider-track-disabled', $slider-track-disabled);
+        }
+        .o-slider-thumb-wrapper {
+            cursor: not-allowed;
+            .o-slider-thumb {
+                @include variable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
+            }
+        }
+    }
+    @include slider-size($base-font-size);
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include slider-size($value, $name);
+        }
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &.o-color-#{$name} {
+            .o-slider-fill {
+                @include variable('background', ('color-' + #{$name}), $color);
+            }
+        }
+    }
+    .o-slider-tick {
+        position: absolute;
+		@include variable('width', 'slider-tick-width', $slider-tick-width);
+        transform: translate(-50%, -50%);
+        top: 50%;
+        @include variable('background', 'slider-tick-background', $slider-tick-background);
+        @include variable('border-radius', 'slider-tick-radius', $slider-tick-radius);
+        &.o-slider-tick-hidden {
+            background: transparent;
+        }
+    }
+}

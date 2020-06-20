@@ -55,3 +55,20 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+@mixin variable($attribute, $name, $value, $function: null, $argument: null) {
+    @if $css-vars == true {
+        // fallback IE 11 #{$attribute}: #{$value};
+        @if ($function != null) {
+            #{$attribute}: #{$function}(var(#{$variable-prefix}#{$name}, #{$value}) #{$argument});
+        } @else {
+            #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
+        }
+    } @else if $scss-vars == true {
+        @if ($function != null) {
+            #{$attribute}: #{$function}(#{$value} #{$argument});
+        } @else {
+            #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
+        }
+    }
+}

@@ -29,9 +29,9 @@
 
         <transition :name="animation">
             <div
-                :class="[menuClass, { 'o-autocomplete-opened-top': isOpenedTop && !appendToBody }]"
+                :class="menuClasses"
                 v-show="isActive && (data.length > 0 || hasEmptySlot || hasHeaderSlot)"
-                :style="contentStyle"
+                :style="menuStyle"
                 ref="dropdown">
                 <div
                     v-if="hasHeaderSlot"
@@ -69,7 +69,7 @@
 
 <script>
 import config from '../../utils/config'
-import { getValueByPath, removeElement, createAbsoluteElement, getCssClass } from '../../utils/helpers'
+import { getValueByPath, removeElement, createAbsoluteElement, getCssClass, toCssDimension } from '../../utils/helpers'
 import FormElementMixin from '../../utils/FormElementMixin'
 import Input from '../input/Input'
 
@@ -114,14 +114,6 @@ export default {
         iconRight: String,
         iconRightClickable: Boolean,
         appendToBody: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.rootClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete')
-            }
-        },
         rootClass: {
             type: String,
             default: () => {
@@ -180,7 +172,7 @@ export default {
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
-            _bodyEl: undefined // Used to append to body
+            bodyEl: undefined // Used to append to body
         }
     },
     computed: {
@@ -188,6 +180,12 @@ export default {
             return [
                 this.rootClass,
                 this.expandend && this.expandedClass
+            ]
+        },
+        menuClasses() {
+            return [
+                this.menuClass,
+                (this.isOpenedTop && !this.appendToBody) && 'o-autocomplete-opened-top'
             ]
         },
         /**
@@ -267,10 +265,9 @@ export default {
             return this.iconRightClickable
         },
 
-        contentStyle() {
+        menuStyle() {
             return {
-                maxHeight: this.maxHeight === undefined
-                    ? null : (isNaN(this.maxHeight) ? this.maxHeight : this.maxHeight + 'px')
+                maxHeight: toCssDimension(this.maxHeight)
             }
         }
     },
@@ -514,7 +511,7 @@ export default {
             this.hasFocus = false
             this.$emit('blur', event)
         },
-        onInput(event) {
+        onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
             this.$emit('typing', this.newValue)
@@ -542,7 +539,7 @@ export default {
             const trigger = this.$refs.input.$el
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
-                const root = this.$data._bodyEl
+                const root = this.$data.bodyEl
                 root.classList.forEach((item) => root.classList.remove(item))
                 this.rootClasses.forEach((item) => {
                     if (item) {
@@ -556,7 +553,7 @@ export default {
                 })
                 const rect = trigger.getBoundingClientRect()
                 let top = rect.top + window.scrollY
-                let left = rect.left + window.scrollX
+                const left = rect.left + window.scrollX
                 if (!this.isOpenedTop) {
                     top += trigger.clientHeight
                 } else {
@@ -583,7 +580,7 @@ export default {
             list.addEventListener('scroll', () => this.checkIfReachedTheEndOfScroll(list))
         }
         if (this.appendToBody) {
-            this.$data._bodyEl = createAbsoluteElement(this.$refs.dropdown)
+            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdown)
             this.updateAppendToBody()
         }
     },
@@ -597,61 +594,8 @@ export default {
             list.removeEventListener('scroll', this.checkIfReachedTheEndOfScroll)
         }
         if (this.appendToBody) {
-            removeElement(this.$data._bodyEl)
+            removeElement(this.$data.bodyEl)
         }
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-autocomplete {
-    position: relative;
-    .o-autocomplete-menu {
-        display: block;
-        min-width: 100%;
-        max-width: 100%;
-        position: absolute;
-        left: 0;
-        top: 100%;
-        overflow: auto;
-        z-index: $autocomplete-menu-zindex;
-        background-color: $autocomplete-menu-background;
-        border-radius: $autocomplete-menu-border-radius;
-        box-shadow: $autocomplete-menu-box-shadow;
-        padding: $autocomplete-menu-padding;
-        margin: $autocomplete-menu-margin;
-        max-height: $autocomplete-menu-max-height;
-        &.o-autocomplete-opened-top {
-            top: auto;
-            bottom: 100%;
-        }
-        .o-autocomplete-item {
-            display: block;
-            position: relative;
-            color: $autocomplete-item-color;
-            font-size: $autocomplete-item-font-size;
-            line-height: $autocomplete-item-line-height;
-            padding: $autocomplete-item-padding;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            &.o-autocomplete-item-disabled {
-                pointer-events: none;
-                opacity: $autocomplete-item-disabled-opacity;
-            }
-            &.o-autocomplete-item-hovered {
-                background: $autocomplete-item-hover-background-color;
-                color: $autocomplete-item-hover-color;
-            }
-        }
-    }
-    &.o-autocomplete-expanded {
-        width: 100%;
-        .o-autocomplete-menu {
-            width: 100%;
-        }
-    }
-}
-</style>

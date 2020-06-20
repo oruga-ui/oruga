@@ -61,7 +61,6 @@ export default {
             type: String,
             default: 'fade'
         },
-        contentClass: String,
         autoClose: {
             type: [Array, Boolean],
             default: true
@@ -113,7 +112,7 @@ export default {
     data() {
         return {
             isActive: false,
-            _bodyEl: undefined // Used to append to body
+            bodyEl: undefined // Used to append to body
         }
     },
     computed: {
@@ -132,7 +131,7 @@ export default {
     },
     watch: {
         isActive(value) {
-            if (this.appendToBody) {
+            if (value && this.appendToBody) {
                 this.updateAppendToBody()
             }
         }
@@ -143,7 +142,7 @@ export default {
             const trigger = this.$refs.trigger
             if (tooltip && trigger) {
                 // update wrapper tooltip
-                const tooltipEl = this.$data._bodyEl.children[0]
+                const tooltipEl = this.$data.bodyEl.children[0]
                 tooltipEl.classList.forEach((item) => tooltipEl.classList.remove(item))
                 this.rootClasses.forEach((item) => {
                     if (typeof item === 'object') {
@@ -156,9 +155,9 @@ export default {
                 tooltipEl.style.width = `${trigger.clientWidth}px`
                 tooltipEl.style.height = `${trigger.clientHeight}px`
                 const rect = trigger.getBoundingClientRect()
-                let top = rect.top + window.scrollY
-                let left = rect.left + window.scrollX
-                const wrapper = this.$data._bodyEl
+                const top = rect.top + window.scrollY
+                const left = rect.left + window.scrollX
+                const wrapper = this.$data.bodyEl
                 wrapper.style.position = 'absolute'
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
@@ -236,7 +235,7 @@ export default {
     },
     mounted() {
         if (this.appendToBody) {
-            this.$data._bodyEl = createAbsoluteElement(this.$refs.content)
+            this.$data.bodyEl = createAbsoluteElement(this.$refs.content)
             this.updateAppendToBody()
         }
     },
@@ -252,157 +251,8 @@ export default {
             document.removeEventListener('keyup', this.keyPress)
         }
         if (this.appendToBody) {
-            removeElement(this.$data._bodyEl)
+            removeElement(this.$data.bodyEl)
         }
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-@mixin tooltip-arrow($direction, $color) {
-    @if ($direction == "top") {
-        border-top: $tooltip-arrow-size solid $color;
-        border-right: $tooltip-arrow-size solid transparent;
-        border-left: $tooltip-arrow-size solid transparent;
-    } @else if ($direction == "bottom") {
-        border-right: $tooltip-arrow-size solid transparent;
-        border-bottom: $tooltip-arrow-size solid $color;
-        border-left: $tooltip-arrow-size solid transparent;
-    } @else if ($direction == "right") {
-        border-top: $tooltip-arrow-size solid transparent;
-        border-right: $tooltip-arrow-size solid $color;
-        border-bottom: $tooltip-arrow-size solid transparent;
-    } @else if ($direction == "left") {
-        border-top: $tooltip-arrow-size solid transparent;
-        border-bottom: $tooltip-arrow-size solid transparent;
-        border-left: $tooltip-arrow-size solid $color;
-    }
-}
-
-@mixin tooltip($direction) {
-    &.o-tooltip-#{$direction} {
-        .o-tooltip-content {
-            @if ($direction == "top") {
-                top: auto;
-                right: auto;
-                bottom: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "bottom") {
-                top: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
-                right: auto;
-                bottom: auto;
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "right") {
-                top: 50%;
-                right: auto;
-                bottom: auto;
-                left: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
-                transform: translateY(-50%);
-            } @else if ($direction == "left") {
-                top: 50%;
-                right: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
-                bottom: auto;
-                left: auto;
-                transform: translateY(-50%);
-            }
-        }
-        .o-tooltip-content::before {
-            @if ($direction == "bottom") {
-                top: auto;
-                right: auto;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "top") {
-                top: 100%;
-                right: auto;
-                bottom: auto;
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "left") {
-                top: 50%;
-                right: auto;
-                bottom: auto;
-                left: 100%;
-                transform: translateY(-50%);
-            } @else if ($direction == "right") {
-                top: 50%;
-                right: 100%;
-                bottom: auto;
-                left: auto;
-                transform: translateY(-50%);
-            }
-            @include tooltip-arrow($direction, $tooltip-background-color);
-        }
-        @each $name, $pair in $colors {
-            $color: nth($pair, 1);
-            &.o-color-#{$name} {
-                .o-tooltip-content::before {
-                    @include tooltip-arrow($direction, $color)
-                }
-            }
-        }
-    }
-}
-
-// Base
-.o-tooltip {
-    @include tooltip("top");
-    @include tooltip("right");
-    @include tooltip("bottom");
-    @include tooltip("left");
-    position: relative;
-    display: inline-flex;
-    .o-tooltip-content {
-        position: absolute;
-        max-width: $tooltip-content-max-width;
-        padding: $tooltip-content-padding;
-        border-radius: $tooltip-content-radius-large;
-        font-size: $tooltip-content-font-size;
-        font-weight: $tooltip-content-weight-normal;
-        box-shadow: $tooltip-content-box-shadow;
-        z-index: $tooltip-content-zindex;
-        white-space: nowrap;
-        background-color: $tooltip-background-color;
-        color: $tooltip-color;
-    }
-    .o-tooltip-content::before {
-        position: absolute;
-        content: "";
-        pointer-events: none;
-        z-index: calc($tooltip-content-zindex + 1); 
-    }
-    .o-tooltip-trigger {
-        width: 100%;
-        z-index: calc($tooltip-content-zindex - 1);
-    }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        $color-invert: nth($pair, 2);
-        &.o-color-#{$name} {
-            .o-tooltip-content {
-                background: $color;
-                color: $color-invert;
-            }
-        }
-    }
-    &.o-tooltip-always {
-        .o-tooltip-content::before,
-        .o-tooltip-content {
-            opacity: 1;
-            visibility: visible;
-        }
-    }
-    &.o-tooltip-multiline {
-        .o-tooltip-content {
-            text-align: center;
-            white-space: normal;
-            width: $tooltip-content-multiline-width;
-        }
-    }
-}
-</style>

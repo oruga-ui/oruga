@@ -1,0 +1,95 @@
+
+.o-control-input {
+    position: relative;
+    @include variable('font-size', 'base-font-size', $base-font-size);
+    &.o-control-input-icons-right .o-icon.o-icon-right {
+        right: 0;
+        @include variable('height', 'input-height', $input-height);
+        position: absolute;
+        top: 0;
+        @include variable('width', 'input-height', $input-height);
+        @include variable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
+    }
+    &.o-control-input-icons-left .o-icon.o-icon-left {
+        left: 0;
+        @include variable('height', 'input-height', $input-height);
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        @include variable('width', 'input-height', $input-height);
+        @include variable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
+        &:not(.o-icon-clickable) {
+            pointer-events: none;
+        }
+    }
+    &.o-control-input-icons-left .o-input {
+        @include variable('padding-left', 'input-height', $input-height);
+    }
+    &.o-control-input-icons-right .o-input {
+        @include variable('padding-right', 'input-height', $input-height);
+    }
+    &.o-control-input-expanded {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+}
+
+.o-input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-flex;
+    position: relative;
+    vertical-align: top;
+    @include variable('box-shadow', 'input-box-shadow', $input-box-shadow);
+    @include variable('max-width', 'input-max-width', $input-max-width);
+    @include variable('width', 'input-width', $input-width);
+    @include variable('background-color', 'input-background-color', $input-background-color);
+    @include variable('border-color', 'input-border-color', $input-border-color);
+    @include variable('border-radius', 'input-border-radius', $input-border-radius);
+    @include variable('color', 'input-color', $input-color);
+    @include variable('border', 'input-border', $input-border);
+    @include variable('font-size', 'base-font-size', $base-font-size);
+    @include variable('height', 'input-height', $input-height);
+    @include variable('line-height', 'input-line-height', $input-line-height);
+    @include variable('padding', 'input-padding', $input-padding);
+    @include variable('margin', 'input-margin', $input-margin);
+    &.o-input-rounded {
+        border-radius: 9999px;
+    }
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include variable('font-size', ('input-font-size-' + #{$name}), $value);
+        }
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &.o-color-#{$name} {
+            @include variable('border-color', ('color-' + #{$name}), $color);
+        }
+    }
+    @at-root {
+        textarea#{&} {
+            display: block;
+            max-width: 100%;
+            min-width: 100%;
+            @include variable('padding', 'input-textarea-padding', $input-textarea-padding);
+            resize: vertical;
+            &:not([rows]) {
+                @include variable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
+                @include variable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
+            }
+        }
+    }
+    .o-input-counter {
+        display: block;
+        float: right;
+        @include variable('font-size', 'input-counter-font-size', $input-counter-font-size);
+        @include variable('margin', 'input-counter-margin', $input-counter-margin);
+        &.o-input-counter-invisible {
+            visibility: hidden;
+        }
+    }
+}

@@ -1,5 +1,3 @@
-@import "../../scss/oruga.scss";
-
 @keyframes icon-spin {
     0% {
         -webkit-transform: rotate(0deg);
@@ -17,13 +15,13 @@
     justify-content: center;
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            font-size: $value;
+            @include variable('font-size', ('icon-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.o-color-#{$name} {
-            color: $color;
+            @include variable('color', ('color-' + #{$name}), $color);
         }
     }
     &.o-icon-clickable {
@@ -31,6 +29,6 @@
         cursor: pointer;
     }
     &.o-icon-spin {
-        animation: spin $icon-spin-duration infinite linear;
+        @include variable('animation', 'icon-spin-duration', (spin $icon-spin-duration infinite linear));
     }
 }

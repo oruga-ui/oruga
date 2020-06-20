@@ -1,0 +1,130 @@
+.o-pagination {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    @include variable('font-size', 'pagination-font-size', $pagination-font-size);
+    @include variable('margin', 'pagination-margin', $pagination-margin);
+    @each $name, $value in $sizes {
+        &.o-size-#{$name} {
+            @include variable('font-size', ('pagination-font-size-' + #{$name}), $value);
+        }
+    }
+    &.o-pagination-simple {
+        justify-content: normal;
+        &.o-pagination-centered {
+            justify-content: center;
+        }
+        &.o-pagination-right {
+            justify-content: flex-end;
+        }
+    }
+    &.o-pagination-rounded {
+        .o-pagination-link {
+            @include variable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
+        }
+    }
+    .o-pagination-ellipsis {
+        @include variable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
+        pointer-events: none;
+    }
+    .o-pagination-ellipsis, .o-pagination-link, .o-pagination-next, .o-pagination-previous {
+        justify-content: center;
+        @include variable('margin', 'pagination-link-margin', $pagination-link-margin);
+        text-align: center;
+    }
+    .o-pagination-next, .o-pagination-previous {
+        white-space: nowrap;
+        &.o-pagination-disabled {
+            pointer-events: none;
+            @include variable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
+        }
+    }
+    .o-pagination-link, .o-pagination-next, .o-pagination-previous {
+        @include unselectable;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        align-items: center;
+        box-shadow: none;
+        display: inline-flex;
+        position: relative;
+        vertical-align: top;
+        @include variable('line-height', 'pagination-link-line-height', $pagination-link-line-height);
+        @include variable('border', 'pagination-link-border', $pagination-link-border);
+        @include variable('border-radius', 'pagination-link-border-radius', $pagination-link-border-radius);
+        @include variable('border-color', 'pagination-link-border-color', $pagination-link-border-color);
+        @include variable('color', 'pagination-link-color', $pagination-link-color);
+        @include variable('min-width', 'pagination-link-min-width', $pagination-link-min-width);
+        @include variable('height', 'pagination-link-height', $pagination-link-height);
+        &:hover {
+            @include variable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
+            @include variable('color', 'pagination-link-hover-color', $pagination-link-hover-color);
+        }
+    }
+    .o-pagination-link {
+        cursor: pointer;
+        &.o-pagination-link-current {
+            pointer-events: none;
+            @include variable('background-color', 'pagination-link-current-background-color', $pagination-link-current-background-color);
+            @include variable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
+            @include variable('color', 'pagination-link-current-color', $pagination-link-current-color);
+        }
+    }
+    a {
+        &.o-pagination-link {
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    .o-pagination-list {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        list-style: none;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+    }
+    @media screen and (min-width: $pagination-mobile-breakpoint) {
+        justify-content: space-between;
+        .o-pagination-previous {
+            order: 2;
+        }
+        .o-pagination-next {
+            order: 3;
+        }
+        .o-pagination-list {
+            flex-grow: 1;
+            flex-shrink: 1;
+            justify-content: flex-start;
+            order: 1;
+        }
+        &.o-pagination-centered {
+            .o-pagination-previous {
+                order: 1;
+            }
+            .o-pagination-next {
+                order: 3;
+            }
+            .o-pagination-list {
+                justify-content: center;
+                order: 2;
+            }
+        }
+        &.o-pagination-centered {
+            .o-pagination-previous {
+                order: 1;
+            }
+            .o-pagination-next {
+                order: 2;
+            }
+            .o-pagination-list {
+                justify-content: flex-end;
+                order: 2;
+            }
+        }
+    }
+}

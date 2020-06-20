@@ -1,0 +1,47 @@
+
+.o-loading-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    @include variable('z-index', 'loading-zindex', $loading-zindex);
+    &.o-loadind-full-page {
+        position: fixed;
+        .o-loading-icon {
+            top: calc(50% - #{$loading-full-page-icon-size / 2});
+            left: calc(50% - #{$loading-full-page-icon-size / 2});
+            .o-icon {
+                * {
+                    @include variable('width', 'loading-full-page-icon-size', $loading-full-page-icon-size);
+                    @include variable('height', 'loading-full-page-icon-size', $loading-full-page-icon-size);
+                }
+            }
+        }
+    }
+    &:not(.o-loadind-full-page) {
+        .o-loading-icon {
+            top: calc(50% - #{$loading-icon-size / 2});
+            left: calc(50% - #{$loading-icon-size / 2});
+            .o-icon {    
+                * {
+                    @include variable('width', 'loading-icon-size', $loading-icon-size);
+                    @include variable('height', 'loading-icon-size', $loading-icon-size);
+                }
+            }
+        }
+    }
+    .o-loading-background {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        @include variable('background', 'loading-background-legacy', $loading-background-legacy);
+        @include variable('background', 'loading-background', $loading-background);
+    }
+}

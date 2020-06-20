@@ -1,20 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
-import BSlotComponent from '@utils/SlotComponent'
+import OSlotComponent from '@utils/SlotComponent'
 
-describe('BSlotComponent', () => {
+describe('OSlotComponent', () => {
     const MockComponent = {
         render: (h) => h('div', {}, 'Hello!')
     }
     const defaultEvent = 'hook:updated'
 
     it('is called', () => {
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: {}
             }
         })
 
-        expect(wrapper.name()).toBe('BSlotComponent')
+        expect(wrapper.name()).toBe('OSlotComponent')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
@@ -25,7 +25,7 @@ describe('BSlotComponent', () => {
                 default: slot
             }
         })
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm
             }
@@ -42,7 +42,7 @@ describe('BSlotComponent', () => {
             }
         })
         const tag = 'span'
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm,
                 tag: tag,
@@ -59,7 +59,7 @@ describe('BSlotComponent', () => {
                 default: slot
             }
         })
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm
             }
@@ -77,7 +77,7 @@ describe('BSlotComponent', () => {
             }
         })
         const refresh = jest.fn()
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm
             },
@@ -99,7 +99,7 @@ describe('BSlotComponent', () => {
             }
         })
         const refresh = jest.fn()
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm,
                 event
@@ -121,7 +121,7 @@ describe('BSlotComponent', () => {
             }
         })
         const refresh = jest.fn()
-        const wrapper = shallowMount(BSlotComponent, {
+        const wrapper = shallowMount(OSlotComponent, {
             propsData: {
                 component: Component.vm
             },

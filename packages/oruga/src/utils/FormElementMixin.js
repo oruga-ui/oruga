@@ -43,7 +43,7 @@ export default {
             if (typeof this.parentField.newVariant === 'string') {
                 return this.parentField.newVariant
             } else {
-                for (let key in this.parentField.newVariant) {
+                for (const key in this.parentField.newVariant) {
                     if (this.parentField.newVariant[key]) {
                         return key
                     }
@@ -93,8 +93,8 @@ export default {
         },
 
         setInvalid() {
-            let variant = 'danger'
-            let message = this.validationMessage || this.getElement().validationMessage
+            const variant = 'danger'
+            const message = this.validationMessage || this.getElement().validationMessage
             this.setValidity(variant, message)
         },
 

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OTableMobileSort render correctly 1`] = `
+<div class="o-table-mobile-sort">
+    <o-field-stub addons="true" rootclass="o-field" horizontalclass="o-field-horizontal" labelclass="o-field-label" labelhorizontalclass="o-field-horizontal-label" contenthorizontalclass="o-field-horizontal-content" messageclass="o-field-message">
+        <o-select-stub expanded="true" usehtml5validation="true" iconright="caret-down" rootclass="o-control-select" selectclass="o-select" roundedclass="o-select-rounded" multipleclass="o-select-multiple" emptyclass="o-select-empty">
+            <!---->
+        </o-select-stub>
+        <o-button-stub variant="primary" nativetype="button" tag="button" rootclass="o-button" outlinedclass="o-button-outlined" invertedclass="o-button-inverted" expandedclass="o-button-expanded" roundedclass="o-button-rounded">
+            <o-icon-stub icon="arrow-up" size="small" rootclass="o-icon" clickableclass="o-icon-clickable" spinclass="o-icon-spin" both="true" class="o-icon-sort-desc"></o-icon-stub>
+        </o-button-stub>
+    </o-field-stub>
+</div>
+`;

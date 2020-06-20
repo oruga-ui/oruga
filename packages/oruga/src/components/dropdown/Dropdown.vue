@@ -205,7 +205,7 @@ export default {
             selected: this.value,
             isActive: false,
             isHoverable: this.hoverable,
-            _bodyEl: undefined // Used to append to body
+            bodyEl: undefined // Used to append to body
         }
     },
     computed: {
@@ -368,7 +368,7 @@ export default {
             const trigger = this.$refs.trigger
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
-                const dropdown = this.$data._bodyEl.children[0]
+                const dropdown = this.$data.bodyEl.children[0]
                 dropdown.classList.forEach((item) => dropdown.classList.remove(item))
                 this.rootClasses.forEach((item) => {
                     if (item) {
@@ -382,7 +382,7 @@ export default {
                 })
                 if (this.appendToBodyCopyParent) {
                     const parentNode = this.$refs.dropdown.parentNode
-                    const parent = this.$data._bodyEl
+                    const parent = this.$data.bodyEl
                     parent.classList.forEach((item) => parent.classList.remove(item))
                     parentNode.classList.forEach((item) => parent.classList.add(item))
                 }
@@ -406,7 +406,7 @@ export default {
     },
     mounted() {
         if (this.appendToBody) {
-            this.$data._bodyEl = createAbsoluteElement(this.$refs.dropdownMenu)
+            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdownMenu)
             this.updateAppendToBody()
         }
     },
@@ -422,155 +422,8 @@ export default {
             document.removeEventListener('keyup', this.keyPress)
         }
         if (this.appendToBody) {
-            removeElement(this.$data._bodyEl)
+            removeElement(this.$data.bodyEl)
         }
     }
 }
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-dropdown {
-    display: inline-flex;
-    position: relative;
-    vertical-align: top;
-    .o-dropdown-background {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: 0;
-        cursor: pointer;
-        background-color: $dropdown-mobile-overlay-color;
-        z-index: $dropdown-mobile-overlay-zindex;
-        @media screen and (min-width: $dropdown-mobile-breakpoint) {
-            display: none;
-        }
-    }
-    .o-dropdown-menu {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        min-width: $dropdown-menu-width;
-        z-index: $dropdown-menu-zindex;
-        background-color: $dropdown-menu-background;
-        border-radius: $dropdown-menu-border-radius;
-        box-shadow: $dropdown-menu-box-shadow;
-        padding: $dropdown-menu-padding;
-        margin: $dropdown-menu-margin;
-        &.o-dropdown-menu-animation {
-            display: block;
-        }
-        .o-dropdown-item {
-            display: block;
-            position: relative;
-            color: $dropdown-item-color;
-            font-size: $dropdown-item-font-size;
-            line-height: $dropdown-item-line-height;
-            padding: $dropdown-item-padding;
-            &.o-dropdown-item-disabled {
-                pointer-events: none;
-            }
-            &.o-dropdown-item-active {
-                background-color: $dropdown-item-background-active;
-                color: $dropdown-item-color-active;
-            }
-        }
-        a {
-            &.o-dropdown-item {
-                cursor: pointer;
-                text-decoration: none;
-                &:hover {
-                    background-color: $dropdown-item-hover-background-color;
-                    color: $dropdown-item-hover-color;
-                }
-            }
-        }
-    }
-    &.o-dropdown-hoverable:not(.o-dropdown-active) {
-        .o-dropdown-menu {
-            display: none;
-        }
-    }
-    &.o-dropdown-hoverable {
-        &:hover {
-            .o-dropdown-menu {
-                display: block;
-            }
-        }
-    }
-    &.o-dropdown-expanded {
-        width: 100%;
-        .o-dropdown-trigger {
-            width: 100%;
-        }
-        .o-dropdown-menu {
-            width: 100%;
-        }
-        &.o-dropdown-mobile {
-            .o-dropdown-menu {
-                max-width: 100%;
-            }
-        }
-    }
-    &:not(.o-dropdown-disabled) {
-        .o-dropdown-menu {
-            .o-dropdown-item {
-                &.o-dropdown-item-disabled {
-                    opacity: $dropdown-item-disabled-opacity;
-                }
-            }
-        }
-    }
-    &.o-dropdown-disabled {
-        opacity: $dropdown-disabled-opacity;
-        .o-dropdown-trigger {
-            pointer-events: none;
-        }
-    }
-    &.o-dropdown-inline {
-        .o-dropdown-menu {
-            position: static;
-            display: inline-block;
-        }
-    }
-    &.o-dropdown-top-right {
-        .o-dropdown-menu {
-            top: auto;
-            bottom: 100%;
-        }
-    }
-    &.o-dropdown-top-left {
-        .o-dropdown-menu {
-            top: auto;
-            bottom: 100%;
-            right: 0;
-            left: auto;
-        }
-    }
-    &.o-dropdown-bottom-left {
-        .o-dropdown-menu {
-            right: 0;
-            left: auto;
-        }
-    }
-    @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
-        &.o-dropdown-mobile {
-            > .o-dropdown-menu {
-                position: fixed;
-                width: $dropdown-mobile-width;
-                max-width: $dropdown-mobile-max-width;
-                max-height: $dropdown-mobile-max-height;
-                top: 25%;
-                left: 50%;
-                bottom: auto;
-                right: auto;
-                transform: translate3d(-50%, -25%, 0);
-                overflow-y: auto;
-                z-index: $dropdown-mobile-zindex;
-            }
-        }
-    }
-}
-</style>

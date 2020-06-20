@@ -173,7 +173,7 @@ export default {
                 renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             if (
-                // renderedNode > 1 &&
+                renderedNode > 1 &&
                 this.addons &&
                 !this.horizontal
             ) {
@@ -182,88 +182,4 @@ export default {
         }
     }
 }
-
 </script>
-
-<style lang="scss">
-@import "../../scss/oruga.scss";
-
-.o-field {
-    &:not(:last-child) {
-        margin-bottom: $field-margin-bottom;
-    }
-    > .o-field-label {
-        display: block;
-        color: $field-label-color;
-        font-size: $field-label-font-size;
-        font-weight: $field-label-font-weight;
-        @each $name, $value in $sizes {
-            &.o-size-#{$name} {
-                font-size: $value;
-            }
-        }
-    }
-    > .o-field-message {
-        display: block;
-        font-size: $field-message-font-size;
-        margin-top: $field-message-margin-top;
-        @each $name, $pair in $colors {
-            $color: nth($pair, 1);
-            &.o-color-#{$name} {
-                color: $color;
-            }
-        }
-    }
-    &.o-field-addons {
-        display: flex;
-        justify-content: flex-start;
-        *:first-child:not(:only-child) button,
-        button:first-child:not(:only-child),
-        *:first-child:not(:only-child) input,
-        input:first-child:not(:only-child),
-        *:first-child:not(:only-child) select,
-        select:first-child:not(:only-child) {
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
-        }
-        *:last-child:not(:only-child) button,
-        button:last-child:not(:only-child),
-        *:last-child:not(:only-child) input,
-        input:last-child:not(:only-child), 
-        *:last-child:not(:only-child) select,
-        select:last-child:not(:only-child) {
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
-        }
-        > *[class$="-expanded"] {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
-    }
-    &.o-field-grouped {
-        display: flex;
-        justify-content: flex-start;
-        > * {
-            flex-shrink: 0;
-        }
-        > *:not(:last-child) {
-            margin-bottom: 0;
-            margin-right: .75rem;
-        }
-        > *[class$="-expanded"] {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
-        &.o-field-grouped-multiline {
-            flex-wrap: wrap;
-            &:last-child {
-                margin-bottom: -.75rem;
-            }
-            > *:not(:last-child) {
-                margin-bottom: .75rem;
-            }
-        }
-    }
-}
-
-</style>

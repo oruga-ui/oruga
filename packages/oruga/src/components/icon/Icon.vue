@@ -67,8 +67,7 @@ export default {
             ]
         },
         iconConfig() {
-            let allIcons = getIcons()
-            return allIcons[this.newPack]
+            return getIcons()[this.newPack]
         },
         iconPrefix() {
             if (this.iconConfig && this.iconConfig.iconPrefix) {
@@ -133,5 +132,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" src="./icon.scss"></style>

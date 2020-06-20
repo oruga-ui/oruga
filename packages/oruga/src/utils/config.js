@@ -1,3 +1,5 @@
+import { merge } from "./helpers"
+
 let config = {
     defaultContainerElement: null,
     defaultIconPack: 'mdi',
@@ -61,6 +63,23 @@ export { config as default }
 
 export const setOptions = (options) => { config = options }
 
+export let VueInstance
+
 export const setVueInstance = (Vue) => { VueInstance = Vue }
 
-export let VueInstance
+export const Programmatic = {
+    getOptions() {
+        return config
+    },
+    setOptions(options) {
+        setOptions(merge(config, options, true))
+    }
+}
+
+export const Plugin = {
+    install(Vue, options = {}) {
+        setVueInstance(Vue)
+        // Options
+        setOptions(merge(config, options, true))
+    }
+} 

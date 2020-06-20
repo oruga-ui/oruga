@@ -1,0 +1,73 @@
+
+.o-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    @include variable('z-index', 'modal-zindex', $modal-zindex);
+    &.o-modal-full-screen {
+        > .o-modal-content {
+            width: 100%;
+            height: 100%;
+            max-height: 100vh;
+            margin: 0;
+            @include variable('background-color', 'modal-content-fullscreen-background-color', $modal-content-fullscreen-background-color);
+        }
+    }
+    .o-modal-background {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        @include variable('background-color', 'modal-background-color', $modal-background-color);
+    }
+    .o-modal-content {
+        margin: 0 20px;
+        @media screen and (max-width: $modal-mobile-breakpoint - 1px) {
+            width: 100%;
+        }
+    }
+    .o-modal-close {
+        background: none;
+        position: fixed;
+        border: none;
+        cursor: pointer;
+        pointer-events: auto;
+        display: inline-block;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 0;
+        outline: none;
+        vertical-align: top;
+        @include variable('border-radius', 'modal-close-border-radius', $modal-close-border-radius);
+        @include variable('right', 'modal-close-right', $modal-close-right);
+        @include variable('top', 'modal-close-top', $modal-close-top);
+        @include variable('height', 'modal-close-height', $modal-close-height);
+        @include variable('width', 'modal-close-width', $modal-close-width);
+        &:before, &:after {
+            background-color: #fff;
+            content: "";
+            display: block;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%) rotate(45deg);
+            transform-origin: center center;
+        }
+        &:before {
+            height: 2px;
+            width: 50%;
+        }
+        &:before {
+            height: 50%;
+            width: 2px;
+        }
+    }
+}
