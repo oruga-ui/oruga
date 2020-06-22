@@ -20,24 +20,28 @@
             flex-shrink: 0;
             position: relative;
             cursor: pointer;
+            border-radius: 50%;
             @include variable('width', 'radio-size', $radio-size);
             @include variable('height', 'radio-size', $radio-size);
-            transition: background $speed-slow $easing;
-            border-radius: 50%;
+            transition-property: background;
+            @include variable('transition-duration', 'transition-duration', $speed-slow);
+            @include variable('transition-timing-function', 'checkbox-border-color', $easing);
             @include variable('border', 'radio-border', $radio-border);
             &:before {
                 content: "";
                 display: flex;
                 position: absolute;
                 left: 50%;
-                margin-left: calc(-#{$radio-size}/2);
                 bottom: 50%;
-                margin-bottom: calc(-#{$radio-size}/2);
-                @include variable('width', 'radio-size', $radio-size);
-                @include variable('height', 'radio-size', $radio-size);
-                transition: transform $speed-slow $easing;
                 border-radius: 50%;
                 transform: scale(0);
+                transition-property: transform;
+                @include variable('transition-duration', 'transition-duration', $speed-slow);
+                @include variable('transition-timing-function', 'checkbox-border-color', $easing);
+                @include variable('margin-bottom', 'radio-size', -$radio-size, 'calc', '/2');
+                @include variable('margin-left', 'radio-size', -$radio-size, 'calc', '/2');
+                @include variable('width', 'radio-size', $radio-size);
+                @include variable('height', 'radio-size', $radio-size);
                 @include variable('background-color', 'radio-active-background-color', $radio-active-background-color);
             }
             @each $name, $pair in $colors {
@@ -64,11 +68,13 @@
                 @include variable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
             }
             &:checked + .o-radio-check {
-                box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
+                @include mvariable('box-shadow', 'radio-checked-box-shadow-length', $radio-checked-box-shadow-length, 'radio-active-background-color', $radio-active-background-color);
+                // box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
-                    &.o-color#{$name} {
-                        box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
+                    &.o-color-#{$name} {
+                        @include mvariable('box-shadow', 'radio-checked-box-shadow-length', $radio-checked-box-shadow-length, ('color-' + #{name}), $color);
+                        // box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
                     }
                 }
             }

@@ -37,7 +37,8 @@
             @include variable('font-size', 'slider-mark-size', $slider-mark-size);
         }
         position: absolute;
-        top: calc(#{$track-height} / 2 + 2px);
+        @include variable('top', 'slider-tick-label-top-' + #{$name}, $track-height, 'calc', '/2 + 2px');
+        // top: calc(#{$track-height} / 2 + 2px);
         left: 50%;
         transform: translateX(-50%);
     }
@@ -74,7 +75,6 @@
         transform: translate(-50%, -50%);
         top: 50%;
         flex-direction: column; // Fix shrinked thumb at the end in IE 11
-
         .o-slider-thumb {
             @include variable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
             @include variable('border', 'slider-thumb-border', $slider-thumb-border);
@@ -132,9 +132,9 @@
     }
     .o-slider-tick {
         position: absolute;
-		@include variable('width', 'slider-tick-width', $slider-tick-width);
         transform: translate(-50%, -50%);
         top: 50%;
+		@include variable('width', 'slider-tick-width', $slider-tick-width);
         @include variable('background', 'slider-tick-background', $slider-tick-background);
         @include variable('border-radius', 'slider-tick-radius', $slider-tick-radius);
         &.o-slider-tick-hidden {

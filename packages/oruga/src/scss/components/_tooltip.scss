@@ -1,21 +1,45 @@
 
-@mixin tooltip-arrow($direction, $color) {
+@mixin tooltip-arrow($direction, $name, $color) {
     @if ($direction == "top") {
-        border-top: $tooltip-arrow-size solid $color;
-        @include variable('border-right', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
-        @include variable('border-left', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
+        border-top-style: solid;
+        @include variable('border-top-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-top-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
+        border-right-style: solid;
+        border-right-color: transparent;
+        border-left-style: solid;
+        border-left-color: transparent;
+        @include variable('border-right', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-left', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "bottom") {
-        @include variable('border-right', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
-        border-bottom: $tooltip-arrow-size solid $color;
-        @include variable('border-left', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
+        border-bottom-style: solid;
+        @include variable('border-bottom-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-bottom-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
+        border-right-style: solid;
+        border-right-color: transparent;
+        border-left-style: solid;
+        border-left-color: transparent;
+        @include variable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "right") {
-        @include variable('border-top', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
-        border-right: $tooltip-arrow-size solid $color;
-        @include variable('border-bottom', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
+        border-right-style: solid;
+        @include variable('border-right-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-right-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
+        border-top-style: solid;
+        border-top-color: transparent;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        @include variable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-bottom-width', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
     } @else if ($direction == "left") {
-        @include variable('border-top', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
-        @include variable('border-bottom', 'tooltip-arrow-size solid transparent', $tooltip-arrow-size solid transparent);
-        border-left: $tooltip-arrow-size solid $color;
+        border-left-style: solid;
+        @include variable('border-left-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-left-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
+        border-top-style: solid;
+        border-top-color: transparent;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        @include variable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     }
 }
 
@@ -25,11 +49,11 @@
             @if ($direction == "top") {
                 top: auto;
                 right: auto;
-                bottom: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
+                @include mvariable('bottom', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
                 left: 50%;
                 transform: translateX(-50%);
             } @else if ($direction == "bottom") {
-                top: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
+                @include mvariable('top', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
                 right: auto;
                 bottom: auto;
                 left: 50%;
@@ -38,11 +62,11 @@
                 top: 50%;
                 right: auto;
                 bottom: auto;
-                left: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
+                @include mvariable('left', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
                 transform: translateY(-50%);
             } @else if ($direction == "left") {
                 top: 50%;
-                right: calc(100% + #{$tooltip-arrow-size} + #{$tooltip-arrow-margin});
+                @include mvariable('right', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
                 bottom: auto;
                 left: auto;
                 transform: translateY(-50%);
@@ -74,13 +98,13 @@
                 left: auto;
                 transform: translateY(-50%);
             }
-            @include tooltip-arrow($direction, $tooltip-background-color);
+            @include tooltip-arrow($direction, null, $tooltip-background-color);
         }
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &.o-color-#{$name} {
                 .o-tooltip-content::before {
-                    @include tooltip-arrow($direction, $color)
+                    @include tooltip-arrow($direction, $name, $color)
                 }
             }
         }
@@ -97,6 +121,7 @@
     display: inline-flex;
     .o-tooltip-content {
         position: absolute;
+        white-space: nowrap;
         @include variable('max-width', 'tooltip-content-max-width', $tooltip-content-max-width);
         @include variable('padding', 'tooltip-content-padding', $tooltip-content-padding);
         @include variable('border-radius', 'tooltip-content-radius-large', $tooltip-content-radius-large);
@@ -104,9 +129,8 @@
         @include variable('font-weight', 'tooltip-content-weight-normal', $tooltip-content-weight-normal);
         @include variable('box-shadow', 'tooltip-content-box-shadow', $tooltip-content-box-shadow);
         @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
-        white-space: nowrap;
         @include variable('background-color', 'tooltip-background-color', $tooltip-background-color);
-        @include variable('color', 'tooltip-color', $tooltip-color);
+        @include variable('color', 'tooltip-background-color', $tooltip-color);
     }
     .o-tooltip-content::before {
         position: absolute;

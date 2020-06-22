@@ -127,15 +127,15 @@
         &.o-dropdown-mobile {
             > .o-dropdown-menu {
                 position: fixed;
-                @include variable('width', 'dropdown-mobile-width', $dropdown-mobile-width);
-                @include variable('max-width', 'dropdown-mobile-max-width', $dropdown-mobile-max-width);
-                @include variable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height);
                 top: 25%;
                 left: 50%;
                 bottom: auto;
                 right: auto;
                 transform: translate3d(-50%, -25%, 0);
                 overflow-y: auto;
+                @include variable('width', 'dropdown-mobile-width', $dropdown-mobile-width);
+                @include variable('max-width', 'dropdown-mobile-max-width', $dropdown-mobile-max-width);
+                @include variable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height); 
                 @include variable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
             }
         }

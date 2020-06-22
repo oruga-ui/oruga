@@ -25,13 +25,13 @@
         }
     }
     .o-pagination-ellipsis {
-        @include variable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
         pointer-events: none;
+        @include variable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
     }
     .o-pagination-ellipsis, .o-pagination-link, .o-pagination-next, .o-pagination-previous {
         justify-content: center;
-        @include variable('margin', 'pagination-link-margin', $pagination-link-margin);
         text-align: center;
+        @include variable('margin', 'pagination-link-margin', $pagination-link-margin);
     }
     .o-pagination-next, .o-pagination-previous {
         white-space: nowrap;
@@ -41,7 +41,6 @@
         }
     }
     .o-pagination-link, .o-pagination-next, .o-pagination-previous {
-        @include unselectable;
         -moz-appearance: none;
         -webkit-appearance: none;
         align-items: center;
@@ -49,6 +48,7 @@
         display: inline-flex;
         position: relative;
         vertical-align: top;
+        @include unselectable;
         @include variable('line-height', 'pagination-link-line-height', $pagination-link-line-height);
         @include variable('border', 'pagination-link-border', $pagination-link-border);
         @include variable('border-radius', 'pagination-link-border-radius', $pagination-link-border-radius);

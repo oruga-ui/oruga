@@ -24,9 +24,9 @@
     vertical-align: middle;
     width: 100%;
     > .o-skeleton-item {
-        @include variable('background', 'skeleton-background', $skeleton-background);
         background-size: 400% 100%;
         width: 100%;
+        @include variable('background', 'skeleton-background', $skeleton-background);
         &.o-skeleton-rounded {
             @include variable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
         }
@@ -39,7 +39,9 @@
     }
     &.o-skeleton-animated {
         > .o-skeleton-item {
-            @include variable('animation', 'skeleton-duration infinite', (skeleton-loading $skeleton-duration infinite));
+            animation-name: skeleton-loading;
+            animation-iteration-count: infinite;
+            @include variable('animation-duration', 'skeleton-duration', $skeleton-duration);
         }
     }
     &.o-skeleton-centered {

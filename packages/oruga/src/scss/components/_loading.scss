@@ -13,8 +13,8 @@
     &.o-loadind-full-page {
         position: fixed;
         .o-loading-icon {
-            top: calc(50% - #{$loading-full-page-icon-size / 2});
-            left: calc(50% - #{$loading-full-page-icon-size / 2});
+            top: calc(50% - #{variable('loading-full-page-icon-size', $loading-full-page-icon-size)} / 2);
+            left: calc(50% - #{variable('loading-full-page-icon-size', $loading-full-page-icon-size)} / 2);
             .o-icon {
                 * {
                     @include variable('width', 'loading-full-page-icon-size', $loading-full-page-icon-size);

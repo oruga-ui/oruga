@@ -29,6 +29,9 @@
         cursor: pointer;
     }
     &.o-icon-spin {
-        @include variable('animation', 'icon-spin-duration', (spin $icon-spin-duration infinite linear));
+        animation-name: spin;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        @include variable('animation-duraiton', 'icon-spin-duration', $icon-spin-duration);
     }
 }

@@ -213,6 +213,10 @@
                 .o-checkbox input {
                     &:checked + .o-checkbox-check {
                         background: $table-row-active-color url(checkmark($table-row-active-background-color)) no-repeat center center;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        @include variable('background-color', 'table-row-active-color', $table-row-active-color);
+                        @include variable('background-image', 'table-checkmark-row-active-color', url(checkmark($table-row-active-background-color)));
                     }
                     + .o-checkbox-check {
                         @include variable('border-color', 'table-row-active-color', $table-row-active-color);

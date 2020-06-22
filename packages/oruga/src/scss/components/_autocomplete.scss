@@ -22,13 +22,13 @@
         .o-autocomplete-item {
             display: block;
             position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             @include variable('color', 'autocomplete-item-color', $autocomplete-item-color);
             @include variable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
             @include variable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
             @include variable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             &.o-autocomplete-item-disabled {
                 pointer-events: none;
                 @include variable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);

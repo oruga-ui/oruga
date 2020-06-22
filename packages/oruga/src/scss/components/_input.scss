@@ -57,7 +57,7 @@
     @include variable('padding', 'input-padding', $input-padding);
     @include variable('margin', 'input-margin', $input-margin);
     &.o-input-rounded {
-        border-radius: 9999px;
+        @include variable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
     }
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
@@ -75,8 +75,8 @@
             display: block;
             max-width: 100%;
             min-width: 100%;
-            @include variable('padding', 'input-textarea-padding', $input-textarea-padding);
             resize: vertical;
+            @include variable('padding', 'input-textarea-padding', $input-textarea-padding);
             &:not([rows]) {
                 @include variable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
                 @include variable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
