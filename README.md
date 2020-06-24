@@ -1,7 +1,9 @@
 <p align="center">
     <a href="https://oruga.io">
-        <img height="128px" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
+        <img height="320" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
     </a>
+</p>
+<p align="center">
     <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/v/oruga.svg" /></a>
     <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/dt/oruga.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/oruga.svg" /></a>
@@ -9,11 +11,15 @@
 
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/)
 
+## The idea behind
+
+***Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly.***
+
 ## Features
 
-* Highly customizable components: all components are fully customizable in different ways
-* Components with steroids: most of the components aren't a simple wrapper of native elements but they add new and custom features
-* Lightweight: no other internal dependency
+* **Highly customizable components**: all components are fully customizable in different ways
+* **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
+* **Lightweigh**t: no other internal dependency
 
 ## Documentation
 
