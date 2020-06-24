@@ -25,7 +25,7 @@
             @include variable('height', 'radio-size', $radio-size);
             transition-property: background;
             @include variable('transition-duration', 'transition-duration', $speed-slow);
-            @include variable('transition-timing-function', 'checkbox-border-color', $easing);
+            @include variable('transition-timing-function', 'transition-timing', $easing);
             @include variable('border', 'radio-border', $radio-border);
             &:before {
                 content: "";
@@ -37,7 +37,7 @@
                 transform: scale(0);
                 transition-property: transform;
                 @include variable('transition-duration', 'transition-duration', $speed-slow);
-                @include variable('transition-timing-function', 'checkbox-border-color', $easing);
+                @include variable('transition-timing-function', 'transition-timing', $easing);
                 @include variable('margin-bottom', 'radio-size', -$radio-size, 'calc', '/2');
                 @include variable('margin-left', 'radio-size', -$radio-size, 'calc', '/2');
                 @include variable('width', 'radio-size', $radio-size);

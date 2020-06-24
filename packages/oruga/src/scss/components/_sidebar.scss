@@ -34,7 +34,7 @@
             &.o-sidebar-mini-expand:hover {
                 transition: width;
                 @include variable('transition-duration', 'transition-duration', $speed-slow);
-                @include variable('transition-timing-function', 'checkbox-border-color', $easing);
+                @include variable('transition-timing-function', 'transition-timing', $easing);
                 &:not(.o-sidebar-fullwidth) {
                     @include variable('width', 'sidebar-width', $sidebar-width);
                     &.o-sidebar-mini-expand-fixed {

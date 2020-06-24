@@ -26,7 +26,7 @@
             border-style: solid;
             transition-property: background;
             @include variable('transition-duration', 'transition-duration', $speed-slow);
-            @include variable('transition-timing-function', 'checkbox-border-color', $easing);
+            @include variable('transition-timing-function', 'transition-timing', $easing);
         }
         &:checked + .o-checkbox-check {
             background-position: center;
