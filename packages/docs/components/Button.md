@@ -1,28 +1,35 @@
 ---
-title: Button
+title: OButton
 ---
 
-# Button
+# OButton
 
-> Base component, contains and wrap all the other components.
+> The classic button, in different colors, sizes, and states
 
----
+## Props
 
-## Demo
+| Prop name     | Description | Type           | Values | Default                                                                                                                                                                                                              |
+| ------------- | ----------- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| variant       |             | string\|object | -      |                                                                                                                                                                                                                      |
+| size          |             | string         | -      |                                                                                                                                                                                                                      |
+| label         |             | string         | -      |                                                                                                                                                                                                                      |
+| iconPack      |             | string         | -      |                                                                                                                                                                                                                      |
+| iconLeft      |             | string         | -      |                                                                                                                                                                                                                      |
+| iconRight     |             | string         | -      |                                                                                                                                                                                                                      |
+| rounded       |             | boolean        | -      | () => getValueByPath(config, 'button.rounded', false)                                                                                                                                                                |
+| outlined      |             | boolean        | -      |                                                                                                                                                                                                                      |
+| expanded      |             | boolean        | -      |                                                                                                                                                                                                                      |
+| inverted      |             | boolean        | -      |                                                                                                                                                                                                                      |
+| nativeType    |             | string         | -      | 'button'                                                                                                                                                                                                             |
+| tag           |             | string         | -      | 'button'                                                                                                                                                                                                             |
+| rootClass     |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.rootClass', '')<br> return getCssClass(clazz, override, 'o-button')<br>}              |
+| outlinedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-button-outlined')<br>} |
+| invertedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.invertedClass', '')<br> return getCssClass(clazz, override, 'o-button-inverted')<br>} |
+| expandedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.expandedClass', '')<br> return getCssClass(clazz, override, 'o-button-expanded')<br>} |
+| roundedClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.roundedClass', '')<br> return getCssClass(clazz, override, 'o-button-rounded')<br>}   |
 
-::: demo
-<template>
-    <section>
-        <o-button>Default</o-button>
-        <o-button variant="primary">Primary</o-button>
-        <o-button variant="primary" rounded>Rounded</o-button>
-        <o-button variant="primary" outlined>Outlined</o-button>
-        <o-button variant="primary" inverted>Inverted</o-button>
-    </section>
-</template>
+## Slots
 
-<script>
-export default {
-}
-</script>
-
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |

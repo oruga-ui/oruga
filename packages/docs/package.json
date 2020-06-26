@@ -6,28 +6,26 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
-    "docs:dev": "npm link oruga && vuepress dev --host localhost",
-    "docs:build": "vuepress build",
-    "docs:dev1": "npm link oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
-    "docs:build1": "vue-docgen && vuepress buildnossr"
+    "docs:dev": "npm link oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --debug --host localhost\"",
+    "docs:build": "vue-docgen && vuepress build"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "@vuepress/plugin-google-analytics": "^1.5.2",
     "@vuepress/plugin-register-components": "^1.5.1",
     "concurrently": "^5.2.0",
+    "estree-walker": "^2.0.1",
     "markdown-it-include": "^1.1.1",
-    "vue-docgen-cli": "^4.24.0",
+    "sockjs-client": "^1.4.0",
+    "vue-docgen-cli": "^4.25.0",
+    "vue-inbrowser-compiler": "^4.23.3",
     "vuepress": "^1.5.0",
     "vuepress-plugin-container": "^2.1.4",
-    "vuepress-plugin-demo-code": "^0.5.0",
     "vuepress-plugin-live": "^1.5.3"
   },
   "resolutions": {
     "watchpack": "1.6.1"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.28",
-    "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "@fortawesome/vue-fontawesome": "^0.1.9"
   }
 }

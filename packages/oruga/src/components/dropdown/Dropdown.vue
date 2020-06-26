@@ -42,6 +42,10 @@ import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
+ * @requires ./DropdownItem.vue
+ */
 export default {
     name: 'ODropdown',
     directives: {

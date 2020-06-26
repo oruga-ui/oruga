@@ -1,4 +1,30 @@
 
+
+$dropdown-disabled-opacity: $base-disabled-opacity !default;
+$dropdown-item-background-active: #000000 !default;
+$dropdown-item-color-active: #ffffff !default;
+$dropdown-item-color: #000000 !default;
+$dropdown-item-disabled-opacity: $base-disabled-opacity !default;
+$dropdown-item-font-size: $base-font-size !default;
+$dropdown-item-hover-background-color: #f5f5f5 !default;
+$dropdown-item-hover-color: #000000 !default;
+$dropdown-item-line-height: $base-line-height !default;
+$dropdown-item-padding: .375rem 1rem !default;
+$dropdown-menu-background: #ffffff !default;
+$dropdown-menu-border-radius: $base-border-radius !default;
+$dropdown-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default;
+$dropdown-menu-margin: 0 !default;
+$dropdown-menu-padding: .5rem 0 .5rem 0 !default;
+$dropdown-menu-width: 12rem !default;
+$dropdown-menu-zindex: 20 !default;
+$dropdown-mobile-breakpoint: 1024px !default;
+$dropdown-mobile-max-height: calc(100vh - 120px) !default;
+$dropdown-mobile-max-width: 460px !default;
+$dropdown-mobile-overlay-color: rgba(#000000, 0.86) !default;
+$dropdown-mobile-overlay-zindex: 40!default;
+$dropdown-mobile-width: calc(100vw - 40px) !default;
+$dropdown-mobile-zindex: 50 !default;
+
 .o-dropdown {
     display: inline-flex;
     position: relative;

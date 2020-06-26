@@ -1,4 +1,11 @@
 
+$field-label-color: #363636 !default;
+$field-label-font-size: $base-font-size !default;
+$field-label-font-weight: 600 !default;
+$field-margin-bottom: .75rem !default;
+$field-message-font-size: .75rem !default;
+$field-message-margin-top: .25rem !default;
+
 .o-field {
     &:not(:last-child) {
         @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);

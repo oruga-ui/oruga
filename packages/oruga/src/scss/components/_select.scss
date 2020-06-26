@@ -1,4 +1,25 @@
 
+$select-background-color: #fff !default;
+$select-border-color: #dbdbdb !default;
+$select-border-radius: $base-border-radius !default;
+$select-box-shadow: none !default;
+$select-color: #363636 !default;
+$select-control-icon-zindex: 4 !default;
+$select-empty-color: rgba($grey, 0.7) !default;
+$select-font-size: 1em !default;
+$select-height: 2.5em !default;
+$select-line-height: $base-line-height !default;
+$select-margin: 0 !default;
+$select-max-width: 100% !default;
+$select-optgroup-color: $grey-light !default;
+$select-optgroup-font-style: normal !default;
+$select-optgroup-font-weight: 500 !default;
+$select-optgroup-padding: 0.25em 0 !default;
+$select-option-color: #4a4a4a !default;
+$select-option-disabled-opacity: $base-disabled-opacity !default;
+$select-option-padding: .25em .5em !default;
+$select-padding: calc(.5em - 1px) 2em calc(.5em - 1px) calc(.75em - 1px) !default;
+
 .o-control-select {
     display: inline-flex;
     position: relative;

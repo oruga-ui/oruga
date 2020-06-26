@@ -1,4 +1,14 @@
 
+$modal-background-color: hsla(0,0%,4%,.86) !default;
+$modal-close-border-radius: $base-rounded-border-radius !default;
+$modal-close-height: 32px !default;
+$modal-close-right: 20px !default;
+$modal-close-top: 20px !default;
+$modal-close-width: 32px !default;
+$modal-content-fullscreen-background-color: #f5f5f5 !default;
+$modal-mobile-breakpoint: 1024px !default;
+$modal-zindex: 40 !default;
+
 .o-modal {
     display: flex;
     flex-direction: column;

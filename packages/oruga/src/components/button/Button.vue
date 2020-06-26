@@ -30,6 +30,9 @@ import Icon from '../icon/Icon'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * The classic button, in different colors, sizes, and states
+ */
 export default {
     name: 'OButton',
     components: {
@@ -45,9 +48,7 @@ export default {
         iconRight: String,
         rounded: {
             type: Boolean,
-            default: () => {
-                return getValueByPath(config, 'button.rounded', false)
-            }
+            default: () => getValueByPath(config, 'button.rounded', false)
         },
         outlined: Boolean,
         expanded: Boolean,

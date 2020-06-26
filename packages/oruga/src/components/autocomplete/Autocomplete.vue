@@ -73,6 +73,9 @@ import { getValueByPath, removeElement, createAbsoluteElement, getCssClass, toCs
 import FormElementMixin from '../../utils/FormElementMixin'
 import Input from '../input/Input'
 
+/**
+ * @style _autocomplete.scss
+ */
 export default {
     name: 'OAutocomplete',
     components: {

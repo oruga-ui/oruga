@@ -29,6 +29,11 @@
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 import config from '../../utils/config'
 
+/**
+ * Switch between two opposing states
+ * @displayName Switch
+ * @style _switch.scss
+ */
 export default {
     name: 'OSwitch',
     props: {

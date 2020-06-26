@@ -1,4 +1,12 @@
 
+$sidebar-background: $modal-background-color !default;
+$sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
+$sidebar-content-background-color: $grey-lighter !default;
+$sidebar-mobile-breakpoint: 1024px !default;
+$sidebar-mobile-width: 80px !default;
+$sidebar-width: 260px !default;
+$sidebar-zindex: 40 !default;
+
 .o-sidebar {
     .o-sidebar-content {
         @include variable('background-color', 'sidebar-content-background-color', $sidebar-content-background-color);

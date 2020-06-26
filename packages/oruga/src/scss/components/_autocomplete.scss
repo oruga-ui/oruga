@@ -1,3 +1,21 @@
+
+/* @docs */
+$autocomplete-item-color: #000000 !default;
+$autocomplete-item-disabled-opacity: $base-disabled-opacity !default;
+$autocomplete-item-font-size: $base-font-size !default;
+$autocomplete-item-hover-background-color: grey !default;
+$autocomplete-item-hover-color: #000000 !default;
+$autocomplete-item-line-height: $base-line-height !default;
+$autocomplete-item-padding: .375rem 1rem !default;
+$autocomplete-menu-background: #ffffff !default;
+$autocomplete-menu-border-radius: $base-border-radius !default;
+$autocomplete-menu-box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default;
+$autocomplete-menu-margin: 0 !default;
+$autocomplete-menu-max-height: 200px !default;
+$autocomplete-menu-padding: .5rem 0 .5rem 0 !default;
+$autocomplete-menu-zindex : 20 !default;
+/* @docs */
+
 .o-autocomplete {
     position: relative;
     .o-autocomplete-menu {

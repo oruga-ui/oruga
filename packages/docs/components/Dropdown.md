@@ -1,95 +1,54 @@
 ---
-title: Dropdown
+title: ODropdown
 ---
 
-# Dropdown
+# ODropdown
 
-> Base component
+> Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
----
+## Props
 
-## Simple
+| Prop name              | Description | Type                                         | Values                                                 | Default                                                                                                                                                                                                                                      |
+| ---------------------- | ----------- | -------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value                  |             | string\|number\|boolean\|object\|array\|func | -                                                      | null                                                                                                                                                                                                                                         |
+| disabled               |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| hoverable              |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| inline                 |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| scrollable             |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| maxHeight              |             | string\|number                               | -                                                      | () => {<br> return getValueByPath(config, 'dropdown.maxHeight', 200)<br>}                                                                                                                                                                    |
+| position               |             | string                                       | `top-right`, `top-left`, `bottom-left`, `bottom-right` |                                                                                                                                                                                                                                              |
+| mobileModal            |             | boolean                                      | -                                                      | () => {<br> return getValueByPath(config, 'dropdown.mobileModal', true)<br>}                                                                                                                                                                 |
+| ariaRole               |             | string                                       | `menu`, `list`, `dialog`                               | null                                                                                                                                                                                                                                         |
+| animation              |             | string                                       | -                                                      | () => {<br> return getValueByPath(config, 'dropdown.animation')<br>}                                                                                                                                                                         |
+| multiple               |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| trapFocus              |             | boolean                                      | -                                                      | () => {<br> return getValueByPath(config, 'dropdown.trapFocus', true)<br>}                                                                                                                                                                   |
+| closeOnClick           |             | boolean                                      | -                                                      | true                                                                                                                                                                                                                                         |
+| canClose               |             | array\|boolean                               | -                                                      | true                                                                                                                                                                                                                                         |
+| expanded               |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| appendToBody           |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| appendToBodyCopyParent |             | boolean                                      | -                                                      |                                                                                                                                                                                                                                              |
+| rootClass              |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.rootClass', '')<br> return getCssClass(clazz, override, 'o-dropdown')<br>}                                |
+| triggerClass           |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.triggerClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-trigger')<br>}                     |
+| backgroundClass        |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.backgroundClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-background')<br>}               |
+| menuClass              |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.menuClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-menu o-dropdown-menu-animation')<br>} |
+| disabledClass          |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.disabledClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-disabled')<br>}                   |
+| activeClass            |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.activeClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-active')<br>}                       |
+| hoverableClass         |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.hoverableClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-hoverable')<br>}                 |
+| inlineClass            |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.inlineClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-inline')<br>}                       |
+| mobileClass            |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.mobileClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-mobile')<br>}                       |
+| expandedClass          |             | string                                       | -                                                      | () => {<br> const override = getValueByPath(config, 'dropdown.override', false)<br> const clazz = getValueByPath(config, 'dropdown.expandedClass', '')<br> return getCssClass(clazz, override, 'o-dropdown-expanded')<br>}                   |
 
-::: demo
-<template>
-    <section>
-        <o-dropdown>
-            <o-button slot="trigger" slot-scope="{ active }">
-                <span>Click me!</span>
-            </o-button>
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
-        </o-dropdown>
-        <o-dropdown hoverable aria-role="list">
-            <o-button slot="trigger">
-                <span>Hover me!</span>
-            </o-button>
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
-        </o-dropdown>
-        <o-dropdown disabled aria-role="list">
-            <o-button slot="trigger">
-                <span>Disabled</span>
-            </o-button>
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
-        </o-dropdown>
-        <o-dropdown inline>
-            <o-button slot="trigger" slot-scope="{ active }">
-                <span>Click me!</span>
-            </o-button>
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
-        </o-dropdown>
-    </section>
-</template>
+## Events
 
-<script>
-export default {
-}
-</script>
-:::
+| Event name    | Type      | Description |
+| ------------- | --------- | ----------- |
+| active-change | undefined |
+| change        | undefined |
+| input         | undefined |
 
-## Multiple
+## Slots
 
-::: demo
-<template>
-    <section>
-        <p><b>Selected</b>: {{ selectedOptions }}</p>
-        <o-dropdown
-            v-model="selectedOptions"
-            multiple
-            aria-role="list">
-            <o-button type="button" slot="trigger">
-                <span>Selected ({{ selectedOptions.length }})</span>
-                <o-icon icon="caret-down"></o-icon>
-            </o-button>
-            <o-dropdown-item value="option1" aria-role="listitem">
-                <span>Option 1</span>
-            </o-dropdown-item>
-            <o-dropdown-item value="option2" aria-role="listitem">
-                <span>Option 2</span>
-            </o-dropdown-item>
-            <o-dropdown-item value="option3" aria-role="listitem">
-                <span>Option 3</span>
-            </o-dropdown-item>
-        </o-dropdown>
-    </section>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            selectedOptions: []
-        }
-    }
-}
-</script>
-:::
-
-
+| Name    | Description | Bindings                                |
+| ------- | ----------- | --------------------------------------- |
+| trigger |             | [<br> {<br> "name": "active"<br> }<br>] |
+| default |             |                                         |
