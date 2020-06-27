@@ -1,4 +1,9 @@
 <script>
+
+/**
+ * An easy way to toggle what you want
+ * @displayName Collapse
+ */
 export default {
     name: 'OCollapse',
     props: {

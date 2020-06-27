@@ -74,6 +74,8 @@ import FormElementMixin from '../../utils/FormElementMixin'
 import Input from '../input/Input'
 
 /**
+ * Extended input that provide suggestions while the user types
+ * @displayName Autocomplete
  * @style _autocomplete.scss
  */
 export default {

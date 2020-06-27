@@ -57,6 +57,11 @@ import SliderTick from './SliderTick'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * A slider to select a value or range from a given range
+ * @displayName Slider
+ * @style _slider.scss
+ */
 export default {
     name: 'OSlider',
     components: {

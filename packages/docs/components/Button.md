@@ -1,10 +1,16 @@
 ---
-title: OButton
+title: Button
 ---
 
-# OButton
+# Button
 
 > The classic button, in different colors, sizes, and states
+
+---
+
+## Examples
+
+### Base
 
 ## Props
 
@@ -33,3 +39,20 @@ title: OButton
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
+
+## Style
+
+| CSS Variable                         | SASS Variable                  | Default                      |
+| ------------------------------------ | ------------------------------ | ---------------------------- |
+| --oruga-button-background-color      | \$button-background-color      | #ffffff                      |
+| --oruga-button-border-radius         | \$button-border-radius         | \$base-border-radius         |
+| --oruga-button-border                | \$button-border                | 1px solid #000000            |
+| --oruga-button-box-shadow            | \$button-box-shadow            | none                         |
+| --oruga-button-color                 | \$button-color                 | #000000                      |
+| --oruga-button-font-size             | \$button-font-size             | \$base-font-size             |
+| --oruga-button-line-height           | \$button-line-height           | \$base-line-height           |
+| --oruga-button-margin-border-to-icon | \$button-margin-border-to-icon | calc(-.375em - 1px)          |
+| --oruga-button-margin-icon-to-text   | \$button-margin-icon-to-text   | .1875em                      |
+| --oruga-button-margin                | \$button-margin                | 0                            |
+| --oruga-button-padding               | \$button-padding               | calc(.375em - 1px) .75em     |
+| --oruga-button-rounded-border-radius | \$button-rounded-border-radius | \$base-rounded-border-radius |

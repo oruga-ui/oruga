@@ -41,6 +41,11 @@ import trapFocus from '../../directives/trapFocus'
 import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
 import config from '../../utils/config'
 
+/**
+ * Classic modal overlay to include any content you may need
+ * @displayName Modal
+ * @style _modal.scss
+ */
 export default {
     name: 'OModal',
     directives: {

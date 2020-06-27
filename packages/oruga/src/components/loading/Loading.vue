@@ -20,6 +20,11 @@ import config from '../../utils/config'
 import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
+/**
+ * A simple loading overlay
+ * @displayName Loading
+ * @style _loading.scss
+ */
 export default {
     name: 'OLoading',
     components: {

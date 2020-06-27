@@ -1,3 +1,5 @@
+
+/* @docs */
 $pagination-disabled-opacity: $base-disabled-opacity !default;
 $pagination-ellipsis-color: #b5b5b5 !default;
 $pagination-font-size: 1rem !default;
@@ -17,6 +19,7 @@ $pagination-link-min-width: 2.25em !default;
 $pagination-margin: -.25rem !default;
 $pagination-mobile-breakpoint: 1024px !default;
 $pagination-rounded-border-radius: $base-rounded-border-radius !default;
+/* @docs */
 
 .o-pagination {
     align-items: center;

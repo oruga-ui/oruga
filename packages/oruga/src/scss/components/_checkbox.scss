@@ -1,4 +1,5 @@
 
+/* @docs */
 $checkbox-active-background-color: $primary !default;
 $checkbox-background-color: transparent !default;
 $checkbox-border-color: $grey !default;
@@ -13,6 +14,7 @@ $checkbox-focus-sibiling-box-shadow: $checkbox-checked-box-shadow-length rgba($g
 $checkbox-label-padding: $control-padding-horizontal 0 0 0 !default;
 $checkbox-margin-sibiling: 0.5em !default;
 $checkbox-size: 1.25em !default;
+/* @docs */
 
 .o-checkbox {
     outline: none;

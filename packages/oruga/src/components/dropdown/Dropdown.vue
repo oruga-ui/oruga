@@ -44,7 +44,8 @@ import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath, g
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
- * @requires ./DropdownItem.vue
+ * @displayName Dropdown
+ * @style _dropdown.scss 
  */
 export default {
     name: 'ODropdown',

@@ -18,6 +18,11 @@ import config from '../../utils/config'
 import getIcons from '../../utils/icons'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Icons take an important role of any application
+ * @displayName Icon
+ * @style _icon.scss 
+ */
 export default {
     name: 'OIcon',
     props: {

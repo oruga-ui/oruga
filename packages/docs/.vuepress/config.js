@@ -11,8 +11,15 @@ module.exports = {
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   ],
   plugins: [
-    [ "live" ]
+    'demo-block'
   ],
+  configureWebpack: {
+    resolve: {
+      alias: {
+        vue: 'vue/dist/vue.common.js',
+      }
+    }
+  },
   markdown: {
     config: md => {
       // use more markdown-it plugins!

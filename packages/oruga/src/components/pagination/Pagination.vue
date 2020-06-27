@@ -119,16 +119,16 @@
 </template>
 
 <script>
-/**
- * @requires ./PaginationButton.vue
- */
 import PaginationButton from './PaginationButton'
 import Icon from '../icon/Icon'
+
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
 /**
  * A responsive and flexible pagination
+ * @displayName Pagination
+ * @style _pagination.scss
  */
 export default {
     name: 'OPagination',

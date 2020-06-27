@@ -24,6 +24,11 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin.js'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Select an option from a set
+ * @displayName Radio
+ * @style _radio.scss
+ */
 export default {
     name: 'ORadio',
     mixins: [CheckRadioMixin],

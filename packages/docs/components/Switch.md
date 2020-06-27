@@ -8,11 +8,13 @@ title: Switch
 
 ---
 
-```vue live
-<button>Aa</button>
-```
+## Examples
 
-```vue live
+### Base
+
+::: demo
+
+```html
 <template>
   <section>
     <o-field>
@@ -35,20 +37,24 @@ title: Switch
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isSwitched: false,
-      isSwitchedCustom: "Yes"
-    };
-  }
-};
+  export default {
+    data() {
+      return {
+        isSwitched: false,
+        isSwitchedCustom: "Yes"
+      };
+    }
+  };
 </script>
 ```
 
-## Variants
+:::
 
-```vue live
+### Variants
+
+::: demo
+
+```html
 <template>
   <section>
     <o-field>
@@ -78,11 +84,19 @@ export default {
     </o-field>
   </section>
 </template>
+
+<script>
+  export default {};
+</script>
 ```
 
-## Sizes
+:::
 
-```vue live
+### Sizes
+
+::: demo
+
+```html
 <template>
   <section>
     <o-field>
@@ -99,19 +113,27 @@ export default {
     </o-field>
   </section>
 </template>
+
+<script>
+  export default {};
+</script>
 ```
 
-# Style variants
+:::
 
-```vue live
+### Style variants
+
+::: demo
+
+```html
 <template>
   <section>
     <o-field grouped>
       <o-switch v-model="isRounded">Rounded</o-switch>
       <o-switch v-model="isOutlined">Outlined</o-switch>
     </o-field>
-    <o-field label="Type">
-      <o-select expanded v-model="type" placeholder="Type">
+    <o-field label="Variant">
+      <o-select expanded v-model="variant" placeholder="Variant">
         <option value="null">Default</option>
         <option value="primary">Primary</option>
         <option value="success">Success</option>
@@ -119,8 +141,8 @@ export default {
         <option value="danger">Danger</option>
       </o-select>
     </o-field>
-    <o-field label="Passive Type">
-      <o-select expanded v-model="passiveType" placeholder="Passive Type">
+    <o-field label="Passive Variant">
+      <o-select expanded v-model="passive" placeholder="Passive Variant">
         <option value="null">Default</option>
         <option value="primary">Primary</option>
         <option value="success">Success</option>
@@ -131,36 +153,38 @@ export default {
     <o-field label="Size">
       <o-select expanded v-model="size">
         <option value="">Default</option>
-        <option value="small">is-small</option>
-        <option value="medium">is-medium</option>
-        <option value="large">is-large</option>
+        <option value="small">small</option>
+        <option value="medium">medium</option>
+        <option value="large">large</option>
       </o-select>
     </o-field>
     <o-switch
       :rounded="isRounded"
       :outlined="isOutlined"
       :size="size"
-      :type="type"
-      :passive-type="passiveType"
+      :variant="variant"
+      :passive-variant="passive"
       >Sample</o-switch
     >
   </section>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      size: "",
-      type: null,
-      passiveType: null,
-      isRounded: false,
-      isOutlined: false
-    };
-  }
-};
+  export default {
+    data() {
+      return {
+        size: "",
+        variant: null,
+        passive: null,
+        isRounded: false,
+        isOutlined: false
+      };
+    }
+  };
 </script>
 ```
+
+:::
 
 ## Props
 
@@ -182,7 +206,7 @@ export default {
 | disabledClass  |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.disabledClass', '')<br> return getCssClass(clazz, override, 'o-switch-disabled')<br>} |
 | checkClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.checkClass', '')<br> return getCssClass(clazz, override, 'o-switch-check')<br>}       |
 | roundedClass   |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.roundedClass', '')<br> return getCssClass(clazz, override, 'o-switch-rounded')<br>}   |
-| outlinedClass  |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-switch-label')<br>}    |
+| outlinedClass  |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-switch-outlined')<br>} |
 | labelClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.labelClass', '')<br> return getCssClass(clazz, override, 'o-switch-label')<br>}       |
 
 ## Events
@@ -208,7 +232,7 @@ export default {
 | --oruga-switch-active-box-shadow-opacity       | \$switch-active-box-shadow-opacity       | 0.6                                                                                              |
 | --oruga-swtich-action-background               | \$swtich-action-background               | #f5f5f5                                                                                          |
 | --oruga-switch-background                      | \$switch-background                      | #b5b5b5                                                                                          |
-| --oruga-switch-border-radius                   | \$switch-border-radius                   | \$base-rounded-border-radius                                                                     |
+| --oruga-switch-border-radius                   | \$switch-border-radius                   | \$base-border-radius                                                                             |
 | --oruga-switch-box-shadow                      | \$switch-box-shadow                      | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
 | --oruga-switch-checked-box-shadow-color        | \$switch-checked-box-shadow-color        | \$switch-active-background-color                                                                 |
 | --oruga-switch-checked-box-shadow-length       | \$switch-checked-box-shadow-length       | 0 0 0.5em                                                                                        |

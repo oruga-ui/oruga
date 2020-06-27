@@ -1,4 +1,5 @@
 
+/* @docs */
 $tooltip-arrow-margin: 2px !default;
 $tooltip-arrow-size: 5px !default;
 $tooltip-background-color: #000000 !default;
@@ -11,6 +12,7 @@ $tooltip-content-padding: 0.35rem 0.75rem !default;
 $tooltip-content-radius-large: 6px !default;
 $tooltip-content-weight-normal: 400 !default;
 $tooltip-content-zindex: 38 !default;
+/* @docs */
 
 @mixin tooltip-arrow($direction, $name, $color) {
     @if ($direction == "top") {

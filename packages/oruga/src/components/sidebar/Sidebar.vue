@@ -22,6 +22,11 @@
 import config from '../../utils/config'
 import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * A sidebar to use as left/right overlay or static
+ * @displayName Sidebar
+ * @style _sidebar.scss
+ */
 export default {
     name: 'OSidebar',
     props: {

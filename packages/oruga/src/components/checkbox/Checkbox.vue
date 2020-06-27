@@ -27,6 +27,11 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin.js'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Select a single or grouped options
+ * @displayName Checkbox
+ * @style _checkbox.scss 
+ */
 export default {
     name: 'OCheckbox',
     mixins: [CheckRadioMixin],

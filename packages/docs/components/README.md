@@ -1,5 +1,5 @@
 ---
-sidebarDepth: 2
+sidebarDepth: 4
 ---
 
 # Components

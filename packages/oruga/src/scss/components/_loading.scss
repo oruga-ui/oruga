@@ -1,9 +1,11 @@
 
+/* @docs */
 $loading-background-legacy: #7f7f7f !default;
 $loading-background: rgba(255,255,255,0.5) !default;
 $loading-full-page-icon-size: 5em !default;
 $loading-icon-size: 2.5em !default;
 $loading-zindex: 999 !default;
+/* @docs */
 
 .o-loading-overlay {
     position: absolute;

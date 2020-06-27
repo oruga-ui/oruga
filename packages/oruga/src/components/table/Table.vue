@@ -324,6 +324,7 @@
 import { getValueByPath, indexOf, multiColumnSort, toCssDimension, getCssClass } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
+
 import Button from '../button/Button'
 import Checkbox from '../checkbox/Checkbox'
 import Icon from '../icon/Icon'
@@ -335,6 +336,11 @@ import TableMobileSort from './TableMobileSort'
 import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
+/**
+ * Tabulated data are sometimes needed, it's even better when it's responsive
+ * @displayName Table
+ * @style _table.scss
+ */
 export default {
     name: 'OTable',
     components: {

@@ -53,10 +53,16 @@
 
 <script>
 import Icon from '../icon/Icon'
+
 import config from '../../utils/config'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Get user Input. Use with Field to access all functionalities
+ * @displayName Input
+ * @style _input.scss
+ */
 export default {
     name: 'OInput',
     components: {

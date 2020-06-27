@@ -1,4 +1,5 @@
 
+/* @docs */
 $input-background-color: #ffffff !default;
 $input-border-color: #dbdbdb !default;
 $input-border-radius: $base-border-radius !default;
@@ -9,7 +10,7 @@ $input-color: #363636 !default;
 $input-control-icon-zindex: 4 !default;
 $input-counter-font-size: .75rem !default;
 $input-counter-margin: .25rem 0 0 .5rem !default;
-$input-height: 2em;
+$input-height: $control-height;
 $input-line-height: $base-line-height !default;
 $input-margin: 0 !default;
 $input-max-width: 100% !default;
@@ -18,6 +19,7 @@ $input-textarea-max-height: 600px !default;
 $input-textarea-min-height: 120px !default;
 $input-textarea-padding: 0.625em !default;
 $input-width: 100% !default;
+/* @docs */
 
 .o-control-input {
     position: relative;

@@ -98,7 +98,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'switch.override', false)
                 const clazz = getValueByPath(config, 'switch.outlinedClass', '')
-                return getCssClass(clazz, override, 'o-switch-label')
+                return getCssClass(clazz, override, 'o-switch-outlined')
             }
         },
         labelClass: {

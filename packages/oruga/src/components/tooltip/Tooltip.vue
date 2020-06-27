@@ -27,6 +27,11 @@
 import config from '../../utils/config'
 import { createAbsoluteElement, removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Display a brief helper text to your user
+ * @displayName Tooltip
+ * @style _tooltip.scss
+ */
 export default {
     name: 'OTooltip',
     props: {

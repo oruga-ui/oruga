@@ -6,7 +6,7 @@ $switch-active-box-shadow-length: 0 0 0.5em !default;
 $switch-active-box-shadow-opacity: 0.6 !default;
 $swtich-action-background: #f5f5f5 !default;
 $switch-background: #b5b5b5 !default;
-$switch-border-radius: $base-rounded-border-radius !default;
+$switch-border-radius: $base-border-radius !default;
 $switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
 $switch-checked-box-shadow-color: $switch-active-background-color !default;
 $switch-checked-box-shadow-length: 0 0 0.5em !default;
@@ -64,13 +64,9 @@ $switch-width: $switch-width-number * 1em !default;
                     @include variable('background', ('color-' + #{$name}), $color);
                 }
             }
-            &:hover {
-                @include variable('background', 'switch-background', $switch-background);
-            }
             &:before {
                 content: "";
                 display: block;
-                @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
                 @include mvariable('width', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
                 @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
                 @include variable('background', 'swtich-action-background', $swtich-action-background);
@@ -83,7 +79,6 @@ $switch-width: $switch-width-number * 1em !default;
             }
             &.o-switch-elastic:before {
                 transform: scaleX(1.5);
-                @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
             }
         }
         &:checked + .o-switch-check {
@@ -131,29 +126,15 @@ $switch-width: $switch-width-number * 1em !default;
     .o-switch-label {
         @include variable('padding', 'switch-label-padding', $switch-label-padding);
     }
-    &:hover {
-        input[type=checkbox] + .o-switch-check {
-            @include variable('background', 'switch-hover-background-color', $switch-hover-background-color);
-            // background: rgba($switch-hover-background-color, $switch-active-background-color-opacity);
-        }
-        input[type=checkbox]:checked + .o-switch-check {
-            // background: rgba($switch-active-background-color, $switch-active-background-color-opacity);
-            @include variable('background', 'switch-active-background-color', $switch-active-background-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name} {
-                    @include variable('background', ('color-' + $name), $color);
-                    // background: rgba($color, $switch-active-background-color-opacity);
-                }
-            }
-        }
-    }
     &.o-switch-rounded {
         input[type=checkbox] {
             + .o-switch-check {
                 @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 &:before {
                     @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
+                }
+                &.o-switch-elastic:before {
+                    @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
                 }
             }
             &.o-switch-elastic:before {
@@ -171,14 +152,10 @@ $switch-width: $switch-width-number * 1em !default;
                 @include variable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        // border-color: rgba($color, $switch-outlined-border-color-opacity);
+                    &.o-color-#{$name}-passive {
                         @include variable('border-color', ('color-' + #{$name}), $color);
                         &:before {
                             @include variable('background', ('color-' + #{$name}), $color);
-                        }
-                        &:hover {
-                            border-color: rgba($color, $switch-outlined-border-color-opacity);
                         }
                     }
                 }
@@ -200,25 +177,6 @@ $switch-width: $switch-width-number * 1em !default;
                 }
                 &:before {
                     @include variable('background', 'switch-active-background-color', $switch-active-background-color);
-                }
-            }
-        }
-        &:hover {
-            input[type=checkbox] + .o-switch-check {
-                background: transparent;
-                @include variable('border-color', 'switch-hover-border-color', $switch-hover-border-color);
-                // border-color: rgba($switch-hover-border-color, $switch-hover-border-color-opacity);
-            }
-            input[type=checkbox]:checked + .o-switch-check {
-                background: transparent;
-                // border-color: rgba($switch-active-background-color, $switch-hover-border-color-opacity);
-                @include variable('border-color', 'switch-active-background-color', $switch-active-background-color);
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.is-color-#{$name} {
-                        // border-color: rgba($color, $switch-hover-border-color-opacity);
-                        @include variable('border-color', ('color-' + #{$name}), $color);
-                    }
                 }
             }
         }

@@ -43,10 +43,16 @@
 
 <script>
 import Icon from '../icon/Icon'
+
 import FormElementMixin from '../../utils/FormElementMixin'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * Select an item in a dropdown list. Use with Field to access all functionalities
+ * @displayName Select
+ * @style _select.scss
+ */
 export default {
     name: 'OSelect',
     components: {

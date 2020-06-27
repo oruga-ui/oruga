@@ -38,10 +38,16 @@
 </template>
 
 <script>
-import config from '../../utils/config'
 import FieldBody from './FieldBody'
+
+import config from '../../utils/config'
 import { getCssClass, getValueByPath } from '../../utils/helpers'
 
+/**
+ * Fields are used to add functionality to controls and to attach/group components and elements together
+ * @displayName Field
+ * @style _field.scss 
+ */
 export default {
     name: 'OField',
     components: {

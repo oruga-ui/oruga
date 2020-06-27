@@ -32,6 +32,8 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 
 /**
  * The classic button, in different colors, sizes, and states
+ * @displayName Button
+ * @style _button.scss
  */
 export default {
     name: 'OButton',

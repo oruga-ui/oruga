@@ -1,5 +1,11 @@
 <script>
 import { toCssDimension } from '../../utils/helpers'
+
+/**
+ * A placeholder for content to load
+ * @displayName Skeleton
+ * @style _skeleton.scss
+ */
 export default {
     name: 'OSkeleton',
     functional: true,

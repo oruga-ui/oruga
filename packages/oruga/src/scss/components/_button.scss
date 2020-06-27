@@ -1,4 +1,5 @@
 
+/* @docs */
 $button-background-color: #ffffff !default;
 $button-border-radius: $base-border-radius !default;
 $button-border: 1px solid #000000 !default;
@@ -11,6 +12,7 @@ $button-margin-icon-to-text: .1875em !default;
 $button-margin: 0 !default;
 $button-padding: calc(.375em - 1px) .75em !default;
 $button-rounded-border-radius: $base-rounded-border-radius !default;
+/* @docs */
 
 .o-button {
     -moz-appearance: none;

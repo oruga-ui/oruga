@@ -1,5 +1,5 @@
 
-
+/* @docs */
 $dropdown-disabled-opacity: $base-disabled-opacity !default;
 $dropdown-item-background-active: #000000 !default;
 $dropdown-item-color-active: #ffffff !default;
@@ -24,6 +24,7 @@ $dropdown-mobile-overlay-color: rgba(#000000, 0.86) !default;
 $dropdown-mobile-overlay-zindex: 40!default;
 $dropdown-mobile-width: calc(100vw - 40px) !default;
 $dropdown-mobile-zindex: 50 !default;
+/* @docs */
 
 .o-dropdown {
     display: inline-flex;
