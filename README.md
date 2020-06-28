@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <i>Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly<i>
+  <i>Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly</i>
 </p>
 
 <p align="center">
