@@ -43,7 +43,7 @@
             </o-select>
             <template
                 v-if="sortMultiple && sortMultipleData.length > 0" >
-                <button
+                <o-button
                     variant="primary"
                     @click="sort">
                     <o-icon
@@ -53,7 +53,7 @@
                         :size="sortIconSize"
                         both
                     />
-                </button>
+                </o-button>
                 <o-button
                     variant="primary"
                     @click="removePriority">

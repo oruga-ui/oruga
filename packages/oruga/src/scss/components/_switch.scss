@@ -134,12 +134,8 @@ $switch-width: $switch-width-number * 1em !default;
                     @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 }
                 &.o-switch-elastic:before {
-                    @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
+                    @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 }
-            }
-            &.o-switch-elastic:before {
-                transform: scaleX(1.5);
-                @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
             }
         }
     }

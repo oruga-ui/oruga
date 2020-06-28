@@ -10,6 +10,7 @@ $button-line-height: $base-line-height !default;
 $button-margin-border-to-icon: calc(-.375em - 1px) !default;
 $button-margin-icon-to-text: .1875em !default;
 $button-margin: 0 !default;
+$button-height: $control-height !default;
 $button-padding: calc(.375em - 1px) .75em !default;
 $button-rounded-border-radius: $base-rounded-border-radius !default;
 /* @docs */
@@ -36,6 +37,7 @@ $button-rounded-border-radius: $base-rounded-border-radius !default;
     @include variable('font-size', 'button-font-size', $button-font-size);
     @include variable('line-height', 'button-line-height', $button-line-height);
     @include variable('margin', 'button-margin', $button-margin);
+    @include variable('height', 'button-height', $button-height);
     &.o-button-expanded {
         width: 100%;
     }

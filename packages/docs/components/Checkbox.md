@@ -1,27 +1,161 @@
 ---
-title: OCheckbox
+title: Checkbox
 ---
 
-# OCheckbox
+# Checkbox
+
+> Select a single or grouped options
+
+---
+
+## Examples
+
+### Base
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="field">
+      <o-checkbox>Basic</o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox v-model="checkbox">
+        {{ checkbox }}
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox v-model="checkboxCustom" true-value="Yes" false-value="No">
+        {{ checkboxCustom }}
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox :indeterminate="true">
+        Indeterminate
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox disabled>Disabled</o-checkbox>
+    </div>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        checkbox: false,
+        checkboxCustom: "Yes"
+      };
+    }
+  };
+</script>
+```
+
+:::
+
+### Variants
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="field">
+      <o-checkbox :value="true">
+        Default
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox :value="true" variant="info">
+        Info
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox :value="true" variant="success">
+        Success
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox :value="true" variant="danger">
+        Danger
+      </o-checkbox>
+    </div>
+    <div class="field">
+      <o-checkbox :value="true" variant="warning">
+        Warning
+      </o-checkbox>
+    </div>
+  </section>
+</template>
+
+<script>
+  export default {};
+</script>
+```
+
+:::
+
+### Array
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="block">
+      <o-checkbox v-model="checkboxGroup" native-value="Silver">
+        Silver
+      </o-checkbox>
+      <o-checkbox v-model="checkboxGroup" native-value="Flint">
+        Flint
+      </o-checkbox>
+      <o-checkbox v-model="checkboxGroup" native-value="Vane">
+        Vane
+      </o-checkbox>
+      <o-checkbox v-model="checkboxGroup" native-value="Billy" disabled>
+        Billy
+      </o-checkbox>
+    </div>
+    <p class="content">
+      <b>Selection:</b>
+      {{ checkboxGroup }}
+    </p>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        checkboxGroup: ["Flint"]
+      };
+    }
+  };
+</script>
+```
+
+:::
 
 ## Props
 
-| Prop name     | Description | Type                    | Values | Default                                                                                                                                                                                                                    |
-| ------------- | ----------- | ----------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value         |             | string\|number\|boolean | -      |                                                                                                                                                                                                                            |
-| nativeValue   |             | string\|number\|boolean | -      |                                                                                                                                                                                                                            |
-| variant       |             | string                  | -      |                                                                                                                                                                                                                            |
-| disabled      |             | boolean                 | -      |                                                                                                                                                                                                                            |
-| required      |             | boolean                 | -      |                                                                                                                                                                                                                            |
-| name          |             | string                  | -      |                                                                                                                                                                                                                            |
-| size          |             | string                  | -      |                                                                                                                                                                                                                            |
-| indeterminate |             | boolean                 | -      |                                                                                                                                                                                                                            |
-| trueValue     |             | string\|number\|boolean | -      | true                                                                                                                                                                                                                       |
-| falseValue    |             | string\|number\|boolean | -      | false                                                                                                                                                                                                                      |
-| rootClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.rootClass', '')<br> return getCssClass(clazz, override, 'o-checkbox')<br>}              |
-| disabledClass |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.disabledClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-disabled')<br>} |
-| checkClass    |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.checkClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-check')<br>}       |
-| labelClass    |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.labelClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-label')<br>}       |
+| Prop name     | Description | Type                           | Values | Default                                                                                                                                                                                                                    |
+| ------------- | ----------- | ------------------------------ | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value         |             | string\|number\|boolean\|array | -      |                                                                                                                                                                                                                            |
+| nativeValue   |             | string\|number\|boolean        | -      |                                                                                                                                                                                                                            |
+| variant       |             | string                         | -      |                                                                                                                                                                                                                            |
+| disabled      |             | boolean                        | -      |                                                                                                                                                                                                                            |
+| required      |             | boolean                        | -      |                                                                                                                                                                                                                            |
+| name          |             | string                         | -      |                                                                                                                                                                                                                            |
+| size          |             | string                         | -      |                                                                                                                                                                                                                            |
+| indeterminate |             | boolean                        | -      |                                                                                                                                                                                                                            |
+| trueValue     |             | string\|number\|boolean        | -      | true                                                                                                                                                                                                                       |
+| falseValue    |             | string\|number\|boolean        | -      | false                                                                                                                                                                                                                      |
+| rootClass     |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.rootClass', '')<br> return getCssClass(clazz, override, 'o-checkbox')<br>}              |
+| disabledClass |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.disabledClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-disabled')<br>} |
+| checkClass    |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.checkClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-check')<br>}       |
+| labelClass    |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'checkbox.override', false)<br> const clazz = getValueByPath(config, 'checkbox.labelClass', '')<br> return getCssClass(clazz, override, 'o-checkbox-label')<br>}       |
 
 ## Events
 
@@ -34,3 +168,22 @@ title: OCheckbox
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
+
+## Style
+
+| CSS Variable                                | SASS Variable                         | Default                                                                                |
+| ------------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
+| --oruga-checkbox-active-background-color    | \$checkbox-active-background-color    | \$primary                                                                              |
+| --oruga-checkbox-background-color           | \$checkbox-background-color           | transparent                                                                            |
+| --oruga-checkbox-border-color               | \$checkbox-border-color               | \$grey                                                                                 |
+| --oruga-checkbox-border-radius              | \$checkbox-border-radius              | \$base-border-radius                                                                   |
+| --oruga-checkbox-border-width               | \$checkbox-border-width               | 2px                                                                                    |
+| --oruga-checkbox-checked-box-shadow-color   | \$checkbox-checked-box-shadow-color   | \$checkbox-active-background-color                                                     |
+| --oruga-checkbox-checked-box-shadow-length  | \$checkbox-checked-box-shadow-length  | 0 0 0.5em                                                                              |
+| --oruga-checkbox-checked-box-shadow-opacity | \$checkbox-checked-box-shadow-opacity | 0.8                                                                                    |
+| --oruga-checkbox-checkmark-color            | \$checkbox-checkmark-color            | \$primary-invert                                                                       |
+| --oruga-checkbox-disabled-opacity           | \$checkbox-disabled-opacity           | \$base-disabled-opacity                                                                |
+| --oruga-checkbox-focus-sibiling-box-shadow  | \$checkbox-focus-sibiling-box-shadow  | $checkbox-checked-box-shadow-length rgba($grey, \$checkbox-checked-box-shadow-opacity) |
+| --oruga-checkbox-label-padding              | \$checkbox-label-padding              | \$control-padding-horizontal 0 0 0                                                     |
+| --oruga-checkbox-margin-sibiling            | \$checkbox-margin-sibiling            | 0.5em                                                                                  |
+| --oruga-checkbox-size                       | \$checkbox-size                       | 1.25em                                                                                 |

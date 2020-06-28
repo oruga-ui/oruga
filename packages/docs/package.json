@@ -15,11 +15,9 @@
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "@vuepress/plugin-google-analytics": "^1.5.2",
     "concurrently": "^5.2.0",
-    "estree-walker": "^2.0.1",
     "markdown-it-include": "^1.1.1",
     "sockjs-client": "^1.4.0",
     "vue-docgen-cli": "^4.25.0",
-    "vue-inbrowser-compiler": "^4.23.3",
     "vuepress": "^1.5.0",
     "vuepress-plugin-demo-block": "^0.7.2"
   },
