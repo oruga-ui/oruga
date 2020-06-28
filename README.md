@@ -3,16 +3,22 @@
         <img height="320" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
     </a>
 </p>
+
 <p align="center">
-  ***Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly*** (🐛) => 🦋 
+  <i>Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly<i>
 </p>
+
+<p align="center">
+(🐛) => 🦋
+</p>
+
 <p align="center">
     <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/v/oruga.svg" /></a>
     <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/dt/oruga.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/oruga.svg" /></a>
 </p>
 
-> Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/)
+> Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
 
 ## Features
 
@@ -77,6 +83,11 @@ While it's still in beta, version will follow **v0.Y.Z**, where:
 
 * **Y**: Major (breaking changes)
 * **Z**: Minor or patch
+
+## Roadmap
+
+* Other components: Tabs, Steps, Datepicker, Timepicker, Tag, TagInput, Notification, Upload, NumberInput
+* Improve customization way
 
 ## Core Team
 
