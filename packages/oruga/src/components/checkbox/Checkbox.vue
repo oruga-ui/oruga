@@ -30,6 +30,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 /**
  * Select a single or grouped options
  * @displayName Checkbox
+ * @example ./examples/Checkbox.md
  * @style _checkbox.scss 
  */
 export default {

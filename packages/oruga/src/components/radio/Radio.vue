@@ -27,6 +27,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 /**
  * Select an option from a set
  * @displayName Radio
+ * @example ./examples/Radio.md
  * @style _radio.scss
  */
 export default {

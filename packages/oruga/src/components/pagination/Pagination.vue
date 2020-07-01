@@ -128,6 +128,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
+ * @example ./examples/Pagination.md
  * @style _pagination.scss
  */
 export default {

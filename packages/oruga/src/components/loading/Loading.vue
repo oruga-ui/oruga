@@ -23,6 +23,7 @@ import { HTMLElement } from '../../utils/ssr'
 /**
  * A simple loading overlay
  * @displayName Loading
+ * @example ./examples/Loading.md
  * @style _loading.scss
  */
 export default {

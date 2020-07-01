@@ -51,6 +51,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
  * @displayName Select
+ * @example ./examples/Select.md
  * @style _select.scss
  */
 export default {

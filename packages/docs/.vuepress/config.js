@@ -38,7 +38,7 @@ module.exports = {
     },
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Quickstart', link: '/quickstart/' },
+      { text: 'Guide', link: '/guide/' },
       { text: 'Components', link: '/components/' }
     ],
   }

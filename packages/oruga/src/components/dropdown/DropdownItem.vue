@@ -13,6 +13,9 @@
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
+/**
+ * @displayName DropdownItem
+ */
 export default {
     name: 'ODropdownItem',
     inject: {

@@ -60,6 +60,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
 /**
  * A slider to select a value or range from a given range
  * @displayName Slider
+ * @example ./examples/Slider.md
  * @style _slider.scss
  */
 export default {

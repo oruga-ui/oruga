@@ -6,13 +6,15 @@ $field-label-font-weight: 600 !default;
 $field-margin-bottom: .75rem !default;
 $field-message-font-size: .75rem !default;
 $field-message-margin-top: .25rem !default;
+$field-horizontal-breakpoint: 769px !default;
+$field-horizontal-label-margin: 0 1.5rem 0 0 !default;
 /* @docs */
 
 .o-field {
     &:not(:last-child) {
         @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
     }
-    > .o-field-label {
+    .o-field-label {
         display: block;
         @include variable('color', 'field-label-color', $field-label-color);
         @include variable('font-size', 'field-label-font-size', $field-label-font-size);
@@ -81,6 +83,29 @@ $field-message-margin-top: .25rem !default;
             }
             > *:not(:last-child) {
                 @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
+            }
+        }
+    }
+    @media screen and (min-width: $field-horizontal-breakpoint) {
+        &.o-field-horizontal {
+            display: flex;
+            .o-field-horizontal-label {
+                flex-basis: 0;
+                flex-grow: 1;
+                flex-shrink: 0;
+                margin: $field-horizontal-label-margin;
+                text-align: right;
+            }
+            .o-field-horizontal-content {
+                display: flex;
+                flex-basis: 0;
+                flex-grow: 5;
+                flex-shrink: 1;
+                > .o-field {
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    margin-bottom: 0;
+                }
             }
         }
     }

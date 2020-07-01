@@ -4,23 +4,23 @@ const os = require('os');
 
 const src = '../oruga/src';
 
+const IGNORE = [
+  'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
+  'TableColumn.vue', 'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue'
+];
+
 module.exports = {
     componentsRoot: `${src}/components`,
     components: '**/[A-Z]*.vue',
     outDir: './components',
     defaultExamples: false,
     getDestFile: (file, config) => {
-        const component = file.split(path.sep)[1];
-        if (!component) return;
+        const component = path.basename(file);
+        if (!component || IGNORE.indexOf(component) >= 0) return;
         return path.join(config.outDir, component).replace(/\.vue$/, '.md');
     },
-    getDocFileName: (componentPath) => {
-        const parts = componentPath.split(path.sep);
-        parts.splice(parts.length - 1, 0, 'examples');
-        return parts.join(path.sep).replace(/\.vue$/, '.md');
-    },
     templates: {
-        component: (renderedUsage, doc, config) => {
+        component: (renderedUsage, doc, config, fileName, requiresMd, subComponent = false) => {
           const { displayName, description, docsBlocks, tags, functional } = doc;
           const { deprecated, author, since, version, see, link, style } = tags || {};
           return `
@@ -41,6 +41,7 @@ ${renderedUsage.props}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
+${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
 ${style ? renderStyleDocs(config, style[0].description) : ''}
 `;
         }

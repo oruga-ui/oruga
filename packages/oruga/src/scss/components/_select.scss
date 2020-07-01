@@ -7,7 +7,7 @@ $select-box-shadow: none !default;
 $select-color: #363636 !default;
 $select-control-icon-zindex: 4 !default;
 $select-empty-color: rgba($grey, 0.7) !default;
-$select-font-size: 1em !default;
+$select-font-size: $base-font-size !default;
 $select-height: $control-height !default;
 $select-line-height: $base-line-height !default;
 $select-margin: 0 !default;
@@ -19,7 +19,7 @@ $select-optgroup-padding: 0.25em 0 !default;
 $select-option-color: #4a4a4a !default;
 $select-option-disabled-opacity: $base-disabled-opacity !default;
 $select-option-padding: .25em .5em !default;
-$select-padding: calc(.5em - 1px) $control-height calc(.5em - 1px) calc(.75em - 1px) !default;
+$select-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
 /* @docs */
 
 .o-control-select {

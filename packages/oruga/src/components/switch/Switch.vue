@@ -32,6 +32,7 @@ import config from '../../utils/config'
 /**
  * Switch between two opposing states
  * @displayName Switch
+ * @example ./examples/Switch.md
  * @style _switch.scss
  */
 export default {

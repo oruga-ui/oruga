@@ -30,6 +30,7 @@ import { createAbsoluteElement, removeElement, getValueByPath, getCssClass } fro
 /**
  * Display a brief helper text to your user
  * @displayName Tooltip
+ * @example ./examples/Tooltip.md
  * @style _tooltip.scss
  */
 export default {

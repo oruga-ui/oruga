@@ -78,7 +78,7 @@
             <o-button variant="primary" type="button" slot="trigger">
                 <span>Selected ({{ selectedOptions.length }})</span>
                 <o-icon icon="menu-down"></o-icon>
-            </button>
+            </o-button>
 
             <o-dropdown-item value="option1" aria-role="listitem">
                 <span>Option 1</span>
@@ -119,7 +119,7 @@
                     <o-switch v-model="isScrollable">Scrollable</o-switch>
                 </div>
             </o-field>
-        </div>   
+        </div>
         
         <o-dropdown
             :scrollable="isScrollable"
@@ -133,7 +133,7 @@
                     <span>{{currentMenu.text}}</span>
                 </template>
                 <o-icon icon="menu-down"></o-icon>
-            </button>
+            </o-button>
 
             <o-dropdown-item 
                 v-for="(menu, index) in menus"

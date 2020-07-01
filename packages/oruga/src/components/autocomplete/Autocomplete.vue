@@ -68,14 +68,16 @@
 </template>
 
 <script>
+import Input from '../input/Input'
+
 import config from '../../utils/config'
 import { getValueByPath, removeElement, createAbsoluteElement, getCssClass, toCssDimension } from '../../utils/helpers'
 import FormElementMixin from '../../utils/FormElementMixin'
-import Input from '../input/Input'
 
 /**
  * Extended input that provide suggestions while the user types
  * @displayName Autocomplete
+ * @example ./examples/Autocomplete.md
  * @style _autocomplete.scss
  */
 export default {

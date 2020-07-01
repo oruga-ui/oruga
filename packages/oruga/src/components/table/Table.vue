@@ -339,6 +339,7 @@ import TablePagination from './TablePagination'
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
+ * @example ./examples/Table.md
  * @style _table.scss
  */
 export default {

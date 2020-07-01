@@ -3,6 +3,7 @@
 /**
  * An easy way to toggle what you want
  * @displayName Collapse
+ * @example ./examples/Collapse.md
  */
 export default {
     name: 'OCollapse',

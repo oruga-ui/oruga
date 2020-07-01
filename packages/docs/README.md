@@ -1,10 +1,9 @@
 ---
 home: true
 heroImage: logo.png
-heroText: Oruga
-tagline: A UI library of minimal and functional components, it's in your hands turning it into a butterfly
-actionText: Get Started →
-actionLink: /quickstart/
+tagline: Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly
+actionText: (🐛) => 🦋
+actionLink: /guide/
 features:
   - title: Highly customizable components
     details: All components are fully customizable in different ways

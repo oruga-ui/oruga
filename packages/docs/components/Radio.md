@@ -1,24 +1,119 @@
 ---
-title: ORadio
+title: Radio
 ---
 
-# ORadio
+# Radio
+
+> Select an option from a set
+
+---
+
+## Examples
+
+### Base
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="block">
+      <o-radio v-model="radio" name="name" native-value="Flint">
+        Flint
+      </o-radio>
+      <o-radio v-model="radio" name="name" native-value="Silver">
+        Silver
+      </o-radio>
+      <o-radio v-model="radio" name="name" native-value="Jack">
+        Jack
+      </o-radio>
+      <o-radio v-model="radio" name="name" native-value="Vane" disabled>
+        Vane
+      </o-radio>
+    </div>
+    <p class="content">
+      <b>Selection:</b>
+      {{ radio }}
+    </p>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        radio: "Jack"
+      };
+    }
+  };
+</script>
+```
+
+:::
+
+### Variants
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="field">
+      <o-radio v-model="radio" native-value="default">
+        Default
+      </o-radio>
+    </div>
+    <div class="field">
+      <o-radio v-model="radio" native-value="info" variant="info">
+        Info
+      </o-radio>
+    </div>
+    <div class="field">
+      <o-radio v-model="radio" native-value="success" variant="success">
+        Success
+      </o-radio>
+    </div>
+    <div class="field">
+      <o-radio v-model="radio" native-value="danger" variant="danger">
+        Danger
+      </o-radio>
+    </div>
+    <div class="field">
+      <o-radio v-model="radio" native-value="warning" variant="warning">
+        Warning
+      </o-radio>
+    </div>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        radio: "default"
+      };
+    }
+  };
+</script>
+```
+
+:::
 
 ## Props
 
-| Prop name     | Description | Type                    | Values | Default                                                                                                                                                                                                             |
-| ------------- | ----------- | ----------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value         |             | string\|number\|boolean | -      |                                                                                                                                                                                                                     |
-| nativeValue   |             | string\|number\|boolean | -      |                                                                                                                                                                                                                     |
-| variant       |             | string                  | -      |                                                                                                                                                                                                                     |
-| disabled      |             | boolean                 | -      |                                                                                                                                                                                                                     |
-| required      |             | boolean                 | -      |                                                                                                                                                                                                                     |
-| name          |             | string                  | -      |                                                                                                                                                                                                                     |
-| size          |             | string                  | -      |                                                                                                                                                                                                                     |
-| rootClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.rootClass', '')<br> return getCssClass(clazz, override, 'o-radio')<br>}                |
-| disabledClass |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.disabledClass', '')<br> return getCssClass(clazz, override, 'o-radio-disabled')<br>}   |
-| checkClass    |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.o-radio-checkClass', '')<br> return getCssClass(clazz, override, 'o-radio-check')<br>} |
-| labelClass    |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.labelClass', '')<br> return getCssClass(clazz, override, 'o-radio-label')<br>}         |
+| Prop name     | Description | Type                           | Values | Default                                                                                                                                                                                                             |
+| ------------- | ----------- | ------------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value         |             | string\|number\|boolean\|array | -      |                                                                                                                                                                                                                     |
+| nativeValue   |             | string\|number\|boolean        | -      |                                                                                                                                                                                                                     |
+| variant       |             | string                         | -      |                                                                                                                                                                                                                     |
+| disabled      |             | boolean                        | -      |                                                                                                                                                                                                                     |
+| required      |             | boolean                        | -      |                                                                                                                                                                                                                     |
+| name          |             | string                         | -      |                                                                                                                                                                                                                     |
+| size          |             | string                         | -      |                                                                                                                                                                                                                     |
+| rootClass     |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.rootClass', '')<br> return getCssClass(clazz, override, 'o-radio')<br>}                |
+| disabledClass |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.disabledClass', '')<br> return getCssClass(clazz, override, 'o-radio-disabled')<br>}   |
+| checkClass    |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.o-radio-checkClass', '')<br> return getCssClass(clazz, override, 'o-radio-check')<br>} |
+| labelClass    |             | string                         | -      | () => {<br> const override = getValueByPath(config, 'radio.override', false)<br> const clazz = getValueByPath(config, 'radio.labelClass', '')<br> return getCssClass(clazz, override, 'o-radio-label')<br>}         |
 
 ## Events
 
@@ -31,3 +126,18 @@ title: ORadio
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
+
+## Style
+
+| CSS Variable                             | SASS Variable                      | Default                                                                          |
+| ---------------------------------------- | ---------------------------------- | -------------------------------------------------------------------------------- |
+| --oruga-radio-active-background-color    | \$radio-active-background-color    | \$primary                                                                        |
+| --oruga-radio-border                     | \$radio-border                     | 2px solid \$grey                                                                 |
+| --oruga-radio-checked-box-shadow-color   | \$radio-checked-box-shadow-color   | \$radio-active-background-color                                                  |
+| --oruga-radio-checked-box-shadow-length  | \$radio-checked-box-shadow-length  | 0 0 0.5em                                                                        |
+| --oruga-radio-checked-box-shadow-opacity | \$radio-checked-box-shadow-opacity | 0.8                                                                              |
+| --oruga-radio-disabled-opacity           | \$radio-disabled-opacity           | \$base-disabled-opacity                                                          |
+| --oruga-radio-focus-sibiling-box-shadow  | \$radio-focus-sibiling-box-shadow  | $radio-checked-box-shadow-length rgba($grey, \$radio-checked-box-shadow-opacity) |
+| --oruga-radio-label-padding              | \$radio-label-padding              | \$control-padding-horizontal 0 0 0                                               |
+| --oruga-radio-margin-sibiling            | \$radio-margin-sibiling            | 0.5em                                                                            |
+| --oruga-radio-size                       | \$radio-size                       | 1.25em                                                                           |
