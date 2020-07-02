@@ -20,7 +20,7 @@ title: Dropdown
     <o-dropdown aria-role="list">
       <o-button variant="primary" slot="trigger" slot-scope="{ active }">
         <span>Click me!</span>
-        <o-icon :icon="active ? 'menu-up' : 'menu-down'"></o-icon>
+        <o-icon :icon="active ? 'caret-up' : 'caret-down'"></o-icon>
       </o-button>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
@@ -31,7 +31,7 @@ title: Dropdown
     <o-dropdown hoverable aria-role="list">
       <o-button variant="info" slot="trigger">
         <span>Hover me!</span>
-        <o-icon icon="menu-down"></o-icon>
+        <o-icon icon="caret-down"></o-icon>
       </o-button>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
@@ -42,7 +42,7 @@ title: Dropdown
     <o-dropdown disabled aria-role="list">
       <o-button class="o-button" slot="trigger">
         <span>Disabled</span>
-        <o-icon icon="menu-down"></o-icon>
+        <o-icon icon="caret-down"></o-icon>
       </o-button>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
@@ -51,14 +51,16 @@ title: Dropdown
     </o-dropdown>
 
     <o-dropdown aria-role="list">
-      <o-icon
-        clickable
-        variant="success"
-        icon="caret-down"
-        slot="trigger"
-        role="button"
-      >
-      </o-icon>
+      <div slot="trigger">
+        Custom
+        <o-icon
+          variant="success"
+          icon="caret-down"
+          slot="trigger"
+          role="button"
+        >
+        </o-icon>
+      </div>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
       <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
@@ -85,7 +87,7 @@ title: Dropdown
     <o-dropdown v-model="selectedOptions" multiple aria-role="list">
       <o-button variant="primary" type="button" slot="trigger">
         <span>Selected ({{ selectedOptions.length }})</span>
-        <o-icon icon="menu-down"></o-icon>
+        <o-icon icon="caret-down"></o-icon>
       </o-button>
 
       <o-dropdown-item value="option1" aria-role="listitem">
@@ -131,6 +133,8 @@ title: Dropdown
       </o-field>
     </div>
 
+    <br />
+
     <o-dropdown
       :scrollable="isScrollable"
       :max-height="maxHeight"
@@ -142,7 +146,7 @@ title: Dropdown
           <o-icon :icon="currentMenu.icon"></o-icon>
           <span>{{currentMenu.text}}</span>
         </template>
-        <o-icon icon="menu-down"></o-icon>
+        <o-icon icon="caret-down"></o-icon>
       </o-button>
 
       <o-dropdown-item
@@ -151,9 +155,11 @@ title: Dropdown
         :value="menu"
         aria-role="listitem"
       >
-        <o-icon class="media-left" :icon="menu.icon"></o-icon>
-        <div>
-          <span>{{menu.text}}</span>
+        <div class="media">
+          <o-icon class="media-left" :icon="menu.icon"></o-icon>
+          <div class="media-content">
+            <span>{{menu.text}}</span>
+          </div>
         </div>
       </o-dropdown-item>
     </o-dropdown>
@@ -166,20 +172,42 @@ title: Dropdown
       return {
         isScrollable: true,
         maxHeight: 200,
-        currentMenu: { icon: "account-group", text: "People" },
+        currentMenu: { icon: "users", text: "People" },
         menus: [
-          { icon: "account-group", text: "People" },
-          { icon: "shopping-search", text: "Orders" },
-          { icon: "credit-card-multiple", text: "Payments" },
+          { icon: "users", text: "People" },
+          { icon: "box", text: "Orders" },
+          { icon: "credit-card", text: "Payments" },
           { icon: "dolly", text: "Logistics" },
-          { icon: "clock-check", text: "Jobs" },
-          { icon: "cart-arrow-right", text: "Cart" },
-          { icon: "settings", text: "Configuration" }
+          { icon: "business-time", text: "Jobs" },
+          { icon: "shopping-cart", text: "Cart" },
+          { icon: "cog", text: "Configuration" }
         ]
       };
     }
   };
 </script>
+
+<style>
+  .media {
+    align-items: flex-start;
+    display: flex;
+    text-align: left;
+  }
+  .media-content {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: left;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+  .media-left {
+    margin-right: 1rem;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+</style>
 ```
 
 :::
@@ -269,8 +297,8 @@ title: Dropdown
 | CSS Variable                                 | SASS Variable                          | Default                                                              |
 | -------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
 | --oruga-dropdown-disabled-opacity            | \$dropdown-disabled-opacity            | \$base-disabled-opacity                                              |
-| --oruga-dropdown-item-background-active      | \$dropdown-item-background-active      | #000000                                                              |
-| --oruga-dropdown-item-color-active           | \$dropdown-item-color-active           | #ffffff                                                              |
+| --oruga-dropdown-item-background-active      | \$dropdown-item-background-active      | \$primary                                                            |
+| --oruga-dropdown-item-color-active           | \$dropdown-item-color-active           | \$primary-invert                                                     |
 | --oruga-dropdown-item-color                  | \$dropdown-item-color                  | #000000                                                              |
 | --oruga-dropdown-item-disabled-opacity       | \$dropdown-item-disabled-opacity       | \$base-disabled-opacity                                              |
 | --oruga-dropdown-item-font-size              | \$dropdown-item-font-size              | \$base-font-size                                                     |

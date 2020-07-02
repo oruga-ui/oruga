@@ -136,7 +136,7 @@ export default {
         selectClasses() {
             return [
                 this.selectClass,
-                this.size && 'o-size',
+                this.size && ('o-size-' + this.size),
                 this.statusVariant && 'o-color-' + this.statusVariant, 
                 this.rounded && this.roundedClass, 
                 this.selected === null && this.emtpyClass, 

@@ -25,7 +25,7 @@ title: Loading
     <o-field>
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
-    <p>
+    <p style="position: relative">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
       fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
       laoreet elit
@@ -75,7 +75,7 @@ title: Loading
         <o-field>
             <o-switch v-model="isFullPage">Display loader over full page</o-switch>
         </o-field>
-        <p>
+        <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
             <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
                 <o-icon
@@ -117,37 +117,40 @@ title: Loading
 
 ```html
 <template>
-    <div>
-        <o-field>
-            <o-button size="medium" variant="primary" @click="openLoading">
-                Launch loading
-            </o-button>
-        </o-field>
-        <o-field>
-            <o-switch v-model="isFullPage">Display loader over full page</o-switch>
-        </o-field>
-        <p ref="element">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-        </o-p>
-    </div>
+  <div>
+    <o-field>
+      <o-button size="medium" variant="primary" @click="openLoading">
+        Launch loading
+      </o-button>
+    </o-field>
+    <o-field>
+      <o-switch v-model="isFullPage">Display loader over full page</o-switch>
+    </o-field>
+    <p style="position: relative" ref="element">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
+    </p>
+  </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                isFullPage: true,
-            }
-        },
-        methods: {
-            openLoading() {
-                const loadingComponent = this.$oruga.loading.open({
-                    container: this.isFullPage ? null : this.$refs.element.$el
-                })
-                setTimeout(() => loadingComponent.close(), 3 * 1000)
-            }
-        }
+  export default {
+    data() {
+      return {
+        isFullPage: true
+      };
+    },
+    methods: {
+      openLoading() {
+        const loadingComponent = this.$oruga.loading.open({
+          fullPage: this.isFullPage,
+          container: this.isFullPage ? null : this.$refs.element
+        });
+        setTimeout(() => loadingComponent.close(), 3 * 1000);
+      }
     }
+  };
 </script>
 ```
 
@@ -186,10 +189,10 @@ title: Loading
 
 ## Style
 
-| CSS Variable                        | SASS Variable                 | Default               |
-| ----------------------------------- | ----------------------------- | --------------------- |
-| --oruga-loading-background-legacy   | \$loading-background-legacy   | #7f7f7f               |
-| --oruga-loading-background          | \$loading-background          | rgba(255,255,255,0.5) |
-| --oruga-loading-full-page-icon-size | \$loading-full-page-icon-size | 5em                   |
-| --oruga-loading-icon-size           | \$loading-icon-size           | 2.5em                 |
-| --oruga-loading-zindex              | \$loading-zindex              | 999                   |
+| CSS Variable                       | SASS Variable                | Default               |
+| ---------------------------------- | ---------------------------- | --------------------- |
+| --oruga-loading-background-legacy  | \$loading-background-legacy  | #7f7f7f               |
+| --oruga-loading-background         | \$loading-background         | rgba(255,255,255,0.5) |
+| --oruga-loading-fullpage-icon-size | \$loading-fullpage-icon-size | 5em                   |
+| --oruga-loading-icon-size          | \$loading-icon-size          | 2.5em                 |
+| --oruga-loading-zindex             | \$loading-zindex             | 999                   |

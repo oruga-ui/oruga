@@ -138,6 +138,7 @@ title: Radio
 | --oruga-radio-checked-box-shadow-opacity | \$radio-checked-box-shadow-opacity | 0.8                                                                              |
 | --oruga-radio-disabled-opacity           | \$radio-disabled-opacity           | \$base-disabled-opacity                                                          |
 | --oruga-radio-focus-sibiling-box-shadow  | \$radio-focus-sibiling-box-shadow  | $radio-checked-box-shadow-length rgba($grey, \$radio-checked-box-shadow-opacity) |
-| --oruga-radio-label-padding              | \$radio-label-padding              | \$control-padding-horizontal 0 0 0                                               |
+| --oruga-radio-label-padding              | \$radio-label-padding              | 0 0 0 .5em                                                                       |
 | --oruga-radio-margin-sibiling            | \$radio-margin-sibiling            | 0.5em                                                                            |
 | --oruga-radio-size                       | \$radio-size                       | 1.25em                                                                           |
+| --oruga-radio-line-height                | \$radio-line-height                | 1.25                                                                             |

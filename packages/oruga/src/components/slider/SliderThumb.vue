@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="[ $slider.wrapperThumbClass, { [$slider.thumbDraggingClass]: dragging } ]"
+        :class="[ $slider.thumbWrapperClass, { [$slider.thumbDraggingClass]: dragging } ]"
         :style="wrapperStyle">
         <o-tooltip
             :label="tooltipLabel"

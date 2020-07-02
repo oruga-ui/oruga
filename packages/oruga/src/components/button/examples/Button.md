@@ -129,11 +129,14 @@
                 native-type="submit"
                 value="Submit input" />
 
+            <!-- Need vue-router -->
+            <!-- 
             <o-button tag="router-link"
                 to="/home"
                 variant="info">
                 Docs
             </o-button>
+            -->
         </div>
     </section>
 </template>

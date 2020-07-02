@@ -513,7 +513,7 @@ title: Autocomplete
         placeholder="e.g. Fight Club"
         field="title"
         :loading="isFetching"
-        :check-infinite-scroll="true"
+        check-infinite-scroll
         @typing="getAsyncData"
         @select="option => selected = option"
         @infinite-scroll="getMoreAsyncData"

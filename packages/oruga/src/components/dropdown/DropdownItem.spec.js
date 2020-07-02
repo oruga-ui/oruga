@@ -4,7 +4,7 @@ import BDropdownItem from '@components/dropdown/DropdownItem'
 let wrapper
 const dropdownSelected = 'val'
 const BDropdown = {
-    template: '<b-dropdown-stub></b-dropdown-stub>',
+    template: '<o-dropdown-stub></o-dropdown-stub>',
     data() {
         return {
             _isDropdown: true,

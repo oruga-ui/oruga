@@ -6,11 +6,9 @@
 ```html
 <template>
     <section>
-        <div class="block">
-            <o-field grouped group-multiline>
-                <o-switch v-model="animated">Animated</o-switch>
-            </o-field>
-        </div>
+        <o-field grouped group-multiline>
+            <o-switch v-model="animated">Animated</o-switch>
+        </o-field>
 
         <o-skeleton width="20%" :animated="animated"></o-skeleton>
 

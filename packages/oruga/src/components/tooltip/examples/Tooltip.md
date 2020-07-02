@@ -56,32 +56,32 @@
 ```html
 <template>
     <section>
-        <b-tooltip
-            label="Tooltip multilined, probably because it's too long for a casual tooltip"
-            multilined>
+        <o-tooltip
+            label="Tooltip multiline, probably because it's too long for a casual tooltip"
+            multiline>
             <o-button variant="primary">
                 Multiline (default)
             </o-button>
-        </b-tooltip>
+        </o-tooltip>
 
-        <b-tooltip
+        <o-tooltip
             label="It's not brief, but it's also not long"
             size="small"
-            multilined>
+            multiline>
             <o-button variant="primary">
                 Multiline (small)
             </o-button>
-        </b-tooltip>
+        </o-tooltip>
 
-        <b-tooltip
-            label="Tooltip large multilined, because it's too long to be on a medium size. Did I tell you it's really long? Yes, it is — I assure you!"
+        <o-tooltip
+            label="Tooltip large multiline, because it's too long to be on a medium size. Did I tell you it's really long? Yes, it is — I assure you!"
             position="bottom"
             size="large"
-            multilined>
+            multiline>
             <o-button variant="primary">
                 Multiline (large)
             </o-button>
-        </b-tooltip>
+        </o-tooltip>
     </section>
 </template>
 
@@ -98,22 +98,22 @@
 ```html
 <template>
     <section>
-        <b-tooltip position="bottom" multilined>
-            <o-o-button variant="primary">Html Content</o-button>
+        <o-tooltip position="bottom" multiline>
+            <o-button variant="primary">Html Content</o-button>
             <template v-slot:content>
                 <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit. <i>Fusce id fermentum quam</i>.
             </template>
-        </b-tooltip>
+        </o-tooltip>
 
-        <b-tooltip variant="primary" :triggers="['click']" :auto-close="['outside', 'escape']">
+        <o-tooltip variant="primary" :triggers="['click']" :auto-close="['outside', 'escape']">
             <template v-slot:content>
                 <o-icon icon="heart" variant="danger"></o-icon>
-                <o-icon icon="thumb-up" variant="info"></o-icon>
-                <o-icon icon="thumb-down" variant="warning"></o-icon>
-                <o-icon icon="emoticon-cool"></o-icon>
+                <o-icon icon="thumbs-up" variant="info"></o-icon>
+                <o-icon icon="thumbs-down" variant="warning"></o-icon>
+                <o-icon icon="smile-beam"></o-icon>
             </template>
-            <o-o-button variant="primary">Action</o-button>
-        </b-tooltip>
+            <o-button variant="primary">Action</o-button>
+        </o-tooltip>
     </section>
 </template>
 
@@ -137,21 +137,21 @@
 
         <hr>
 
-        <b-tooltip label="I'm never closing"
+        <o-tooltip label="I'm never closing"
             :active="active"
             always>
-            <o-butto>
+            <o-button>
                 Always
             </o-button>
-        </b-tooltip>
+        </o-tooltip>
 
-        <b-tooltip label="Tooltip right"
+        <o-tooltip label="Tooltip right"
             position="right"
             :active="active">
             <o-button variant="primary">
                 Right
             </o-button>
-        </b-tooltip>
+        </o-tooltip>
     </section>
 </template>
 

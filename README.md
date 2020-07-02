@@ -24,7 +24,7 @@
 
 * **Highly customizable components**: all components are fully customizable in different ways
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
-* **Lightweight**: no other internal dependency
+* **Lightweight**: no other internal dependency and import only components that you need
 
 ## Documentation
 

@@ -93,7 +93,7 @@ export default {
         },
         variant: {
             type: String,
-            default: ''
+            default: 'primary'
         },
         size: String,
         ticks: {
@@ -179,12 +179,12 @@ export default {
                 return getCssClass(clazz, override, 'o-slider-focus')
             }
         },
-        wrapperThumbClass: {
+        thumbWrapperClass: {
             type: String,
             default: () => {
                 const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.wrapperThumbClass', '')
-                return getCssClass(clazz, override, 'o-slider-wrapper-thumb')
+                const clazz = getValueByPath(config, 'slider.thumbWrapperClass', '')
+                return getCssClass(clazz, override, 'o-slider-thumb-wrapper')
             }
         },
         thumbClass: {

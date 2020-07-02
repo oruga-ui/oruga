@@ -1,8 +1,8 @@
 
 /* @docs */
 $dropdown-disabled-opacity: $base-disabled-opacity !default;
-$dropdown-item-background-active: #000000 !default;
-$dropdown-item-color-active: #ffffff !default;
+$dropdown-item-background-active: $primary !default;
+$dropdown-item-color-active: $primary-invert !default;
 $dropdown-item-color: #000000 !default;
 $dropdown-item-disabled-opacity: $base-disabled-opacity !default;
 $dropdown-item-font-size: $base-font-size !default;

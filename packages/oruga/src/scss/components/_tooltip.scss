@@ -2,8 +2,8 @@
 /* @docs */
 $tooltip-arrow-margin: 2px !default;
 $tooltip-arrow-size: 5px !default;
-$tooltip-background-color: #000000 !default;
-$tooltip-color: #ffffff !default;
+$tooltip-background-color: $primary !default;
+$tooltip-color: $primary-invert !default;
 $tooltip-content-box-shadow: 0px 1px 2px 1px rgba(0, 1, 0, 0.2) !default;
 $tooltip-content-font-size: 0.85rem !default;
 $tooltip-content-max-width: 300px !default;
@@ -17,17 +17,17 @@ $tooltip-content-zindex: 38 !default;
 @mixin tooltip-arrow($direction, $name, $color) {
     @if ($direction == "top") {
         border-top-style: solid;
-        @include variable('border-top-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         @include variable('border-top-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-right-style: solid;
         border-right-color: transparent;
         border-left-style: solid;
         border-left-color: transparent;
-        @include variable('border-right', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include variable('border-left', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "bottom") {
         border-bottom-style: solid;
-        @include variable('border-bottom-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         @include variable('border-bottom-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-right-style: solid;
         border-right-color: transparent;
@@ -37,7 +37,7 @@ $tooltip-content-zindex: 38 !default;
         @include variable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "right") {
         border-right-style: solid;
-        @include variable('border-right-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         @include variable('border-right-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-top-style: solid;
         border-top-color: transparent;
@@ -47,7 +47,7 @@ $tooltip-content-zindex: 38 !default;
         @include variable('border-bottom-width', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
     } @else if ($direction == "left") {
         border-left-style: solid;
-        @include variable('border-left-style', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include variable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         @include variable('border-left-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-top-style: solid;
         border-top-color: transparent;
@@ -155,7 +155,7 @@ $tooltip-content-zindex: 38 !default;
     }
     .o-tooltip-trigger {
         width: 100%;
-        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex, 'calc', '+ 2');
+        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex, 'calc', '- 1');
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
@@ -163,7 +163,7 @@ $tooltip-content-zindex: 38 !default;
         &.o-color-#{$name} {
             .o-tooltip-content {
                 @include variable('background', ('color-' + #{$name}), $color);
-                @include variable('color', ('color-invert-' + #{$name}), $color);
+                @include variable('color', ('color-invert-' + #{$name}), $color-invert);
             }
         }
     }

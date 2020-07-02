@@ -131,9 +131,14 @@ title: Button
 
       <o-button tag="input" native-type="submit" value="Submit input" />
 
-      <o-button tag="router-link" to="/home" variant="info">
-        Docs
-      </o-button>
+      <!-- Need vue-router -->
+      <!-- 
+            <o-button tag="router-link"
+                to="/home"
+                variant="info">
+                Docs
+            </o-button>
+            -->
     </div>
   </section>
 </template>

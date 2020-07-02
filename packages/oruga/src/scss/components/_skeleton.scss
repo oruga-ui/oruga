@@ -31,7 +31,6 @@ $skeleton-margin: .5rem 0 0 0 !default;
     vertical-align: middle;
     width: 100%;
     > .o-skeleton-item {
-        background-size: 400% 100%;
         width: 100%;
         @include variable('background', 'skeleton-background', $skeleton-background);
         &.o-skeleton-rounded {
@@ -46,6 +45,7 @@ $skeleton-margin: .5rem 0 0 0 !default;
     }
     &.o-skeleton-animated {
         > .o-skeleton-item {
+            background-size: 400% 100%;
             animation-name: skeleton-loading;
             animation-iteration-count: infinite;
             @include variable('animation-duration', 'skeleton-duration', $skeleton-duration);

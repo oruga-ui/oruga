@@ -11,9 +11,10 @@ $checkbox-checked-box-shadow-opacity: 0.8 !default;
 $checkbox-checkmark-color: $primary-invert !default;
 $checkbox-disabled-opacity: $base-disabled-opacity !default;
 $checkbox-focus-sibiling-box-shadow: $checkbox-checked-box-shadow-length rgba($grey, $checkbox-checked-box-shadow-opacity) !default;
-$checkbox-label-padding: $control-padding-horizontal 0 0 0 !default;
+$checkbox-label-padding: 0 0 0 .5em !default;
 $checkbox-margin-sibiling: 0.5em !default;
 $checkbox-size: 1.25em !default;
+$checkbox-line-height: 1.25 !default;
 /* @docs */
 
 .o-checkbox {
@@ -21,7 +22,9 @@ $checkbox-size: 1.25em !default;
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
     @include unselectable;
+    @include variable('line-height', 'checkbox-line-height', $checkbox-line-height);
     @include variable('margin-right', 'checkbox-margin-sibiling', $checkbox-margin-sibiling);
     & + .o-checkbox:last-child {
         margin-right: 0;

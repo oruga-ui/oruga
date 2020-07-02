@@ -258,6 +258,8 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 }
             }
             &.o-table-row-selected {
+                background-color: $table-row-active-background-color;
+                color: $table-row-active-color;
                 .o-checkbox input {
                     &:checked + .o-checkbox-check {
                         background: $table-row-active-color url(checkmark($table-row-active-background-color)) no-repeat center center;

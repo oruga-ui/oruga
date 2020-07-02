@@ -63,35 +63,35 @@ title: Tooltip
 ```html
 <template>
   <section>
-    <b-tooltip
-      label="Tooltip multilined, probably because it's too long for a casual tooltip"
-      multilined
+    <o-tooltip
+      label="Tooltip multiline, probably because it's too long for a casual tooltip"
+      multiline
     >
       <o-button variant="primary">
         Multiline (default)
       </o-button>
-    </b-tooltip>
+    </o-tooltip>
 
-    <b-tooltip
+    <o-tooltip
       label="It's not brief, but it's also not long"
       size="small"
-      multilined
+      multiline
     >
       <o-button variant="primary">
         Multiline (small)
       </o-button>
-    </b-tooltip>
+    </o-tooltip>
 
-    <b-tooltip
-      label="Tooltip large multilined, because it's too long to be on a medium size. Did I tell you it's really long? Yes, it is — I assure you!"
+    <o-tooltip
+      label="Tooltip large multiline, because it's too long to be on a medium size. Did I tell you it's really long? Yes, it is — I assure you!"
       position="bottom"
       size="large"
-      multilined
+      multiline
     >
       <o-button variant="primary">
         Multiline (large)
       </o-button>
-    </b-tooltip>
+    </o-tooltip>
   </section>
 </template>
 
@@ -108,29 +108,33 @@ title: Tooltip
 
 ```html
 <template>
-    <section>
-        <b-tooltip position="bottom" multilined>
-            <o-o-button variant="primary">Html Content</o-button>
-            <template v-slot:content>
-                <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit. <i>Fusce id fermentum quam</i>.
-            </template>
-        </b-tooltip>
+  <section>
+    <o-tooltip position="bottom" multiline>
+      <o-button variant="primary">Html Content</o-button>
+      <template v-slot:content>
+        <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
+        <i>Fusce id fermentum quam</i>.
+      </template>
+    </o-tooltip>
 
-        <b-tooltip variant="primary" :triggers="['click']" :auto-close="['outside', 'escape']">
-            <template v-slot:content>
-                <o-icon icon="heart" variant="danger"></o-icon>
-                <o-icon icon="thumb-up" variant="info"></o-icon>
-                <o-icon icon="thumb-down" variant="warning"></o-icon>
-                <o-icon icon="emoticon-cool"></o-icon>
-            </template>
-            <o-o-button variant="primary">Action</o-button>
-        </b-tooltip>
-    </section>
+    <o-tooltip
+      variant="primary"
+      :triggers="['click']"
+      :auto-close="['outside', 'escape']"
+    >
+      <template v-slot:content>
+        <o-icon icon="heart" variant="danger"></o-icon>
+        <o-icon icon="thumbs-up" variant="info"></o-icon>
+        <o-icon icon="thumbs-down" variant="warning"></o-icon>
+        <o-icon icon="smile-beam"></o-icon>
+      </template>
+      <o-button variant="primary">Action</o-button>
+    </o-tooltip>
+  </section>
 </template>
 
 <script>
-    export default {
-    }
+  export default {};
 </script>
 ```
 
@@ -142,40 +146,35 @@ title: Tooltip
 
 ```html
 <template>
-    <section>
-        <o-button variant="primary"
-            @click="active = !active">
-            Toggle
-        </o-button>
+  <section>
+    <o-button variant="primary" @click="active = !active">
+      Toggle
+    </o-button>
 
-        <hr>
+    <hr />
 
-        <b-tooltip label="I'm never closing"
-            :active="active"
-            always>
-            <o-butto>
-                Always
-            </o-button>
-        </b-tooltip>
+    <o-tooltip label="I'm never closing" :active="active" always>
+      <o-button>
+        Always
+      </o-button>
+    </o-tooltip>
 
-        <b-tooltip label="Tooltip right"
-            position="right"
-            :active="active">
-            <o-button variant="primary">
-                Right
-            </o-button>
-        </b-tooltip>
-    </section>
+    <o-tooltip label="Tooltip right" position="right" :active="active">
+      <o-button variant="primary">
+        Right
+      </o-button>
+    </o-tooltip>
+  </section>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                active: true
-            }
-        }
+  export default {
+    data() {
+      return {
+        active: true
+      };
     }
+  };
 </script>
 ```
 
@@ -216,8 +215,8 @@ title: Tooltip
 | --------------------------------------- | --------------------------------- | ---------------------------------- |
 | --oruga-tooltip-arrow-margin            | \$tooltip-arrow-margin            | 2px                                |
 | --oruga-tooltip-arrow-size              | \$tooltip-arrow-size              | 5px                                |
-| --oruga-tooltip-background-color        | \$tooltip-background-color        | #000000                            |
-| --oruga-tooltip-color                   | \$tooltip-color                   | #ffffff                            |
+| --oruga-tooltip-background-color        | \$tooltip-background-color        | \$primary                          |
+| --oruga-tooltip-color                   | \$tooltip-color                   | \$primary-invert                   |
 | --oruga-tooltip-content-box-shadow      | \$tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
 | --oruga-tooltip-content-font-size       | \$tooltip-content-font-size       | 0.85rem                            |
 | --oruga-tooltip-content-max-width       | \$tooltip-content-max-width       | 300px                              |

@@ -14,13 +14,12 @@
             :right="right"
             :open.sync="open"
             >
-            <div class="p-1">
-                <img
-                src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.pn"
+            <img
+                width="128"
+                src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
                 alt="Lightweight UI components for Vue.js"
-                />
-                Sidebar
-            </div>
+            />
+            <h3>Example</h3>
         </o-sidebar>
         <div class="block">
             <o-field grouped group-multiline>
@@ -30,6 +29,9 @@
                 <o-switch v-model="right">Right</o-switch>
             </o-field>
         </div>
+
+        <br>
+
         <o-button @click="open = true">Show</o-button>
     </section>
 </template>
@@ -65,22 +67,26 @@ export default {
                 variant="primary"
                 open
             >
-                <div class="p-1">
-                    <img
-                        src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.pn"
-                        alt="Lightweight UI components for Vue.js"
-                    />
-                    Sidebar
-                </div>
+                 <img
+                    width="128"
+                    src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+                    alt="Lightweight UI components for Vue.js"
+                />
+                <h5>Example 1</h5>
+                <h5>Example 2</h5>
+                <h5>Example 3</h5>
+                <h5>Example 4</h5>
+                <h5>Example 5</h5>
             </o-sidebar>
 
-            <div class="p-1">
+            <div>
                 <o-field>
                     <o-switch v-model="reduce">Reduced</o-switch>
                 </o-field>
                 <o-field>
                     <o-switch v-model="expandOnHover">Expand on hover</o-switch>
                 </o-field>
+                <br>
                 <o-field label="Mobile Layout">
                     <o-select v-model="mobile">
                         <option :value="null"></option>
@@ -106,22 +112,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.p-1 {
-  padding: 1em;
-}
+<style>
 .sidebar-page {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 100%;
-    // min-height: 100vh;
-    .sidebar-layout {
-        display: flex;
-        flex-direction: row;
-        min-height: 100%;
-        // min-height: 100vh;
-    }
+}
+.sidebar-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
 }
 </style>
 ```

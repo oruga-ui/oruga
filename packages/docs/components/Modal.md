@@ -35,39 +35,33 @@ title: Modal
     </div>
 
     <o-modal :active.sync="isImageModalActive">
-      <p class="image is-4by3">
-        <img src="/static/img/placeholder-1280x960.png" />
-      </p>
+      <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
     </o-modal>
 
     <o-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
-      <div class="card">
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="/static/img/placeholder-1280x960.png" alt="Image" />
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48">
-                <img src="/static/img/placeholder-1280x960.png" alt="Image" />
-              </figure>
-            </div>
-            <div class="media-content">
-              <p class="title is-4">John Smith</p>
-              <p class="subtitle is-6">@johnsmith</p>
-            </div>
-          </div>
-
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            nec iaculis mauris. <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
-            <br />
-            <small>11:09 PM - 1 Jan 2016</small>
-          </div>
-        </div>
-      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales
+        leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum.
+        Nulla faucibus leo eget enim egestas, in tempus justo venenatis. Duis
+        dictum suscipit erat, a dapibus eros lobortis ac. Praesent tempor
+        rhoncus convallis. Nullam in ipsum convallis, rutrum elit eget, dictum
+        ipsum. Nunc sagittis aliquet massa. Etiam lacus sapien, eleifend non
+        eros quis, finibus ornare nisl. Ut laoreet sit amet lacus non dignissim.
+        Sed convallis mattis enim, sed interdum risus molestie ut. Praesent vel
+        ex hendrerit, cursus lectus a, blandit felis. Nam luctus orci nec varius
+        commodo.
+      </p>
+      <p>
+        Sed vulputate metus purus, ut egestas erat congue et. Donec tellus orci,
+        malesuada eget dolor sed, pellentesque bibendum nunc. In eu egestas
+        diam. Integer sed congue massa. Sed a urna quam. Morbi vulputate dolor
+        eleifend ligula lobortis venenatis. Aenean pellentesque risus sit amet
+        faucibus molestie. Aliquam eu lorem aliquet, aliquam nulla in,
+        vestibulum lorem. Donec mollis mi at sollicitudin tristique. Nullam id
+        nibh pulvinar, dignissim nisl id, gravida risus. Nulla arcu elit,
+        scelerisque in sollicitudin et, laoreet et metus. Aenean placerat turpis
+        nec tincidunt tempus.
+      </p>
     </o-modal>
   </section>
 </template>
@@ -112,32 +106,35 @@ title: Modal
                 <div class="modal-card" style="width: auto">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Login</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="$emit('close')"/>
+                        <o-icon
+                            clickable
+                            native-type="button"
+                            icon="times"
+                            @click.native="$emit('close')"/>
                     </header>
                     <section class="modal-card-body">
-                        <b-field label="Email">
-                            <b-input
+                        <o-field label="Email">
+                            <o-input
                                 type="email"
                                 :value="email"
                                 placeholder="Your email"
                                 required>
-                            </b-input>
-                        </b-field>
+                            </o-input>
+                        </o-field>
 
-                        <b-field label="Password">
-                            <b-input
+                        <o-field label="Password">
+                            <o-input
                                 type="password"
                                 :value="password"
                                 password-reveal
                                 placeholder="Your password"
                                 required>
-                            </b-input>
-                        </b-field>
+                            </o-input>
+                        </o-field>
 
-                        <b-checkbox>Remember me</b-checkbox>
+                        <o-field>
+                            <o-checkbox>Remember me</o-checkbox>
+                        </o-field>
                     </section>
                     <footer class="modal-card-foot">
                         <o-button type="button" @click="$emit('close')">Close</o-button>
@@ -152,10 +149,10 @@ title: Modal
     methods: {
       imageModal() {
         const h = this.$createElement;
-        const vnode = h("p", { class: "image is-4by3" }, [
+        const vnode = h("p", {}, [
           h("img", {
             attrs: {
-              src: "https://buefy.org/static/img/placeholder-1280x960.png"
+              src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
             }
           })
         ]);
@@ -167,13 +164,75 @@ title: Modal
         this.$oruga.modal.open({
           parent: this,
           component: ModalForm,
-          hasModalCard: true,
+          custom: true,
           trapFocus: true
         });
       }
     }
   };
 </script>
+
+<style>
+  .modal-card {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+  }
+  @media screen and (min-width: 769px) {
+    .modal-card {
+      margin: 0 auto;
+      max-height: calc(100vh - 40px);
+      width: 640px;
+    }
+  }
+  .modal-card {
+    margin: 0 20px;
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    position: relative;
+    width: 100%;
+  }
+  .modal-card-foot,
+  .modal-card-head {
+    align-items: center;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative;
+  }
+  .modal-card-head {
+    border-bottom: 1px solid #dbdbdb;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .modal-card-body {
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: auto;
+    padding: 20px;
+  }
+  .modal-card-foot {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top: 1px solid #dbdbdb;
+  }
+  .modal-card-title {
+    color: #363636;
+    flex-grow: 1;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 0;
+  }
+  .modal-card-foot .o-button:not(:last-child) {
+    margin-right: 0.5em;
+  }
+</style>
 ```
 
 :::
@@ -191,7 +250,7 @@ title: Modal
 | width           |             | string\|number | -      | 960                                                                                                                                                                                                                   |
 | custom          |             | boolean        | -      |                                                                                                                                                                                                                       |
 | animation       |             | string         | -      | 'zoom-out'                                                                                                                                                                                                            |
-| canCancel       |             | array\|boolean | -      | () => {<br> getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])<br>}                                                                                                                      |
+| canCancel       |             | array\|boolean | -      | () => {<br> return getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])<br>}                                                                                                               |
 | onCancel        |             | func           | -      | () => {}                                                                                                                                                                                                              |
 | scroll          |             | string         | -      | () => {<br> return getValueByPath(config, 'modal.scroll', 'keep')<br>}                                                                                                                                                |
 | fullScreen      |             | boolean        | -      |                                                                                                                                                                                                                       |
@@ -216,7 +275,10 @@ title: Modal
 
 | CSS Variable                                      | SASS Variable                               | Default                      |
 | ------------------------------------------------- | ------------------------------------------- | ---------------------------- |
-| --oruga-modal-background-color                    | \$modal-background-color                    | hsla(0,0%,4%,.86)            |
+| --oruga-modal-content-background-color            | \$modal-content-background-color            | \$white                      |
+| --oruga-modal-content-padding                     | \$modal-content-padding                     | 10px                         |
+| --oruga-modal-content-border-radius               | \$modal-content-border-radius               | \$base-border-radius         |
+| --oruga-modal-background-background-color         | \$modal-background-background-color         | hsla(0,0%,4%,.86)            |
 | --oruga-modal-close-border-radius                 | \$modal-close-border-radius                 | \$base-rounded-border-radius |
 | --oruga-modal-close-height                        | \$modal-close-height                        | 32px                         |
 | --oruga-modal-close-right                         | \$modal-close-right                         | 20px                         |

@@ -25,7 +25,7 @@ title: Select
     </o-field>
 
     <o-field label="Grouped">
-      <o-select placeholder="Select a character" icon="account">
+      <o-select placeholder="Select a character" icon="user">
         <optgroup label="Black Sails">
           <option value="flint">Flint</option>
           <option value="silver">Silver</option>
@@ -93,36 +93,6 @@ title: Select
       <o-select placeholder="Large" size="large" expanded>
         <option value="flint">Flint</option>
         <option value="silver">Silver</option>
-      </o-select>
-    </o-field>
-  </section>
-</template>
-
-<script>
-  export default {};
-</script>
-```
-
-:::
-
-### Icons
-
-::: demo
-
-```html
-<template>
-  <section>
-    <o-field>
-      <o-select placeholder="Country" icon="globe">
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-      </o-select>
-    </o-field>
-
-    <o-field>
-      <o-select placeholder="Client" icon="user">
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
       </o-select>
     </o-field>
   </section>

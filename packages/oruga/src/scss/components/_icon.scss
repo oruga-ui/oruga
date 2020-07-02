@@ -34,9 +34,9 @@ $icon-spin-duration: 2s !default;
         cursor: pointer;
     }
     &.o-icon-spin {
-        animation-name: spin;
+        animation-name: icon-spin;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
-        @include variable('animation-duraiton', 'icon-spin-duration', $icon-spin-duration);
+        @include variable('animation-duration', 'icon-spin-duration', $icon-spin-duration);
     }
 }

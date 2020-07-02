@@ -71,7 +71,7 @@ export default {
         canCancel: {
             type: [Array, Boolean],
             default: () => {
-                getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
+                return getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
             }
         },
         onCancel: {

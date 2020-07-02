@@ -10,6 +10,6 @@ features:
   - title: Components with steroids
     details: Most of the components aren't a simple wrapper of native elements but they add new and custom features
   - title: Lightweight
-    details: No other internal dependency
+    details: No other internal dependency and import only components that you need
 footer: MIT Licensed
 ---

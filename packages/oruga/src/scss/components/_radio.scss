@@ -7,9 +7,10 @@ $radio-checked-box-shadow-length: 0 0 0.5em !default;
 $radio-checked-box-shadow-opacity: 0.8 !default;
 $radio-disabled-opacity: $base-disabled-opacity !default;
 $radio-focus-sibiling-box-shadow: $radio-checked-box-shadow-length rgba($grey, $radio-checked-box-shadow-opacity) !default;
-$radio-label-padding: $control-padding-horizontal 0 0 0 !default;
+$radio-label-padding: 0 0 0 .5em !default;
 $radio-margin-sibiling: 0.5em !default;
 $radio-size: 1.25em !default;
+$radio-line-height: 1.25 !default;
 /* @docs */
 
 .o-radio {
@@ -18,6 +19,7 @@ $radio-size: 1.25em !default;
     align-items: center;
     cursor: pointer;
     @include unselectable;
+    @include variable('line-height', 'radio-line-height', $radio-line-height);
     @include variable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
     & + .o-radio:last-child {
         margin-right: 0;
@@ -59,7 +61,7 @@ $radio-size: 1.25em !default;
             }
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
-                &.o-color#{$name}:before {
+                &.o-color-#{$name}:before {
                     @include variable('background', ('color-' + #{$name}), $color);
                 }
             }
@@ -68,7 +70,7 @@ $radio-size: 1.25em !default;
             @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
-                &.o-color#{$name} {
+                &.o-color-#{$name} {
                     @include variable('border-color', ('color-' + #{$name}), $color);
                 }
             }
@@ -107,7 +109,7 @@ $radio-size: 1.25em !default;
             @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
-                &.o-color#{$name} {
+                &.o-color-#{$name} {
                     @include variable('border-color', ('color-' + #{$name}), $color);
                 }
             }

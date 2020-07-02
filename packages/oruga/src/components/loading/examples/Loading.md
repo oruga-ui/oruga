@@ -14,7 +14,7 @@
         <o-field>
             <o-switch v-model="isFullPage">Display loader over full page</o-switch>
         </o-field>
-        <p>
+        <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
             <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></o-loading>
         </p>
@@ -56,7 +56,7 @@
         <o-field>
             <o-switch v-model="isFullPage">Display loader over full page</o-switch>
         </o-field>
-        <p>
+        <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
             <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
                 <o-icon
@@ -105,9 +105,9 @@
         <o-field>
             <o-switch v-model="isFullPage">Display loader over full page</o-switch>
         </o-field>
-        <p ref="element">
+        <p style="position: relative" ref="element">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-        </o-p>
+        </p>
     </div>
 </template>
 
@@ -121,7 +121,8 @@
         methods: {
             openLoading() {
                 const loadingComponent = this.$oruga.loading.open({
-                    container: this.isFullPage ? null : this.$refs.element.$el
+                    fullPage: this.isFullPage,
+                    container: this.isFullPage ? null : this.$refs.element
                 })
                 setTimeout(() => loadingComponent.close(), 3 * 1000)
             }

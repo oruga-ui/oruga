@@ -80,8 +80,8 @@ describe('OIcon', () => {
             'chevron-down': 'angle-down',
             'eye': 'eye',
             'eye-off': 'eye-slash',
-            'menu-down': 'caret-down',
-            'menu-up': 'caret-up',
+            'caret-down': 'caret-down',
+            'caret-up': 'caret-up',
             'other': 'other'
         }
 

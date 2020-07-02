@@ -43,12 +43,16 @@ const mergeFn = (target, source, deep = false) => {
             target !== null &&
             Object.prototype.hasOwnProperty.call(target, prop) &&
             isObject(target[prop])
-        const replaced = Object.getOwnPropertyNames(source)
-            .map((prop) => ({ [prop]: isDeep(prop)
-                ? mergeFn(target[prop], source[prop], deep)
-                : source[prop] }))
-            .reduce((a, b) => ({ ...a, ...b }), {})
-
+        let replaced
+        if (source === null || typeof source === 'undefined') {
+            replaced = false;
+        } else {
+            replaced = Object.getOwnPropertyNames(source)
+                .map((prop) => ({ [prop]: isDeep(prop)
+                    ? mergeFn(target[prop], source[prop], deep)
+                    : source[prop] }))
+                .reduce((a, b) => ({ ...a, ...b }), {})
+        }
         return {
             ...target,
             ...replaced

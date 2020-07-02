@@ -11,7 +11,11 @@ module.exports = {
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   ],
   plugins: [
-    'demo-block'
+    ['demo-block', {
+      settings: {
+        horizontal: false
+      }
+    }]
   ],
   configureWebpack: {
     resolve: {

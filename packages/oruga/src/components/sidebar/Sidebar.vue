@@ -147,7 +147,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'sidebar.override', false)
                 const clazz = getValueByPath(config, 'sidebar.expandOnHoverClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-expand-hover')
+                return getCssClass(clazz, override, 'o-sidebar-mini-expand')
             }
         },
         expandOnHoverFixedClass: {
@@ -155,7 +155,7 @@ export default {
             default: () => {
                 const override = getValueByPath(config, 'sidebar.override', false)
                 const clazz = getValueByPath(config, 'sidebar.expandOnHoverFixedClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-expand-hover-fixed')
+                return getCssClass(clazz, override, 'o-sidebar-expand-mini-hover-fixed')
             }
         },
         mobileReduceClass: {

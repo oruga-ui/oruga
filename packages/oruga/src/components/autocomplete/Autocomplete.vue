@@ -426,7 +426,8 @@ export default {
          * Check if the scroll list inside the dropdown
          * reached it's end.
          */
-        checkIfReachedTheEndOfScroll(list) {
+        checkIfReachedTheEndOfScroll() {
+            const list = this.$refs.dropdown
             if (list.clientHeight !== list.scrollHeight &&
                 list.scrollTop + list.clientHeight >= list.scrollHeight) {
                 this.$emit('infinite-scroll')
@@ -582,12 +583,12 @@ export default {
         }
     },
     mounted() {
-        if (this.checkInfiniteScroll && this.$refs.dropdown) {
-            const list = this.$refs.dropdown
-            list.addEventListener('scroll', () => this.checkIfReachedTheEndOfScroll(list))
+        const list = this.$refs.dropdown
+        if (this.checkInfiniteScroll && list) {
+            list.addEventListener('scroll', this.checkIfReachedTheEndOfScroll)
         }
         if (this.appendToBody) {
-            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdown)
+            this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
         }
     },

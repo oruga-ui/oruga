@@ -31,8 +31,8 @@ const faIcons = () => {
             'chevron-down': 'angle-down',
             'chevron-up': 'angle-up',
             'eye-off': 'eye-slash',
-            'menu-down': 'caret-down',
-            'menu-up': 'caret-up',
+            'caret-down': 'caret-down',
+            'caret-up': 'caret-up',
             'close-circle': 'times-circle',
             'spin': 'circle-notch'
         }

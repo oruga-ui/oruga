@@ -163,8 +163,10 @@
             <span>Clear selected</span>
         </o-button>
 
-         <pre>{{ selected }}</pre>
-
+        <p>
+        {{ selected }}
+        </p>
+        
         <o-table
             :data="data"
             :columns="columns"
@@ -237,15 +239,9 @@
                 <option value="15">15 per page</option>
                 <option value="20">20 per page</option>
             </o-select>
-            <div class="control">
-                <button class="button" @click="currentPage = 2" :disabled="!isPaginated">Set page to 2</button>
-            </div>
-            <div class="control">
-                <o-switch v-model="isPaginated">Paginated</o-switch>
-            </div>
-            <div class="control">
-                <o-switch v-model="isPaginationSimple" :disabled="!isPaginated">Simple pagination</o-switch>
-            </div>
+            <o-button @click="currentPage = 2" :disabled="!isPaginated">Set page to 2</o-button>
+            <o-switch v-model="isPaginated">Paginated</o-switch>
+            <o-switch v-model="isPaginationSimple" :disabled="!isPaginated">Simple pagination</o-switch>
             <o-select v-model="paginationPosition" :disabled="!isPaginated">
                 <option value="bottom">bottom pagination</option>
                 <option value="top">top pagination</option>
@@ -253,7 +249,7 @@
             </o-select>
             <o-select v-model="sortIcon">
                 <option value="arrow-up">Arrow sort icon</option>
-                <option value="menu-up">Caret sort icon</option>
+                <option value="caret-up">Caret sort icon</option>
                 <option value="chevron-up">Chevron sort icon </option>
             </o-select>
             <o-select v-model="sortIconSize">

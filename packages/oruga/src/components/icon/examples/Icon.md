@@ -268,8 +268,8 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
                     'chevron-down': 'arrow-down',
                     'eye': 'eye',
                     'eye-off': 'eye-off',
-                    'menu-down': 'arrow-dropdown',
-                    'menu-up': 'arrow-dropup'
+                    'caret-down': 'arrow-dropdown',
+                    'caret-up': 'arrow-dropup'
                 }
             }
         }

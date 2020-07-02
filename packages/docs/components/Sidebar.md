@@ -25,13 +25,12 @@ title: Sidebar
       :right="right"
       :open.sync="open"
     >
-      <div class="p-1">
-        <img
-          src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.pn"
-          alt="Lightweight UI components for Vue.js"
-        />
-        Sidebar
-      </div>
+      <img
+        width="128"
+        src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+        alt="Lightweight UI components for Vue.js"
+      />
+      <h3>Example</h3>
     </o-sidebar>
     <div class="block">
       <o-field grouped group-multiline>
@@ -41,6 +40,9 @@ title: Sidebar
         <o-switch v-model="right">Right</o-switch>
       </o-field>
     </div>
+
+    <br />
+
     <o-button @click="open = true">Show</o-button>
   </section>
 </template>
@@ -78,22 +80,26 @@ title: Sidebar
         variant="primary"
         open
       >
-        <div class="p-1">
-          <img
-            src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.pn"
-            alt="Lightweight UI components for Vue.js"
-          />
-          Sidebar
-        </div>
+        <img
+          width="128"
+          src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+          alt="Lightweight UI components for Vue.js"
+        />
+        <h5>Example 1</h5>
+        <h5>Example 2</h5>
+        <h5>Example 3</h5>
+        <h5>Example 4</h5>
+        <h5>Example 5</h5>
       </o-sidebar>
 
-      <div class="p-1">
+      <div>
         <o-field>
           <o-switch v-model="reduce">Reduced</o-switch>
         </o-field>
         <o-field>
           <o-switch v-model="expandOnHover">Expand on hover</o-switch>
         </o-field>
+        <br />
         <o-field label="Mobile Layout">
           <o-select v-model="mobile">
             <option :value="null"></option>
@@ -119,22 +125,17 @@ title: Sidebar
   };
 </script>
 
-<style lang="scss" scoped>
-  .p-1 {
-    padding: 1em;
-  }
+<style>
   .sidebar-page {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 100%;
-    // min-height: 100vh;
-    .sidebar-layout {
-      display: flex;
-      flex-direction: row;
-      min-height: 100%;
-      // min-height: 100vh;
-    }
+  }
+  .sidebar-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
   }
 </style>
 ```
@@ -143,36 +144,36 @@ title: Sidebar
 
 ## Props
 
-| Prop name               | Description | Type           | Values | Default                                                                                                                                                                                                                                     |
-| ----------------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| open                    |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| variant                 |             | string\|object | -      |                                                                                                                                                                                                                                             |
-| overlay                 |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| position                |             | string         | -      | 'fixed'                                                                                                                                                                                                                                     |
-| fullheight              |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| fullwidth               |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| right                   |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| mobile                  |             | string         | -      |                                                                                                                                                                                                                                             |
-| reduce                  |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| expandOnHover           |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| expandOnHoverFixed      |             | boolean        | -      |                                                                                                                                                                                                                                             |
-| canCancel               |             | array\|boolean | -      | () => ['escape', 'outside']                                                                                                                                                                                                                 |
-| onCancel                |             | func           | -      | () => {}                                                                                                                                                                                                                                    |
-| rootClass               |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.rootClass', '')<br> return getCssClass(clazz, override, 'o-sidebar')<br>}                                  |
-| backgroundClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.backgroundClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-background')<br>}                 |
-| contentClass            |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.contentClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-content')<br>}                       |
-| fixedClass              |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fixedClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fixed')<br>}                           |
-| staticClass             |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.staticClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-static')<br>}                         |
-| absoluteClass           |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.absoluteClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-absolute')<br>}                     |
-| fullheightClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fullheightClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fullheight')<br>}                 |
-| fullwidthClass          |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fullwidthClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fullwidth')<br>}                   |
-| rightClass              |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.rightClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-right')<br>}                           |
-| reduceClass             |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.reduceClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini')<br>}                           |
-| expandOnHoverClass      |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.expandOnHoverClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-expand-hover')<br>}            |
-| expandOnHoverFixedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.expandOnHoverFixedClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-expand-hover-fixed')<br>} |
-| mobileReduceClass       |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileReduceClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini-mobile')<br>}              |
-| mobileHideClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileHideClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-hidden-mobile')<br>}              |
-| mobileFullwidthClass    |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileFullwidthClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini-fullwidth')<br>}        |
+| Prop name               | Description | Type           | Values | Default                                                                                                                                                                                                                                          |
+| ----------------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| open                    |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| variant                 |             | string\|object | -      |                                                                                                                                                                                                                                                  |
+| overlay                 |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| position                |             | string         | -      | 'fixed'                                                                                                                                                                                                                                          |
+| fullheight              |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| fullwidth               |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| right                   |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| mobile                  |             | string         | -      |                                                                                                                                                                                                                                                  |
+| reduce                  |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| expandOnHover           |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| expandOnHoverFixed      |             | boolean        | -      |                                                                                                                                                                                                                                                  |
+| canCancel               |             | array\|boolean | -      | () => ['escape', 'outside']                                                                                                                                                                                                                      |
+| onCancel                |             | func           | -      | () => {}                                                                                                                                                                                                                                         |
+| rootClass               |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.rootClass', '')<br> return getCssClass(clazz, override, 'o-sidebar')<br>}                                       |
+| backgroundClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.backgroundClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-background')<br>}                      |
+| contentClass            |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.contentClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-content')<br>}                            |
+| fixedClass              |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fixedClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fixed')<br>}                                |
+| staticClass             |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.staticClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-static')<br>}                              |
+| absoluteClass           |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.absoluteClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-absolute')<br>}                          |
+| fullheightClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fullheightClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fullheight')<br>}                      |
+| fullwidthClass          |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.fullwidthClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-fullwidth')<br>}                        |
+| rightClass              |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.rightClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-right')<br>}                                |
+| reduceClass             |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.reduceClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini')<br>}                                |
+| expandOnHoverClass      |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.expandOnHoverClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini-expand')<br>}                  |
+| expandOnHoverFixedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.expandOnHoverFixedClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-expand-mini-hover-fixed')<br>} |
+| mobileReduceClass       |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileReduceClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini-mobile')<br>}                   |
+| mobileHideClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileHideClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-hidden-mobile')<br>}                   |
+| mobileFullwidthClass    |             | string         | -      | () => {<br> const override = getValueByPath(config, 'sidebar.override', false)<br> const clazz = getValueByPath(config, 'sidebar.mobileFullwidthClass', '')<br> return getCssClass(clazz, override, 'o-sidebar-mini-fullwidth')<br>}             |
 
 ## Events
 

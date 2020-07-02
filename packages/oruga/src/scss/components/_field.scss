@@ -82,7 +82,7 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
                 @include variable('margin-bottom', 'field-margin-bottom', -$field-margin-bottom);
             }
             > *:not(:last-child) {
-                @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
+                // @include variable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
             }
         }
     }
