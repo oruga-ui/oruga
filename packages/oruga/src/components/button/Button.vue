@@ -71,6 +71,7 @@ export default {
             type: String,
             default: 'button'
         },
+        disabled: Boolean,
         rootClass: {
             type: String,
             default: () => {
@@ -111,6 +112,14 @@ export default {
                 return getCssClass(clazz, override, 'o-button-rounded')
             }
         },
+        disabledClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'button.override', false)
+                const clazz = getValueByPath(config, 'button.disabledClass', '')
+                return getCssClass(clazz, override, 'o-button-disabled')
+            }
+        }
     },
     computed: {
         rootClasses() {
@@ -121,11 +130,12 @@ export default {
                 this.outlined && this.outlinedClass,
                 this.inverted && this.invertedClass,
                 this.expanded && this.expandedClass, 
-                this.rounded && this.roundedClass
+                this.rounded && this.roundedClass,
+                this.disabled && this.disabledClass
             ]
         },
         computedTag() {
-            if (this.$attrs.disabled !== undefined && this.$attrs.disabled !== false) {
+            if (this.disabled !== undefined && this.disabled !== false) {
                 return 'button'
             }
             return this.tag

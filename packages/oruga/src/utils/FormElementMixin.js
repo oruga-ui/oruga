@@ -18,7 +18,16 @@ export default {
         maxlength: [Number, String],
         useHtml5Validation: {
             type: Boolean,
-            default: () => getValueByPath(config, 'useHtml5Validation', true)
+            default: () => {
+                return getValueByPath(config, 'useHtml5Validation', true)
+            }
+        },
+        statusIcon: {
+            type: Boolean,
+            default: () => {
+                console.log(getValueByPath(config, 'statusIcon', true))
+                return getValueByPath(config, 'statusIcon', true)
+            }
         },
         validationMessage: String
     },

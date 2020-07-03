@@ -24,5 +24,8 @@
   },
   "resolutions": {
     "watchpack": "1.6.1"
+  },
+  "dependencies": {
+    "tailwindcss": "1.4.6"
   }
 }

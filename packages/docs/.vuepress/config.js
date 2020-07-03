@@ -11,11 +11,18 @@ module.exports = {
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   ],
   plugins: [
-    ['demo-block', {
-      settings: {
-        horizontal: false
+    [
+      'demo-block',
+      {
+        settings: {
+          horizontal: false
+        }
+      },
+      '@vuepress/google-analytics',
+      {
+        'ga': 'UA-171490794-1'
       }
-    }]
+    ]
   ],
   configureWebpack: {
     resolve: {
@@ -23,6 +30,12 @@ module.exports = {
         vue: 'vue/dist/vue.common.js',
       }
     }
+  },
+  postcss: {
+    plugins: [
+      require('tailwindcss'),
+      require('autoprefixer'),
+    ]
   },
   markdown: {
     config: md => {
@@ -43,7 +56,8 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
-      { text: 'Components', link: '/components/' }
+      { text: 'Components', link: '/components/' },
+      { text: 'Examples', link: '/examples/' }
     ],
   }
 };

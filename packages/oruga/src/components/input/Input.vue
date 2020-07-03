@@ -24,7 +24,7 @@
 
         <o-icon
             v-if="icon"
-            class="o-icon-left"
+            :class="iconLeftClass"
             :clickable="iconClickable"
             :icon="icon"
             :pack="iconPack"
@@ -32,8 +32,8 @@
             @click.native="iconClick('icon-click', $event)"/>
 
         <o-icon
-            v-if="!loading && hasIconRight"
-            class="o-icon-right"
+            v-if="hasIconRight"
+            :class="iconRightClass"
             :clickable="passwordReveal || iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
@@ -44,8 +44,7 @@
 
         <small
             v-if="maxlength && hasCounter && type !== 'number'"
-            class="o-input-counter"
-            :class="{ 'o-input-counter-invisible': !isFocused }">
+            :class="[ counterClass, !isFocused && counterInvisibleClass ]">
             {{ valueLength }} / {{ maxlength }}
         </small>
     </div>
@@ -100,6 +99,30 @@ export default {
                 return getCssClass(clazz, override, 'o-control-input')
             }
         },
+        controlExpandedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.controlExpandedClass', '')
+                return getCssClass(clazz, override, 'o-control-input-expanded')
+            }
+        },
+        controlIconLeftClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.controlIconLeftClass', '')
+                return getCssClass(clazz, override, 'o-control-input-icons-left')
+            }
+        },
+        controlIconRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.controlIconRightClass', '')
+                return getCssClass(clazz, override, 'o-control-input-icons-right')
+            }
+        },
         inputClass: {
             type: String,
             default: () => {
@@ -107,7 +130,47 @@ export default {
                 const clazz = getValueByPath(config, 'input.inputClass', '')
                 return getCssClass(clazz, override, 'o-input')
             }
-        }
+        },
+        roundedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.roundedClass', '')
+                return getCssClass(clazz, override, 'o-input-rounded')
+            }
+        },
+        iconLeftClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.iconLeftClass', '')
+                return getCssClass(clazz, override, 'o-icon-left')
+            }
+        },
+        iconRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.iconRightClass', '')
+                return getCssClass(clazz, override, 'o-icon-right')
+            }
+        },
+        counterClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.counterClass', '')
+                return getCssClass(clazz, override, 'o-input-counter')
+            }
+        },
+        counterInvisibleClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'input.override', false)
+                const clazz = getValueByPath(config, 'input.counterInvisibleClass', '')
+                return getCssClass(clazz, override, 'o-input-counter-invisible')
+            }
+        },
     },
     data() {
         return {
@@ -129,18 +192,12 @@ export default {
             }
         },
         rootClasses() {
-            let iconPosition = ''
-            if (this.icon && this.hasIconRight) {
-                iconPosition = 'o-control-input-icons-left o-control-input-icons-right'
-            } else if (!this.icon && this.hasIconRight) {
-                iconPosition = 'o-control-input-icons-right'
-            } else if (this.icon) {
-                iconPosition = 'o-control-input-icons-left'
-            }
             return [
                 this.rootClass,
-                iconPosition,
-                this.expanded && 'o-control-input-expanded'
+                this.expanded && this.controlExpandedClass,
+                (this.icon && this.hasIconRight) && `${this.controlIconLeftClass} ${this.controlIconRightClass}`,
+                (!this.icon && this.hasIconRight) && this.controlIconRightClass,
+                this.icon && this.controlIconLeftClass
             ]
         },
         inputClasses() {
@@ -148,11 +205,11 @@ export default {
                 this.inputClass,
                 this.statusVariant && ('o-color-' + this.statusVariant),
                 this.size && ('o-size-' + this.size),
-                this.rounded && 'o-input-rounded'
+                this.rounded && this.roundedClass
             ]
         },
         hasIconRight() {
-            return this.passwordReveal || this.statusVariantIcon || this.iconRight
+            return this.passwordReveal || (this.statusIcon && this.statusVariantIcon) || this.iconRight
         },
         rightIcon() {
             if (this.passwordReveal) {

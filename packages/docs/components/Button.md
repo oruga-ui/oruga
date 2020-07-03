@@ -166,11 +166,13 @@ title: Button
 | inverted      |             | boolean        | -      |                                                                                                                                                                                                                      |
 | nativeType    |             | string         | -      | 'button'                                                                                                                                                                                                             |
 | tag           |             | string         | -      | 'button'                                                                                                                                                                                                             |
+| disabled      |             | boolean        | -      |                                                                                                                                                                                                                      |
 | rootClass     |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.rootClass', '')<br> return getCssClass(clazz, override, 'o-button')<br>}              |
 | outlinedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-button-outlined')<br>} |
 | invertedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.invertedClass', '')<br> return getCssClass(clazz, override, 'o-button-inverted')<br>} |
 | expandedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.expandedClass', '')<br> return getCssClass(clazz, override, 'o-button-expanded')<br>} |
 | roundedClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.roundedClass', '')<br> return getCssClass(clazz, override, 'o-button-rounded')<br>}   |
+| disabledClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.disabledClass', '')<br> return getCssClass(clazz, override, 'o-button-disabled')<br>} |
 
 ## Slots
 
@@ -195,3 +197,4 @@ title: Button
 | --oruga-button-height                | \$button-height                | \$control-height             |
 | --oruga-button-padding               | \$button-padding               | calc(.375em - 1px) .75em     |
 | --oruga-button-rounded-border-radius | \$button-rounded-border-radius | \$base-rounded-border-radius |
+| --oruga-button-disabled-opacity      | \$button-disabled-opacity      | \$base-disabled-opacity      |

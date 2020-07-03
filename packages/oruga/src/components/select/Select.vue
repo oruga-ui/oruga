@@ -26,14 +26,14 @@
 
         <o-icon
             v-if="icon"
-            class="o-icon-left"
+            :class="iconLeftClass"
             :icon="icon"
             :pack="iconPack"
             :size="size"/>
 
          <o-icon
             v-if="iconRight"
-            class="o-icon-right"
+            :class="iconRightClass"
             :icon="iconRight"
             :pack="iconPack"
             :size="size"
@@ -86,12 +86,36 @@ export default {
                 return getCssClass(clazz, override, 'o-control-select')
             }
         },
-        selectClass: {
+        emptyClass: {
             type: String,
             default: () => {
                 const override = getValueByPath(config, 'select.override', false)
-                const clazz = getValueByPath(config, 'select.selectClass', '')
-                return getCssClass(clazz, override, 'o-select')
+                const clazz = getValueByPath(config, 'select.emptyClass', '')
+                return getCssClass(clazz, override, 'o-select-empty')
+            }
+        },
+        controlExpandedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.controlExpandedClass', '')
+                return getCssClass(clazz, override, 'o-control-select-expanded')
+            }
+        },
+        controlIconLeftClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.controlIconLeftClass', '')
+                return getCssClass(clazz, override, 'o-control-select-icons-left')
+            }
+        },
+        controlIconRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.controlIconRightClass', '')
+                return getCssClass(clazz, override, 'o-control-select-icons-right')
             }
         },
         roundedClass: {
@@ -117,6 +141,30 @@ export default {
                 const clazz = getValueByPath(config, 'select.emptyClass', '')
                 return getCssClass(clazz, override, 'o-select-empty')
             }
+        },
+        expandedClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.expandedClass', '')
+                return getCssClass(clazz, override, 'o-select-expanded')
+            }
+        },
+        iconLeftClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.iconLeftClass', '')
+                return getCssClass(clazz, override, 'o-icon-left')
+            }
+        },
+        iconRightClass: {
+            type: String,
+            default: () => {
+                const override = getValueByPath(config, 'select.override', false)
+                const clazz = getValueByPath(config, 'select.iconRightClass', '')
+                return getCssClass(clazz, override, 'o-icon-right')
+            }
         }
     },
     data() {
@@ -128,9 +176,9 @@ export default {
         rootClasses() {
             return [
                 this.rootClass,
-                this.icon && 'o-control-select-icons-left',
-                this.iconRight && 'o-control-select-icons-right',
-                this.expanded && 'o-control-select-expanded'
+                this.icon && this.controlIconLeftClass,
+                this.iconRight && this.controlIconRightClass,
+                this.expanded && this.controlExpandedClass
             ]
         },
         selectClasses() {
@@ -141,7 +189,7 @@ export default {
                 this.rounded && this.roundedClass, 
                 this.selected === null && this.emtpyClass, 
                 this.multiple && this.multipleClass, 
-                this.expanded && 'o-select-expanded'
+                this.expanded && this.expandedClass
             ]
         },
         computedValue: {

@@ -13,6 +13,7 @@ $button-margin: 0 !default;
 $button-height: $control-height !default;
 $button-padding: calc(.375em - 1px) .75em !default;
 $button-rounded-border-radius: $base-rounded-border-radius !default;
+$button-disabled-opacity: $base-disabled-opacity !default;
 /* @docs */
 
 .o-button {
@@ -43,6 +44,10 @@ $button-rounded-border-radius: $base-rounded-border-radius !default;
     }
     &.o-button-rounded {
         @include variable('border-radius', 'button-border-radius', $button-rounded-border-radius);
+    }
+    &.o-button-disabled {
+        @include variable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
+        cursor: not-allowed;
     }
     > .o-icon:first-child:not(:last-child) {
         @include variable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);

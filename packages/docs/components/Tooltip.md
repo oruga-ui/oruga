@@ -18,25 +18,25 @@ title: Tooltip
 <template>
   <section>
     <o-tooltip label="Tooltip right" position="right">
-      <o-button variant="primary">
+      <o-button>
         Right
       </o-button>
     </o-tooltip>
 
     <o-tooltip label="Tooltip top">
-      <o-button variant="primary">
+      <o-button>
         Top (default)
       </o-button>
     </o-tooltip>
 
     <o-tooltip label="Tooltip bottom" position="bottom">
-      <o-button variant="primary">
+      <o-button>
         Bottom
       </o-button>
     </o-tooltip>
 
     <o-tooltip label="Tooltip left" position="left">
-      <o-button variant="primary">
+      <o-button>
         Left
       </o-button>
     </o-tooltip>
@@ -67,7 +67,7 @@ title: Tooltip
       label="Tooltip multiline, probably because it's too long for a casual tooltip"
       multiline
     >
-      <o-button variant="primary">
+      <o-button>
         Multiline (default)
       </o-button>
     </o-tooltip>
@@ -77,7 +77,7 @@ title: Tooltip
       size="small"
       multiline
     >
-      <o-button variant="primary">
+      <o-button>
         Multiline (small)
       </o-button>
     </o-tooltip>
@@ -88,7 +88,7 @@ title: Tooltip
       size="large"
       multiline
     >
-      <o-button variant="primary">
+      <o-button>
         Multiline (large)
       </o-button>
     </o-tooltip>
@@ -110,7 +110,7 @@ title: Tooltip
 <template>
   <section>
     <o-tooltip position="bottom" multiline>
-      <o-button variant="primary">Html Content</o-button>
+      <o-button>Html Content</o-button>
       <template v-slot:content>
         <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
         <i>Fusce id fermentum quam</i>.
@@ -128,7 +128,7 @@ title: Tooltip
         <o-icon icon="thumbs-down" variant="warning"></o-icon>
         <o-icon icon="smile-beam"></o-icon>
       </template>
-      <o-button variant="primary">Action</o-button>
+      <o-button>Action</o-button>
     </o-tooltip>
   </section>
 </template>
@@ -147,7 +147,7 @@ title: Tooltip
 ```html
 <template>
   <section>
-    <o-button variant="primary" @click="active = !active">
+    <o-button @click="active = !active">
       Toggle
     </o-button>
 
@@ -160,7 +160,7 @@ title: Tooltip
     </o-tooltip>
 
     <o-tooltip label="Tooltip right" position="right" :active="active">
-      <o-button variant="primary">
+      <o-button>
         Right
       </o-button>
     </o-tooltip>

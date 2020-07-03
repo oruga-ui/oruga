@@ -11,8 +11,8 @@ export const sign = Math.sign || signPoly
  * Get value of an object property/path even if it's nested
  */
 export function getValueByPath(obj, path, defaultValue = null) {
-    const value = path.split('.').reduce((o, i) => o ? o[i] : defaultValue, obj)
-    return value ? value : defaultValue
+    const value = path.split('.').reduce((o, i) => typeof o !== 'undefined' ? o[i] : obj[i], obj)
+    return typeof value !== 'undefined' ? value : defaultValue
 }
 
 /**

@@ -126,8 +126,6 @@ title: Pagination
         slot-scope="props"
         :page="props.page"
         :id="`page${props.page.number}`"
-        tag="router-link"
-        :to="`/documentation/pagination#page${props.page.number}`"
       >
         {{ convertToRoman(props.page.number) }}
       </o-pagination-button>
@@ -136,19 +134,11 @@ title: Pagination
         slot="previous"
         slot-scope="props"
         :page="props.page"
-        tag="router-link"
-        :to="`/documentation/pagination#page${props.page.number}`"
       >
         Previous
       </o-pagination-button>
 
-      <o-pagination-button
-        slot="next"
-        slot-scope="props"
-        :page="props.page"
-        tag="router-link"
-        :to="`/documentation/pagination#page${props.page.number}`"
-      >
+      <o-pagination-button slot="next" slot-scope="props" :page="props.page">
         Next
       </o-pagination-button>
     </o-pagination>

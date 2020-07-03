@@ -166,6 +166,9 @@ $table-th-wrap-icon-margin: 0.5rem !default;
         border-spacing: 0;
         @include variable('background-color', 'table-background-color', $table-background-color);
         @include variable('color', 'table-color', $table-color);
+        tbody tr:not(.o-table-row-selected):nth-child(2n) {
+            @include variable('background-color', 'table-background-color', $table-background-color);
+        }
         tr {
             th {
                 @include variable('font-weight', 'table-th-font-weight', $table-th-font-weight);
