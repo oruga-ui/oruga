@@ -24,7 +24,7 @@
 
         <o-icon
             v-if="icon"
-            :class="iconLeftClass"
+            :class="iconLeftClasses"
             :clickable="iconClickable"
             :icon="icon"
             :pack="iconPack"
@@ -33,7 +33,7 @@
 
         <o-icon
             v-if="hasIconRight"
-            :class="iconRightClass"
+            :class="iconRightClasses"
             :clickable="passwordReveal || iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
@@ -44,7 +44,7 @@
 
         <small
             v-if="maxlength && hasCounter && type !== 'number'"
-            :class="[ counterClass, !isFocused && counterInvisibleClass ]">
+            :class="counterClasses">
             {{ valueLength }} / {{ maxlength }}
         </small>
     </div>
@@ -54,8 +54,9 @@
 import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Get user Input. Use with Field to access all functionalities
@@ -68,7 +69,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [FormElementMixin],
+    mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -87,100 +88,64 @@ export default {
         iconClickable: Boolean,
         hasCounter: {
             type: Boolean,
-            default: () => getValueByPath(config, 'input.counter', false)
+            default: () => { return getValueByPath(config, 'input.counter', false) }
         },
         iconRight: String,
         iconRightClickable: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.rootClass', '')
-                return getCssClass(clazz, override, 'o-control-input')
-            }
-        },
-        controlExpandedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.controlExpandedClass', '')
-                return getCssClass(clazz, override, 'o-control-input-expanded')
-            }
-        },
-        controlIconLeftClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.controlIconLeftClass', '')
-                return getCssClass(clazz, override, 'o-control-input-icons-left')
-            }
-        },
-        controlIconRightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.controlIconRightClass', '')
-                return getCssClass(clazz, override, 'o-control-input-icons-right')
-            }
-        },
-        inputClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.inputClass', '')
-                return getCssClass(clazz, override, 'o-input')
-            }
-        },
-        roundedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.roundedClass', '')
-                return getCssClass(clazz, override, 'o-input-rounded')
-            }
-        },
-        iconLeftClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.iconLeftClass', '')
-                return getCssClass(clazz, override, 'o-icon-left')
-            }
-        },
-        iconRightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.iconRightClass', '')
-                return getCssClass(clazz, override, 'o-icon-right')
-            }
-        },
-        counterClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.counterClass', '')
-                return getCssClass(clazz, override, 'o-input-counter')
-            }
-        },
-        counterInvisibleClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'input.override', false)
-                const clazz = getValueByPath(config, 'input.counterInvisibleClass', '')
-                return getCssClass(clazz, override, 'o-input-counter-invisible')
-            }
-        },
+        rootClass: String,
+        controlExpandedClass: String,
+        controlIconLeftClass: String,
+        controlIconRightClass: String,
+        inputClass: String,
+        roundedClass: String,
+        iconLeftClass: String,
+        iconRightClass: String,
+        counterClass: String,
+        counterInvisibleClass: String,
+        sizeClass: String,
+        variantClass: String
     },
     data() {
         return {
             newValue: this.value,
             newType: this.type,
-            newAutocomplete: this.autocomplete || getValueByPath(config, 'autocompletete', 'off'),
+            newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('input', 'rootClass', 'o-control-input'),
+                { [this.computedClass('input', 'controlExpandedClass', 'o-control-input-expanded')]: this.expanded },
+                { [this.computedClass('input', 'controlIconLeftClass', 'o-control-input-icons-left')]: this.icon },
+                { [this.computedClass('input', 'controlIconRightClass', 'o-control-input-icons-right')]: this.hasIconRight }
+            ]
+        },
+        inputClasses() {
+            return [
+                this.computedClass('input', 'inputClass', 'o-input'),
+                { [this.computedClass('input', 'roundedClass', 'o-input-rounded')]: this.rounded },
+                { [`${this.computedClass('input', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('input', 'variantClass', 'o-color-')}${this.statusVariant}`]: this.statusVariant }
+            ]
+        },
+        iconLeftClasses() {
+            return [
+                this.computedClass('input', 'iconLeftClass', 'o-icon-left')
+            ]
+        },
+        iconRightClasses() {
+            return [
+                this.computedClass('input', 'iconRightClass', 'o-icon-right')
+            ]
+        },
+        counterClasses() {
+            return [
+                this.computedClass('input', 'counterClass', 'o-input-counter'),
+                { [this.computedClass('input', 'counterInvisibleClass', 'o-input-counter-invisible')]: !this.isFocused }
+            ]
+        },
         computedValue: {
             get() {
                 return this.newValue
@@ -190,23 +155,6 @@ export default {
                 this.$emit('input', value)
                 !this.isValid && this.checkHtml5Validity()
             }
-        },
-        rootClasses() {
-            return [
-                this.rootClass,
-                this.expanded && this.controlExpandedClass,
-                (this.icon && this.hasIconRight) && `${this.controlIconLeftClass} ${this.controlIconRightClass}`,
-                (!this.icon && this.hasIconRight) && this.controlIconRightClass,
-                this.icon && this.controlIconLeftClass
-            ]
-        },
-        inputClasses() {
-            return [
-                this.inputClass,
-                this.statusVariant && ('o-color-' + this.statusVariant),
-                this.size && ('o-size-' + this.size),
-                this.rounded && this.roundedClass
-            ]
         },
         hasIconRight() {
             return this.passwordReveal || (this.statusIcon && this.statusVariantIcon) || this.iconRight

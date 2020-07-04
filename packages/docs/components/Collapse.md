@@ -142,12 +142,15 @@ title: Collapse
 
 ## Props
 
-| Prop name | Description | Type    | Values          | Default |
-| --------- | ----------- | ------- | --------------- | ------- |
-| open      |             | boolean | -               | true    |
-| animation |             | string  | -               | 'fade'  |
-| ariaId    |             | string  | -               | ''      |
-| position  |             | string  | `top`, `bottom` | 'top'   |
+| Prop name    | Description | Type    | Values          | Default                                                                      |
+| ------------ | ----------- | ------- | --------------- | ---------------------------------------------------------------------------- |
+| open         |             | boolean | -               | true                                                                         |
+| animation    |             | string  | -               | () => {<br> return getValueByPath(config, 'collapse.animation', 'fade')<br>} |
+| ariaId       |             | string  | -               | ''                                                                           |
+| position     |             | string  | `top`, `bottom` | 'top'                                                                        |
+| rootClass    |             | string  | -               |                                                                              |
+| triggerClass |             | string  | -               |                                                                              |
+| contentClass |             | string  | -               |                                                                              |
 
 ## Events
 

@@ -220,34 +220,36 @@ title: Pagination
 
 ## Props
 
-| Prop name         | Description | Type           | Values | Default                                                                                                                                                                                                                                 |
-| ----------------- | ----------- | -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| total             |             | number\|string | -      |                                                                                                                                                                                                                                         |
-| perPage           |             | number\|string | -      | 20                                                                                                                                                                                                                                      |
-| current           |             | number\|string | -      | 1                                                                                                                                                                                                                                       |
-| rangeBefore       |             | number\|string | -      | 1                                                                                                                                                                                                                                       |
-| rangeAfter        |             | number\|string | -      | 1                                                                                                                                                                                                                                       |
-| size              |             | string         | -      |                                                                                                                                                                                                                                         |
-| simple            |             | boolean        | -      |                                                                                                                                                                                                                                         |
-| rounded           |             | boolean        | -      |                                                                                                                                                                                                                                         |
-| order             |             | string         | -      |                                                                                                                                                                                                                                         |
-| iconPack          |             | string         | -      |                                                                                                                                                                                                                                         |
-| iconPrev          |             | string         | -      | () => getValueByPath(config, 'pagination.iconPrev', 'chevron-left')                                                                                                                                                                     |
-| iconNext          |             | string         | -      | () => getValueByPath(config, 'pagination.iconNext', 'chevron-right')                                                                                                                                                                    |
-| ariaNextLabel     |             | string         | -      |                                                                                                                                                                                                                                         |
-| ariaPreviousLabel |             | string         | -      |                                                                                                                                                                                                                                         |
-| ariaPageLabel     |             | string         | -      |                                                                                                                                                                                                                                         |
-| ariaCurrentLabel  |             | string         | -      |                                                                                                                                                                                                                                         |
-| rootClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.rootClass', '')<br> return getCssClass(clazz, override, 'o-pagination')<br>}                     |
-| prevBtnClass      |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.prevBtnClass', '')<br> return getCssClass(clazz, override, 'o-pagination-previous')<br>}         |
-| nextBtnClass      |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.nextBtnClass', '')<br> return getCssClass(clazz, override, 'o-pagination-next')<br>}             |
-| listClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.listClass', '')<br> return getCssClass(clazz, override, 'o-pagination-list')<br>}                |
-| linkClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.linkClass', '')<br> return getCssClass(clazz, override, 'o-pagination-link')<br>}                |
-| linkCurrentClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.linkCurrentClass', '')<br> return getCssClass(clazz, override, 'o-pagination-link-current')<br>} |
-| ellipsisClass     |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.ellipsisClass', '')<br> return getCssClass(clazz, override, 'o-pagination-ellipsis')<br>}        |
-| infoClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.infoClass', '')<br> return getCssClass(clazz, override, 'o-pagination-info')<br>}                |
-| simpleClass       |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.simpleClass', '')<br> return getCssClass(clazz, override, 'o-pagination-simple')<br>}            |
-| roundedClass      |             | string         | -      | () => {<br> const override = getValueByPath(config, 'pagination.override', false)<br> const clazz = getValueByPath(config, 'pagination.roundedClass', '')<br> return getCssClass(clazz, override, 'o-pagination-rounded')<br>}          |
+| Prop name         | Description | Type           | Values | Default                                                                         |
+| ----------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------- |
+| total             |             | number\|string | -      |                                                                                 |
+| perPage           |             | number\|string | -      | () => { return getValueByPath(config, 'pagination.perPage', 20) }               |
+| current           |             | number\|string | -      | 1                                                                               |
+| rangeBefore       |             | number\|string | -      | 1                                                                               |
+| rangeAfter        |             | number\|string | -      | 1                                                                               |
+| size              |             | string         | -      |                                                                                 |
+| simple            |             | boolean        | -      |                                                                                 |
+| rounded           |             | boolean        | -      |                                                                                 |
+| order             |             | string         | -      |                                                                                 |
+| iconPack          |             | string         | -      |                                                                                 |
+| iconPrev          |             | string         | -      | () => { return getValueByPath(config, 'pagination.iconPrev', 'chevron-left') }  |
+| iconNext          |             | string         | -      | () => { return getValueByPath(config, 'pagination.iconNext', 'chevron-right') } |
+| ariaNextLabel     |             | string         | -      |                                                                                 |
+| ariaPreviousLabel |             | string         | -      |                                                                                 |
+| ariaPageLabel     |             | string         | -      |                                                                                 |
+| ariaCurrentLabel  |             | string         | -      |                                                                                 |
+| rootClass         |             | string         | -      |                                                                                 |
+| prevBtnClass      |             | string         | -      |                                                                                 |
+| nextBtnClass      |             | string         | -      |                                                                                 |
+| listClass         |             | string         | -      |                                                                                 |
+| linkClass         |             | string         | -      |                                                                                 |
+| linkCurrentClass  |             | string         | -      |                                                                                 |
+| ellipsisClass     |             | string         | -      |                                                                                 |
+| infoClass         |             | string         | -      |                                                                                 |
+| orderClass        |             | string         | -      |                                                                                 |
+| simpleClass       |             | string         | -      |                                                                                 |
+| roundedClass      |             | string         | -      |                                                                                 |
+| sizeClass         |             | string         | -      |                                                                                 |
 
 ## Events
 

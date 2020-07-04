@@ -11,7 +11,7 @@ export default {
     },
     render(createElement) {
         let first = true
-        return createElement('div', { attrs: { 'class': this.parent.contentHorizontalClass } }, this.$slots.default.map((element) => {
+        return createElement('div', { attrs: { 'class': this.parent.contentHorizontalClasses } }, this.$slots.default.map((element) => {
             // skip returns and comments
             if (!element.tag) {
                 return element
@@ -21,7 +21,7 @@ export default {
                 message = this.parent.newMessage
                 first = false
             }
-            return createElement(this.parent.rootClass, { attrs: { type: this.parent.newVariant, message } }, [element])
+            return createElement(this.parent.rootClass, { attrs: { variant: this.parent.newVariant, message } }, [element])
         }))
     }
 }

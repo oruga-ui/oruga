@@ -13,9 +13,9 @@
             tabindex="-1"
             :role="ariaRole"
             :aria-modal="ariaModal">
-            <div :class="backgroundClass" @click="cancel('outside')"/>
+            <div :class="backgroundClasses" @click="cancel('outside')"/>
             <div
-                :class="[ !custom && contentClass ]"
+                :class="contentClasses"
                 :style="customStyle">
                 <component
                     v-if="component"
@@ -29,7 +29,7 @@
                     type="button"
                     v-if="showX"
                     v-show="!animating"
-                    :class="closeClass"
+                    :class="closeClasses"
                     @click="cancel('x')"/>
             </div>
         </div>
@@ -38,7 +38,8 @@
 
 <script>
 import trapFocus from '../../directives/trapFocus'
-import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { removeElement, getValueByPath, getCssClass, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 
 /**
@@ -52,6 +53,7 @@ export default {
     directives: {
         trapFocus
     },
+    mixins: [BaseComponentMixin],
     props: {
         active: Boolean,
         component: [Object, Function],
@@ -61,12 +63,16 @@ export default {
         events: Object,
         width: {
             type: [String, Number],
-            default: 960
+            default: () => {
+                return getValueByPath(config, 'modal.width', 960)
+            }
         },
         custom: Boolean,
         animation: {
             type: String,
-            default: 'zoom-out'
+            default: () => {
+                return getValueByPath(config, 'modal.animation', 'zoom-out')
+            }
         },
         canCancel: {
             type: [Array, Boolean],
@@ -82,9 +88,6 @@ export default {
             type: String,
             default: () => {
                 return getValueByPath(config, 'modal.scroll', 'keep')
-            },
-            validator: (value) => {
-                return [ 'clip', 'keep' ].indexOf(value) >= 0
             }
         },
         fullScreen: Boolean,
@@ -103,56 +106,21 @@ export default {
         ariaModal: Boolean,
         destroyOnHide: {
             type: Boolean,
-            default: true
-        },
-        rootClass: {
-            type: String,
             default: () => {
-                const override = getValueByPath(config, 'modal.override', false)
-                const clazz = getValueByPath(config, 'modal.rootClass', '')
-                return getCssClass(clazz, override, 'o-modal')
+                return getValueByPath(config, 'modal.destroyOnHide', true)
             }
         },
-        backgroundClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'modal.override', false)
-                const clazz = getValueByPath(config, 'modal.backgroundClas', '')
-                return getCssClass(clazz, override, 'o-modal-background')
-            }
-        },
-        contentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'modal.override', false)
-                const clazz = getValueByPath(config, 'modal.contentClass', '')
-                return getCssClass(clazz, override, 'o-modal-content')
-            }
-        },
-        closeClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'modal.override', false)
-                const clazz = getValueByPath(config, 'modal.closeClass', '')
-                return getCssClass(clazz, override, 'o-modal-close')
-            }
-        },
-        fullScreenClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'modal.override', false)
-                const clazz = getValueByPath(config, 'modal.fullScreenClass', '')
-                return getCssClass(clazz, override, 'o-modal-fullscreen')
-            }
-        }
+        rootClass: String,
+        backgroundClass: String,
+        contentClass: String,
+        closeClass: String,
+        fullScreenClass: String
     },
     data() {
         return {
             isActive: this.active || false,
             savedScrollTop: null,
-            newWidth: typeof this.width === 'number'
-                ? this.width + 'px'
-                : this.width,
+            newWidth: toCssDimension(this.width),
             animating: true,
             destroyed: !this.active
         }
@@ -160,8 +128,23 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.fullScreen && this.fullScreenClass
+                this.computedClass('modal', 'rootClass', 'o-modal'),
+                { [this.computedClass('modal', 'fullScreenClass', 'o-modal-fullscreen')]: this.fullScreen }
+            ]
+        },
+        backgroundClasses() {
+            return [
+                this.computedClass('modal', 'backgroundClass', 'o-modal-background')
+            ]
+        },
+        contentClasses() {
+            return [
+                { [this.computedClass('modal', 'contentClass', 'o-modal-content')]: !this.custom }
+            ]
+        },
+        closeClasses() {
+            return [
+                this.computedClass('modal', 'closeClass', 'o-modal-close')
             ]
         },
         cancelOptions() {

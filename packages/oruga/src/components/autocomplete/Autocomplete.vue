@@ -35,13 +35,13 @@
                 ref="dropdown">
                 <div
                     v-if="hasHeaderSlot"
-                    :class="itemClass">
+                    :class="itemClasses">
                     <slot name="header"/>
                 </div>
                 <a
                     v-for="(option, index) in data"
                     :key="index"
-                    :class="[itemClass, { [itemHoveredClass]: option === hovered }]"
+                    :class="itemOptionClasses(option)"
                     @click="setSelected(option, undefined, $event)">
                     <slot
                         v-if="hasDefaultSlot"
@@ -54,12 +54,12 @@
                 </a>
                 <div
                     v-if="data.length === 0 && hasEmptySlot"
-                    :class="[itemClass, itemDisabledClass]">
+                    :class="itemEmptyClasses">
                     <slot name="empty"/>
                 </div>
                 <div
                     v-if="hasFooterSlot"
-                    :class="itemClass">
+                    :class="itemClasses">
                     <slot name="footer"/>
                 </div>
             </div>
@@ -71,8 +71,9 @@
 import Input from '../input/Input'
 
 import config from '../../utils/config'
-import { getValueByPath, removeElement, createAbsoluteElement, getCssClass, toCssDimension } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension } from '../../utils/helpers'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -85,7 +86,7 @@ export default {
     components: {
         [Input.name]: Input
     },
-    mixins: [FormElementMixin],
+    mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -116,59 +117,20 @@ export default {
         },
         animation: {
             type: String,
-            default: 'fade'
+            default: () => {
+                return getValueByPath(config, 'autocomplete.animation', 'fade')
+            }
         },
         iconRight: String,
         iconRightClickable: Boolean,
         appendToBody: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.rootClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete')
-            }
-        },
-        menuClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.menuClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete-menu')
-            }
-        },
-        expandedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.expandedClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete-expanded')
-            }
-        },
-        itemClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.activeClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete-item')
-            }
-        },
-        itemHoveredClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.itemHoveredClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete-item-hovered')
-            }
-        },
-        itemDisabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'autocomplete.override', false)
-                const clazz = getValueByPath(config, 'autocomplete.itemDisabledClass', '')
-                return getCssClass(clazz, override, 'o-autocomplete-item-disabled')
-            }
-        }
+        rootClass: String,
+        menuClass: String,
+        expandedClass: String,
+        openedTopClass: String,
+        itemClass: String,
+        itemHoveredClass: String,
+        itemDisabledClass: String
     },
     data() {
         return {
@@ -185,14 +147,25 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.expandend && this.expandedClass
+                this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
+                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expandend }
             ]
         },
         menuClasses() {
             return [
-                this.menuClass,
-                (this.isOpenedTop && !this.appendToBody) && 'o-autocomplete-opened-top'
+                this.computedClass('autocomplete', 'menuClass', 'o-autocomplete-menu'),
+                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-opened-top')]: (this.isOpenedTop && !this.appendToBody)  }
+            ]
+        },
+        itemClasses() {
+            return [
+                this.computedClass('autocomplete', 'itemClass', 'o-autocomplete-item')
+            ]
+        },
+        itemEmptyClasses() {
+            return [
+                ...this.itemClasses,
+                this.computedClass('autocomplete', 'itemDisabledClass', 'o-autocomplete-item-disabled')
             ]
         },
         /**
@@ -336,6 +309,12 @@ export default {
         }
     },
     methods: {
+        itemOptionClasses(option) {
+            return [
+                ...this.itemClasses,
+                { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
+            ]
+        },
         /**
          * Set which option is currently hovered.
          */

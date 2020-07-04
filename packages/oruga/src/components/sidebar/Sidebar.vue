@@ -1,7 +1,7 @@
 <template>
-    <div :class="rootClass">
+    <div :class="rootClasses">
         <div
-            :class="backgroundClass"
+            :class="backgroundClasses"
             v-if="overlay && isOpen"
         />
         <transition
@@ -20,7 +20,8 @@
 
 <script>
 import config from '../../utils/config'
-import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -30,13 +31,14 @@ import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
  */
 export default {
     name: 'OSidebar',
+    mixins: [BaseComponentMixin],
     props: {
         open: Boolean,
         variant: [String, Object],
         overlay: Boolean,
         position: {
             type: String,
-            default: 'fixed',
+            default: () => { return getValueByPath(config, 'sidebar.position', 'fixed') },
             validator: (value) => {
                 return [
                     'fixed',
@@ -48,140 +50,34 @@ export default {
         fullheight: Boolean,
         fullwidth: Boolean,
         right: Boolean,
-        mobile: {
-            type: String
-        },
+        mobile: String,
         reduce: Boolean,
         expandOnHover: Boolean,
         expandOnHoverFixed: Boolean,
         canCancel: {
             type: [Array, Boolean],
-            default: () => ['escape', 'outside']
+            default: () => { return getValueByPath(config, 'sidebar.canCancel', ['escape', 'outside']) }
         },
         onCancel: {
             type: Function,
             default: () => {}
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.rootClass', '')
-                return getCssClass(clazz, override, 'o-sidebar')
-            }
-        },
-        backgroundClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.backgroundClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-background')
-            }
-        },
-        contentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.contentClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-content')
-            }
-        },
-        fixedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.fixedClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-fixed')
-            }
-        },
-        staticClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.staticClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-static')
-            }
-        },
-        absoluteClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.absoluteClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-absolute')
-            }
-        },
-        fullheightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.fullheightClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-fullheight')
-            }
-        },
-        fullwidthClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.fullwidthClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-fullwidth')
-            }
-        },
-        rightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.rightClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-right')
-            }
-        },
-        reduceClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.reduceClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-mini')
-            }
-        },
-        expandOnHoverClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.expandOnHoverClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-mini-expand')
-            }
-        },
-        expandOnHoverFixedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.expandOnHoverFixedClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-expand-mini-hover-fixed')
-            }
-        },
-        mobileReduceClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.mobileReduceClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-mini-mobile')
-            }
-        },
-        mobileHideClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.mobileHideClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-hidden-mobile')
-            }
-        },
-        mobileFullwidthClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'sidebar.override', false)
-                const clazz = getValueByPath(config, 'sidebar.mobileFullwidthClass', '')
-                return getCssClass(clazz, override, 'o-sidebar-mini-fullwidth')
-            }
-        },
+        rootClass: String,
+        backgroundClass: String,
+        contentClass: String,
+        fixedClass: String,
+        staticClass: String,
+        absoluteClass: String,
+        fullheightClass: String,
+        fullwidthClass: String,
+        rightClass: String,
+        reduceClass: String,
+        expandOnHoverClass: String,
+        expandOnHoverFixedClass: String,
+        mobileReduceClass: String,
+        mobileHideClass: String,
+        mobileFullwidthClass: String,
+        variantClass: String
     },
     data() {
         return {
@@ -191,28 +87,38 @@ export default {
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('sidebar', 'rootClass', 'o-sidebar')
+            ]
+        },
+        backgroundClasses() {
+            return [
+                this.computedClass('sidebar', 'backgroundClass', 'o-sidebar-background')
+            ]
+        },
         contentClasses() {
             return [
-                this.contentClass,
-                this.variant && ('o-color-' + this.variant),
-                this.isFixed && this.fixedClass,
-                this.isStatic && this.staticClass,
-                this.isAbsolute && this.absoluteClass,
-                this.fullheight && this.fullheightClass,
-                this.fullwidth && this.fullwidthClass,
-                this.right && this.rightClass,
-                this.reduce && this.reduceClass,
-                this.expandOnHover && this.expandOnHoverClass,
-                (this.expandOnHover && this.expandOnHoverFixed) && this.expandOnHoverFixedClass,
-                this.mobile === 'reduce' && this.mobileReduceClass,
-                this.mobile === 'hide' && this.mobileHideClass,
-                this.mobile === 'fullwidth' && this.mobileFullwidthClass
+                this.computedClass('sidebar', 'contentClass', 'o-sidebar-content'),
+                { [`${this.computedClass('sidebar', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [this.computedClass('sidebar', 'fixedClass', 'o-sidebar-fixed')]: this.isFixed },
+                { [this.computedClass('sidebar', 'staticClass', 'o-sidebar-static')]: this.isStatic },
+                { [this.computedClass('sidebar', 'absoluteClass', 'o-sidebar-absolute')]: this.isAbsolute },
+                { [this.computedClass('sidebar', 'fullheightClass', 'o-sidebar-fullheight')]: this.fullheight },
+                { [this.computedClass('sidebar', 'fullwidthClass', 'o-sidebar-fullwidth')]: this.fullwidth },
+                { [this.computedClass('sidebar', 'rightClass', 'o-sidebar-right')]: this.right },
+                { [this.computedClass('sidebar', 'reduceClass', 'o-sidebar-mini')]: this.reduce },
+                { [this.computedClass('sidebar', 'expandOnHoverClass', 'o-sidebar-mini-expand')]: this.expandOnHover },
+                { [this.computedClass('sidebar', 'expandOnHoverFixedClass', 'o-sidebar-expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed) },
+                { [this.computedClass('sidebar', 'mobileReduceClass', 'o-sidebar-mini-mobile')]: this.mobile === 'reduce' },
+                { [this.computedClass('sidebar', 'mobileHideClass', 'o-sidebar-hidden-mobile')]: this.mobile === 'hide' },
+                { [this.computedClass('sidebar', 'mobileFullwidthClass', 'o-sidebar-mini-fullwidth')]: this.mobile === 'fullwidth' }
             ]
         },
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
                 ? this.canCancel
-                    ? ['escape', 'outside']
+                    ? getValueByPath(config, 'sidebar.canCancel', ['escape', 'outside'])
                     : []
                 : this.canCancel
         },

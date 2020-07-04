@@ -7,7 +7,7 @@
             v-if="!inline"
             role="button"
             ref="trigger"
-            :class="triggerClass"
+            :class="triggerClasses"
             @click="toggle"
             @mouseenter="checkHoverable"
             aria-haspopup="true">
@@ -18,7 +18,7 @@
             <div
                 v-if="isMobileModal"
                 v-show="isActive"
-                :class="backgroundClass"
+                :class="backgroundClasses"
                 :aria-hidden="!isActive"
             />
         </transition>
@@ -26,7 +26,7 @@
             <div
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
-                :class="menuClass"
+                :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
                 :style="menuStyle"
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath, getCssClass } from '../../utils/helpers'
@@ -54,6 +55,7 @@ export default {
     directives: {
         trapFocus
     },
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $dropdown: this
@@ -105,7 +107,7 @@ export default {
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'dropdown.animation')
+                return getValueByPath(config, 'dropdown.animation', 'fade')
             }
         },
         multiple: Boolean,
@@ -126,86 +128,16 @@ export default {
         expanded: Boolean,
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.rootClass', '')
-                return getCssClass(clazz, override, 'o-dropdown')
-            }
-        },
-        triggerClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.triggerClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-trigger')
-            }
-        },
-        backgroundClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.backgroundClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-background')
-            }
-        },
-        menuClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.menuClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-menu o-dropdown-menu-animation')
-            }
-        },
-        disabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.disabledClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-disabled')
-            }
-        },
-        activeClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.activeClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-active')
-            }
-        },
-        hoverableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.hoverableClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-hoverable')
-            }
-        },
-        inlineClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.inlineClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-inline')
-            }
-        },
-        mobileClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.mobileClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-mobile')
-            }
-        },
-        expandedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.expandedClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-expanded')
-            }
-        }
+        rootClass: String,
+        triggerClass: String,
+        backgroundClass: String,
+        menuClass: String,
+        disabledClass: String,
+        activeClass: String,
+        hoverableClass: String,
+        inlineClass: String,
+        mobileClass: String,
+        expandedClass: String
     },
     data() {
         return {
@@ -218,14 +150,29 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.disabled && this.disabledClass, 
-                this.position && (this.rootClass + '-' + this.position),
-                (this.isActive || this.inline) && this.activeClass, 
-                this.hoverable && this.hoverableClass,
-                this.inline && this.inlineClass,
-                this.isMobileModal && this.mobileClass,
-                this.expanded && this.expandedClass
+                this.computedClass('dropdown', 'rootClass', 'o-dropdown'),
+                { [this.computedClass('dropdown', 'disabledClass', 'o-dropdown-disabled')]: this.disabled },
+                { [`${this.computedClass('dropdown', 'positionClass', 'o-dropdown-')}${this.position}`]: this.position },
+                { [this.computedClass('dropdown', 'activeClass', 'o-dropdown-active')]: (this.isActive || this.inline) },
+                { [this.computedClass('dropdown', 'hoverableClass', 'o-dropdown-hoverable')]: this.hoverable },
+                { [this.computedClass('dropdown', 'inlineClass', 'o-dropdown-inline')]: this.inline },
+                { [this.computedClass('dropdown', 'expandedClass', 'o-dropdown-expanded')]: this.expanded },
+                { [this.computedClass('dropdown', 'mobileClass', 'o-dropdown-mobile')]: this.isMobileModal },
+            ]
+        },
+        triggerClasses() {
+            return [
+                this.computedClass('dropdown', 'triggerClass', 'o-dropdown-trigger')
+            ]
+        },
+        backgroundClasses() {
+            return [
+                this.computedClass('dropdown', 'backgroundClass', 'o-dropdown-background')
+            ]
+        },
+        menuClasses() {
+            return [
+                this.computedClass('dropdown', 'menuClass', 'o-dropdown-menu o-dropdown-menu-animation')
             ]
         },
         isMobileModal() {

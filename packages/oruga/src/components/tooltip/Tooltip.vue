@@ -25,7 +25,8 @@
 
 <script>
 import config from '../../utils/config'
-import { createAbsoluteElement, removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
  * Display a brief helper text to your user
@@ -35,6 +36,7 @@ import { createAbsoluteElement, removeElement, getValueByPath, getCssClass } fro
  */
 export default {
     name: 'OTooltip',
+    mixins: [BaseComponentMixin],
     props: {
         active: {
             type: Boolean,
@@ -44,7 +46,7 @@ export default {
         delay: Number,
         position: {
             type: String,
-            default: 'top',
+            default: () => { return getValueByPath(config, 'tooltip.position', 'top') },
             validator(value) {
                 return [
                     'top',
@@ -56,7 +58,7 @@ export default {
         },
         triggers: {
             type: Array,
-            default: () => ['hover']
+            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) },
         },
         always: Boolean,
         animated: {
@@ -65,7 +67,7 @@ export default {
         },
         animation: {
             type: String,
-            default: 'fade'
+            default: () => { return getValueByPath(config, 'tooltip.animation', 'fade') },
         },
         autoClose: {
             type: [Array, Boolean],
@@ -74,46 +76,12 @@ export default {
         multiline: Boolean,
         appendToBody: Boolean,
         variant: String,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'tooltip.override', false)
-                const clazz = getValueByPath(config, 'tooltip.rootClass', '')
-                return getCssClass(clazz, override, 'o-tooltip')
-            }
-        },
-        contentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'tooltip.override', false)
-                const clazz = getValueByPath(config, 'tooltip.contentClass', '')
-                return getCssClass(clazz, override, 'o-tooltip-content')
-            }
-        },
-        triggerClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'tooltip.override', false)
-                const clazz = getValueByPath(config, 'tooltip.triggerClass', '')
-                return getCssClass(clazz, override, 'o-tooltip-trigger')
-            }
-        },
-        multilineClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'tooltip.override', false)
-                const clazz = getValueByPath(config, 'tooltip.multilineClass', '')
-                return getCssClass(clazz, override, 'o-tooltip-multiline')
-            }
-        },
-        alwaysClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'tooltip.override', false)
-                const clazz = getValueByPath(config, 'tooltip.alwaysClass', '')
-                return getCssClass(clazz, override, 'o-tooltip-always')
-            }
-        }
+        rootClass: String,
+        contentClass: String,
+        triggerClass: String,
+        multilineClass: String,
+        alwaysClass: String,
+        variantClass: String
     },
     data() {
         return {
@@ -124,11 +92,21 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.variant && ('o-color-' + this.variant),
-                this.multiline && this.multilineClass,
-                this.position && (this.rootClass + '-' + this.position),
-                this.always && this.alwaysClass
+                this.computedClass('tooltip', 'rootClass', 'o-tooltip'),
+                { [`${this.computedClass('tooltip', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('tooltip', 'orderClass', 'o-tooltip-')}${this.position}`]: this.position },
+                { [this.computedClass('tooltip', 'multilineClass', 'o-tooltip-multiline')]: this.multiline },
+                { [this.computedClass('tooltip', 'alwaysClass', 'o-tooltip-always')]: this.always }
+            ]
+        },
+        triggerClasses() {
+            return [
+                this.computedClass('tooltip', 'triggerClass', 'o-tooltip-trigger')
+            ]
+        },
+        contentClasses() {
+            return [
+                this.computedClass('tooltip', 'contentClass', 'o-tooltip-content')
             ]
         },
         newAnimation() {

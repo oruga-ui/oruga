@@ -1,4 +1,5 @@
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
  * An easy way to toggle what you want
@@ -7,6 +8,7 @@
  */
 export default {
     name: 'OCollapse',
+    mixins: [BaseComponentMixin],
     props: {
         open: {
             type: Boolean,
@@ -14,7 +16,9 @@ export default {
         },
         animation: {
             type: String,
-            default: 'fade'
+            default: () => {
+                return getValueByPath(config, 'collapse.animation', 'fade')
+            }
         },
         ariaId: {
             type: String,
@@ -29,7 +33,10 @@ export default {
                     'bottom'
                 ].indexOf(value) > -1
             }
-        }
+        },
+        rootClass: String,
+        triggerClass: String,
+        contentClass: String
     },
     data() {
         return {
@@ -53,14 +60,15 @@ export default {
     },
     render(createElement) {
         const trigger = createElement('div', {
-            staticClass: 'o-collapse-trigger', on: { click: this.toggle }
+            staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
+            on: { click: this.toggle }
         }, this.$scopedSlots.trigger
             ? [this.$scopedSlots.trigger({ open: this.isOpen })]
             : [this.$slots.trigger]
         )
         const content = createElement('transition', { props: { name: this.animation } }, [
             createElement('div', {
-                staticClass: 'o-collapse-content',
+                staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
@@ -68,7 +76,7 @@ export default {
                 }]
             }, this.$slots.default)
         ])
-        return createElement('div', { staticClass: 'o-collapse' },
+        return createElement('div', { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 }

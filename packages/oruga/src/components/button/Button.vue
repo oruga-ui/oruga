@@ -27,8 +27,10 @@
 
 <script>
 import Icon from '../icon/Icon'
+
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -41,6 +43,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
+    mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
         variant: [String, Object],
@@ -51,7 +54,7 @@ export default {
         iconRight: String,
         rounded: {
             type: Boolean,
-            default: () => getValueByPath(config, 'button.rounded', false)
+            default: () => { return getValueByPath(config, 'button.rounded', false) }
         },
         outlined: Boolean,
         expanded: Boolean,
@@ -72,66 +75,26 @@ export default {
             default: 'button'
         },
         disabled: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.rootClass', '')
-                return getCssClass(clazz, override, 'o-button')
-            }
-        },
-        outlinedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.outlinedClass', '')
-                return getCssClass(clazz, override, 'o-button-outlined')
-            }
-        },
-        invertedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.invertedClass', '')
-                return getCssClass(clazz, override, 'o-button-inverted')
-            }
-        },
-        expandedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.expandedClass', '')
-                return getCssClass(clazz, override, 'o-button-expanded')
-            }
-        },
-        roundedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.roundedClass', '')
-                return getCssClass(clazz, override, 'o-button-rounded')
-            }
-        },
-        disabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'button.override', false)
-                const clazz = getValueByPath(config, 'button.disabledClass', '')
-                return getCssClass(clazz, override, 'o-button-disabled')
-            }
-        }
+        rootClass: String,
+        outlinedClass: String,
+        invertedClass: String,
+        expandedClass: String,
+        roundedClass: String,
+        disabledClass: String,
+        sizeClass: String,
+        variantClass: String
     },
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.size && ('o-size-' + this.size), 
-                this.variant && ('o-color-' + this.variant),
-                this.outlined && this.outlinedClass,
-                this.inverted && this.invertedClass,
-                this.expanded && this.expandedClass, 
-                this.rounded && this.roundedClass,
-                this.disabled && this.disabledClass
+                this.computedClass('button', 'rootClass', 'o-button'),
+                { [`${this.computedClass('button', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('button', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [this.computedClass('button', 'outlinedClass', 'o-button-outlined')]: this.outlined },
+                { [this.computedClass('button', 'invertedClass', 'o-button-inverted')]: this.inverted },
+                { [this.computedClass('button', 'expandedClass', 'o-button-expanded')]: this.expanded },
+                { [this.computedClass('button', 'roundedClass', 'o-button-rounded')]: this.rounded },
+                { [this.computedClass('button', 'disabledClass', 'o-button-disabled')]: this.disabled },
             ]
         },
         computedTag() {

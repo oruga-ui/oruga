@@ -3,9 +3,9 @@
         <div
             :class="rootClasses"
             v-if="isActive">
-            <div :class="backgroundClass" @click="cancel"/>
+            <div :class="backgroundClasses" @click="cancel"/>
             <slot>
-                <div :class="iconClass">
+                <div :class="iconClasses">
                     <o-icon :icon="icon" :spin="iconSpin" both />
                 </div>
             </slot>
@@ -17,7 +17,8 @@
 import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
-import { removeElement, getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { removeElement, getValueByPath } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
 /**
@@ -31,6 +32,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
+    mixins: [BaseComponentMixin],
     props: {
         active: Boolean,
         programmatic: Boolean,
@@ -41,7 +43,7 @@ export default {
         },
         animation: {
             type: String,
-            default: 'fade'
+            default: () => { return getValueByPath(config, 'loading.animation', 'fade') }
         },
         canCancel: {
             type: Boolean,
@@ -53,36 +55,15 @@ export default {
         },
         icon: {
             type: String,
-            default: 'spin'
+            default: () => { return getValueByPath(config, 'loading.icom', 'spin') }
         },
         iconSpin: {
             type: Boolean,
             default: true
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'loading.override', false)
-                const clazz = getValueByPath(config, 'loading.rootClass', '')
-                return getCssClass(clazz, override, 'o-loading-overlay')
-            }
-        },
-        backgroundClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'loading.override', false)
-                const clazz = getValueByPath(config, 'loading.backgroundClass', '')
-                return getCssClass(clazz, override, 'o-loading-background')
-            }
-        },
-        iconClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'loading.override', false)
-                const clazz = getValueByPath(config, 'loading.iconClass', '')
-                return getCssClass(clazz, override, 'o-loading-icon')
-            }
-        }
+        rootClass: String,
+        backgroundClass: String,
+        iconClass: String
     },
     data() {
         return {
@@ -101,8 +82,18 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.displayInFullPage && 'o-loading-fullpage'
+                this.computedClass('loading', 'rootClass', 'o-loading-overlay'),
+                { [this.computedClass('loading', 'fullPageClass', 'o-loading-fullpage')]: this.displayInFullPage }
+            ]
+        },
+        backgroundClasses() {
+            return [
+                this.computedClass('loading', 'backgroundClass', 'o-loading-background')
+            ]
+        },
+        iconClasses() {
+            return [
+                this.computedClass('loading', 'iconClass', 'o-loading-icon')
             ]
         }
     },

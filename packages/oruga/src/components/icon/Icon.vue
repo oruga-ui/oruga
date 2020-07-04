@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
@@ -26,6 +27,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
  */
 export default {
     name: 'OIcon',
+    mixins: [BaseComponentMixin],
     props: {
         variant: [String, Object],
         component: String,
@@ -36,40 +38,21 @@ export default {
         customClass: String,
         clickable: Boolean,
         spin: Boolean,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'icon.override', false)
-                const clazz = getValueByPath(config, 'icon.rootClass', '')
-                return getCssClass(clazz, override, 'o-icon')
-            }
-        },
-        clickableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'icon.override', false)
-                const clazz = getValueByPath(config, 'icon.clickableClass', '')
-                return getCssClass(clazz, override, 'o-icon-clickable')
-            }
-        },
-        spinClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'icon.override', false)
-                const clazz = getValueByPath(config, 'icon.spinClass', '')
-                return getCssClass(clazz, override, 'o-icon-spin')
-            }
-        },
-        both: Boolean // This is used internally to show both MDI and FA icon
+        both: Boolean, // This is used internally
+        rootClass: String,
+        clickableClass: String,
+        spinClass: String,
+        sizeClass: String,
+        variantClass: String
     },
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.clickable && this.clickableClass,
-                this.spin && this.spinClass,
-                this.size && ('o-size-' + this.size),
-                this.newVariant && ('o-color-' + this.newVariant)
+                this.computedClass('icon', 'rootClass', 'o-icon'),
+                { [this.computedClass('icon', 'clickableClass', 'o-icon-clickable')]: this.clickable },
+                { [this.computedClass('icon', 'spinClass', 'o-icon-spin')]: this.spin },
+                { [`${this.computedClass('icon', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('icon', 'variantClass', 'o-color-')}${this.newVariant}`]: this.newVariant }
             ]
         },
         iconConfig() {

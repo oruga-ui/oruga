@@ -152,27 +152,29 @@ title: Button
 
 ## Props
 
-| Prop name     | Description | Type           | Values | Default                                                                                                                                                                                                              |
-| ------------- | ----------- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| variant       |             | string\|object | -      |                                                                                                                                                                                                                      |
-| size          |             | string         | -      |                                                                                                                                                                                                                      |
-| label         |             | string         | -      |                                                                                                                                                                                                                      |
-| iconPack      |             | string         | -      |                                                                                                                                                                                                                      |
-| iconLeft      |             | string         | -      |                                                                                                                                                                                                                      |
-| iconRight     |             | string         | -      |                                                                                                                                                                                                                      |
-| rounded       |             | boolean        | -      | () => getValueByPath(config, 'button.rounded', false)                                                                                                                                                                |
-| outlined      |             | boolean        | -      |                                                                                                                                                                                                                      |
-| expanded      |             | boolean        | -      |                                                                                                                                                                                                                      |
-| inverted      |             | boolean        | -      |                                                                                                                                                                                                                      |
-| nativeType    |             | string         | -      | 'button'                                                                                                                                                                                                             |
-| tag           |             | string         | -      | 'button'                                                                                                                                                                                                             |
-| disabled      |             | boolean        | -      |                                                                                                                                                                                                                      |
-| rootClass     |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.rootClass', '')<br> return getCssClass(clazz, override, 'o-button')<br>}              |
-| outlinedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-button-outlined')<br>} |
-| invertedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.invertedClass', '')<br> return getCssClass(clazz, override, 'o-button-inverted')<br>} |
-| expandedClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.expandedClass', '')<br> return getCssClass(clazz, override, 'o-button-expanded')<br>} |
-| roundedClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.roundedClass', '')<br> return getCssClass(clazz, override, 'o-button-rounded')<br>}   |
-| disabledClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'button.override', false)<br> const clazz = getValueByPath(config, 'button.disabledClass', '')<br> return getCssClass(clazz, override, 'o-button-disabled')<br>} |
+| Prop name     | Description | Type           | Values | Default                                                          |
+| ------------- | ----------- | -------------- | ------ | ---------------------------------------------------------------- |
+| variant       |             | string\|object | -      |                                                                  |
+| size          |             | string         | -      |                                                                  |
+| label         |             | string         | -      |                                                                  |
+| iconPack      |             | string         | -      |                                                                  |
+| iconLeft      |             | string         | -      |                                                                  |
+| iconRight     |             | string         | -      |                                                                  |
+| rounded       |             | boolean        | -      | () => { return getValueByPath(config, 'button.rounded', false) } |
+| outlined      |             | boolean        | -      |                                                                  |
+| expanded      |             | boolean        | -      |                                                                  |
+| inverted      |             | boolean        | -      |                                                                  |
+| nativeType    |             | string         | -      | 'button'                                                         |
+| tag           |             | string         | -      | 'button'                                                         |
+| disabled      |             | boolean        | -      |                                                                  |
+| rootClass     |             | string         | -      |                                                                  |
+| outlinedClass |             | string         | -      |                                                                  |
+| invertedClass |             | string         | -      |                                                                  |
+| expandedClass |             | string         | -      |                                                                  |
+| roundedClass  |             | string         | -      |                                                                  |
+| disabledClass |             | string         | -      |                                                                  |
+| sizeClass     |             | string         | -      |                                                                  |
+| variantClass  |             | string         | -      |                                                                  |
 
 ## Slots
 

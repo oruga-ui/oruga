@@ -20,15 +20,12 @@ export function getValueByPath(obj, path, defaultValue = null) {
  */
 export function indexOf(array, obj, fn) {
     if (!array) return -1
-
     if (!fn || typeof fn !== 'function') return array.indexOf(obj)
-
     for (let i = 0; i < array.length; i++) {
         if (fn(array[i], obj)) {
             return i
         }
     }
-
     return -1
 }
 
@@ -139,7 +136,6 @@ export function isVueComponent(c) {
  */
 export function escapeRegExpChars(value) {
     if (!value) return value
-
     // eslint-disable-next-line
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
 }

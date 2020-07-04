@@ -25,7 +25,6 @@ export default {
         statusIcon: {
             type: Boolean,
             default: () => {
-                console.log(getValueByPath(config, 'statusIcon', true))
                 return getValueByPath(config, 'statusIcon', true)
             }
         },

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath, getCssClass } from '../../utils/helpers'
 
@@ -18,6 +19,7 @@ import { getValueByPath, getCssClass } from '../../utils/helpers'
  */
 export default {
     name: 'ODropdownItem',
+    mixins: [BaseComponentMixin],
     inject: {
         $dropdown: { name: '$dropdown', default: false }
     },
@@ -25,30 +27,6 @@ export default {
         value: {
             type: [String, Number, Boolean, Object, Array, Function],
             default: null
-        },
-        itemClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.itemClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-item')
-            }
-        },
-        itemActiveClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.itemActiveClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-item-active')
-            }
-        },
-        itemDisabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'dropdown.override', false)
-                const clazz = getValueByPath(config, 'dropdown.itemDisabledClass', '')
-                return getCssClass(clazz, override, 'o-dropdown-item-disabled')
-            }
         },
         disabled: Boolean,
         custom: Boolean,
@@ -59,16 +37,20 @@ export default {
         ariaRole: {
             type: String,
             default: ''
-        }
+        },
+        itemClass: String,
+        itemActiveClass: String,
+        itemDisabledClass: String,
     },
     computed: {
         parent() {
             return this.$dropdown
         },
         rootClasses() {
-            return [this.itemClass,
-                (this.parent.disabled || this.disabled) && this.itemDisabledClass,
-                this.isActive && this.itemActiveClass
+            return [
+                this.computedClass('dropdown', 'itemClass', 'o-dropdown-item'),
+                { [this.computedClass('dropdown', 'itemDisabledClass', 'o-dropdown-item-disabled')]: (this.parent.disabled || this.disabled) },
+                { [this.computedClass('dropdown', 'itemActiveClass', 'o-dropdown-item-active')]: this.isActive }
             ]
         },
         ariaRoleItem() {

@@ -151,36 +151,38 @@ title: Input
 
 ## Props
 
-| Prop name             | Description | Type           | Values | Default                                                                                                                                                                                                                              |
-| --------------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| size                  |             | string         | -      |                                                                                                                                                                                                                                      |
-| expanded              |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| loading               |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| rounded               |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| icon                  |             | string         | -      |                                                                                                                                                                                                                                      |
-| iconPack              |             | string         | -      |                                                                                                                                                                                                                                      |
-| autocomplete          |             | string         | -      |                                                                                                                                                                                                                                      |
-| maxlength             |             | number\|string | -      |                                                                                                                                                                                                                                      |
-| useHtml5Validation    |             | boolean        | -      | () => {<br> return getValueByPath(config, 'useHtml5Validation', true)<br>}                                                                                                                                                           |
-| statusIcon            |             | boolean        | -      | () => {<br> console.log(getValueByPath(config, 'statusIcon', true))<br> return getValueByPath(config, 'statusIcon', true)<br>}                                                                                                       |
-| validationMessage     |             | string         | -      |                                                                                                                                                                                                                                      |
-| value                 |             | number\|string | -      |                                                                                                                                                                                                                                      |
-| type                  |             | string         | -      | 'text'                                                                                                                                                                                                                               |
-| passwordReveal        |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| iconClickable         |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| hasCounter            |             | boolean        | -      | () => getValueByPath(config, 'input.counter', false)                                                                                                                                                                                 |
-| iconRight             |             | string         | -      |                                                                                                                                                                                                                                      |
-| iconRightClickable    |             | boolean        | -      |                                                                                                                                                                                                                                      |
-| rootClass             |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.rootClass', '')<br> return getCssClass(clazz, override, 'o-control-input')<br>}                         |
-| controlExpandedClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.controlExpandedClass', '')<br> return getCssClass(clazz, override, 'o-control-input-expanded')<br>}     |
-| controlIconLeftClass  |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.controlIconLeftClass', '')<br> return getCssClass(clazz, override, 'o-control-input-icons-left')<br>}   |
-| controlIconRightClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.controlIconRightClass', '')<br> return getCssClass(clazz, override, 'o-control-input-icons-right')<br>} |
-| inputClass            |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.inputClass', '')<br> return getCssClass(clazz, override, 'o-input')<br>}                                |
-| roundedClass          |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.roundedClass', '')<br> return getCssClass(clazz, override, 'o-input-rounded')<br>}                      |
-| iconLeftClass         |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.iconLeftClass', '')<br> return getCssClass(clazz, override, 'o-icon-left')<br>}                         |
-| iconRightClass        |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.iconRightClass', '')<br> return getCssClass(clazz, override, 'o-icon-right')<br>}                       |
-| counterClass          |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.counterClass', '')<br> return getCssClass(clazz, override, 'o-input-counter')<br>}                      |
-| counterInvisibleClass |             | string         | -      | () => {<br> const override = getValueByPath(config, 'input.override', false)<br> const clazz = getValueByPath(config, 'input.counterInvisibleClass', '')<br> return getCssClass(clazz, override, 'o-input-counter-invisible')<br>}   |
+| Prop name             | Description | Type           | Values | Default                                                                    |
+| --------------------- | ----------- | -------------- | ------ | -------------------------------------------------------------------------- |
+| size                  |             | string         | -      |                                                                            |
+| expanded              |             | boolean        | -      |                                                                            |
+| loading               |             | boolean        | -      |                                                                            |
+| rounded               |             | boolean        | -      |                                                                            |
+| icon                  |             | string         | -      |                                                                            |
+| iconPack              |             | string         | -      |                                                                            |
+| autocomplete          |             | string         | -      |                                                                            |
+| maxlength             |             | number\|string | -      |                                                                            |
+| useHtml5Validation    |             | boolean        | -      | () => {<br> return getValueByPath(config, 'useHtml5Validation', true)<br>} |
+| statusIcon            |             | boolean        | -      | () => {<br> return getValueByPath(config, 'statusIcon', true)<br>}         |
+| validationMessage     |             | string         | -      |                                                                            |
+| value                 |             | number\|string | -      |                                                                            |
+| type                  |             | string         | -      | 'text'                                                                     |
+| passwordReveal        |             | boolean        | -      |                                                                            |
+| iconClickable         |             | boolean        | -      |                                                                            |
+| hasCounter            |             | boolean        | -      | () => { return getValueByPath(config, 'input.counter', false) }            |
+| iconRight             |             | string         | -      |                                                                            |
+| iconRightClickable    |             | boolean        | -      |                                                                            |
+| rootClass             |             | string         | -      |                                                                            |
+| controlExpandedClass  |             | string         | -      |                                                                            |
+| controlIconLeftClass  |             | string         | -      |                                                                            |
+| controlIconRightClass |             | string         | -      |                                                                            |
+| inputClass            |             | string         | -      |                                                                            |
+| roundedClass          |             | string         | -      |                                                                            |
+| iconLeftClass         |             | string         | -      |                                                                            |
+| iconRightClass        |             | string         | -      |                                                                            |
+| counterClass          |             | string         | -      |                                                                            |
+| counterInvisibleClass |             | string         | -      |                                                                            |
+| sizeClass             |             | string         | -      |                                                                            |
+| variantClass          |             | string         | -      |                                                                            |
 
 ## Events
 

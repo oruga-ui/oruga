@@ -188,26 +188,30 @@ title: Switch
 
 ## Props
 
-| Prop name      | Description | Type                    | Values | Default                                                                                                                                                                                                              |
-| -------------- | ----------- | ----------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value          |             | string\|number\|boolean | -      |                                                                                                                                                                                                                      |
-| nativeValue    |             | string\|number\|boolean | -      |                                                                                                                                                                                                                      |
-| disabled       |             | boolean                 | -      |                                                                                                                                                                                                                      |
-| variant        |             | string                  | -      |                                                                                                                                                                                                                      |
-| passiveVariant |             | string                  | -      |                                                                                                                                                                                                                      |
-| name           |             | string                  | -      |                                                                                                                                                                                                                      |
-| required       |             | boolean                 | -      |                                                                                                                                                                                                                      |
-| size           |             | string                  | -      |                                                                                                                                                                                                                      |
-| trueValue      |             | string\|number\|boolean | -      | true                                                                                                                                                                                                                 |
-| falseValue     |             | string\|number\|boolean | -      | false                                                                                                                                                                                                                |
-| rounded        |             | boolean                 | -      | true                                                                                                                                                                                                                 |
-| outlined       |             | boolean                 | -      | false                                                                                                                                                                                                                |
-| rootClass      |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.rootClass', '')<br> return getCssClass(clazz, override, 'o-switch')<br>}              |
-| disabledClass  |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.disabledClass', '')<br> return getCssClass(clazz, override, 'o-switch-disabled')<br>} |
-| checkClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.checkClass', '')<br> return getCssClass(clazz, override, 'o-switch-check')<br>}       |
-| roundedClass   |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.roundedClass', '')<br> return getCssClass(clazz, override, 'o-switch-rounded')<br>}   |
-| outlinedClass  |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.outlinedClass', '')<br> return getCssClass(clazz, override, 'o-switch-outlined')<br>} |
-| labelClass     |             | string                  | -      | () => {<br> const override = getValueByPath(config, 'switch.override', false)<br> const clazz = getValueByPath(config, 'switch.labelClass', '')<br> return getCssClass(clazz, override, 'o-switch-label')<br>}       |
+| Prop name           | Description | Type                    | Values | Default |
+| ------------------- | ----------- | ----------------------- | ------ | ------- |
+| value               |             | string\|number\|boolean | -      |         |
+| nativeValue         |             | string\|number\|boolean | -      |         |
+| disabled            |             | boolean                 | -      |         |
+| variant             |             | string                  | -      |         |
+| passiveVariant      |             | string                  | -      |         |
+| name                |             | string                  | -      |         |
+| required            |             | boolean                 | -      |         |
+| size                |             | string                  | -      |         |
+| trueValue           |             | string\|number\|boolean | -      | true    |
+| falseValue          |             | string\|number\|boolean | -      | false   |
+| rounded             |             | boolean                 | -      | true    |
+| outlined            |             | boolean                 | -      | false   |
+| rootClass           |             | string                  | -      |         |
+| disabledClass       |             | string                  | -      |         |
+| checkClass          |             | string                  | -      |         |
+| roundedClass        |             | string                  | -      |         |
+| outlinedClass       |             | string                  | -      |         |
+| labelClass          |             | string                  | -      |         |
+| sizeClass           |             | string                  | -      |         |
+| variantClass        |             | string                  | -      |         |
+| passiveVariantClass |             | string                  | -      |         |
+| animationClass      |             | string                  | -      |         |
 
 ## Events
 

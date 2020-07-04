@@ -2,11 +2,11 @@
     <div :class="[rootClasses, fieldType()]">
         <div
             v-if="horizontal"
-            :class="labelHorizontalClass">
+            :class="labelHorizontalClasses">
             <label
                 v-if="hasLabel"
                 :for="labelFor"
-                :class="labelClass">
+                :class="labelClasses">
                 <slot v-if="$slots.label" name="label"/>
                 <template v-else>{{ label }}</template>
             </label>
@@ -15,7 +15,7 @@
             <label
                 v-if="hasLabel"
                 :for="labelFor"
-                :class="labelClass">
+                :class="labelClasses">
                 <slot v-if="$slots.label" name="label"/>
                 <template v-else>{{ label }}</template>
             </label>
@@ -40,6 +40,7 @@
 <script>
 import FieldBody from './FieldBody'
 
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import { getCssClass, getValueByPath } from '../../utils/helpers'
 
@@ -54,6 +55,7 @@ export default {
     components: {
         [FieldBody.name]: FieldBody
     },
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $field: this
@@ -72,54 +74,15 @@ export default {
             type: Boolean,
             default: true
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.rootClass', '')
-                return getCssClass(clazz, override, 'o-field')
-            }
-        },
-        horizontalClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.horizontalClass', '')
-                return getCssClass(clazz, override, 'o-field-horizontal')
-            }
-        },
-        labelClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.labelClass', '')
-                return getCssClass(clazz, override, 'o-field-label')
-            }
-        },
-        labelHorizontalClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.labelHorizontalClass', '')
-                return getCssClass(clazz, override, 'o-field-horizontal-label')
-            }
-        },
-        contentHorizontalClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.contentHorizontalClass', '')
-                return getCssClass(clazz, override, 'o-field-horizontal-content')
-            }
-        },
-        messageClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'field.override', false)
-                const clazz = getValueByPath(config, 'field.messageClass', '')
-                return getCssClass(clazz, override, 'o-field-message')
-            }
-        }
+        rootClass: String,
+        horizontalClass: String,
+        expandedClass: String,
+        groupMultilineClass: String,
+        labelClass: String,
+        labelHorizontalClass: String,
+        contentHorizontalClass: String,
+        messageClass: String,
+        variantClass: String
     },
     data() {
         return {
@@ -130,18 +93,31 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.horizontal && this.horizontalClass,
-                {
-                    'o-field-expanded': this.expanded,
-                    'o-field-grouped-multiline': this.groupMultiline
-                }
+                this.computedClass('field', 'rootClass', 'o-field'),
+                { [this.computedClass('field', 'horizontalClass', 'o-field-horizontal')]: this.horizontal },
+                { [this.computedClass('field', 'expandedClass', 'o-field-expanded')]: this.expanded },
+                { [this.computedClass('field', 'groupMultiline', 'o-field-grouped-multiline')]: this.groupMultiline }
             ]
         },
         messageClasses() {
             return [
-                this.messageClass,
-                this.newVariant && ('o-color-' + this.variant)
+                this.computedClass('field', 'messageClass', 'o-field-message'),
+                { [`${this.computedClass('field', 'variantClass', 'o-color-')}${this.newVariant}`]: this.newVariant }
+            ]
+        },
+        labelClasses() {
+            return [
+                this.computedClass('field', 'labelClass', 'o-field-label')
+            ]
+        },
+        labelHorizontalClasses() {
+            return [
+                this.computedClass('field', 'labelHorizontalClass', 'o-field-horizontal-label')
+            ]
+        },
+        contentHorizontalClasses() {
+            return [
+                this.computedClass('field', 'contentHorizontalClass', 'o-field-horizontal-content')
             ]
         },
         hasLabel() {

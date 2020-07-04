@@ -21,12 +21,13 @@
             :true-value="trueValue"
             :false-value="falseValue">
         <span :class="checkClasses"/>
-        <span class="o-switch-label"><slot/></span>
+        <span :class="labelClasses"><slot/></span>
     </label>
 </template>
 
 <script>
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath } from '../../utils/helpers'
 import config from '../../utils/config'
 
 /**
@@ -37,6 +38,7 @@ import config from '../../utils/config'
  */
 export default {
     name: 'OSwitch',
+    mixins: [BaseComponentMixin],
     props: {
         value: [String, Number, Boolean],
         nativeValue: [String, Number, Boolean],
@@ -62,54 +64,16 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.rootClass', '')
-                return getCssClass(clazz, override, 'o-switch')
-            }
-        },
-        disabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.disabledClass', '')
-                return getCssClass(clazz, override, 'o-switch-disabled')
-            }
-        },
-        checkClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.checkClass', '')
-                return getCssClass(clazz, override, 'o-switch-check')
-            }
-        },
-        roundedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.roundedClass', '')
-                return getCssClass(clazz, override, 'o-switch-rounded')
-            }
-        },
-        outlinedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.outlinedClass', '')
-                return getCssClass(clazz, override, 'o-switch-outlined')
-            }
-        },
-        labelClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'switch.override', false)
-                const clazz = getValueByPath(config, 'switch.labelClass', '')
-                return getCssClass(clazz, override, 'o-switch-label')
-            }
-        }
+        rootClass: String,
+        disabledClass: String,
+        checkClass: String,
+        roundedClass: String,
+        outlinedClass: String,
+        labelClass: String,
+        sizeClass: String,
+        variantClass: String,
+        passiveVariantClass: String,
+        animationClass: String
     },
     data() {
         return {
@@ -120,19 +84,24 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.size && 'o-size-' + this.size,
-                this.disabled && this.disabledClass,
-                this.rounded && this.roundedClass,
-                this.outlined && this.outlinedClass
+                this.computedClass('switch', 'rootClass', 'o-switch'),
+                { [`${this.computedClass('switch', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [this.computedClass('switch', 'disabledClass', 'o-switch-disabled')]: this.disabled },
+                { [this.computedClass('switch', 'roundedClass', 'o-switch-rounded')]: this.rounded },
+                { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined }
             ]
         },
         checkClasses() {
             return [
-                this.checkClass,
-                this.variant && ('o-color-' + this.variant),
-                (this.isMouseDown && !this.disabled) && 'o-switch-elastic',
-                (this.passiveVariant && 'o-color-' + this.passiveVariant + '-passive'),
+                this.computedClass('switch', 'checkClass', 'o-switch-check'),
+                { [this.computedClass('switch', 'animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
+                { [`${this.computedClass('switch', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('switch', 'passiveVariantClass', 'o-color-')}${this.passiveVariant}-passive`]: this.passiveVariant }
+            ]
+        },
+        labelClasses() {
+            return [
+                this.computedClass('switch', 'labelClass', 'o-switch-label')
             ]
         },
         computedValue: {

@@ -3,11 +3,11 @@
         <slot
             v-if="$scopedSlots.previous"
             name="previous"
-            :linkClass="linkClass"
-            :linkCurrentClass="linkCurrentClass"
+            :linkClass="linkClasses"
+            :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current - 1, {
                 disabled: !hasPrev,
-                class: prevBtnClass,
+                class: prevBtnClasses,
                 'aria-label': ariaPreviousLabel
         })">
             <o-icon
@@ -18,9 +18,9 @@
         </slot>
         <o-pagination-button
             v-else
-            :class="prevBtnClass"
-            :linkClass="linkClass"
-            :linkCurrentClass="linkCurrentClass"
+            :class="prevBtnClasses"
+            :linkClass="linkClasses"
+            :linkCurrentClass="linkCurrentClasses"
             :disabled="!hasPrev"
             :page="getPage(current - 1)">
             <o-icon
@@ -32,11 +32,11 @@
         <slot
             v-if="$scopedSlots.next"
             name="next"
-            :linkClass="linkClass"
-            :linkCurrentClass="linkCurrentClass"
+            :linkClass="linkClasses"
+            :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current + 1, {
                 disabled: !hasNext,
-                class: nextBtnClass,
+                class: nextBtnClasses,
                 'aria-label': ariaNextLabel,
         })">
             <o-icon
@@ -47,9 +47,9 @@
         </slot>
         <o-pagination-button
             v-else
-            :class="nextBtnClass"
-            :linkClass="linkClass"
-            :linkCurrentClass="linkCurrentClass"
+            :class="nextBtnClasses"
+            :linkClass="linkClasses"
+            :linkCurrentClass="linkCurrentClasses"
             :disabled="!hasNext"
             :page="getPage(current + 1)">
             <o-icon
@@ -59,7 +59,7 @@
                 aria-hidden="true"/>
         </o-pagination-button>
 
-        <small :class="infoClass" v-if="simple">
+        <small :class="infoClasses" v-if="simple">
             <template v-if="perPage == 1">
                 {{ firstItem }} / {{ total }}
             </template>
@@ -67,51 +67,51 @@
                 {{ firstItem }}-{{ Math.min(current * perPage, total) }} / {{ total }}
             </template>
         </small>
-        <ul :class="listClass" v-else>
+        <ul :class="listClasses" v-else>
             <!--First-->
             <li v-if="hasFirst">
                 <slot
                     v-if="$scopedSlots.default"
                     :page="getPage(1)"
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                 />
                 <o-pagination-button
                     v-else
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                     :page="getPage(1)" />
             </li>
-            <li v-if="hasFirstEllipsis"><span :class="ellipsisClass">&hellip;</span></li>
+            <li v-if="hasFirstEllipsis"><span :class="ellipsisClasses">&hellip;</span></li>
 
             <!--Pages-->
             <li v-for="page in pagesInRange" :key="page.number">
                 <slot
                     v-if="$scopedSlots.default"
                     :page="page"
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                 />
                 <o-pagination-button
                     v-else
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                     :page="page" />
             </li>
 
             <!--Last-->
-            <li v-if="hasLastEllipsis"><span :class="ellipsisClass">&hellip;</span></li>
+            <li v-if="hasLastEllipsis"><span :class="ellipsisClasses">&hellip;</span></li>
             <li v-if="hasLast">
                 <slot
                     v-if="$scopedSlots.default"
                     :page="getPage(pageCount)"
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                 />
                 <o-pagination-button
                     v-else
-                    :linkClass="linkClass"
-                    :linkCurrentClass="linkCurrentClass"
+                    :linkClass="linkClasses"
+                    :linkCurrentClass="linkCurrentClasses"
                     :page="getPage(pageCount)" />
             </li>
         </ul>
@@ -123,7 +123,8 @@ import PaginationButton from './PaginationButton'
 import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * A responsive and flexible pagination
@@ -137,11 +138,12 @@ export default {
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
+    mixins: [BaseComponentMixin],
     props: {
         total: [Number, String],
         perPage: {
             type: [Number, String],
-            default: 20
+            default: () => { return getValueByPath(config, 'pagination.perPage', 20) }
         },
         current: {
             type: [Number, String],
@@ -162,105 +164,72 @@ export default {
         iconPack: String,
         iconPrev: {
             type: String,
-            default: () => getValueByPath(config, 'pagination.iconPrev', 'chevron-left')
+            default: () => { return getValueByPath(config, 'pagination.iconPrev', 'chevron-left') }
         },
         iconNext: {
             type: String,
-            default: () => getValueByPath(config, 'pagination.iconNext', 'chevron-right')
+            default: () => { return getValueByPath(config, 'pagination.iconNext', 'chevron-right') }
         },
         ariaNextLabel: String,
         ariaPreviousLabel: String,
         ariaPageLabel: String,
         ariaCurrentLabel: String,
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.rootClass', '')
-                return getCssClass(clazz, override, 'o-pagination')
-            }
-        },
-        prevBtnClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.prevBtnClass', '')
-                return getCssClass(clazz, override, 'o-pagination-previous')
-            }
-        },
-        nextBtnClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.nextBtnClass', '')
-                return getCssClass(clazz, override, 'o-pagination-next')
-            }
-        },
-        listClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.listClass', '')
-                return getCssClass(clazz, override, 'o-pagination-list')
-            }
-        },
-        linkClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.linkClass', '')
-                return getCssClass(clazz, override, 'o-pagination-link')
-            }
-        },
-        linkCurrentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.linkCurrentClass', '')
-                return getCssClass(clazz, override, 'o-pagination-link-current')
-            }
-        },
-        ellipsisClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.ellipsisClass', '')
-                return getCssClass(clazz, override, 'o-pagination-ellipsis')
-            }
-        },
-        infoClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.infoClass', '')
-                return getCssClass(clazz, override, 'o-pagination-info')
-            }
-        },
-        simpleClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.simpleClass', '')
-                return getCssClass(clazz, override, 'o-pagination-simple')
-            }
-        },
-        roundedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'pagination.override', false)
-                const clazz = getValueByPath(config, 'pagination.roundedClass', '')
-                return getCssClass(clazz, override, 'o-pagination-rounded')
-            }
-        }
+        rootClass: String,
+        prevBtnClass: String,
+        nextBtnClass: String,
+        listClass: String,
+        linkClass: String,
+        linkCurrentClass: String,
+        ellipsisClass: String,
+        infoClass: String,
+        orderClass: String,
+        simpleClass: String,
+        roundedClass: String,
+        sizeClass: String
     },
     computed: {
         rootClasses() {
             return [
-                this.rootClass,
-                this.order && 'o-pagination-' + this.order,
-                this.size && 'o-size-' + this.size,
-                this.simple && this.simpleClass,
-                this.rounded && this.roundedClass
+                this.computedClass('pagination', 'rootClass', 'o-pagination'),
+                { [`${this.computedClass('pagination', 'orderClass', 'o-pagination-')}${this.order}`]: this.order },
+                { [`${this.computedClass('pagination', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [this.computedClass('pagination', 'simpleClass', 'o-pagination-simple')]: this.simple },
+                { [this.computedClass('pagination', 'roundedClass', 'o-pagination-rounded')]: this.rounded }
+            ]
+        },
+        prevBtnClasses() {
+            return [
+                this.computedClass('pagination', 'prevBtnClass', 'o-pagination-previous')
+            ]
+        },
+        nextBtnClasses() {
+            return [
+                this.computedClass('pagination', 'nextBtnClass', 'o-pagination-next')
+            ]
+        },
+        infoClasses() {
+            return [
+                this.computedClass('pagination', 'infoClass', 'o-pagination-info')
+            ]
+        },
+        ellipsisClasses() {
+            return [
+                this.computedClass('pagination', 'ellipsisClass', 'o-pagination-ellipsis')
+            ]
+        },
+        listClasses() {
+            return [
+                this.computedClass('pagination', 'listClass', 'o-pagination-list')
+            ]
+        },
+        linkClasses() {
+            return [
+                this.computedClass('pagination', 'linkClass', 'o-pagination-link')
+            ]
+        },
+        linkCurrentClasses() {
+            return [
+                this.computedClass('pagination', 'linkCurrentClass', 'o-pagination-link-current')
             ]
         },
 
