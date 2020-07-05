@@ -286,3 +286,31 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 </style>
 ```
 :::
+
+### Custom icon component
+
+::: tip
+You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should works with other Vue icon components).
+:::
+
+```js
+import { library } from '@fortawesome/fontawesome-svg-core';
+// internal icons
+import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
+    faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
+    faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
+    faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
+    faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload);
+Vue.component('vue-fontawesome', FontAwesomeIcon);
+
+// ...
+
+import Oruga from '@oruga/oruga'
+Vue.use(Oruga, {
+  iconComponent: 'vue-fontawesome',
+  iconPack: 'fas'
+});
+```

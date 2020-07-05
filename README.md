@@ -34,7 +34,7 @@ Browse [online documentation here](https://oruga.io/).
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.5+**.
+You need [Vue.js](https://vuejs.org/) **version 2.6+**.
 
 ### 1 Install via npm
 
@@ -47,7 +47,7 @@ npm install @oruga/oruga
 Bundle
 ```javascript
 import Vue from 'vue';
-import Oruga from 'oruga';
+import Oruga from '@oruga/oruga';
 import '@oruga/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
@@ -57,7 +57,7 @@ or Individual Components
 ```javascript
 
 import Vue from 'vue'
-import { Field, Input } from 'oruga'
+import { Field, Input } from '@oruga/oruga'
 import '@oruga/oruga/dist/oruga.css'
 
 Vue.use(Field)
@@ -67,7 +67,7 @@ Vue.use(Input)
 
 ### 3 Customization
 
-Browse [customization section on the documentation](https://oruga.io/quickstart).
+Browse [customization section on the documentation](https://oruga.io/guide).
 
 ## Browser support
 

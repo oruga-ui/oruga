@@ -15,7 +15,6 @@ $easing: ease-out !default;
 $control-border-width: 1px !default;
 $control-width: 2em !default;
 $control-height: 2em !default;
-$control-padding-horizontal: calc(0.625em - #{$control-border-width}) !default;
 
 $whitelist: () !default;
 $sass-vars: true !default;
@@ -35,7 +34,7 @@ $sizes: (
 $white: #ffffff !default;
 $black: #000000 !default;
 $grey: #7a7a7a !default;
-$grey-light: #7a7a7a !default;
+$grey-light: #b5b5b5 !default;
 $grey-lighter: #dbdbdb !default;
 
 $primary: #94C11F !default;

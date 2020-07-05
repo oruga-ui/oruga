@@ -101,32 +101,16 @@ title: Table
 <template>
   <section>
     <o-field grouped group-multiline>
-      <div class="control">
-        <o-switch v-model="isBordered">Bordered</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isStriped">Striped</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isNarrowed">Narrowed</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isHoverable">Hoverable</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isFocusable">Focusable</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isLoading">Loading state</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="isEmpty">Empty</o-switch>
-      </div>
-      <div class="control">
-        <o-switch v-model="hasMobileCards"
-          >Mobile cards <small>(collapsed rows)</small></o-switch
-        >
-      </div>
+      <o-switch v-model="isBordered">Bordered</o-switch>
+      <o-switch v-model="isStriped">Striped</o-switch>
+      <o-switch v-model="isNarrowed">Narrowed</o-switch>
+      <o-switch v-model="isHoverable">Hoverable</o-switch>
+      <o-switch v-model="isFocusable">Focusable</o-switch>
+      <o-switch v-model="isLoading">Loading state</o-switch>
+      <o-switch v-model="isEmpty">Empty</o-switch>
+      <o-switch v-model="hasMobileCards"
+        >Mobile cards <small>(collapsed rows)</small></o-switch
+      >
     </o-field>
 
     <o-table
@@ -1141,10 +1125,7 @@ title: Table
     <o-field grouped group-multiline>
       <o-checkbox v-model="showDetailIcon">Show detail chevron</o-checkbox>
       <o-checkbox v-model="showDefaultDetail">Custom detail column</o-checkbox>
-      <div
-        v-for="(column, index) in columnsVisible"
-        :key="index"
-      >
+      <div v-for="(column, index) in columnsVisible" :key="index">
         <o-checkbox v-model="column.display">
           {{ column.title }}
         </o-checkbox>

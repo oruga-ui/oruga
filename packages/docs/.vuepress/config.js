@@ -49,9 +49,12 @@ module.exports = {
     repo: "oruga-ui/oruga",
     editLinks: true,
     docsDir: 'packages/docs',
-    docsBranch: 'master',
+    docsBranch: 'develop',
     sidebar: {
-      '/components/': components
+      '/components/': [
+        '',
+        ...components
+      ]
     },
     nav: [
       { text: 'Home', link: '/' },

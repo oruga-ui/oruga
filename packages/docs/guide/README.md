@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# Quick Start
+# Guide
 
 ## Installation
 
@@ -81,7 +81,7 @@ but you can mix them, for example adding new classes and using css variables!
 
 ### CSS Variables
 
-In order to use css variables you have to import `@oruga/oruga/dist/oruga-css-vars.css`
+In order to use css variables you have to import `@oruga/oruga/dist/oruga-vars.css`
 
 Each component is well documented with all css variables (the default value is the relative SASS/SCSS variable) that you have to add in your project, for example:
 ```css
@@ -93,12 +93,11 @@ Each component is well documented with all css variables (the default value is t
 
 ### SASS/SCSS Variables
 
-``` warning
+::: warning
 You might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
-```
+:::
 
 ```scss
-
 $colors: (
     "primary": ($primary, $primary-invert),
     "info": ($info, $info-invert),
@@ -107,13 +106,15 @@ $colors: (
     "danger": ($danger, $danger-invert)
 );
 
+...
+
 @import "~@oruga/oruga/src/scss/oruga";
 ```
 
 ### Adding new classes
 
-Adding new classes is really easy and you can do it during the library/component import (global); in this way all component intances are using the same custom classes.
-Othervise the library allows to add new classes on a single component instance (local).
+Adding new classes is really easy and you can do it importing the library/component (global); in this case all component intances are using the same custom classes.
+Otherwise the library allows to add new classes on a single component instance (local).
 
 #### Global
 
@@ -140,10 +141,9 @@ Vue.use(Oruga, {
     item-class="myautocomplete-item" />
 ```
 
-
-``` tip
-For a most complete customization you can import `@oruga/oruga/dist/oruga-lite.css`. It's a light stylesheet thant doesn't provide all class attributes that you would customize by CSS or SASS/SCSS variables
-```
+::: tip
+For a complete customization you can import `@oruga/oruga/dist/oruga-lite.css`. It's a light stylesheet thant doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables.
+:::
 
 ### Overriding classes
 
@@ -164,4 +164,22 @@ Vue.use(Oruga, {
 });
 ```
 
+Using individual imports you can customize components by `Config` plugin.
+
+```js
+import Vue from 'vue';
+import { Autocomplete, Sidebar, Config } from '@oruga/oruga';
+
+Vue.use(Autocomplete);
+Vue.use(Sidebar);
+Vue.use(Config, {
+    autocomplete: {
+        override: true,
+        rootClass: 'myautocomplete-root',
+        menuClass: 'myautocomplete-menu',
+        itemClass: 'myautocomplete-item',
+        ...
+    }
+})
+```
 
