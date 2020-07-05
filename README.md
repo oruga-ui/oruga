@@ -86,8 +86,7 @@ While it's still in beta, version will follow **v0.Y.Z**, where:
 
 ## Roadmap
 
-* Other components: Tabs, Steps, Datepicker, Timepicker, Tag, TagInput, Notification, Upload, NumberInput
-* Improve customization way
+* [v1](https://github.com/oruga-ui/oruga/projects/1)
 
 ## Core Team
 
