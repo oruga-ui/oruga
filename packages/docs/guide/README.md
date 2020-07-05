@@ -77,7 +77,7 @@ Oruga allows to customize a component in 4 different ways:
 * adding new classes
 * overriding all classes
 
-but you can mix a few of them, for example adding new classes and using css variables!
+but you can mix them, for example adding new classes and using css variables!
 
 ### CSS Variables
 

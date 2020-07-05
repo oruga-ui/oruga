@@ -39,7 +39,7 @@
 <script>
 import trapFocus from '../../directives/trapFocus'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { removeElement, getValueByPath, getCssClass, toCssDimension } from '../../utils/helpers'
+import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 
 /**

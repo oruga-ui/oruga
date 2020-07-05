@@ -1,13 +1,25 @@
 <template>
     <section>
         <h2> Buttons </h2>
-        <o-button label="Simple" />
+        <o-button label="Simple" root-class="pippo" />
         <o-button label="Rounded" rounded />
         <o-button label="Outlined" outlined />
         <o-button label="Disabled" disabled />
 
         <o-button label="Add" icon-left="plus" />
         <o-button icon-left="plus" />
+
+        <h2>Dropdown</h2>
+        <o-dropdown aria-role="list">
+            <o-button variant="primary" slot="trigger" slot-scope="{ active }">
+                <span>Click me!</span>
+                <o-icon :icon="active ? 'caret-up' : 'caret-down'"></o-icon>
+            </o-button>
+
+            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
+            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
+            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
+        </o-dropdown>
 
         <h2> Form </h2>
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -49,11 +61,20 @@ export default {
             field: {
                 override: true,
                 labelClass: 'field-label',
-                messageClass: 'text-red-500 text-xs italic'
+                messageClass: 'text-xs italic',
+                variantClass: 'field-'
             },
             input: {
                 override: true,
-                inputClass: 'input focus:outline-none focus:shadow-outline'
+                inputClass: 'input focus:outline-none focus:shadow-outline',
+                roundedClass: 'rounded',
+                variantClass: 'input-'
+            },
+            dropdown: {
+                override: true,
+                rootClass: 'dropdown',
+                menuClass: 'dropdown-menu',
+                itemClass: 'dropdown-item'
             }
         })
     },
@@ -73,7 +94,7 @@ export default {
             },
             input: {
                 override: false,
-                inputClass: undefined
+                inputClass: undefined,
             }
         });
     }
@@ -101,8 +122,25 @@ export default {
 .field-label {
     @apply block text-gray-700 text-sm font-bold mb-2;
 }
+.field-danger {
+    @apply text-red-500;
+}
 .input {
-    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+    @apply shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight;
+}
+.input-danger {
+    @apply border-red-500;
+}
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
 }
 
 </style>

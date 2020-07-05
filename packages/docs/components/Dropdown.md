@@ -127,9 +127,7 @@ title: Dropdown
   <section>
     <div class="block">
       <o-field>
-        <div class="control">
-          <o-switch v-model="isScrollable">Scrollable</o-switch>
-        </div>
+        <o-switch v-model="isScrollable">Scrollable</o-switch>
       </o-field>
     </div>
 

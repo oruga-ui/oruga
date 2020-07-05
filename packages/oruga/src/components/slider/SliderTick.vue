@@ -1,16 +1,19 @@
 <template>
     <div
-        :class="[$slider.tickClass, { [$slider.tickHiddenClass]: hidden }]"
-        :style="getTickStyle(position)">
-        <span v-if="$slots.default" :class="$slider.tickLabelClass">
+        :class="rootClasses"
+        :style="tickStyle">
+        <span v-if="$slots.default" :class="tickLabelClasses">
             <slot/>
         </span>
     </div>
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 export default {
     name: 'OSliderTick',
+    mixins: [BaseComponentMixin],
     inject: {
         $slider: { name: '$slider', default: false }
     },
@@ -18,9 +21,23 @@ export default {
         value: {
             variant: Number,
             default: 0
-        }
+        },
+        tickClass: String,
+        tickHiddenClass: String,
+        tickLabelClass: String
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('slider', 'tickClass', 'o-slider-tick'),
+                { [this.computedClass('slider', 'tickHiddenClass', 'o-slider-tick-hidden')]: this.hidden },
+            ]
+        },
+        tickLabelClasses() {
+            return [
+                this.computedClass('slider', 'tickLabelClass', 'o-slider-tick-label')
+            ]
+        },
         position() {
             const pos = (this.value - this.$parent.min) /
                 (this.$parent.max - this.$parent.min) * 100
@@ -28,11 +45,9 @@ export default {
         },
         hidden() {
             return this.value === this.$parent.min || this.value === this.$parent.max
-        }
-    },
-    methods: {
-        getTickStyle(position) {
-            return { 'left': position + '%' }
+        },
+        tickStyle() {
+            return { 'left': this.position + '%' }
         }
     },
     created() {

@@ -167,6 +167,6 @@ export function toCssDimension(width) {
     return width === undefined ? null : (isNaN(width) ? width : width + 'px')
 }
 
-export function getCssClass(clazz, override, defaultClazz) {
-    return (clazz ? (clazz + (override ? '' : ' ')) : '') + (override ? '' : defaultClazz)
+export function blankIfUndefined(value) {
+    return typeof value !== 'undefined' && value !== null ? value : ''
 }

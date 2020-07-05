@@ -3,10 +3,10 @@
         @click="onSliderClick"
         :class="rootClasses">
         <div
-            :class="trackClass"
+            :class="trackClasses"
             ref="slider">
             <div
-                :class="fillClass"
+                :class="fillClasses"
                 :style="barStyle"/>
             <template v-if="ticks">
                 <o-slider-tick
@@ -55,7 +55,8 @@ import SliderThumb from './SliderThumb'
 import SliderTick from './SliderTick'
 
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * A slider to select a value or range from a given range
@@ -69,6 +70,7 @@ export default {
         [SliderThumb.name]: SliderThumb,
         [SliderTick.name]: SliderTick
     },
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $slider: this
@@ -93,7 +95,7 @@ export default {
         },
         variant: {
             type: String,
-            default: 'primary'
+            default: () => { return getValueByPath(config, 'slider.variant', 'primary') },
         },
         size: String,
         ticks: {
@@ -107,7 +109,7 @@ export default {
         tooltipVariant: String,
         rounded: {
             type: Boolean,
-            default: false
+            default: () => { return getValueByPath(config, 'slider.rounded', false) },
         },
         disabled: {
             type: Boolean,
@@ -123,110 +125,16 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.rootClass', '')
-                return getCssClass(clazz, override, 'o-slider')
-            }
-        },
-        trackClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.trackClass', '')
-                return getCssClass(clazz, override, 'o-slider-track')
-            }
-        },
-        fillClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.fillClass', '')
-                return getCssClass(clazz, override, 'o-slider-fill')
-            }
-        },
-        roundedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.roundedClass', '')
-                return getCssClass(clazz, override, 'o-slider-rounded')
-            }
-        },
-        draggingClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.draggingClass', '')
-                return getCssClass(clazz, override, 'o-slider-dragging')
-            }
-        },
-        disabledClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.disabledClass', '')
-                return getCssClass(clazz, override, 'o-slider-disabled')
-            }
-        },
-        biggerSliderFocusClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.biggerSliderFocusClass', '')
-                return getCssClass(clazz, override, 'o-slider-focus')
-            }
-        },
-        thumbWrapperClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.thumbWrapperClass', '')
-                return getCssClass(clazz, override, 'o-slider-thumb-wrapper')
-            }
-        },
-        thumbClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.thumbClass', '')
-                return getCssClass(clazz, override, 'o-slider-thumb')
-            }
-        },
-        thumbDraggingClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.thumbDraggingClass', '')
-                return getCssClass(clazz, override, 'o-slider-thumb-dragging')
-            }
-        },
-        tickClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.tickClass', '')
-                return getCssClass(clazz, override, 'o-slider-tick')
-            }
-        },
-        tickHiddenClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.tickHiddenClass', '')
-                return getCssClass(clazz, override, 'o-slider-tick-hidden')
-            }
-        },
-        tickLabelClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'slider.override', false)
-                const clazz = getValueByPath(config, 'slider.tickLabelClass', '')
-                return getCssClass(clazz, override, 'o-slider-tick-label')
-            }
-        }
+        rootClass: String,
+        trackClass: String,
+        fillClass: String,
+        roundedClass: String,
+        draggingClass: String,
+        disabledClass: String,
+        biggerSliderFocusClass: String,
+        thumbWrapperClass: String,
+        thumbClass: String,
+        thumbDraggingClass: String
     },
     data() {
         return {
@@ -237,6 +145,32 @@ export default {
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('slider', 'rootClass', 'o-slider'),
+                { [`${this.computedClass('slider', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('slider', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [this.computedClass('slider', 'roundedClass', 'o-slider-rounded')]: this.rounded },
+                { [this.computedClass('slider', 'draggingClass', 'o-slider-dragging')]: this.dragging },
+                { [this.computedClass('slider', 'disabledClass', 'o-slider-disabled')]: this.disabled },
+                { [this.computedClass('slider', 'biggerSliderFocusClass', 'o-slider-focus')]: this.biggerSliderFocus }
+            ]
+        },
+        trackClasses() {
+            return [
+                this.computedClass('slider', 'trackClass', 'o-slider-track'),
+            ]
+        },
+        fillClasses() {
+            return [
+                this.computedClass('slider', 'fillClass', 'o-slider-fill'),
+            ]
+        },
+        thumbClasses() {
+            return [
+                this.computedClass('slider', 'thumbClass', 'o-slider-thumb'),
+            ]
+        },
         newTooltipVariant() {
             return this.tooltipVariant ? this.tooltipVariant : this.variant
         },
@@ -276,17 +210,6 @@ export default {
                 width: this.barSize,
                 left: this.barStart
             }
-        },
-        rootClasses() {
-            return [
-                this.rootClass,
-                this.size && 'o-size-' + this.size,
-                this.variant && 'o-color-' + this.variant,
-                this.rounded && this.roundedClass,
-                this.dragging && this.draggingClass,
-                this.disabled && this.disabledClass,
-                this.biggerSliderFocus && this.biggerSliderFocusClass,
-            ]
         }
     },
     watch: {
@@ -310,6 +233,12 @@ export default {
         }
     },
     methods: {
+        thumbWrapperClasses(dragging) {
+             return [
+                this.computedClass('slider', 'thumbWrapperClass', 'o-slider-thumb-wrapper'),
+                { [this.computedClass('slider', 'thumbDraggingClass', 'o-slider-thumb-dragging')]: dragging },
+            ]
+        },
         setValues(newValue) {
             if (this.min > this.max) {
                 return

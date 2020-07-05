@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="[ $slider.thumbWrapperClass, { [$slider.thumbDraggingClass]: dragging } ]"
+        :class="$slider.thumbWrapperClasses(dragging)"
         :style="wrapperStyle">
         <o-tooltip
             :label="tooltipLabel"
@@ -8,7 +8,7 @@
             :always="dragging || isFocused"
             :active="!disabled && tooltip">
             <div
-                :class="$slider.thumbClass"
+                :class="$slider.thumbClasses"
                 :tabindex="disabled ? false : 0"
                 v-bind="$attrs"
                 @mousedown="onButtonDown"
@@ -27,6 +27,7 @@
 
 <script>
 import Tooltip from '../tooltip/Tooltip'
+
 export default {
     name: 'OSliderThumb',
     components: {

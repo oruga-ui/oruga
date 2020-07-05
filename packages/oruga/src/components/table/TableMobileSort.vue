@@ -1,5 +1,5 @@
 <template>
-    <div :class="$table.mobileSortClass">
+    <div :class="$table.mobileSortClasses">
         <o-field>
             <o-select
                 v-model="sortMultipleSelect"
@@ -70,7 +70,7 @@
                 @click="sort">
                 <o-icon
                     v-show="currentSortColumn === mobileSort"
-                    :class="{ [$table.iconSortDesc]: !isAsc }"
+                    :class="$table.iconSortClasses"
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"
@@ -101,7 +101,6 @@ export default {
     props: {
         currentSortColumn: Object,
         sortMultipleData: Array,
-        isAsc: Boolean,
         columns: Array,
         placeholder: String,
         iconPack: String,
@@ -171,8 +170,7 @@ export default {
                 remainingFields.includes(column.field))[0]
         },
         getSortingObjectOfColumn(column) {
-            return this.sortMultipleData.filter((i) =>
-                i.field === column.field)[0]
+            return this.sortMultipleData.filter((i) => i.field === column.field)[0]
         },
         columnIsDesc(column) {
             const sortingObject = this.getSortingObjectOfColumn(column)

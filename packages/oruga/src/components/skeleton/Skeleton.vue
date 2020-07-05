@@ -1,4 +1,5 @@
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
 
 /**
@@ -9,7 +10,7 @@ import { toCssDimension } from '../../utils/helpers'
  */
 export default {
     name: 'OSkeleton',
-    functional: true,
+    mixins: [BaseComponentMixin],
     props: {
         active: {
             type: Boolean,
@@ -41,31 +42,37 @@ export default {
                 ].indexOf(value) > -1
             }
         },
-        size: String
+        size: String,
+        rootClass: String,
+        animationClass: String,
+        positionClass: String,
+        itemClass: String,
+        itemRoundedClass: String,
+        sizeClass: String
     },
-    render(createElement, { props }) {
-        if (!props.active) return
+    render(createElement) {
+        if (!this.active) return
         const items = []
-        const width = props.width
-        const height = props.height
-        for (let i = 0; i < props.count; i++) {
+        const width = this.width
+        const height = this.height
+        for (let i = 0; i < this.count; i++) {
             items.push(createElement('div', {
-                staticClass: 'o-skeleton-item',
-                class: { 'o-skeleton-rounded': props.rounded },
+                staticClass: this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'),
+                class: { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded },
                 key: i,
                 style: {
                     height: toCssDimension(height),
                     width: toCssDimension(width),
-                    borderRadius: props.circle ? '50%' : null
+                    borderRadius: this.circle ? '50%' : null
                 }
             }))
         }
         return createElement('div', {
-            staticClass: 'o-skeleton',
-            class: [ 
-                props.size && ('o-size-' + props.size),
-                props.position && ('o-skeleton-' + props.position),
-                props.animated && 'o-skeleton-animated'
+            staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
+            class: [
+                { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-')}${this.position}`]: this.position },
+                { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
             ]
         }, items)
     }

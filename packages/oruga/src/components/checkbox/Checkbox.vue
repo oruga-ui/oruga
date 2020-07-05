@@ -26,7 +26,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select a single or grouped options

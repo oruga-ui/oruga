@@ -23,7 +23,7 @@
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select an option from a set

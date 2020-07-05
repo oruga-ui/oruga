@@ -33,7 +33,7 @@ $skeleton-margin: .5rem 0 0 0 !default;
     > .o-skeleton-item {
         width: 100%;
         @include variable('background', 'skeleton-background', $skeleton-background);
-        &.o-skeleton-rounded {
+        &.o-skeleton-item-rounded {
             @include variable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
         }
         &::after {

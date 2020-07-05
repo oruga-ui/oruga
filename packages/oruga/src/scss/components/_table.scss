@@ -110,15 +110,6 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     overflow-y: initial !important;
                 }
             }
-            tr:first-child {
-                th {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    top: 0;
-                    @include variable('z-index', 'table-sticky-zindex', $table-sticky-zindex + 1);
-                    @include variable('background', 'table-background-color', $table-background-color);
-                }
-            }
         }
         &.o-table-mobile-cards {
             @media screen and (max-width: $table-mobile-breakpoint - 1px) {
@@ -230,7 +221,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    @include variable('z-index', 'table-sticky-zindex + 2', $table-sticky-zindex + 2);
+                    @include variable('z-index', 'table-sticky-zindex', $table-sticky-zindex, 'calc', '+ 2');
                     @include variable('background', 'table-background-color', $table-background-color);
                 }
                 &.o-table-th-unselectable {
@@ -341,26 +332,29 @@ $table-th-wrap-icon-margin: 0.5rem !default;
         @media screen and (min-width: $table-mobile-breakpoint) {
             display: flex;
         }
-    }
-    .o-pagination-wrapper-left {
-        align-items: center;
-        justify-content: flex-start;
-    }
-    .o-pagination-wrapper-left {
-        align-items: center;
-        justify-content: flex-end;
-    }
-    .o-pagination-wrapper-left, .o-pagination-wrapper-right {
-        flex-basis: auto;
-        flex-grow: 0;
-        flex-shrink: 0;
-    }
-    .o-pagination-wrapper-item {
-        align-items: center;
-        display: flex;
-        flex-basis: auto;
-        flex-grow: 0;
-        flex-shrink: 0;
-        justify-content: center;
+        // left
+        > div:first-child {
+            align-items: center;
+            justify-content: flex-start;
+        }
+        // right
+        > div:last-child {
+            align-items: center;
+            justify-content: flex-end;
+            > div {
+                align-items: center;
+                display: flex;
+                flex-basis: auto;
+                flex-grow: 0;
+                flex-shrink: 0;
+                justify-content: center;
+            }
+        }
+        // left - right
+        > div {
+            flex-basis: auto;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
     }
 }

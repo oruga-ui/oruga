@@ -41,7 +41,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
-import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath, getCssClass } from '../../utils/helpers'
+import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content

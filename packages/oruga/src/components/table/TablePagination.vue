@@ -1,10 +1,10 @@
 <template>
-    <div class="o-pagination-wrapper">
-        <div class="o-pagination-wrapper-left">
+    <div :class="rootClass">
+        <div>
             <slot />
         </div>
-        <div class="o-pagination-wrapper-right">
-            <div v-if="paginated" class="o-pagination-wrapper-item">
+        <div>
+            <div v-if="paginated">
                 <o-pagination
                     :icon-pack="iconPack"
                     :total="total"
@@ -35,6 +35,7 @@ export default {
         paginationSize: String,
         rounded: Boolean,
         iconPack: String,
+        rootClass: [String, Array, Object],
         ariaNextLabel: String,
         ariaPreviousLabel: String,
         ariaPageLabel: String,

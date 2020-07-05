@@ -33,14 +33,6 @@ export default {
         }
     },
     computed: {
-        rootClasses() {
-            return [
-                this.cellClass, 
-                (this.numeric && !this.centered) && this.$table.tdRightClass,
-                this.centered && this.$table.tdCenteredClass,
-                this.sticky && this.$table.tdStickyClass
-            ]
-        },
         style() {
             return {
                 width: toCssDimension(this.width)
@@ -52,7 +44,7 @@ export default {
         /**
          * Return if column header is un-selectable
          */
-        isHeaderUnSelectable() {
+        isHeaderUnselectable() {
             return !this.headerSelectable && this.sortable
         }
     },

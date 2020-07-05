@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass">
+    <div :class="rootClasses">
 
         <slot />
 
@@ -8,7 +8,6 @@
             :current-sort-column="currentSortColumn"
             :sort-multiple="sortMultiple"
             :sort-multiple-data="sortMultipleDataComputed"
-            :is-asc="isAsc"
             :columns="newColumns"
             :placeholder="mobileSortPlaceholder"
             :icon-pack="iconPack"
@@ -26,6 +25,7 @@
                     :paginated="paginated"
                     :total="newDataTotal"
                     :current-page.sync="newCurrentPage"
+                    :root-class="paginationWrapperClasses"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="top-left"/>
@@ -45,7 +45,7 @@
                 <thead v-if="newColumns.length && showHeader">
                     <tr>
                         <th v-if="showDetailRowIcon" width="40px"/>
-                        <th :class="thCheckboxClass" v-if="checkable && checkboxPosition === 'left'">
+                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
                                     :value="isAllChecked"
@@ -56,18 +56,10 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
-                            :class="[column.headerClass,
-                                (!sortMultiple && currentSortColumn === column) && thCurrentSortClass,
-                                column.sortable && thSortableClass,
-                                column.sticky && thStickyClass,
-                                column.isHeaderUnSelectable && thUnselectableClass
-                            ]"
+                            :class="thClasses(column)"
                             :style="column.style"
                             @click.stop="sort(column, null, $event)">
-                            <div :class="[ thWrapClass, {
-                                [thRightClass]: column.numeric,
-                                [thCenteredClass]: column.centered
-                            }]">
+                            <div :class="thWrapClasses(column)">
                                 <template v-if="column.$scopedSlots && column.$scopedSlots.header">
                                     <o-slot-component
                                         :component="column"
@@ -78,7 +70,7 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    <span :class="thContentClass">
+                                    <span :class="thContentClasses">
                                         {{ column.label }}
                                         <template
                                             v-if="sortMultiple &&
@@ -90,11 +82,10 @@
                                                 :pack="iconPack"
                                                 both
                                                 :size="sortIconSize"
-                                                :class="{[iconSortDescClass]: sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'}"
+                                                :class="iconSortMultipleClasses(column)"
                                             />
                                             {{ findIndexOfSortData(column) }}
                                             <o-button
-                                                :class="multiColumnSortDeleteIconClass"
                                                 native-type="button"
                                                 size="small"
                                                 @click.stop="removeSortingPriority(column)"/>
@@ -106,16 +97,13 @@
                                             :pack="iconPack"
                                             both
                                             :size="sortIconSize"
-                                            :class="[ iconSortClass, {
-                                                [iconSortDescClass]: !isAsc,
-                                                [iconSortInvisibleClass]: currentSortColumn !== column
-                                            }]"
+                                            :class="iconSortClasses(column)"
                                         />
                                     </span>
                                 </template>
                             </div>
                         </th>
-                        <th :class="thCheckboxClass" v-if="checkable && checkboxPosition === 'right'">
+                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
                                     :value="isAllChecked"
@@ -124,17 +112,14 @@
                             </template>
                         </th>
                     </tr>
-                    <tr v-if="hasCustomSubheadings" :class="subheadingClass">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClass" />
+                    <tr v-if="hasCustomSubheadings" :class="subheadingClasses">
+                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
                             :style="column.style">
-                            <div :class="[ thWrapClass, {
-                                [thRightClass]: column.numeric,
-                                [thCenteredClass]: column.centered
-                            }]">
+                            <div :class="thWrapClasses({})">
                                 <template
                                     v-if="column.$scopedSlots && column.$scopedSlots.subheading"
                                 >
@@ -152,13 +137,13 @@
                         <th v-if="checkable && checkboxPosition === 'right'" />
                     </tr>
                     <tr v-if="hasSearchablenewColumns">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClass" />
+                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
                             :style="column.style">
-                            <div :class="thWrapClass">
+                            <div :class="thWrapClasses({})">
                                 <template v-if="column.searchable">
                                     <template
                                         v-if="column.$scopedSlots
@@ -186,9 +171,7 @@
                     <template v-for="(row, index) in visibleData">
                         <tr
                             :key="customRowKey ? row[customRowKey] : index"
-                            :class="[rowClass(row, index), {
-                                [tdSelectedClass]: row === selected
-                            }]"
+                            :class="rowClasses(row, index)"
                             @click="selectRow(row)"
                             @dblclick="$emit('dblclick', row)"
                             @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
@@ -203,7 +186,7 @@
 
                             <td
                                 v-if="showDetailRowIcon"
-                                :class="detailedChevronClass"
+                                :class="detailedChevronClasses"
                             >
                                 <a
                                     v-if="hasDetailedVisible(row)"
@@ -213,12 +196,12 @@
                                         icon="chevron-right"
                                         :pack="iconPack"
                                         both
-                                        :class="{[detailedIconExpandedClass]: isVisibleDetailRow(row)}"/>
+                                        :class="detailedIconExpandedClasses(row)"/>
                                 </a>
                             </td>
 
                             <td
-                                :class="tdCheckboxCell"
+                                :class="tdCheckboxCellClasses"
                                 v-if="checkable && checkboxPosition === 'left'">
                                 <o-checkbox
                                     :disabled="!isRowCheckable(row)"
@@ -236,7 +219,7 @@
                                         scoped
                                         name="default"
                                         tag="td"
-                                        :class="column.rootClasses"
+                                        :class="columnClasses(column)"
                                         :data-label="column.label"
                                         :props="{ row, column, index }"
                                     />
@@ -245,7 +228,7 @@
                             </template>
 
                             <td
-                                :class="tdCheckboxCell"
+                                :class="tdCheckboxCellClasses"
                                 v-if="checkable && checkboxPosition === 'right'">
                                 <o-checkbox
                                     :disabled="!isRowCheckable(row)"
@@ -258,7 +241,7 @@
                         <tr
                             v-if="isActiveDetailRow(row)"
                             :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                            :class="detailedClass">
+                            :class="detailedClasses">
                             <td :colspan="columnCount">
                                 <slot
                                     name="detail"
@@ -276,7 +259,7 @@
 
                     <tr
                         v-if="!visibleData.length"
-                        :class="emptyClass">
+                        :class="emptyClasses">
                         <td :colspan="columnCount">
                             <slot name="empty"/>
                         </td>
@@ -285,7 +268,7 @@
                 </tbody>
 
                 <tfoot v-if="$slots.footer !== undefined">
-                    <tr :class="footerClass">
+                    <tr :class="footerClasses">
                         <slot name="footer" v-if="hasCustomFooterSlot()"/>
                         <th :colspan="columnCount" v-else>
                             <slot name="footer"/>
@@ -310,6 +293,7 @@
                     :paginated="paginated"
                     :total="newDataTotal"
                     :current-page.sync="newCurrentPage"
+                    :root-class="paginationWrapperClasses"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="bottom-left"/>
@@ -321,7 +305,8 @@
 </template>
 
 <script>
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension, getCssClass } from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath, indexOf, multiColumnSort, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
@@ -356,6 +341,7 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
+    mixins: [BaseComponentMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -418,11 +404,11 @@ export default {
         },
         sortIcon: {
             type: String,
-            default: 'arrow-up'
+            default: () => { return getValueByPath(config, 'table.sortIcon', 'arrow-up') }
         },
         sortIconSize: {
             type: String,
-            default: 'small'
+            default: () => { return getValueByPath(config, 'table.sortIconSize', 'small') }
         },
         sortMultiple: {
             type: Boolean,
@@ -451,7 +437,7 @@ export default {
         },
         paginationPosition: {
             type: String,
-            default: 'bottom',
+            default: () => { return getValueByPath(config, 'table.paginationPosition', 'bottom') },
             validator: (value) => {
                 return [
                     'bottom',
@@ -508,296 +494,44 @@ export default {
         cardLayout: Boolean,
         showHeader: {
             type: Boolean,
-            default: true
+            default: () => { return getValueByPath(config, 'table.showHeader', true) }
         },
-        rootClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.rootClass', '')
-                return getCssClass(clazz, override, 'o-table')
-            }
-        },
-        wrapperClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.wrapperClass', '')
-                return getCssClass(clazz, override, 'o-table-wrapper')
-            }
-        },
-        footerClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.footerClass', '')
-                return getCssClass(clazz, override, 'o-table-footer')
-            }
-        },
-        emptyClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.emptyClass', '')
-                return getCssClass(clazz, override, 'o-table-empty')
-            }
-        },
-        detailedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.detailedClass', '')
-                return getCssClass(clazz, override, 'o-table-detail')
-            }
-        },
-        detailedChevronClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.detailedChevronClass', '')
-                return getCssClass(clazz, override, 'o-table-chevron-cell')
-            }
-        },
-        detailedIconExpandedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.detailedIconExpandedClass', '')
-                return getCssClass(clazz, override, 'o-table-detail-icon-expanded')
-            }
-        },
-        borderedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.borderedClass', '')
-                return getCssClass(clazz, override, 'o-table-bordered')
-            }
-        },
-        stripedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.stripedClass', '')
-                return getCssClass(clazz, override, 'o-table-striped')
-            }
-        },
-        narrowClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.narrowClass', '')
-                return getCssClass(clazz, override, 'o-table-narrow')
-            }
-        },
-        hoverableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.hoverableClass', '')
-                return getCssClass(clazz, override, 'o-table-hoverable')
-            }
-        },
-        thWrapClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thWrapClass', '')
-                return getCssClass(clazz, override, 'o-table-th-wrap')
-            }
-        },
-        thContentClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thContentClass', '')
-                return getCssClass(clazz, override, 'o-table-th-content')
-            }
-        },
-        thRightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thRightClass', '')
-                return getCssClass(clazz, override, 'o-table-th-right')
-            }
-        },
-        thCenteredClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thCenteredClass', '')
-                return getCssClass(clazz, override, 'o-table-th-centered')
-            }
-        },
-        thStickyClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thStickyClass', '')
-                return getCssClass(clazz, override, 'o-table-th-sticky')
-            }
-        },
-        thCheckboxClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thCheckboxClass', '')
-                return getCssClass(clazz, override, 'o-table-th-checkbox')
-            }
-        },
-        thCurrentSortClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thCurrentSortClass', '')
-                return getCssClass(clazz, override, 'o-table-th-current-sort')
-            }
-        },
-        thSortableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thSortableClass', '')
-                return getCssClass(clazz, override, 'o-table-th-sortable')
-            }
-        },
-        thUnselectableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thUnselectableClass', '')
-                return getCssClass(clazz, override, 'o-table-th-unselectable')
-            }
-        },
-        thDetailedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.thDetailedClass', '')
-                return getCssClass(clazz, override, 'o-table-th-detail')
-            }
-        },
-        tdRightClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.tdRightClass', '')
-                return getCssClass(clazz, override, 'o-table-td-right')
-            }
-        },
-        tdCenteredClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.tdCenteredClass', '')
-                return getCssClass(clazz, override, 'o-table-td-centered')
-            }
-        },
-        tdStickyClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.tdStickyClass', '')
-                return getCssClass(clazz, override, 'o-table-td-sticky')
-            }
-        },
-        tdCheckboxCell: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.tdCheckboxCell', '')
-                return getCssClass(clazz, override, 'o-table-checkbox-cell')
-            }
-        },
-        tdSelectedClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.tdSelectedClass', '')
-                return getCssClass(clazz, override, 'o-table-row-selected')
-            }
-        },
-        subheadingClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.subheadingClass', '')
-                return getCssClass(clazz, override, 'o-table-subheading')
-            }
-        },
-        stickyHeaderClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.stickyHeaderClass', '')
-                return getCssClass(clazz, override, 'o-table-sticky-header')
-            }
-        },
-        mobileCardsClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.mobileCardsClass', '')
-                return getCssClass(clazz, override, 'o-table-mobile-cards')
-            }
-        },
-        cardsClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.cardsClass', '')
-                return getCssClass(clazz, override, 'o-table-cards')
-            }
-        },
-        scrollableClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.scrollableClass', '')
-                return getCssClass(clazz, override, 'o-table-scrollable')
-            }
-        },
-        mobileSortClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.mobileSortClass', '')
-                return getCssClass(clazz, override, 'o-table-mobile-sort')
-            }
-        },
-        iconSortDescClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.iconSortDesc', '')
-                return getCssClass(clazz, override, 'o-icon-sort-desc')
-            }
-        },
-        iconSortClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.iconSortClass', '')
-                return getCssClass(clazz, override, 'o-icon-sort')
-            }
-        },
-        iconSortInvisibleClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.iconSortInvisibleClass', '')
-                return getCssClass(clazz, override, 'o-icon-sort-invisible')
-            }
-        },
-        multiColumnSortDeleteIconClass: {
-            type: String,
-            default: () => {
-                const override = getValueByPath(config, 'table.override', false)
-                const clazz = getValueByPath(config, 'table.multiColumnSortDeleteIconClass', '')
-                return getCssClass(clazz, override, 'delete multi-sort-cancel-icon')
-            }
-        },
+        rootClass: String,
+        wrapperClass: String,
+        footerClass: String,
+        emptyClass: String,
+        detailedClass: String,
+        detailedChevronClass: String,
+        detailedIconExpandedClass: String,
+        borderedClass: String,
+        stripedClass: String,
+        narrowClass: String,
+        hoverableClass: String,
+        thWrapClass: String,
+        thContentClass: String,
+        thRightClass: String,
+        thCenteredClass: String,
+        thStickyClass: String,
+        thCheckboxClass: String,
+        thCurrentSortClass: String,
+        thSortableClass: String,
+        thUnselectableClass: String,
+        thDetailedClass: String,
+        tdRightClass: String,
+        tdCenteredClass: String,
+        tdStickyClass: String,
+        tdCheckboxCellClass: String,
+        tdSelectedClass: String,
+        subheadingClass: String,
+        stickyHeaderClass: String,
+        mobileCardsClass: String,
+        cardsClass: String,
+        scrollableClass: String,
+        mobileSortClass: String,
+        iconSortDescClass: String,
+        iconSortClass: String,
+        iconSortInvisibleClass: String,
+        paginationWrapperClass: String
     },
     data() {
         return {
@@ -817,21 +551,81 @@ export default {
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('table', 'rootClass', 'o-table')
+            ]
+        },
         tableClasses() {
             return [
-                this.bordered && this.borderedClass,
-                this.striped && this.stripedClass,
-                this.narrowed && this.narrowClass,
-                ((this.hoverable || this.focusable) && this.visibleData.length) && this.hoverableClass
+                { [this.computedClass('table', 'borderedClass', 'o-table-bordered')]: this.bordered },
+                { [this.computedClass('table', 'stripedClass', 'o-table-striped')]: this.striped },
+                { [this.computedClass('table', 'narrowClass', 'o-table-narrow')]: this.narrowed },
+                { [this.computedClass('table', 'hoverableClass', 'o-table-hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) }
             ]
         },
         tableWrapperClasses() {
             return [
-                this.wrapperClass,
-                this.mobileCards && this.mobileCardsClass,
-                this.stickyHeader && this.stickyHeaderClass,
-                this.cardLayout && this.cardsClass,
-                this.isScrollable && this.scrollableClass
+                this.computedClass('table', 'wrapperClass', 'o-table-wrapper'),
+                { [this.computedClass('table', 'mobileCardsClass', 'o-table-mobile-cards')]: this.mobileCards },
+                { [this.computedClass('table', 'stickyHeaderClass', 'o-table-sticky-header')]: this.stickyHeader },
+                { [this.computedClass('table', 'cardsClass', 'o-table-cards')]: this.cardLayout },
+                { [this.computedClass('table', 'scrollableClass', 'o-table-scrollable')]: this.isScrollable }
+            ]
+        },
+        footerClasses() {
+            return [
+                this.computedClass('table', 'footerClass', 'o-table-footer')
+            ]
+        },
+        emptyClasses() {
+            return [
+                this.computedClass('table', 'emptyClass', 'o-table-empty')
+            ]
+        },
+        thContentClasses() {
+            return [
+                this.computedClass('table', 'thContentClass', 'o-table-th-content')
+            ]
+        },
+        thCheckboxClasses() {
+            return [
+                this.computedClass('table', 'thCheckboxClass', 'o-table-th-checkbox')
+            ]
+        },
+        thDetailedClasses() {
+            return [
+                this.computedClass('table', 'thDetailedClass', 'o-table-th-detail')
+            ]
+        },
+        tdCheckboxCellClasses() {
+            return [
+                this.computedClass('table', 'tdCheckboxCellClass', 'o-table-checkbox-cell')
+            ]
+        },
+        detailedClasses() {
+            return [
+                this.computedClass('table', 'detailedClass', 'o-table-detail')
+            ]
+        },
+        detailedChevronClasses() {
+            return [
+                this.computedClass('table', 'detailedChevronClass', 'o-table-chevron-cell')
+            ]
+        },
+        subheadingClasses() {
+            return [
+                this.computedClass('table', 'subheadingClass', 'o-table-subheading')
+            ]
+        },
+        mobileSortClasses() {
+            return [
+                this.computedClass('table', 'mobileSortClass', 'o-table-mobile-sort')
+            ]
+        },
+        paginationWrapperClasses() {
+            return [
+                this.computedClass('table', 'paginationWrapperClass', 'o-pagination-wrapper')
             ]
         },
         tableWrapperStyle() {
@@ -1052,12 +846,62 @@ export default {
         }
     },
     methods: {
+        thWrapClasses(column) {
+            return [
+                this.computedClass('table', 'thWrapClass', 'o-table-th-wrap'),
+                { [this.computedClass('table', 'thRightClass', 'o-table-th-right')]: column.numeric },
+                { [this.computedClass('table', 'thCenteredClass', 'o-table-th-centered')]: column.centered }
+            ]
+        },
+        thClasses(column) {
+            return [
+                column.headerClass,
+                { [this.computedClass('table', 'thCurrentSortClass', 'o-table-th-current-sort')]: (!this.sortMultiple && this.currentSortColumn === column) },
+                { [this.computedClass('table', 'thSortableClass', 'o-table-th-sortable')]: column.sortable },
+                { [this.computedClass('table', 'thStickyClass', 'o-table-th-sticky')]: column.sticky },
+                { [this.computedClass('table', 'thUnselectableClass', 'o-table-th-unselectable')]: column.isHeaderUnselectable }
+            ]
+        },
+        rowClasses(row, index) {
+            return [
+                this.rowClass(row, index),
+                { [this.computedClass('table', 'tdSelectedClass', 'o-table-row-selected')]: row === this.selected }
+            ]
+        },
+        iconSortClasses(column) {
+            return [
+                this.computedClass('table', 'iconSortClass', 'o-icon-sort'),
+                { [this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc')]: !this.isAsc },
+                { [this.computedClass('table', 'iconSortInvisibleClass', 'o-icon-sort-invisible')]: this.currentSortColumn !== column }
+            ]
+        },
+        iconSortMultipleClasses(column) {
+            return [
+                {
+                    [ this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc') ]: 
+                        sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'
+                }
+            ]
+        },
+        columnClasses(column) {
+            return [
+                column.cellClass,
+                { [this.computedClass('table', 'tdRightClass', 'o-table-td-right')]: (column.numeric && !column.centered) },
+                { [this.computedClass('table', 'tdCenteredClass', 'o-table-td-centered')]: column.centered },
+                { [this.computedClass('table', 'tdStickyClass', 'o-table-td-sticky')]: column.sticky }
+            ]
+        },
+        detailedIconExpandedClasses(row) {
+            return [
+                { [this.computedClass('table', 'detailedIconExpandedClass', 'o-table-detail-icon-expanded')]: this.isVisibleDetailRow(row) }
+            ]
+        },
+
         onFiltersEvent(event) {
             this.$emit(`filters-event-${this.filtersEvent}`, { event, filters: this.filters })
         },
         findIndexOfSortData(column) {
-            const sortObj = this.sortMultipleDataComputed.filter((i) =>
-                i.field === column.field)[0]
+            const sortObj = this.sortMultipleDataComputed.filter((i) => i.field === column.field)[0]
             return this.sortMultipleDataComputed.indexOf(sortObj) + 1
         },
         removeSortingPriority(column) {
@@ -1066,7 +910,6 @@ export default {
             } else {
                 this.sortMultipleDataLocal = this.sortMultipleDataLocal.filter(
                     (priority) => priority.field !== column.field)
-
                 const formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
                     return (i.order && i.order === 'desc' ? '-' : '') + i.field
                 })

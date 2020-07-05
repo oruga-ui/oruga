@@ -4,7 +4,7 @@
             <div
                 v-show="active && (isActive || always)"
                 ref="content"
-                :class="contentClass">
+                :class="contentClasses">
                 <template v-if="label">{{ label }}</template>
                 <template v-else-if="$slots.content">
                     <slot name="content" />
@@ -13,7 +13,7 @@
         </transition>
         <div
             ref="trigger"
-            :class="triggerClass"
+            :class="triggerClasses"
             @click.prevent="onClick"
             @mouseenter="onHover"
             @focus.capture="onFocus"
@@ -58,7 +58,7 @@ export default {
         },
         triggers: {
             type: Array,
-            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) },
+            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) }
         },
         always: Boolean,
         animated: {
@@ -67,7 +67,7 @@ export default {
         },
         animation: {
             type: String,
-            default: () => { return getValueByPath(config, 'tooltip.animation', 'fade') },
+            default: () => { return getValueByPath(config, 'tooltip.animation', 'fade') }
         },
         autoClose: {
             type: [Array, Boolean],

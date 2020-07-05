@@ -1,12 +1,13 @@
 import config from '../utils/config'
-import { getValueByPath } from './helpers'
+import { getValueByPath, blankIfUndefined } from './helpers'
 
 export default {
     methods: {
         computedClass(component, field, defaultValue) {
             const override = getValueByPath(config, `${component}.override`, false)
-            const clazz = this.$props[field] || getValueByPath(config, `${component}.${field}`, '')
-            return (clazz ? (clazz + (override ? '' : ' ')) : '') + (override ? '' : defaultValue)
+            const clazz = override ? getValueByPath(config, `${component}.${field}`, defaultValue) : defaultValue
+            const currrentClazz = this.$props[field]
+            return `${blankIfUndefined(currrentClazz)} ${blankIfUndefined(clazz)}`.trim()
         }
     }
 }

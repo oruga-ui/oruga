@@ -33,15 +33,15 @@ export default {
             type: Boolean,
             default: false
         },
-        linkClass: String,
-        linkCurrentClass: String
+        linkClass: [String, Array, Object],
+        linkCurrentClass: [String, Array, Object]
     },
     computed: {
         linkClasses() {
             return [
                 this.linkClass,
                 this.page.class,
-                this.page.isCurrent && this.linkCurrentClass
+                { [this.linkCurrentClass]: this.page.isCurrent }
             ]
         },
         href() {

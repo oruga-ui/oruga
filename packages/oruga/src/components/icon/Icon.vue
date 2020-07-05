@@ -17,7 +17,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
-import { getValueByPath, getCssClass } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Icons take an important role of any application
