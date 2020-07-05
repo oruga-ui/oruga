@@ -17,7 +17,8 @@ $control-width: 2em !default;
 $control-height: 2em !default;
 $control-padding-horizontal: calc(0.625em - #{$control-border-width}) !default;
 
-$scss-vars: true !default;
+$whitelist: () !default;
+$sass-vars: true !default;
 $css-vars: true !default;
 $variable-prefix: '--oruga-' !default;
 
@@ -27,7 +28,7 @@ $sizes: (
     "small": .75rem,
     "medium": 1.25rem,
     "large": 1.5rem
-);
+) !default;
 
 // Colors
 
@@ -55,4 +56,4 @@ $colors: (
     "warning" : ($warning, $warning-invert),
     "success" : ($success, $success-invert),
     "info" : ($info, $info-invert)
-);
+) !default;
