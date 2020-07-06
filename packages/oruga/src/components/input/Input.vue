@@ -38,7 +38,7 @@
             :icon="rightIcon"
             :pack="iconPack"
             :size="size"
-            :variant="rightIconType"
+            :variant="rightIconVariant"
             both
             @click.native="rightIconClick"/>
 
@@ -167,7 +167,7 @@ export default {
             }
             return this.statusVariantIcon
         },
-        rightIconType() {
+        rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
                 return
             }

@@ -149,7 +149,7 @@ describe('OInput', () => {
     it('change status icon when statusType updated', () => {
         const parent = {
             data: () => ({
-                newType: 'is-success'
+                newVariant: 'is-success'
             }),
             components: {OInput},
             template: `<o-input />`
@@ -158,11 +158,11 @@ describe('OInput', () => {
 
         const input = wrapper.find(OInput)
         expect(input.vm.statusTypeIcon).toBe('check')
-        wrapper.setData({ newType: 'is-danger' })
+        wrapper.setData({ newVariant: 'is-danger' })
         expect(input.vm.statusTypeIcon).toBe('alert-circle')
-        wrapper.setData({ newType: 'is-info' })
+        wrapper.setData({ newVariant: 'is-info' })
         expect(input.vm.statusTypeIcon).toBe('information')
-        wrapper.setData({ newType: 'is-warning' })
+        wrapper.setData({ newVariant: 'is-warning' })
         expect(input.vm.statusTypeIcon).toBe('alert')
     })
 

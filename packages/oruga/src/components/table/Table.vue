@@ -879,7 +879,7 @@ export default {
             return [
                 {
                     [ this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc') ]: 
-                        sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'
+                        this.sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'
                 }
             ]
         },

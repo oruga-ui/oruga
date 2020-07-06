@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OSlider render correctly 1`] = `
-<div class="o-slider is-primary">
+<div class="o-slider o-color-primary">
     <div class="o-slider-track">
         <div class="o-slider-fill" style="width: 0%; left: 0%;"></div>
         <!---->

@@ -13,5 +13,9 @@ describe('BaseComponentMixin', () => {
             attachToDocument: true,
             mixins: [BaseComponentMixin]
         })
+
+        it('computedClass method', () => {
+            expect(wrapper.vm.computedClass).exists()
+        })
     })
 })

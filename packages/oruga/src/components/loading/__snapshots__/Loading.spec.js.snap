@@ -5,7 +5,7 @@ exports[`OLoading active render correctly 1`] = `
     <div class="o-loading-overlay o-loading-fullpage">
         <div class="o-loading-background"></div>
         <div class="o-loading-icon">
-            <o-icon-stub icon="spin" spin="true" rootclass="o-icon" clickableclass="o-icon-clickable" spinclass="o-icon-spin" both="true"></o-icon-stub>
+            <o-icon-stub icon="spin" spin="true" both="true"></o-icon-stub>
         </div>
     </div>
 </transition-stub>

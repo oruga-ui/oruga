@@ -1,5 +1,7 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import config from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * An easy way to toggle what you want

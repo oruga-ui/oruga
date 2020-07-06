@@ -18,10 +18,10 @@ describe('OSlider', () => {
     })
 
     it('manage props correctly', () => {
-        const newType = 'is-info'
-        expect(wrapper.vm.newTooltipType).toBe(wrapper.vm.type)
-        wrapper.setProps({ tooltipType: newType })
-        expect(wrapper.vm.newTooltipType).toBe(newType)
+        const newVariant = 'is-info'
+        expect(wrapper.vm.newTooltipVariant).toBe(wrapper.vm.variant)
+        wrapper.setProps({ tooltipVariant: newVariant })
+        expect(wrapper.vm.newTooltipVariant).toBe(newVariant)
 
         const value1 = 3
         const value2 = 5

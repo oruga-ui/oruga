@@ -27,8 +27,6 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath } from '../../utils/helpers'
-import config from '../../utils/config'
 
 /**
  * Switch between two opposing states

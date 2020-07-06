@@ -35,15 +35,15 @@ describe('OIcon', () => {
         expect(wrapper.classes()).toContain('has-text-primary')
     })
 
-    it('returns correct color for newType when type is passed as an object', () => {
+    it('returns correct color for newVariant when type is passed as an object', () => {
         const wrapper = shallowMount(OIcon, {
             propsData: {
                 icon: 'eye',
-                type: {'is-primary': true}
+                variant: {'primary': true}
             }
         })
 
-        expect(wrapper.vm.newType).toEqual('has-text-primary')
+        expect(wrapper.vm.newVariant).toEqual('o-color-primary')
     })
 
     it('render icon package correctly when the pack property is is passed.', () => {

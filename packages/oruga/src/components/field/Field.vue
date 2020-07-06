@@ -41,8 +41,6 @@
 import FieldBody from './FieldBody'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import config from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together

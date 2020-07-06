@@ -3,10 +3,10 @@
 exports[`OPagination render correctly 1`] = `
 <nav class="o-pagination">
     <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pagination-link" linkcurrentclass="o-pagination-link-current" class="o-pagination-previous">
-        <o-icon-stub icon="chevron-left" rootclass="o-icon" clickableclass="o-icon-clickable" spinclass="o-icon-spin" both="true" aria-hidden="true"></o-icon-stub>
+        <o-icon-stub icon="chevron-left" both="true" aria-hidden="true"></o-icon-stub>
     </o-pagination-button-stub>
     <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pagination-link" linkcurrentclass="o-pagination-link-current" class="o-pagination-next">
-        <o-icon-stub icon="chevron-right" rootclass="o-icon" clickableclass="o-icon-clickable" spinclass="o-icon-spin" both="true" aria-hidden="true"></o-icon-stub>
+        <o-icon-stub icon="chevron-right" both="true" aria-hidden="true"></o-icon-stub>
     </o-pagination-button-stub>
     <ul class="o-pagination-list">
         <!---->
