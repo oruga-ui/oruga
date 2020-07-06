@@ -1,9 +1,9 @@
 
-@import "_variables";
-@import "_animations";
-@import "_helpers";
+@import "utilities/_variables";
+@import "utilities/_animations";
+@import "utilities/_helpers";
 
-@import "_base";
+@import "utilities/_base";
 
 @import "components/_autocomplete";
 @import "components/_button";

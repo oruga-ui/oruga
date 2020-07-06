@@ -64,7 +64,7 @@
         } @else {
             #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
         }
-    } @else if ($scss-vars == true OR index($whitelist, $attribute) != null) {
+    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
         @if ($function != null) {
             #{$attribute}: #{$function}(#{$value} #{$argument});
         } @else {
@@ -81,7 +81,7 @@
         } @else {
             #{$attribute}: var(#{$variable-prefix}#{$name1}, #{$value1}), var(#{$variable-prefix}#{$name2}, #{$value2});
         }
-    } @else if ($scss-vars == true OR index($whitelist, $attribute) != null) {
+    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
         @if ($function != null) {
             #{$attribute}: #{$function}#{'('}(#{$value1} #{$argument1} #{$operator} #{$value2} #{$argument2}#{')'} #{$argument});
         } @else {
@@ -93,7 +93,7 @@
 @function variable($name, $value) {
     @if $css-vars == true {
         @return var(#{$variable-prefix}#{$name}, #{$value});
-    } @else if ($scss-vars == true OR index($whitelist, $attribute) != null) {
+    } @else if ($sass-vars == true or index($whitelist, $name) != null) {
         @return #{$value};
     }
     @return null

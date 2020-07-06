@@ -3,14 +3,13 @@ import node from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
-import clear from 'rollup-plugin-clear'
 
 import fs from 'fs'
 import path from 'path'
 
 import pack from './package.json'
 
-const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga/oruga */`
+const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
 
 const baseFolder = './src/'
 const componentsFolder = 'components/'
@@ -40,6 +39,7 @@ const capitalize = (s) => {
 }
 
 export default () => {
+    /*
     const mapComponent = (name) => {
         return [
             {
@@ -60,14 +60,13 @@ export default () => {
                         extensions: ['.vue', '.js']
                     }),
                     cjs(),
-                    vue({
-                        styleToImports: true
-                    }),
+                    vue(),
                     babel(babelOptions)
                 ]
             }
         ]
     }
+    */
 
     let config = [
         {
@@ -81,15 +80,9 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
-                vue({
-                    styleToImports: true
-                }),
+                vue(),
                 babel(babelOptions),
-                cjs(),
-                clear({
-                    targets: ['dist/esm'],
-                    watch: false
-                })
+                cjs()
             ]
         },
         {
@@ -108,14 +101,9 @@ export default () => {
                     styleToImports: true
                 }),
                 babel(babelOptions),
-                cjs(),
-                clear({
-                    targets: ['dist/cjs'],
-                    watch: false
-                })
+                cjs()
             ]
         },
-        /*
         {
             input: 'src/index.js',
             external: ['vue'],
