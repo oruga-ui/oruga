@@ -174,7 +174,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
   };
 </script>
 
-<style scoped>
+<style>
   @import "https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css";
 </style>
 ```

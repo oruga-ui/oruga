@@ -51,16 +51,17 @@ module.exports = {
     docsDir: 'packages/docs',
     docsBranch: 'develop',
     sidebar: {
-      '/components/': [
-        '',
-        ...components
-      ]
+      '/components/': [{
+        title: 'Components',
+        collapsable: false,
+        children: [...components]
+      }]
     },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'Components', link: '/components/' },
       { text: 'Examples', link: '/examples/' }
-    ],
+    ]
   }
 };

@@ -99,7 +99,11 @@ export default {
             return null
         },
         useIconComponent() {
-            return this.component || getValueByPath(config, 'iconComponent')
+            if (this.component) return component
+            const component = getValueByPath(config, 'iconComponent')
+            const iconPack = getValueByPath(config, 'iconPack')
+            if (component && (!this.pack || this.pack === iconPack)) return component
+            return;
         }
     },
     methods: {

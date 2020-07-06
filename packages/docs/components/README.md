@@ -1,11 +1,5 @@
----
-sidebarDepth: 4
----
 
 # Components
-
-- [o-autocomplete](/components/Autocomplete.md)
-- [o-button](/components/Button.md)
 
 ## Base Style
 
