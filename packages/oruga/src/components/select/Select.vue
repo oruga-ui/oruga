@@ -110,7 +110,7 @@ export default {
         },
         selectClasses() {
             return [
-                this.computedClass('select', 'selectClass', 'o-input'),
+                this.computedClass('select', 'selectClass', 'o-select'),
                 { [this.computedClass('select', 'roundedClass', 'o-select-rounded')]: this.rounded },
                 { [this.computedClass('select', 'emtpyClass', 'o-select-empty')]: this.selected === null },
                 { [this.computedClass('select', 'multipleClass', 'o-select-multiple')]: this.multiple },
