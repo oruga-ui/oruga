@@ -1,6 +1,8 @@
 
 # Components
 
+Take a look at components on the left sidebar!!
+
 ## Base Style
 
 | SASS Variable                     | Default                       |

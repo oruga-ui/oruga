@@ -603,42 +603,42 @@ title: Autocomplete
 
 ## Props
 
-| Prop name           | Description | Type           | Values | Default                                                                          |
-| ------------------- | ----------- | -------------- | ------ | -------------------------------------------------------------------------------- |
-| size                |             | string         | -      |                                                                                  |
-| expanded            |             | boolean        | -      |                                                                                  |
-| loading             |             | boolean        | -      |                                                                                  |
-| rounded             |             | boolean        | -      |                                                                                  |
-| icon                |             | string         | -      |                                                                                  |
-| iconPack            |             | string         | -      |                                                                                  |
-| autocomplete        |             | string         | -      |                                                                                  |
-| maxlength           |             | number\|string | -      |                                                                                  |
-| useHtml5Validation  |             | boolean        | -      | () => {<br> return getValueByPath(config, 'useHtml5Validation', true)<br>}       |
-| statusIcon          |             | boolean        | -      | () => {<br> return getValueByPath(config, 'statusIcon', true)<br>}               |
-| validationMessage   |             | string         | -      |                                                                                  |
-| value               |             | number\|string | -      |                                                                                  |
-| data                |             | array          | -      | []                                                                               |
-| field               |             | string         | -      | 'value'                                                                          |
-| keepFirst           |             | boolean        | -      |                                                                                  |
-| clearOnSelect       |             | boolean        | -      |                                                                                  |
-| openOnFocus         |             | boolean        | -      |                                                                                  |
-| customFormatter     |             | func           | -      |                                                                                  |
-| checkInfiniteScroll |             | boolean        | -      |                                                                                  |
-| keepOpen            |             | boolean        | -      |                                                                                  |
-| clearable           |             | boolean        | -      |                                                                                  |
-| maxHeight           |             | string\|number | -      |                                                                                  |
-| dropdownPosition    |             | string         | -      | 'auto'                                                                           |
-| animation           |             | string         | -      | () => {<br> return getValueByPath(config, 'autocomplete.animation', 'fade')<br>} |
-| iconRight           |             | string         | -      |                                                                                  |
-| iconRightClickable  |             | boolean        | -      |                                                                                  |
-| appendToBody        |             | boolean        | -      |                                                                                  |
-| rootClass           |             | string         | -      |                                                                                  |
-| menuClass           |             | string         | -      |                                                                                  |
-| expandedClass       |             | string         | -      |                                                                                  |
-| openedTopClass      |             | string         | -      |                                                                                  |
-| itemClass           |             | string         | -      |                                                                                  |
-| itemHoveredClass    |             | string         | -      |                                                                                  |
-| itemDisabledClass   |             | string         | -      |                                                                                  |
+| Prop name           | Description                                                                                                       | Type           | Values                  | Default                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------- | ----------------------- | -------------------------------------------------------------------------------- |
+| size                |                                                                                                                   | string         | -                       |                                                                                  |
+| expanded            |                                                                                                                   | boolean        | -                       |                                                                                  |
+| loading             |                                                                                                                   | boolean        | -                       |                                                                                  |
+| rounded             |                                                                                                                   | boolean        | -                       |                                                                                  |
+| icon                |                                                                                                                   | string         | -                       |                                                                                  |
+| iconPack            |                                                                                                                   | string         | -                       |                                                                                  |
+| autocomplete        |                                                                                                                   | string         | -                       |                                                                                  |
+| maxlength           |                                                                                                                   | number\|string | -                       |                                                                                  |
+| useHtml5Validation  |                                                                                                                   | boolean        | -                       | () => {<br> return getValueByPath(config, 'useHtml5Validation', true)<br>}       |
+| statusIcon          |                                                                                                                   | boolean        | -                       | () => {<br> return getValueByPath(config, 'statusIcon', true)<br>}               |
+| validationMessage   |                                                                                                                   | string         | -                       |                                                                                  |
+| v-model             |                                                                                                                   | number\|string | -                       |                                                                                  |
+| data                | Options / suggestions                                                                                             | array          | -                       | []                                                                               |
+| field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option | string         | -                       | 'value'                                                                          |
+| keepFirst           | The first option will always be pre-selected (easier to just hit enter or tab)                                    | boolean        | -                       |                                                                                  |
+| clearOnSelect       | Clear input text on select                                                                                        | boolean        | -                       |                                                                                  |
+| openOnFocus         | Open dropdown list on focus                                                                                       | boolean        | -                       |                                                                                  |
+| customFormatter     | Function to format an option to a string for display in the input as alternative to field prop)                   | func           | -                       |                                                                                  |
+| checkInfiniteScroll | Makes the component check if list reached scroll end and emit infinite-scroll event.                              | boolean        | -                       |                                                                                  |
+| keepOpen            | Keep open dropdown list after select                                                                              | boolean        | -                       |                                                                                  |
+| clearable           | Add a button/icon to clear the inputed text                                                                       | boolean        | -                       |                                                                                  |
+| maxHeight           | Max height of dropdown content                                                                                    | string\|number | -                       |                                                                                  |
+| dropdownPosition    | Position of dropdown                                                                                              | string         | `auto`, `top`, `bottom` | 'auto'                                                                           |
+| animation           | Transition name to apply on dropdown list                                                                         | string         | -                       | () => {<br> return getValueByPath(config, 'autocomplete.animation', 'fade')<br>} |
+| iconRight           | Icon name to be added on the right side                                                                           | string         | -                       |                                                                                  |
+| iconRightClickable  | Clickable icon right if exists                                                                                    | boolean        | -                       |                                                                                  |
+| appendToBody        | Append autocomplete content to body                                                                               | boolean        | -                       |                                                                                  |
+| rootClass           | Root class                                                                                                        | string         | -                       |                                                                                  |
+| menuClass           | Options menu class                                                                                                | string         | -                       |                                                                                  |
+| expandedClass       | Expanded options menu class                                                                                       | string         | -                       |                                                                                  |
+| openedTopClass      |                                                                                                                   | string         | -                       |                                                                                  |
+| itemClass           | Option class                                                                                                      | string         | -                       |                                                                                  |
+| itemHoveredClass    | Option hovered class                                                                                              | string         | -                       |                                                                                  |
+| itemDisabledClass   | Option disabled class                                                                                             | string         | -                       |                                                                                  |
 
 ## Events
 

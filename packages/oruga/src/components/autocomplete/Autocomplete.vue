@@ -94,42 +94,67 @@ export default {
         }
     },
     props: {
+        /** @model */
         value: [Number, String],
+        /** Options / suggestions */
         data: {
             type: Array,
             default: () => []
         },
+        /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
         field: {
             type: String,
             default: 'value'
         },
+        /** The first option will always be pre-selected (easier to just hit enter or tab) */
         keepFirst: Boolean,
+        /** Clear input text on select */
         clearOnSelect: Boolean,
+        /** Open dropdown list on focus */
         openOnFocus: Boolean,
+        /** Function to format an option to a string for display in the input as alternative to field prop) */
         customFormatter: Function,
+        /** Makes the component check if list reached scroll end and emit infinite-scroll event. */
         checkInfiniteScroll: Boolean,
+        /** Keep open dropdown list after select */
         keepOpen: Boolean,
+        /** Add a button/icon to clear the inputed text */
         clearable: Boolean,
+        /** Max height of dropdown content */
         maxHeight: [String, Number],
+        /** 
+         * Position of dropdown
+         * @values auto, top, bottom
+         */
         dropdownPosition: {
             type: String,
             default: 'auto'
         },
+        /** Transition name to apply on dropdown list */
         animation: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'autocomplete.animation', 'fade')
             }
         },
+        /** Icon name to be added on the right side */
         iconRight: String,
+        /** Clickable icon right if exists */
         iconRightClickable: Boolean,
+        /** Append autocomplete content to body */
         appendToBody: Boolean,
+        /** Root class */
         rootClass: String,
+        /** Options menu class */
         menuClass: String,
+        /** Expanded options menu class */
         expandedClass: String,
         openedTopClass: String,
+        /** Option class */
         itemClass: String,
+        /** Option hovered class */
         itemHoveredClass: String,
+        /** Option disabled class */
         itemDisabledClass: String
     },
     data() {
