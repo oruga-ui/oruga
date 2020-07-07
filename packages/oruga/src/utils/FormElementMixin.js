@@ -34,7 +34,7 @@ export default {
         return {
             isValid: true,
             isFocused: false,
-            newIconPack: this.iconPack || config.defaultIconPack
+            newIconPack: this.iconPack
         }
     },
     computed: {

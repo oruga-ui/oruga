@@ -1,7 +1,63 @@
 
 # Components
 
-Take a look at components on the left sidebar!!
+- [o-autocomplete](/components/Autocomplete.md)
+- [o-button](/components/Button.md)
+- [o-checkbox](/components/Checkbox.md)
+- [o-collapse](/components/Collapse.md)
+- [o-dropdown](/components/Dropdown.md)
+- [o-field](/components/Field.md)
+- [o-icon](/components/Icon.md)
+- [o-input](/components/Input.md)
+- [o-loading](/components/Loading.md)
+- [o-modal](/components/Modal.md)
+- [o-pagination](/components/Pagination.md)
+- [o-radio](/components/Radio.md)
+- [o-select](/components/Select.md)
+- [o-sidebar](/components/Sidebar.md)
+- [o-skeleton](/components/Skeleton.md)
+- [o-slider](/components/Slider.md)
+- [o-switch](/components/Switch.md)
+- [o-table](/components/Table.md)
+- [o-tooltip](/components/Tooltip.md)
+
+## Config
+
+Oruga allows to customize each components using config constructor or programmatically using `this.$oruga.config`.
+
+```js
+{
+    componentname: {
+        override: boolean,
+        customfieldX: string|boolean|number|function|....
+    }
+}
+
+```
+
+For example:
+
+```js
+{
+    button: {
+        override: true,
+        rootClass: 'btn',
+        roundedClass: 'btn-rounded',
+        ...
+    }
+}
+
+```
+
+### Global
+
+| Field                             | Description                                                   | Default                       |
+| --------------------------------- | ------------------------------------------------------------- | ----------------------------- |
+| statusIcon                        | Show status icon using field and variant prop                 | true                          |
+| useHtml5Validation                | Default form components use-html5-validation attribute        | true                          |
+| iconPack                          | Icon pack used internally and on the Icon component attribute | 'mdi'                         |
+
+Take a look at each component docs to know all customizable fields/props by config.
 
 ## Base Style
 

@@ -31,12 +31,6 @@ module.exports = {
       }
     }
   },
-  postcss: {
-    plugins: [
-      require('tailwindcss'),
-      require('autoprefixer'),
-    ]
-  },
   markdown: {
     config: md => {
       // use more markdown-it plugins!

@@ -6,6 +6,7 @@ $button-border: 1px solid #000000 !default;
 $button-box-shadow: none !default;
 $button-color: #000000 !default;
 $button-font-size: $base-font-size !default;
+$button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
 $button-margin-border-to-icon: calc(-.375em - 1px) !default;
 $button-margin-icon-to-text: .1875em !default;
@@ -36,9 +37,13 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     @include variable('border-radius', 'button-border-radius', $button-border-radius);
     @include variable('box-shadow', 'button-box-shadow', $button-box-shadow);
     @include variable('font-size', 'button-font-size', $button-font-size);
+    @include variable('font-weight', 'button-font-weight', $button-font-weight);
     @include variable('line-height', 'button-line-height', $button-line-height);
     @include variable('margin', 'button-margin', $button-margin);
     @include variable('height', 'button-height', $button-height);
+    &:hover {
+        text-decoration: none;
+    }
     &.o-button-expanded {
         width: 100%;
     }

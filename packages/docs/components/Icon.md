@@ -113,34 +113,15 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     </o-button>
 
     <o-button variant="warning">
-      <o-icon pack="ionicons" icon="refresh"> </o-icon>
+      <o-icon spin pack="ionicons" icon="refresh"> </o-icon>
       <span>Refresh</span>
     </o-button>
-
-    <div class="block">
-      <p>
-        Can also customize some properties of the default icon packs. In this
-        example, default sizes for FontAwesome have been modified.
-      </p>
-      <o-icon pack="fas" icon="user" size="small" variant="success"> </o-icon>
-      <o-icon pack="fas" icon="user" variant="info"> </o-icon>
-      <o-icon pack="fas" icon="user" size="medium" variant="danger"> </o-icon>
-      <o-icon pack="fas" icon="user" size="large" variant="primary"> </o-icon>
-    </div>
   </section>
 </template>
 
 <script>
   const customIconConfig = {
     customIconPacks: {
-      fas: {
-        sizes: {
-          default: null,
-          small: "fa-xs",
-          medium: "fa-lg",
-          large: "fa-2x"
-        }
-      },
       ionicons: {
         sizes: {
           default: "is-size-5",
@@ -180,6 +161,32 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ```
 
 :::
+
+### Override icon pack
+
+<p>
+    Can also customize some properties of the default icon packs. In this example, default sizes for FontAwesome have been modified.
+</p>
+
+```js
+const customIconConfig = {
+  customIconPacks: {
+    fas: {
+      sizes: {
+        default: null,
+        small: null,
+        medium: "fa-lg",
+        large: "fa-2x"
+      }
+    }
+  }
+};
+export default {
+  created() {
+    this.$oruga.config.setOptions(customIconConfig);
+  }
+};
+```
 
 ### Custom icon component
 

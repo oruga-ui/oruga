@@ -8,7 +8,7 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "docs:dev": "npm link oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
-    "docs:build": "rimraf components && vue-docgen && vuepress build"
+    "docs:build": "vue-docgen && vuepress build"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",
@@ -24,8 +24,5 @@
   },
   "resolutions": {
     "watchpack": "1.6.1"
-  },
-  "dependencies": {
-    "tailwindcss": "1.4.6"
   }
 }

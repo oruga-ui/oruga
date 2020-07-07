@@ -304,6 +304,7 @@ title: Dropdown
 | --oruga-dropdown-item-hover-color            | \$dropdown-item-hover-color            | #000000                                                              |
 | --oruga-dropdown-item-line-height            | \$dropdown-item-line-height            | \$base-line-height                                                   |
 | --oruga-dropdown-item-padding                | \$dropdown-item-padding                | .375rem 1rem                                                         |
+| --oruga-dropdown-item-font-weight            | \$dropdown-item-font-weight            | 400                                                                  |
 | --oruga-dropdown-menu-background             | \$dropdown-menu-background             | #ffffff                                                              |
 | --oruga-dropdown-menu-border-radius          | \$dropdown-menu-border-radius          | \$base-border-radius                                                 |
 | --oruga-dropdown-menu-box-shadow             | \$dropdown-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |

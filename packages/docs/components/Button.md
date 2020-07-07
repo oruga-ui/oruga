@@ -192,6 +192,7 @@ title: Button
 | --oruga-button-box-shadow            | \$button-box-shadow            | none                         |
 | --oruga-button-color                 | \$button-color                 | #000000                      |
 | --oruga-button-font-size             | \$button-font-size             | \$base-font-size             |
+| --oruga-button-font-weight           | \$button-font-weight           | 400                          |
 | --oruga-button-line-height           | \$button-line-height           | \$base-line-height           |
 | --oruga-button-margin-border-to-icon | \$button-margin-border-to-icon | calc(-.375em - 1px)          |
 | --oruga-button-margin-icon-to-text   | \$button-margin-icon-to-text   | .1875em                      |
