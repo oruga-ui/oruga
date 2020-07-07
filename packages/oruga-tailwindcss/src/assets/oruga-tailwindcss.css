@@ -1,0 +1,45 @@
+
+
+
+/* Button */
+.btn {
+    @apply font-bold py-2 px-4 bg-blue-500 text-white rounded;
+}
+.btn-rounded {
+    @apply rounded-full;
+}
+.btn-outlined {
+    @apply bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500;
+}
+.btn-disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+/* Field */
+.field-label {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+}
+.field-danger {
+    @apply text-red-500;
+}
+
+/* Input */
+.input {
+    @apply shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight;
+}
+.input-danger {
+    @apply border-red-500;
+}
+
+/* Dropdown */
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
+}
