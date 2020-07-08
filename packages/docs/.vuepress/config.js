@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const componentsFolder = path.join(__dirname, '../components/');
-const components = fs.readdirSync(componentsFolder).filter(c => c !== 'README.md');
+const components = fs.readdirSync(componentsFolder).filter(c => c !== 'README.md').map(c => c.replace('.md', ''));
 
 module.exports = {
   title: 'Oruga',
