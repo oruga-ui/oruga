@@ -18,5 +18,8 @@ export default ({
       iconComponent: 'vue-fontawesome'
   });
 
-  window.Vue = Vue;
+  if (typeof window !== 'undefined') {
+    window.Vue = Vue;
+  }
+ 
 }

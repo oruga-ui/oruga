@@ -39,7 +39,7 @@ You need [Vue.js](https://vuejs.org/) **version 2.6+**.
 ### 1 Install via npm
 
 ```bash
-npm install @oruga/oruga
+npm install @oruga-uioruga
 ```
 
 ### 2 Import and use Oruga
@@ -47,8 +47,8 @@ npm install @oruga/oruga
 Bundle
 ```javascript
 import Vue from 'vue';
-import Oruga from '@oruga/oruga';
-import '@oruga/oruga/dist/oruga.css';
+import Oruga from '@oruga-uioruga';
+import '@oruga-uioruga/dist/oruga.css';
 
 Vue.use(Oruga);
 
@@ -57,8 +57,8 @@ or Individual Components
 ```javascript
 
 import Vue from 'vue'
-import { Field, Input } from '@oruga/oruga'
-import '@oruga/oruga/dist/oruga.css'
+import { Field, Input } from '@oruga-uioruga'
+import '@oruga-uioruga/dist/oruga.css'
 
 Vue.use(Field)
 Vue.use(Input)

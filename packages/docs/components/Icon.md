@@ -235,7 +235,7 @@ Vue.component("vue-fontawesome", FontAwesomeIcon);
 
 // ...
 
-import Oruga from "@oruga/oruga";
+import Oruga from "@oruga-uioruga";
 Vue.use(Oruga, {
   iconComponent: "vue-fontawesome",
   iconPack: "fas"
