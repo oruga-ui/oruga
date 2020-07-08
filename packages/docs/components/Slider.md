@@ -174,33 +174,33 @@ title: Slider
 
 ## Props
 
-| Prop name              | Description | Type          | Values | Default                                                              |
-| ---------------------- | ----------- | ------------- | ------ | -------------------------------------------------------------------- |
-| value                  |             | number\|array | -      | 0                                                                    |
-| min                    |             | number        | -      | 0                                                                    |
-| max                    |             | number        | -      | 100                                                                  |
-| step                   |             | number        | -      | 1                                                                    |
-| variant                |             | string        | -      | () => { return getValueByPath(config, 'slider.variant', 'primary') } |
-| size                   |             | string        | -      |                                                                      |
-| ticks                  |             | boolean       | -      | false                                                                |
-| tooltip                |             | boolean       | -      | true                                                                 |
-| tooltipVariant         |             | string        | -      |                                                                      |
-| rounded                |             | boolean       | -      | () => { return getValueByPath(config, 'slider.rounded', false) }     |
-| disabled               |             | boolean       | -      | false                                                                |
-| lazy                   |             | boolean       | -      | false                                                                |
-| customFormatter        |             | func          | -      |                                                                      |
-| ariaLabel              |             | string\|array | -      |                                                                      |
-| biggerSliderFocus      |             | boolean       | -      | false                                                                |
-| rootClass              |             | string        | -      |                                                                      |
-| trackClass             |             | string        | -      |                                                                      |
-| fillClass              |             | string        | -      |                                                                      |
-| roundedClass           |             | string        | -      |                                                                      |
-| draggingClass          |             | string        | -      |                                                                      |
-| disabledClass          |             | string        | -      |                                                                      |
-| biggerSliderFocusClass |             | string        | -      |                                                                      |
-| thumbWrapperClass      |             | string        | -      |                                                                      |
-| thumbClass             |             | string        | -      |                                                                      |
-| thumbDraggingClass     |             | string        | -      |                                                                      |
+| Prop name              | Description | Type          | Values | Default                         |
+| ---------------------- | ----------- | ------------- | ------ | ------------------------------- |
+| value                  |             | number\|array | -      | 0                               |
+| min                    |             | number        | -      | 0                               |
+| max                    |             | number        | -      | 100                             |
+| step                   |             | number        | -      | 1                               |
+| variant                |             | string        | -      | { 'slider.variant': 'primary' } |
+| size                   |             | string        | -      |                                 |
+| ticks                  |             | boolean       | -      | false                           |
+| tooltip                |             | boolean       | -      | true                            |
+| tooltipVariant         |             | string        | -      |                                 |
+| rounded                |             | boolean       | -      | { 'slider.rounded': false }     |
+| disabled               |             | boolean       | -      | false                           |
+| lazy                   |             | boolean       | -      | false                           |
+| customFormatter        |             | func          | -      |                                 |
+| ariaLabel              |             | string\|array | -      |                                 |
+| biggerSliderFocus      |             | boolean       | -      | false                           |
+| rootClass              |             | string        | -      |                                 |
+| trackClass             |             | string        | -      |                                 |
+| fillClass              |             | string        | -      |                                 |
+| roundedClass           |             | string        | -      |                                 |
+| draggingClass          |             | string        | -      |                                 |
+| disabledClass          |             | string        | -      |                                 |
+| biggerSliderFocusClass |             | string        | -      |                                 |
+| thumbWrapperClass      |             | string        | -      |                                 |
+| thumbClass             |             | string        | -      |                                 |
+| thumbDraggingClass     |             | string        | -      |                                 |
 
 ## Events
 

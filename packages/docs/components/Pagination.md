@@ -220,36 +220,36 @@ title: Pagination
 
 ## Props
 
-| Prop name         | Description | Type           | Values | Default                                                                         |
-| ----------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------- |
-| total             |             | number\|string | -      |                                                                                 |
-| perPage           |             | number\|string | -      | () => { return getValueByPath(config, 'pagination.perPage', 20) }               |
-| current           |             | number\|string | -      | 1                                                                               |
-| rangeBefore       |             | number\|string | -      | 1                                                                               |
-| rangeAfter        |             | number\|string | -      | 1                                                                               |
-| size              |             | string         | -      |                                                                                 |
-| simple            |             | boolean        | -      |                                                                                 |
-| rounded           |             | boolean        | -      |                                                                                 |
-| order             |             | string         | -      |                                                                                 |
-| iconPack          |             | string         | -      |                                                                                 |
-| iconPrev          |             | string         | -      | () => { return getValueByPath(config, 'pagination.iconPrev', 'chevron-left') }  |
-| iconNext          |             | string         | -      | () => { return getValueByPath(config, 'pagination.iconNext', 'chevron-right') } |
-| ariaNextLabel     |             | string         | -      |                                                                                 |
-| ariaPreviousLabel |             | string         | -      |                                                                                 |
-| ariaPageLabel     |             | string         | -      |                                                                                 |
-| ariaCurrentLabel  |             | string         | -      |                                                                                 |
-| rootClass         |             | string         | -      |                                                                                 |
-| prevBtnClass      |             | string         | -      |                                                                                 |
-| nextBtnClass      |             | string         | -      |                                                                                 |
-| listClass         |             | string         | -      |                                                                                 |
-| linkClass         |             | string         | -      |                                                                                 |
-| linkCurrentClass  |             | string         | -      |                                                                                 |
-| ellipsisClass     |             | string         | -      |                                                                                 |
-| infoClass         |             | string         | -      |                                                                                 |
-| orderClass        |             | string         | -      |                                                                                 |
-| simpleClass       |             | string         | -      |                                                                                 |
-| roundedClass      |             | string         | -      |                                                                                 |
-| sizeClass         |             | string         | -      |                                                                                 |
+| Prop name         | Description | Type           | Values | Default                                    |
+| ----------------- | ----------- | -------------- | ------ | ------------------------------------------ |
+| total             |             | number\|string | -      |                                            |
+| perPage           |             | number\|string | -      | { 'pagination.perPage': 20 }               |
+| current           |             | number\|string | -      | 1                                          |
+| rangeBefore       |             | number\|string | -      | 1                                          |
+| rangeAfter        |             | number\|string | -      | 1                                          |
+| size              |             | string         | -      |                                            |
+| simple            |             | boolean        | -      |                                            |
+| rounded           |             | boolean        | -      |                                            |
+| order             |             | string         | -      |                                            |
+| iconPack          |             | string         | -      |                                            |
+| iconPrev          |             | string         | -      | { 'pagination.iconPrev': 'chevron-left' }  |
+| iconNext          |             | string         | -      | { 'pagination.iconNext': 'chevron-right' } |
+| ariaNextLabel     |             | string         | -      |                                            |
+| ariaPreviousLabel |             | string         | -      |                                            |
+| ariaPageLabel     |             | string         | -      |                                            |
+| ariaCurrentLabel  |             | string         | -      |                                            |
+| rootClass         |             | string         | -      |                                            |
+| prevBtnClass      |             | string         | -      |                                            |
+| nextBtnClass      |             | string         | -      |                                            |
+| listClass         |             | string         | -      |                                            |
+| linkClass         |             | string         | -      |                                            |
+| linkCurrentClass  |             | string         | -      |                                            |
+| ellipsisClass     |             | string         | -      |                                            |
+| infoClass         |             | string         | -      |                                            |
+| orderClass        |             | string         | -      |                                            |
+| simpleClass       |             | string         | -      |                                            |
+| roundedClass      |             | string         | -      |                                            |
+| sizeClass         |             | string         | -      |                                            |
 
 ## Events
 

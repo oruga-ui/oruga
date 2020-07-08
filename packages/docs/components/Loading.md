@@ -159,20 +159,20 @@ title: Loading
 
 ## Props
 
-| Prop name       | Description | Type                      | Values | Default                                                              |
-| --------------- | ----------- | ------------------------- | ------ | -------------------------------------------------------------------- |
-| active          |             | boolean                   | -      |                                                                      |
-| programmatic    |             | boolean                   | -      |                                                                      |
-| container       |             | object\|func\|HTMLElement | -      |                                                                      |
-| fullPage        |             | boolean                   | -      | true                                                                 |
-| animation       |             | string                    | -      | () => { return getValueByPath(config, 'loading.animation', 'fade') } |
-| canCancel       |             | boolean                   | -      | false                                                                |
-| onCancel        |             | func                      | -      | () => {}                                                             |
-| icon            |             | string                    | -      | () => { return getValueByPath(config, 'loading.icom', 'spin') }      |
-| iconSpin        |             | boolean                   | -      | true                                                                 |
-| rootClass       |             | string                    | -      |                                                                      |
-| backgroundClass |             | string                    | -      |                                                                      |
-| iconClass       |             | string                    | -      |                                                                      |
+| Prop name       | Description | Type                      | Values | Default                         |
+| --------------- | ----------- | ------------------------- | ------ | ------------------------------- |
+| active          |             | boolean                   | -      |                                 |
+| programmatic    |             | boolean                   | -      |                                 |
+| container       |             | object\|func\|HTMLElement | -      |                                 |
+| fullPage        |             | boolean                   | -      | true                            |
+| animation       |             | string                    | -      | { 'loading.animation': 'fade' } |
+| canCancel       |             | boolean                   | -      | false                           |
+| onCancel        |             | func                      | -      | () => {}                        |
+| icon            |             | string                    | -      | { 'loading.icom': 'spin' }      |
+| iconSpin        |             | boolean                   | -      | true                            |
+| rootClass       |             | string                    | -      |                                 |
+| backgroundClass |             | string                    | -      |                                 |
+| iconClass       |             | string                    | -      |                                 |
 
 ## Events
 

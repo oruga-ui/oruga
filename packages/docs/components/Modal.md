@@ -239,30 +239,30 @@ title: Modal
 
 ## Props
 
-| Prop name       | Description | Type           | Values | Default                                                                                                 |
-| --------------- | ----------- | -------------- | ------ | ------------------------------------------------------------------------------------------------------- |
-| active          |             | boolean        | -      |                                                                                                         |
-| component       |             | object\|func   | -      |                                                                                                         |
-| content         |             | string         | -      |                                                                                                         |
-| programmatic    |             | boolean        | -      |                                                                                                         |
-| props           |             | object         | -      |                                                                                                         |
-| events          |             | object         | -      |                                                                                                         |
-| width           |             | string\|number | -      | () => {<br> return getValueByPath(config, 'modal.width', 960)<br>}                                      |
-| custom          |             | boolean        | -      |                                                                                                         |
-| animation       |             | string         | -      | () => {<br> return getValueByPath(config, 'modal.animation', 'zoom-out')<br>}                           |
-| canCancel       |             | array\|boolean | -      | () => {<br> return getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])<br>} |
-| onCancel        |             | func           | -      | () => {}                                                                                                |
-| scroll          |             | string         | -      | () => {<br> return getValueByPath(config, 'modal.scroll', 'keep')<br>}                                  |
-| fullScreen      |             | boolean        | -      |                                                                                                         |
-| trapFocus       |             | boolean        | -      | () => {<br> return getValueByPath(config, 'modal.trapFocus', true)<br>}                                 |
-| ariaRole        |             | string         | -      |                                                                                                         |
-| ariaModal       |             | boolean        | -      |                                                                                                         |
-| destroyOnHide   |             | boolean        | -      | () => {<br> return getValueByPath(config, 'modal.destroyOnHide', true)<br>}                             |
-| rootClass       |             | string         | -      |                                                                                                         |
-| backgroundClass |             | string         | -      |                                                                                                         |
-| contentClass    |             | string         | -      |                                                                                                         |
-| closeClass      |             | string         | -      |                                                                                                         |
-| fullScreenClass |             | string         | -      |                                                                                                         |
+| Prop name       | Description | Type           | Values | Default                           |
+| --------------- | ----------- | -------------- | ------ | --------------------------------- |
+| active          |             | boolean        | -      |                                   |
+| component       |             | object\|func   | -      |                                   |
+| content         |             | string         | -      |                                   |
+| programmatic    |             | boolean        | -      |                                   |
+| props           |             | object         | -      |                                   |
+| events          |             | object         | -      |                                   |
+| width           |             | string\|number | -      | { 'modal.width': 960 }            |
+| custom          |             | boolean        | -      |                                   |
+| animation       |             | string         | -      | { 'modal.animation': 'zoom-out' } |
+| canCancel       |             | array\|boolean | -      | { 'modal.canCancel': ['escape' }  |
+| onCancel        |             | func           | -      | () => {}                          |
+| scroll          |             | string         | -      | { 'modal.scroll': 'keep' }        |
+| fullScreen      |             | boolean        | -      |                                   |
+| trapFocus       |             | boolean        | -      | { 'modal.trapFocus': true }       |
+| ariaRole        |             | string         | -      |                                   |
+| ariaModal       |             | boolean        | -      |                                   |
+| destroyOnHide   |             | boolean        | -      | { 'modal.destroyOnHide': true }   |
+| rootClass       |             | string         | -      |                                   |
+| backgroundClass |             | string         | -      |                                   |
+| contentClass    |             | string         | -      |                                   |
+| closeClass      |             | string         | -      |                                   |
+| fullScreenClass |             | string         | -      |                                   |
 
 ## Events
 

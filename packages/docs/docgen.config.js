@@ -44,9 +44,41 @@ ${renderedUsage.slots}
 ${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
 ${style ? renderStyleDocs(config, style[0].description) : ''}
 `;
+        },
+        props: (props, subComponent = false) => {
+return `
+## Props
+| Prop name     | Description | Type      | Values      | Default     |
+| ------------- |-------------| --------- | ----------- | ----------- |
+${tmplProps(props)}
+`
         }
     }
 };
+
+function tmplProps(props) {
+	let ret = ''
+
+	props.forEach(pr => {
+		const p = pr.name
+		const n = pr.type && pr.type.name ? pr.type.name : ''
+		let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''
+		const v = pr.values ? pr.values.map(pv => `\`${pv}\``).join(', ') : '-'
+    const t = pr.description ? pr.description : ''
+    
+    if (d.indexOf('getValueByPath') >= 0) {
+      const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
+      d = `${params[1]}: ${params[2]}`
+    }
+
+		ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + '\n'
+	})
+	return ret
+}
+
+function mdclean(input) {
+	return input.replace(/\r?\n/g, '<br>').replace(/\|/g, '\\|')
+}
 
 function renderStyleDocs(config, name) {
     const cssFile = path.resolve(config.cwd, `${src}/scss/components/${name}`)
