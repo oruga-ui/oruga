@@ -13,8 +13,8 @@
 </p>
 
 <p align="center">
-    <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/v/oruga.svg" /></a>
-    <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/dt/oruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/oruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/oruga.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/oruga.svg" /></a>
 </p>
 
