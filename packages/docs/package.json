@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
-    "docs:dev": "npm link oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
+    "docs:dev": "npm link @oruga-ui/oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
     "docs:build": "vue-docgen && vuepress build"
   },
   "devDependencies": {

@@ -55,7 +55,7 @@ export default {
          */
         customSize: String,
         /**
-         * Add class to icon font (<i> tag), optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes
+         * Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes
          */
         customClass: String,
         /**

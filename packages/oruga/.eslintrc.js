@@ -27,6 +27,12 @@ module.exports = {
       env: {
         jest: true
       }
-    }
+    },
+    {
+      "files": ["*.md"],
+      "rules": {
+        'semi': ['error', 'never'],
+      }
+    },
   ]
 }

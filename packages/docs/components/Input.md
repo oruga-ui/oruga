@@ -151,38 +151,38 @@ title: Input
 
 ## Props
 
-| Prop name             | Description | Type           | Values | Default                                                                    |
-| --------------------- | ----------- | -------------- | ------ | -------------------------------------------------------------------------- |
-| size                  |             | string         | -      |                                                                            |
-| expanded              |             | boolean        | -      |                                                                            |
-| loading               |             | boolean        | -      |                                                                            |
-| rounded               |             | boolean        | -      |                                                                            |
-| icon                  |             | string         | -      |                                                                            |
-| iconPack              |             | string         | -      |                                                                            |
-| autocomplete          |             | string         | -      |                                                                            |
-| maxlength             |             | number\|string | -      |                                                                            |
-| useHtml5Validation    |             | boolean        | -      | () => {<br> return getValueByPath(config, 'useHtml5Validation', true)<br>} |
-| statusIcon            |             | boolean        | -      | () => {<br> return getValueByPath(config, 'statusIcon', true)<br>}         |
-| validationMessage     |             | string         | -      |                                                                            |
-| value                 |             | number\|string | -      |                                                                            |
-| type                  |             | string         | -      | 'text'                                                                     |
-| passwordReveal        |             | boolean        | -      |                                                                            |
-| iconClickable         |             | boolean        | -      |                                                                            |
-| hasCounter            |             | boolean        | -      | () => { return getValueByPath(config, 'input.counter', false) }            |
-| iconRight             |             | string         | -      |                                                                            |
-| iconRightClickable    |             | boolean        | -      |                                                                            |
-| rootClass             |             | string         | -      |                                                                            |
-| controlExpandedClass  |             | string         | -      |                                                                            |
-| controlIconLeftClass  |             | string         | -      |                                                                            |
-| controlIconRightClass |             | string         | -      |                                                                            |
-| inputClass            |             | string         | -      |                                                                            |
-| roundedClass          |             | string         | -      |                                                                            |
-| iconLeftClass         |             | string         | -      |                                                                            |
-| iconRightClass        |             | string         | -      |                                                                            |
-| counterClass          |             | string         | -      |                                                                            |
-| counterInvisibleClass |             | string         | -      |                                                                            |
-| sizeClass             |             | string         | -      |                                                                            |
-| variantClass          |             | string         | -      |                                                                            |
+| Prop name             | Description                                                 | Type           | Values                                  | Default                                                                     |
+| --------------------- | ----------------------------------------------------------- | -------------- | --------------------------------------- | --------------------------------------------------------------------------- |
+| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`              |                                                                             |
+| expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                       |                                                                             |
+| loading               | Adds the loading state to the input                         | boolean        | -                                       |                                                                             |
+| rounded               | Makes the element rounded                                   | boolean        | -                                       |                                                                             |
+| icon                  | Icon name to be added                                       | string         | -                                       |                                                                             |
+| iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal` |                                                                             |
+| autocomplete          |                                                             | string         | -                                       |                                                                             |
+| maxlength             | Same as native maxlength, plus character counter            | number\|string | -                                       |                                                                             |
+| useHtml5Validation    |                                                             | boolean        | -                                       | () => {<br> return getValueByPath(config, "useHtml5Validation", true);<br>} |
+| statusIcon            |                                                             | boolean        | -                                       | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}         |
+| validationMessage     | The message which is shown when a validation error occurs   | string         | -                                       |                                                                             |
+| v-model               |                                                             | number\|string | -                                       |                                                                             |
+| type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea` | 'text'                                                                      |
+| passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                       |                                                                             |
+| iconClickable         | Makes the icon clickable                                    | boolean        | -                                       |                                                                             |
+| hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                       | () => { return getValueByPath(config, 'input.counter', false) }             |
+| iconRight             | Icon name to be added on the right side                     | string         | -                                       |                                                                             |
+| iconRightClickable    | Make the icon right clickable                               | boolean        | -                                       |                                                                             |
+| rootClass             |                                                             | string         | -                                       |                                                                             |
+| controlExpandedClass  |                                                             | string         | -                                       |                                                                             |
+| controlIconLeftClass  |                                                             | string         | -                                       |                                                                             |
+| controlIconRightClass |                                                             | string         | -                                       |                                                                             |
+| inputClass            |                                                             | string         | -                                       |                                                                             |
+| roundedClass          |                                                             | string         | -                                       |                                                                             |
+| iconLeftClass         |                                                             | string         | -                                       |                                                                             |
+| iconRightClass        |                                                             | string         | -                                       |                                                                             |
+| counterClass          |                                                             | string         | -                                       |                                                                             |
+| counterInvisibleClass |                                                             | string         | -                                       |                                                                             |
+| sizeClass             |                                                             | string         | -                                       |                                                                             |
+| variantClass          |                                                             | string         | -                                       |                                                                             |
 
 ## Events
 

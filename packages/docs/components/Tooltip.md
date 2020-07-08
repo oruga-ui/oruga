@@ -182,26 +182,26 @@ title: Tooltip
 
 ## Props
 
-| Prop name      | Description | Type           | Values                           | Default                                                              |
-| -------------- | ----------- | -------------- | -------------------------------- | -------------------------------------------------------------------- |
-| active         |             | boolean        | -                                | true                                                                 |
-| label          |             | string         | -                                |                                                                      |
-| delay          |             | number         | -                                |                                                                      |
-| position       |             | string         | `top`, `bottom`, `left`, `right` | () => { return getValueByPath(config, 'tooltip.position', 'top') }   |
-| triggers       |             | array          | -                                | getValueByPath(config, 'tooltip.triggers', ['hover'])                |
-| always         |             | boolean        | -                                |                                                                      |
-| animated       |             | boolean        | -                                | true                                                                 |
-| animation      |             | string         | -                                | () => { return getValueByPath(config, 'tooltip.animation', 'fade') } |
-| autoClose      |             | array\|boolean | -                                | true                                                                 |
-| multiline      |             | boolean        | -                                |                                                                      |
-| appendToBody   |             | boolean        | -                                |                                                                      |
-| variant        |             | string         | -                                |                                                                      |
-| rootClass      |             | string         | -                                |                                                                      |
-| contentClass   |             | string         | -                                |                                                                      |
-| triggerClass   |             | string         | -                                |                                                                      |
-| multilineClass |             | string         | -                                |                                                                      |
-| alwaysClass    |             | string         | -                                |                                                                      |
-| variantClass   |             | string         | -                                |                                                                      |
+| Prop name      | Description                                    | Type           | Values                                                                          | Default                                                              |
+| -------------- | ---------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| active         | Whether tooltip is active or not               | boolean        | -                                                                               | true                                                                 |
+| label          | Tooltip text                                   | string         | -                                                                               |                                                                      |
+| delay          | Tooltip delay before it appears (number in ms) | number         | -                                                                               |                                                                      |
+| position       | Tooltip position in relation to the element    | string         | `top`, `bottom`, `left`, `right`                                                | () => { return getValueByPath(config, 'tooltip.position', 'top') }   |
+| triggers       | Tooltip trigger events                         | array          | `hover`, `click`, `focus`                                                       | getValueByPath(config, 'tooltip.triggers', ['hover'])                |
+| always         | Tooltip will be always active                  | boolean        | -                                                                               |                                                                      |
+| animated       | Tooltip will have an animation                 | boolean        | -                                                                               | true                                                                 |
+| animation      | Tooltip default animation                      | string         | -                                                                               | () => { return getValueByPath(config, 'tooltip.animation', 'fade') } |
+| autoClose      | Tooltip auto close options                     | array\|boolean | `true`, `false`, `'inside'`, `'outside'`                                        | true                                                                 |
+| multiline      | Tooltip will be multilined                     | boolean        | -                                                                               |                                                                      |
+| appendToBody   | Append tooltip content to body                 | boolean        | -                                                                               |                                                                      |
+| variant        | Type (color) of the tooltip                    | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                      |
+| rootClass      |                                                | string         | -                                                                               |                                                                      |
+| contentClass   |                                                | string         | -                                                                               |                                                                      |
+| triggerClass   |                                                | string         | -                                                                               |                                                                      |
+| multilineClass |                                                | string         | -                                                                               |                                                                      |
+| alwaysClass    |                                                | string         | -                                                                               |                                                                      |
+| variantClass   |                                                | string         | -                                                                               |                                                                      |
 
 ## Slots
 

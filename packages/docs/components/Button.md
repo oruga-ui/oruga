@@ -152,29 +152,29 @@ title: Button
 
 ## Props
 
-| Prop name     | Description | Type           | Values | Default                                                          |
-| ------------- | ----------- | -------------- | ------ | ---------------------------------------------------------------- |
-| variant       |             | string\|object | -      |                                                                  |
-| size          |             | string         | -      |                                                                  |
-| label         |             | string         | -      |                                                                  |
-| iconPack      |             | string         | -      |                                                                  |
-| iconLeft      |             | string         | -      |                                                                  |
-| iconRight     |             | string         | -      |                                                                  |
-| rounded       |             | boolean        | -      | () => { return getValueByPath(config, 'button.rounded', false) } |
-| outlined      |             | boolean        | -      |                                                                  |
-| expanded      |             | boolean        | -      |                                                                  |
-| inverted      |             | boolean        | -      |                                                                  |
-| nativeType    |             | string         | -      | 'button'                                                         |
-| tag           |             | string         | -      | 'button'                                                         |
-| disabled      |             | boolean        | -      |                                                                  |
-| rootClass     |             | string         | -      |                                                                  |
-| outlinedClass |             | string         | -      |                                                                  |
-| invertedClass |             | string         | -      |                                                                  |
-| expandedClass |             | string         | -      |                                                                  |
-| roundedClass  |             | string         | -      |                                                                  |
-| disabledClass |             | string         | -      |                                                                  |
-| sizeClass     |             | string         | -      |                                                                  |
-| variantClass  |             | string         | -      |                                                                  |
+| Prop name     | Description                              | Type           | Values                                                                          | Default                                                          |
+| ------------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| variant       | Type (color) of the control, optional    | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                  |
+| size          | Vertical size of button, optional        | string         | `is-small`, `is-medium`, `is-large`                                             |                                                                  |
+| label         | Button label, optional when default slot | string         | -                                                                               |                                                                  |
+| iconPack      | Icon pack to use                         | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal`                                         |                                                                  |
+| iconLeft      | Icon name to show on the left            | string         | -                                                                               |                                                                  |
+| iconRight     | Icon name to show on the right           | string         | -                                                                               |                                                                  |
+| rounded       | Rounded style                            | boolean        | -                                                                               | () => { return getValueByPath(config, 'button.rounded', false) } |
+| outlined      | Outlined style                           | boolean        | -                                                                               |                                                                  |
+| expanded      | Button will be expanded (full-width)     | boolean        | -                                                                               |                                                                  |
+| inverted      |                                          | boolean        | -                                                                               |                                                                  |
+| nativeType    | Button type, like native                 | string         | -                                                                               | 'button'                                                         |
+| tag           | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link or other nuxt alias`          | 'button'                                                         |
+| disabled      | Button will be disabled                  | boolean        | -                                                                               |                                                                  |
+| rootClass     |                                          | string         | -                                                                               |                                                                  |
+| outlinedClass |                                          | string         | -                                                                               |                                                                  |
+| invertedClass |                                          | string         | -                                                                               |                                                                  |
+| expandedClass |                                          | string         | -                                                                               |                                                                  |
+| roundedClass  |                                          | string         | -                                                                               |                                                                  |
+| disabledClass |                                          | string         | -                                                                               |                                                                  |
+| sizeClass     |                                          | string         | -                                                                               |                                                                  |
+| variantClass  |                                          | string         | -                                                                               |                                                                  |
 
 ## Slots
 

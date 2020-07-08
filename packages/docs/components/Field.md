@@ -225,26 +225,26 @@ title: Field
 
 ## Props
 
-| Prop name              | Description | Type           | Values | Default |
-| ---------------------- | ----------- | -------------- | ------ | ------- |
-| variant                |             | string\|object | -      |         |
-| label                  |             | string         | -      |         |
-| labelFor               |             | string         | -      |         |
-| message                |             | string         | -      |         |
-| grouped                |             | boolean        | -      |         |
-| groupMultiline         |             | boolean        | -      |         |
-| expanded               |             | boolean        | -      |         |
-| horizontal             |             | boolean        | -      |         |
-| addons                 |             | boolean        | -      | true    |
-| rootClass              |             | string         | -      |         |
-| horizontalClass        |             | string         | -      |         |
-| expandedClass          |             | string         | -      |         |
-| groupMultilineClass    |             | string         | -      |         |
-| labelClass             |             | string         | -      |         |
-| labelHorizontalClass   |             | string         | -      |         |
-| contentHorizontalClass |             | string         | -      |         |
-| messageClass           |             | string         | -      |         |
-| variantClass           |             | string         | -      |         |
+| Prop name              | Description                                                                                                             | Type           | Values                                                                          | Default |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------- |
+| variant                | Type (color) of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| label                  | Field label                                                                                                             | string         | -                                                                               |         |
+| labelFor               | Same as native for set on the label                                                                                     | string         | -                                                                               |         |
+| message                | Help message text                                                                                                       | string         | -                                                                               |         |
+| grouped                | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)          | boolean        | -                                                                               |         |
+| groupMultiline         | Allow controls to fill up multiple lines, making it responsive                                                          | boolean        | -                                                                               |         |
+| expanded               |                                                                                                                         | boolean        | -                                                                               |         |
+| horizontal             | Group label and control on the same line for horizontal forms                                                           | boolean        | -                                                                               |         |
+| addons                 | Field automatically attach controls together                                                                            | boolean        | -                                                                               | true    |
+| rootClass              |                                                                                                                         | string         | -                                                                               |         |
+| horizontalClass        |                                                                                                                         | string         | -                                                                               |         |
+| expandedClass          |                                                                                                                         | string         | -                                                                               |         |
+| groupMultilineClass    |                                                                                                                         | string         | -                                                                               |         |
+| labelClass             |                                                                                                                         | string         | -                                                                               |         |
+| labelHorizontalClass   |                                                                                                                         | string         | -                                                                               |         |
+| contentHorizontalClass |                                                                                                                         | string         | -                                                                               |         |
+| messageClass           |                                                                                                                         | string         | -                                                                               |         |
+| variantClass           |                                                                                                                         | string         | -                                                                               |         |
 
 ## Slots
 

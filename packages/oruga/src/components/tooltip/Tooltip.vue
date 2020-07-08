@@ -38,12 +38,19 @@ export default {
     name: 'OTooltip',
     mixins: [BaseComponentMixin],
     props: {
+        /** Whether tooltip is active or not */
         active: {
             type: Boolean,
             default: true
         },
+        /** Tooltip text */
         label: String,
+        /** Tooltip delay before it appears (number in ms) */
         delay: Number,
+        /**
+         * Tooltip position in relation to the element
+         * @values top, bottom, left, right
+         */
         position: {
             type: String,
             default: () => { return getValueByPath(config, 'tooltip.position', 'top') },
@@ -56,25 +63,49 @@ export default {
                 ].indexOf(value) > -1
             }
         },
+        /**
+         * Tooltip trigger events
+         * @values hover, click, focus
+         */
         triggers: {
             type: Array,
-            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) }
+            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) },
+             validator(value) {
+                return [
+                    'hover',
+                    'click',
+                    'focus'
+                ].indexOf(value) > -1
+            }
         },
+        /** Tooltip will be always active */
         always: Boolean,
+        /** Tooltip will have an animation */
         animated: {
             type: Boolean,
             default: true
         },
+        /** Tooltip default animation */
         animation: {
             type: String,
             default: () => { return getValueByPath(config, 'tooltip.animation', 'fade') }
         },
+        /**
+         * Tooltip auto close options
+         * @values true, false, 'inside', 'outside'
+         */
         autoClose: {
             type: [Array, Boolean],
             default: true
         },
+        /** Tooltip will be multilined */
         multiline: Boolean,
+        /** Append tooltip content to body */
         appendToBody: Boolean,
+        /**
+        * Type (color) of the tooltip
+        * @values primary, info, success, warning, danger, and any other custom color
+        */
         variant: String,
         rootClass: String,
         contentClass: String,

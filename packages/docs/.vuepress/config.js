@@ -24,7 +24,8 @@ module.exports = {
           jsLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.js'],
           cssLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.css'],
           vue: 'https://cdn.jsdelivr.net/npm/vue',
-          jsfiddle: false
+          jsfiddle: false,
+          codepen: false
         }
       }
     ]

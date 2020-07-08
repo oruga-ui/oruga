@@ -36,7 +36,7 @@
     "build:scss": "sass src/scss/oruga-vars.scss | node ./build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
     "build:style:watch": "sass src/scss/oruga.scss dist/oruga.css --watch",
     "build:lib": "npm run build:vue && npm run build:style",
-    "build:lib:watch": "concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
+    "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
   },
   "keywords": [
     "oruga",
@@ -86,5 +86,6 @@
     "vue-class-component": "7.2.3",
     "vue-property-decorator": "8.4.1",
     "vue-template-compiler": "2.6.11"
-  }
+  },
+  "dependencies": {}
 }
