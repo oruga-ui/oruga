@@ -9,13 +9,13 @@ sidebar: auto
 ### Npm
 
 ```bash
-npm install @oruga-uioruga --save
+npm install @oruga-ui/oruga --save
 ```
 
 ### Yarn
 
 ```bash
-yarn add @oruga-uioruga
+yarn add @oruga-ui/oruga
 ```
 
 ### CDN
@@ -31,8 +31,8 @@ yarn add @oruga-uioruga
 
 ```js
 import Vue from 'vue';
-import Oruga from '@oruga-uioruga';
-import '@oruga-uioruga/dist/oruga.css';
+import Oruga from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
 ```
@@ -41,8 +41,8 @@ Vue.use(Oruga);
 
 ```js
 import Vue from 'vue';
-import { Autocomplete, Sidebar } from '@oruga-uioruga';
-import '@oruga-uioruga/dist/oruga.css';
+import { Autocomplete, Sidebar } from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Autocomplete);
 Vue.use(Sidebar);
@@ -56,8 +56,8 @@ But it can be manually done by adding a plugin let's say `oruga.js` in your `plu
 
 ```js
 import Vue from 'vue';
-import Oruga from '@oruga-uioruga';
-import '@oruga-uioruga/dist/oruga.css';
+import Oruga from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
 ```
@@ -81,7 +81,7 @@ but you can mix them, for example adding new classes and using css variables!
 
 ### CSS Variables
 
-In order to use css variables you have to import `@oruga-uioruga/dist/oruga-vars.css`
+In order to use css variables you have to import `@oruga-ui/oruga/dist/oruga-vars.css`
 
 Each component is well documented with all css variables (the default value is the relative SASS/SCSS variable) that you have to add in your project, for example:
 ```css
@@ -108,7 +108,7 @@ $colors: (
 
 ...
 
-@import "~@oruga-uioruga/src/scss/oruga";
+@import "~@oruga-ui/oruga/src/scss/oruga";
 ```
 
 ### Adding new classes
@@ -120,8 +120,8 @@ Otherwise the library allows to add new classes on a single component instance (
 
 ```js
 import Vue from 'vue';
-import Oruga from '@oruga-uioruga';
-import '@oruga-uioruga/dist/oruga.css';
+import Oruga from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga, {
     autocomplete: {
@@ -142,7 +142,7 @@ Vue.use(Oruga, {
 ```
 
 ::: tip
-For a complete customization you can import `@oruga-uioruga/dist/oruga-lite.css`. It's a light stylesheet thant doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables.
+For a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet thant doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables.
 :::
 
 ### Overriding classes
@@ -151,7 +151,7 @@ In case you want to overwrite Oruga style completely, the way is the same of abo
 
 ```js
 import Vue from 'vue';
-import Oruga from '@oruga-uioruga';
+import Oruga from '@oruga-ui/oruga';
 
 Vue.use(Oruga, {
     autocomplete: {
@@ -168,7 +168,7 @@ Using individual imports you can customize components by `Config` plugin.
 
 ```js
 import Vue from 'vue';
-import { Autocomplete, Sidebar, Config } from '@oruga-uioruga';
+import { Autocomplete, Sidebar, Config } from '@oruga-ui/oruga';
 
 Vue.use(Autocomplete);
 Vue.use(Sidebar);

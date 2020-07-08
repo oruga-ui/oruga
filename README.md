@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://oruga.io">
-        <img width="160" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
+        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
     </a>
 </p>
 
@@ -14,7 +14,7 @@
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg" /></a>
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-uioruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg" /></a>
 </p>
 
@@ -47,8 +47,8 @@ npm install @oruga-ui/oruga
 Bundle
 ```javascript
 import Vue from 'vue';
-import Oruga from '@oruga-uioruga';
-import '@oruga-uioruga/dist/oruga.css';
+import Oruga from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
 
@@ -57,8 +57,8 @@ or Individual Components
 ```javascript
 
 import Vue from 'vue'
-import { Field, Input } from '@oruga-uioruga'
-import '@oruga-uioruga/dist/oruga.css'
+import { Field, Input } from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
 
 Vue.use(Field)
 Vue.use(Input)
@@ -104,6 +104,10 @@ Oruga is an open source MIT project if you are interested in supporting this pro
     <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron" />
   </a>
 </p>
+
+## Credits
+
+Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
 
 ## License
 

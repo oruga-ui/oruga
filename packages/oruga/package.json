@@ -42,7 +42,12 @@
     "oruga",
     "vue",
     "vuejs",
-    "components"
+    "components",
+    "ux",
+    "ui",
+    "css",
+    "agnostic",
+    "framework"
   ],
   "peerDependencies": {
     "vue": "^2.6.11"
