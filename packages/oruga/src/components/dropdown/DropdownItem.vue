@@ -22,11 +22,20 @@ export default {
         $dropdown: { name: '$dropdown', default: false }
     },
     props: {
+        /**
+         * The value that will be returned on events and v-model
+         */
         value: {
             type: [String, Number, Boolean, Object, Array, Function],
             default: null
         },
+        /**
+         * Item is disabled
+         */
         disabled: Boolean,
+        /**
+         * Item is not a clickable item
+         */
         custom: Boolean,
         tabindex: {
             type: [Number, String],

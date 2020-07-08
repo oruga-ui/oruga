@@ -46,12 +46,12 @@ export default {
     mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
-        /** 
+        /**
         * Type (color) of the control, optional
-        * @values is-white, is-black, is-light, is-dark, is-primary, is-info, is-success, is-warning, is-danger, and any other colors you've set in the $colors list on Sass
+        * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: [String, Object],
-        /** 
+        /**
          * Vertical size of button, optional
          * @values is-small, is-medium, is-large
          */

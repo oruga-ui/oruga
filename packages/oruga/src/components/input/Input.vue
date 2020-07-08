@@ -79,18 +79,40 @@ export default {
         }
     },
     props: {
+        /**
+         * @model
+         */
         value: [Number, String],
+        /**
+         * Input type, like native
+         * @values Any native input type, and textarea
+         */
         type: {
             type: String,
             default: 'text'
         },
+        /**
+         * 	Adds the reveal password functionality
+         */
         passwordReveal: Boolean,
+        /**
+         * Makes the icon clickable
+         */
         iconClickable: Boolean,
+        /**
+         * Show character counter when maxlength prop is passed
+         */
         hasCounter: {
             type: Boolean,
             default: () => { return getValueByPath(config, 'input.counter', false) }
         },
+        /**
+         * 	Icon name to be added on the right side
+         */
         iconRight: String,
+        /**
+         * Make the icon right clickable
+         */
         iconRightClickable: Boolean,
         rootClass: String,
         controlExpandedClass: String,

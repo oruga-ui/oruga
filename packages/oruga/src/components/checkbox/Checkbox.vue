@@ -36,11 +36,20 @@ export default {
     name: 'OCheckbox',
     mixins: [BaseComponentMixin, CheckRadioMixin],
     props: {
+        /**
+         * Same as native indeterminate
+         */
         indeterminate: Boolean,
+        /**
+         * Overrides the returned value when it's checked
+         */
         trueValue: {
             type: [String, Number, Boolean],
             default: true
         },
+        /**
+         * Overrides the returned value when it's not checked
+         */
         falseValue: {
             type: [String, Number, Boolean],
             default: false

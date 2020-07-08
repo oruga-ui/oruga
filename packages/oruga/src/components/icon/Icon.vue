@@ -29,13 +29,38 @@ export default {
     name: 'OIcon',
     mixins: [BaseComponentMixin],
     props: {
+        /**
+         * 	Type (color) of the icon, optional
+         *  @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: [String, Object],
         component: String,
+        /**
+         * Icon pack to use
+         * @values mdi, fa, fas, far, fad, fal
+         */
         pack: String,
+        /**
+         * Icon name
+         */
         icon: String,
+        /**
+         * Icon size, optional
+         * @values small, medium, large
+         */
         size: String,
+        /**
+         * Overrides icon font size, optional
+         * @values Depends on library: null (smallest), fa-lg, fa-2x, fa-3x, fa-4x, fa-5x, mdi-18px, mdi-24px, mdi-36px, mdi-48px
+         */
         customSize: String,
+        /**
+         * Add class to icon font (<i> tag), optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes
+         */
         customClass: String,
+        /**
+         * When true makes icon clickable
+         */
         clickable: Boolean,
         spin: Boolean,
         both: Boolean, // This is used internally
