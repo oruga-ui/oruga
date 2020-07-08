@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://oruga.io">
-        <img width="120" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
+        <img width="160" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
     </a>
 </p>
 
@@ -48,7 +48,7 @@ Bundle
 ```javascript
 import Vue from 'vue';
 import Oruga from '@oruga/oruga';
-import '@oruga/oruga/dist/oruga.css';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
 
@@ -58,7 +58,7 @@ or Individual Components
 
 import Vue from 'vue'
 import { Field, Input } from '@oruga/oruga'
-import '@oruga/oruga/dist/oruga.css'
+import '@oruga-ui/oruga/dist/oruga.css'
 
 Vue.use(Field)
 Vue.use(Input)
