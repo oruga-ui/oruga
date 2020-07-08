@@ -60,14 +60,39 @@ export default {
         }
     },
     props: {
+        /**
+         * 	Type (color) of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete
+         *  @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: [String, Object],
+        /**
+         * Field label
+         */
         label: String,
+        /**
+         * Same as native for set on the label
+         */
         labelFor: String,
+        /**
+         * Help message text
+         */
         message: String,
+        /**
+         * Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)
+         */
         grouped: Boolean,
+        /**
+         * Allow controls to fill up multiple lines, making it responsive
+         */
         groupMultiline: Boolean,
         expanded: Boolean,
+        /**
+         * Group label and control on the same line for horizontal forms
+         */
         horizontal: Boolean,
+        /**
+         * Field automatically attach controls together
+         */
         addons: {
             type: Boolean,
             default: true

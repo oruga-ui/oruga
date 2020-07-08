@@ -1,41 +1,61 @@
 export default {
-    props: {
-        value: [String, Number, Boolean, Array],
-        nativeValue: [String, Number, Boolean],
-        variant: String,
-        disabled: Boolean,
-        required: Boolean,
-        name: String,
-        size: String
+  props: {
+    /**
+     * @model
+     */
+    value: [String, Number, Boolean, Array],
+    /**
+     * Same as native value
+     */
+    nativeValue: [String, Number, Boolean],
+    /**
+     * Type (color) of the control, optional
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant: String,
+    /**
+     * Same as native disabled
+     */
+    disabled: Boolean,
+    required: Boolean,
+    /**
+     * Same as native name
+     */
+    name: String,
+    /**
+     * Size of the control, optional
+     * @values small, medium, large
+     */
+    size: String,
+  },
+  data() {
+    return {
+      newValue: this.value,
+    };
+  },
+  computed: {
+    computedValue: {
+      get() {
+        return this.newValue;
+      },
+      set(value) {
+        this.newValue = value;
+        this.$emit("input", value);
+      },
     },
-    data() {
-        return {
-            newValue: this.value
-        }
+  },
+  watch: {
+    /**
+     * When v-model change, set internal value.
+     */
+    value(value) {
+      this.newValue = value;
     },
-    computed: {
-        computedValue: {
-            get() {
-                return this.newValue
-            },
-            set(value) {
-                this.newValue = value
-                this.$emit('input', value)
-            }
-        }
+  },
+  methods: {
+    focus() {
+      // MacOS FireFox and Safari do not focus when clicked
+      this.$refs.input.focus();
     },
-    watch: {
-        /**
-        * When v-model change, set internal value.
-        */
-        value(value) {
-            this.newValue = value
-        }
-    },
-    methods: {
-        focus() {
-            // MacOS FireFox and Safari do not focus when clicked
-            this.$refs.input.focus()
-        }
-    }
-}
+  },
+};

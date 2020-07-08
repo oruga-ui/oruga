@@ -12,20 +12,33 @@ export default {
     name: 'OCollapse',
     mixins: [BaseComponentMixin],
     props: {
+        /**
+         * Whether collapse is open or not, use the .sync modifier to make it two-way binding
+         */
         open: {
             type: Boolean,
             default: true
         },
+        /**
+         * Custom animation (transition name)
+         */
         animation: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'collapse.animation', 'fade')
             }
         },
+        /**
+         * Custom animation (transition name)
+         */
         ariaId: {
             type: String,
             default: ''
         },
+        /**
+         * Trigger position
+         * @values top, bottom
+         */
         position: {
             type: String,
             default: 'top',
