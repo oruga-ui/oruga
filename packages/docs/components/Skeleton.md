@@ -55,23 +55,23 @@ title: Skeleton
 
 ## Props
 
-| Prop name        | Description | Type           | Values              | Default |
-| ---------------- | ----------- | -------------- | ------------------- | ------- |
-| active           |             | boolean        | -                   | true    |
-| animated         |             | boolean        | -                   | true    |
-| width            |             | number\|string | -                   |         |
-| height           |             | number\|string | -                   |         |
-| circle           |             | boolean        | -                   |         |
-| rounded          |             | boolean        | -                   | true    |
-| count            |             | number         | -                   | 1       |
-| position         |             | string         | `centered`, `right` | ''      |
-| size             |             | string         | -                   |         |
-| rootClass        |             | string         | -                   |         |
-| animationClass   |             | string         | -                   |         |
-| positionClass    |             | string         | -                   |         |
-| itemClass        |             | string         | -                   |         |
-| itemRoundedClass |             | string         | -                   |         |
-| sizeClass        |             | string         | -                   |         |
+| Prop name        | Description                                  | Type           | Values                      | Default |
+| ---------------- | -------------------------------------------- | -------------- | --------------------------- | ------- |
+| active           | Show or hide loader                          | boolean        | -                           | true    |
+| animated         | Show a loading animation                     | boolean        | -                           | true    |
+| width            | Custom width                                 | number\|string | -                           |         |
+| height           | Custom height                                | number\|string | -                           |         |
+| circle           | Show a circle shape                          | boolean        | -                           |         |
+| rounded          | Rounded style                                | boolean        | -                           | true    |
+| count            | Number of shapes to display                  | number         | -                           | 1       |
+| position         | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | ''      |
+| size             | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
+| rootClass        |                                              | string         | -                           |         |
+| animationClass   |                                              | string         | -                           |         |
+| positionClass    |                                              | string         | -                           |         |
+| itemClass        |                                              | string         | -                           |         |
+| itemRoundedClass |                                              | string         | -                           |         |
+| sizeClass        |                                              | string         | -                           |         |
 
 ## Style
 

@@ -52,8 +52,8 @@ export default {
         */
         variant: [String, Object],
         /**
-         * Vertical size of button, optional
-         * @values is-small, is-medium, is-large
+         * Size of button, optional
+         * @values small, medium, large
          */
         size: String,
         /**

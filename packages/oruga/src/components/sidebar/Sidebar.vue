@@ -33,9 +33,18 @@ export default {
     name: 'OSidebar',
     mixins: [BaseComponentMixin],
     props: {
+        /** To control the behaviour of the sidebar programmatically, use the .sync modifier to make it two-way binding */
         open: Boolean,
+        /**
+        * Color of the sidebar, optional
+        * @values primary, info, success, warning, danger, and any other custom color
+        */
         variant: [String, Object],
         overlay: Boolean,
+        /**
+         * Skeleton position in relation to the window
+         * @values fixed, absolute, static
+         */
         position: {
             type: String,
             default: () => { return getValueByPath(config, 'sidebar.position', 'fixed') },
@@ -47,17 +56,44 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
+        /** Show sidebar in fullheight */
         fullheight: Boolean,
+        /** Show sidebar in fullwidth */
         fullwidth: Boolean,
+        /** Show the sidebar on right */
         right: Boolean,
-        mobile: String,
+        /**
+         * Custom layout on mobile
+         * @values fullwidth, reduce, hidden
+         */
+        mobile: {
+            type: String,
+            validator: (value) => {
+                return [
+                    '',
+                    'fullwidth',
+                    'reduce',
+                    'hidden'
+                ].indexOf(value) >= 0
+            }
+        },
+        /** Show a small sidebar */
         reduce: Boolean,
+        /** Expand sidebar on hover when reduced or mobile is reduce */
         expandOnHover: Boolean,
+        /** Expand sidebar on hover with fixed position when reduced or mobile is reduce */
         expandOnHoverFixed: Boolean,
+        /**
+         * Sidebar cancel options
+         * @values true, false, 'escape', 'outside'
+         */
         canCancel: {
             type: [Array, Boolean],
             default: () => { return getValueByPath(config, 'sidebar.canCancel', ['escape', 'outside']) }
         },
+        /**
+         * Callback on cancel
+         */
         onCancel: {
             type: Function,
             default: () => {}

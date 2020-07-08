@@ -12,25 +12,36 @@ export default {
     name: 'OSkeleton',
     mixins: [BaseComponentMixin],
     props: {
+        /** Show or hide loader	 */
         active: {
             type: Boolean,
             default: true
         },
+        /** Show a loading animation	 */
         animated: {
             type: Boolean,
             default: true
         },
+        /** Custom width */
         width: [Number, String],
+        /** Custom height */
         height: [Number, String],
+        /** Show a circle shape */
         circle: Boolean,
+        /** Rounded style */
         rounded: {
             type: Boolean,
             default: true
         },
+        /** Number of shapes to display */
         count: {
             type: Number,
             default: 1
         },
+        /**
+         * Skeleton position in relation to the element
+         * @values left, centered, right
+         */
         position: {
             type: String,
             default: '',
@@ -42,6 +53,10 @@ export default {
                 ].indexOf(value) > -1
             }
         },
+        /**
+         * Size of skeleton
+         * @values small, medium, large
+         */
         size: String,
         rootClass: String,
         animationClass: String,
