@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://oruga.io">
-        <img height="320" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
+        <img width="160" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
     </a>
 </p>
 
@@ -13,9 +13,9 @@
 </p>
 
 <p align="center">
-    <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/v/oruga.svg" /></a>
-    <a href="https://www.npmjs.com/package/oruga"><img src="https://img.shields.io/npm/dt/oruga.svg" /></a>
-    <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/oruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-uioruga.svg" /></a>
+    <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg" /></a>
 </p>
 
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
@@ -39,7 +39,7 @@ You need [Vue.js](https://vuejs.org/) **version 2.6+**.
 ### 1 Install via npm
 
 ```bash
-npm install @oruga-uioruga
+npm install @oruga-ui/oruga
 ```
 
 ### 2 Import and use Oruga
