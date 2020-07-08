@@ -46,19 +46,52 @@ export default {
     mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
+        /** 
+        * Type (color) of the control, optional
+        * @values is-white, is-black, is-light, is-dark, is-primary, is-info, is-success, is-warning, is-danger, and any other colors you've set in the $colors list on Sass
+        */
         variant: [String, Object],
+        /** 
+         * Vertical size of button, optional
+         * @values is-small, is-medium, is-large
+         */
         size: String,
+        /**
+         * Button label, optional when default slot
+         */
         label: String,
+        /**
+         * Icon pack to use
+         * @values mdi, fa, fas, far, fad, fal
+         */
         iconPack: String,
+        /**
+         * Icon name to show on the left
+         */
         iconLeft: String,
+         /**
+         * Icon name to show on the right
+         */
         iconRight: String,
+        /**
+         * Rounded style
+         */
         rounded: {
             type: Boolean,
             default: () => { return getValueByPath(config, 'button.rounded', false) }
         },
+        /**
+         * Outlined style
+         */
         outlined: Boolean,
+        /**
+         * Button will be expanded (full-width)	
+         */
         expanded: Boolean,
         inverted: Boolean,
+        /**
+         * Button type, like native
+         */
         nativeType: {
             type: String,
             default: 'button',
@@ -70,10 +103,17 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
+        /**
+         * Button tag name
+         * @values button, a, input, router-link, nuxt-link or other nuxt alias
+         */
         tag: {
             type: String,
             default: 'button'
         },
+        /**
+         * Button will be disabled
+         */
         disabled: Boolean,
         rootClass: String,
         outlinedClass: String,
