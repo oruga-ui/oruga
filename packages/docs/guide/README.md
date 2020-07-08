@@ -106,10 +106,10 @@ $colors: (
     "danger": ($danger, $danger-invert)
 );
 
-...
-
 @import "~@oruga-ui/oruga/src/scss/oruga";
 ```
+
+Take a look at [components page](/components/#base-style) to know all global variables.
 
 ### Adding new classes
 

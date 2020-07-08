@@ -12,6 +12,12 @@ module.exports = {
   ],
   plugins: [
     [
+      '@vuepress/google-analytics',
+      {
+        ga: 'UA-171490794-1',
+      }
+    ],
+    [
       'demo-block',
       {
         settings: {
@@ -20,10 +26,6 @@ module.exports = {
           vue: 'https://cdn.jsdelivr.net/npm/vue',
           jsfiddle: false
         }
-      },
-      '@vuepress/google-analytics',
-      {
-        'ga': 'UA-171490794-1'
       }
     ]
   ],

@@ -1,6 +1,6 @@
 
-import Oruga from 'oruga';
-import 'oruga/dist/oruga.css';
+import Oruga from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,7 @@ export default ({
       iconComponent: 'vue-fontawesome'
   });
 
+  // plugin-demo-block
   if (typeof window !== 'undefined') {
     window.Vue = Vue;
   }

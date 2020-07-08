@@ -66,7 +66,7 @@
                     spin>
                 </o-icon>
             </o-loading>
-        </o-notification>
+        </p>
     </section>
 </template>
 
