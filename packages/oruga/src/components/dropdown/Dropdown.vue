@@ -62,20 +62,37 @@ export default {
         }
     },
     props: {
+        /** @model */
         value: {
             type: [String, Number, Boolean, Object, Array, Function],
             default: null
         },
         disabled: Boolean,
+        /**
+         * Dropdown will be triggered by hover instead of click
+         */
         hoverable: Boolean,
+        /**
+         * Dropdown content (items) are shown inline, trigger is removed
+         */
         inline: Boolean,
+        /**
+         * Dropdown content will be scrollable
+         */
         scrollable: Boolean,
+        /**
+         * Max height of dropdown content
+         */
         maxHeight: {
             type: [String, Number],
             default: () => {
                 return getValueByPath(config, 'dropdown.maxHeight', 200)
             }
         },
+        /**
+         * Optional, position of the dropdown relative to the trigger
+         * @values top-right, top-left, bottom-left
+         */
         position: {
             type: String,
             validator(value) {
@@ -87,12 +104,19 @@ export default {
                 ].indexOf(value) > -1
             }
         },
+        /**
+         * Dropdown content (items) are shown into a modal on mobile
+         */
         mobileModal: {
             type: Boolean,
             default: () => {
                 return getValueByPath(config, 'dropdown.mobileModal', true)
             }
         },
+        /**
+         * Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus
+         * @values list, menu, dialog
+         */
         ariaRole: {
             type: String,
             validator(value) {
@@ -104,28 +128,50 @@ export default {
             },
             default: null
         },
+        /**
+         * Custom animation (transition name)
+         */
         animation: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'dropdown.animation', 'fade')
             }
         },
+        /**
+         * Allows multiple selections
+         */
         multiple: Boolean,
+        /**
+         * Trap focus inside the dropdown.
+         */
         trapFocus: {
             type: Boolean,
             default: () => {
                 return getValueByPath(config, 'dropdown.trapFocus', true)
             }
         },
+        /**
+         * Close dropdown when content is clicked
+         */
         closeOnClick: {
             type: Boolean,
             default: true
         },
+        /**
+         * Can close dropdown by pressing escape or by clicking outside
+         * @values escape, outside
+         */
         canClose: {
             type: [Array, Boolean],
             default: true
         },
+        /**
+         * Dropdown will be expanded (full-width)
+         */
         expanded: Boolean,
+        /**
+         * Append dropdown content to body
+         */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
         rootClass: String,
