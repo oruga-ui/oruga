@@ -11,20 +11,20 @@ module.exports = {
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-    ['meta', { title: 'Oruga UI - Vue.js' }],
+    ['meta', { name: 'title', content: 'Oruga UI - Vue.js' }],
     ['meta', { name: 'og:locale', content: 'en_US' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:url', content: 'https://oruga.io' }],
     ['meta', { name: 'og:title', content: 'UI components for Vue.js and CSS framework agnostic' }],
     ['meta', { name: 'og:site_name', content: 'Oruga' }],
     ['meta', { name: 'og:description', content: 'Oruga UI is like a caterpillar, minimal and yet functional. It\'s in your hands turning it into a butterfly' }],
-    ['meta', { name: 'og:image', content: 'https://oruga.io/logo.png' }],
+    ['meta', { name: 'og:image', content: 'https://oruga.io/logo-banner.png' }],
     ['meta', { name: 'og:image:type', content: 'image/png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@walter_tommasi' }],
     ['meta', { name: 'twitter:title', content: 'UI components for Vue.js and CSS framework agnostic' }],
     ['meta', { name: 'twitter:description', content: 'Oruga UI is like a caterpillar, minimal and yet functional. It\'s in your hands turning it into a butterfly' }],
-    ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo.png' }]
+    ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png' }]
   ],
   plugins: [
     [

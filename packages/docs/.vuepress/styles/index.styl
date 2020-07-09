@@ -4,6 +4,15 @@
     overflow: visible !important;
     max-height: none !important;
 }
+.vuepress-plugin-demo-block__wrapper:hover {
+    box-shadow: none !important;
+}
+.vuepress-plugin-demo-block__expand::after {
+    content: 'Show code';
+}
+.vuepress-plugin-demo-block__expand::before {
+    display: none !important;
+}
 
 /* Vuepress */
 .home {
