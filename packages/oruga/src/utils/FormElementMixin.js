@@ -33,18 +33,20 @@ export default {
      * @values mdi, fa, fas, far, fad, fal
      */
     iconPack: String,
-    // Native options to use in HTML5 validation
+    /** Native options to use in HTML5 validation */
     autocomplete: String,
     /**
      * Same as native maxlength, plus character counter
      */
     maxlength: [Number, String],
+    /** Enable html 5 native validation */
     useHtml5Validation: {
       type: Boolean,
       default: () => {
         return getValueByPath(config, "useHtml5Validation", true);
       },
     },
+    /** Show status icon using field and variant prop */
     statusIcon: {
       type: Boolean,
       default: () => {

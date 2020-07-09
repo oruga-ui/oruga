@@ -68,18 +68,26 @@ export default {
         }
     },
     props: {
+        /**
+         * @model
+         */
         value: {
             type: [String, Number, Boolean, Object, Array],
             default: null
         },
+        /**
+         * 	Icon name to be added on the right side
+         */
         iconRight: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'select.iconRight', 'caret-down')
             }
         },
+        /** Text when nothing is selected */
         placeholder: String,
         multiple: Boolean,
+        /** Same as native size */
         nativeSize: [String, Number],
         rootClass: String,
         controlExpandedClass: String,

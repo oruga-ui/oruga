@@ -144,7 +144,7 @@ title: Checkbox
 | ------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
 | v-model       |                                                    | string\|number\|boolean\|array | -                                                                               |         |
 | nativeValue   | Same as native value                               | string\|number\|boolean        | -                                                                               |         |
-| variant       | Type (color) of the control, optional              | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| variant       | Color of the control, optional                     | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 | disabled      | Same as native disabled                            | boolean                        | -                                                                               |         |
 | required      |                                                    | boolean                        | -                                                                               |         |
 | name          | Same as native name                                | string                         | -                                                                               |         |

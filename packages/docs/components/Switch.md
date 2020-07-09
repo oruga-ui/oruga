@@ -188,30 +188,30 @@ title: Switch
 
 ## Props
 
-| Prop name           | Description | Type                    | Values | Default |
-| ------------------- | ----------- | ----------------------- | ------ | ------- |
-| value               |             | string\|number\|boolean | -      |         |
-| nativeValue         |             | string\|number\|boolean | -      |         |
-| disabled            |             | boolean                 | -      |         |
-| variant             |             | string                  | -      |         |
-| passiveVariant      |             | string                  | -      |         |
-| name                |             | string                  | -      |         |
-| required            |             | boolean                 | -      |         |
-| size                |             | string                  | -      |         |
-| trueValue           |             | string\|number\|boolean | -      | true    |
-| falseValue          |             | string\|number\|boolean | -      | false   |
-| rounded             |             | boolean                 | -      | true    |
-| outlined            |             | boolean                 | -      | false   |
-| rootClass           |             | string                  | -      |         |
-| disabledClass       |             | string                  | -      |         |
-| checkClass          |             | string                  | -      |         |
-| roundedClass        |             | string                  | -      |         |
-| outlinedClass       |             | string                  | -      |         |
-| labelClass          |             | string                  | -      |         |
-| sizeClass           |             | string                  | -      |         |
-| variantClass        |             | string                  | -      |         |
-| passiveVariantClass |             | string                  | -      |         |
-| animationClass      |             | string                  | -      |         |
+| Prop name           | Description                                        | Type                    | Values                                                                          | Default |
+| ------------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| v-model             |                                                    | string\|number\|boolean | -                                                                               |         |
+| nativeValue         | Same as native value                               | string\|number\|boolean | -                                                                               |         |
+| disabled            |                                                    | boolean                 | -                                                                               |         |
+| variant             | Color of the switch, optional                      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| passiveVariant      | Color of the switch when is passive, optional      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| name                | Name attribute on native checkbox                  | string                  | -                                                                               |         |
+| required            |                                                    | boolean                 | -                                                                               |         |
+| size                | Vertical size of switch, optional                  | string                  | `small`, `medium`, `large`                                                      |         |
+| trueValue           | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
+| falseValue          | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
+| rounded             | Rounded style                                      | boolean                 | -                                                                               | true    |
+| outlined            | Outlined style                                     | boolean                 | -                                                                               | false   |
+| rootClass           |                                                    | string                  | -                                                                               |         |
+| disabledClass       |                                                    | string                  | -                                                                               |         |
+| checkClass          |                                                    | string                  | -                                                                               |         |
+| roundedClass        |                                                    | string                  | -                                                                               |         |
+| outlinedClass       |                                                    | string                  | -                                                                               |         |
+| labelClass          |                                                    | string                  | -                                                                               |         |
+| sizeClass           |                                                    | string                  | -                                                                               |         |
+| variantClass        |                                                    | string                  | -                                                                               |         |
+| passiveVariantClass |                                                    | string                  | -                                                                               |         |
+| animationClass      |                                                    | string                  | -                                                                               |         |
 
 ## Events
 

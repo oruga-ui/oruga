@@ -21,32 +21,13 @@
 - [o-table](/components/Table.md)
 - [o-tooltip](/components/Tooltip.md)
 
-::: demo
-
-```html
-<template>
-  <section>
-    <o-button @click="clickMe">Click Me</o-button>
-  </section>
-</template>
-
-<script>
-  export default {
-    methods: {
-      clickMe() {
-        alert("Clicked!")
-      }
-    }
-  }
-</script>
-```
-
 ## Config
 
 Oruga allows to customize each components using config constructor or programmatically using `this.$oruga.config`.
 
 ```js
 {
+    globalfield: string|boolean|number|function|....,
     componentname: {
         override: boolean,
         customfieldX: string|boolean|number|function|....

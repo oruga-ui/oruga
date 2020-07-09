@@ -139,33 +139,59 @@ export default {
         [PaginationButton.name]: PaginationButton
     },
     mixins: [BaseComponentMixin],
+    provide() {
+        return {
+            $pagination: this
+        }
+    },
     props: {
+        /** Total count of items */
         total: [Number, String],
+        /** Items count for each page */
         perPage: {
             type: [Number, String],
             default: () => { return getValueByPath(config, 'pagination.perPage', 20) }
         },
+        /** Current page number, use the .sync modifier to make it two-way binding */
         current: {
             type: [Number, String],
             default: 1
         },
+        /** Number of pagination items to show before current page */
         rangeBefore: {
             type: [Number, String],
             default: 1
         },
+        /** Number to paginatation items to show after current page */
         rangeAfter: {
             type: [Number, String],
             default: 1
         },
+        /**
+         * Pagination size, optional
+         * @values small, medium, large
+         */
         size: String,
+        /** Simple style */
         simple: Boolean,
+        /** Rounded button styles */
         rounded: Boolean,
+        /**
+         * Buttons order, optional
+         * @values centered, right, left
+         */
         order: String,
+        /**
+         * Icon pack to use
+         * @values mdi, fa, fas, far, fad, fal
+         */
         iconPack: String,
+        /** Icon to use for previous button */
         iconPrev: {
             type: String,
             default: () => { return getValueByPath(config, 'pagination.iconPrev', 'chevron-left') }
         },
+         /** Icon to use for next button */
         iconNext: {
             type: String,
             default: () => { return getValueByPath(config, 'pagination.iconNext', 'chevron-right') }

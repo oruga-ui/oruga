@@ -239,30 +239,30 @@ title: Modal
 
 ## Props
 
-| Prop name       | Description | Type           | Values | Default                           |
-| --------------- | ----------- | -------------- | ------ | --------------------------------- |
-| active          |             | boolean        | -      |                                   |
-| component       |             | object\|func   | -      |                                   |
-| content         |             | string         | -      |                                   |
-| programmatic    |             | boolean        | -      |                                   |
-| props           |             | object         | -      |                                   |
-| events          |             | object         | -      |                                   |
-| width           |             | string\|number | -      | { 'modal.width': 960 }            |
-| custom          |             | boolean        | -      |                                   |
-| animation       |             | string         | -      | { 'modal.animation': 'zoom-out' } |
-| canCancel       |             | array\|boolean | -      | { 'modal.canCancel': ['escape' }  |
-| onCancel        |             | func           | -      | () => {}                          |
-| scroll          |             | string         | -      | { 'modal.scroll': 'keep' }        |
-| fullScreen      |             | boolean        | -      |                                   |
-| trapFocus       |             | boolean        | -      | { 'modal.trapFocus': true }       |
-| ariaRole        |             | string         | -      |                                   |
-| ariaModal       |             | boolean        | -      |                                   |
-| destroyOnHide   |             | boolean        | -      | { 'modal.destroyOnHide': true }   |
-| rootClass       |             | string         | -      |                                   |
-| backgroundClass |             | string         | -      |                                   |
-| contentClass    |             | string         | -      |                                   |
-| closeClass      |             | string         | -      |                                   |
-| fullScreenClass |             | string         | -      |                                   |
+| Prop name       | Description                                                                                                                                                            | Type           | Values                             | Default                       |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------- | ----------------------------- |
+| active          | Whether modal is active or not, use the .sync modifier to make it two-way binding                                                                                      | boolean        | -                                  |                               |
+| component       | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                               |
+| content         | Text content                                                                                                                                                           | string         | -                                  |                               |
+| programmatic    |                                                                                                                                                                        | boolean        | -                                  |                               |
+| props           | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                               |
+| events          | Events to be binded to the injected component                                                                                                                          | object         | -                                  |                               |
+| width           | Width of the Modal                                                                                                                                                     | string\|number | -                                  | 'modal.width': 960            |
+| custom          | Enable custom style on modal content                                                                                                                                   | boolean        | -                                  |                               |
+| animation       | Custom animation (transition name)                                                                                                                                     | string         | -                                  | 'modal.animation': 'zoom-out' |
+| canCancel       | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean | `escape`, `x`, `outside`, `button` | 'modal.canCancel': ['escape'  |
+| onCancel        | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | () => {}                      |
+| scroll          | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | 'modal.scroll': 'keep'        |
+| fullScreen      | Display modal as full screen                                                                                                                                           | boolean        | -                                  |                               |
+| trapFocus       | Trap focus inside the modal.                                                                                                                                           | boolean        | -                                  | 'modal.trapFocus': true       |
+| ariaRole        |                                                                                                                                                                        | string         | -                                  |                               |
+| ariaModal       |                                                                                                                                                                        | boolean        | -                                  |                               |
+| destroyOnHide   | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | 'modal.destroyOnHide': true   |
+| rootClass       |                                                                                                                                                                        | string         | -                                  |                               |
+| backgroundClass |                                                                                                                                                                        | string         | -                                  |                               |
+| contentClass    |                                                                                                                                                                        | string         | -                                  |                               |
+| closeClass      |                                                                                                                                                                        | string         | -                                  |                               |
+| fullScreenClass |                                                                                                                                                                        | string         | -                                  |                               |
 
 ## Events
 

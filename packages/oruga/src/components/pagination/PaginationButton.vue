@@ -19,6 +19,9 @@ import { getValueByPath } from '../../utils/helpers'
 
 export default {
     name: 'OPaginationButton',
+    inject: {
+        $pagination: { name: '$pagination', default: false }
+    },
     props: {
         page: {
             type: Object,
@@ -39,7 +42,7 @@ export default {
     computed: {
         linkClasses() {
             return [
-                this.linkClass,
+                this.linkClass || [...this.$pagination.linkClasses],
                 this.page.class,
                 { [this.linkCurrentClass]: this.page.isCurrent }
             ]

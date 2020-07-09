@@ -103,7 +103,7 @@ export default {
         /** Append tooltip content to body */
         appendToBody: Boolean,
         /**
-        * Type (color) of the tooltip
+        * Color of the tooltip
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: String,

@@ -30,7 +30,7 @@ export default {
     mixins: [BaseComponentMixin],
     props: {
         /**
-         * 	Type (color) of the icon, optional
+         * 	Color of the icon, optional
          *  @values primary, info, success, warning, danger, and any other custom color
          */
         variant: [String, Object],
@@ -62,6 +62,7 @@ export default {
          * When true makes icon clickable
          */
         clickable: Boolean,
+        /** Enable spin effect on icon */
         spin: Boolean,
         both: Boolean, // This is used internally
         rootClass: String,

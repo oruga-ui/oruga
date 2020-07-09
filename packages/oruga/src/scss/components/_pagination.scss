@@ -17,7 +17,7 @@ $pagination-link-line-height: $base-line-height !default;
 $pagination-link-margin: .25rem !default;
 $pagination-link-min-width: 2.25em !default;
 $pagination-margin: -.25rem !default;
-$pagination-mobile-breakpoint: 1024px !default;
+$pagination-mobile-breakpoint: 768px !default;
 $pagination-rounded-border-radius: $base-rounded-border-radius !default;
 /* @docs */
 
@@ -111,7 +111,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         margin: 0;
         padding: 0;
     }
-    @media screen and (min-width: $pagination-mobile-breakpoint) {
+    @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
         justify-content: space-between;
         .o-pagination-previous {
             order: 2;
@@ -148,6 +148,15 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
                 justify-content: flex-end;
                 order: 2;
             }
+        }
+    }
+    @media screen and (max-width: $pagination-mobile-breakpoint) {
+        & {
+            flex-wrap: wrap;
+        }
+        .o-pagination-list li, .o-pagination-next, .o-pagination-previous {
+            flex-grow: 1;
+            flex-shrink: 1;
         }
     }
 }

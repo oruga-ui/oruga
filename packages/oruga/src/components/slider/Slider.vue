@@ -61,6 +61,7 @@ import { getValueByPath } from '../../utils/helpers'
 /**
  * A slider to select a value or range from a given range
  * @displayName Slider
+ * @requires ./SliderTick.vue
  * @example ./examples/Slider.md
  * @style _slider.scss
  */
@@ -77,36 +78,57 @@ export default {
         }
     },
     props: {
+        /**
+         * @model
+         */
         value: {
             type: [Number, Array],
             default: 0
         },
+        /** Minimum value */
         min: {
             type: Number,
             default: 0
         },
+        /** Maximum  value */
         max: {
             type: Number,
             default: 100
         },
+        /** Step interval of ticks */
         step: {
             type: Number,
             default: 1
         },
+        /**
+         * Color of the slider
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: {
             type: String,
             default: () => { return getValueByPath(config, 'slider.variant', 'primary') },
         },
+        /**
+         * Vertical size of slider, optional
+         * @values small, medium, large
+         */
         size: String,
+        /** Show tick marks */
         ticks: {
             type: Boolean,
             default: false
         },
+        /** Show tooltip when thumb is being dragged */
         tooltip: {
             type: Boolean,
             default: true
         },
+        /**
+         * Color of the tooltip
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         tooltipVariant: String,
+        /** Rounded thumb */
         rounded: {
             type: Boolean,
             default: () => { return getValueByPath(config, 'slider.rounded', false) },
@@ -115,12 +137,15 @@ export default {
             type: Boolean,
             default: false
         },
+        /** Update v-model only when dragging is finished */
         lazy: {
             type: Boolean,
             default: false
         },
+        /** Function to format the tooltip label for display */
         customFormatter: Function,
         ariaLabel: [String, Array],
+        /** Increas slider size on focus */
         biggerSliderFocus: {
             type: Boolean,
             default: false

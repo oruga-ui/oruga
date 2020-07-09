@@ -113,8 +113,8 @@ Take a look at [components page](/components/#base-style) to know all global var
 
 ### Adding new classes
 
-Adding new classes is really easy and you can do it importing the library/component (global); in this case all component intances are using the same custom classes.
-Otherwise the library allows to add new classes on a single component instance (local).
+This way allows to append a one or more classes to already existsing classes.
+It is really easy and you can do it importing the library/component (global) and in this case all component intances are using the same custom classes, otherwise the library allows to add new classes on a single component instance (local).
 
 #### Global
 

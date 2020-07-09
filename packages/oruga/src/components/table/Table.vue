@@ -349,25 +349,39 @@ export default {
         }
     },
     props: {
+        /** Table data */
         data: {
             type: Array,
             default: () => []
         },
+        /** Table columns */
         columns: {
             type: Array,
             default: () => []
         },
+        /** Border to all cells */
         bordered: Boolean,
+        /** Whether table is striped */
         striped: Boolean,
+        /** Makes the cells narrower */
         narrowed: Boolean,
+        /** Rows are highlighted when hovering */
         hoverable: Boolean,
+        /** Loading state */
         loading: Boolean,
+        /** Allow row details  */
         detailed: Boolean,
+        /** Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style */
         checkable: Boolean,
+        /** Show check/uncheck all checkbox in table header when checkable */
         headerCheckable: {
             type: Boolean,
             default: true
         },
+        /**
+         * Position of the checkbox (if checkable is true)
+         * @values left, right
+         */
         checkboxPosition: {
             type: String,
             default: 'left',
@@ -378,63 +392,94 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
+        /** Set which row is selected, use the .sync modifier to make it two-way binding */
         selected: Object,
+        /** Custom method to verify if a row is selectable, works when is selected. */
         isRowSelectable: {
             type: Function,
             default: () => true
         },
+        /** Table can be focused and user can navigate with keyboard arrows (require selected.sync) and rows are highlighted when hovering */
         focusable: Boolean,
+        /** Custom method to verify if row is checked, works when is checkable. Useful for backend pagination */
         customIsChecked: Function,
+        /** Custom method to verify if a row is checkable, works when is checkable */
         isRowCheckable: {
             type: Function,
             default: () => true
         },
+        /** Set which rows are checked, use the .sync modifier to make it two-way binding */
         checkedRows: {
             type: Array,
             default: () => []
         },
+        /** Rows appears as cards on mobile (collapse rows) */
         mobileCards: {
             type: Boolean,
             default: true
         },
+        /** Sets the default sort column and order — e.g. ['first_name', 'desc']	 */
         defaultSort: [String, Array],
+        /**
+         * Sets the default sort column direction on the first click
+         * @values asc, desc
+         */
         defaultSortDirection: {
             type: String,
             default: 'asc'
         },
+        /** Sets the header sorting icon */
         sortIcon: {
             type: String,
             default: () => { return getValueByPath(config, 'table.sortIcon', 'arrow-up') }
         },
+        /**
+         * Sets the size of the sorting icon
+         * @values small, medium, large
+         */
         sortIconSize: {
             type: String,
             default: () => { return getValueByPath(config, 'table.sortIconSize', 'small') }
         },
+        /** Adds multiple column sorting */
         sortMultiple: {
             type: Boolean,
             default: false
         },
+        /** Used in combination with backend-sorting */
         sortMultipleData: {
             type: Array,
             default: () => []
         },
+        /**
+         * Adds a key which will be required for multi column sorting to work. Will always be enabled if null is selected (default). Requres sort-multiple
+         * @values null, shiftKey, altKey, ctrlKey
+         */
         sortMultipleKey: {
             type: String,
             default: null
         },
+        /** Adds pagination to the table */
         paginated: Boolean,
+        /** Current page of table data (if paginated), use the .sync modifier to make it two-way binding */
         currentPage: {
             type: Number,
             default: 1
         },
+        /** How many rows per page (if paginated) */
         perPage: {
             type: [Number, String],
-            default: 20
+            default: () => { return getValueByPath(config, 'table.perPage', 20) }
         },
+        /** Allow chevron icon and column to be visible */
         showDetailIcon: {
             type: Boolean,
             default: true
         },
+        /**
+         * Pagination position (if paginated)
+         * @values bottom, top, bot
+         */
         paginationPosition: {
             type: String,
             default: () => { return getValueByPath(config, 'table.paginationPosition', 'bottom') },
@@ -446,52 +491,71 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
+        /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
         backendSorting: Boolean,
+        /** Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend */
         backendFiltering: Boolean,
+        /** Add a class to row based on the return */
         rowClass: {
             type: Function,
             default: () => ''
         },
+        /** Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop) */
         openedDetailed: {
             type: Array,
             default: () => []
         },
+        /** Controls the visibility of the trigger that toggles the detailed rows. */
         hasDetailedVisible: {
             type: Function,
             default: () => true
         },
+        /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
         detailKey: {
             type: String,
             default: ''
         },
+        /** Custom style on details */
         customDetailRow: {
             type: Boolean,
             default: false
         },
+        /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
         backendPagination: Boolean,
+        /** Total number of table data if backend-pagination is enabled */
         total: {
             type: [Number, String],
             default: 0
         },
+        /** Icon pack to use */
         iconPack: String,
+        /** Text when nothing is selected */
         mobileSortPlaceholder: String,
+        /** Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended) */
         customRowKey: String,
+        /** Allows rows to be draggable */
         draggable: {
             type: Boolean,
             default: false
         },
+        /** Add a horizontal scrollbar when table is too wide */
         scrollable: Boolean,
         ariaNextLabel: String,
         ariaPreviousLabel: String,
         ariaPageLabel: String,
         ariaCurrentLabel: String,
+        /** Show a sticky table header */
         stickyHeader: Boolean,
+        /** Table fixed height */
         height: [Number, String],
+        /** Add a native event to filter */
         filtersEvent: {
             type: String,
             default: ''
         },
+        /** Force to show table with cards layout */
         cardLayout: Boolean,
+        /** Show header */
         showHeader: {
             type: Boolean,
             default: () => { return getValueByPath(config, 'table.showHeader', true) }

@@ -55,42 +55,61 @@ export default {
     },
     mixins: [BaseComponentMixin],
     props: {
+        /** Whether modal is active or not, use the .sync modifier to make it two-way binding */
         active: Boolean,
+        /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],
+        /** Text content */
         content: String,
         programmatic: Boolean,
+        /** Props to be binded to the injected component */
         props: Object,
+         /** Events to be binded to the injected component */
         events: Object,
+        /** Width of the Modal */
         width: {
             type: [String, Number],
             default: () => {
                 return getValueByPath(config, 'modal.width', 960)
             }
         },
+        /** Enable custom style on modal content */
         custom: Boolean,
+        /** Custom animation (transition name) */
         animation: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'modal.animation', 'zoom-out')
             }
         },
+        /**
+         * Can close Modal by clicking 'X', pressing escape or clicking outside
+         * @values escape, x, outside, button
+         */
         canCancel: {
             type: [Array, Boolean],
             default: () => {
                 return getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
             }
         },
+        /** Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside) */
         onCancel: {
             type: Function,
             default: () => {}
         },
+        /**
+         * clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts
+         * @values keep, clip
+         */
         scroll: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'modal.scroll', 'keep')
             }
         },
+        /** Display modal as full screen */
         fullScreen: Boolean,
+        /** Trap focus inside the modal. */
         trapFocus: {
             type: Boolean,
             default: () => {
@@ -104,6 +123,7 @@ export default {
             }
         },
         ariaModal: Boolean,
+        /** Destroy modal on hide */
         destroyOnHide: {
             type: Boolean,
             default: () => {

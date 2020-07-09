@@ -38,26 +38,53 @@ export default {
     name: 'OSwitch',
     mixins: [BaseComponentMixin],
     props: {
+        /**
+         * @model
+         */
         value: [String, Number, Boolean],
+        /**
+         * Same as native value
+         */
         nativeValue: [String, Number, Boolean],
         disabled: Boolean,
+        /**
+         * Color of the switch, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: String,
+         /**
+         * Color of the switch when is passive, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         passiveVariant: String,
+        /** Name attribute on native checkbox */
         name: String,
         required: Boolean,
+        /**
+         * Vertical size of switch, optional
+         * @values small, medium, large
+         */
         size: String,
+        /**
+         * Overrides the returned value when it's checked
+         */
         trueValue: {
             type: [String, Number, Boolean],
             default: true
         },
+        /**
+         * Overrides the returned value when it's not checked
+         */
         falseValue: {
             type: [String, Number, Boolean],
             default: false
         },
+        /** Rounded style */
         rounded: {
             type: Boolean,
             default: true
         },
+        /** Outlined style */
         outlined: {
             type: Boolean,
             default: false

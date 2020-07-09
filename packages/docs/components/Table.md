@@ -1446,97 +1446,97 @@ title: Table
 
 ## Props
 
-| Prop name                 | Description | Type           | Values | Default                                  |
-| ------------------------- | ----------- | -------------- | ------ | ---------------------------------------- |
-| data                      |             | array          | -      | []                                       |
-| columns                   |             | array          | -      | []                                       |
-| bordered                  |             | boolean        | -      |                                          |
-| striped                   |             | boolean        | -      |                                          |
-| narrowed                  |             | boolean        | -      |                                          |
-| hoverable                 |             | boolean        | -      |                                          |
-| loading                   |             | boolean        | -      |                                          |
-| detailed                  |             | boolean        | -      |                                          |
-| checkable                 |             | boolean        | -      |                                          |
-| headerCheckable           |             | boolean        | -      | true                                     |
-| checkboxPosition          |             | string         | -      | 'left'                                   |
-| selected                  |             | object         | -      |                                          |
-| isRowSelectable           |             | func           | -      | () => true                               |
-| focusable                 |             | boolean        | -      |                                          |
-| customIsChecked           |             | func           | -      |                                          |
-| isRowCheckable            |             | func           | -      | () => true                               |
-| checkedRows               |             | array          | -      | []                                       |
-| mobileCards               |             | boolean        | -      | true                                     |
-| defaultSort               |             | string\|array  | -      |                                          |
-| defaultSortDirection      |             | string         | -      | 'asc'                                    |
-| sortIcon                  |             | string         | -      | { 'table.sortIcon': 'arrow-up' }         |
-| sortIconSize              |             | string         | -      | { 'table.sortIconSize': 'small' }        |
-| sortMultiple              |             | boolean        | -      | false                                    |
-| sortMultipleData          |             | array          | -      | []                                       |
-| sortMultipleKey           |             | string         | -      | null                                     |
-| paginated                 |             | boolean        | -      |                                          |
-| currentPage               |             | number         | -      | 1                                        |
-| perPage                   |             | number\|string | -      | 20                                       |
-| showDetailIcon            |             | boolean        | -      | true                                     |
-| paginationPosition        |             | string         | -      | { 'table.paginationPosition': 'bottom' } |
-| backendSorting            |             | boolean        | -      |                                          |
-| backendFiltering          |             | boolean        | -      |                                          |
-| rowClass                  |             | func           | -      | () => ''                                 |
-| openedDetailed            |             | array          | -      | []                                       |
-| hasDetailedVisible        |             | func           | -      | () => true                               |
-| detailKey                 |             | string         | -      | ''                                       |
-| customDetailRow           |             | boolean        | -      | false                                    |
-| backendPagination         |             | boolean        | -      |                                          |
-| total                     |             | number\|string | -      | 0                                        |
-| iconPack                  |             | string         | -      |                                          |
-| mobileSortPlaceholder     |             | string         | -      |                                          |
-| customRowKey              |             | string         | -      |                                          |
-| draggable                 |             | boolean        | -      | false                                    |
-| scrollable                |             | boolean        | -      |                                          |
-| ariaNextLabel             |             | string         | -      |                                          |
-| ariaPreviousLabel         |             | string         | -      |                                          |
-| ariaPageLabel             |             | string         | -      |                                          |
-| ariaCurrentLabel          |             | string         | -      |                                          |
-| stickyHeader              |             | boolean        | -      |                                          |
-| height                    |             | number\|string | -      |                                          |
-| filtersEvent              |             | string         | -      | ''                                       |
-| cardLayout                |             | boolean        | -      |                                          |
-| showHeader                |             | boolean        | -      | { 'table.showHeader': true }             |
-| rootClass                 |             | string         | -      |                                          |
-| wrapperClass              |             | string         | -      |                                          |
-| footerClass               |             | string         | -      |                                          |
-| emptyClass                |             | string         | -      |                                          |
-| detailedClass             |             | string         | -      |                                          |
-| detailedChevronClass      |             | string         | -      |                                          |
-| detailedIconExpandedClass |             | string         | -      |                                          |
-| borderedClass             |             | string         | -      |                                          |
-| stripedClass              |             | string         | -      |                                          |
-| narrowClass               |             | string         | -      |                                          |
-| hoverableClass            |             | string         | -      |                                          |
-| thWrapClass               |             | string         | -      |                                          |
-| thContentClass            |             | string         | -      |                                          |
-| thRightClass              |             | string         | -      |                                          |
-| thCenteredClass           |             | string         | -      |                                          |
-| thStickyClass             |             | string         | -      |                                          |
-| thCheckboxClass           |             | string         | -      |                                          |
-| thCurrentSortClass        |             | string         | -      |                                          |
-| thSortableClass           |             | string         | -      |                                          |
-| thUnselectableClass       |             | string         | -      |                                          |
-| thDetailedClass           |             | string         | -      |                                          |
-| tdRightClass              |             | string         | -      |                                          |
-| tdCenteredClass           |             | string         | -      |                                          |
-| tdStickyClass             |             | string         | -      |                                          |
-| tdCheckboxCellClass       |             | string         | -      |                                          |
-| tdSelectedClass           |             | string         | -      |                                          |
-| subheadingClass           |             | string         | -      |                                          |
-| stickyHeaderClass         |             | string         | -      |                                          |
-| mobileCardsClass          |             | string         | -      |                                          |
-| cardsClass                |             | string         | -      |                                          |
-| scrollableClass           |             | string         | -      |                                          |
-| mobileSortClass           |             | string         | -      |                                          |
-| iconSortDescClass         |             | string         | -      |                                          |
-| iconSortClass             |             | string         | -      |                                          |
-| iconSortInvisibleClass    |             | string         | -      |                                          |
-| paginationWrapperClass    |             | string         | -      |                                          |
+| Prop name                 | Description                                                                                                                                     | Type           | Values                                  | Default                              |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | --------------------------------------- | ------------------------------------ |
+| data                      | Table data                                                                                                                                      | array          | -                                       | []                                   |
+| columns                   | Table columns                                                                                                                                   | array          | -                                       | []                                   |
+| bordered                  | Border to all cells                                                                                                                             | boolean        | -                                       |                                      |
+| striped                   | Whether table is striped                                                                                                                        | boolean        | -                                       |                                      |
+| narrowed                  | Makes the cells narrower                                                                                                                        | boolean        | -                                       |                                      |
+| hoverable                 | Rows are highlighted when hovering                                                                                                              | boolean        | -                                       |                                      |
+| loading                   | Loading state                                                                                                                                   | boolean        | -                                       |                                      |
+| detailed                  | Allow row details                                                                                                                               | boolean        | -                                       |                                      |
+| checkable                 | Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style                                                 | boolean        | -                                       |                                      |
+| headerCheckable           | Show check/uncheck all checkbox in table header when checkable                                                                                  | boolean        | -                                       | true                                 |
+| checkboxPosition          | Position of the checkbox (if checkable is true)                                                                                                 | string         | `left`, `right`                         | 'left'                               |
+| selected                  | Set which row is selected, use the .sync modifier to make it two-way binding                                                                    | object         | -                                       |                                      |
+| isRowSelectable           | Custom method to verify if a row is selectable, works when is selected.                                                                         | func           | -                                       | () => true                           |
+| focusable                 | Table can be focused and user can navigate with keyboard arrows (require selected.sync) and rows are highlighted when hovering                  | boolean        | -                                       |                                      |
+| customIsChecked           | Custom method to verify if row is checked, works when is checkable. Useful for backend pagination                                               | func           | -                                       |                                      |
+| isRowCheckable            | Custom method to verify if a row is checkable, works when is checkable                                                                          | func           | -                                       | () => true                           |
+| checkedRows               | Set which rows are checked, use the .sync modifier to make it two-way binding                                                                   | array          | -                                       | []                                   |
+| mobileCards               | Rows appears as cards on mobile (collapse rows)                                                                                                 | boolean        | -                                       | true                                 |
+| defaultSort               | Sets the default sort column and order — e.g. ['first_name', 'desc']                                                                            | string\|array  | -                                       |                                      |
+| defaultSortDirection      | Sets the default sort column direction on the first click                                                                                       | string         | `asc`, `desc`                           | 'asc'                                |
+| sortIcon                  | Sets the header sorting icon                                                                                                                    | string         | -                                       | 'table.sortIcon': 'arrow-up'         |
+| sortIconSize              | Sets the size of the sorting icon                                                                                                               | string         | `small`, `medium`, `large`              | 'table.sortIconSize': 'small'        |
+| sortMultiple              | Adds multiple column sorting                                                                                                                    | boolean        | -                                       | false                                |
+| sortMultipleData          | Used in combination with backend-sorting                                                                                                        | array          | -                                       | []                                   |
+| sortMultipleKey           | Adds a key which will be required for multi column sorting to work. Will always be enabled if null is selected (default). Requres sort-multiple | string         | `null`, `shiftKey`, `altKey`, `ctrlKey` | null                                 |
+| paginated                 | Adds pagination to the table                                                                                                                    | boolean        | -                                       |                                      |
+| currentPage               | Current page of table data (if paginated), use the .sync modifier to make it two-way binding                                                    | number         | -                                       | 1                                    |
+| perPage                   | How many rows per page (if paginated)                                                                                                           | number\|string | -                                       | 'table.perPage': 20                  |
+| showDetailIcon            | Allow chevron icon and column to be visible                                                                                                     | boolean        | -                                       | true                                 |
+| paginationPosition        | Pagination position (if paginated)                                                                                                              | string         | `bottom`, `top`, `bot`                  | 'table.paginationPosition': 'bottom' |
+| backendSorting            | Columns won't be sorted with Javascript, use with sort event to sort in your backend                                                            | boolean        | -                                       |                                      |
+| backendFiltering          | Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend                                    | boolean        | -                                       |                                      |
+| rowClass                  | Add a class to row based on the return                                                                                                          | func           | -                                       | () => ''                             |
+| openedDetailed            | Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop)                       | array          | -                                       | []                                   |
+| hasDetailedVisible        | Controls the visibility of the trigger that toggles the detailed rows.                                                                          | func           | -                                       | () => true                           |
+| detailKey                 | Use a unique key of your data Object when use detailed or opened detailed. (id recommended)                                                     | string         | -                                       | ''                                   |
+| customDetailRow           | Custom style on details                                                                                                                         | boolean        | -                                       | false                                |
+| backendPagination         | Rows won't be paginated with Javascript, use with page-change event to paginate in your backend                                                 | boolean        | -                                       |                                      |
+| total                     | Total number of table data if backend-pagination is enabled                                                                                     | number\|string | -                                       | 0                                    |
+| iconPack                  | Icon pack to use                                                                                                                                | string         | -                                       |                                      |
+| mobileSortPlaceholder     | Text when nothing is selected                                                                                                                   | string         | -                                       |                                      |
+| customRowKey              | Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)                               | string         | -                                       |                                      |
+| draggable                 | Allows rows to be draggable                                                                                                                     | boolean        | -                                       | false                                |
+| scrollable                | Add a horizontal scrollbar when table is too wide                                                                                               | boolean        | -                                       |                                      |
+| ariaNextLabel             |                                                                                                                                                 | string         | -                                       |                                      |
+| ariaPreviousLabel         |                                                                                                                                                 | string         | -                                       |                                      |
+| ariaPageLabel             |                                                                                                                                                 | string         | -                                       |                                      |
+| ariaCurrentLabel          |                                                                                                                                                 | string         | -                                       |                                      |
+| stickyHeader              | Show a sticky table header                                                                                                                      | boolean        | -                                       |                                      |
+| height                    | Table fixed height                                                                                                                              | number\|string | -                                       |                                      |
+| filtersEvent              | Add a native event to filter                                                                                                                    | string         | -                                       | ''                                   |
+| cardLayout                | Force to show table with cards layout                                                                                                           | boolean        | -                                       |                                      |
+| showHeader                | Show header                                                                                                                                     | boolean        | -                                       | 'table.showHeader': true             |
+| rootClass                 |                                                                                                                                                 | string         | -                                       |                                      |
+| wrapperClass              |                                                                                                                                                 | string         | -                                       |                                      |
+| footerClass               |                                                                                                                                                 | string         | -                                       |                                      |
+| emptyClass                |                                                                                                                                                 | string         | -                                       |                                      |
+| detailedClass             |                                                                                                                                                 | string         | -                                       |                                      |
+| detailedChevronClass      |                                                                                                                                                 | string         | -                                       |                                      |
+| detailedIconExpandedClass |                                                                                                                                                 | string         | -                                       |                                      |
+| borderedClass             |                                                                                                                                                 | string         | -                                       |                                      |
+| stripedClass              |                                                                                                                                                 | string         | -                                       |                                      |
+| narrowClass               |                                                                                                                                                 | string         | -                                       |                                      |
+| hoverableClass            |                                                                                                                                                 | string         | -                                       |                                      |
+| thWrapClass               |                                                                                                                                                 | string         | -                                       |                                      |
+| thContentClass            |                                                                                                                                                 | string         | -                                       |                                      |
+| thRightClass              |                                                                                                                                                 | string         | -                                       |                                      |
+| thCenteredClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| thStickyClass             |                                                                                                                                                 | string         | -                                       |                                      |
+| thCheckboxClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| thCurrentSortClass        |                                                                                                                                                 | string         | -                                       |                                      |
+| thSortableClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| thUnselectableClass       |                                                                                                                                                 | string         | -                                       |                                      |
+| thDetailedClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| tdRightClass              |                                                                                                                                                 | string         | -                                       |                                      |
+| tdCenteredClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| tdStickyClass             |                                                                                                                                                 | string         | -                                       |                                      |
+| tdCheckboxCellClass       |                                                                                                                                                 | string         | -                                       |                                      |
+| tdSelectedClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| subheadingClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| stickyHeaderClass         |                                                                                                                                                 | string         | -                                       |                                      |
+| mobileCardsClass          |                                                                                                                                                 | string         | -                                       |                                      |
+| cardsClass                |                                                                                                                                                 | string         | -                                       |                                      |
+| scrollableClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| mobileSortClass           |                                                                                                                                                 | string         | -                                       |                                      |
+| iconSortDescClass         |                                                                                                                                                 | string         | -                                       |                                      |
+| iconSortClass             |                                                                                                                                                 | string         | -                                       |                                      |
+| iconSortInvisibleClass    |                                                                                                                                                 | string         | -                                       |                                      |
+| paginationWrapperClass    |                                                                                                                                                 | string         | -                                       |                                      |
 
 ## Events
 

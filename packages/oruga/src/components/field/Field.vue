@@ -61,7 +61,7 @@ export default {
     },
     props: {
         /**
-         * 	Type (color) of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete
+         * 	Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete
          *  @values primary, info, success, warning, danger, and any other custom color
          */
         variant: [String, Object],

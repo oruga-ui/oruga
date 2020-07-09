@@ -1,11 +1,12 @@
 
 /* @docs */
 $select-background-color: #fff !default;
-$select-border-color: #dbdbdb !default;
+$select-border-color: $grey-lighter !default;
 $select-border-radius: $base-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
 $select-control-icon-zindex: 4 !default;
+$select-control-icon-color: $grey-lighter !default;
 $select-empty-color: rgba($grey, 0.7) !default;
 $select-font-size: $base-font-size !default;
 $select-height: $control-height !default;
@@ -26,28 +27,25 @@ $select-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
     display: inline-flex;
     position: relative;
     @include variable('font-size', 'base-font-size', $base-font-size);
-    &.o-control-select-icons-right .o-icon.o-icon-right {
-        right: 0;
-        @include variable('height', 'select-height', $select-height);
+    &.o-control-select-icons-left .o-icon, &.o-control-select-icons-right .o-icon {
         position: absolute;
         top: 0;
+        @include variable('height', 'select-height', $select-height);
         @include variable('width', 'select-height', $select-height);
         @include variable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
         &:not(.o-icon-clickable) {
             pointer-events: none;
         }
+        &:not([class*="o-color-"]) {
+            @include variable('color', 'select-control-icon-color', $select-control-icon-color);
+        }
+    }
+    &.o-control-select-icons-right .o-icon.o-icon-right {
+        right: 0;
     }
     &.o-control-select-icons-left .o-icon.o-icon-left {
         left: 0;
-        @include variable('height', 'select-height', $select-height);
         pointer-events: none;
-        position: absolute;
-        top: 0;
-        @include variable('width', 'select-height', $select-height);
-        @include variable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
     }
     &.o-control-select-icons-left .o-select {
         @include variable('padding-left', 'select-height', $select-height);

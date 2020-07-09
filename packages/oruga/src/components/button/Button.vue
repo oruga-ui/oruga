@@ -47,7 +47,7 @@ export default {
     inheritAttrs: false,
     props: {
         /**
-        * Type (color) of the control, optional
+        * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: [String, Object],

@@ -1,13 +1,14 @@
 
 /* @docs */
 $input-background-color: #ffffff !default;
-$input-border-color: #dbdbdb !default;
+$input-border-color: $grey-lighter !default;
 $input-border-radius: $base-border-radius !default;
 $input-rounded-border-radius: $base-rounded-border-radius !default;
 $input-border: 1px solid transparent !default;
 $input-box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1) !default;
 $input-color: #363636 !default;
 $input-control-icon-zindex: 4 !default;
+$input-control-icon-color: $grey-lighter !default;
 $input-counter-font-size: .75rem !default;
 $input-counter-margin: .25rem 0 0 .5rem !default;
 $input-height: $control-height !default;
@@ -24,28 +25,25 @@ $input-width: 100% !default;
 .o-control-input {
     position: relative;
     @include variable('font-size', 'base-font-size', $base-font-size);
-    &.o-control-input-icons-right .o-icon.o-icon-right {
-        right: 0;
-        @include variable('height', 'input-height', $input-height);
+    &.o-control-input-icons-left .o-icon, &.o-control-input-icons-right .o-icon {
         position: absolute;
         top: 0;
+        @include variable('height', 'input-height', $input-height);
         @include variable('width', 'input-height', $input-height);
         @include variable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
         &:not(.o-icon-clickable) {
             pointer-events: none;
         }
+        &:not([class*="o-color-"]) {
+            @include variable('color', 'input-control-icon-color', $input-control-icon-color);
+        }
+    }
+    &.o-control-input-icons-right .o-icon.o-icon-right {
+        right: 0;
     }
     &.o-control-input-icons-left .o-icon.o-icon-left {
         left: 0;
-        @include variable('height', 'input-height', $input-height);
         pointer-events: none;
-        position: absolute;
-        top: 0;
-        @include variable('width', 'input-height', $input-height);
-        @include variable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
     }
     &.o-control-input-icons-left .o-input {
         @include variable('padding-left', 'input-height', $input-height);

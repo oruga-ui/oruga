@@ -9,7 +9,7 @@ export default {
      */
     nativeValue: [String, Number, Boolean],
     /**
-     * Type (color) of the control, optional
+     * Color of the control, optional
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: String,

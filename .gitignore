@@ -4,3 +4,4 @@ packages/docs/.vuepress/dist/
 packages/storybook/.dist/
 packages/storybook/*
 packages/oruga/coverage/*
+packages/oruga/README.md

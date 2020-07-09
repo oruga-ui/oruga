@@ -34,29 +34,36 @@ export default {
     },
     mixins: [BaseComponentMixin],
     props: {
+        /** Whether modal is active or not, use the .sync modifier to make it two-way binding */
         active: Boolean,
         programmatic: Boolean,
         container: [Object, Function, HTMLElement],
+        /** Loader will overlay the full page */
         fullPage: {
             type: Boolean,
             default: true
         },
+        /* Custom animation (transition name) */
         animation: {
             type: String,
             default: () => { return getValueByPath(config, 'loading.animation', 'fade') }
         },
+        /** Can close Loading by pressing escape or clicking outside */
         canCancel: {
             type: Boolean,
             default: false
         },
+        /** Callback function to call after user canceled (pressed escape / clicked outside) */
         onCancel: {
             type: Function,
             default: () => {}
         },
+        /** Icon name */
         icon: {
             type: String,
             default: () => { return getValueByPath(config, 'loading.icom', 'spin') }
         },
+        /** Enable spin effect on icon */
         iconSpin: {
             type: Boolean,
             default: true

@@ -159,20 +159,20 @@ title: Loading
 
 ## Props
 
-| Prop name       | Description | Type                      | Values | Default                         |
-| --------------- | ----------- | ------------------------- | ------ | ------------------------------- |
-| active          |             | boolean                   | -      |                                 |
-| programmatic    |             | boolean                   | -      |                                 |
-| container       |             | object\|func\|HTMLElement | -      |                                 |
-| fullPage        |             | boolean                   | -      | true                            |
-| animation       |             | string                    | -      | { 'loading.animation': 'fade' } |
-| canCancel       |             | boolean                   | -      | false                           |
-| onCancel        |             | func                      | -      | () => {}                        |
-| icon            |             | string                    | -      | { 'loading.icom': 'spin' }      |
-| iconSpin        |             | boolean                   | -      | true                            |
-| rootClass       |             | string                    | -      |                                 |
-| backgroundClass |             | string                    | -      |                                 |
-| iconClass       |             | string                    | -      |                                 |
+| Prop name       | Description                                                                       | Type                      | Values | Default                     |
+| --------------- | --------------------------------------------------------------------------------- | ------------------------- | ------ | --------------------------- |
+| active          | Whether modal is active or not, use the .sync modifier to make it two-way binding | boolean                   | -      |                             |
+| programmatic    |                                                                                   | boolean                   | -      |                             |
+| container       |                                                                                   | object\|func\|HTMLElement | -      |                             |
+| fullPage        | Loader will overlay the full page                                                 | boolean                   | -      | true                        |
+| animation       |                                                                                   | string                    | -      | 'loading.animation': 'fade' |
+| canCancel       | Can close Loading by pressing escape or clicking outside                          | boolean                   | -      | false                       |
+| onCancel        | Callback function to call after user canceled (pressed escape / clicked outside)  | func                      | -      | () => {}                    |
+| icon            | Icon name                                                                         | string                    | -      | 'loading.icom': 'spin'      |
+| iconSpin        | Enable spin effect on icon                                                        | boolean                   | -      | true                        |
+| rootClass       |                                                                                   | string                    | -      |                             |
+| backgroundClass |                                                                                   | string                    | -      |                             |
+| iconClass       |                                                                                   | string                    | -      |                             |
 
 ## Events
 

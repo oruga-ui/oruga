@@ -56,13 +56,12 @@ Vue.use(Oruga);
 or Individual Components
 ```javascript
 
-import Vue from 'vue'
-import { Field, Input } from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
+import Vue from 'vue';
+import { Field, Input } from '@oruga-ui/oruga';
+import '@oruga-ui/oruga/dist/oruga.css';
 
-Vue.use(Field)
-Vue.use(Input)
-
+Vue.use(Field);
+Vue.use(Input);
 ```
 
 ### 3 Customization
