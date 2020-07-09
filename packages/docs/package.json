@@ -8,14 +8,14 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "docs:dev": "npm link @oruga-ui/oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
-    "docs:build": "npm link @oruga-ui/oruga && vue-docgen && vuepress build",
+    "docs:build": "vue-docgen && vuepress build",
     "docs:gen": "vue-docgen"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",
     "@fortawesome/free-solid-svg-icons": "5.13.0",
     "@fortawesome/vue-fontawesome": "0.1.9",
-    "@oruga-ui/oruga": "0.0.2",
+    "@oruga-ui/oruga": "0.1.0",
     "@vuepress/plugin-google-analytics": "1.5.2",
     "concurrently": "5.2.0",
     "markdown-it-include": "1.1.1",
