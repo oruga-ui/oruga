@@ -69,14 +69,7 @@ export default {
          */
         triggers: {
             type: Array,
-            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) },
-             validator(value) {
-                return [
-                    'hover',
-                    'click',
-                    'focus'
-                ].indexOf(value) > -1
-            }
+            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) }
         },
         /** Tooltip will be always active */
         always: Boolean,
