@@ -70,7 +70,7 @@ Browse [customization section on the documentation](https://oruga.io/guide).
 
 ## Browser support
 
-Recent versions of Firefox, Chrome, Edge, Opera and Safari. IE11+ is only partially supported.
+Recent versions of Firefox, Chrome, Edge, Opera, Safari and IE11.
 
 ## Contributing
 

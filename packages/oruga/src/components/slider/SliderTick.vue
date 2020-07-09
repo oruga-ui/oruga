@@ -11,6 +11,9 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
+/**
+ * @displayName SliderTick
+ */
 export default {
     name: 'OSliderTick',
     mixins: [BaseComponentMixin],
@@ -18,6 +21,7 @@ export default {
         $slider: { name: '$slider', default: false }
     },
     props: {
+        /** Value of single tick */
         value: {
             variant: Number,
             default: 0

@@ -219,18 +219,18 @@ title: Slider
 
 ---
 
-## title: OSliderTick
+## title: SliderTick
 
-# OSliderTick
+# SliderTick
 
 ## Props
 
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| value           |             | number | -      | 0       |
-| tickClass       |             | string | -      |         |
-| tickHiddenClass |             | string | -      |         |
-| tickLabelClass  |             | string | -      |         |
+| Prop name       | Description          | Type   | Values | Default |
+| --------------- | -------------------- | ------ | ------ | ------- |
+| value           | Value of single tick | number | -      | 0       |
+| tickClass       |                      | string | -      |         |
+| tickHiddenClass |                      | string | -      |         |
+| tickLabelClass  |                      | string | -      |         |
 
 ## Slots
 

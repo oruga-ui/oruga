@@ -156,11 +156,12 @@ title: Select
 | CSS Variable                           | SASS Variable                    | Default                               |
 | -------------------------------------- | -------------------------------- | ------------------------------------- |
 | --oruga-select-background-color        | \$select-background-color        | #fff                                  |
-| --oruga-select-border-color            | \$select-border-color            | #dbdbdb                               |
+| --oruga-select-border-color            | \$select-border-color            | \$grey-lighter                        |
 | --oruga-select-border-radius           | \$select-border-radius           | \$base-border-radius                  |
 | --oruga-select-box-shadow              | \$select-box-shadow              | none                                  |
 | --oruga-select-color                   | \$select-color                   | #363636                               |
 | --oruga-select-control-icon-zindex     | \$select-control-icon-zindex     | 4                                     |
+| --oruga-select-control-icon-color      | \$select-control-icon-color      | \$grey-lighter                        |
 | --oruga-select-empty-color             | \$select-empty-color             | rgba(\$grey, 0.7)                     |
 | --oruga-select-font-size               | \$select-font-size               | \$base-font-size                      |
 | --oruga-select-height                  | \$select-height                  | \$control-height                      |

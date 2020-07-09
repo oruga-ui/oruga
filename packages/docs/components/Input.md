@@ -197,13 +197,14 @@ title: Input
 | CSS Variable                        | SASS Variable                 | Default                               |
 | ----------------------------------- | ----------------------------- | ------------------------------------- |
 | --oruga-input-background-color      | \$input-background-color      | #ffffff                               |
-| --oruga-input-border-color          | \$input-border-color          | #dbdbdb                               |
+| --oruga-input-border-color          | \$input-border-color          | \$grey-lighter                        |
 | --oruga-input-border-radius         | \$input-border-radius         | \$base-border-radius                  |
 | --oruga-input-rounded-border-radius | \$input-rounded-border-radius | \$base-rounded-border-radius          |
 | --oruga-input-border                | \$input-border                | 1px solid transparent                 |
 | --oruga-input-box-shadow            | \$input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)      |
 | --oruga-input-color                 | \$input-color                 | #363636                               |
 | --oruga-input-control-icon-zindex   | \$input-control-icon-zindex   | 4                                     |
+| --oruga-input-control-icon-color    | \$input-control-icon-color    | \$grey-lighter                        |
 | --oruga-input-counter-font-size     | \$input-counter-font-size     | .75rem                                |
 | --oruga-input-counter-margin        | \$input-counter-margin        | .25rem 0 0 .5rem                      |
 | --oruga-input-height                | \$input-height                | \$control-height                      |
