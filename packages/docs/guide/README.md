@@ -4,6 +4,12 @@ sidebar: auto
 
 # Guide
 
+Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
+
+## Quick start
+
+You need [Vue.js](https://vuejs.org/) **version 2.6+**.
+
 ## Installation
 
 ### Npm
@@ -37,7 +43,7 @@ import '@oruga-ui/oruga/dist/oruga.css';
 Vue.use(Oruga);
 ```
 
-### Individual components
+### Individual components ((tree shaking))
 
 ```js
 import Vue from 'vue';
@@ -142,7 +148,7 @@ Vue.use(Oruga, {
 ```
 
 ::: tip
-For a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet thant doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables.
+For a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables.
 :::
 
 ### Overriding classes

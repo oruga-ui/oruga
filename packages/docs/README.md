@@ -1,6 +1,7 @@
 ---
 home: true
 heroImage: logo.png
+heroAlt: oruga
 tagline: Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly
 actionText: (🐛) => 🦋
 actionLink: /guide/
@@ -10,6 +11,6 @@ features:
   - title: Components with steroids
     details: Most of the components aren't a simple wrapper of native elements but they add new and custom features
   - title: Lightweight
-    details: No other internal dependency and import only components that you need
-footer: MIT Licensed
+    details: No other internal dependency (except for Vue.js) and import only components that you need
+footer: MIT Licensed - Copyright © 2020- Walter Tommasi
 ---

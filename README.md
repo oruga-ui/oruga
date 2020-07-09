@@ -53,7 +53,7 @@ import '@oruga-ui/oruga/dist/oruga.css';
 Vue.use(Oruga);
 
 ```
-or Individual Components
+or Individual Components (tree shaking)
 ```javascript
 
 import Vue from 'vue';
