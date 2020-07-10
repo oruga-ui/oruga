@@ -151,11 +151,10 @@ $tooltip-content-zindex: 38 !default;
         position: absolute;
         content: "";
         pointer-events: none;
-        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex, 'calc', '+ 1'); 
+        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex); 
     }
     .o-tooltip-trigger {
         width: 100%;
-        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex, 'calc', '- 1');
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
