@@ -65,7 +65,7 @@
     <section>
         <o-field grouped group-multiline>
             <o-switch v-model="openOnFocus">Open dropdown on focus</o-switch>
-            <o-switch v-model="keepFirst">Keep-first <small>(will always have first option pre-selected)</small></o-switch>
+            <o-switch v-model="keepFirst">Keep-first</o-switch>
         </o-field>
         <p class="content"><b>Selected:</b> {{ selected }}</p>
         <o-field label="Find a name">

@@ -222,36 +222,36 @@ title: Pagination
 
 ## Props
 
-| Prop name         | Description                                                            | Type           | Values                                  | Default                                |
-| ----------------- | ---------------------------------------------------------------------- | -------------- | --------------------------------------- | -------------------------------------- |
-| total             | Total count of items                                                   | number\|string | -                                       |                                        |
-| perPage           | Items count for each page                                              | number\|string | -                                       | 'pagination.perPage': 20               |
-| current           | Current page number, use the .sync modifier to make it two-way binding | number\|string | -                                       | 1                                      |
-| rangeBefore       | Number of pagination items to show before current page                 | number\|string | -                                       | 1                                      |
-| rangeAfter        | Number to paginatation items to show after current page                | number\|string | -                                       | 1                                      |
-| size              | Pagination size, optional                                              | string         | `small`, `medium`, `large`              |                                        |
-| simple            | Simple style                                                           | boolean        | -                                       |                                        |
-| rounded           | Rounded button styles                                                  | boolean        | -                                       |                                        |
-| order             | Buttons order, optional                                                | string         | `centered`, `right`, `left`             |                                        |
-| iconPack          | Icon pack to use                                                       | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal` |                                        |
-| iconPrev          | Icon to use for previous button                                        | string         | -                                       | 'pagination.iconPrev': 'chevron-left'  |
-| iconNext          | Icon to use for next button                                            | string         | -                                       | 'pagination.iconNext': 'chevron-right' |
-| ariaNextLabel     |                                                                        | string         | -                                       |                                        |
-| ariaPreviousLabel |                                                                        | string         | -                                       |                                        |
-| ariaPageLabel     |                                                                        | string         | -                                       |                                        |
-| ariaCurrentLabel  |                                                                        | string         | -                                       |                                        |
-| rootClass         |                                                                        | string         | -                                       |                                        |
-| prevBtnClass      |                                                                        | string         | -                                       |                                        |
-| nextBtnClass      |                                                                        | string         | -                                       |                                        |
-| listClass         |                                                                        | string         | -                                       |                                        |
-| linkClass         |                                                                        | string         | -                                       |                                        |
-| linkCurrentClass  |                                                                        | string         | -                                       |                                        |
-| ellipsisClass     |                                                                        | string         | -                                       |                                        |
-| infoClass         |                                                                        | string         | -                                       |                                        |
-| orderClass        |                                                                        | string         | -                                       |                                        |
-| simpleClass       |                                                                        | string         | -                                       |                                        |
-| roundedClass      |                                                                        | string         | -                                       |                                        |
-| sizeClass         |                                                                        | string         | -                                       |                                        |
+| Prop name         | Description                                                            | Type           | Values                                            | Default                                |
+| ----------------- | ---------------------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------- |
+| total             | Total count of items                                                   | number\|string | -                                                 |                                        |
+| perPage           | Items count for each page                                              | number\|string | -                                                 | 'pagination.perPage': 20               |
+| current           | Current page number, use the .sync modifier to make it two-way binding | number\|string | -                                                 | 1                                      |
+| rangeBefore       | Number of pagination items to show before current page                 | number\|string | -                                                 | 1                                      |
+| rangeAfter        | Number to paginatation items to show after current page                | number\|string | -                                                 | 1                                      |
+| size              | Pagination size, optional                                              | string         | `small`, `medium`, `large`                        |                                        |
+| simple            | Simple style                                                           | boolean        | -                                                 |                                        |
+| rounded           | Rounded button styles                                                  | boolean        | -                                                 |                                        |
+| order             | Buttons order, optional                                                | string         | `centered`, `right`, `left`                       |                                        |
+| iconPack          | Icon pack to use                                                       | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                        |
+| iconPrev          | Icon to use for previous button                                        | string         | -                                                 | 'pagination.iconPrev': 'chevron-left'  |
+| iconNext          | Icon to use for next button                                            | string         | -                                                 | 'pagination.iconNext': 'chevron-right' |
+| ariaNextLabel     |                                                                        | string         | -                                                 |                                        |
+| ariaPreviousLabel |                                                                        | string         | -                                                 |                                        |
+| ariaPageLabel     |                                                                        | string         | -                                                 |                                        |
+| ariaCurrentLabel  |                                                                        | string         | -                                                 |                                        |
+| rootClass         |                                                                        | string         | -                                                 |                                        |
+| prevBtnClass      |                                                                        | string         | -                                                 |                                        |
+| nextBtnClass      |                                                                        | string         | -                                                 |                                        |
+| listClass         |                                                                        | string         | -                                                 |                                        |
+| linkClass         |                                                                        | string         | -                                                 |                                        |
+| linkCurrentClass  |                                                                        | string         | -                                                 |                                        |
+| ellipsisClass     |                                                                        | string         | -                                                 |                                        |
+| infoClass         |                                                                        | string         | -                                                 |                                        |
+| orderClass        |                                                                        | string         | -                                                 |                                        |
+| simpleClass       |                                                                        | string         | -                                                 |                                        |
+| roundedClass      |                                                                        | string         | -                                                 |                                        |
+| sizeClass         |                                                                        | string         | -                                                 |                                        |
 
 ## Events
 

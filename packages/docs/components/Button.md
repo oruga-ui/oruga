@@ -157,7 +157,7 @@ title: Button
 | variant       | Color of the control, optional           | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                         |
 | size          | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                         |
 | label         | Button label, optional when default slot | string         | -                                                                               |                         |
-| iconPack      | Icon pack to use                         | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal`                                         |                         |
+| iconPack      | Icon pack to use                         | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                         |
 | iconLeft      | Icon name to show on the left            | string         | -                                                                               |                         |
 | iconRight     | Icon name to show on the right           | string         | -                                                                               |                         |
 | rounded       | Rounded style                            | boolean        | -                                                                               | 'button.rounded': false |
