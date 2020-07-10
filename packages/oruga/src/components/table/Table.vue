@@ -142,6 +142,7 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="index"
+                            :class="thStickyClasses(column)"
                             :style="column.style">
                             <div :class="thWrapClasses({})">
                                 <template v-if="column.searchable">
@@ -692,6 +693,11 @@ export default {
                 this.computedClass('table', 'paginationWrapperClass', 'o-pagination-wrapper')
             ]
         },
+        iconSortDescClasses() {
+            return [
+                { [this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc')]: !this.isAsc },
+            ]
+        },
         tableWrapperStyle() {
             return {
                 height: toCssDimension(this.height)
@@ -922,8 +928,13 @@ export default {
                 column.headerClass,
                 { [this.computedClass('table', 'thCurrentSortClass', 'o-table-th-current-sort')]: (!this.sortMultiple && this.currentSortColumn === column) },
                 { [this.computedClass('table', 'thSortableClass', 'o-table-th-sortable')]: column.sortable },
-                { [this.computedClass('table', 'thStickyClass', 'o-table-th-sticky')]: column.sticky },
-                { [this.computedClass('table', 'thUnselectableClass', 'o-table-th-unselectable')]: column.isHeaderUnselectable }
+                { [this.computedClass('table', 'thUnselectableClass', 'o-table-th-unselectable')]: column.isHeaderUnselectable },
+                ...this.thStickyClasses(column)
+            ]
+        },
+        thStickyClasses(column) {
+            return [
+                { [this.computedClass('table', 'thStickyClass', 'o-table-th-sticky')]: column.sticky }
             ]
         },
         rowClasses(row, index) {
@@ -935,8 +946,8 @@ export default {
         iconSortClasses(column) {
             return [
                 this.computedClass('table', 'iconSortClass', 'o-icon-sort'),
-                { [this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc')]: !this.isAsc },
-                { [this.computedClass('table', 'iconSortInvisibleClass', 'o-icon-sort-invisible')]: this.currentSortColumn !== column }
+                { [this.computedClass('table', 'iconSortInvisibleClass', 'o-icon-sort-invisible')]: column && this.currentSortColumn !== column },
+                ...this.iconSortDescClasses
             ]
         },
         iconSortMultipleClasses(column) {

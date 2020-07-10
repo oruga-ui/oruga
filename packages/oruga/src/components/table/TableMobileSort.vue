@@ -47,7 +47,7 @@
                     variant="primary"
                     @click="sort">
                     <o-icon
-                        :class="{ [$table.iconSortDesc]: columnIsDesc(sortMultipleSelect) }"
+                        :class="{ [$table.iconSortDescClasses]: columnIsDesc(sortMultipleSelect) }"
                         :icon="sortIcon"
                         :pack="iconPack"
                         :size="sortIconSize"
@@ -70,7 +70,7 @@
                 @click="sort">
                 <o-icon
                     v-show="currentSortColumn === mobileSort"
-                    :class="$table.iconSortClasses"
+                    :class="$table.iconSortClasses()"
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"

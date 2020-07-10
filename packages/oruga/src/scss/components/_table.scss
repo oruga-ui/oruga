@@ -62,7 +62,6 @@ $table-th-wrap-icon-margin: 0.5rem !default;
         max-width: 100%;
         position: relative;
         display: block;
-        background: inherit;
         td {
             border: 0;
             display: inherit;
@@ -72,9 +71,6 @@ $table-th-wrap-icon-margin: 0.5rem !default;
         }
         &:not(:last-child) {
             @include variable('margin', 'table-card-margin', $table-card-margin);
-        }
-        &:hover {
-            background-color: inherit;
         }
         &.o-table-detail {
             @include variable('margin', 'table-card-detail-margin', $table-card-detail-margin);
@@ -101,6 +97,9 @@ $table-th-wrap-icon-margin: 0.5rem !default;
     transition: opacity $speed $easing;
     position: relative;
     .o-table-wrapper {
+        @media screen and (max-width: $table-mobile-breakpoint - 1px) {
+            overflow-x: auto;
+        }
         &.o-table-sticky-header {
             @include variable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
@@ -130,6 +129,13 @@ $table-th-wrap-icon-margin: 0.5rem !default;
     .o-table-mobile-sort {
         @media screen and (min-width: $table-mobile-breakpoint) {
             display: none;
+        }
+        .o-icon {
+            &.o-icon-sort {
+                &.o-icon-sort-desc {
+                    transform: rotate(180deg);
+                }
+            }
         }
     }
 
