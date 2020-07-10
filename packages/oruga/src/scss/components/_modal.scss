@@ -10,6 +10,8 @@ $modal-close-right: 20px !default;
 $modal-close-top: 20px !default;
 $modal-close-width: 32px !default;
 $modal-content-fullscreen-background-color: #f5f5f5 !default;
+$modal-content-max-height: calc(100vh - 160px) !default;
+$modal-content-margin: 0 auto !default;
 $modal-mobile-breakpoint: 1024px !default;
 $modal-zindex: 40 !default;
 /* @docs */
@@ -44,8 +46,11 @@ $modal-zindex: 40 !default;
         @include variable('background-color', 'modal-background-background-color', $modal-background-background-color);
     }
     .o-modal-content {
-        margin: 0 20px;
         position: relative;
+        max-height: calc(100vh - 160px);
+        overflow: auto;
+        @include variable('margin', 'modal-content-margin', $modal-content-margin);
+        @include variable('max-height', 'modal-content-max-height', $modal-content-max-height);
         @include variable('background-color', 'modal-content-background-color', $modal-content-background-color);
         @include variable('padding', 'modal-content-padding', $modal-content-padding);
         @include variable('border-radius', 'modal-content-border-radius', $modal-content-border-radius);

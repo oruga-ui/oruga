@@ -9,19 +9,21 @@
         <div class="buttons">
             <o-button size="medium" variant="primary"
                 @click="isImageModalActive = true">
-                Launch image modal
+                Open modal
             </o-button>
             <o-button size="medium" variant="primary"
                 @click="isCardModalActive = true">
-                Launch card modal (keep scroll)
+                Open modal (clip scroll)
             </o-button>
         </div>
 
         <o-modal :active.sync="isImageModalActive">
-            <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4">
+            <p style="text-align: center">
+                <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4">
+            </p>
         </o-modal>
 
-        <o-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
+        <o-modal :active.sync="isCardModalActive" :width="640" scroll="clip">
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum. Nulla faucibus leo eget enim egestas, in tempus justo venenatis. Duis dictum suscipit erat, a dapibus eros lobortis ac. Praesent tempor rhoncus convallis. Nullam in ipsum convallis, rutrum elit eget, dictum ipsum. Nunc sagittis aliquet massa. Etiam lacus sapien, eleifend non eros quis, finibus ornare nisl. Ut laoreet sit amet lacus non dignissim. Sed convallis mattis enim, sed interdum risus molestie ut. Praesent vel ex hendrerit, cursus lectus a, blandit felis. Nam luctus orci nec varius commodo.
             </p>
@@ -54,11 +56,11 @@
         <div class="buttons">
             <o-button size="medium" variant="primary"
                 @click="imageModal()">
-                Launch image modal (HTML)
+                Open modal (HTML)
             </o-button>
             <o-button size="medium" variant="primary"
                 @click="cardModal()">
-                Launch card modal (Component)
+                Open modal (Component)
             </o-button>
         </div>
     </section>
@@ -115,7 +117,7 @@
         methods: {
             imageModal() {
                 const h = this.$createElement
-                const vnode = h('p', {}, [
+                const vnode = h('p', { style: { 'text-align': 'center' }}, [
                     h('img', { attrs: { src: 'https://avatars2.githubusercontent.com/u/66300512?s=200&v=4' }})
                 ])
                 this.$oruga.modal.open({

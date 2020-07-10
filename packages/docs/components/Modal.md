@@ -23,22 +23,26 @@ title: Modal
         variant="primary"
         @click="isImageModalActive = true"
       >
-        Launch image modal
+        Open modal
       </o-button>
       <o-button
         size="medium"
         variant="primary"
         @click="isCardModalActive = true"
       >
-        Launch card modal (keep scroll)
+        Open modal (clip scroll)
       </o-button>
     </div>
 
     <o-modal :active.sync="isImageModalActive">
-      <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
+      <p style="text-align: center">
+        <img
+          src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+        />
+      </p>
     </o-modal>
 
-    <o-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
+    <o-modal :active.sync="isCardModalActive" :width="640" scroll="clip">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales
         leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum.
@@ -89,10 +93,10 @@ title: Modal
   <section>
     <div class="buttons">
       <o-button size="medium" variant="primary" @click="imageModal()">
-        Launch image modal (HTML)
+        Open modal (HTML)
       </o-button>
       <o-button size="medium" variant="primary" @click="cardModal()">
-        Launch card modal (Component)
+        Open modal (Component)
       </o-button>
     </div>
   </section>
@@ -149,7 +153,7 @@ title: Modal
     methods: {
       imageModal() {
         const h = this.$createElement;
-        const vnode = h("p", {}, [
+        const vnode = h("p", { style: { "text-align": "center" } }, [
           h("img", {
             attrs: {
               src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
@@ -285,5 +289,7 @@ title: Modal
 | --oruga-modal-close-top                           | \$modal-close-top                           | 20px                         |
 | --oruga-modal-close-width                         | \$modal-close-width                         | 32px                         |
 | --oruga-modal-content-fullscreen-background-color | \$modal-content-fullscreen-background-color | #f5f5f5                      |
+| --oruga-modal-content-max-height                  | \$modal-content-max-height                  | calc(100vh - 160px)          |
+| --oruga-modal-content-margin                      | \$modal-content-margin                      | 0 auto                       |
 | --oruga-modal-mobile-breakpoint                   | \$modal-mobile-breakpoint                   | 1024px                       |
 | --oruga-modal-zindex                              | \$modal-zindex                              | 40                           |
