@@ -43,7 +43,7 @@ import '@oruga-ui/oruga/dist/oruga.css';
 Vue.use(Oruga);
 ```
 
-### Individual components ((tree shaking))
+### Individual components (tree shaking)
 
 ```js
 import Vue from 'vue';
@@ -115,7 +115,7 @@ $colors: (
 @import "~@oruga-ui/oruga/src/scss/oruga";
 ```
 
-Take a look at [components page](/components/#base-style) to know all global variables.
+Take a look at [components page](/components/#base-style) to know all global variables; you should be able to create a custom theme setting your values (global and components) or/and remove a few css class attributes and enable css var.
 
 ### Adding new classes
 
@@ -187,5 +187,40 @@ Vue.use(Config, {
         ...
     }
 })
+```
+
+:::tip
+Before to use override mode you should evaluate to use *oruge-lite* stylesheet in order to avoid to define the css structure of Oruga components (display, position, z-index and other base attributes).
+:::
+
+For example: 
+
+**Override mode**
+
+```css
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+**Oruga lite mode**
+
+```css
+.dropdown { }
+.dropdown-menu {
+    min-width: 12em;
+    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply no-underline px-1 py-2 cursor-pointer;
+}
 ```
 
