@@ -15,7 +15,7 @@ $input-height: $control-height !default;
 $input-line-height: $base-line-height !default;
 $input-margin: 0 !default;
 $input-max-width: 100% !default;
-$input-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
+$input-padding: $control-padding-vertical $control-padding-horizontal !default;
 $input-textarea-max-height: 600px !default;
 $input-textarea-min-height: 120px !default;
 $input-textarea-padding: 0.625em !default;

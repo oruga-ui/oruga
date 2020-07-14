@@ -74,7 +74,7 @@ Take a look at each component docs to know all customizable fields/props by conf
 | \$speed-slower                    | 250ms                         |
 | \$easing                          | ease-out                      |
 | \$control-border-width            | 1px                           |
-| \$control-width                   | 2em                           |
+| \$control-height                  | 2.25em                        |
 | \$white                           | #ffffff                       |
 | \$black                           | #000000                       |
 | \$grey                            | #7a7a7a                       |

@@ -20,7 +20,7 @@ $select-optgroup-padding: 0.25em 0 !default;
 $select-option-color: #4a4a4a !default;
 $select-option-disabled-opacity: $base-disabled-opacity !default;
 $select-option-padding: .25em .5em !default;
-$select-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
+$select-padding: $control-padding-vertical $control-padding-horizontal !default;
 /* @docs */
 
 .o-control-select {
@@ -77,7 +77,6 @@ $select-padding: calc(.375em - 1px) calc(.625em - 1px) !default;
     @include variable('color', 'select-color', $select-color);
     @include variable('margin', 'select-margin', $select-margin);
     @include variable('box-shadow', 'select-box-shadow', $select-box-shadow);
-    @include variable('height', 'select-height', $select-height);
     @include variable('line-height', 'select-line-height', $select-line-height);
     @include variable('padding', 'select-padding', $select-padding);
     &:not(.o-select-multiple) {

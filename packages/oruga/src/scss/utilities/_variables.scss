@@ -13,8 +13,9 @@ $speed-slower: 250ms !default;
 $easing: ease-out !default;
 
 $control-border-width: 1px !default;
-$control-width: 2em !default;
-$control-height: 2em !default;
+$control-height: 2.25em !default;
+$control-padding-vertical: calc(0.375em - #{$control-border-width});
+$control-padding-horizontal: calc(0.625em - #{$control-border-width});
 
 $whitelist: () !default;
 $sass-vars: true !default;

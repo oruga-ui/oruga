@@ -8,11 +8,11 @@ $button-color: #000000 !default;
 $button-font-size: $base-font-size !default;
 $button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
-$button-margin-border-to-icon: calc(-.375em - 1px) !default;
+$button-margin-border-to-icon: $control-padding-vertical !default;
 $button-margin-icon-to-text: .1875em !default;
 $button-margin: 0 !default;
 $button-height: $control-height !default;
-$button-padding: calc(.375em - 1px) .75em !default;
+$button-padding: $control-padding-vertical .75em !default;
 $button-rounded-border-radius: $base-rounded-border-radius !default;
 $button-disabled-opacity: $base-disabled-opacity !default;
 /* @docs */
