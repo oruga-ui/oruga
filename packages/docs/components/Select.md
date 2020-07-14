@@ -153,26 +153,26 @@ title: Select
 
 ## Style
 
-| CSS Variable                           | SASS Variable                    | Default                               |
-| -------------------------------------- | -------------------------------- | ------------------------------------- |
-| --oruga-select-background-color        | \$select-background-color        | #fff                                  |
-| --oruga-select-border-color            | \$select-border-color            | \$grey-lighter                        |
-| --oruga-select-border-radius           | \$select-border-radius           | \$base-border-radius                  |
-| --oruga-select-box-shadow              | \$select-box-shadow              | none                                  |
-| --oruga-select-color                   | \$select-color                   | #363636                               |
-| --oruga-select-control-icon-zindex     | \$select-control-icon-zindex     | 4                                     |
-| --oruga-select-control-icon-color      | \$select-control-icon-color      | \$grey-lighter                        |
-| --oruga-select-empty-color             | \$select-empty-color             | rgba(\$grey, 0.7)                     |
-| --oruga-select-font-size               | \$select-font-size               | \$base-font-size                      |
-| --oruga-select-height                  | \$select-height                  | \$control-height                      |
-| --oruga-select-line-height             | \$select-line-height             | \$base-line-height                    |
-| --oruga-select-margin                  | \$select-margin                  | 0                                     |
-| --oruga-select-max-width               | \$select-max-width               | 100%                                  |
-| --oruga-select-optgroup-color          | \$select-optgroup-color          | \$grey-light                          |
-| --oruga-select-optgroup-font-style     | \$select-optgroup-font-style     | normal                                |
-| --oruga-select-optgroup-font-weight    | \$select-optgroup-font-weight    | 500                                   |
-| --oruga-select-optgroup-padding        | \$select-optgroup-padding        | 0.25em 0                              |
-| --oruga-select-option-color            | \$select-option-color            | #4a4a4a                               |
-| --oruga-select-option-disabled-opacity | \$select-option-disabled-opacity | \$base-disabled-opacity               |
-| --oruga-select-option-padding          | \$select-option-padding          | .25em .5em                            |
-| --oruga-select-padding                 | \$select-padding                 | calc(.375em - 1px) calc(.625em - 1px) |
+| CSS Variable                           | SASS Variable                    | Default                                               |
+| -------------------------------------- | -------------------------------- | ----------------------------------------------------- |
+| --oruga-select-background-color        | \$select-background-color        | #fff                                                  |
+| --oruga-select-border-color            | \$select-border-color            | \$grey-lighter                                        |
+| --oruga-select-border-radius           | \$select-border-radius           | \$base-border-radius                                  |
+| --oruga-select-box-shadow              | \$select-box-shadow              | none                                                  |
+| --oruga-select-color                   | \$select-color                   | #363636                                               |
+| --oruga-select-control-icon-zindex     | \$select-control-icon-zindex     | 4                                                     |
+| --oruga-select-control-icon-color      | \$select-control-icon-color      | \$grey-lighter                                        |
+| --oruga-select-empty-color             | \$select-empty-color             | rgba(\$grey, 0.7)                                     |
+| --oruga-select-font-size               | \$select-font-size               | \$base-font-size                                      |
+| --oruga-select-height                  | \$select-height                  | \$control-height                                      |
+| --oruga-select-line-height             | \$select-line-height             | \$base-line-height                                    |
+| --oruga-select-margin                  | \$select-margin                  | 0                                                     |
+| --oruga-select-max-width               | \$select-max-width               | 100%                                                  |
+| --oruga-select-optgroup-color          | \$select-optgroup-color          | \$grey-light                                          |
+| --oruga-select-optgroup-font-style     | \$select-optgroup-font-style     | normal                                                |
+| --oruga-select-optgroup-font-weight    | \$select-optgroup-font-weight    | 500                                                   |
+| --oruga-select-optgroup-padding        | \$select-optgroup-padding        | 0.25em 0                                              |
+| --oruga-select-option-color            | \$select-option-color            | #4a4a4a                                               |
+| --oruga-select-option-disabled-opacity | \$select-option-disabled-opacity | \$base-disabled-opacity                               |
+| --oruga-select-option-padding          | \$select-option-padding          | .25em .5em                                            |
+| --oruga-select-padding                 | \$select-padding                 | $control-padding-vertical $control-padding-horizontal |

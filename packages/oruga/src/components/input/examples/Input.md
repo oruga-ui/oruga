@@ -95,7 +95,7 @@
 ```html
 <template>
     <section>
-        <h3 class="subtitle">With Material Design Icons</h3>
+        <h3 class="subtitle">With Icons</h3>
         <o-field>
             <o-input placeholder="Search..."
                 type="search"

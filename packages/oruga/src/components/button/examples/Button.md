@@ -84,6 +84,8 @@
             </o-button>
         </div>
 
+        <br>
+
         <div class="buttons">
             <o-button variant="danger"
                 icon-left="trash">

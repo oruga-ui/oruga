@@ -8,8 +8,9 @@ $button-color: #000000 !default;
 $button-font-size: $base-font-size !default;
 $button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
-$button-margin-border-to-icon: $control-padding-vertical !default;
+$button-margin-border-to-icon: calc(-0.375em - #{$control-border-width}) !default;
 $button-margin-icon-to-text: .1875em !default;
+$button-icon-width: 1.5em !default;
 $button-margin: 0 !default;
 $button-height: $control-height !default;
 $button-padding: $control-padding-vertical .75em !default;
@@ -53,6 +54,10 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     &.o-button-disabled {
         @include variable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
+    }
+    > .o-icon {
+        @include variable('height', 'button-icon-width', $button-icon-width);
+        @include variable('width', 'button-icon-width', $button-icon-width);
     }
     > .o-icon:first-child:not(:last-child) {
         @include variable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
