@@ -3,7 +3,7 @@
 $autocomplete-item-color: #000000 !default;
 $autocomplete-item-disabled-opacity: $base-disabled-opacity !default;
 $autocomplete-item-font-size: $base-font-size !default;
-$autocomplete-item-hover-background-color: grey !default;
+$autocomplete-item-hover-background-color: #f5f5f5 !default;
 $autocomplete-item-hover-color: #000000 !default;
 $autocomplete-item-line-height: $base-line-height !default;
 $autocomplete-item-padding: .375rem 1rem !default;
@@ -43,6 +43,8 @@ $autocomplete-menu-zindex : 20 !default;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-decoration: none;
+            cursor: pointer;
             @include variable('color', 'autocomplete-item-color', $autocomplete-item-color);
             @include variable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
             @include variable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
@@ -51,9 +53,10 @@ $autocomplete-menu-zindex : 20 !default;
                 pointer-events: none;
                 @include variable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
             }
-            &.o-autocomplete-item-hovered {
+            &:hover, &.o-autocomplete-item-hovered {
                 @include variable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
                 @include variable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
+                text-decoration: none;
             }
         }
     }

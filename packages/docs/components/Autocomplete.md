@@ -666,7 +666,7 @@ title: Autocomplete
 | --oruga-autocomplete-item-color                  | \$autocomplete-item-color                  | #000000                                                              |
 | --oruga-autocomplete-item-disabled-opacity       | \$autocomplete-item-disabled-opacity       | \$base-disabled-opacity                                              |
 | --oruga-autocomplete-item-font-size              | \$autocomplete-item-font-size              | \$base-font-size                                                     |
-| --oruga-autocomplete-item-hover-background-color | \$autocomplete-item-hover-background-color | grey                                                                 |
+| --oruga-autocomplete-item-hover-background-color | \$autocomplete-item-hover-background-color | \$grey-light                                                         |
 | --oruga-autocomplete-item-hover-color            | \$autocomplete-item-hover-color            | #000000                                                              |
 | --oruga-autocomplete-item-line-height            | \$autocomplete-item-line-height            | \$base-line-height                                                   |
 | --oruga-autocomplete-item-padding                | \$autocomplete-item-padding                | .375rem 1rem                                                         |
