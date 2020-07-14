@@ -20,7 +20,7 @@
     "concurrently": "5.2.0",
     "markdown-it-include": "1.1.1",
     "sockjs-client": "1.4.0",
-    "vue-docgen-cli": "4.26.1",
+    "vue-docgen-cli": "4.26.2",
     "vuepress": "1.5.2",
     "vuepress-plugin-demo-block": "0.7.2"
   },

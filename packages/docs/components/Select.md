@@ -50,11 +50,7 @@ title: Select
       </o-select>
     </o-field>
 
-    <o-field
-      label="Error"
-      variant="danger"
-      message="Something went wrong with this field"
-    >
+    <o-field label="Error" variant="danger" message="Something went wrong with this field">
       <o-select placeholder="Select a character">
         <option value="flint">Flint</option>
         <option value="silver">Silver</option>
@@ -99,7 +95,7 @@ title: Select
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 

@@ -16,22 +16,15 @@ title: Collapse
 <template>
   <section>
     <o-collapse :open="false" aria-id="contentIdForA11y1">
-      <o-button
-        variant="primary"
-        slot="trigger"
-        aria-controls="contentIdForA11y1"
-        >Click me!</o-button
-      >
+      <o-button variant="primary" slot="trigger" aria-controls="contentIdForA11y1">Click me!</o-button>
       <div class="notification">
         <h3>
           Subtitle
         </h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-          Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius
-          lectus, nec rutrum justo nibh eu lectus. <br />
-          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel,
-          interdum mattis neque.
+          Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />
+          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.
         </p>
       </div>
     </o-collapse>
@@ -39,7 +32,7 @@ title: Collapse
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -52,14 +45,7 @@ title: Collapse
 ```html
 <template>
   <section>
-    <o-collapse
-      class="card"
-      animation="slide"
-      v-for="(collapse, index) of collapses"
-      :key="index"
-      :open="isOpen == index"
-      @open="isOpen = index"
-    >
+    <o-collapse class="card" animation="slide" v-for="(collapse, index) of collapses" :key="index" :open="isOpen == index" @open="isOpen = index">
       <div slot="trigger" slot-scope="props" class="card-header" role="button">
         <p class="card-header-title">
           {{ collapse.title }}
@@ -84,21 +70,21 @@ title: Collapse
         isOpen: 0,
         collapses: [
           {
-            title: "Title 1",
-            text: "Text 1"
+            title: 'Title 1',
+            text: 'Text 1'
           },
           {
-            title: "Title 2",
-            text: "Text 2"
+            title: 'Title 2',
+            text: 'Text 2'
           },
           {
-            title: "Title 3",
-            text: "Text 3"
+            title: 'Title 3',
+            text: 'Text 3'
           }
         ]
-      };
+      }
     }
-  };
+  }
 </script>
 
 <style>

@@ -26,14 +26,8 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
-      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
-      laoreet elit
-      <o-loading
-        :full-page="isFullPage"
-        :active.sync="isLoading"
-        :can-cancel="true"
-      ></o-loading>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+      <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></o-loading>
     </p>
   </section>
 </template>
@@ -44,17 +38,17 @@ title: Loading
       return {
         isLoading: false,
         isFullPage: true
-      };
+      }
     },
     methods: {
       openLoading() {
-        this.isLoading = true;
+        this.isLoading = true
         setTimeout(() => {
-          this.isLoading = false;
-        }, 10 * 1000);
+          this.isLoading = false
+        }, 10 * 1000)
       }
     }
-  };
+  }
 </script>
 ```
 
@@ -76,14 +70,8 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
-      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
-      laoreet elit
-      <o-loading
-        :full-page="isFullPage"
-        :active.sync="isLoading"
-        :can-cancel="true"
-      >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+      <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
         <o-icon pack="fas" icon="sync-alt" size="ilarge" spin> </o-icon>
       </o-loading>
     </p>
@@ -96,17 +84,17 @@ title: Loading
       return {
         isLoading: false,
         isFullPage: true
-      };
+      }
     },
     methods: {
       openLoading() {
-        this.isLoading = true;
+        this.isLoading = true
         setTimeout(() => {
-          this.isLoading = false;
-        }, 10 * 1000);
+          this.isLoading = false
+        }, 10 * 1000)
       }
     }
-  };
+  }
 </script>
 ```
 
@@ -128,9 +116,7 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative" ref="element">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
-      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
-      laoreet elit
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
     </p>
   </div>
 </template>
@@ -140,18 +126,18 @@ title: Loading
     data() {
       return {
         isFullPage: true
-      };
+      }
     },
     methods: {
       openLoading() {
         const loadingComponent = this.$oruga.loading.open({
           fullPage: this.isFullPage,
           container: this.isFullPage ? null : this.$refs.element
-        });
-        setTimeout(() => loadingComponent.close(), 3 * 1000);
+        })
+        setTimeout(() => loadingComponent.close(), 3 * 1000)
       }
     }
-  };
+  }
 </script>
 ```
 

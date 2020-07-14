@@ -29,12 +29,7 @@ title: Skeleton
 
     <o-skeleton :animated="animated"></o-skeleton>
 
-    <o-skeleton
-      :animated="animated"
-      circle
-      width="64px"
-      height="64px"
-    ></o-skeleton>
+    <o-skeleton :animated="animated" circle width="64px" height="64px"></o-skeleton>
 
     <o-skeleton :animated="animated" size="large" :count="2"></o-skeleton>
   </section>
@@ -45,9 +40,9 @@ title: Skeleton
     data() {
       return {
         animated: true
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 

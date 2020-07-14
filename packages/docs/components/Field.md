@@ -25,11 +25,7 @@ title: Field
       <o-input type="email" value="john@" maxlength="30"> </o-input>
     </o-field>
 
-    <o-field
-      label="Username"
-      variant="success"
-      message="This username is available"
-    >
+    <o-field label="Username" variant="success" message="This username is available">
       <o-input value="johnsilver" maxlength="30"></o-input>
     </o-field>
 
@@ -47,7 +43,7 @@ title: Field
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -132,13 +128,9 @@ title: Field
           <o-icon icon="caret-down"></o-icon>
         </o-button>
 
-        <o-dropdown-item value="open_issues"
-          >Open Issues and Pull Requests</o-dropdown-item
-        >
+        <o-dropdown-item value="open_issues">Open Issues and Pull Requests</o-dropdown-item>
         <o-dropdown-item value="your_issues">Your Issues</o-dropdown-item>
-        <o-dropdown-item value="pull_requests"
-          >Your Pull Requests</o-dropdown-item
-        >
+        <o-dropdown-item value="pull_requests">Your Pull Requests</o-dropdown-item>
         <o-dropdown-item value="everything">Everything</o-dropdown-item>
       </o-dropdown>
       <o-input icon="search" type="search" placeholder="Search..."></o-input>
@@ -147,7 +139,7 @@ title: Field
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -185,7 +177,7 @@ title: Field
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -217,7 +209,7 @@ title: Field
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
