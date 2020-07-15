@@ -16,6 +16,7 @@ import Sidebar from './sidebar'
 import Slider from './slider'
 import Switch from './switch'
 import Table from './table'
+import Tabs from './tabs'
 import Tooltip from './tooltip'
 
 export {
@@ -37,5 +38,6 @@ export {
     Slider,
     Switch,
     Table,
+    Tabs,
     Tooltip
 }

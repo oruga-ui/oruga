@@ -1,0 +1,286 @@
+/* @docs */
+$tabs-disabled-opacity: $base-disabled-opacity !default;
+$tabs-font-size: $base-font-size !default;
+$tabs-icon-margin: 0.5em !default;
+$tabs-content-padding: 1rem !default;
+$tabs-margin-bottom: 1.5rem !default;
+$tabs-border-bottom-color: #dbdbdb !default;
+$tabs-border-bottom-style: solid !default;	
+$tabs-border-bottom-width: 1px !default;
+$tabs-link-color: hsl(0, 0%, 29%) !default;
+$tabs-link-hover-border-bottom-color: hsl(0, 0%, 21%) !default;
+$tabs-link-hover-color: hsl(0, 0%, 21%) !default;
+$tabs-link-active-border-bottom-color: $primary !default;
+$tabs-link-active-color: $primary !default;
+$tabs-link-padding: 0.5em 1em !default;
+$tabs-boxed-link-radius: $base-border-radius !default;
+$tabs-boxed-link-hover-background-color: hsl(0, 0%, 96%) !default;
+$tabs-boxed-link-hover-border-bottom-color: hsl(0, 0%, 86%) !default;
+$tabs-boxed-link-active-background-color: hsl(0, 0%, 100%) !default;
+$tabs-boxed-link-active-border-color: hsl(0, 0%, 86%) !default;
+$tabs-boxed-link-active-border-bottom-color: transparent !default;
+$tabs-toggle-link-border-color: hsl(0, 0%, 86%) !default;
+$tabs-toggle-link-border-style:	solid !default;	
+$tabs-toggle-link-border-width: 1px !default;
+$tabs-toggle-link-hover-background-color: hsl(0, 0%, 96%) !default;
+$tabs-toggle-link-hover-border-color: hsl(0, 0%, 71%) !default;
+$tabs-toggle-link-radius: $base-border-radius !default;
+$tabs-toggle-link-active-background-color: $primary !default;
+$tabs-toggle-link-active-border-color: $primary !default;
+$tabs-toggle-link-active-color: $primary-invert !default;
+/* @docs */
+
+.o-tabs-wrapper {
+    .o-tabs {
+        @include unselectable;
+        margin-bottom: 0;
+        flex-shrink: 0;
+        align-items: stretch;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+        overflow-x: auto;
+        white-space: nowrap;
+        @include variable('font-size', 'tabs-font-size', $tabs-font-size);
+        @each $name, $value in $sizes {
+            &.o-size-#{$name} {
+                @include variable('font-size', ('tabs-font-size-' + #{$name}), $value);
+                button {
+                    @include variable('font-size', ('tabs-font-size-' + #{$name}), $value);
+                }
+            }
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 0;
+            justify-content: flex-start;
+            @include variable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+            @include variable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
+            @include variable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
+            li {
+                display: block;
+                margin: 0;
+                padding: 0;
+                &.o-tab-disabled {
+                    pointer-events: none;
+                    cursor: not-allowed;
+                    @include variable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
+                }
+                button {
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                    border: 1px solid transparent;
+                    background-color: transparent;
+                    align-items: center;
+                    @include variable('font-size', 'tabs-font-size', $tabs-font-size);
+                    @include variable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                    @include variable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
+                    @include variable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
+                    @include variable('color', 'tabs-link-color', $tabs-link-color);
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: -1px;
+                    @include variable('padding', 'tabs-link-padding', $tabs-link-padding);
+                    vertical-align: top;
+                    cursor: pointer;
+                    text-decoration: none;
+                    &:hover {
+                        @include variable('border-bottom-color', 'tabs-link-hover-border-bottom-color', $tabs-link-hover-border-bottom-color);
+                        @include variable('color', 'tabs-link-hover-color', $tabs-link-hover-color);
+                        text-decoration: none;
+                    }
+                    .o-icon:first-child {
+                        @include variable('margin-right', 'tabs-icon-margin', $tabs-icon-margin);
+                    }
+                }
+                &.o-tab-active {
+                    button {
+                        @include variable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
+                        @include variable('color', 'tabs-link-active-color', $tabs-link-active-color);
+                    }
+                }
+            }
+        }
+        &.o-tabs-boxed {
+            li {
+                button {
+                    @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-boxed-link-radius} #{$tabs-boxed-link-radius} 0 0);
+                    border-bottom-color: transparent;
+                    &:hover {
+                        @include variable('background-color', 'tabs-boxed-link-hover-background-color', $tabs-boxed-link-hover-background-color);
+                        @include variable('border-bottom-color', 'tabs-boxed-link-hover-border-bottom-color', $tabs-boxed-link-hover-border-bottom-color);
+                    }
+                }
+                &.o-tab-active {
+                    button {
+                        @include variable('border-color', 'tabs-border-color', $tabs-border-bottom-color);
+                        border-bottom-color: transparent;
+                        background-color: #fff;
+                    }
+                }
+            }
+        }
+        &.o-tabs-toggle {
+            li {
+                + li {
+                    margin-left: -1px;
+                }
+                button {
+                    @include variable('border-color', 'tabs-toggle-link-border-color', $tabs-toggle-link-border-color);
+                    @include variable('border-style', 'tabs-toggle-link-border-styl', $tabs-toggle-link-border-style);
+                    @include variable('border-width', 'tabs-toggle-link-border-width', $tabs-toggle-link-border-width);
+                    margin-bottom: 0;
+                    position: relative;
+                    &:hover {
+                        @include variable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
+                        @include variable('border-color', '$tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
+                    }
+                }
+                &:first-child {
+                    button {
+                        @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
+                    }
+                }
+                &:last-child {
+                    button {
+                        @include variable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-toggle-link-radius} #{$tabs-toggle-link-radius} 0);
+                    }
+                }
+                &.o-tab-active {
+                    button {
+                        @include variable('background-color', 'tabs-toggle-link-active-background-color', $tabs-toggle-link-active-background-color);
+                        @include variable('border-color', 'tabs-toggle-link-active-border-color', $tabs-toggle-link-active-border-color);
+                        @include variable('color', 'tabs-toggle-link-active-color', $tabs-toggle-link-active-color);
+                    }
+                }
+            }
+        }
+    }
+    .o-tab-content {
+        position: relative;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+        @include variable('padding', 'tabs-content-padding', $tabs-content-padding);
+        .o-tab-item {
+            flex-shrink: 0;
+            flex-basis: auto;
+        }
+        &.o-tab-content-transitioning {
+            overflow: hidden;
+        }
+    }
+    &:not(:last-child) {
+        @include variable('margin-bottom', 'tabs-margin-bottom', $tabs-margin-bottom);
+    }
+    &.o-tabs-wrapper-fullwidth {
+        width: 100%;
+        > .o-tabs {
+            ul {
+                li {
+                    flex-grow: 1;
+                    flex-shrink: 0;
+                    button {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+    &.o-tabs-wrapper-vertical {
+        display: flex;
+        flex-direction: row;
+        > .o-tabs {
+            ul {
+                flex-direction: column;
+                border-bottom-color: transparent;
+                li {
+                    width: 100%;
+                    button {
+                        justify-content: left;
+                    }
+                }
+            }
+            &.o-tabs-boxed {
+                li {
+                    button {
+                        border-bottom-color: transparent;
+                        @include variable('border-right-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                        @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
+                    }
+                    &.o-tab-active {
+                        button {
+                            @include variable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                            border-right-color: transparent;
+                        }
+                    }
+                }
+            }
+            &.o-tabs-toggle {
+                li {
+                    + li {
+                        margin-left: 0;
+                    }
+                    &:first-child {
+                        button {
+                            @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} #{$tabs-toggle-link-radius} 0 0);
+                        }
+                    }
+                    &:last-child {
+                        button {
+                            @include variable('border-radius', 'tabs-border-bottom-color', 0 0 #{$tabs-toggle-link-radius} #{$tabs-toggle-link-radius});
+                        }
+                    }
+                }
+            }
+        }
+        > .o-tab-content {
+            flex-grow: 1;
+        }
+        &.o-tabs-wrapper-position-right {
+            flex-direction: row-reverse;
+            > .o-tabs {
+                ul {
+                    button {
+                        flex-direction: row-reverse;
+                        .o-icon:first-child {
+                            @include variable('margin-left', 'tabs-icon-margin', $tabs-icon-margin);
+                        }
+                    }
+                }
+                &.o-tabs-boxed {
+                    li {
+                        button {
+                            border-bottom-color: transparent;
+                            border-right-color: transparent;
+                            @include variable('border-left-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                            @include variable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-boxed-link-radius} #{$tabs-boxed-link-radius} 0);
+                        }
+                        &.o-tab-active {
+                            button {
+                                @include variable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                                @include variable('border-right-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                                border-left-color: transparent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.o-tabs-wrapper-multiline {
+        > .o-tabs {
+            ul {
+                flex-wrap: wrap;
+                flex-shrink: 1;
+            }
+        }
+    }
+}

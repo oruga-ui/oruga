@@ -1,5 +1,5 @@
 <template>
-    <div :class="[rootClasses, fieldType()]">
+    <div :class="rootClasses()">
         <div
             v-if="horizontal"
             :class="labelHorizontalClasses">
@@ -114,14 +114,6 @@ export default {
         }
     },
     computed: {
-        rootClasses() {
-            return [
-                this.computedClass('field', 'rootClass', 'o-field'),
-                { [this.computedClass('field', 'horizontalClass', 'o-field-horizontal')]: this.horizontal },
-                { [this.computedClass('field', 'expandedClass', 'o-field-expanded')]: this.expanded },
-                { [this.computedClass('field', 'groupMultiline', 'o-field-grouped-multiline')]: this.groupMultiline }
-            ]
-        },
         messageClasses() {
             return [
                 this.computedClass('field', 'messageClass', 'o-field-message'),
@@ -166,6 +158,13 @@ export default {
         }
     },
     methods: {
+        rootClasses() {
+            return [
+                this.computedClass('field', 'rootClass', 'o-field'),
+                { [this.computedClass('field', 'groupMultilineClass', 'o-field-grouped-multiline')]: this.groupMultiline },
+                this.fieldType()
+            ]
+        },
         /**
         * Field has addons if there are more than one slot
         * (element / component) in the Field.
@@ -185,6 +184,7 @@ export default {
             ) {
                 return 'o-field-addons'
             }
+            return null
         }
     }
 }

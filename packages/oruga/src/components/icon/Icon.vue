@@ -125,11 +125,11 @@ export default {
             return null
         },
         useIconComponent() {
-            if (this.component) return component
+            if (this.component) return this.component
             const component = getValueByPath(config, 'iconComponent')
             const iconPack = getValueByPath(config, 'iconPack')
             if (component && (!this.pack || this.pack === iconPack)) return component
-            return;
+            return null;
         }
     },
     methods: {

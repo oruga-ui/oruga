@@ -19,6 +19,7 @@
 - [o-slider](/components/Slider.md)
 - [o-switch](/components/Switch.md)
 - [o-table](/components/Table.md)
+- [o-tabs](/components/Tabs.md)
 - [o-tooltip](/components/Tooltip.md)
 
 ## Config
