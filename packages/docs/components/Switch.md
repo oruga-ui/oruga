@@ -41,10 +41,10 @@ title: Switch
     data() {
       return {
         isSwitched: false,
-        isSwitchedCustom: "Yes"
-      };
+        isSwitchedCustom: 'Yes'
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -86,7 +86,7 @@ title: Switch
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -115,7 +115,7 @@ title: Switch
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -158,14 +158,7 @@ title: Switch
         <option value="large">large</option>
       </o-select>
     </o-field>
-    <o-switch
-      :rounded="isRounded"
-      :outlined="isOutlined"
-      :size="size"
-      :variant="variant"
-      :passive-variant="passive"
-      >Sample</o-switch
-    >
+    <o-switch :rounded="isRounded" :outlined="isOutlined" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
   </section>
 </template>
 
@@ -173,14 +166,14 @@ title: Switch
   export default {
     data() {
       return {
-        size: "",
+        size: '',
         variant: null,
         passive: null,
         isRounded: false,
         isOutlined: false
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 

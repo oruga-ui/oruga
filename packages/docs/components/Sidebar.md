@@ -17,19 +17,8 @@ title: Sidebar
 ```html
 <template>
   <section>
-    <o-sidebar
-      variant="primary"
-      :fullheight="fullheight"
-      :fullwidth="fullwidth"
-      :overlay="overlay"
-      :right="right"
-      :open.sync="open"
-    >
-      <img
-        width="128"
-        src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
-        alt="Lightweight UI components for Vue.js"
-      />
+    <o-sidebar variant="primary" :fullheight="fullheight" :fullwidth="fullwidth" :overlay="overlay" :right="right" :open.sync="open">
+      <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" alt="Lightweight UI components for Vue.js" />
       <h3>Example</h3>
     </o-sidebar>
     <div class="block">
@@ -56,9 +45,9 @@ title: Sidebar
         fullheight: true,
         fullwidth: false,
         right: false
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -72,19 +61,8 @@ title: Sidebar
 <template>
   <div class="sidebar-page">
     <section class="sidebar-layout">
-      <o-sidebar
-        position="static"
-        :mobile="mobile"
-        :expand-on-hover="expandOnHover"
-        :reduce="reduce"
-        variant="primary"
-        open
-      >
-        <img
-          width="128"
-          src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
-          alt="Lightweight UI components for Vue.js"
-        />
+      <o-sidebar position="static" :mobile="mobile" :expand-on-hover="expandOnHover" :reduce="reduce" variant="primary" open>
+        <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" alt="Lightweight UI components for Vue.js" />
         <h5>Example 1</h5>
         <h5>Example 2</h5>
         <h5>Example 3</h5>
@@ -118,11 +96,11 @@ title: Sidebar
     data() {
       return {
         expandOnHover: false,
-        mobile: "reduce",
+        mobile: 'reduce',
         reduce: false
-      };
+      }
     }
-  };
+  }
 </script>
 
 <style>

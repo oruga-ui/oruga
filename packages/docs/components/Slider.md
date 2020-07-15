@@ -40,9 +40,9 @@ title: Slider
     data() {
       return {
         value: 5
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -78,19 +78,19 @@ title: Slider
     data() {
       return {
         sliderValue: 0
-      };
+      }
     },
     computed: {
       sliderType() {
         if (this.sliderValue > 25 && this.sliderValue < 75) {
-          return "warning";
+          return 'warning'
         } else if (this.sliderValue >= 75) {
-          return "success";
+          return 'success'
         }
-        return "danger";
+        return 'danger'
       }
     }
-  };
+  }
 </script>
 ```
 
@@ -127,7 +127,7 @@ title: Slider
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -141,19 +141,11 @@ title: Slider
 <template>
   <section>
     <o-field>
-      <o-slider v-model="numbers" :min="1" :max="15" :step="0.5" ticks>
-      </o-slider>
+      <o-slider v-model="numbers" :min="1" :max="15" :step="0.5" ticks> </o-slider>
     </o-field>
 
     <o-field>
-      <o-slider
-        v-model="numbers2"
-        variant="danger"
-        :min="-2"
-        :max="8"
-        :step="2"
-      >
-      </o-slider>
+      <o-slider v-model="numbers2" variant="danger" :min="-2" :max="8" :step="2"> </o-slider>
     </o-field>
   </section>
 </template>
@@ -164,9 +156,9 @@ title: Slider
       return {
         numbers: [2, 5],
         numbers2: [2, 6]
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 

@@ -53,13 +53,7 @@ title: Dropdown
     <o-dropdown aria-role="list">
       <div slot="trigger">
         Custom
-        <o-icon
-          variant="success"
-          icon="caret-down"
-          slot="trigger"
-          role="button"
-        >
-        </o-icon>
+        <o-icon variant="success" icon="caret-down" slot="trigger" role="button"> </o-icon>
       </div>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
@@ -70,7 +64,7 @@ title: Dropdown
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -110,9 +104,9 @@ title: Dropdown
     data() {
       return {
         selectedOptions: []
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -133,12 +127,7 @@ title: Dropdown
 
     <br />
 
-    <o-dropdown
-      :scrollable="isScrollable"
-      :max-height="maxHeight"
-      v-model="currentMenu"
-      aria-role="list"
-    >
+    <o-dropdown :scrollable="isScrollable" :max-height="maxHeight" v-model="currentMenu" aria-role="list">
       <o-button variant="primary" type="button" slot="trigger">
         <template>
           <o-icon :icon="currentMenu.icon"></o-icon>
@@ -147,12 +136,7 @@ title: Dropdown
         <o-icon icon="caret-down"></o-icon>
       </o-button>
 
-      <o-dropdown-item
-        v-for="(menu, index) in menus"
-        :key="index"
-        :value="menu"
-        aria-role="listitem"
-      >
+      <o-dropdown-item v-for="(menu, index) in menus" :key="index" :value="menu" aria-role="listitem">
         <div class="media">
           <o-icon class="media-left" :icon="menu.icon"></o-icon>
           <div class="media-content">
@@ -170,19 +154,19 @@ title: Dropdown
       return {
         isScrollable: true,
         maxHeight: 200,
-        currentMenu: { icon: "users", text: "People" },
+        currentMenu: { icon: 'users', text: 'People' },
         menus: [
-          { icon: "users", text: "People" },
-          { icon: "box", text: "Orders" },
-          { icon: "credit-card", text: "Payments" },
-          { icon: "dolly", text: "Logistics" },
-          { icon: "business-time", text: "Jobs" },
-          { icon: "shopping-cart", text: "Cart" },
-          { icon: "cog", text: "Configuration" }
+          { icon: 'users', text: 'People' },
+          { icon: 'box', text: 'Orders' },
+          { icon: 'credit-card', text: 'Payments' },
+          { icon: 'dolly', text: 'Logistics' },
+          { icon: 'business-time', text: 'Jobs' },
+          { icon: 'shopping-cart', text: 'Cart' },
+          { icon: 'cog', text: 'Configuration' }
         ]
-      };
+      }
     }
-  };
+  }
 </script>
 
 <style>

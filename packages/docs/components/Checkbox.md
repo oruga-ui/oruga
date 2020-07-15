@@ -46,10 +46,10 @@ title: Checkbox
     data() {
       return {
         checkbox: false,
-        checkboxCustom: "Yes"
-      };
+        checkboxCustom: 'Yes'
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -91,7 +91,7 @@ title: Checkbox
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -129,10 +129,10 @@ title: Checkbox
   export default {
     data() {
       return {
-        checkboxGroup: ["Flint"]
-      };
+        checkboxGroup: ['Flint']
+      }
     }
-  };
+  }
 </script>
 ```
 

@@ -25,17 +25,12 @@ title: Input
       <o-input type="email" value="john@" maxlength="30"> </o-input>
     </o-field>
 
-    <o-field
-      label="Username"
-      variant="success"
-      message="This username is available"
-    >
+    <o-field label="Username" variant="success" message="This username is available">
       <o-input value="johnsilver" maxlength="30"></o-input>
     </o-field>
 
     <o-field label="Password">
-      <o-input type="password" value="iwantmytreasure" password-reveal>
-      </o-input>
+      <o-input type="password" value="iwantmytreasure" password-reveal> </o-input>
     </o-field>
 
     <o-field label="Message">
@@ -54,11 +49,7 @@ title: Input
       <o-input placeholder="Success"></o-input>
     </o-field>
 
-    <o-field
-      label="Error"
-      variant="danger"
-      message="You can have a message too"
-    >
+    <o-field label="Error" variant="danger" message="You can have a message too">
       <o-input placeholder="Error"></o-input>
     </o-field>
 
@@ -84,10 +75,10 @@ title: Input
   export default {
     data() {
       return {
-        name: "John Silver"
-      };
+        name: 'John Silver'
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -102,27 +93,11 @@ title: Input
   <section>
     <h3 class="subtitle">With Icons</h3>
     <o-field>
-      <o-input
-        placeholder="Search..."
-        type="search"
-        icon="search"
-        icon-clickable
-        @icon-click="searchIconClick"
-      >
-      </o-input>
+      <o-input placeholder="Search..." type="search" icon="search" icon-clickable @icon-click="searchIconClick"> </o-input>
     </o-field>
 
     <o-field>
-      <o-input
-        placeholder="Email"
-        v-model="email"
-        type="email"
-        icon="envelope"
-        icon-right="times-circle"
-        icon-right-clickable
-        @icon-right-click="clearIconClick"
-      >
-      </o-input>
+      <o-input placeholder="Email" v-model="email" type="email" icon="envelope" icon-right="times-circle" icon-right-clickable @icon-right-click="clearIconClick"> </o-input>
     </o-field>
   </section>
 </template>
@@ -131,19 +106,19 @@ title: Input
   export default {
     data() {
       return {
-        email: ""
-      };
+        email: ''
+      }
     },
     methods: {
       searchIconClick() {
-        alert("You wanna make a search?");
+        alert('You wanna make a search?')
       },
       clearIconClick() {
-        this.email = "";
-        alert("Email cleared!");
+        this.email = ''
+        alert('Email cleared!')
       }
     }
-  };
+  }
 </script>
 ```
 

@@ -25,10 +25,10 @@ title: Button
   export default {
     methods: {
       clickMe() {
-        alert("Clicked!");
+        alert('Clicked!')
       }
     }
-  };
+  }
 </script>
 ```
 
@@ -63,7 +63,7 @@ title: Button
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -111,7 +111,7 @@ title: Button
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -146,7 +146,7 @@ title: Button
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 

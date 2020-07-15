@@ -100,15 +100,15 @@ title: Pagination
         perPage: 10,
         rangeBefore: 3,
         rangeAfter: 1,
-        order: "",
-        size: "",
+        order: '',
+        size: '',
         isSimple: false,
         isRounded: false,
-        prevIcon: "chevron-left",
-        nextIcon: "chevron-right"
-      };
+        prevIcon: 'chevron-left',
+        nextIcon: 'chevron-right'
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -122,19 +122,11 @@ title: Pagination
 <template>
   <section>
     <o-pagination :total="200" :current.sync="current" :per-page="10">
-      <o-pagination-button
-        slot-scope="props"
-        :page="props.page"
-        :id="`page${props.page.number}`"
-      >
+      <o-pagination-button slot-scope="props" :page="props.page" :id="`page${props.page.number}`">
         {{ convertToRoman(props.page.number) }}
       </o-pagination-button>
 
-      <o-pagination-button
-        slot="previous"
-        slot-scope="props"
-        :page="props.page"
-      >
+      <o-pagination-button slot="previous" slot-scope="props" :page="props.page">
         Previous
       </o-pagination-button>
 
@@ -151,55 +143,55 @@ title: Pagination
       return {
         current: 10,
         basicRomanNumeral: [
-          "",
-          "I",
-          "II",
-          "III",
-          "IV",
-          "V",
-          "VI",
-          "VII",
-          "VIII",
-          "IX",
-          "",
-          "X",
-          "XX",
-          "XXX",
-          "XL",
-          "L",
-          "LX",
-          "LXX",
-          "LXXX",
-          "XC",
-          "",
-          "C",
-          "CC",
-          "CCC",
-          "CD",
-          "D",
-          "DC",
-          "DCC",
-          "DCCC",
-          "CM",
-          "",
-          "M",
-          "MM",
-          "MMM"
+          '',
+          'I',
+          'II',
+          'III',
+          'IV',
+          'V',
+          'VI',
+          'VII',
+          'VIII',
+          'IX',
+          '',
+          'X',
+          'XX',
+          'XXX',
+          'XL',
+          'L',
+          'LX',
+          'LXX',
+          'LXXX',
+          'XC',
+          '',
+          'C',
+          'CC',
+          'CCC',
+          'CD',
+          'D',
+          'DC',
+          'DCC',
+          'DCCC',
+          'CM',
+          '',
+          'M',
+          'MM',
+          'MMM'
         ]
-      };
+      }
     },
     methods: {
       convertToRoman(num) {
-        const numArray = num.toString().split("");
-        const base = numArray.length;
-        let count = base - 1;
+        const numArray = num.toString().split('')
+        const base = numArray.length
+        let count = base - 1
         const convertedRoman = numArray.reduce((roman, digit) => {
-          const digitRoman = this.basicRomanNumeral[+digit + count * 10];
-          const result = roman + digitRoman;
-          count -= 1;
-          return result;
-        }, "");
-        return convertedRoman;
+          const digitRoman = this.basicRomanNumeral[+digit + count * 10]
+          const result = roman + digitRoman
+          count -= 1
+          return result
+        }, '')
+        return convertedRoman
       }
     }
     /*
@@ -214,7 +206,7 @@ title: Pagination
             },
         }
         */
-  };
+  }
 </script>
 ```
 

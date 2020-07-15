@@ -42,10 +42,10 @@ title: Radio
   export default {
     data() {
       return {
-        radio: "Jack"
-      };
+        radio: 'Jack'
+      }
     }
-  };
+  }
 </script>
 ```
 
@@ -90,10 +90,10 @@ title: Radio
   export default {
     data() {
       return {
-        radio: "default"
-      };
+        radio: 'default'
+      }
     }
-  };
+  }
 </script>
 ```
 

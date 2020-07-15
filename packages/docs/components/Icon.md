@@ -41,8 +41,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     <div class="block">
       <o-icon pack="fas" icon="user" size="large" variant="success"> </o-icon>
       <o-icon pack="fas" icon="home" size="large" variant="info"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt" size="large" variant="primary">
-      </o-icon>
+      <o-icon pack="fas" icon="tachometer-alt" size="large" variant="primary"> </o-icon>
     </div>
 
     <o-button variant="success">
@@ -63,7 +62,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -95,11 +94,9 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     </div>
 
     <div class="block">
-      <o-icon pack="ionicons" icon="person" size="large" variant="success">
-      </o-icon>
+      <o-icon pack="ionicons" icon="person" size="large" variant="success"> </o-icon>
       <o-icon pack="ionicons" icon="home" size="large" variant="info"> </o-icon>
-      <o-icon pack="ionicons" icon="apps" size="large" variant="primary">
-      </o-icon>
+      <o-icon pack="ionicons" icon="apps" size="large" variant="primary"> </o-icon>
     </div>
 
     <o-button variant="primary">
@@ -124,39 +121,39 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     customIconPacks: {
       ionicons: {
         sizes: {
-          default: "is-size-5",
-          small: "",
-          medium: "is-size-3",
-          large: "is-size-1"
+          default: 'is-size-5',
+          small: '',
+          medium: 'is-size-3',
+          large: 'is-size-1'
         },
-        iconPrefix: "ion-md-",
+        iconPrefix: 'ion-md-',
         internalIcons: {
-          check: "checkmark",
-          information: "information",
-          "check-circle": "checkmark-circle-outline",
-          alert: "alert",
-          "alert-circle": "alert",
-          "arrow-up": "arrow-up",
-          "chevron-right": "arrow-forward",
-          "chevron-left": "arrow-back",
-          "chevron-down": "arrow-down",
-          eye: "eye",
-          "eye-off": "eye-off",
-          "caret-down": "arrow-dropdown",
-          "caret-up": "arrow-dropup"
+          check: 'checkmark',
+          information: 'information',
+          'check-circle': 'checkmark-circle-outline',
+          alert: 'alert',
+          'alert-circle': 'alert',
+          'arrow-up': 'arrow-up',
+          'chevron-right': 'arrow-forward',
+          'chevron-left': 'arrow-back',
+          'chevron-down': 'arrow-down',
+          eye: 'eye',
+          'eye-off': 'eye-off',
+          'caret-down': 'arrow-dropdown',
+          'caret-up': 'arrow-dropup'
         }
       }
     }
-  };
+  }
   export default {
     created() {
-      this.$oruga.config.setOptions(customIconConfig);
+      this.$oruga.config.setOptions(customIconConfig)
     }
-  };
+  }
 </script>
 
 <style>
-  @import "https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css";
+  @import 'https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css';
 </style>
 ```
 
@@ -175,17 +172,17 @@ const customIconConfig = {
       sizes: {
         default: null,
         small: null,
-        medium: "fa-lg",
-        large: "fa-2x"
+        medium: 'fa-lg',
+        large: 'fa-2x'
       }
     }
   }
-};
+}
 export default {
   created() {
-    this.$oruga.config.setOptions(customIconConfig);
+    this.$oruga.config.setOptions(customIconConfig)
   }
-};
+}
 ```
 
 ### Custom icon component
@@ -195,7 +192,7 @@ You can set the `iconComponent` config option to render icons with the vue-fonta
 :::
 
 ```js
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from '@fortawesome/fontawesome-svg-core'
 // internal icons
 import {
   faCheck,
@@ -212,8 +209,8 @@ import {
   faCaretDown,
   faCaretUp,
   faUpload
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(
   faCheck,
@@ -230,16 +227,16 @@ library.add(
   faCaretDown,
   faCaretUp,
   faUpload
-);
-Vue.component("vue-fontawesome", FontAwesomeIcon);
+)
+Vue.component('vue-fontawesome', FontAwesomeIcon)
 
 // ...
 
-import Oruga from "@oruga-ui/oruga";
+import Oruga from '@oruga-ui/oruga'
 Vue.use(Oruga, {
-  iconComponent: "vue-fontawesome",
-  iconPack: "fas"
-});
+  iconComponent: 'vue-fontawesome',
+  iconPack: 'fas'
+})
 ```
 
 ## Props

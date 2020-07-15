@@ -50,7 +50,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -63,20 +63,13 @@ title: Tooltip
 ```html
 <template>
   <section>
-    <o-tooltip
-      label="Tooltip multiline, probably because it's too long for a casual tooltip"
-      multiline
-    >
+    <o-tooltip label="Tooltip multiline, probably because it's too long for a casual tooltip" multiline>
       <o-button>
         Multiline (default)
       </o-button>
     </o-tooltip>
 
-    <o-tooltip
-      label="It's not brief, but it's also not long"
-      size="small"
-      multiline
-    >
+    <o-tooltip label="It's not brief, but it's also not long" size="small" multiline>
       <o-button>
         Multiline (small)
       </o-button>
@@ -96,7 +89,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -111,17 +104,10 @@ title: Tooltip
   <section>
     <o-tooltip position="bottom" multiline>
       <o-button>Html Content</o-button>
-      <template v-slot:content>
-        <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
-        <i>Fusce id fermentum quam</i>.
-      </template>
+      <template v-slot:content> <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit. <i>Fusce id fermentum quam</i>. </template>
     </o-tooltip>
 
-    <o-tooltip
-      variant="primary"
-      :triggers="['click']"
-      :auto-close="['outside', 'escape']"
-    >
+    <o-tooltip variant="primary" :triggers="['click']" :auto-close="['outside', 'escape']">
       <template v-slot:content>
         <o-icon icon="heart" variant="danger"></o-icon>
         <o-icon icon="thumbs-up" variant="info"></o-icon>
@@ -134,7 +120,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {};
+  export default {}
 </script>
 ```
 
@@ -172,9 +158,9 @@ title: Tooltip
     data() {
       return {
         active: true
-      };
+      }
     }
-  };
+  }
 </script>
 ```
 
