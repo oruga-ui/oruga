@@ -117,7 +117,7 @@ export default {
          *   4. If it's invalid, validate again.
          */
         value(value) {
-            let inputFiles = this.$refs.input.files
+            const inputFiles = this.$refs.input.files
             this.newValue = value
 
             if (!this.newValue ||

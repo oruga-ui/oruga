@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OSelect render correctly 1`] = `
-<div class="o-control-select o-control-select-icons-right"><select class="o-input o-select-empty">
+<div class="o-control-select o-control-select-icons-right"><select class="o-select o-select-empty">
         <!----> </select>
     <!---->
     <o-icon-stub icon="caret-down" both="true" class="o-icon-right"></o-icon-stub>

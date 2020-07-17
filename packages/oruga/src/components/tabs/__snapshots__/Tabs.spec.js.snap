@@ -1,27 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BTabs render correctly 1`] = `
-<div class="b-tabs">
-    <nav class="tabs">
+<div class="o-tabs-wrapper">
+    <nav class="o-tabs">
         <ul>
-            <li class="is-active"><a>
-                    <!----> <span></span></a></li>
-            <li class="" style="display: none;"><a>
-                    <!----> <span></span></a></li>
+            <li class="o-tab-active"><button>
+                    <!----> <span></span></button></li>
+            <li class="" style="display: none;"><button>
+                    <!----> <span></span></button></li>
         </ul>
     </nav>
-    <section class="tab-content">
-        <div class="tab-item"></div>
-        <div class="tab-item" style="display: none;"></div>
+    <section class="o-tab-content">
+        <div class="o-tab-item"></div>
+        <div class="o-tab-item" style="display: none;"></div>
     </section>
-</div>
-`;
-
-exports[`BTabs still renders if there is no item 1`] = `
-<div class="b-tabs">
-    <nav class="tabs">
-        <ul></ul>
-    </nav>
-    <section class="tab-content"></section>
 </div>
 `;
