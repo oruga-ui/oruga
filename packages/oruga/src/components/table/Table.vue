@@ -196,6 +196,7 @@
                                     <o-icon
                                         icon="chevron-right"
                                         :pack="iconPack"
+                                        clickable
                                         both
                                         :class="detailedIconExpandedClasses(row)"/>
                                 </a>

@@ -181,14 +181,14 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     .o-table-th-content {
                         position: relative;
                     }
-                    .o-icon {
+                    .o-icon-sort {
                         @include variable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin);
                         margin-right: 0;
                     }
                     &.o-table-th-right {
                         flex-direction: row-reverse;
                         text-align: right;
-                        .o-icon {
+                        .o-icon-sort {
                             @include variable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin, 'calc', '/ 2');
                             margin-right: 0;
                         }
@@ -286,6 +286,9 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 @include variable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
                 > a {
                     @include variable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
+                    .o-table-detail-icon-expanded {
+                        transform: rotate(90deg);
+                    }
                 }
                 .o-checkbox {
                     vertical-align: middle;
