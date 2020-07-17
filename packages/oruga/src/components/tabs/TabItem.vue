@@ -2,10 +2,16 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
 
+/**
+ * @displayName Tab Item
+ */
 export default {
     name: 'OTabItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('tab')],
     props: {
+        /**
+         * Item will be disabled
+         */
         disabled: Boolean
     },
     computed: {

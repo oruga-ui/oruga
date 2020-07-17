@@ -10,21 +10,34 @@ export default (cmp) => ({
         [SlotComponent.name]: SlotComponent
     },
     props: {
+        /**
+         * @model
+         */
         value: {
             type: [String, Number],
             default: undefined
         },
         type: [String, Object],
+        /**
+         * Tab size, optional
+         * @values small, medium, large
+         */
         size: String,
         animated: {
             type: Boolean,
             default: true
         },
+        /** Show tab in vertical layout */
         vertical: {
             type: Boolean,
             default: false
         },
+        /**
+         * Position of the tab, optional
+         * @values centered, right
+         */
         position: String,
+        /** Destroy tab on hide */
         destroyOnHide: {
             type: Boolean,
             default: false

@@ -3,17 +3,35 @@ import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
 export default (parentCmp) => ({
     mixins: [InjectedChildMixin(parentCmp, Sorted)],
     props: {
+        /**
+         * Item label
+         */
         label: String,
+        /**
+         * Icon on the left
+         */
         icon: String,
+        /**
+         * Icon pack
+         */
         iconPack: String,
+        /**
+         * Show/hide item
+         */
         visible: {
             type: Boolean,
             default: true
         },
+        /**
+         * Item value (it will be used as v-model of wrapper component)
+         */
         value: {
             type: String,
             default() { return this._uid.toString() }
         },
+        /**
+         * Header class of the item
+         */
         headerClass: {
             type: [String, Array, Object],
             default: null

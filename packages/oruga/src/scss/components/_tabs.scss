@@ -12,6 +12,7 @@ $tabs-link-hover-border-bottom-color: hsl(0, 0%, 21%) !default;
 $tabs-link-hover-color: hsl(0, 0%, 21%) !default;
 $tabs-link-active-border-bottom-color: $primary !default;
 $tabs-link-active-color: $primary !default;
+$tabs-link-line-height: $base-line-height !default;
 $tabs-link-padding: 0.5em 1em !default;
 $tabs-boxed-link-radius: $base-border-radius !default;
 $tabs-boxed-link-hover-background-color: hsl(0, 0%, 96%) !default;
@@ -50,6 +51,12 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 }
             }
         }
+        &.o-tabs-position-centered ul {
+            justify-content: center;
+        }
+        &.o-tabs-position-right ul {
+            justify-content: flex-end;
+        }
         ul {
             margin: 0;
             padding: 0;
@@ -65,6 +72,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 display: block;
                 margin: 0;
                 padding: 0;
+                line-height: $tabs-link-line-height;
                 &.o-tab-disabled {
                     pointer-events: none;
                     cursor: not-allowed;
@@ -73,6 +81,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 button {
                     -moz-appearance: none;
                     -webkit-appearance: none;
+                    outline: none;
                     width: 100%;
                     margin: 0;
                     padding: 0;
@@ -128,36 +137,40 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             }
         }
         &.o-tabs-toggle {
-            li {
-                + li {
-                    margin-left: -1px;
-                }
-                button {
-                    @include variable('border-color', 'tabs-toggle-link-border-color', $tabs-toggle-link-border-color);
-                    @include variable('border-style', 'tabs-toggle-link-border-styl', $tabs-toggle-link-border-style);
-                    @include variable('border-width', 'tabs-toggle-link-border-width', $tabs-toggle-link-border-width);
-                    margin-bottom: 0;
-                    position: relative;
-                    &:hover {
-                        @include variable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
-                        @include variable('border-color', '$tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
+            ul {
+                border-bottom: none;
+                li {
+                    + li {
+                        margin-left: -1px;
                     }
-                }
-                &:first-child {
+                    .tabs.is-toggle 
                     button {
-                        @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
+                        @include variable('border-color', 'tabs-toggle-link-border-color', $tabs-toggle-link-border-color);
+                        @include variable('border-style', 'tabs-toggle-link-border-styl', $tabs-toggle-link-border-style);
+                        @include variable('border-width', 'tabs-toggle-link-border-width', $tabs-toggle-link-border-width);
+                        margin-bottom: 0;
+                        position: relative;
+                        &:hover {
+                            @include variable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
+                            @include variable('border-color', '$tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
+                        }
                     }
-                }
-                &:last-child {
-                    button {
-                        @include variable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-toggle-link-radius} #{$tabs-toggle-link-radius} 0);
+                    &:first-child {
+                        button {
+                            @include variable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
+                        }
                     }
-                }
-                &.o-tab-active {
-                    button {
-                        @include variable('background-color', 'tabs-toggle-link-active-background-color', $tabs-toggle-link-active-background-color);
-                        @include variable('border-color', 'tabs-toggle-link-active-border-color', $tabs-toggle-link-active-border-color);
-                        @include variable('color', 'tabs-toggle-link-active-color', $tabs-toggle-link-active-color);
+                    &:last-child {
+                        button {
+                            @include variable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-toggle-link-radius} #{$tabs-toggle-link-radius} 0);
+                        }
+                    }
+                    &.o-tab-active {
+                        button {
+                            @include variable('background-color', 'tabs-toggle-link-active-background-color', $tabs-toggle-link-active-background-color);
+                            @include variable('border-color', 'tabs-toggle-link-active-border-color', $tabs-toggle-link-active-border-color);
+                            @include variable('color', 'tabs-toggle-link-active-color', $tabs-toggle-link-active-color);
+                        }
                     }
                 }
             }

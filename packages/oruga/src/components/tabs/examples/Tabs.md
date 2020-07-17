@@ -6,9 +6,14 @@
 ```html
 <template>
     <section>
-        <o-button @click="activeTab = 1">Set Music</o-button>
-        <o-switch v-model="showBooks"> Show Books item </o-switch>
-        <o-tabs v-model="activeTab">
+        <p>
+            <o-button @click="activeTab = 1">Set Music</o-button>
+        </p>
+        <p>
+            <o-switch v-model="showBooks"> Show Books item </o-switch>
+            <o-switch v-model="multiline"> Multiline </o-switch>
+        </p>
+        <o-tabs v-model="activeTab" :multiline="multiline">
             <o-tab-item label="Pictures">
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
@@ -45,7 +50,8 @@
         data() {
             return {
                 activeTab: 0,
-                showBooks: false
+                showBooks: false,
+                multiline: false
             }
         }
     }
@@ -61,13 +67,13 @@
     <o-tabs type="boxed">
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="information-outline"></o-icon>
+                <o-icon icon="info-circle"></o-icon>
                 <span> Issues 3 </span>
             </template>
         </o-tab-item>
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="source-pull"></o-icon>
+                <o-icon icon="retweet"></o-icon>
                 <span> Pull Requests {{count}} </span>
             </template>
         </o-tab-item>
@@ -126,7 +132,7 @@ export default {
                 :type="type"
                 vertical
                 :expanded="expanded">
-            <o-tab-item label="Pictures" icon="google-photos">
+            <o-tab-item label="Pictures" icon="images">
                 Lorem ipsum dolor sit amet. <br>
                 Lorem ipsum dolor sit amet. <br>
                 Lorem ipsum dolor sit amet. <br>
@@ -135,7 +141,7 @@ export default {
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
 
-            <o-tab-item label="Music" icon="library-music">
+            <o-tab-item label="Music" icon="music">
                 What light is light, if Silvia be not seen? <br>
                 What joy is joy, if Silvia be not by— <br>
                 Unless it be to think that she is by <br>
@@ -177,14 +183,42 @@ export default {
 <template>
     <section>
         <o-tabs type="boxed">
-            <o-tab-item label="Pictures" icon="google-photos"></o-tab-item>
-            <o-tab-item label="Music" icon="library-music"></o-tab-item>
+            <o-tab-item label="Pictures" icon="images"></o-tab-item>
+            <o-tab-item label="Music" icon="music"></o-tab-item>
             <o-tab-item label="Videos" icon="video"></o-tab-item>
         </o-tabs>
 
         <o-tabs type="toggle">
-            <o-tab-item label="Pictures" icon="google-photos"></o-tab-item>
-            <o-tab-item label="Music" icon="library-music"></o-tab-item>
+            <o-tab-item label="Pictures" icon="images"></o-tab-item>
+            <o-tab-item label="Music" icon="music"></o-tab-item>
+            <o-tab-item label="Videos" icon="video"></o-tab-item>
+        </o-tabs>
+
+    </section>
+</template>
+
+<script>
+    export default {
+    }
+</script>
+```
+:::
+
+### Position
+
+::: demo
+```html
+<template>
+    <section>
+        <o-tabs type="boxed" position="centered">
+            <o-tab-item label="Pictures" icon="images"></o-tab-item>
+            <o-tab-item label="Music" icon="music"></o-tab-item>
+            <o-tab-item label="Videos" icon="video"></o-tab-item>
+        </o-tabs>
+
+        <o-tabs type="toggle" position="right">
+            <o-tab-item label="Pictures" icon="images"></o-tab-item>
+            <o-tab-item label="Music" icon="music"></o-tab-item>
             <o-tab-item label="Videos" icon="video"></o-tab-item>
         </o-tabs>
 

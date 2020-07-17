@@ -6,7 +6,8 @@ const src = '../oruga/src';
 
 const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
-  'TableColumn.vue', 'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue'
+  'TableColumn.vue', 'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue',
+  'TabItem.vue'
 ];
 
 module.exports = {

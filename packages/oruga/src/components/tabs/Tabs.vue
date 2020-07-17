@@ -48,13 +48,23 @@ export default {
     name: 'OTabs',
     mixins: [BaseComponentMixin, TabbedMixin('tab')],
     props: {
+        /**
+         * Tab type
+         * @values boxed, toggle
+         */
+        type: [String, Object],
+         /**
+         * Tabs will be expanded (full-width)	
+         */
         expanded: Boolean,
+        /** Tab will have an animation */
         animated: {
             type: Boolean,
             default: () => {
                 return getValueByPath(config, 'tabs.animated', true)
             }
         },
+        /** Show tab items multiline when there is no space */
         multiline: Boolean,
         rootClass: String,
         positionWrapperClass: String,
@@ -85,7 +95,7 @@ export default {
                 this.computedClass('tabs', 'tabsClass', 'o-tabs'),
                 { [`${this.computedClass('tabs', 'typeClass', 'o-tabs-')}${this.type}`]: this.type },
                 { [`${this.computedClass('tabs', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
-                { [`${this.computedClass('tabs', 'positionClass', 'o-position-')}${this.position}`]: this.position && !this.vertical },
+                { [`${this.computedClass('tabs', 'positionClass', 'o-tabs-position-')}${this.position}`]: this.position && !this.vertical },
             ]
         },
         contentClasses() {

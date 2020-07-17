@@ -17,9 +17,14 @@ title: Tabs
 ```html
 <template>
   <section>
-    <o-button @click="activeTab = 1">Set Music</o-button>
-    <o-switch v-model="showBooks"> Show Books item </o-switch>
-    <o-tabs v-model="activeTab">
+    <p>
+      <o-button @click="activeTab = 1">Set Music</o-button>
+    </p>
+    <p>
+      <o-switch v-model="showBooks"> Show Books item </o-switch>
+      <o-switch v-model="multiline"> Multiline </o-switch>
+    </p>
+    <o-tabs v-model="activeTab" :multiline="multiline">
       <o-tab-item label="Pictures">
         Lorem ipsum dolor sit amet.
       </o-tab-item>
@@ -54,7 +59,8 @@ title: Tabs
     data() {
       return {
         activeTab: 0,
-        showBooks: false
+        showBooks: false,
+        multiline: false
       }
     }
   }
@@ -72,13 +78,13 @@ title: Tabs
   <o-tabs type="boxed">
     <o-tab-item>
       <template slot="header">
-        <o-icon icon="information-outline"></o-icon>
+        <o-icon icon="info-circle"></o-icon>
         <span> Issues 3 </span>
       </template>
     </o-tab-item>
     <o-tab-item>
       <template slot="header">
-        <o-icon icon="source-pull"></o-icon>
+        <o-icon icon="retweet"></o-icon>
         <span> Pull Requests {{count}} </span>
       </template>
     </o-tab-item>
@@ -135,7 +141,7 @@ title: Tabs
     </o-field>
 
     <o-tabs :position="atRight ? 'right' : ''" :size="size" :type="type" vertical :expanded="expanded">
-      <o-tab-item label="Pictures" icon="google-photos">
+      <o-tab-item label="Pictures" icon="images">
         Lorem ipsum dolor sit amet. <br />
         Lorem ipsum dolor sit amet. <br />
         Lorem ipsum dolor sit amet. <br />
@@ -144,7 +150,7 @@ title: Tabs
         Lorem ipsum dolor sit amet.
       </o-tab-item>
 
-      <o-tab-item label="Music" icon="library-music">
+      <o-tab-item label="Music" icon="music">
         What light is light, if Silvia be not seen? <br />
         What joy is joy, if Silvia be not by— <br />
         Unless it be to think that she is by <br />
@@ -185,14 +191,42 @@ title: Tabs
 <template>
   <section>
     <o-tabs type="boxed">
-      <o-tab-item label="Pictures" icon="google-photos"></o-tab-item>
-      <o-tab-item label="Music" icon="library-music"></o-tab-item>
+      <o-tab-item label="Pictures" icon="images"></o-tab-item>
+      <o-tab-item label="Music" icon="music"></o-tab-item>
       <o-tab-item label="Videos" icon="video"></o-tab-item>
     </o-tabs>
 
     <o-tabs type="toggle">
-      <o-tab-item label="Pictures" icon="google-photos"></o-tab-item>
-      <o-tab-item label="Music" icon="library-music"></o-tab-item>
+      <o-tab-item label="Pictures" icon="images"></o-tab-item>
+      <o-tab-item label="Music" icon="music"></o-tab-item>
+      <o-tab-item label="Videos" icon="video"></o-tab-item>
+    </o-tabs>
+  </section>
+</template>
+
+<script>
+  export default {}
+</script>
+```
+
+:::
+
+### Position
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-tabs type="boxed" position="centered">
+      <o-tab-item label="Pictures" icon="images"></o-tab-item>
+      <o-tab-item label="Music" icon="music"></o-tab-item>
+      <o-tab-item label="Videos" icon="video"></o-tab-item>
+    </o-tabs>
+
+    <o-tabs type="toggle" position="right">
+      <o-tab-item label="Pictures" icon="images"></o-tab-item>
+      <o-tab-item label="Music" icon="music"></o-tab-item>
       <o-tab-item label="Videos" icon="video"></o-tab-item>
     </o-tabs>
   </section>
@@ -207,24 +241,36 @@ title: Tabs
 
 ## Props
 
-| Prop name                  | Description | Type    | Values | Default               |
-| -------------------------- | ----------- | ------- | ------ | --------------------- |
-| expanded                   |             | boolean | -      |                       |
-| animated                   |             | boolean | -      | 'tabs.animated': true |
-| multiline                  |             | boolean | -      |                       |
-| rootClass                  |             | string  | -      |                       |
-| positionWrapperClass       |             | string  | -      |                       |
-| expandedWrapperClass       |             | string  | -      |                       |
-| verticalWrapperClass       |             | string  | -      |                       |
-| multilineWrapperClass      |             | string  | -      |                       |
-| tabsClass                  |             | string  | -      |                       |
-| typeClass                  |             | string  | -      |                       |
-| sizeClass                  |             | string  | -      |                       |
-| positionClass              |             | string  | -      |                       |
-| contentClass               |             | string  | -      |                       |
-| transitioningClass         |             | string  | -      |                       |
-| tabItemHeaderActiveClass   |             | string  | -      |                       |
-| tabItemHeaderDisabledClass |             | string  | -      |                       |
+| Prop name                  | Description                                     | Type           | Values                     | Default               |
+| -------------------------- | ----------------------------------------------- | -------------- | -------------------------- | --------------------- |
+| v-model                    |                                                 | string\|number | -                          | undefined             |
+| type                       | Tab type                                        | string\|object | `boxed`, `toggle`          |                       |
+| size                       | Tab size, optional                              | string         | `small`, `medium`, `large` |                       |
+| animated                   | Tab will have an animation                      | boolean        | -                          | 'tabs.animated': true |
+| vertical                   | Show tab in vertical layout                     | boolean        | -                          | false                 |
+| position                   | Position of the tab, optional                   | string         | `centered`, `right`        |                       |
+| destroyOnHide              | Destroy tab on hide                             | boolean        | -                          | false                 |
+| expanded                   | Tabs will be expanded (full-width)              | boolean        | -                          |                       |
+| multiline                  | Show tab items multiline when there is no space | boolean        | -                          |                       |
+| rootClass                  |                                                 | string         | -                          |                       |
+| positionWrapperClass       |                                                 | string         | -                          |                       |
+| expandedWrapperClass       |                                                 | string         | -                          |                       |
+| verticalWrapperClass       |                                                 | string         | -                          |                       |
+| multilineWrapperClass      |                                                 | string         | -                          |                       |
+| tabsClass                  |                                                 | string         | -                          |                       |
+| typeClass                  |                                                 | string         | -                          |                       |
+| sizeClass                  |                                                 | string         | -                          |                       |
+| positionClass              |                                                 | string         | -                          |                       |
+| contentClass               |                                                 | string         | -                          |                       |
+| transitioningClass         |                                                 | string         | -                          |                       |
+| tabItemHeaderActiveClass   |                                                 | string         | -                          |                       |
+| tabItemHeaderDisabledClass |                                                 | string         | -                          |                       |
+
+## Events
+
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| input      | undefined |
 
 ## Slots
 
@@ -236,15 +282,27 @@ title: Tabs
 
 ---
 
-## title: OTabItem
+## title: Tab Item
 
-# OTabItem
+# Tab Item
 
 ## Props
 
-| Prop name | Description | Type    | Values | Default |
-| --------- | ----------- | ------- | ------ | ------- |
-| disabled  |             | boolean | -      |         |
+| Prop name   | Description                                                  | Type                  | Values | Default                                     |
+| ----------- | ------------------------------------------------------------ | --------------------- | ------ | ------------------------------------------- |
+| label       | Item label                                                   | string                | -      |                                             |
+| icon        | Icon on the left                                             | string                | -      |                                             |
+| iconPack    | Icon pack                                                    | string                | -      |                                             |
+| visible     | Show/hide item                                               | boolean               | -      | true                                        |
+| value       | Item value (it will be used as v-model of wrapper component) | string                | -      | function() { return this.\_uid.toString() } |
+| headerClass | Header class of the item                                     | string\|array\|object | -      | null                                        |
+| disabled    | Item will be disabled                                        | boolean               | -      |                                             |
+
+## Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 ## Style
 
@@ -263,6 +321,7 @@ title: Tabs
 | --oruga-tabs-link-hover-color                      | \$tabs-link-hover-color                      | hsl(0, 0%, 21%)         |
 | --oruga-tabs-link-active-border-bottom-color       | \$tabs-link-active-border-bottom-color       | \$primary               |
 | --oruga-tabs-link-active-color                     | \$tabs-link-active-color                     | \$primary               |
+| --oruga-tabs-link-line-height                      | \$tabs-link-line-height                      | \$base-line-height      |
 | --oruga-tabs-link-padding                          | \$tabs-link-padding                          | 0.5em 1em               |
 | --oruga-tabs-boxed-link-radius                     | \$tabs-boxed-link-radius                     | \$base-border-radius    |
 | --oruga-tabs-boxed-link-hover-background-color     | \$tabs-boxed-link-hover-background-color     | hsl(0, 0%, 96%)         |
