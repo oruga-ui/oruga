@@ -63,6 +63,7 @@ $input-width: 100% !default;
     display: inline-flex;
     position: relative;
     vertical-align: top;
+    outline: none;
     @include variable('box-shadow', 'input-box-shadow', $input-box-shadow);
     @include variable('max-width', 'input-max-width', $input-max-width);
     @include variable('width', 'input-width', $input-width);
