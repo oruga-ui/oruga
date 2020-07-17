@@ -5,7 +5,6 @@
             ref="input"
             type="text"
             :size="size"
-            :loading="loading"
             :rounded="rounded"
             :icon="icon"
             :icon-right="newIconRight"
