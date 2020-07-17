@@ -76,6 +76,11 @@ export default {
             default: null
         },
         /**
+         * Vertical size of input, optional
+         * @values small, medium, large
+         */
+        size: String,
+        /**
          * 	Icon name to be added on the right side
          */
         iconRight: {

@@ -92,6 +92,11 @@ export default {
             default: 'text'
         },
         /**
+         * Vertical size of input, optional
+         * @values small, medium, large
+         */
+        size: String,
+        /**
          * 	Adds the reveal password functionality
          */
         passwordReveal: Boolean,

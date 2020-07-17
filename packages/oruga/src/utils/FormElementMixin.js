@@ -8,18 +8,9 @@ export default {
   },
   props: {
     /**
-     * Vertical size of input, optional
-     * @values small, medium, large
-     */
-    size: String,
-    /**
      * Makes input full width when inside a grouped or addon field
      */
     expanded: Boolean,
-    /**
-     * Adds the loading state to the input
-     */
-    loading: Boolean,
     /**
      * Makes the element rounded
      */
@@ -35,9 +26,7 @@ export default {
     iconPack: String,
     /** Native options to use in HTML5 validation */
     autocomplete: String,
-    /**
-     * Same as native maxlength, plus character counter
-     */
+    /** Same as native maxlength, plus character counter */
     maxlength: [Number, String],
     /** Enable html 5 native validation */
     useHtml5Validation: {

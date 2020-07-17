@@ -128,9 +128,7 @@ title: Input
 
 | Prop name             | Description                                                 | Type           | Values                                  | Default                    |
 | --------------------- | ----------------------------------------------------------- | -------------- | --------------------------------------- | -------------------------- |
-| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`              |                            |
 | expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                       |                            |
-| loading               | Adds the loading state to the input                         | boolean        | -                                       |                            |
 | rounded               | Makes the element rounded                                   | boolean        | -                                       |                            |
 | icon                  | Icon name to be added                                       | string         | -                                       |                            |
 | iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal` |                            |
@@ -141,6 +139,7 @@ title: Input
 | validationMessage     | The message which is shown when a validation error occurs   | string         | -                                       |                            |
 | v-model               |                                                             | number\|string | -                                       |                            |
 | type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea` | 'text'                     |
+| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`              |                            |
 | passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                       |                            |
 | iconClickable         | Makes the icon clickable                                    | boolean        | -                                       |                            |
 | hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                       | 'input.counter': false     |
@@ -173,9 +172,10 @@ title: Input
 | ----------------------------------- | ----------------------------- | ----------------------------------------------------- |
 | --oruga-input-background-color      | \$input-background-color      | #ffffff                                               |
 | --oruga-input-border-color          | \$input-border-color          | \$grey-lighter                                        |
+| --oruga-input-border-style          | \$input-border-style          | solid                                                 |
+| --oruga-input-border-width          | \$input-border-width          | 1px                                                   |
 | --oruga-input-border-radius         | \$input-border-radius         | \$base-border-radius                                  |
 | --oruga-input-rounded-border-radius | \$input-rounded-border-radius | \$base-rounded-border-radius                          |
-| --oruga-input-border                | \$input-border                | 1px solid transparent                                 |
 | --oruga-input-box-shadow            | \$input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
 | --oruga-input-color                 | \$input-color                 | #363636                                               |
 | --oruga-input-control-icon-zindex   | \$input-control-icon-zindex   | 4                                                     |

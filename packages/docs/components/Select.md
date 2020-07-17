@@ -105,9 +105,7 @@ title: Select
 
 | Prop name             | Description                                                 | Type                                   | Values                                  | Default                          |
 | --------------------- | ----------------------------------------------------------- | -------------------------------------- | --------------------------------------- | -------------------------------- |
-| size                  | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`              |                                  |
 | expanded              | Makes input full width when inside a grouped or addon field | boolean                                | -                                       |                                  |
-| loading               | Adds the loading state to the input                         | boolean                                | -                                       |                                  |
 | rounded               | Makes the element rounded                                   | boolean                                | -                                       |                                  |
 | icon                  | Icon name to be added                                       | string                                 | -                                       |                                  |
 | iconPack              | Icon pack to use                                            | string                                 | `mdi`, `fa`, `fas`, `far`, `fad`, `fal` |                                  |
@@ -117,6 +115,7 @@ title: Select
 | statusIcon            | Show status icon using field and variant prop               | boolean                                | -                                       | "statusIcon": true               |
 | validationMessage     | The message which is shown when a validation error occurs   | string                                 | -                                       |                                  |
 | v-model               |                                                             | string\|number\|boolean\|object\|array | -                                       | null                             |
+| size                  | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`              |                                  |
 | iconRight             | Icon name to be added on the right side                     | string                                 | -                                       | 'select.iconRight': 'caret-down' |
 | placeholder           | Text when nothing is selected                               | string                                 | -                                       |                                  |
 | multiple              |                                                             | boolean                                | -                                       |                                  |
@@ -153,6 +152,8 @@ title: Select
 | -------------------------------------- | -------------------------------- | ----------------------------------------------------- |
 | --oruga-select-background-color        | \$select-background-color        | #fff                                                  |
 | --oruga-select-border-color            | \$select-border-color            | \$grey-lighter                                        |
+| --oruga-select-border-width            | \$select-border-width            | 1px                                                   |
+| --oruga-select-border-style            | \$select-border-style            | solid                                                 |
 | --oruga-select-border-radius           | \$select-border-radius           | \$base-border-radius                                  |
 | --oruga-select-box-shadow              | \$select-box-shadow              | none                                                  |
 | --oruga-select-color                   | \$select-color                   | #363636                                               |

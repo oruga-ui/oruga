@@ -101,6 +101,11 @@ export default {
             type: Array,
             default: () => []
         },
+        /**
+         * Vertical size of input, optional
+         * @values small, medium, large
+         */
+        size: String,
         /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
         field: {
             type: String,
