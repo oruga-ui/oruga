@@ -14,12 +14,14 @@
             :right="right"
             :open.sync="open"
             >
+            <o-button v-if="fullwidth" icon-left="times" label="Close" @click="open = false" />
             <img
                 width="128"
                 src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
                 alt="Lightweight UI components for Vue.js"
             />
             <h3>Example</h3>
+           
         </o-sidebar>
         <div class="block">
             <o-field grouped group-multiline>
