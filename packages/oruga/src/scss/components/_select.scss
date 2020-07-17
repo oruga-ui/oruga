@@ -2,6 +2,8 @@
 /* @docs */
 $select-background-color: #fff !default;
 $select-border-color: $grey-lighter !default;
+$select-border-width: 1px !default;
+$select-border-style: solid !default;
 $select-border-radius: $base-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
@@ -68,11 +70,13 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     cursor: pointer;
     justify-content: flex-start;
     align-items: center;
-    outline: 0;
+    outline: none;
     @include variable('font-size', 'select-font-size', $select-font-size);
     @include variable('max-width', 'select-max-width', $select-max-width);
     @include variable('background-color', 'select-background-color', $select-background-color);
     @include variable('border-color', 'select-border-color', $select-border-color);
+    @include variable('border-width', 'select-border-width', $select-border-width);
+    @include variable('border-style', 'select-border-style', $select-border-style);
     @include variable('border-radius', 'select-border-radius', $select-border-radius);
     @include variable('color', 'select-color', $select-color);
     @include variable('margin', 'select-margin', $select-margin);
