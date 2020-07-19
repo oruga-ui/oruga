@@ -177,7 +177,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
-                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expandend }
+                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded }
             ]
         },
         menuClasses() {
