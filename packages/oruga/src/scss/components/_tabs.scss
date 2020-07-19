@@ -143,7 +143,6 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                     + li {
                         margin-left: -1px;
                     }
-                    .tabs.is-toggle 
                     button {
                         @include variable('border-color', 'tabs-toggle-link-border-color', $tabs-toggle-link-border-color);
                         @include variable('border-style', 'tabs-toggle-link-border-styl', $tabs-toggle-link-border-style);
