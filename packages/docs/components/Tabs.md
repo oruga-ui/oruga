@@ -288,15 +288,18 @@ title: Tabs
 
 ## Props
 
-| Prop name   | Description                                                  | Type                  | Values | Default                                     |
-| ----------- | ------------------------------------------------------------ | --------------------- | ------ | ------------------------------------------- |
-| label       | Item label                                                   | string                | -      |                                             |
-| icon        | Icon on the left                                             | string                | -      |                                             |
-| iconPack    | Icon pack                                                    | string                | -      |                                             |
-| visible     | Show/hide item                                               | boolean               | -      | true                                        |
-| value       | Item value (it will be used as v-model of wrapper component) | string                | -      | function() { return this.\_uid.toString() } |
-| headerClass | Header class of the item                                     | string\|array\|object | -      | null                                        |
-| disabled    | Item will be disabled                                        | boolean               | -      |                                             |
+| Prop name               | Description                                                  | Type                  | Values | Default                                     |
+| ----------------------- | ------------------------------------------------------------ | --------------------- | ------ | ------------------------------------------- |
+| label                   | Item label                                                   | string                | -      |                                             |
+| icon                    | Icon on the left                                             | string                | -      |                                             |
+| iconPack                | Icon pack                                                    | string                | -      |                                             |
+| visible                 | Show/hide item                                               | boolean               | -      | true                                        |
+| value                   | Item value (it will be used as v-model of wrapper component) | string                | -      | function() { return this.\_uid.toString() } |
+| headerClass             | Header class of the item                                     | string\|array\|object | -      | null                                        |
+| disabled                | Item will be disabled                                        | boolean               | -      |                                             |
+| itemClass               |                                                              | string                | -      |                                             |
+| itemHeaderActiveClass   |                                                              | string                | -      |                                             |
+| itemHeaderDisabledClass |                                                              | string                | -      |                                             |
 
 ## Slots
 

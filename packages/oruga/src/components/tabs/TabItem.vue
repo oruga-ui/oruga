@@ -9,22 +9,23 @@ export default {
     name: 'OTabItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('tab')],
     props: {
-        /**
-         * Item will be disabled
-         */
-        disabled: Boolean
+        /** Item will be disabled */
+        disabled: Boolean,
+        itemClass: String,
+        itemHeaderActiveClass: String,
+        itemHeaderDisabledClass: String
     },
     computed: {
         elementClasses() {
             return [
-                this.computedClass('tabs', 'rootClass', 'o-tab-item')
+                this.computedClass('tabs', 'itemClass', 'o-tab-item')
             ]
         },
         headerClasses() {
             return [
                 this.headerClass,
-                { [this.computedClass('tabs', 'headerActiveClass', 'o-tab-active')]: this.isActive },
-                { [this.computedClass('tabs', 'headerDisabledClass', 'o-tab-disabled')]: this.disabled }
+                { [this.computedClass('tabs', 'itemHeaderActiveClass', 'o-tab-active')]: this.isActive },
+                { [this.computedClass('tabs', 'itemHeaderDisabledClass', 'o-tab-disabled')]: this.disabled }
             ]
         }
     }

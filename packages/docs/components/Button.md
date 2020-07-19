@@ -169,6 +169,7 @@ title: Button
 | nativeType    | Button type, like native                 | string         | -                                                                               | 'button'                |
 | tag           | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link or other nuxt alias`          | 'button'                |
 | disabled      | Button will be disabled                  | boolean        | -                                                                               |                         |
+| iconBoth      |                                          | boolean        | -                                                                               |                         |
 | rootClass     |                                          | string         | -                                                                               |                         |
 | outlinedClass |                                          | string         | -                                                                               |                         |
 | invertedClass |                                          | string         | -                                                                               |                         |

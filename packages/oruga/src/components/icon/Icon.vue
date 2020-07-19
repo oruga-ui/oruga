@@ -64,6 +64,7 @@ export default {
         clickable: Boolean,
         /** Enable spin effect on icon */
         spin: Boolean,
+        /** @ignore */
         both: Boolean, // This is used internally
         rootClass: String,
         clickableClass: String,

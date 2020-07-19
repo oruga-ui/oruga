@@ -26,7 +26,7 @@ $slider-track-radius: $base-border-radius !default;
 $slider-track-shadow: 0px 0px 0px $grey !default;
 /* @docs */
 
-@mixin slider-size($size, $name: nul) {
+@mixin slider-size($size, $name: null) {
 	$track-height: $size / $slider-thumb-to-track-ratio;
 	$tick-height: $track-height * $slider-tick-to-track-ratio;
 	$thumb-size: $size;

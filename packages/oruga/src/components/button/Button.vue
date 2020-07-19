@@ -11,6 +11,7 @@
             :pack="iconPack"
             :icon="iconLeft"
             :size="size"
+            :both="iconBoth"
         />
         <span v-if="label">{{ label }}</span>
         <span v-else-if="$slots.default">
@@ -21,6 +22,7 @@
             :pack="iconPack"
             :icon="iconRight"
             :size="size"
+            :both="iconBoth"
         />
     </component>
 </template>
@@ -69,7 +71,7 @@ export default {
          * Icon name to show on the left
          */
         iconLeft: String,
-         /**
+        /**
          * Icon name to show on the right
          */
         iconRight: String,
@@ -115,6 +117,8 @@ export default {
          * Button will be disabled
          */
         disabled: Boolean,
+        /**  @ignore */
+        iconBoth: Boolean, // This is used internally
         rootClass: String,
         outlinedClass: String,
         invertedClass: String,

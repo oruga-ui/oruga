@@ -17,7 +17,11 @@ export default (cmp) => ({
             type: [String, Number],
             default: undefined
         },
-        type: [String, Object],
+        /**
+        * Color of the control, optional
+        * @values primary, info, success, warning, danger, and any other custom color
+        */
+        variant: [String, Object],
         /**
          * Tab size, optional
          * @values small, medium, large

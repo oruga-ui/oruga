@@ -14,6 +14,7 @@ import Select from './select'
 import Skeleton from './skeleton'
 import Sidebar from './sidebar'
 import Slider from './slider'
+import Steps from './steps'
 import Switch from './switch'
 import Table from './table'
 import Tabs from './tabs'
@@ -37,6 +38,7 @@ export {
     Skeleton,
     Sidebar,
     Slider,
+    Steps,
     Switch,
     Table,
     Tabs,

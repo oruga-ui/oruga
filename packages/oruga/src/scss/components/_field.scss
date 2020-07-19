@@ -69,7 +69,6 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
             flex-shrink: 0;
         }
         > *:not(:last-child) {
-            margin-bottom: 0;
             @include variable('margin-right', 'field-margin-bottom', $field-margin-bottom);
         }
         > *[class$="-expanded"] {

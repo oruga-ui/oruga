@@ -279,3 +279,12 @@ export function matchWithGroups(pattern, str) {
             return acc
         }, {})
 }
+
+export function getStyleValue(value) {
+    if (typeof value === 'object') {
+        for (const key in value) {
+            if (value[key]) return key
+        }
+    }
+    return value
+}
