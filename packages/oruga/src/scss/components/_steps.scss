@@ -1,8 +1,12 @@
 
 /* @docs */
 $steps-details-background-color: hsl(0, 0%, 100%) !default;
-$steps-maker-default-color: $grey-light !default;
+$steps-details-padding: .2em !default;
+$steps-maker-default-background: $grey-light !default;
+$steps-maker-default-color: $primary-invert !default;
 $steps-marker-default-border: .2em solid #fff !default;
+$steps-maker-font-weight: 700 !default;
+$steps-marker-rounded-border-radius: $base-rounded-border-radius !default;
 $steps-default-color: $grey-lighter !default;
 $steps-previous-color: $primary !default;
 $steps-active-color: $primary !default;
@@ -10,44 +14,47 @@ $steps-divider-height: .2em !default;
 $steps-vertical-padding: 1em 0 !default;
 $steps-mobile-max-width: 769px !default;
 $steps-item-line-height: $base-line-height !default;
+$steps-link-color: hsl(0, 0%, 29%) !default;
+$steps-content-padding: 1rem !default;
+$steps-details-title-font-weight: 600 !default;
 /* @docs */
 
 @mixin steps-size($size, $name: null) {
     .o-steps {
-        font-size: $size;
-        min-height: $size * 2;
+        @include variable('font-size', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
+        @include variable('min-height', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'calc', ' * 2');
         .o-step-items {
             .o-step-item {
                 .o-step-marker {
-                    height: $size * 2;
-                    width: $size * 2;
+                    @include variable('height', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'calc', ' * 2');
+                    @include variable('width', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'calc', ' * 2');
                     .o-icon {
                 *, *:before {
-                            font-size: $size;
+                        @include variable('font-size', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
                         }
                     }
                 }
                 .o-step-details {
                     .o-step-title {
-                        font-size: $size * 1.2;
-                        font-weight: 600;
-                        line-height: $size;
+                        @include variable('font-size', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'calc', ' * 1.2');
+                        @include variable('height', 'steps-details-title-font-weight', $steps-details-title-font-weight);
+                        @include variable('line-height', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
                     }
                 }
                 &:not(:first-child), &:only-child {
                     &::before {
-                        height: $steps-divider-height;
-                        top: #{$size};
+                        @include variable('height', 'steps-divider-height', $steps-divider-height);
+                        @include variable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
                     }
                 }
                 &:only-child {
                     &::after {
-                        top: #{$size};
+                        @include variable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
                     }
                 }
                 @media screen and (max-width: $steps-mobile-max-width - 1px) {
                     &::before, &::after, &:not(:first-child)::before {
-                        top: #{$size};
+                        @include variable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
                     }
                 }
             }
@@ -60,7 +67,7 @@ $steps-item-line-height: $base-line-height !default;
                     .o-step-item {
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
-                                left: calc(#{$size} - #{$steps-divider-height / 2});
+                                @include mvariable('left', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
                             }
                         }
                     }
@@ -72,7 +79,7 @@ $steps-item-line-height: $base-line-height !default;
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
                                 left: auto;
-                                right: calc(#{$size} - #{$steps-divider-height / 2});
+                                @include mvariable('right', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
                             }
                         }
                     }
@@ -87,7 +94,7 @@ $steps-item-line-height: $base-line-height !default;
                         .o-step-item {
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
-                                    left: calc(#{$size} - #{$steps-divider-height / 2});
+                                    @include mvariable('left', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
                                 }
                             }
                         }
@@ -99,7 +106,7 @@ $steps-item-line-height: $base-line-height !default;
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
                                     left: auto;
-                                    right: calc(#{$size} - #{$steps-divider-height / 2});
+                                    @include mvariable('right', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
                                 }
                             }
                         }
@@ -122,24 +129,22 @@ $steps-item-line-height: $base-line-height !default;
             .o-step-item {
                 margin: 0;
                 padding: 0;
-                line-height: $steps-item-line-height;
+                @include variable('line-height', 'steps-item-line-height', $steps-item-line-height);
                 margin-top: 0;
                 position: relative;
                 flex-grow: 1;
                 flex-basis: 1em;
-
                 .o-step-link {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     flex-direction: column;
-                    color: hsl(0, 0%, 29%);
+                    @include variable('color', 'steps-link-color', $steps-link-color);
                     cursor: pointer;
                     text-decoration: none;
                     &:hover {
                         text-decoration: none;
                     }
-
                     &:not(.o-step-link-clickable) {
                         cursor: not-allowed;
                     }
@@ -148,11 +153,11 @@ $steps-item-line-height: $base-line-height !default;
                 .o-step-marker {
                     align-items: center;
                     display: flex;
-                    font-weight: 700;
                     justify-content: center;
-                    background: $steps-maker-default-color;
-                    color: $primary-invert;
-                    border: $steps-marker-default-border;
+                    @include variable('font-weight', 'steps-maker-font-weight', $steps-maker-font-weight);
+                    @include variable('background', 'steps-maker-default-background', $steps-maker-default-background);
+                    @include variable('color', 'steps-maker-default-color', $steps-maker-default-color);
+                    @include variable('border', 'steps-marker-default-border', $steps-marker-default-border);
                     z-index: 1;
                     overflow: hidden;
                 }
@@ -164,15 +169,16 @@ $steps-item-line-height: $base-line-height !default;
 
                     &.o-color-#{$name} {
                         &::before, &::after {
-                            background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                            // background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                            @include mvariable('background', ('color-invert-' + #{$name}), $steps-default-color 50%, ('color-invert-' + #{$name}), $color 50, 'linear-gradient', ' , ', ', to left');
                             background-size: 200% 100%;
                             background-position: right bottom;
                         }
                         &.o-step-item-active {
                             .o-step-marker {
-                                background-color: $primary-invert;
-                                border-color: $color;
-                                color: $color;
+                                @include variable('background-color', ('color-invert-' + #{$name}), $color-invert);
+                                @include variable('border-color', ('color-' + #{$name}), $color);
+                                @include variable('color', ('color-' + #{$name}), $color);
                             }
 
                             &::before, &::after {
@@ -181,8 +187,8 @@ $steps-item-line-height: $base-line-height !default;
                         }
                         &.o-step-item-previous {
                             .o-step-marker {
-                                color: $color-invert;
-                                background-color: $color;
+                                @include variable('color', ('color-invert-' + #{$name}), $color-invert);
+                                @include variable('background-color', ('color-' + #{$name}), $color);
                             }
 
                             &::before, &::after {
@@ -190,10 +196,6 @@ $steps-item-line-height: $base-line-height !default;
                             }
                         }
                     }
-                }
-
-                .o-step-marker {
-                    color: $primary-invert;
                 }
 
                 .o-step-details {
@@ -220,7 +222,7 @@ $steps-item-line-height: $base-line-height !default;
                         content: " ";
                         display: block;
                         position: absolute;
-                        height: $steps-divider-height;
+                        @include variable('height', 'steps-divider-height', $steps-divider-height);
                         bottom: 0;
                     }
                     &::before, &::after {
@@ -235,6 +237,7 @@ $steps-item-line-height: $base-line-height !default;
 
                 &::before, &::after {
                     background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
+
                     background-size: 200% 100%;
                     background-position: right bottom;
                 }
@@ -245,9 +248,9 @@ $steps-item-line-height: $base-line-height !default;
                     }
 
                     .o-step-marker {
-                        background-color: $primary-invert;
-                        border-color: $steps-active-color;
-                        color: $steps-active-color;
+                        @include variable('background-color', 'steps-maker-default-color', $steps-maker-default-color);
+                        @include variable('border-color', 'steps-active-color', $steps-active-color);
+                        @include variable('color', 'steps-active-color', $steps-active-color);
                     }
 
                     &::before, &::after {
@@ -256,8 +259,8 @@ $steps-item-line-height: $base-line-height !default;
                 }
                 &.o-step-item-previous {
                     .o-step-marker {
-                        color: $primary-invert;
-                        background-color: $steps-previous-color;
+                        @include variable('color', 'steps-maker-default-color', $steps-maker-default-color);
+                        @include variable('background-color', 'steps-previous-color', $steps-previous-color);
                     }
 
                     &::before, &::after {
@@ -272,7 +275,7 @@ $steps-item-line-height: $base-line-height !default;
             overflow: visible;
             display: flex;
             flex-direction: column;
-            padding: 1rem;
+            @include variable('padding', 'steps-content-padding', $steps-content-padding);
             .o-step-item {
                 flex-shrink: 0;
                 flex-basis: auto;
@@ -285,7 +288,7 @@ $steps-item-line-height: $base-line-height !default;
         &.o-steps-rounded {
             .o-step-item {
                 .o-step-marker {
-                    border-radius: $base-rounded-border-radius;
+                    @include variable('border-radius', 'steps-marker-rounded-border-radius', $steps-marker-rounded-border-radius);
                 }
             }
         }
@@ -294,7 +297,9 @@ $steps-item-line-height: $base-line-height !default;
             .o-step-item {
                 &:not(:first-child), &:only-child {
                     &::before {
-                        transition: background $speed-slow $easing;
+                        transition-property: background;
+                        @include variable('transition-duration', 'transition-duration', $speed-slow);
+                        @include variable('transition-timing-function', 'transition-timing', $easing);
                     }
                 }
             }
@@ -305,10 +310,9 @@ $steps-item-line-height: $base-line-height !default;
                 .o-step-item {
                     .o-step-link {
                         flex-direction: row;
-
                         > .o-step-details {
-                            background-color: $steps-details-background-color;
-                            padding: .2em;
+                            @include variable('background-color', 'steps-details-background-color', $steps-details-background-color);
+                            @include variable('padding', 'steps-details-padding', $steps-details-padding);
                         }
                     }
                 }
@@ -348,7 +352,7 @@ $steps-item-line-height: $base-line-height !default;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    padding: $steps-vertical-padding;
+                    @include variable('padding', 'steps-vertical-padding', $steps-vertical-padding);
 
                     &::before, &::after {
                         background: linear-gradient(to top, $steps-default-color 50%, $steps-active-color 50%);
@@ -372,9 +376,10 @@ $steps-item-line-height: $base-line-height !default;
                     &:not(:first-child), &:only-child {
                         &::before {
                             height: 100%;
-                            width: $steps-divider-height;
+                            @include variable('width', 'steps-divider-height', $steps-divider-height);
                             top: -50%;
                             left: calc(50% - #{$steps-divider-height / 2});
+                            @include variable('left', 'steps-divider-height', $steps-divider-height, 'calc', '/ 2');
                         }
                     }
 
@@ -389,7 +394,7 @@ $steps-item-line-height: $base-line-height !default;
                             top: 50%;
                         }
                         &::after {
-                            width: $steps-divider-height;
+                            @include variable('width', 'steps-divider-height', $steps-divider-height);
                             top: auto;
                             bottom: 50%;
                         }
@@ -419,7 +424,7 @@ $steps-item-line-height: $base-line-height !default;
                     .o-step-item {
                         .o-step-link {
                             > .o-step-details {
-                                background-color: $steps-details-background-color;
+                                @include variable('background-color', 'steps-details-background-color', $steps-details-background-color);
                             }
                         }
                     }
@@ -453,7 +458,7 @@ $steps-item-line-height: $base-line-height !default;
                                 content: " ";
                                 display: block;
                                 position: absolute;
-                                height: $steps-divider-height;
+                                @include variable('height', 'steps-divider-height', $steps-divider-height);
                                 width: 25%;
                                 bottom: 0;
                                 left: 50%;

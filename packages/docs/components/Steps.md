@@ -328,15 +328,22 @@ title: Steps
 
 ## Style
 
-| CSS Variable                           | SASS Variable                    | Default            |
-| -------------------------------------- | -------------------------------- | ------------------ |
-| --oruga-steps-details-background-color | \$steps-details-background-color | hsl(0, 0%, 100%)   |
-| --oruga-steps-maker-default-color      | \$steps-maker-default-color      | \$grey-light       |
-| --oruga-steps-marker-default-border    | \$steps-marker-default-border    | .2em solid #fff    |
-| --oruga-steps-default-color            | \$steps-default-color            | \$grey-lighter     |
-| --oruga-steps-previous-color           | \$steps-previous-color           | \$primary          |
-| --oruga-steps-active-color             | \$steps-active-color             | \$primary          |
-| --oruga-steps-divider-height           | \$steps-divider-height           | .2em               |
-| --oruga-steps-vertical-padding         | \$steps-vertical-padding         | 1em 0              |
-| --oruga-steps-mobile-max-width         | \$steps-mobile-max-width         | 769px              |
-| --oruga-steps-item-line-height         | \$steps-item-line-height         | \$base-line-height |
+| CSS Variable                               | SASS Variable                        | Default                      |
+| ------------------------------------------ | ------------------------------------ | ---------------------------- |
+| --oruga-steps-details-background-color     | \$steps-details-background-color     | hsl(0, 0%, 100%)             |
+| --oruga-steps-details-padding              | \$steps-details-padding              | .2em                         |
+| --oruga-steps-maker-default-background     | \$steps-maker-default-background     | \$grey-light                 |
+| --oruga-steps-maker-default-color          | \$steps-maker-default-color          | \$primary-invert             |
+| --oruga-steps-marker-default-border        | \$steps-marker-default-border        | .2em solid #fff              |
+| --oruga-steps-maker-font-weight            | \$steps-maker-font-weight            | 700                          |
+| --oruga-steps-marker-rounded-border-radius | \$steps-marker-rounded-border-radius | \$base-rounded-border-radius |
+| --oruga-steps-default-color                | \$steps-default-color                | \$grey-lighter               |
+| --oruga-steps-previous-color               | \$steps-previous-color               | \$primary                    |
+| --oruga-steps-active-color                 | \$steps-active-color                 | \$primary                    |
+| --oruga-steps-divider-height               | \$steps-divider-height               | .2em                         |
+| --oruga-steps-vertical-padding             | \$steps-vertical-padding             | 1em 0                        |
+| --oruga-steps-mobile-max-width             | \$steps-mobile-max-width             | 769px                        |
+| --oruga-steps-item-line-height             | \$steps-item-line-height             | \$base-line-height           |
+| --oruga-steps-link-color                   | \$steps-link-color                   | hsl(0, 0%, 29%)              |
+| --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
+| --oruga-steps-details-title-font-weight    | \$steps-details-title-font-weight    | 600                          |

@@ -241,30 +241,31 @@ title: Tabs
 
 ## Props
 
-| Prop name                  | Description                                     | Type           | Values                     | Default               |
-| -------------------------- | ----------------------------------------------- | -------------- | -------------------------- | --------------------- |
-| v-model                    |                                                 | string\|number | -                          | undefined             |
-| type                       | Tab type                                        | string\|object | `boxed`, `toggle`          |                       |
-| size                       | Tab size, optional                              | string         | `small`, `medium`, `large` |                       |
-| animated                   | Tab will have an animation                      | boolean        | -                          | 'tabs.animated': true |
-| vertical                   | Show tab in vertical layout                     | boolean        | -                          | false                 |
-| position                   | Position of the tab, optional                   | string         | `centered`, `right`        |                       |
-| destroyOnHide              | Destroy tab on hide                             | boolean        | -                          | false                 |
-| expanded                   | Tabs will be expanded (full-width)              | boolean        | -                          |                       |
-| multiline                  | Show tab items multiline when there is no space | boolean        | -                          |                       |
-| rootClass                  |                                                 | string         | -                          |                       |
-| positionWrapperClass       |                                                 | string         | -                          |                       |
-| expandedWrapperClass       |                                                 | string         | -                          |                       |
-| verticalWrapperClass       |                                                 | string         | -                          |                       |
-| multilineWrapperClass      |                                                 | string         | -                          |                       |
-| tabsClass                  |                                                 | string         | -                          |                       |
-| typeClass                  |                                                 | string         | -                          |                       |
-| sizeClass                  |                                                 | string         | -                          |                       |
-| positionClass              |                                                 | string         | -                          |                       |
-| contentClass               |                                                 | string         | -                          |                       |
-| transitioningClass         |                                                 | string         | -                          |                       |
-| tabItemHeaderActiveClass   |                                                 | string         | -                          |                       |
-| tabItemHeaderDisabledClass |                                                 | string         | -                          |                       |
+| Prop name                  | Description                                     | Type           | Values                                                                          | Default               |
+| -------------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------- |
+| v-model                    |                                                 | string\|number | -                                                                               | undefined             |
+| variant                    | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                       |
+| size                       | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                       |
+| animated                   | Tab will have an animation                      | boolean        | -                                                                               | 'tabs.animated': true |
+| vertical                   | Show tab in vertical layout                     | boolean        | -                                                                               | false                 |
+| position                   | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                       |
+| destroyOnHide              | Destroy tab on hide                             | boolean        | -                                                                               | false                 |
+| type                       | Tab type                                        | string\|object | `boxed`, `toggle`                                                               |                       |
+| expanded                   | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                       |
+| multiline                  | Show tab items multiline when there is no space | boolean        | -                                                                               |                       |
+| rootClass                  |                                                 | string         | -                                                                               |                       |
+| positionWrapperClass       |                                                 | string         | -                                                                               |                       |
+| expandedWrapperClass       |                                                 | string         | -                                                                               |                       |
+| verticalWrapperClass       |                                                 | string         | -                                                                               |                       |
+| multilineWrapperClass      |                                                 | string         | -                                                                               |                       |
+| tabsClass                  |                                                 | string         | -                                                                               |                       |
+| typeClass                  |                                                 | string         | -                                                                               |                       |
+| sizeClass                  |                                                 | string         | -                                                                               |                       |
+| positionClass              |                                                 | string         | -                                                                               |                       |
+| contentClass               |                                                 | string         | -                                                                               |                       |
+| transitioningClass         |                                                 | string         | -                                                                               |                       |
+| tabItemHeaderActiveClass   |                                                 | string         | -                                                                               |                       |
+| tabItemHeaderDisabledClass |                                                 | string         | -                                                                               |                       |
 
 ## Events
 
