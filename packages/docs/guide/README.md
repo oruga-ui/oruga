@@ -56,7 +56,15 @@ Vue.use(Sidebar);
 
 ### Nuxt
 
-Work in progress [nuxt-oruga](https://github.com/oruga-ui/nuxt-oruga)
+Oruga provides a Nuxt.js module for easily importing the library into your Nuxt.js app.
+
+Add @oruga-ui/oruga/nuxt to modules section of your nuxt.config.js file.
+
+```js
+module.exports = {
+  modules: ['@oruga-ui/oruga/nuxt']
+}
+```
 
 But it can be manually done by adding a plugin let's say `oruga.js` in your `plugin` folder
 
