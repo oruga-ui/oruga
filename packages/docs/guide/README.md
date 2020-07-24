@@ -66,7 +66,7 @@ module.exports = {
 }
 ```
 
-But it can be manually done by adding a plugin let's say `oruga.js` in your `plugin` folder
+But it can be manually done by adding a plugin let's say `oruga.js` in your `plugins` folder
 
 ```js
 import Vue from 'vue';
@@ -81,6 +81,8 @@ And then in your nuxt.config.js edit the plugin array with:
 ```js
 plugins: [{ src: '~plugins/oruga.js', ssr: false }];
 ```
+
+To understand how the plugins work with Nuxt.js, take a look at the [plugin documentation](https://nuxtjs.org/guide/plugins).
 
 ## Customization
 
