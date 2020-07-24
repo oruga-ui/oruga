@@ -4,7 +4,7 @@ const { resolve } = require('path')
 module.exports = function nuxtBootstrapVue(moduleOptions = {}) {
   this.nuxt.hook('build:before', () => {
     
-    const options = Object.assign({}, defaults, this.options.buefy, moduleOptions)
+    const options = Object.assign({}, this.options.oruga, moduleOptions)
 
     // Add css
     if (options.css !== false) {
@@ -28,4 +28,4 @@ module.exports = function nuxtBootstrapVue(moduleOptions = {}) {
   })
 }
 
-module.exports.meta = require('../package.json')
+module.exports.meta = require(__dirname, '../package.json')
