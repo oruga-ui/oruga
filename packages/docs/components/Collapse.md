@@ -128,15 +128,15 @@ title: Collapse
 
 ## Props
 
-| Prop name    | Description                                                                        | Type    | Values          | Default                      |
-| ------------ | ---------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------- |
-| open         | Whether collapse is open or not, use the .sync modifier to make it two-way binding | boolean | -               | true                         |
-| animation    | Custom animation (transition name)                                                 | string  | -               | 'collapse.animation': 'fade' |
-| ariaId       | Custom animation (transition name)                                                 | string  | -               | ''                           |
-| position     | Trigger position                                                                   | string  | `top`, `bottom` | 'top'                        |
-| rootClass    |                                                                                    | string  | -               |                              |
-| triggerClass |                                                                                    | string  | -               |                              |
-| contentClass |                                                                                    | string  | -               |                              |
+| Prop name    | Description                                                                        | Type    | Values          | Default                                              |
+| ------------ | ---------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------- |
+| open         | Whether collapse is open or not, use the .sync modifier to make it two-way binding | boolean | -               | true                                                 |
+| animation    | Custom animation (transition name)                                                 | string  | -               | Config -> <code> 'collapse.animation': 'fade'</code> |
+| ariaId       | Custom animation (transition name)                                                 | string  | -               | ''                                                   |
+| position     | Trigger position                                                                   | string  | `top`, `bottom` | 'top'                                                |
+| rootClass    |                                                                                    | string  | -               |                                                      |
+| triggerClass |                                                                                    | string  | -               |                                                      |
+| contentClass |                                                                                    | string  | -               |                                                      |
 
 ## Events
 

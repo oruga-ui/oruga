@@ -69,7 +69,7 @@ function tmplProps(props) {
     
     if (d.indexOf('getValueByPath') >= 0) {
       const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
-      d = `${params[1]}: ${params[2]}`
+      d = `Config -> <code>${params[1]}:${params[2]}</code>`
     }
 
 		ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + '\n'
