@@ -72,7 +72,7 @@ import Input from '../input/Input'
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
-import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension } from '../../utils/helpers'
+import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -141,6 +141,8 @@ export default {
                 return getValueByPath(config, 'autocomplete.animation', 'fade')
             }
         },
+        /** Number of milliseconds to delay before to emit typing event */
+        debounceTyping: Number,
         /** Icon name to be added on the right side */
         iconRight: String,
         /** Clickable icon right if exists */
@@ -538,8 +540,12 @@ export default {
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            this.$emit('typing', this.newValue)
-            this.checkValidity()
+            const typing = () => {
+                this.$emit('typing', this.newValue)
+                this.checkValidity()
+            }
+            if (this.debounceTyping) debounce(typing, this.debounceTyping)
+            else typing()
         },
         rightIconClick(event) {
             if (this.clearable) {
