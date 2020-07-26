@@ -304,6 +304,7 @@ title: Autocomplete
 | itemClass           | Option class                                                                                                      | string         | -                                       |                                  |
 | itemHoveredClass    | Option hovered class                                                                                              | string         | -                                       |                                  |
 | itemDisabledClass   | Option disabled class                                                                                             | string         | -                                       |                                  |
+| inputClasses        | Classes to apply on internal input (@see o-input style docs)                                                      | object         | -                                       |                                  |
 
 ## Events
 

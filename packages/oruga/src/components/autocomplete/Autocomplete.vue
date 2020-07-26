@@ -13,7 +13,7 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
-            v-bind="$attrs"
+            v-bind="inputBind"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -159,7 +159,9 @@ export default {
         /** Option hovered class */
         itemHoveredClass: String,
         /** Option disabled class */
-        itemDisabledClass: String
+        itemDisabledClass: String,
+        /** Classes to apply on internal input (@see o-input style docs) */
+        inputClasses: Object
     },
     data() {
         return {
@@ -196,6 +198,12 @@ export default {
                 ...this.itemClasses,
                 this.computedClass('autocomplete', 'itemDisabledClass', 'o-autocomplete-item-disabled')
             ]
+        },
+        inputBind() {
+            return {
+                ...this.$attrs,
+                ...this.inputClasses
+            }
         },
         /**
          * White-listed items to not close when clicked.
