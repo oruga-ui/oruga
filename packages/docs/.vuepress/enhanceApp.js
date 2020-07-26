@@ -1,6 +1,6 @@
 
 import Oruga from '@oruga-ui/oruga';
-import '@oruga-ui/oruga/dist/oruga.css';
+import '@oruga-ui/oruga/dist/oruga-vars.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
