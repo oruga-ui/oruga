@@ -174,7 +174,8 @@ export default {
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
-            bodyEl: undefined // Used to append to body
+            bodyEl: undefined, // Used to append to body
+            debouncedEmitTyping: undefined // Used to debouced typing
         }
     },
     computed: {
@@ -345,6 +346,13 @@ export default {
             if (this.keepFirst) {
                 this.selectFirstOption(value)
             }
+        },
+
+        debounceTyping: {
+            handler(value) {
+                this.debouncedEmitTyping = debounce(this, this.emitTyping, value)
+            },
+            immediate: true
         }
     },
     methods: {
@@ -540,12 +548,12 @@ export default {
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            const typing = () => {
-                this.$emit('typing', this.newValue)
-                this.checkValidity()
-            }
-            if (this.debounceTyping) debounce(typing, this.debounceTyping)
-            else typing()
+            if (this.debounceTyping) this.debouncedEmitTyping()
+            else this.emitTyping()
+        },
+        emitTyping() {
+            this.$emit('typing', this.newValue)
+            this.checkValidity()
         },
         rightIconClick(event) {
             if (this.clearable) {

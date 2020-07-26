@@ -183,6 +183,7 @@
                 field="title"
                 :loading="isFetching"
                 check-infinite-scroll
+                :debounce-typing="500"
                 @typing="getAsyncData"
                 @select="option => selected = option"
                 @infinite-scroll="getMoreAsyncData">
