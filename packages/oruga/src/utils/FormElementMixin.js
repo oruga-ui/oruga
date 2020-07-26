@@ -21,7 +21,7 @@ export default {
     icon: String,
     /**
      * Icon pack to use
-     * @values mdi, fa, fas, far, fad, fal
+     * @values mdi, fa, fas and any other custom icon pack
      */
     iconPack: String,
     /** Native options to use in HTML5 validation */

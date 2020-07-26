@@ -81,23 +81,36 @@ export default {
     },
     mixins: [BaseComponentMixin, TabbedMixin('step')],
     props: {
+        /**
+         * Icon pack to use for the navigation
+         * @values mdi, fa, fas and any other custom icon pack
+         */
         iconPack: String,
+        /** Icon to use for navigation button */
         iconPrev: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'steps.iconPrev', 'chevron-left')
             }
         },
+        /** Icon to use for navigation button */
         iconNext: {
             type: String,
             default: () => {
                 return getValueByPath(config, 'steps.iconNext', 'chevron-right')
             }
         },
+        /**
+         * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
+         */
         hasNavigation: {
             type: Boolean,
             default: true
         },
+        /**
+         * Position of the marker label, optional
+         * @values bottom, right, left
+         */
         labelPosition: {
             type: String,
             validator(value) {
@@ -109,10 +122,15 @@ export default {
             },
             default: 'bottom'
         },
+        /** Rounded step markers */
         rounded: {
             type: Boolean,
             default: true
         },
+        /**
+         * How Steps will be displayed for mobile user
+         * @values minimalist, compact, null
+         */
         mobileMode: {
             type: String,
             validator(value) {
