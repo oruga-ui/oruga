@@ -66,7 +66,7 @@ Vue.use(Input);
 
 ### 3 Customization
 
-Browse [customization section on the documentation](https://oruga.io/guide).
+Browse [customization section on the documentation](https://oruga.io/documentation).
 
 ## Browser support
 

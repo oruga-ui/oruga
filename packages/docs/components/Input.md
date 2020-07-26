@@ -126,37 +126,37 @@ title: Input
 
 ## Props
 
-| Prop name             | Description                                                 | Type           | Values                                  | Default                    |
-| --------------------- | ----------------------------------------------------------- | -------------- | --------------------------------------- | -------------------------- |
-| expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                       |                            |
-| rounded               | Makes the element rounded                                   | boolean        | -                                       |                            |
-| icon                  | Icon name to be added                                       | string         | -                                       |                            |
-| iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas`, `far`, `fad`, `fal` |                            |
-| autocomplete          | Native options to use in HTML5 validation                   | string         | -                                       |                            |
-| maxlength             | Same as native maxlength, plus character counter            | number\|string | -                                       |                            |
-| useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                       | "useHtml5Validation": true |
-| statusIcon            | Show status icon using field and variant prop               | boolean        | -                                       | "statusIcon": true         |
-| validationMessage     | The message which is shown when a validation error occurs   | string         | -                                       |                            |
-| v-model               |                                                             | number\|string | -                                       |                            |
-| type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea` | 'text'                     |
-| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`              |                            |
-| passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                       |                            |
-| iconClickable         | Makes the icon clickable                                    | boolean        | -                                       |                            |
-| hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                       | 'input.counter': false     |
-| iconRight             | Icon name to be added on the right side                     | string         | -                                       |                            |
-| iconRightClickable    | Make the icon right clickable                               | boolean        | -                                       |                            |
-| rootClass             |                                                             | string         | -                                       |                            |
-| controlExpandedClass  |                                                             | string         | -                                       |                            |
-| controlIconLeftClass  |                                                             | string         | -                                       |                            |
-| controlIconRightClass |                                                             | string         | -                                       |                            |
-| inputClass            |                                                             | string         | -                                       |                            |
-| roundedClass          |                                                             | string         | -                                       |                            |
-| iconLeftClass         |                                                             | string         | -                                       |                            |
-| iconRightClass        |                                                             | string         | -                                       |                            |
-| counterClass          |                                                             | string         | -                                       |                            |
-| counterInvisibleClass |                                                             | string         | -                                       |                            |
-| sizeClass             |                                                             | string         | -                                       |                            |
-| variantClass          |                                                             | string         | -                                       |                            |
+| Prop name             | Description                                                 | Type           | Values                                            | Default                    |
+| --------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------- |
+| expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                            |
+| rounded               | Makes the element rounded                                   | boolean        | -                                                 |                            |
+| icon                  | Icon name to be added                                       | string         | -                                                 |                            |
+| iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                            |
+| autocomplete          | Native options to use in HTML5 validation                   | string         | -                                                 |                            |
+| maxlength             | Same as native maxlength, plus character counter            | number\|string | -                                                 |                            |
+| useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                                 | "useHtml5Validation": true |
+| statusIcon            | Show status icon using field and variant prop               | boolean        | -                                                 | "statusIcon": true         |
+| validationMessage     | The message which is shown when a validation error occurs   | string         | -                                                 |                            |
+| v-model               |                                                             | number\|string | -                                                 |                            |
+| type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                     |
+| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                            |
+| passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                                 |                            |
+| iconClickable         | Makes the icon clickable                                    | boolean        | -                                                 |                            |
+| hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                                 | 'input.counter': false     |
+| iconRight             | Icon name to be added on the right side                     | string         | -                                                 |                            |
+| iconRightClickable    | Make the icon right clickable                               | boolean        | -                                                 |                            |
+| rootClass             |                                                             | string         | -                                                 |                            |
+| controlExpandedClass  |                                                             | string         | -                                                 |                            |
+| controlIconLeftClass  |                                                             | string         | -                                                 |                            |
+| controlIconRightClass |                                                             | string         | -                                                 |                            |
+| inputClass            |                                                             | string         | -                                                 |                            |
+| roundedClass          |                                                             | string         | -                                                 |                            |
+| iconLeftClass         |                                                             | string         | -                                                 |                            |
+| iconRightClass        |                                                             | string         | -                                                 |                            |
+| counterClass          |                                                             | string         | -                                                 |                            |
+| counterInvisibleClass |                                                             | string         | -                                                 |                            |
+| sizeClass             |                                                             | string         | -                                                 |                            |
+| variantClass          |                                                             | string         | -                                                 |                            |
 
 ## Events
 

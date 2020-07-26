@@ -2,10 +2,8 @@ const path = require('path')
 const fs = require('fs')
 
 const componentsFolder = path.join(__dirname, '../components/')
-const components = fs
-  .readdirSync(componentsFolder)
-  .filter(c => c !== 'README.md')
-  .map(c => c.replace('.md', ''))
+const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
+const sidebarComponents = components.map(c => `/components/${c}`)
 
 module.exports = {
   title: 'Oruga',
@@ -69,20 +67,23 @@ module.exports = {
     editLinks: true,
     docsDir: 'packages/docs',
     docsBranch: 'develop',
-    sidebar: {
-      '/components/': [
-        {
-          title: 'Components',
-          collapsable: false,
-          children: [...components]
-        }
-      ]
-    },
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Components', link: '/components/' },
+      { text: 'Documentation', link: '/documentation/' },
       { text: 'Examples', link: '/examples/' }
+    ],
+    sidebar: [
+      {
+        title: 'Introduction',
+        collapsable: true,
+        path: '/documentation/',
+        sidebarDepth: 2
+      },
+      {
+        title: 'Components',
+        collapsable: false,
+        children: sidebarComponents
+      }
     ]
   }
 }
