@@ -20,12 +20,11 @@
     "concurrently": "5.2.0",
     "markdown-it-include": "1.1.1",
     "sockjs-client": "1.4.0",
-    "vue-docgen-cli": "4.27.0",
+    "vue-docgen-cli": "4.29.0",
     "vuepress": "1.5.2",
     "vuepress-plugin-demo-block": "0.7.2"
   },
   "resolutions": {
     "watchpack": "1.6.1"
-  },
-  "dependencies": {}
+  }
 }

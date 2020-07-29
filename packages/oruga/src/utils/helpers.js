@@ -285,6 +285,7 @@ export function getStyleValue(value) {
         for (const key in value) {
             if (value[key]) return key
         }
+        return ''
     }
     return value
 }

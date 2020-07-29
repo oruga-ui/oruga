@@ -169,8 +169,7 @@ $steps-details-title-font-weight: 600 !default;
 
                     &.o-color-#{$name} {
                         &::before, &::after {
-                            // background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
-                            @include mvariable('background', ('color-invert-' + #{$name}), $steps-default-color 50%, ('color-invert-' + #{$name}), $color 50, 'linear-gradient', ' , ', ', to left');
+                            background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
                             background-size: 200% 100%;
                             background-position: right bottom;
                         }

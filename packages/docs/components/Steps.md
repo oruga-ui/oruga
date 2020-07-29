@@ -281,13 +281,13 @@ title: Steps
 | stepTitleClass                |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepLinkClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
 
-## Events
+### Events
 
 | Event name | Type      | Description |
 | ---------- | --------- | ----------- |
 | input      | undefined |
 
-## Slots
+### Slots
 
 | Name       | Description | Bindings                                                                  |
 | ---------- | ----------- | ------------------------------------------------------------------------- |
@@ -320,7 +320,7 @@ title: Steps
 | itemActiveClass   |                                                                                                                                     | string                | -      |                                             |
 | itemPreviousClass |                                                                                                                                     | string                | -      |                                             |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |

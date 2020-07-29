@@ -194,14 +194,14 @@ title: Slider
 | thumbClass             |                                                  | string        | -                                                                               |                                                     |
 | thumbDraggingClass     |                                                  | string        | -                                                                               |                                                     |
 
-## Events
+### Events
 
 | Event name | Type | Description |
 | ---------- | ---- | ----------- |
 | dragstart  |      |
 | dragend    |      |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
@@ -224,7 +224,7 @@ title: Slider
 | tickHiddenClass |                      | string | -      |         |
 | tickLabelClass  |                      | string | -      |         |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |

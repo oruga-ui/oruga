@@ -226,7 +226,7 @@ title: Dropdown
 | mobileClass            |                                                                                                                                                        | string                                       | -                                      |                                                      |
 | expandedClass          |                                                                                                                                                        | string                                       | -                                      |                                                      |
 
-## Events
+### Events
 
 | Event name    | Type      | Description |
 | ------------- | --------- | ----------- |
@@ -234,7 +234,7 @@ title: Dropdown
 | change        | undefined |
 | input         | undefined |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings                                |
 | ------- | ----------- | --------------------------------------- |
@@ -262,13 +262,13 @@ title: Dropdown
 | itemActiveClass   |                                                       | string                                       | -      |         |
 | itemDisabledClass |                                                       | string                                       | -      |         |
 
-## Events
+### Events
 
 | Event name | Type | Description |
 | ---------- | ---- | ----------- |
 | click      |      |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |

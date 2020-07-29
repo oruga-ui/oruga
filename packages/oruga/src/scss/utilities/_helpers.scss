@@ -73,11 +73,11 @@
     }
 }
 
-@mixin mvariable($attribute, $name1, $value1, $name2, $value2, $function: null, $operator: null, $argument: null, $argument1: null, $argument2: null) {
+@mixin mvariable($attribute, $name1, $value1, $name2, $value2, $function: null, $operator: null, $argument: null, $argument1: null, $argument2: null, $preargument: null) {
     @if $css-vars == true {
         // fallback IE 11 #{$attribute}: #{$value1} #{$value2};
         @if ($function != null) {
-            #{$attribute}: #{$function}#{'('}(var(#{$variable-prefix}#{$name1}, #{$value1}) #{$argument1} #{$operator} var(#{$variable-prefix}#{$name2}, #{$value2}) #{$argument2}#{')'} #{$argument});
+            #{$attribute}: #{$function}#{'('}(#{$preargument} var(#{$variable-prefix}#{$name1}, #{$value1}) #{$argument1} #{$operator} var(#{$variable-prefix}#{$name2}, #{$value2}) #{$argument2}#{')'} #{$argument});
         } @else {
             #{$attribute}: var(#{$variable-prefix}#{$name1}, #{$value1}), var(#{$variable-prefix}#{$name2}, #{$value2});
         }

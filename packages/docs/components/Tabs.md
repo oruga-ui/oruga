@@ -267,13 +267,13 @@ title: Tabs
 | tabItemHeaderActiveClass   |                                                 | string         | -                                                                               |                                               |
 | tabItemHeaderDisabledClass |                                                 | string         | -                                                                               |                                               |
 
-## Events
+### Events
 
 | Event name | Type      | Description |
 | ---------- | --------- | ----------- |
 | input      | undefined |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
@@ -302,7 +302,7 @@ title: Tabs
 | itemHeaderActiveClass   |                                                              | string                | -      |                                             |
 | itemHeaderDisabledClass |                                                              | string                | -      |                                             |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
