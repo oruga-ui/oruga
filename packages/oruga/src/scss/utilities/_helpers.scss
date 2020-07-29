@@ -56,11 +56,11 @@
     user-select: none;
 }
 
-@mixin variable($attribute, $name, $value, $function: null, $argument: null) {
+@mixin variable($attribute, $name, $value, $function: null, $argument: null, $preargument: null) {
     @if $css-vars == true {
         // fallback IE 11 #{$attribute}: #{$value};
         @if ($function != null) {
-            #{$attribute}: #{$function}(var(#{$variable-prefix}#{$name}, #{$value}) #{$argument});
+            #{$attribute}: #{$function}(#{$preargument} var(#{$variable-prefix}#{$name}, #{$value}) #{$argument});
         } @else {
             #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
         }

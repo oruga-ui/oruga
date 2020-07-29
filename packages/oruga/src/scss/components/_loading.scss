@@ -21,8 +21,8 @@ $loading-zindex: 999 !default;
     &.o-loading-fullpage {
         position: fixed;
         .o-loading-icon {
-            top: calc(50% - #{variable('loading-fullpage-icon-size', $loading-fullpage-icon-size)} / 2);
-            left: calc(50% - #{variable('loading-fullpage-icon-size', $loading-fullpage-icon-size)} / 2);
+            @include variable('top', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
+            @include variable('left', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
             .o-icon {
                 * {
                     @include variable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
@@ -31,10 +31,10 @@ $loading-zindex: 999 !default;
             }
         }
     }
-    &:not(.o-loadind-fullpage) {
+    &:not(.o-loading-fullpage) {
         .o-loading-icon {
-            top: calc(50% - #{$loading-icon-size / 2});
-            left: calc(50% - #{$loading-icon-size / 2});
+            @include variable('top', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
+            @include variable('left', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
             .o-icon {    
                 * {
                     @include variable('width', 'loading-icon-size', $loading-icon-size);
