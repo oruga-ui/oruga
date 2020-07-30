@@ -8,6 +8,8 @@ title: Icon
 
 ---
 
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/icon/examples/Icon.md" class="docgen-edit-link">edit on github</a>
+
 ## Examples
 
 Oruga is compatible with both <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a>

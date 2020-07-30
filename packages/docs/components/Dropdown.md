@@ -8,6 +8,8 @@ title: Dropdown
 
 ---
 
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
+
 ## Examples
 
 ### Base
@@ -242,10 +244,6 @@ title: Dropdown
 | default |             |                                         |
 
 ---
-
----
-
-## title: DropdownItem
 
 # DropdownItem
 
