@@ -243,10 +243,6 @@ title: Dropdown
 
 ---
 
----
-
-## title: DropdownItem
-
 # DropdownItem
 
 ## Props

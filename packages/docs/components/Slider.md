@@ -209,10 +209,6 @@ title: Slider
 
 ---
 
----
-
-## title: SliderTick
-
 # SliderTick
 
 ## Props

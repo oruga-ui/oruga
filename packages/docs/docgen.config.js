@@ -11,23 +11,29 @@ const IGNORE = [
 ];
 
 module.exports = {
-    componentsRoot: `${src}/components`,
-    components: '**/[A-Z]*.vue',
-    outDir: './components',
-    defaultExamples: false,
-    getDestFile: (file, config) => {
-        const component = path.basename(file);
-        if (!component || IGNORE.indexOf(component) >= 0) return;
-        return path.join(config.outDir, component).replace(/\.vue$/, '.md');
-    },
-    templates: {
-        component: (renderedUsage, doc, config, fileName, requiresMd, subComponent = false) => {
-          const { displayName, description, docsBlocks, tags, functional } = doc;
-          const { deprecated, author, since, version, see, link, style } = tags || {};
-          return `
+  componentsRoot: `${src}/components`,
+  components: '**/[A-Z]*.vue',
+  outDir: './components',
+  // docsRepo: 'oruga-ui/oruga',
+  // docsBranch: 'develop',
+  // docsFolder: 'packages/docs',
+  defaultExamples: false,
+  getDestFile: (file, config) => {
+    const component = path.basename(file);
+    if (!component || IGNORE.indexOf(component) >= 0) return;
+    return path.join(config.outDir, component).replace(/\.vue$/, '.md');
+  },
+  templates: {
+    component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent }) => {
+      const { displayName, description, docsBlocks, tags, functional } = doc;
+      const { deprecated, author, since, version, see, link, style } = tags || {};
+      return `
+
+${!isSubComponent ? `
 ---
 title: ${displayName}
 ---
+`: ''}
 # ${deprecated ? `~~${displayName}~~` : displayName}
 ${deprecated ? `> **Deprecated** ${deprecated[0].description}\n` : ''}
 ${description ? '> ' + description : ''}
@@ -45,63 +51,63 @@ ${renderedUsage.slots}
 ${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
 ${style ? renderStyleDocs(config, style[0].description) : ''}
 `;
-        },
-        props: (props, subComponent = false) => {
-return `
+    },
+    props: (props) => {
+      return `
 ## Props
 | Prop name     | Description | Type      | Values      | Default     |
 | ------------- |-------------| --------- | ----------- | ----------- |
 ${tmplProps(props)}
 `
-        }
     }
+  }
 };
 
 function tmplProps(props) {
-	let ret = ''
+  let ret = ''
 
-	props.forEach(pr => {
-		const p = pr.name
-		const n = pr.type && pr.type.name ? pr.type.name : ''
-		let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''
-		const v = pr.values ? pr.values.map(pv => `\`${pv}\``).join(', ') : '-'
+  props.forEach(pr => {
+    const p = pr.name
+    const n = pr.type && pr.type.name ? pr.type.name : ''
+    let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''
+    const v = pr.values ? pr.values.map(pv => `\`${pv}\``).join(', ') : '-'
     const t = pr.description ? pr.description : ''
-    
+
     if (d.indexOf('getValueByPath') >= 0) {
       const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
       d = `Config -> <code>${params[1]}:${params[2]}</code>`
     }
 
-		ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + '\n'
-	})
-	return ret
+    ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + '\n'
+  })
+  return ret
 }
 
 function mdclean(input) {
-	return input.replace(/\r?\n/g, '<br>').replace(/\|/g, '\\|')
+  return input.replace(/\r?\n/g, '<br>').replace(/\|/g, '\\|')
 }
 
 function renderStyleDocs(config, name) {
-    const cssFile = path.resolve(config.cwd, `${src}/scss/components/${name}`)
-    const content = fs.readFileSync(cssFile, 'utf8');
-    const docsRegex = '/* @docs */';
-    const docs = content.substring(content.indexOf(docsRegex) + docsRegex.length, content.lastIndexOf(docsRegex));
-    const variables = docs.split(os.EOL).filter(d => !!d);
-    return `
+  const cssFile = path.resolve(config.cwd, `${src}/scss/components/${name}`)
+  const content = fs.readFileSync(cssFile, 'utf8');
+  const docsRegex = '/* @docs */';
+  const docs = content.substring(content.indexOf(docsRegex) + docsRegex.length, content.lastIndexOf(docsRegex));
+  const variables = docs.split(os.EOL).filter(d => !!d);
+  return `
 ## Style
 
   | CSS Variable          | SASS Variable  | Default |
   | --------------------- | -------------- | ------- |
 ${variables
-    .map(variable => {
-      const keyValue = variable.split(':');
-      const varName = keyValue[0].trim();
-      const varValue = keyValue[1].replace('!default', '').replace(';', '').trim();
-      const varNameCSS = varName.replace('$', '');
-      return (
-        `| ${'--oruga-' + varNameCSS} | ${varName} | ${varValue} |`
-      )
-    })
-    .join('\n')}
+      .map(variable => {
+        const keyValue = variable.split(':');
+        const varName = keyValue[0].trim();
+        const varValue = keyValue[1].replace('!default', '').replace(';', '').trim();
+        const varNameCSS = varName.replace('$', '');
+        return (
+          `| ${'--oruga-' + varNameCSS} | ${varName} | ${varValue} |`
+        )
+      })
+      .join('\n')}
 `
 }

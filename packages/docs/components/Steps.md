@@ -296,10 +296,6 @@ title: Steps
 
 ---
 
----
-
-## title: OStepItem
-
 # OStepItem
 
 ## Props

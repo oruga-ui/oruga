@@ -281,10 +281,6 @@ title: Tabs
 
 ---
 
----
-
-## title: Tab Item
-
 # Tab Item
 
 ## Props
