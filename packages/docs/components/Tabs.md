@@ -8,6 +8,8 @@ title: Tabs
 
 ---
 
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
+
 ## Examples
 
 ### Base

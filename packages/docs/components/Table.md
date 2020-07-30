@@ -8,6 +8,8 @@ title: Table
 
 ---
 
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/table/examples/Table.md" class="docgen-edit-link">edit on github</a>
+
 ## Examples
 
 ### Base

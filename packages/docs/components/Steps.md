@@ -8,6 +8,8 @@ title: Steps
 
 ---
 
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
+
 ## Examples
 
 ### Base

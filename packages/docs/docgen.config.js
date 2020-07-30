@@ -14,9 +14,9 @@ module.exports = {
   componentsRoot: `${src}/components`,
   components: '**/[A-Z]*.vue',
   outDir: './components',
-  // docsRepo: 'oruga-ui/oruga',
-  // docsBranch: 'develop',
-  // docsFolder: 'packages/docs',
+  docsRepo: 'oruga-ui/oruga',
+  docsBranch: 'develop',
+  docsFolder: 'packages/docs',
   defaultExamples: false,
   getDestFile: (file, config) => {
     const component = path.basename(file);
