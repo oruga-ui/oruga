@@ -7,7 +7,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default ({
-  Vue,
+  Vue
 }) => {
   
   library.add(fas);
