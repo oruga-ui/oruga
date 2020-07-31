@@ -1,9 +1,9 @@
 const { resolve } = require('path')
 
 // --- Main Nuxt.js module ---
-module.exports = function nuxtBootstrapVue(moduleOptions = {}) {
+module.exports = function nuxtOruga(moduleOptions = {}) {
   this.nuxt.hook('build:before', () => {
-    
+
     const options = Object.assign({}, this.options.oruga, moduleOptions)
 
     // Add css

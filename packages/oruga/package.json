@@ -12,6 +12,7 @@
   "files": [
     "dist",
     "src",
+    "nuxt",
     "types/*.d.ts"
   ],
   "repository": {
