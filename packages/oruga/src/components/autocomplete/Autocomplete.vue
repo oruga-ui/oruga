@@ -430,7 +430,7 @@ export default {
          * Close dropdown if clicked outside.
          */
         clickedOutside(event) {
-            if (this.whiteList.indexOf(event.target) < 0) this.isActive = false
+            if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) this.isActive = false
         },
 
         /**
