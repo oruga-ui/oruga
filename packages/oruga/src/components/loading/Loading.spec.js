@@ -22,18 +22,20 @@ describe('OLoading', () => {
         })
 
         it('Is called', () => {
-            expect(wrapper.name()).toBe('OLoading')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
         })
 
         it('render correctly', () => {
             expect(wrapper.html()).toMatchSnapshot()
         })
 
-        it('changes isActive when active prop is modified', () => {
+        it('changes isActive when active prop is modified', async () => {
             wrapper.setProps({active: false})
+            await wrapper.vm.$nextTick()
             expect(wrapper.vm.isActive).toBeFalsy()
+
             wrapper.setProps({active: true})
+            await wrapper.vm.$nextTick()
             expect(wrapper.vm.isActive).toBeTruthy()
         })
 
@@ -79,8 +81,7 @@ describe('OLoading', () => {
         })
 
         it('Is called', () => {
-            expect(wrapper.name()).toBe('OLoading')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
             expect(window.document.body.appendChild).toHaveBeenCalled()
         })
 
@@ -114,8 +115,7 @@ describe('OLoading', () => {
         })
 
         it('Is called', () => {
-            expect(wrapper.name()).toBe('OLoading')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
             expect(component.appendChild).toHaveBeenCalled()
         })
 

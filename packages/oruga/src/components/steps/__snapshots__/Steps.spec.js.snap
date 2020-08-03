@@ -1,34 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BSteps render correctly 1`] = `
-<div class="b-steps">
-    <nav class="steps is-animated is-rounded mobile-minimalist">
-        <ul class="step-items">
-            <li class="step-item is-previous"><a class="step-link is-clickable">
-                    <div class="step-marker">
+exports[`OSteps render correctly 1`] = `
+<div class="o-steps-wrapper">
+    <nav class="o-steps o-steps-label-bottom o-steps-animated o-steps-rounded o-steps-mobile-minimalist">
+        <ul class="o-step-items">
+            <li class="o-step-item o-step-item-previous"><a class="o-step-link o-step-link-clickable">
+                    <div class="o-step-marker">
                         <!---->
                     </div>
-                    <div class="step-details"><span class="step-title"></span></div>
+                    <div class="o-step-details"><span class="o-step-title"></span></div>
                 </a></li>
-            <li class="step-item is-active" style="display: none;"><a class="step-link">
-                    <div class="step-marker">
+            <li class="o-step-item o-step-item-active" style="display: none;"><a class="o-step-link">
+                    <div class="o-step-marker">
                         <!---->
                     </div>
-                    <div class="step-details"><span class="step-title"></span></div>
+                    <div class="o-step-details"><span class="o-step-title"></span></div>
                 </a></li>
-            <li class="step-item"><a class="step-link">
-                    <div class="step-marker">
+            <li class="o-step-item"><a class="o-step-link">
+                    <div class="o-step-marker">
                         <!---->
                     </div>
-                    <div class="step-details"><span class="step-title"></span></div>
+                    <div class="o-step-details"><span class="o-step-title"></span></div>
                 </a></li>
         </ul>
     </nav>
-    <section class="step-content">
-        <div class="step-item" style="display: none;"></div>
-        <div class="step-item" style="display: none;"></div>
-        <div class="step-item" style="display: none;"></div>
+    <section class="o-step-content">
+        <div class="o-step-item v-leave v-leave-active"></div>
+        <div class="o-step-item" style="display: none;"></div>
+        <div class="o-step-item" style="display: none;"></div>
     </section>
-    <nav class="step-navigation"><a role="button" class="pagination-previous"><span class="icon" aria-hidden="true"><i class="mdi mdi-chevron-left mdi-24px"></i></span></a> <a role="button" class="pagination-next"><span class="icon" aria-hidden="true"><i class="mdi mdi-chevron-right mdi-24px"></i></span></a></nav>
+    <nav class="o-step-navigation"><button type="button" role="button" class="o-button"><span class="o-icon"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+            <!---->
+            <!----></button> <button type="button" role="button" class="o-button"><span class="o-icon"><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            <!---->
+            <!----></button></nav>
 </div>
 `;

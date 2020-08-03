@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import OTablePagination from '@components/table/OTablePagination'
+import OTablePagination from '@components/table/TablePagination'
 
 let wrapper
 
@@ -9,8 +9,7 @@ describe('OTablePagination', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTablePagination')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {

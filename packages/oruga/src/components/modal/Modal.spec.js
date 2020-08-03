@@ -17,8 +17,7 @@ describe('OModal', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OModal')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -34,23 +33,15 @@ describe('OModal', () => {
         expect(ariaRole.validator && ariaRole.validator('alertdialog')).toBeTruthy()
     })
 
-    it('manage default config props values', () => {
-        setOptions(Object.assign(config, {
-            defaultModalScroll: 'keep'
-        }))
-        wrapper = shallowMount(OModal)
-
-        expect(wrapper.vm.scroll).toEqual(config.defaultModalScroll)
-    })
-
-    it('sets isActive when active prop is changed', () => {
+    it('sets isActive when active prop is changed', async () => {
         wrapper.setProps({active: false})
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.isActive).toBeFalsy()
     })
 
     it('manage cancel options', () => {
         wrapper.setProps({canCancel: true})
-        expect(wrapper.vm.cancelOptions).toEqual(config.defaultModalCanCancel)
+        expect(wrapper.vm.cancelOptions).toEqual(['escape', 'x', 'outside', 'button'])
 
         wrapper.setProps({canCancel: false})
         expect(wrapper.vm.cancelOptions).toEqual([])

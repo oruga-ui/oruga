@@ -1,14 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTableMobileSort render correctly 1`] = `
-<div>
-    <o-field-stub addons="true">
-        <o-select-stub expanded="true" usehtml5validation="true" statusicon="true" iconright="caret-down">
+<div class="o-table">
+    <o-table-mobile-sort-stub currentsortcolumn="[object Object]" sortmultipledata="" columns="[object Object]" sorticon="arrow-up" sorticonsize="small"></o-table-mobile-sort-stub>
+    <!---->
+    <div class="o-table-wrapper o-table-mobile-cards">
+        <table class="">
+            <thead>
+                <tr>
+                    <!---->
+                    <!---->
+                    <th class="o-table-th-sortable o-table-th-unselectable" style="width: 40px;">
+                        <div class="o-table-th-wrap o-table-th-right"><span class="o-table-th-content">
+                                    ID
+                                    <o-icon-stub icon="arrow-up" size="small" both="true" class="o-icon-sort o-icon-sort-invisible"></o-icon-stub></span></div>
+                    </th>
+                    <!---->
+                </tr>
+                <!---->
+                <!---->
+            </thead>
+            <tbody>
+                <tr class="o-table-empty">
+                    <td colspan="1"></td>
+                </tr>
+            </tbody>
             <!---->
-        </o-select-stub>
-        <o-button-stub variant="primary" nativetype="button" tag="button">
-            <o-icon-stub icon="arrow-up" size="small" both="true"></o-icon-stub>
-        </o-button-stub>
-    </o-field-stub>
+        </table>
+    </div>
+    <!---->
+    <!---->
 </div>
 `;

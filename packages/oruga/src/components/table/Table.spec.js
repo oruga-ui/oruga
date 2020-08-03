@@ -24,11 +24,7 @@ describe('OTable', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTable')
-        expect(wrapper.isVueInstance()).toBeTruthy()
-
-        expect(tableCols.name()).toBe('OTable')
-        expect(tableCols.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('has the filter row visible when searchable', () => {
@@ -71,7 +67,7 @@ describe('OTable', () => {
         const cols = headers.filter((th) => {
             const div = th.find('div')
 
-            return div.classes('th-wrap')
+            return div.classes('o-table-th-wrap')
         })
 
         expect(cols.length).toBe(4)
@@ -113,7 +109,7 @@ describe('OTable', () => {
         })
 
         it('displays filter input only on searchable columns', () => {
-            const filterCells = headRows.at(1).findAll('.th-wrap')
+            const filterCells = headRows.at(1).findAll('.o-table-th-wrap')
 
             expect(filterCells.at(0).isEmpty()).toBe(true) // ID column is not searchable
             expect(filterCells.at(1).contains(OInput)).toBe(true) // Name column is searchable
@@ -123,14 +119,15 @@ describe('OTable', () => {
             expect(bodyRows).toHaveLength(5)
         })
 
-        it('displays filtered data when searching', () => {
+        it('displays filtered data when searching', async () => {
             searchInput.vm.$emit('input', 'J')
-            bodyRows = wrapper.findAll('tbody tr')
+            await wrapper.vm.$nextTick()
 
+            bodyRows = wrapper.findAll('tbody tr')
             expect(bodyRows).toHaveLength(2) // Jesse and John
         })
 
-        it('displays filtered data when searching and updating data', () => {
+        it('displays filtered data when searching and updating data', async () => {
             searchInput.vm.$emit('input', 'J')
             wrapper.setProps({
                 data: [
@@ -138,8 +135,9 @@ describe('OTable', () => {
                     { id: 6, name: 'Justin' }
                 ]
             })
-            bodyRows = wrapper.findAll('tbody tr')
+            await wrapper.vm.$nextTick()
 
+            bodyRows = wrapper.findAll('tbody tr')
             expect(bodyRows).toHaveLength(3) // Jesse, John and Justin
         })
     })

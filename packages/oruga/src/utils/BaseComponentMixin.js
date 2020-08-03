@@ -5,10 +5,9 @@ export default {
     methods: {
         computedClass(component, field, defaultValue) {
             const override = getValueByPath(config, `${component}.override`, false)
-            const gloabalClazz = getValueByPath(config, `${component}.${field}`, '')
+            const globalClazz = getValueByPath(config, `${component}.${field}`, '')
             const currrentClazz = this.$props[field]
-            return `${override ? '' : defaultValue} ${blankIfUndefined(gloabalClazz)} ${blankIfUndefined(currrentClazz)}`.trim()
+            return `${override ? '' : defaultValue} ${blankIfUndefined(globalClazz)} ${blankIfUndefined(currrentClazz)}`.trim()
         }
     }
 }
-        

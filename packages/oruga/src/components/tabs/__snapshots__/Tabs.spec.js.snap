@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BTabs render correctly 1`] = `
+exports[`OTabs render correctly 1`] = `
 <div class="o-tabs-wrapper">
     <nav class="o-tabs">
         <ul>
@@ -14,5 +14,14 @@ exports[`BTabs render correctly 1`] = `
         <div class="o-tab-item"></div>
         <div class="o-tab-item" style="display: none;"></div>
     </section>
+</div>
+`;
+
+exports[`OTabs still renders if there is no item 1`] = `
+<div class="o-tabs-wrapper">
+    <nav class="o-tabs">
+        <ul></ul>
+    </nav>
+    <section class="o-tab-content"></section>
 </div>
 `;

@@ -15,10 +15,11 @@ describe('CheckRadioMixin', () => {
         })
     })
 
-    it('set value prop', () => {
+    it('set value prop', async () => {
         wrapper.setProps({
             value: 'test'
         })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.newValue).toEqual('test')
     })
 })

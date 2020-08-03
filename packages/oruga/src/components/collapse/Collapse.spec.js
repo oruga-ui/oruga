@@ -10,8 +10,7 @@ describe('OCollapse', () => {
         })
 
         it('is called', () => {
-            expect(wrapper.name()).toBe('OCollapse')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
         })
 
         it('default props and vm', () => {
@@ -29,7 +28,7 @@ describe('OCollapse', () => {
             wrapper = shallowMount(OCollapse, {
                 propsData: {
                     open: false,
-                    position: 'is-bottom'
+                    position: 'bottom'
                 }
             })
         })
@@ -47,11 +46,12 @@ describe('OCollapse', () => {
             expect(wrapper.find('.o-collapse-content').isVisible()).toBe(true)
         })
 
-        it('emit a click event', () => {
+        it('emit a click event', async () => {
             expect(wrapper.find('.o-collapse-content').isVisible()).toBe(false)
             const updateOpen = jest.fn()
             wrapper.vm.$on('update:open', updateOpen)
             wrapper.find('.o-collapse-trigger').trigger('click')
+            await wrapper.vm.$nextTick()
             expect(updateOpen).toHaveBeenCalledTimes(1)
             expect(updateOpen).toHaveBeenCalledWith(true)
             expect(wrapper.vm.isOpen).toBe(true)
@@ -65,9 +65,10 @@ describe('OCollapse', () => {
             expect(open).toHaveBeenCalledTimes(1)
         })
 
-        it('update open prop', () => {
+        it('update open prop', async () => {
             expect(wrapper.find('.o-collapse-content').isVisible()).toBe(false)
             wrapper.setProps({ open: true })
+            await wrapper.vm.$nextTick()
             expect(wrapper.vm.isOpen).toBe(true)
             expect(wrapper.find('.o-collapse-content').isVisible()).toBe(true)
         })

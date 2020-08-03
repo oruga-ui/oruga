@@ -1,23 +1,24 @@
 import { mount } from '@vue/test-utils'
+import OTable from '@components/table/Table'
 import OTableColumn from '@components/table/TableColumn'
 
 let wrapper
-const OTable = {
-    template: '<o-table-stub></o-table-stub>',
-    methods: {
-        refreshSlots() { }
-    }
-}
+let wrapperParent
 
 describe('OTableColumn', () => {
     beforeEach(() => {
+        wrapperParent = mount(OTable, {
+            sync: false,
+        })
         wrapper = mount(OTableColumn, {
-            parentComponent: OTable
+            parentComponent: wrapperParent.vm,
+            provide: {
+                $table: wrapperParent.vm
+            }
         })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTableColumn')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 })

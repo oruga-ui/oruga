@@ -1,29 +1,28 @@
 import {mount} from '@vue/test-utils'
-import BSteps from '@components/steps/Steps'
-import BStepItem from '@components/steps/StepItem'
+import OSteps from '@components/steps/Steps'
+import OStepItem from '@components/steps/StepItem'
 
 let wrapper
 
 const WrapperComp = {
     template: `
-        <BSteps>
-            <BStepItem/>
-            <BStepItem ref="testItem"/>
-            <BStepItem :visible="false"/>
-        </BSteps>`,
+        <OSteps>
+            <OStepItem/>
+            <OStepItem ref="testItem"/>
+            <OStepItem :visible="false"/>
+        </OSteps>`,
     components: {
-        BSteps, BStepItem
+        OSteps, OStepItem
     }
 }
 
-describe('BStepItem', () => {
+describe('OStepItem', () => {
     beforeEach(() => {
         wrapper = mount(WrapperComp, { sync: false }).find({ ref: 'testItem' })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BStepItem')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -55,9 +54,9 @@ describe('BStepItem', () => {
 
         try {
             wrapper = mount({
-                template: `<BStepItem/>`,
+                template: `<OStepItem/>`,
                 components: {
-                    BStepItem
+                    OStepItem
                 },
                 destroyed() {
                     spy()

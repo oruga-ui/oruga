@@ -13,53 +13,22 @@ describe('OInput', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('is vue instance', () => {
-        expect(wrapper.name()).toBe('OInput')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+    it('is called', () => {
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('renders input element by default', () => {
         expect(wrapper.contains('input')).toBeTruthy()
-        expect(wrapper.classes()).toContain('control')
+        expect(wrapper.classes()).toContain('o-control-input')
     })
 
-    it('render textarea element when type is textarea', () => {
+    it('render textarea element when type is textarea', async () => {
         wrapper.setProps({ type: 'textarea' })
+        await wrapper.vm.$nextTick()
+
         const target = wrapper.find('textarea')
-
         expect(target.exists()).toBeTruthy()
-        expect(target.classes()).toContain('textarea')
-    })
-
-    it('displays the icon when the icon property is true', () => {
-        wrapper.setProps({ icon: 'magnify' })
-        const target = wrapper.find(OIcon)
-
-        expect(target.exists()).toBeTruthy()
-    })
-
-    it('display counter when the maxlength property is passed', () => {
-        wrapper.setProps({
-            value: 'foo',
-            maxlength: 100
-        })
-        const counter = wrapper.find('small.counter')
-
-        expect(counter.exists()).toBeTruthy()
-        expect(counter.text()).toBe('3 / 100')
-
-        wrapper.setProps({
-            value: 1234
-        })
-        expect(counter.text()).toBe('4 / 100')
-    })
-
-    it('no display counter when hasCounter property set for false', () => {
-        wrapper.setProps({ maxlength: 100 })
-        expect(wrapper.find('small.counter').exists()).toBeTruthy()
-
-        wrapper.setProps({ hasCounter: false })
-        expect(wrapper.find('small.counter').exists()).toBeFalsy()
+        expect(target.classes()).toContain('o-input')
     })
 
     it('render field password when the type property is password', () => {
@@ -75,7 +44,7 @@ describe('OInput', () => {
         expect(target.attributes().type).toBe('password')
     })
 
-    it('toggles the visibility of the password to true when the togglePasswordVisibility method is called', (done) => {
+    it('toggles the visibility of the password to true when the togglePasswordVisibility method is called', async () => {
         const wrapper = mount(OInput, {
             propsData: {
                 value: 'foo',
@@ -85,21 +54,22 @@ describe('OInput', () => {
         })
 
         wrapper.setProps({ value: 'bar' })
+        await wrapper.vm.$nextTick()
 
         expect(wrapper.find('input').exists()).toBeTruthy()
         expect(wrapper.vm.newType).toBe('password')
         expect(wrapper.vm.isPasswordVisible).toBeFalsy()
         expect(wrapper.find('input').attributes().type).toBe('password')
 
-        const visibilityIcon = wrapper.find('.icon.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon-clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
+
         visibilityIcon.trigger('click')
         wrapper.setProps({ passwordReveal: false })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.newType).toBe('text')
         expect(wrapper.vm.isPasswordVisible).toBeTruthy()
         expect(wrapper.find('input').attributes().type).toBe('text')
-
-        wrapper.vm.$nextTick(done)
     })
 
     it('render the placeholder and readonly attribute when passed', () => {
@@ -112,19 +82,11 @@ describe('OInput', () => {
         expect(target.element.getAttribute('readonly')).toBe('readonly')
     })
 
-    it('expands input when expanded property is passed', () => {
+    it('expands input when expanded property is passed', async () => {
         wrapper.setProps({ expanded: true })
+        await wrapper.vm.$nextTick()
 
-        expect(wrapper.classes()).toContain('is-expanded')
-    })
-
-    it('display loading icon when loading property passed', () => {
-        wrapper.setProps({
-            loading: true,
-            icon: 'magnify'
-        })
-
-        expect(wrapper.classes()).toContain('is-loading')
+        expect(wrapper.classes()).toContain('o-control-input-expanded')
     })
 
     it('keep its value on blur', async () => {
@@ -146,27 +108,7 @@ describe('OInput', () => {
         expect(input.element.value).toBe('bar')
     })
 
-    it('change status icon when statusType updated', () => {
-        const parent = {
-            data: () => ({
-                newVariant: 'is-success'
-            }),
-            components: {OInput},
-            template: `<o-input />`
-        }
-        const wrapper = mount(parent)
-
-        const input = wrapper.find(OInput)
-        expect(input.vm.statusTypeIcon).toBe('check')
-        wrapper.setData({ newVariant: 'is-danger' })
-        expect(input.vm.statusTypeIcon).toBe('alert-circle')
-        wrapper.setData({ newVariant: 'is-info' })
-        expect(input.vm.statusTypeIcon).toBe('information')
-        wrapper.setData({ newVariant: 'is-warning' })
-        expect(input.vm.statusTypeIcon).toBe('alert')
-    })
-
-    it('manage the click on icon', (done) => {
+    it('manage the click on icon', async () => {
         const wrapper = mount(OInput, {
             propsData: {
                 icon: 'magnify',
@@ -176,13 +118,11 @@ describe('OInput', () => {
 
         expect(wrapper.find('input').exists()).toBeTruthy()
 
-        const visibilityIcon = wrapper.find('.icon.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon-clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
-        visibilityIcon.trigger('click')
 
-        wrapper.vm.$nextTick(() => {
-            expect(wrapper.emitted()['icon-click']).toBeTruthy()
-            done()
-        })
+        visibilityIcon.trigger('click')
+        await wrapper.vm.$nextTick()
+        expect(wrapper.emitted()['icon-click']).toBeTruthy()
     })
 })

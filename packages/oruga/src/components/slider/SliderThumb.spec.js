@@ -1,27 +1,21 @@
-import { shallowMount } from '@vue/test-utils'
-import OSliderThumb from '@components/slider/SliderThumb'
+import { mount } from '@vue/test-utils'
+import OSlider from '@components/slider/Slider'
 
 let wrapper
-const OSlider = {
-    template: '<o-slider-stub></o-slider-stub>',
-    data() {
-        return {
-            step: 5,
-            precision: 2
-        }
-    }
-} // Mocking only necessary
+let wrapperParent
 
 describe('OSliderThumb', () => {
     beforeEach(() => {
-        wrapper = shallowMount(OSliderThumb, {
-            parentComponent: OSlider
+        wrapperParent = mount(OSlider, {
+            propsData: {
+                step: 5,
+            }
         })
+        wrapper = wrapperParent.find({ ref: 'button1' })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OSliderThumb')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -29,8 +23,7 @@ describe('OSliderThumb', () => {
     })
 
     it('inherits parent properties', () => {
-        expect(wrapper.vm.step).toBe(OSlider.data().step)
-        expect(wrapper.vm.precision).toBe(OSlider.data().precision)
+        expect(wrapper.vm.step).toBe(5)
     })
 
     it('manage focus', () => {

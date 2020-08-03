@@ -1,29 +1,28 @@
 import { mount } from '@vue/test-utils'
-import BSteps from '@components/steps/Steps'
-import BStepItem from '@components/steps/StepItem'
+import OSteps from '@components/steps/Steps'
+import OStepItem from '@components/steps/StepItem'
 
 let wrapper
 
 const WrapperComp = {
     template: `
-        <BSteps :value="1">
-            <BStepItem></BStepItem>
-            <BStepItem :visible="false"></BStepItem>
-            <BStepItem :clickable="false"></BStepItem>
-        </BSteps>`,
+        <OSteps :value="1">
+            <OStepItem></OStepItem>
+            <OStepItem :visible="false"></OStepItem>
+            <OStepItem :clickable="false"></OStepItem>
+        </OSteps>`,
     components: {
-        BSteps, BStepItem
+        OSteps, OStepItem
     }
 }
 
-describe('BSteps', () => {
+describe('OSteps', () => {
     beforeEach(() => {
-        wrapper = mount(WrapperComp, { sync: false }).find(BSteps)
+        wrapper = mount(WrapperComp, { sync: false }).find(OSteps)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BSteps')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -103,13 +102,13 @@ describe('BSteps', () => {
     })
 
     it('manage wrapper classes as expected', () => {
-        expect(wrapper.vm.wrapperClasses[1]['is-vertical']).toBeFalsy()
+        expect(wrapper.vm.wrapperClasses[2]['o-steps-wrapper-vertical']).toBeFalsy()
 
         wrapper.setProps({vertical: true})
-        expect(wrapper.vm.wrapperClasses[1]['is-vertical']).toBeTruthy()
+        expect(wrapper.vm.wrapperClasses[2]['o-steps-wrapper-vertical']).toBeTruthy()
 
-        wrapper.setProps({position: 'is-right'})
-        expect(wrapper.vm.wrapperClasses[1]['is-right']).toBeTruthy()
+        wrapper.setProps({position: 'right'})
+        expect(wrapper.vm.wrapperClasses[3]['o-steps-wrapper-position-right']).toBeTruthy()
     })
 
     it('throws an error when there is no item', () => {
@@ -117,9 +116,9 @@ describe('BSteps', () => {
 
         try {
             wrapper = mount({
-                template: `<BSteps/>`,
+                template: `<OSteps/>`,
                 components: {
-                    BSteps
+                    OSteps
                 },
                 destroyed() {
                     spy()
