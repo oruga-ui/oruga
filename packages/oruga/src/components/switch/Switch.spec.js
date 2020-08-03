@@ -9,8 +9,7 @@ describe('OSwitch', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OSwitch')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -19,12 +18,13 @@ describe('OSwitch', () => {
 
     it('renders input element by default', () => {
         expect(wrapper.contains('input')).toBeTruthy()
-        expect(wrapper.classes()).toContain('switch')
+        expect(wrapper.classes()).toContain('o-switch')
     })
 
-    it('updates internal value when v-model is changed', () => {
+    it('updates internal value when v-model is changed', async () => {
         const newValue = 'switch value'
         wrapper.setProps({ value: newValue })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.newValue).toBe(newValue)
     })
 
@@ -36,20 +36,19 @@ describe('OSwitch', () => {
         expect(valueEmitted).toContainEqual(newValue)
     })
 
-    it('method focus() gives focus to the input element', (done) => {
+    it('method focus() gives focus to the input element', async () => {
         wrapper.vm.$refs.input.focus = jest.fn()
         wrapper.vm.focus()
-        wrapper.vm.$nextTick(() => {
-            expect(wrapper.vm.$refs.input.focus).toHaveBeenCalled()
-            done()
-        })
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.$refs.input.focus).toHaveBeenCalled()
     })
 
-    it('applies passiveType prop properly', () => {
-        const passiveType = 'is-danger'
+    it('applies passiveVariant prop properly', async () => {
+        const passiveVariant = 'danger'
         const value = false
-        wrapper.setProps({ passiveType, value })
-        const switchElement = wrapper.find('.check')
-        expect(switchElement.classes()).toContain('is-danger-passive')
+        wrapper.setProps({ passiveVariant, value })
+        await wrapper.vm.$nextTick()
+        const switchElement = wrapper.find('.o-switch-check')
+        expect(switchElement.classes()).toContain('o-color-danger-passive')
     })
 })

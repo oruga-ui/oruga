@@ -18,7 +18,7 @@ const DATA_LIST = [
     'RxJS',
     'Vue.js'
 ]
-const dropdownMenu = '.dropdown-menu'
+const dropdownMenu = '.o-autocomplete-menu'
 let wrapper, $input, $dropdown, stubs
 
 describe('OAutocomplete', () => {
@@ -31,8 +31,7 @@ describe('OAutocomplete', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OAutocomplete')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -40,7 +39,7 @@ describe('OAutocomplete', () => {
     })
 
     it('has an input type', () => {
-        expect(wrapper.contains('.control .input[type=text]')).toBeTruthy()
+        expect(wrapper.contains('.o-control-input .o-input[type=text]')).toBeTruthy()
     })
 
     it('has a dropdown menu hidden by default', () => {
@@ -73,28 +72,30 @@ describe('OAutocomplete', () => {
         $input.setValue(VALUE_TYPED)
         await wrapper.vm.$nextTick()
 
-        expect($dropdown.isVisible()).toBeTruthy()
+        expect(wrapper.vm.isActive).toBeTruthy()
 
-        const itemsInDropdowm = findStringsStartingWith(DATA_LIST, VALUE_TYPED)
+        const itemsInDropdown = findStringsStartingWith(DATA_LIST, VALUE_TYPED)
 
         $input.trigger('keydown.down')
         $input.trigger('keydown.enter')
         await wrapper.vm.$nextTick()
 
-        expect($input.element.value).toBe(itemsInDropdowm[0])
-        expect($dropdown.isVisible()).toBeFalsy()
+        expect($input.element.value).toBe(itemsInDropdown[0])
+        expect(wrapper.vm.isActive).toBeFalsy()
     })
 
-    it('close dropdown on esc', () => {
+    it('close dropdown on esc', async () => {
         jest.useFakeTimers()
         wrapper.setProps({ data: DATA_LIST })
 
         wrapper.vm.isActive = true
-        expect($dropdown.isVisible()).toBeTruthy()
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.isActive).toBeTruthy()
 
         $input.trigger('keyup.esc')
+        await wrapper.vm.$nextTick()
 
-        expect($dropdown.isVisible()).toBeFalsy()
+        expect(wrapper.vm.isActive).toBeFalsy()
 
         wrapper.vm.calcDropdownInViewportVertical = jest.fn(
             () => wrapper.vm.calcDropdownInViewportVertical
@@ -104,31 +105,35 @@ describe('OAutocomplete', () => {
         jest.useRealTimers()
     })
 
-    it('close dropdown on click outside', () => {
+    it('close dropdown on click outside', async () => {
         wrapper.setProps({ data: DATA_LIST })
 
         wrapper.vm.isActive = true
-        expect($dropdown.isVisible()).toBeTruthy()
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.isActive).toBeTruthy()
 
         window.document.body.click()
+        await wrapper.vm.$nextTick()
 
-        expect($dropdown.isVisible()).toBeFalsy()
+        expect(wrapper.vm.isActive).toBeFalsy()
     })
 
-    it('open dropdown on down key click', () => {
+    it('open dropdown on down key click', async () => {
         wrapper.setProps({ data: DATA_LIST })
 
-        expect($dropdown.isVisible()).toBeFalsy()
+        expect(wrapper.vm.isActive).toBeFalsy()
 
         $input.trigger('focus')
         $input.trigger('keydown.down')
+        await wrapper.vm.$nextTick()
 
-        expect($dropdown.isVisible()).toBeTruthy()
+        expect(wrapper.vm.isActive).toBeTruthy()
     })
 
     it('manages tab pressed as expected', async () => {
         // hovered is null
         $input.trigger('keydown.tab')
+        await wrapper.vm.$nextTick()
         expect($dropdown.isVisible()).toBeFalsy()
 
         // The first element will be hovered
@@ -145,6 +150,7 @@ describe('OAutocomplete', () => {
         await wrapper.vm.$nextTick()
 
         $input.trigger('keydown.tab')
+        await wrapper.vm.$nextTick()
         expect($input.element.value).toBe(DATA_LIST[0])
     })
 
@@ -177,28 +183,31 @@ describe('OAutocomplete', () => {
         expect(window.removeEventListener).toBeCalledWith('resize', expect.any(Function))
     })
 
-    it('clear button does not exist when the search input is empty', () => {
+    it('clear button does not exist when the search input is empty', async () => {
         wrapper.setData({newValue: ''})
         wrapper.setProps({ clearable: true })
-        const subject = wrapper.find('o-icon-stub').exists()
+        await wrapper.vm.$nextTick()
 
+        const subject = wrapper.find('o-icon-stub').exists()
         expect(subject).toBeFalsy()
     })
 
-    it('clear button exists when the search input is not empty and clearable property is true', () => {
+    it('clear button exists when the search input is not empty and clearable property is true', async () => {
         wrapper.setData({ newValue: 'Jquery' })
         wrapper.setProps({ clearable: true })
-        const subject = wrapper.find('o-icon-stub').exists()
+        await wrapper.vm.$nextTick()
 
+        const subject = wrapper.find('o-icon-stub').exists()
         expect(subject).toBeTruthy()
     })
 
-    it('clears search input text when clear button gets clicked', () => {
+    it('clears search input text when clear button gets clicked', async () => {
         wrapper.setData({newValue: 'Jquery'})
         wrapper.setProps({ clearable: true })
+        await wrapper.vm.$nextTick()
+
         wrapper.find('o-icon-stub').trigger('click')
         const subject = wrapper.vm.newValue
-
         expect(subject).toEqual('')
     })
 

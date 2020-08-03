@@ -1,39 +1,31 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import OPagination from '@components/pagination/Pagination'
 import OPaginationButton from '@components/pagination/PaginationButton'
 
 let wrapper
-const page = 5
-const defaultProps = {
-    page: {
-        number: page,
-        isCurrent: false,
-        click: jest.fn(),
-        disabled: false,
-        class: '',
-        'aria-label': ''
+let wrapperParent
+
+const WrapperComp = {
+    template: `
+        <OPagination>
+            <OPaginationButton ref="nextBtn" slot="next" slot-scope="props" :page="props.page"/>
+        </OPagination>`,
+    components: {
+        OPagination, OPaginationButton
     }
 }
 
-describe('OPagination', () => {
+describe('OPaginationButton', () => {
     beforeEach(() => {
-        wrapper = shallowMount(OPaginationButton, {
-            propsData: defaultProps
-        })
+        wrapperParent = mount(WrapperComp)
+        wrapper = wrapperParent.find({ ref: 'nextBtn' })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OPaginationButton')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
         expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    it('returns href as expected', () => {
-        expect(wrapper.vm.href).toBe('#')
-
-        wrapper.setProps({ tag: 'button' })
-        expect(wrapper.vm.href).toBeUndefined()
     })
 })

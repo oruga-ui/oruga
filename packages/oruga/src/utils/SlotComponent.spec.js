@@ -14,8 +14,7 @@ describe('OSlotComponent', () => {
             }
         })
 
-        expect(wrapper.name()).toBe('OSlotComponent')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('default render', () => {

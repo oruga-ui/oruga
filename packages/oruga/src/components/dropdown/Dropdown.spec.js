@@ -1,16 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import BDropdown from '@components/dropdown/Dropdown'
+import ODropdown from '@components/dropdown/Dropdown'
 
 let wrapper
 
-describe('BDropdown', () => {
+describe('ODropdown', () => {
     beforeEach(() => {
-        wrapper = shallowMount(BDropdown)
+        wrapper = shallowMount(ODropdown)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BDropdown')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -21,20 +20,21 @@ describe('BDropdown', () => {
         const position = wrapper.vm.$options.props.position
 
         expect(position.type).toBe(String)
-        expect(position.validator && position.validator('is-top')).toBeFalsy()
-        expect(position.validator && position.validator('is-top-left')).toBeTruthy()
-        expect(position.validator && position.validator('is-top-right')).toBeTruthy()
-        expect(position.validator && position.validator('is-bottom-left')).toBeTruthy()
+        expect(position.validator && position.validator('top-left')).toBeTruthy()
+        expect(position.validator && position.validator('top-right')).toBeTruthy()
+        expect(position.validator && position.validator('bottom-left')).toBeTruthy()
     })
 
-    it('react accordingly when changing v-model', () => {
+    it('react accordingly when changing v-model', async () => {
         const value = 'value'
         wrapper.setProps({ value })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.selected).toBe(value)
     })
 
-    it('emit activity when it changes', () => {
+    it('emit activity when it changes', async () => {
         wrapper.vm.isActive = true
+        await wrapper.vm.$nextTick()
         expect(wrapper.emitted()['active-change']).toBeTruthy()
     })
 
@@ -86,9 +86,6 @@ describe('BDropdown', () => {
 
     it('manage the whitelisted items accordingly', () => {
         let el = wrapper.vm.$refs.dropdownMenu
-        expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
-
-        el = wrapper.vm.$refs.dropdownMenu.querySelector('.dropdown-content')
         expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
 
         wrapper.vm.$refs.dropdownMenu = undefined

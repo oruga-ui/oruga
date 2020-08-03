@@ -1,43 +1,54 @@
 import { mount } from '@vue/test-utils'
-import BTabs from '@components/tabs/Tabs'
-import BTabItem from '@components/tabs/TabItem'
+import OTabs from '@components/tabs/Tabs'
+import OTabItem from '@components/tabs/TabItem'
 
 let wrapper
 
 const WrapperComp = {
     template: `
-        <BTabs value="tab1">
-            <BTabItem value="tab1"></BTabItem>
-            <BTabItem value="tab2" :visible="false"></BTabItem>
-        </BTabs>`,
+        <OTabs value="tab1">
+            <OTabItem value="tab1"></OTabItem>
+            <OTabItem value="tab2" :visible="false"></OTabItem>
+        </OTabs>`,
     components: {
-        BTabs, BTabItem
+        OTabs, OTabItem
     }
 }
 
-describe('BTabs', () => {
+describe('OTabs', () => {
     beforeEach(() => {
-        wrapper = mount(WrapperComp).find(BTabs)
+        wrapper = mount(WrapperComp).find(OTabs)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BTabs')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('manage main classes accordingly', () => {
+    it('manage main classes accordingly', async () => {
         wrapper.setProps({
-            expanded: true,
-            vertical: true,
-            position: 'is-centered'
+            expanded: false,
+            vertical: false,
+            position: 'centered'
         })
-        expect(wrapper.vm.mainClasses['is-fullwidth']).toBeTruthy()
-        expect(wrapper.vm.mainClasses['is-vertical']).toBeTruthy()
-        expect(wrapper.vm.mainClasses['is-centered']).toBeTruthy()
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.rootClasses[2]['o-tabs-wrapper-fullwidth']).toBeFalsy()
+        expect(wrapper.vm.rootClasses[3]['o-tabs-wrapper-vertical']).toBeFalsy()
+
+        wrapper.setProps({expanded: true})
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.rootClasses[2]['o-tabs-wrapper-fullwidth']).toBeTruthy()
+
+        wrapper.setProps({vertical: true})
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.rootClasses[3]['o-tabs-wrapper-vertical']).toBeTruthy()
+
+        wrapper.setProps({position: 'right'})
+        await wrapper.vm.$nextTick()
+        expect(wrapper.vm.rootClasses[1]['o-tabs-wrapper-position-centered']).toBeFalsy()
     })
 
     it('emit input event with value when active tab is modified', async () => {
@@ -68,54 +79,21 @@ describe('BTabs', () => {
 
     it('updates the tab when the value is changed', async () => {
         wrapper.setProps({value: 'tab2'})
-
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.activeId).toBe('tab2')
 
         wrapper.setProps({value: 0})
-
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.activeId).toBe('tab1')
-    })
-
-    it('finds the children in descendants', () => {
-        const testCmp = {
-            template: `
-                <div>
-                    <BTabItem></BTabItem>
-                    <BTabItem></BTabItem>
-                </div>`,
-            components: {BTabItem}
-        }
-
-        wrapper = mount({
-            template: `
-        <BTabs>
-            <test-cmp/>
-            <test-cmp/>
-            <test-cmp/>
-        </BTabs>`,
-            components: {
-                BTabs, testCmp
-            }
-        }).find(BTabs)
-
-        expect(wrapper.vm.items.length).toBe(6)
-        expect(wrapper.vm.items.map((i) => i.index)).toEqual([0, 1, 2, 3, 4, 5])
-    })
-
-    it('doesn\'t show a tab if value is null', () => {
-        wrapper.setProps({value: null})
-
-        expect(wrapper.vm.activeId).toBeNull()
-        expect(wrapper.vm.activeTab).toBe(undefined)
     })
 
     it('still renders if there is no item', () => {
         wrapper = mount({
-            template: `<BTabs value="tab1"></BTabs>`,
+            template: `<OTabs value="tab1"></OTabs>`,
             components: {
-                BTabs
+                OTabs
             }
-        }).find(BTabs)
+        }).find(OTabs)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

@@ -10,8 +10,7 @@ describe('OButton', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OButton')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -25,7 +24,7 @@ describe('OButton', () => {
                 'click': click
             }
         })
-        wrapper.find('.button').trigger('click')
+        wrapper.find('.o-button').trigger('click')
         expect(click).toHaveBeenCalledTimes(1)
     })
 
@@ -35,14 +34,15 @@ describe('OButton', () => {
                 iconLeft: 'plus'
             }
         })
-        expect(wrapper.contains('.icon')).toBe(true)
+        expect(wrapper.contains('.o-icon')).toBeTruthy()
     })
 
-    it('should be medium', () => {
+    it('should be medium', async () => {
         wrapper.setProps({
-            size: 'is-medium'
+            size: 'medium'
         })
-        expect(wrapper.classes()).toContain('is-medium')
+        await wrapper.vm.$nextTick()
+        expect(wrapper.classes()).toContain('o-size-medium')
     })
 
     it('should be small + icon', () => {
@@ -52,29 +52,27 @@ describe('OButton', () => {
                 iconLeft: 'plus'
             }
         })
-        expect(wrapper.classes()).toContain('small')
-        expect(wrapper.contains('.icon')).toBe(true)
+        expect(wrapper.classes()).toContain('o-size-small')
+        expect(wrapper.contains('.o-icon')).toBeTruthy()
     })
 
     it('should be large + icon', () => {
         wrapper = mount(OButton, {
             propsData: {
-                size: 'is-large',
+                size: 'large',
                 iconLeft: 'plus'
             }
         })
-        expect(wrapper.classes()).toContain('is-large')
-        expect(wrapper.contains('.icon')).toBe(true)
+        expect(wrapper.classes()).toContain('o-size-large')
+        expect(wrapper.contains('.o-icon')).toBeTruthy()
     })
 
-    it('should be rounded when default config set to true', () => {
-        setOptions(Object.assign(config, {
-            defaultButtonRounded: true
-        }))
+    it('should be rounded when prop is set to true', async () => {
         wrapper.setProps({
-            rounded: config.defaultButtonRounded
+            rounded: true
         })
-        expect(wrapper.classes()).toContain('is-rounded')
+        await wrapper.vm.$nextTick()
+        expect(wrapper.classes()).toContain('o-button-rounded')
     })
 
     it('should set tag to "button" if disabled', () => {

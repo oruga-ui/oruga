@@ -11,8 +11,7 @@ describe('OIcon', () => {
     it('is vue instance', () => {
         const wrapper = shallowMount(OIcon)
 
-        expect(wrapper.name()).toBe('OIcon')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render icon when icon property is passed', () => {
@@ -20,19 +19,8 @@ describe('OIcon', () => {
             propsData: { icon: 'eye' }
         })
 
-        expect(wrapper.classes()).toContain('icon')
+        expect(wrapper.classes()).toContain('o-icon')
         expect(wrapper.find('i').classes()).toContain('mdi', 'mdi-eye', 'mdi-24px')
-    })
-
-    it('render a colored icon when type is passed', () => {
-        const wrapper = shallowMount(OIcon, {
-            propsData: {
-                icon: 'eye',
-                type: 'is-primary'
-            }
-        })
-
-        expect(wrapper.classes()).toContain('has-text-primary')
     })
 
     it('returns correct color for newVariant when type is passed as an object', () => {
@@ -43,7 +31,8 @@ describe('OIcon', () => {
             }
         })
 
-        expect(wrapper.vm.newVariant).toEqual('o-color-primary')
+        expect(wrapper.classes()).toContain('o-color-primary')
+        expect(wrapper.vm.newVariant).toEqual('primary')
     })
 
     it('render icon package correctly when the pack property is is passed.', () => {
@@ -57,57 +46,24 @@ describe('OIcon', () => {
         expect(wrapper.find('i').classes()).toContain('fa-eye')
     })
 
-    it('use both packages when the both property is is passed', () => {
-        const wrapper = shallowMount(OIcon, {
-            propsData: {
-                icon: 'eye',
-                both: true
-            }
-        })
-
-        expect(wrapper.find('i').classes()).toContain('mdi-eye')
-        wrapper.setProps({ pack: 'fa' })
-
-        const equivalentIcons = {
-            'check': 'check',
-            'information': 'info-circle',
-            'check-circle': 'check-circle',
-            'alert': 'exclamation-triangle',
-            'alert-circle': 'exclamation-circle',
-            'arrow-up': 'arrow-up',
-            'chevron-right': 'angle-right',
-            'chevron-left': 'angle-left',
-            'chevron-down': 'angle-down',
-            'eye': 'eye',
-            'eye-off': 'eye-slash',
-            'caret-down': 'caret-down',
-            'caret-up': 'caret-up',
-            'other': 'other'
-        }
-
-        const expectEquivalentIcon = (icon, expected) => {
-            wrapper.setProps({ icon })
-            expect(wrapper.find('i').classes()).toContain(`fa-${expected}`)
-        }
-
-        Object.keys(equivalentIcons).forEach((icon) => {
-            expectEquivalentIcon(icon, equivalentIcons[icon])
-        })
-    })
-
-    it('display size when size propery is passed', () => {
+    it('display size when size propery is passed', async () => {
         const wrapper = shallowMount(OIcon, {
             propsData: {
                 icon: 'eye'
             }
         })
-
         expect(wrapper.find('i').classes()).toContain('mdi-24px')
+
         wrapper.setProps({ size: 'small' })
+        await wrapper.vm.$nextTick()
         expect(wrapper.find('i').classes()).toContainEqual('mdi', 'mdi-eye')
-        wrapper.setProps({ size: 'is-medium' })
+
+        wrapper.setProps({ size: 'medium' })
+        await wrapper.vm.$nextTick()
         expect(wrapper.find('i').classes()).toContain('mdi-36px')
-        wrapper.setProps({ size: 'is-large' })
+
+        wrapper.setProps({ size: 'large' })
+        await wrapper.vm.$nextTick()
         expect(wrapper.find('i').classes()).toContain('mdi-48px')
     })
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BDropdown render correctly 1`] = `
+exports[`ODropdown render correctly 1`] = `
 <div class="o-dropdown o-dropdown-mobile">
     <div role="button" aria-haspopup="true" class="o-dropdown-trigger"></div>
     <transition-stub name="fade">

@@ -9,8 +9,7 @@ describe('OTooltip', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTooltip')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {

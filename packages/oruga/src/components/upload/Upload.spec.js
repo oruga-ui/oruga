@@ -1,16 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import BUpload from '@components/upload/Upload'
+import OUpload from '@components/upload/Upload'
 
 let wrapper
 
-describe('BUpload', () => {
+describe('OUpload', () => {
     beforeEach(() => {
-        wrapper = shallowMount(BUpload)
+        wrapper = shallowMount(OUpload)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BUpload')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {

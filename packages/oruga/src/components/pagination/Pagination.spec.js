@@ -9,8 +9,7 @@ describe('OPagination', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OPagination')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -72,10 +71,11 @@ describe('OPagination', () => {
         expect(wrapper.emitted()['update:current'][0]).toContainEqual(3)
     })
 
-    it('set current to last if page count is smaller than current', () => {
+    it('set current to last if page count is smaller than current', async () => {
         wrapper.vm.last = jest.fn()
         wrapper.setProps({total: 100, current: 3})
         wrapper.setProps({total: 40})
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.last).toHaveBeenCalled()
     })
 

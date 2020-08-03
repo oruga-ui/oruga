@@ -9,8 +9,7 @@ describe('OSidebar', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OSidebar')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -23,19 +22,21 @@ describe('OSidebar', () => {
         })
 
         it('is called', () => {
-            expect(wrapper.name()).toBe('OSidebar')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
         })
 
         it('render correctly', () => {
             expect(wrapper.html()).toMatchSnapshot()
         })
 
-        it('changes isOpen when open prop is modified', () => {
+        it('changes isOpen when open prop is modified', async () => {
             wrapper.setProps({open: false})
+            await wrapper.vm.$nextTick()
             expect(wrapper.vm.isOpen).toBeFalsy()
             expect(wrapper.vm.transitionName).toBe('slide-prev')
+
             wrapper.setProps({open: true})
+            await wrapper.vm.$nextTick()
             expect(wrapper.vm.isOpen).toBeTruthy()
             expect(wrapper.vm.transitionName).toBe('slide-next')
         })
@@ -85,8 +86,7 @@ describe('OSidebar', () => {
         })
 
         it('Is called', () => {
-            expect(wrapper.name()).toBe('OSidebar')
-            expect(wrapper.isVueInstance()).toBeTruthy()
+            expect(wrapper.exists()).toBeTruthy()
         })
     })
 })

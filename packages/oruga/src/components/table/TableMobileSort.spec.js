@@ -1,40 +1,36 @@
+import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils'
-import OTableMobileSort from '@components/table/TableMobileSort'
+import OTable from '@components/table/Table'
+import { setVueInstance } from '../../utils/config'
 
 let wrapper
+const columns = [
+    {
+        field: 'id',
+        label: 'ID',
+        width: '40',
+        numeric: true,
+        sortable: true
+    },
+]
 
 describe('OTableMobileSort', () => {
+    setVueInstance(Vue)
+
     beforeEach(() => {
-        wrapper = shallowMount(OTableMobileSort, {sync: false})
+        wrapper = shallowMount(OTable, {
+            propsData: {
+                mobileCards: true,
+                columns
+            }
+        })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTableMobileSort')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
         expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    describe('showPlaceholder', () => {
-        it('is true if there are no columns', () => {
-            expect(wrapper.vm.showPlaceholder).toBeTruthy()
-        })
-    })
-
-    it('set mobileSort value when currentSortColumn is changed', (done) => {
-        wrapper.setProps({currentSortColumn: 'val'})
-        wrapper.vm.$nextTick(() => {
-            expect(wrapper.vm.mobileSort).toEqual(wrapper.vm.currentSortColumn)
-            done()
-        })
-    })
-
-    it('emit sort event with mobileSort value when sort is called', () => {
-        wrapper.vm.mobileSort = 'val'
-        wrapper.vm.sort()
-        const valueEmitted = wrapper.emitted()['sort'][0]
-        expect(valueEmitted).toContainEqual(wrapper.vm.mobileSort)
     })
 })

@@ -9,8 +9,7 @@ describe('OCheckbox', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OCheckbox')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -21,10 +20,13 @@ describe('OCheckbox', () => {
         expect(wrapper.contains('label input[type=checkbox]')).toBeTruthy()
     })
 
-    it('emit input event with value when value change', () => {
+    it('emit input event with value when value change', async () => {
         wrapper.setProps({ value: true })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.computedValue).toBeTruthy()
+
         wrapper.vm.computedValue = false
+        await wrapper.vm.$nextTick()
         const valueEmitted = wrapper.emitted()['input'][0]
         expect(valueEmitted).toContainEqual(false)
     })

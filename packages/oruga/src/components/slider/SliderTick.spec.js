@@ -1,21 +1,28 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import OSlider from '@components/slider/Slider'
 import OSliderTick from '@components/slider/SliderTick'
 
 let wrapper
-const OSlider = {
-    template: '<o-slider-stub></o-slider-stub>',
+let wrapperParent
+
+const WrapperComp = {
+    template: `
+        <OSlider>
+            <OSliderTick ref="tick" />
+        </OSlider>`,
+    components: {
+        OSlider, OSliderTick
+    }
 }
 
 describe('OSliderTick', () => {
     beforeEach(() => {
-        wrapper = shallowMount(OSliderTick, {
-            parentComponent: OSlider
-        })
+        wrapperParent = mount(WrapperComp)
+        wrapper = wrapperParent.find({ ref: 'tick' })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OSliderTick')
-        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper.exists()).toBeTruthy()
     })
 
     it('render correctly', () => {
