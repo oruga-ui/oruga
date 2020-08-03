@@ -43,6 +43,6 @@ jobs:
           command: cd packages/oruga && ./node_modules/.bin/codecov
 
       # run lint
-      - run:
-          name: Run lint
-          command: cd packages/oruga && npm run lint
+      ## - run:
+         ## name: Run lint
+         ## command: cd packages/oruga && npm run lint

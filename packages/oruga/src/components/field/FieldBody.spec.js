@@ -1,7 +1,6 @@
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import OFieldBody from '@components/field/FieldBody'
 import OField from '@components/field/Field'
-import OInput from '@components/input/Input'
 
 const localVue = createLocalVue()
 localVue.component('o-field', OField)

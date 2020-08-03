@@ -1,6 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import OButton from '@components/button/Button'
-import config, {setOptions} from '@utils/config'
 
 let wrapper
 

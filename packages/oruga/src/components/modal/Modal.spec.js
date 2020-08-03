@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 import OModal from '@components/modal/Modal'
-import config, {setOptions} from '@utils/config'
 
 let wrapper
 

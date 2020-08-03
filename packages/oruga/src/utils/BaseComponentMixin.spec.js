@@ -6,7 +6,6 @@ import { merge } from '@utils/helpers'
 import config, { setOptions } from '@utils/config'
 
 let wrapper
-let component
 
 describe('BaseComponentMixin', () => {
     HTMLElement.prototype.insertAdjacentElement = jest.fn()

@@ -1,6 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import OInput from '@components/input/Input'
-import OIcon from '@components/icon/Icon'
 
 let wrapper
 
