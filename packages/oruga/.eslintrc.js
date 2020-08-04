@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     jest: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     'eslint:recommended',
     '@vue/typescript/recommended'
@@ -20,17 +20,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
+      files: ["*.spec.js"],
+      rules: {
+        'require-atomic-updates': 'off'
       }
     },
     {
-      "files": ["*.md"],
-      "rules": {
+      files: ["*.md"],
+      rules: {
         'semi': ['error', 'never'],
       }
     },
