@@ -13,11 +13,10 @@
 </p>
 
 <p align="center">
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
     <a href="https://circleci.com/gh/oruga-ui/oruga"><img src="https://img.shields.io/circleci/project/github/oruga-ui/oruga.svg?style=flat-square" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://img.shields.io/codecov/c/github/oruga-ui/oruga.svg?style=flat-square" /></a>
-    <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg" /></a>
 </p>
 
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
@@ -110,6 +109,6 @@ Oruga is an open source MIT project if you are interested in supporting this pro
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
 
-## License
+## License <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg?logo=github" /></a>
 
 Code released under [MIT](https://github.com/oruga-ui/oruga/blob/master/LICENSE) license.
