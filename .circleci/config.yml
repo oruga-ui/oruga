@@ -31,18 +31,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests
-      - run:
-          name: Run tests
-          command: cd packages/oruga && npm run unit
 
-      # run codecov
+      # run ci
       - run:
-          name: Run coverage
-          command: cd packages/oruga && ./node_modules/.bin/codecov
-
-      # run lint
-      ## - run:
-         ## name: Run lint
-         ## command: cd packages/oruga && npm run lint
+          name: Run lint, tests and coverage
+          command: cd packages/oruga && npm run ci
