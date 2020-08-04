@@ -69,6 +69,13 @@ $ npm run build:lib:watch
 ```
 
 ```bash
+# move to oruga core code
+$ cd ./packages/oruga
+# execute tests suite
+$ npm run test
+```
+
+```bash
 # move to oruga docs
 $ cd ./packages/docs
 
