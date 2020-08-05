@@ -24,7 +24,7 @@ jobs:
       # Install dependencies
       - run:
           name: Install Dependencies
-          command: cd packages/oruga && npm install
+          command: npm install && npm run bootstrap
 
       # Keep cache
       - save_cache:
@@ -35,4 +35,4 @@ jobs:
       # run ci
       - run:
           name: Run lint, tests and coverage
-          command: cd packages/oruga && npm run ci
+          command: npm run ci:oruga

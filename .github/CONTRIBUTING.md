@@ -61,17 +61,16 @@ $ npm install
 Common used NPM scripts
 
 ```bash
-# move to oruga core code
-$ cd ./packages/oruga
-
 # build lib in watch mode
-$ npm run build:lib:watch
+$ npm run build:lib:watch:oruga
 ```
 
 ```bash
-# move to oruga docs
-$ cd ./packages/docs
-
 # build lib in watch mode
-$ npm run docs:dev
+$ npm run docs:dev:oruga
+```
+
+```bash
+# launch tests suite
+$ npm run test:oruga
 ```
