@@ -5,3 +5,5 @@ packages/storybook/.dist/
 packages/storybook/*
 packages/oruga/coverage/*
 packages/oruga/README.md
+
+*.json.lerna_backup
