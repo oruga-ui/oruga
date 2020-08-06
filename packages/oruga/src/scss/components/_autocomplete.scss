@@ -33,10 +33,7 @@ $autocomplete-menu-zindex : 20 !default;
         @include variable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
         @include variable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
         @include variable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
-        &.o-autocomplete-opened-top {
-            top: auto;
-            bottom: 100%;
-        }
+        
         .o-autocomplete-item {
             display: block;
             position: relative;
@@ -59,6 +56,10 @@ $autocomplete-menu-zindex : 20 !default;
                 text-decoration: none;
             }
         }
+    }
+    &.o-autocomplete-opened-top .o-autocomplete-menu {
+        top: auto;
+        bottom: 100%;
     }
     &.o-autocomplete-expanded {
         width: 100%;

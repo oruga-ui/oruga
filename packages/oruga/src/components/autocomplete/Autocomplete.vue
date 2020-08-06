@@ -182,13 +182,13 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
-                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded }
+                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded },
+                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-opened-top')]: (this.isOpenedTop && !this.appendToBody)  }
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('autocomplete', 'menuClass', 'o-autocomplete-menu'),
-                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-opened-top')]: (this.isOpenedTop && !this.appendToBody)  }
+                this.computedClass('autocomplete', 'menuClass', 'o-autocomplete-menu')
             ]
         },
         itemClasses() {
