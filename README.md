@@ -17,6 +17,7 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
     <a href="https://circleci.com/gh/oruga-ui/oruga"><img src="https://img.shields.io/circleci/project/github/oruga-ui/oruga.svg?style=flat-square" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://img.shields.io/codecov/c/github/oruga-ui/oruga.svg?style=flat-square" /></a>
+    <a href="https://discord.gg/TP3FBY"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
