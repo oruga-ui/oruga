@@ -65,7 +65,7 @@ title: Table
 
 :::
 
-### Sandobx
+### Sandbox
 
 ::: demo
 
