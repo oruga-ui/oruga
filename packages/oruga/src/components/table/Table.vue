@@ -938,7 +938,7 @@ export default {
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('table', 'tdSelectedClass', 'o-table-row-selected')]: row === this.selected }
+                { [this.computedClass('table', 'tdSelectedClass', 'o-table-row-selected')]: this.isRowSelected(row, this.selected) }
             ]
         },
         iconSortClasses(column) {
@@ -1119,6 +1119,13 @@ export default {
                 column.customSort,
                 this.isAsc
             )
+        },
+
+        isRowSelected(row, selected) {
+            if (this.customRowKey) {
+                return row[this.customRowKey] === selected[this.customRowKey]
+            }
+            return row === selected
         },
 
         /**
