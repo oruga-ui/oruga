@@ -812,6 +812,12 @@
             :columns="columns">
         </o-table>
         <hr />
+        <p>You can debounce search filter to avoid multiple filtering when typing.</p>
+        <o-table
+            :data="data"
+            :columns="columns"
+            :debounce-search="1000">
+        </o-table>
         <p>You can also customize the search input using a scoped slot.</p>
         <o-table
             :data="data">

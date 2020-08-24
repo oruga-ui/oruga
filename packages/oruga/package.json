@@ -83,6 +83,7 @@
     "rollup-copy-plugin": "0.1.0",
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-vue": "5.1.9",
+    "sinon": "9.0.3",
     "typescript": "3.8.3",
     "vue": "2.6.11",
     "vue-class-component": "7.2.3",

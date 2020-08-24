@@ -308,7 +308,7 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension } from '../../utils/helpers'
+import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
@@ -557,6 +557,8 @@ export default {
         },
         /** Force to show table with cards layout */
         cardLayout: Boolean,
+        /** Filtering debounce time (in milliseconds) */
+        debounceSearch: Number,
         /** Show header */
         showHeader: {
             type: Boolean,
@@ -885,24 +887,19 @@ export default {
             this.newCheckedRows = [...rows]
         },
 
+        debounceSearch: {
+            handler(value) {
+                this.debouncedHandleFiltersChange = debounce(this, this.handleFiltersChange, value)
+            },
+            immediate: true
+        },
+
         filters: {
             handler(value) {
-                if (this.backendFiltering) {
-                    this.$emit('filters-change', value)
+                if (this.debounceSearch) {
+                    this.debouncedHandleFiltersChange(value)
                 } else {
-                    this.newData = this.data.filter(
-                        (row) => this.isRowFiltered(row))
-                    if (!this.backendPagination) {
-                        this.newDataTotal = this.newData.length
-                    }
-                    if (!this.backendSorting) {
-                        if (this.sortMultiple &&
-                            this.sortMultipleDataLocal && this.sortMultipleDataLocal.length > 0) {
-                            this.doSortMultiColumn()
-                        } else if (Object.keys(this.currentSortColumn).length > 0) {
-                            this.doSortSingleColumn(this.currentSortColumn)
-                        }
-                    }
+                    this.handleFiltersChange(value)
                 }
             },
             deep: true
@@ -972,9 +969,27 @@ export default {
                 { [this.computedClass('table', 'detailedIconExpandedClass', 'o-table-detail-icon-expanded')]: this.isVisibleDetailRow(row) }
             ]
         },
-
         onFiltersEvent(event) {
             this.$emit(`filters-event-${this.filtersEvent}`, { event, filters: this.filters })
+        },
+        handleFiltersChange(value) {
+            if (this.backendFiltering) {
+                this.$emit('filters-change', value)
+            } else {
+                this.newData = this.data.filter(
+                    (row) => this.isRowFiltered(row))
+                if (!this.backendPagination) {
+                    this.newDataTotal = this.newData.length
+                }
+                if (!this.backendSorting) {
+                    if (this.sortMultiple &&
+                        this.sortMultipleDataLocal && this.sortMultipleDataLocal.length > 0) {
+                        this.doSortMultiColumn()
+                    } else if (Object.keys(this.currentSortColumn).length > 0) {
+                        this.doSortSingleColumn(this.currentSortColumn)
+                    }
+                }
+            }
         },
         findIndexOfSortData(column) {
             const sortObj = this.sortMultipleDataComputed.filter((i) => i.field === column.field)[0]

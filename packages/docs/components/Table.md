@@ -791,6 +791,8 @@ title: Table
   <section>
     <o-table :data="data" :columns="columns"> </o-table>
     <hr />
+    <p>You can debounce search filter to avoid multiple filtering when typing.</p>
+    <o-table :data="data" :columns="columns" :debounce-search="1000"> </o-table>
     <p>You can also customize the search input using a scoped slot.</p>
     <o-table :data="data">
       <template v-for="column in columns">
@@ -910,6 +912,7 @@ title: Table
 | height                    | Table fixed height                                                                                                                              | number\|string | -                                       |                                                              |
 | filtersEvent              | Add a native event to filter                                                                                                                    | string         | -                                       | ''                                                           |
 | cardLayout                | Force to show table with cards layout                                                                                                           | boolean        | -                                       |                                                              |
+| debounceSearch            | Filtering debounce time (in milliseconds)                                                                                                       | number         | -                                       |                                                              |
 | showHeader                | Show header                                                                                                                                     | boolean        | -                                       | Config -> <code> 'table.showHeader': true</code>             |
 | rootClass                 |                                                                                                                                                 | string         | -                                       |                                                              |
 | wrapperClass              |                                                                                                                                                 | string         | -                                       |                                                              |
