@@ -33,6 +33,15 @@ const babelOptions = {
     babelHelpers: 'bundled'
 }
 
+const vuePluginConfig = {
+    template: {
+        isProduction: true,
+        compilerOptions: {
+            whitespace: 'condense'
+        }
+    }
+}
+
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
@@ -80,7 +89,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
-                vue(),
+                vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
@@ -97,9 +106,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
-                vue({
-                    styleToImports: true
-                }),
+                vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
@@ -121,7 +128,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
-                vue({}),
+                vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
@@ -138,7 +145,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
-                vue({}),
+                vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
