@@ -19,7 +19,7 @@
             <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
         </o-dropdown>
 
-        <o-dropdown hoverable aria-role="list">
+        <o-dropdown :triggers="['hover']" aria-role="list">
             <o-button variant="info" slot="trigger">
                 <span>Hover me!</span>
                 <o-icon icon="caret-down"></o-icon>
@@ -51,6 +51,18 @@
                     role="button">
                 </o-icon>
             </div>
+
+            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
+            <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>
+            <o-dropdown-item aria-role="listitem">Something else</o-dropdown-item>
+        </o-dropdown>
+
+        <o-dropdown :triggers="['contextmenu']" aria-role="list">
+            <o-button
+                slot="trigger"
+                role="button">
+                Right click
+            </o-button>
 
             <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
             <o-dropdown-item aria-role="listitem">Another action</o-dropdown-item>

@@ -8,8 +8,10 @@
             role="button"
             ref="trigger"
             :class="triggerClasses"
-            @click="toggle"
-            @mouseenter="checkHoverable"
+            @click="onClick"
+            @contextmenu.prevent="onContextMenu"
+            @mouseenter="onHover"
+            @focus.capture="onFocus"
             aria-haspopup="true">
             <slot name="trigger" :active="isActive"/>
         </div>
@@ -68,10 +70,6 @@ export default {
             default: null
         },
         disabled: Boolean,
-        /**
-         * Dropdown will be triggered by hover instead of click
-         */
-        hoverable: Boolean,
         /**
          * Dropdown content (items) are shown inline, trigger is removed
          */
@@ -170,6 +168,14 @@ export default {
          */
         expanded: Boolean,
         /**
+         * Dropdown will be triggered by any events
+         * @values click, hover, contextmenu, focus
+         */
+        triggers: {
+            type: Array,
+            default: () => ['click']
+        },
+        /**
          * Append dropdown content to body
          */
         appendToBody: Boolean,
@@ -189,7 +195,7 @@ export default {
         return {
             selected: this.value,
             isActive: false,
-            isHoverable: this.hoverable,
+            isHoverable: false,
             bodyEl: undefined // Used to append to body
         }
     },
@@ -222,7 +228,7 @@ export default {
             ]
         },
         isMobileModal() {
-            return this.mobileModal && !this.inline && !this.hoverable
+            return this.mobileModal && !this.inline
         },
         cancelOptions() {
             return typeof this.canClose === 'boolean'
@@ -236,6 +242,9 @@ export default {
                 maxHeight: this.scrollable ? toCssDimension(this.maxHeight) : null,
                 overflow: this.scrollable ? 'auto' : null
             }
+        },
+        hoverable() {
+            return this.triggers.indexOf('hover') >= 0
         }
     },
     watch: {
@@ -337,6 +346,23 @@ export default {
             }
         },
 
+        onClick() {
+            if (this.triggers.indexOf('click') < 0) return
+            this.toggle()
+        },
+        onContextMenu() {
+            if (this.triggers.indexOf('contextmenu') < 0) return
+            this.toggle()
+        },
+        onHover() {
+            if (this.triggers.indexOf('hover') < 0) return
+            this.isHoverable = true
+        },
+        onFocus() {
+            if (this.triggers.indexOf('focus') < 0) return
+            this.toggle()
+        },
+
         /**
         * Toggle dropdown if it's not disabled.
         */
@@ -354,12 +380,6 @@ export default {
                 })
             } else {
                 this.isActive = !this.isActive
-            }
-        },
-
-        checkHoverable() {
-            if (this.hoverable) {
-                this.isHoverable = true
             }
         },
 
