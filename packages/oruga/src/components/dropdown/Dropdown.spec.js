@@ -49,7 +49,7 @@ describe('ODropdown', () => {
         expect(wrapper.emitted()['input']).toBeTruthy()
 
         wrapper.setProps({
-            hoverable: true,
+            triggers: ['hover'],
             closeOnClick: true
         })
 
