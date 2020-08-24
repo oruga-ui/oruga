@@ -143,7 +143,7 @@ describe('OTable', () => {
         })
 
         it('debounce search filtering when debounce-search is defined', () => {
-            let clock = useFakeTimers()
+            const clock = useFakeTimers()
             wrapper.setProps({
                 debounceSearch: 1000
             })

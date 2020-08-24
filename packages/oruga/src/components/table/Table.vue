@@ -1272,7 +1272,7 @@ export default {
                     delete this.filters[key]
                     return true
                 }
-                let value = this.getValueByPath(row, key)
+                const value = this.getValueByPath(row, key)
                 if (value == null) return false
                 if (Number.isInteger(value)) {
                     if (value !== Number(this.filters[key])) return false
