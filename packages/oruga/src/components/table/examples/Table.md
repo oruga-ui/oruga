@@ -51,7 +51,7 @@
 ```
 :::
 
-### Sandobx
+### Sandbox
 
 ::: demo
 ```html

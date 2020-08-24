@@ -8,8 +8,7 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "docs:dev": "npm link @oruga-ui/oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
-    "docs:build": "vue-docgen && vuepress build",
-    "docs:gen": "vue-docgen"
+    "docs:build": "vue-docgen && vuepress build"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",

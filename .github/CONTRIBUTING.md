@@ -55,7 +55,7 @@ You need [Node.js](http://nodejs.org/) **version >= 6 and <= 12**.
 After cloning the repo, run:
 
 ```bash
-$ npm install
+$ npm run bootstrap
 ```
 
 Common used NPM scripts
@@ -67,7 +67,7 @@ $ npm run build:lib:watch:oruga
 
 ```bash
 # build lib in watch mode
-$ npm run docs:dev:oruga
+$ npm run build:docs:watch:oruga
 ```
 
 ```bash
