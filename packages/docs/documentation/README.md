@@ -79,7 +79,7 @@ And then in your nuxt.config.js edit the plugin array with:
 plugins: [{ src: '~plugins/oruga.js', ssr: false }];
 ```
 
-To understand how the plugins work with Nuxt.js, take a look at the [plugin documentation](https://nuxtjs.org/guide/plugins).
+To understand how the plugins work with Nuxt.js, take a look at the [plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
 
 ## Customization
 
