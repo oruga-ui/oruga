@@ -25,7 +25,10 @@
             <slot/>
         </o-field-body>
         <div v-else-if="hasInnerField" :class="contentHorizontalClasses">
-            <o-field :addons="false" :class="innerFieldClasses">
+            <o-field
+                :addons="false"
+                :type="newType"
+                :class="innerFieldClasses">
                 <slot/>
             </o-field>
         </div>
@@ -157,6 +160,9 @@ export default {
         },
         hasMessage() {
             return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.$slots.message
+        },
+        hasInnerField() {
+            return this.grouped || this.groupMultiline || this.hasAddons()
         }
     },
     watch: {
@@ -201,9 +207,6 @@ export default {
         fieldType() {
             if (this.grouped) return 'o-field-grouped'
             if (this.hasAddons()) return 'o-field-addons'
-        },
-        hasInnerField() {
-            return this.grouped || this.groupMultiline || this.hasAddons()
         },
         hasAddons() {
             let renderedNode = 0
