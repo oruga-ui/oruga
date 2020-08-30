@@ -49,7 +49,20 @@ $table-th-wrap-icon-margin: 0.5rem !default;
 
 @mixin table-cards {
     thead {
-        display: none;
+        tr {
+            box-shadow: none;
+            border-width: 0;
+            th {
+                display: none;
+            }
+            .o-table-th-checkbox {
+                display: block;
+                width: 100%;
+                text-align: right;
+                margin-bottom: 1rem;
+                border: 0;
+            }
+        }
     }
     tfoot {
          th {
@@ -105,12 +118,19 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             overflow-y: auto;
             &.o-table-mobile-cards {
                 @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-                    height: initial !important;
-                    overflow-y: initial !important;
+                    height: initial;
+                    overflow-y: initial;
                 }
             }
         }
         &.o-table-mobile-cards {
+            tr {
+                background: $table-background-color !important;
+            }
+
+            .table {
+                background-color: transparent;
+            }
             @media screen and (max-width: $table-mobile-breakpoint - 1px) {
                 @include table-cards
             }
