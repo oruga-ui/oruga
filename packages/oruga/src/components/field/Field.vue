@@ -24,7 +24,7 @@
             v-if="horizontal">
             <slot/>
         </o-field-body>
-        <div v-else-if="grouped || groupMultiline || hasAddons()" :class="contentHorizontalClasses">
+        <div v-else-if="hasInnerField" :class="contentHorizontalClasses">
             <o-field :addons="false" :class="innerFieldClasses">
                 <slot/>
             </o-field>
@@ -63,6 +63,9 @@ export default {
         return {
             $field: this
         }
+    },
+    inject: {
+        $field: { name: '$field', default: false }
     },
     props: {
         /**
@@ -146,11 +149,14 @@ export default {
                 this.fieldType()
             ]
         },
+        parent() {
+            return this.$field
+        },
         hasLabel() {
             return this.label || this.$slots.label
         },
         hasMessage() {
-            return this.newMessage || this.$slots.message
+            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.$slots.message
         }
     },
     watch: {
@@ -166,6 +172,18 @@ export default {
         */
         message(value) {
             this.newMessage = value
+        },
+
+        /**
+        * Set parent message if we use Field in Field.
+        */
+        newMessage(value) {
+            if (this.parent && this.parent.hasInnerField) {
+                if (!this.parent.type) {
+                    this.parent.newType = this.newType
+                }
+                this.parent.newMessage = value
+            }
         }
     },
     methods: {
@@ -183,6 +201,9 @@ export default {
         fieldType() {
             if (this.grouped) return 'o-field-grouped'
             if (this.hasAddons()) return 'o-field-addons'
+        },
+        hasInnerField() {
+            return this.grouped || this.groupMultiline || this.hasAddons()
         },
         hasAddons() {
             let renderedNode = 0
