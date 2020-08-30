@@ -14,7 +14,8 @@
         <div
             ref="trigger"
             :class="triggerClasses"
-            @click.prevent="onClick"
+            @click="onClick"
+            @contextmenu="onContextMenu"
             @mouseenter="onHover"
             @focus.capture="onFocus"
             @mouseleave="close">
@@ -65,7 +66,7 @@ export default {
         },
         /**
          * Tooltip trigger events
-         * @values hover, click, focus
+         * @values hover, click, focus, contextmenu
          */
         triggers: {
             type: Array,
@@ -152,6 +153,9 @@ export default {
                 // update wrapper tooltip
                 const tooltipEl = this.$data.bodyEl.children[0]
                 tooltipEl.classList.forEach((item) => tooltipEl.classList.remove(item))
+                if (this.$vnode && this.$vnode.data && this.$vnode.data.staticClass) {
+                    tooltipEl.classList.add(this.$vnode.data.staticClass)
+                }
                 this.rootClasses.forEach((item) => {
                     if (typeof item === 'object') {
                         Object.keys(item).filter(key => !!item[key]).forEach(
@@ -169,7 +173,7 @@ export default {
                 wrapper.style.position = 'absolute'
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
-                wrapper.style.zIndex = this.isActive ? '9999' : '-1'
+                wrapper.style.zIndex = this.isActive || this.always ? '9999' : '-1'
             }
         },
         onClick() {
@@ -188,9 +192,17 @@ export default {
             if (this.triggers.indexOf('focus') < 0) return
             this.open()
         },
+        onContextMenu(event) {
+            if (this.triggers.indexOf('contextmenu') < 0) return
+            event.preventDefault()
+            this.open()
+        },
         open() {
             if (this.delay) {
-                setTimeout(() => (this.isActive = true), this.delay)
+                this.timer = setTimeout(() => {
+                    this.isActive = true
+                    this.timer = null
+                }, this.delay)
             } else {
                 this.isActive = true
             }
@@ -199,6 +211,7 @@ export default {
             if (typeof this.autoClose === 'boolean') {
                 this.isActive = !this.autoClose
             }
+            if (this.autoClose && this.timer) clearTimeout(this.timer)
         },
         /**
         * Close tooltip if clicked outside.
