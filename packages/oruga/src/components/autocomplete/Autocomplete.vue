@@ -29,7 +29,7 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
-                v-show="isActive && (computedData.length > 0 || hasEmptySlot || hasHeaderSlot)"
+                v-show="isActive && (!isEmpty || hasEmptySlot || hasHeaderSlot)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
@@ -67,7 +67,7 @@
                     </a>
                 </template>
                 <div
-                    v-if="computedData.length === 0 && hasEmptySlot"
+                    v-if="isEmpty && hasEmptySlot"
                     :class="itemEmptyClasses">
                     <slot name="empty" />
                 </div>
@@ -251,6 +251,10 @@ export default {
                 }
             }
             return [{ items: this.data }]
+        },
+        isEmpty() {
+            if (!this.computedData) return true
+            return !this.computedData.some((element) => element.items && element.items.length)
         },
         /**
          * White-listed items to not close when clicked.

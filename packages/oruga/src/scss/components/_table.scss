@@ -237,6 +237,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 .o-icon-sort, .o-icon-sort-multi-cancel-icon {
                     position: absolute;
                     bottom: 50%;
+                    left: 100%;
                     transform: translateY(50%);
                 }
                 .o-icon-sort-multi-cancel-icon {

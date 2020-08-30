@@ -26,6 +26,7 @@
                     :total="newDataTotal"
                     :current-page.sync="newCurrentPage"
                     :root-class="paginationWrapperClasses"
+                    :icon-pack="iconPack"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="top-left"/>
@@ -296,6 +297,7 @@
                     :total="newDataTotal"
                     :current-page.sync="newCurrentPage"
                     :root-class="paginationWrapperClasses"
+                    :icon-pack="iconPack"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="bottom-left"/>
@@ -1122,6 +1124,9 @@ export default {
         },
 
         isRowSelected(row, selected) {
+            if (!selected) {
+                return false
+            }
             if (this.customRowKey) {
                 return row[this.customRowKey] === selected[this.customRowKey]
             }
