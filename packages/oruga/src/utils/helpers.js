@@ -290,9 +290,10 @@ export function getStyleValue(value) {
     return value
 }
 
-export function debounce(context, func, wait, immediate) {
+export function debounce(func, wait, immediate) {
     let timeout
     return function () {
+        const context = this
         const args = arguments
         const later = function () {
             timeout = null

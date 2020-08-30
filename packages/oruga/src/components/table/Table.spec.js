@@ -155,7 +155,7 @@ describe('OTable', () => {
             }
             clock.tick(1000)
             bodyRows = wrapper.findAll('tbody tr')
-            expect(bodyRows).toHaveLength(2) // Filtering after debounce
+            expect(bodyRows).toHaveLength(5) // Filtering after debounce
         })
     })
 })

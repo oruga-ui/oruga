@@ -175,7 +175,6 @@ export default {
             isListInViewportVertically: true,
             hasFocus: false,
             bodyEl: undefined, // Used to append to body
-            debouncedEmitTyping: undefined // Used to debouced typing
         }
     },
     computed: {
@@ -350,7 +349,7 @@ export default {
 
         debounceTyping: {
             handler(value) {
-                this.debouncedEmitTyping = debounce(this, this.emitTyping, value)
+                this.debouncedEmitTyping = debounce(this.emitTyping, value)
             },
             immediate: true
         }
@@ -548,8 +547,10 @@ export default {
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            if (this.debounceTyping) this.debouncedEmitTyping()
-            else this.emitTyping()
+            if (this.debounceTyping)
+                this.debouncedEmitTyping()
+            else
+                this.emitTyping()
         },
         emitTyping() {
             this.$emit('typing', this.newValue)

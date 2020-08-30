@@ -889,7 +889,7 @@ export default {
 
         debounceSearch: {
             handler(value) {
-                this.debouncedHandleFiltersChange = debounce(this, this.handleFiltersChange, value)
+                this.debouncedHandleFiltersChange = debounce(this.handleFiltersChange, value)
             },
             immediate: true
         },
