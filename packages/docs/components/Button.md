@@ -8,7 +8,7 @@ title: Button
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\button\examples\Button.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/button/examples/Button.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 

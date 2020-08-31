@@ -8,7 +8,7 @@ title: Slider
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\slider\examples\Slider.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/slider/examples/Slider.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
