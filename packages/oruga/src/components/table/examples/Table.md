@@ -208,10 +208,13 @@
 
 ```html
 <template>
-<<<<<<< HEAD
   <section>
-    <o-button variant="danger" @click="selected = null" :disabled="!selected">
-      <o-icon icon="times"></o-icon>
+    <o-button
+      variant="danger"
+      @click="selected = null"
+      :disabled="!selected"
+      icon-left="times"
+    >
       <span>Clear selected</span>
     </o-button>
 
@@ -227,28 +230,6 @@
     >
     </o-table>
   </section>
-=======
-    <section>
-        <o-button
-            variant="danger"
-            @click="selected = null"
-            :disabled="!selected"
-            icon-left="times">
-            <span>Clear selected</span>
-        </o-button>
-
-        <p>
-        {{ selected }}
-        </p>
-        
-        <o-table
-            :data="data"
-            :columns="columns"
-            :selected.sync="selected"
-            focusable>
-        </o-table>
-    </section>
->>>>>>> upstream/develop
 </template>
 
 <script>
@@ -830,15 +811,14 @@
 
 ```html
 <template>
-<<<<<<< HEAD
   <section>
     <o-field grouped group-multiline>
       <o-button
         variant="danger"
         @click="checkedRows = []"
         :disabled="!checkedRows.length"
+        icon-left="times"
       >
-        <o-icon icon="times"></o-icon>
         <span>Clear checked</span>
       </o-button>
       <o-select v-model="checkboxPosition">
@@ -860,37 +840,6 @@
       </template>
     </o-table>
   </section>
-=======
-    <section>
-        <o-field grouped group-multiline>
-            <o-button
-                variant="danger"
-                @click="checkedRows = []"
-                :disabled="!checkedRows.length"
-                icon-left="times">
-                <span>Clear checked</span>
-            </o-button>
-            <o-select v-model="checkboxPosition">
-                <option value="left">Checkbox at left</option>
-                <option value="right">Checkbox at right</option>
-            </o-select>
-        </o-field>
-
-        <o-table
-            :data="data"
-            :columns="columns"
-            :checked-rows.sync="checkedRows"
-            :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
-            checkable
-            :checkbox-position="checkboxPosition">
-
-            <template slot="bottom-left">
-                <b>Total checked</b>: {{ checkedRows.length }}
-            </template>
-        </o-table>
-
-    </section>
->>>>>>> upstream/develop
 </template>
 
 <script>
