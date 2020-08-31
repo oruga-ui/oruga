@@ -16,7 +16,8 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'prefer-rest-params': 'off',
-    '@typescript-eslint/no-empty-function': ["error", { "allow": ["arrowFunctions", "functions", "methods"] } ]
+    '@typescript-eslint/no-empty-function': ["error", { "allow": ["arrowFunctions", "functions", "methods"] } ],
+    '@typescript-eslint/no-this-alias': 'off'
   },
   overrides: [
     {

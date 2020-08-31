@@ -215,8 +215,7 @@ title: Table
 ```html
 <template>
   <section>
-    <o-button variant="danger" @click="selected = null" :disabled="!selected">
-      <o-icon icon="times"></o-icon>
+    <o-button variant="danger" @click="selected = null" :disabled="!selected" icon-left="times">
       <span>Clear selected</span>
     </o-button>
 
@@ -778,8 +777,7 @@ title: Table
 <template>
   <section>
     <o-field grouped group-multiline>
-      <o-button variant="danger" @click="checkedRows = []" :disabled="!checkedRows.length">
-        <o-icon icon="times"></o-icon>
+      <o-button variant="danger" @click="checkedRows = []" :disabled="!checkedRows.length" icon-left="times">
         <span>Clear checked</span>
       </o-button>
       <o-select v-model="checkboxPosition">

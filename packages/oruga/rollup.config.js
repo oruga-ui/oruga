@@ -48,35 +48,6 @@ const capitalize = (s) => {
 }
 
 export default () => {
-    /*
-    const mapComponent = (name) => {
-        return [
-            {
-                input: baseFolder + componentsFolder + `${name}/index.js`,
-                external: ['vue'],
-                output: {
-                    format: 'umd',
-                    name: capitalize(name),
-                    file: `dist/components/${name}/index.js`,
-                    banner: bannerTxt,
-                    exports: 'named',
-                    globals: {
-                        vue: 'Vue'
-                    }
-                },
-                plugins: [
-                    node({
-                        extensions: ['.vue', '.js']
-                    }),
-                    cjs(),
-                    vue(),
-                    babel(babelOptions)
-                ]
-            }
-        ]
-    }
-    */
-
     let config = [
         {
             input: entries,
@@ -149,11 +120,7 @@ export default () => {
                 babel(babelOptions),
                 cjs()
             ]
-        },
-        // individual components
-        /*
-        ...components.map((f) => mapComponent(f)).reduce((r, a) => r.concat(a), [])
-        */
+        }
     ]
 
     if (process.env.MINIFY === 'true') {

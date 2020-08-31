@@ -24,6 +24,14 @@
             v-if="horizontal">
             <slot/>
         </o-field-body>
+        <div v-else-if="hasInnerField" :class="contentHorizontalClasses">
+            <o-field
+                :addons="false"
+                :type="newType"
+                :class="innerFieldClasses">
+                <slot/>
+            </o-field>
+        </div>
         <template v-else>
             <slot/>
         </template>
@@ -58,6 +66,9 @@ export default {
         return {
             $field: this
         }
+    },
+    inject: {
+        $field: { name: '$field', default: false }
     },
     props: {
         /**
@@ -135,11 +146,23 @@ export default {
                 this.computedClass('field', 'contentHorizontalClass', 'o-field-horizontal-content')
             ]
         },
+        innerFieldClasses() {
+            return [
+                { [this.computedClass('field', 'groupMultilineClass', 'o-field-grouped-multiline')]: this.groupMultiline },
+                this.fieldType()
+            ]
+        },
+        parent() {
+            return this.$field
+        },
         hasLabel() {
             return this.label || this.$slots.label
         },
         hasMessage() {
-            return this.newMessage || this.$slots.message
+            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.$slots.message
+        },
+        hasInnerField() {
+            return this.grouped || this.groupMultiline || this.hasAddons()
         }
     },
     watch: {
@@ -155,14 +178,24 @@ export default {
         */
         message(value) {
             this.newMessage = value
+        },
+
+        /**
+        * Set parent message if we use Field in Field.
+        */
+        newMessage(value) {
+            if (this.parent && this.parent.hasInnerField) {
+                if (!this.parent.type) {
+                    this.parent.newType = this.newType
+                }
+                this.parent.newMessage = value
+            }
         }
     },
     methods: {
         rootClasses() {
             return [
-                this.computedClass('field', 'rootClass', 'o-field'),
-                { [this.computedClass('field', 'groupMultilineClass', 'o-field-grouped-multiline')]: this.groupMultiline },
-                this.fieldType()
+                this.computedClass('field', 'rootClass', 'o-field')
             ]
         },
         /**
@@ -173,18 +206,18 @@ export default {
         */
         fieldType() {
             if (this.grouped) return 'o-field-grouped'
+            if (this.hasAddons()) return 'o-field-addons'
+        },
+        hasAddons() {
             let renderedNode = 0
             if (this.$slots.default) {
                 renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
-            if (
+            return (
                 renderedNode > 1 &&
                 this.addons &&
                 !this.horizontal
-            ) {
-                return 'o-field-addons'
-            }
-            return null
+            )
         }
     }
 }

@@ -29,7 +29,7 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
-                v-show="isActive && (data.length > 0 || hasEmptySlot || hasHeaderSlot)"
+                v-show="isActive && (!isEmpty || hasEmptySlot || hasHeaderSlot)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
@@ -37,24 +37,39 @@
                     :class="itemClasses">
                     <slot name="header"/>
                 </div>
-                <a
-                    v-for="(option, index) in data"
-                    :key="index"
-                    :class="itemOptionClasses(option)"
-                    @click="setSelected(option, undefined, $event)">
-                    <slot
-                        v-if="hasDefaultSlot"
-                        :option="option"
-                        :index="index"
-                    />
-                    <span v-else>
-                        {{ getValue(option, true) }}
-                    </span>
-                </a>
+                <template v-for="(element, groupindex) in computedData">
+                    <div
+                        v-if="element.group"
+                        :key="groupindex + 'group'"
+                        :class="itemEmptyClasses">
+                        <slot
+                            v-if="hasGroupSlot"
+                            name="group"
+                            :group="element.group"
+                            :index="groupindex" />
+                        <span v-else>
+                            {{ element.group }}
+                        </span>
+                    </div>
+                    <a
+                        v-for="(option, index) in element.items"
+                        :key="groupindex + ':' + index"
+                        :class="itemOptionClasses(option)"
+                        @click="setSelected(option, undefined, $event)"
+                    >
+                        <slot
+                            v-if="hasDefaultSlot"
+                            :option="option"
+                            :index="index" />
+                        <span v-else>
+                            {{ getValue(option, true) }}
+                        </span>
+                    </a>
+                </template>
                 <div
-                    v-if="data.length === 0 && hasEmptySlot"
+                    v-if="isEmpty && hasEmptySlot"
                     :class="itemEmptyClasses">
-                    <slot name="empty"/>
+                    <slot name="empty" />
                 </div>
                 <div
                     v-if="hasFooterSlot"
@@ -141,6 +156,10 @@ export default {
                 return getValueByPath(config, 'autocomplete.animation', 'fade')
             }
         },
+        /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
+        groupField: String,
+        /** Property of the object (if <code>data</code> is array of objects) to use as key to get items array of each group, optional */
+        groupOptions: String,
         /** Number of milliseconds to delay before to emit typing event */
         debounceTyping: Number,
         /** Icon name to be added on the right side */
@@ -175,7 +194,6 @@ export default {
             isListInViewportVertically: true,
             hasFocus: false,
             bodyEl: undefined, // Used to append to body
-            debouncedEmitTyping: undefined // Used to debouced typing
         }
     },
     computed: {
@@ -208,6 +226,36 @@ export default {
                 ...this.inputClasses
             }
         },
+        computedData() {
+            if (this.groupField) {
+                if (this.groupOptions) {
+                    const newData = []
+                    this.data.forEach((option) => {
+                        const group = getValueByPath(option, this.groupField)
+                        const items = getValueByPath(option, this.groupOptions)
+                        newData.push({ group, items })
+                    })
+                    return newData
+                } else {
+                    const tmp = {}
+                    this.data.forEach((option) => {
+                        const group = getValueByPath(option, this.groupField)
+                        if (!tmp[group]) tmp[group] = []
+                        tmp[group].push(option)
+                    })
+                    const newData = []
+                    Object.keys(this.data).forEach((group) => {
+                        newData.push({ group, items: this.data[group] })
+                    })
+                    return newData
+                }
+            }
+            return [{ items: this.data }]
+        },
+        isEmpty() {
+            if (!this.computedData) return true
+            return !this.computedData.some((element) => element.items && element.items.length)
+        },
         /**
          * White-listed items to not close when clicked.
          * Add input, dropdown and all children.
@@ -234,6 +282,13 @@ export default {
             }
 
             return whiteList
+        },
+
+        /**
+         * Check if exists group slot
+         */
+        hasGroupSlot() {
+            return !!this.$scopedSlots.group
         },
 
         /**
@@ -350,7 +405,7 @@ export default {
 
         debounceTyping: {
             handler(value) {
-                this.debouncedEmitTyping = debounce(this, this.emitTyping, value)
+                this.debouncedEmitTyping = debounce(this.emitTyping, value)
             },
             immediate: true
         }
@@ -492,11 +547,13 @@ export default {
         keyArrows(direction) {
             const sum = direction === 'down' ? 1 : -1
             if (this.isActive) {
-                let index = this.data.indexOf(this.hovered) + sum
-                index = index > this.data.length - 1 ? this.data.length : index
+                const data = this.computedData.map(
+                    (d) => d.items).reduce((a, b) => ([...a, ...b]), [])
+                let index = data.indexOf(this.hovered) + sum
+                index = index > data.length - 1 ? data.length - 1 : index
                 index = index < 0 ? 0 : index
 
-                this.setHovered(this.data[index])
+                this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
                 const element = list.querySelectorAll(`a`)[index]
@@ -531,7 +588,7 @@ export default {
             if (this.openOnFocus) {
                 this.isActive = true
                 if (this.keepFirst) {
-                    this.selectFirstOption(this.data)
+                    this.selectFirstOption(this.computedData)
                 }
             }
             this.hasFocus = true
@@ -548,8 +605,10 @@ export default {
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            if (this.debounceTyping) this.debouncedEmitTyping()
-            else this.emitTyping()
+            if (this.debounceTyping)
+                this.debouncedEmitTyping()
+            else
+                this.emitTyping()
         },
         emitTyping() {
             this.$emit('typing', this.newValue)

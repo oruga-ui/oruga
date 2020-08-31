@@ -5,7 +5,7 @@ import OInput from '@components/input/Input'
 
 const localVue = createLocalVue()
 localVue.component('o-field', OField)
-localVue.component('o-field-body', OFieldBody)
+localVue.component('o-field-horizontal-content', OFieldBody)
 localVue.component('o-input', OInput)
 
 describe('OField', () => {
@@ -29,13 +29,6 @@ describe('OField', () => {
         await wrapper.vm.$nextTick()
         expect(wrapper.find('.o-control-input').classes()).toContain('o-control-input-icons-right')
         expect(wrapper.find('.o-control-input').find('.o-icon').classes()).toContain('o-color-danger')
-    })
-
-    describe('class names for the root div.field', () => {
-        it('contains "o-field-grouped-multiline" when prop "groupMultiline" is set', () => {
-            const wrapper = shallowMount(OField, { propsData: { groupMultiline: true } })
-            expect(wrapper.find('.o-field').classes()).toContain('o-field-grouped-multiline')
-        })
     })
 
     describe('Passing a message prop', () => {
@@ -66,7 +59,7 @@ describe('OField', () => {
         })
     })
 
-    describe('Passing true for grouped prop', () => {
+    describe('managing groups', () => {
         const mountOptions = {
             propsData: {
                 grouped: true
@@ -77,21 +70,30 @@ describe('OField', () => {
             }
         }
 
-        it('groups the children together', () => {
-            const wrapper = shallowMount(OField, mountOptions)
-            expect(wrapper.find('.o-field').classes()).toContain('o-field-grouped')
-        })
-
-        it('appends the classname with value of position when "position" prop is passed', () => {
+        it('contains "o-field-grouped" when prop "grouped" is set', () => {
             const {propsData} = mountOptions
-            const wrapper = shallowMount(OField, {
+            const wrapper = mount(OField, {
                 ...mountOptions,
                 propsData: {
                     ...propsData,
-                    position: 'is-centered'
+                    grouped: true
                 }
             })
-            expect(wrapper.find('.o-field').classes()).toContain('o-field-grouped')
+            const innerField = wrapper.find('.o-field-horizontal-content').find('.o-field')
+            expect(innerField.classes()).toContain('o-field-grouped')  
+        })
+
+        it('contains "o-field-grouped-multiline" when prop "groupMultiline" is set', () => {
+            const {propsData} = mountOptions
+            const wrapper = mount(OField, {
+                ...mountOptions,
+                propsData: {
+                    ...propsData,
+                    groupMultiline: true
+                }
+            })
+            const innerField = wrapper.find('.o-field-horizontal-content').find('.o-field')
+            expect(innerField.classes()).toContain('o-field-grouped-multiline')
         })
 
         it('adds a label element under the root div.field when "label" prop is passed', () => {
