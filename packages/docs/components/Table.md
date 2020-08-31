@@ -1052,7 +1052,7 @@ title: Table
 
 <style>
   .is-sticky-column-one {
-    background: #008930 !important;
+    background: #006724 !important;
     color: white !important;
   }
   .is-sticky-column-two {
