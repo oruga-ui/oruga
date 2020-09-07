@@ -74,9 +74,7 @@ export default {
             this.$emit(this.isOpen ? 'open' : 'close')
         }
     },
-    render() {
-        alert('b')
-        const h = this.$createElement
+    render(h) {
         const trigger = createElement(h, 'div', {
             staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
             on: { click: this.toggle }
