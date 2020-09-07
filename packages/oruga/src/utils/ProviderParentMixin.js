@@ -1,4 +1,5 @@
 import { hasFlag } from './helpers'
+import { getScopedSlot } from './vue-utils'
 
 const items = 1
 const sorted = 3
@@ -37,10 +38,9 @@ export default (itemName, flags = 0) => {
                  * And mark the items with their index
                  */
                 childItems(items) {
-                    if (items.length > 0 && this.$scopedSlots.default) {
+                    if (items.length > 0 && getScopedSlot(this, 'default')) {
                         const tag = items[0].$vnode.tag
                         let index = 0
-
                         const deepSearch = (children) => {
                             for (const child of children) {
                                 if (child.tag === tag) {
@@ -51,8 +51,8 @@ export default (itemName, flags = 0) => {
                                     }
                                 } else if (child.tag) {
                                     const sub = child.componentInstance
-                                        ? (child.componentInstance.$scopedSlots.default
-                                            ? child.componentInstance.$scopedSlots.default()
+                                        ? (getScopedSlot(child.componentInstance, 'default')
+                                            ? (child.componentInstance, 'default')()
                                             : child.componentInstance.$children)
                                         : child.children
                                     if (Array.isArray(sub) && sub.length > 0) {
@@ -62,8 +62,7 @@ export default (itemName, flags = 0) => {
                             }
                             return false
                         }
-
-                        deepSearch(this.$scopedSlots.default())
+                        deepSearch(getScopedSlot(this, 'default')())
                     }
                 }
             }

@@ -45,13 +45,13 @@ export default {
             $elementRef: 'input'
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
-        /**
-         * @model
-         */
-        value: {
-            type: [Object, Function, File, Array]
-        },
+        /** @model */
+        modelValue: [Object, File, Array],
         /** Same as native, also push new item to v-model instead of replacing */
         multiple: Boolean,
         /** Same as native disabled */
@@ -87,7 +87,7 @@ export default {
     },
     data() {
         return {
-            newValue: this.value,
+            newValue: this.modelValue,
             dragDropFocus: false
         }
     },
@@ -115,7 +115,7 @@ export default {
          *   2. Reset interna input file value
          *   3. If it's invalid, validate again.
          */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
             if (!value || (Array.isArray(value) && value.length === 0)) {
                 this.$refs.input.value = null
@@ -160,7 +160,7 @@ export default {
                 }
                 if (!newValues) return
             }
-            this.$emit('input', this.newValue)
+            this.$emit('update:modelValue', this.newValue)
             !this.dragDrop && this.checkHtml5Validity()
         },
 

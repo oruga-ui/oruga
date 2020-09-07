@@ -121,7 +121,7 @@ describe('OTable', () => {
         })
 
         it('displays filtered data when searching', async () => {
-            searchInput.vm.$emit('input', 'J')
+            searchInput.vm.$emit('update:modelValue', 'J')
             await wrapper.vm.$nextTick()
 
             bodyRows = wrapper.findAll('tbody tr')
@@ -129,7 +129,7 @@ describe('OTable', () => {
         })
 
         it('displays filtered data when searching and updating data', async () => {
-            searchInput.vm.$emit('input', 'J')
+            searchInput.vm.$emit('update:modelValue', 'J')
             wrapper.setProps({
                 data: [
                     ...data,
@@ -148,7 +148,7 @@ describe('OTable', () => {
                 debounceSearch: 1000
             })
             for (let i = 0; i < 10; i++) {
-                searchInput.vm.$emit('input', 'J'.repeat(10 - i))
+                searchInput.vm.$emit('update:modelValue', 'J'.repeat(10 - i))
                 clock.tick(500)
                 bodyRows = wrapper.findAll('tbody tr')
                 expect(bodyRows).toHaveLength(5) // No filtering yet

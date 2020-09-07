@@ -39,7 +39,7 @@ export default {
     name: 'OTooltip',
     mixins: [BaseComponentMixin],
     props: {
-        /** Whether tooltip is active or not */
+        /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: {
             type: Boolean,
             default: true

@@ -11,20 +11,19 @@ import pack from './package.json'
 
 const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
 
-const baseFolder = './src/'
-const componentsFolder = 'components/'
+const baseFolder = './src/components/'
 
 const components = fs
-    .readdirSync(baseFolder + componentsFolder)
+    .readdirSync(baseFolder)
     .filter((f) =>
-        fs.statSync(path.join(baseFolder + componentsFolder, f)).isDirectory()
+        fs.statSync(path.join(baseFolder, f)).isDirectory()
     )
 
 const entries = {
     'index': './src/index.js',
     'helpers': './src/utils/helpers.js',
     ...components.reduce((obj, name) => {
-        obj[name] = (baseFolder + componentsFolder + name)
+        obj[name] = (baseFolder + name)
         return obj
     }, {})
 }

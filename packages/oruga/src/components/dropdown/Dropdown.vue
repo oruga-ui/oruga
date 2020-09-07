@@ -63,9 +63,13 @@ export default {
             $dropdown: this
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
         /** @model */
-        value: {
+        modelValue: {
             type: [String, Number, Boolean, Object, Array, Function],
             default: null
         },
@@ -193,7 +197,7 @@ export default {
     },
     data() {
         return {
-            selected: this.value,
+            selected: this.modelValue,
             isActive: false,
             isHoverable: false,
             bodyEl: undefined // Used to append to body
@@ -251,7 +255,7 @@ export default {
         /**
         * When v-model is changed set the new selected item.
         */
-        value(value) {
+        modelValue(value) {
             this.selected = value
         },
 
@@ -290,7 +294,7 @@ export default {
                     this.$emit('change', this.selected)
                 }
             }
-            this.$emit('input', this.selected)
+            this.$emit('update:modelValue', this.selected)
             if (!this.multiple) {
                 this.isActive = !this.closeOnClick
                 if (this.hoverable && this.closeOnClick) {

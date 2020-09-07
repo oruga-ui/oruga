@@ -1,9 +1,11 @@
 export default {
+  model: {
+    prop: 'modelValue',
+    event: 'update:modelValue'
+  },
   props: {
-    /**
-     * @model
-     */
-    value: [String, Number, Boolean, Array],
+    /** @model */
+    modelValue: [String, Number, Boolean, Array],
     /**
      * Same as native value
      */
@@ -30,7 +32,7 @@ export default {
   },
   data() {
     return {
-      newValue: this.value,
+      newValue: this.modelValue,
     };
   },
   computed: {
@@ -40,7 +42,7 @@ export default {
       },
       set(value) {
         this.newValue = value;
-        this.$emit("input", value);
+        this.$emit('update:modelValue', value);
       },
     },
   },
@@ -48,7 +50,7 @@ export default {
     /**
      * When v-model change, set internal value.
      */
-    value(value) {
+    modelValue(value) {
       this.newValue = value;
     },
   },
@@ -56,6 +58,6 @@ export default {
     focus() {
       // MacOS FireFox and Safari do not focus when clicked
       this.$refs.input.focus();
-    },
-  },
+    }
+  }
 };

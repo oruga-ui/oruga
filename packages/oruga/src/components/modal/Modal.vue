@@ -55,7 +55,7 @@ export default {
     },
     mixins: [BaseComponentMixin],
     props: {
-        /** Whether modal is active or not, use the .sync modifier to make it two-way binding */
+        /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],

@@ -1,3 +1,4 @@
+import { isVue2 } from "./vue-utils"
 
 export const use = (plugin) => {
     if (typeof window !== 'undefined' && window.Vue) {
@@ -5,11 +6,20 @@ export const use = (plugin) => {
     }
 }
 
-export const registerComponent = (Vue, component) => {
-    Vue.component(component.name, component)
+export const registerPlugin = (vm, plugin) => {
+    vm.use(plugin)
 }
 
-export const registerComponentProgrammatic = (Vue, property, component) => {
-    if (!Vue.prototype.$oruga) Vue.prototype.$oruga = {}
-    Vue.prototype.$oruga[property] = component
+export const registerComponent = (vm, component) => {
+    vm.component(component.name, component)
+}
+
+export const registerComponentProgrammatic = (vm, property, component) => {
+    if (isVue2(vm)) {
+        if (!vm.prototype.$oruga) vm.prototype.$oruga = {}
+        vm.prototype.$oruga[property] = component
+    } else {
+        if (!vm.config.globalProperties.$oruga) vm.config.globalProperties.$oruga = {}
+        vm.config.globalProperties[property] = component
+    }
 }

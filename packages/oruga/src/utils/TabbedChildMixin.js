@@ -1,4 +1,5 @@
 import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
+import { createElement } from './vue-utils'
 
 export default (parentCmp) => ({
     mixins: [InjectedChildMixin(parentCmp, Sorted)],
@@ -69,31 +70,39 @@ export default (parentCmp) => ({
                 : this.parent.vertical ? 'slide-up' : 'slide-prev'
         }
     },
-    render(createElement) {
+    render(h) {
         // if destroy apply v-if
         if (this.parent.destroyOnHide) {
-            if (!this.isActive || !this.visible) {
-                return
-            }
+            if (!this.isActive || !this.visible) return
         }
-        const vnode = createElement('div', {
+        const vnode = createElement(
+            h,
+            'div',
+            {
             directives: [{
-                name: 'show',
-                value: this.isActive && this.visible
-            }],
-            attrs: { 'class': this.elementClasses }
-        }, this.$slots.default)
+                    name: 'show',
+                    value: this.isActive && this.visible
+                }],
+                attrs: { 'class': this.elementClasses }
+            },
+            this.$slots.default
+        )
         // check animated prop
         if (this.parent.animated) {
-            return createElement('transition', {
-                props: {
-                    'name': this.transitionName
+            return createElement(
+                h,
+                'transition',
+                {
+                    props: {
+                        'name': this.transitionName
+                    },
+                    on: {
+                        'before-enter': () => { this.parent.isTransitioning = true },
+                        'after-enter': () => { this.parent.isTransitioning = false }
+                    }
                 },
-                on: {
-                    'before-enter': () => { this.parent.isTransitioning = true },
-                    'after-enter': () => { this.parent.isTransitioning = false }
-                }
-            }, [vnode])
+                [vnode]
+            )
         }
         return vnode
     }

@@ -8,7 +8,7 @@ title: Radio
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/radio/examples/Radio.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\radio\examples\Radio.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -121,9 +121,9 @@ title: Radio
 
 ## Events
 
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| input      | undefined |
+| Event name        | Type      | Description |
+| ----------------- | --------- | ----------- |
+| update:modelValue | undefined |
 
 ## Slots
 

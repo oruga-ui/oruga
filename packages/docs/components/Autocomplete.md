@@ -8,7 +8,7 @@ title: Autocomplete
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/autocomplete/examples/Autocomplete.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\autocomplete\examples\Autocomplete.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -368,16 +368,16 @@ title: Autocomplete
 
 ## Events
 
-| Event name       | Type      | Description |
-| ---------------- | --------- | ----------- |
-| icon-click       |           |
-| blur             | undefined |
-| focus            | undefined |
-| input            | undefined |
-| select           | undefined |
-| infinite-scroll  |           |
-| typing           | undefined |
-| icon-right-click | undefined |
+| Event name        | Type      | Description |
+| ----------------- | --------- | ----------- |
+| icon-click        |           |
+| blur              | undefined |
+| focus             | undefined |
+| update:modelValue | undefined |
+| select            | undefined |
+| infinite-scroll   |           |
+| typing            | undefined |
+| icon-right-click  | undefined |
 
 ## Slots
 

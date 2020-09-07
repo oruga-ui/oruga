@@ -8,7 +8,7 @@ title: Input
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/input/examples/Input.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\input\examples\Input.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -162,11 +162,11 @@ title: Input
 
 ## Events
 
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| blur       | undefined |
-| focus      | undefined |
-| input      | undefined |
+| Event name        | Type      | Description |
+| ----------------- | --------- | ----------- |
+| blur              | undefined |
+| focus             | undefined |
+| update:modelValue | undefined |
 
 ## Style
 

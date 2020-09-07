@@ -1,4 +1,5 @@
 import { isVueComponent } from './helpers'
+import { getScopedSlot } from './vue-utils'
 
 export default {
     name: 'OSlotComponent',
@@ -44,7 +45,7 @@ export default {
     render(createElement) {
         if (isVueComponent(this.component)) {
             return createElement(this.tag, {},
-                this.scoped ? this.component.$scopedSlots[this.name](this.props)
+                this.scoped ? getScopedSlot(this.component, this.name)(this.props)
                     : this.component.$slots[this.name])
         }
     }

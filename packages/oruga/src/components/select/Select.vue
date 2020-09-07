@@ -67,11 +67,13 @@ export default {
             $elementRef: 'select'
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
-        /**
-         * @model
-         */
-        value: {
+        /** @model */
+        modelValue: {
             type: [String, Number, Boolean, Object, Array],
             default: null
         },
@@ -109,7 +111,7 @@ export default {
     },
     data() {
         return {
-            selected: this.value
+            selected: this.modelValue
         }
     },
     computed: {
@@ -142,17 +144,16 @@ export default {
                 this.computedClass('select', 'iconRightClass', 'o-icon-right')
             ]
         },
-
         computedValue: {
             get() {
                 return this.selected
             },
             set(value) {
                 this.selected = value
-                this.$emit('input', value)
+                this.$emit('update:modelValue', value)
                 !this.isValid && this.checkHtml5Validity()
             }
-        },
+        }
     },
     watch: {
         /**
@@ -160,7 +161,7 @@ export default {
         *   1. Set the selected option.
         *   2. If it's invalid, validate again.
         */
-        value(value) {
+        modelValue(value) {
             this.selected = value
             !this.isValid && this.checkHtml5Validity()
         }

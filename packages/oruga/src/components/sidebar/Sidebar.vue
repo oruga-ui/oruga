@@ -33,7 +33,7 @@ export default {
     name: 'OSidebar',
     mixins: [BaseComponentMixin],
     props: {
-        /** To control the behaviour of the sidebar programmatically, use the .sync modifier to make it two-way binding */
+        /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
         open: Boolean,
         /**
         * Color of the sidebar, optional

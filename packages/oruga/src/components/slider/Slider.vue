@@ -77,11 +77,13 @@ export default {
             $slider: this
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
-        /**
-         * @model
-         */
-        value: {
+        /** @model */
+        modelValue: {
             type: [Number, Array],
             default: 0
         },
@@ -241,7 +243,7 @@ export default {
         /**
         * When v-model is changed set the new active step.
         */
-        value(value) {
+        modelValue(value) {
             this.setValues(value)
         },
         value1() {
@@ -251,10 +253,10 @@ export default {
             this.onInternalValueUpdate()
         },
         min() {
-            this.setValues(this.value)
+            this.setValues(this.modelValue)
         },
         max() {
-            this.setValues(this.value)
+            this.setValues(this.modelValue)
         }
     },
     methods: {
@@ -346,7 +348,7 @@ export default {
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.value)
+        this.setValues(this.modelValue)
     }
 }
 </script>

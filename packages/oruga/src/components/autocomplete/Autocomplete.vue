@@ -88,6 +88,7 @@ import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { getScopedSlot } from '../../utils/vue-utils'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -107,9 +108,13 @@ export default {
             $elementRef: 'input'
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
         /** @model */
-        value: [Number, String],
+        modelValue: [Number, String],
         /** Options / suggestions */
         data: {
             type: Array,
@@ -189,7 +194,7 @@ export default {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: this.value,
+            newValue: this.modelValue,
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -288,14 +293,14 @@ export default {
          * Check if exists group slot
          */
         hasGroupSlot() {
-            return !!this.$scopedSlots.group
+            return !!getScopedSlot(this, 'group')
         },
 
         /**
          * Check if exists default slot
          */
         hasDefaultSlot() {
-            return !!this.$scopedSlots.default
+            return !!getScopedSlot(this, 'default')
         },
 
         /**
@@ -372,7 +377,7 @@ export default {
          *   3. Close dropdown if value is clear or else open it
          */
         newValue(value) {
-            this.$emit('input', value)
+            this.$emit('update:modelValue', value)
             // Check if selected is invalid
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue !== value) {
@@ -389,7 +394,7 @@ export default {
          *   1. Update internal value.
          *   2. If it's invalid, validate again.
          */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
         },
 

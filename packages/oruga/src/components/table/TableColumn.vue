@@ -1,5 +1,6 @@
 <script>
 import { toCssDimension } from '../../utils/helpers'
+import { getScopedSlot } from '../../utils/vue-utils'
 
 export default {
     name: 'OTableColumn',
@@ -39,7 +40,16 @@ export default {
             }
         },
         hasDefaultSlot() {
-            return !!this.$scopedSlots.default
+            return !!getScopedSlot(this, 'default')
+        },
+        hasSearchableSlot() {
+            return !!getScopedSlot(this, 'searchable')
+        },
+        hasHeaderSlot() {
+            return !!getScopedSlot(this, 'header')
+        },
+        hasSubheadingSlot() {
+            return !!getScopedSlot(this, 'subheading')
         },
         /**
          * Return if column header is un-selectable

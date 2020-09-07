@@ -2,7 +2,7 @@ import * as components from './components'
 
 import { merge } from './utils/helpers'
 import config, { setOptions, setVueInstance, Programmatic as ConfigProgrammatic } from './utils/config'
-import { use, registerComponentProgrammatic } from './utils/plugins'
+import { use, registerComponentProgrammatic, registerPlugin } from './utils/plugins'
 
 const Oruga = {
     install(Vue, options = {}) {
@@ -11,7 +11,7 @@ const Oruga = {
         setOptions(merge(config, options, true))
         // Components
         for (const componentKey in components) {
-            Vue.use(components[componentKey])
+            registerPlugin(Vue, components[componentKey])
         }
         // Config component
         registerComponentProgrammatic(Vue, 'config', ConfigProgrammatic)

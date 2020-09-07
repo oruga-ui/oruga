@@ -78,11 +78,13 @@ export default {
                 : 'input'
         }
     },
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
-        /**
-         * @model
-         */
-        value: [Number, String],
+        /**  @model */
+        modelValue: [Number, String],
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -134,7 +136,7 @@ export default {
     },
     data() {
         return {
-            newValue: this.value,
+            newValue: this.modelValue,
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false
@@ -179,7 +181,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.$emit('input', value)
+                this.$emit('update:modelValue', value)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -244,7 +246,7 @@ export default {
         * When v-model is changed:
         *   1. Set internal value.
         */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
         }
     },

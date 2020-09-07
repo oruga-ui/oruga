@@ -37,11 +37,15 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default {
     name: 'OSwitch',
     mixins: [BaseComponentMixin],
+    model: {
+        prop: 'modelValue',
+        event: 'update:modelValue'
+    },
     props: {
         /**
          * @model
          */
-        value: [String, Number, Boolean],
+        modelValue: [String, Number, Boolean],
         /**
          * Same as native value
          */
@@ -102,7 +106,7 @@ export default {
     },
     data() {
         return {
-            newValue: this.value,
+            newValue: this.modelValue,
             isMouseDown: false
         }
     },
@@ -135,7 +139,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.$emit('input', value)
+                this.$emit('update:modelValue', value)
             }
         }
     },
@@ -143,7 +147,7 @@ export default {
         /**
         * When v-model change, set internal value.
         */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
         }
     },
