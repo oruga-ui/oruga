@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="vueReady"
         ref="dropdown"
         :class="rootClasses"
     >
@@ -41,6 +42,7 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
@@ -57,7 +59,7 @@ export default {
     directives: {
         trapFocus
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     provide() {
         return {
             $dropdown: this

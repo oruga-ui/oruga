@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="vueReady"
         @click="onSliderClick"
         :class="rootClasses">
         <div
@@ -56,6 +57,7 @@ import SliderTick from './SliderTick'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -71,7 +73,7 @@ export default {
         [SliderThumb.name]: SliderThumb,
         [SliderTick.name]: SliderTick
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     provide() {
         return {
             $slider: this

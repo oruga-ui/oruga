@@ -1,5 +1,5 @@
 <template>
-    <label :class="rootClasses">
+    <label v-if="vueReady" :class="rootClasses">
         <template v-if="!dragDrop">
             <slot/>
         </template>
@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { File } from '../../utils/ssr'
 
@@ -38,7 +39,7 @@ import { File } from '../../utils/ssr'
  */
 export default {
     name: 'OUpload',
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {

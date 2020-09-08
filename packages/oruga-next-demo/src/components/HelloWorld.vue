@@ -1,7 +1,9 @@
 <template>
   <o-collapse :open="true">
-    <template #trigger><a>click</a></template>
-    <o-input />
+    <template v-slot:trigger="props">
+      <a>{{ props ? 'close' : 'open' }}</a>
+      </template>
+    <div>Hello</div>
   </o-collapse>
 </template>
 

@@ -1,8 +1,8 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
-import { createElement, getScopedSlot } from '../../utils/vue-utils'
 
 /**
  * An easy way to toggle what you want
@@ -11,7 +11,7 @@ import { createElement, getScopedSlot } from '../../utils/vue-utils'
  */
 export default {
     name: 'OCollapse',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     props: {
         /**
          * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
@@ -74,25 +74,24 @@ export default {
             this.$emit(this.isOpen ? 'open' : 'close')
         }
     },
-    render(h) {
-        const trigger = createElement(h, 'div', {
+    render() {
+        if (!this.vueReady) return
+        const triggerSlot = this.getScopedSlot('trigger')
+        const trigger = this.$createElement('div', {
             staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
             on: { click: this.toggle }
-        }, getScopedSlot(this, 'trigger')
-            ? [getScopedSlot(this, 'trigger')({ open: this.isOpen })]
-            : [this.$slots.trigger]
-        )
-        const content = createElement(h, 'transition', { props: { name: this.animation } }, [
-            createElement(h, 'div', {
+        }, triggerSlot ? [triggerSlot({ open: this.isOpen })] : [this.$slots.trigger()] )
+        const content = this.$createElement('transition', { props: { name: this.animation } }, [
+            this.$createElement('div', {
                 staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
                     value: this.isOpen
                 }]
-            }, this.$slots.default)
+            }, this.$slots.default())
         ])
-        return createElement(h, 'div',
+        return this.$createElement('div',
             { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }

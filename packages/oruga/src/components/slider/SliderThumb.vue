@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="vueReady"
         :class="$slider.thumbWrapperClasses(dragging)"
         :style="wrapperStyle">
         <o-tooltip
@@ -28,11 +29,14 @@
 <script>
 import Tooltip from '../tooltip/Tooltip'
 
+import VueComponentMixin from '../../utils/VueComponentMixin'
+
 export default {
     name: 'OSliderThumb',
     components: {
         [Tooltip.name]: Tooltip
     },
+    mixins: [VueComponentMixin],
     inheritAttrs: false,
     inject: {
         $slider: { name: '$slider', default: false }

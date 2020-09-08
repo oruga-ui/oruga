@@ -1,8 +1,9 @@
 <script>
-import { createElement } from '../../utils/vue-utils'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 export default {
     name: 'OFieldBody',
+    mixins: [VueComponentMixin],
     inject: {
         $field: { name: '$field', default: false }
     },
@@ -11,10 +12,10 @@ export default {
             return this.$field
         }
     },
-    render(h) {
+    render() {
+        if (!this.vueReady) return
         let first = true
-        return createElement(
-            h,
+        return this.$createElement(
             'div', 
             { attrs: { 'class': this.parent.contentHorizontalClasses } }, 
             this.$slots.default.map((element) => {
@@ -27,8 +28,7 @@ export default {
                     message = this.parent.newMessage
                     first = false
                 }
-                return createElement(
-                    h,
+                return this.$createElement(
                     this.parent.rootClass,
                     { attrs: { variant: this.parent.newVariant, message } }, [element])
             })

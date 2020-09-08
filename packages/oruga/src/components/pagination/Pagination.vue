@@ -124,9 +124,8 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
-import { getScopedSlot } from '../../utils/vue-utils'
-
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
@@ -139,7 +138,7 @@ export default {
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     provide() {
         return {
             $pagination: this
@@ -349,13 +348,13 @@ export default {
         },
 
         hasDefaultSlot() {
-            return !!getScopedSlot(this, 'default')
+            return !!this.getScopedSlot('default')
         },
         hasPreviousSlot() {
-            return !!getScopedSlot(this, 'previous')
+            return !!this.getScopedSlot('previous')
         },
         hasNextSlot() {
-            return !!getScopedSlot(this, 'next')
+            return !!this.getScopedSlot('next')
         }
     },
     watch: {

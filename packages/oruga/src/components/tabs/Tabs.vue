@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <nav :class="navClasses">
             <ul>
                 <li
@@ -33,7 +33,8 @@
 
 <script>
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin.js'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -46,7 +47,7 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OTabs',
-    mixins: [BaseComponentMixin, TabbedMixin('tab')],
+    mixins: [VueComponentMixin, BaseComponentMixin, TabbedMixin('tab')],
     props: {
         /**
          * Tab type

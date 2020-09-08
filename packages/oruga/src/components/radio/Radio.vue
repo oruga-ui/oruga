@@ -1,5 +1,6 @@
 <template>
     <label
+        v-if="vueReady"
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
@@ -22,6 +23,7 @@
 <script>
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Select an option from a set
@@ -31,7 +33,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  */
 export default {
     name: 'ORadio',
-    mixins: [BaseComponentMixin, CheckRadioMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, CheckRadioMixin],
     props: {
         rootClass: String,
         disabledClass: String,

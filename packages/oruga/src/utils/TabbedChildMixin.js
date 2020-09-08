@@ -1,8 +1,8 @@
 import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
-import { createElement } from './vue-utils'
+import VueComponentMixin from './VueComponentMixin'
 
 export default (parentCmp) => ({
-    mixins: [InjectedChildMixin(parentCmp, Sorted)],
+    mixins: [VueComponentMixin, InjectedChildMixin(parentCmp, Sorted)],
     props: {
         /**
          * Item label
@@ -70,13 +70,13 @@ export default (parentCmp) => ({
                 : this.parent.vertical ? 'slide-up' : 'slide-prev'
         }
     },
-    render(h) {
+    render() {
+        if (!this.vueReady) return
         // if destroy apply v-if
         if (this.parent.destroyOnHide) {
             if (!this.isActive || !this.visible) return
         }
-        const vnode = createElement(
-            h,
+        const vnode = this.$createElement(
             'div',
             {
             directives: [{
@@ -89,8 +89,7 @@ export default (parentCmp) => ({
         )
         // check animated prop
         if (this.parent.animated) {
-            return createElement(
-                h,
+            return this.$createElement(
                 'transition',
                 {
                     props: {

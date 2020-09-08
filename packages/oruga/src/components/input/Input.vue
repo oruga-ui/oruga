@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
             ref="input"
@@ -56,6 +56,7 @@ import Icon from '../icon/Icon'
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -69,7 +70,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {

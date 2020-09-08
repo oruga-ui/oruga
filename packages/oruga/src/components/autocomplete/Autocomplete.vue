@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <o-input
             v-model="newValue"
             ref="input"
@@ -85,10 +85,10 @@
 import Input from '../input/Input'
 
 import config from '../../utils/config'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
-import { getScopedSlot } from '../../utils/vue-utils'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -101,7 +101,7 @@ export default {
     components: {
         [Input.name]: Input
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -293,14 +293,14 @@ export default {
          * Check if exists group slot
          */
         hasGroupSlot() {
-            return !!getScopedSlot(this, 'group')
+            return !!this.getScopedSlot(this, 'group')
         },
 
         /**
          * Check if exists default slot
          */
         hasDefaultSlot() {
-            return !!getScopedSlot(this, 'default')
+            return !!this.getScopedSlot(this, 'default')
         },
 
         /**

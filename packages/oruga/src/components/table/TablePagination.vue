@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass">
+    <div v-if="vueReady" :class="rootClass">
         <div>
             <slot />
         </div>
@@ -24,8 +24,11 @@
 </template>
 
 <script>
+import VueComponentMixin from '../../utils/VueComponentMixin'
+
 export default {
     name: 'OTablePagination',
+    mixins: [VueComponentMixin],
     props: {
         paginated: Boolean,
         total: [Number, String],

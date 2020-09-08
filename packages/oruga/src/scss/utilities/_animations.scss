@@ -91,6 +91,7 @@
     transition: opacity $speed-slow $easing;
 }
 .fade-enter,
+.fade-enter-from
 .fade-leave-to {
     opacity: 0;
 }
@@ -105,6 +106,7 @@
     }
 }
 .zoom-in-enter,
+.zoom-in-enter-from,
 .zoom-in-leave-active {
     opacity: 0;
     .animation-content,
@@ -124,6 +126,7 @@
     }
 }
 .zoom-out-enter,
+.zoom-out-enter-from,
 .zoom-out-leave-active {
     opacity: 0;
     .animation-content,
@@ -139,12 +142,15 @@
 .slide-prev-leave-active {
     transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
-.slide-prev-leave-to, .slide-next-enter {
+.slide-prev-leave-to,
+.slide-next-enter {
     transform: translate3d(-100%, 0, 0);
     position: absolute;
     width: 100%;
 }
-.slide-prev-enter, .slide-next-leave-to {
+.slide-prev-enter,
+.slide-prev-enter-from,
+.slide-next-leave-to {
     transform: translate3d(100%, 0, 0);
     position: absolute;
     width: 100%;
@@ -156,12 +162,15 @@
 .slide-up-leave-active {
     transition: transform $speed-slower cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
-.slide-up-leave-to, .slide-down-enter {
+.slide-up-leave-to,
+.slide-down-enter {
     transform: translate3d(0, -100%, 0);
     position: absolute;
     height: 100%;
 }
-.slide-up-enter, .slide-down-leave-to {
+.slide-up-enter,
+.slide-up-enter-from,
+.slide-down-leave-to {
     transform: translate3d(0, 100%, 0);
     position: absolute;
     height: 100%;

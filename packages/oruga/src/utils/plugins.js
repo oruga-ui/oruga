@@ -1,25 +1,27 @@
-import { isVue2 } from "./vue-utils"
+import {
+    use as vueUse,
+    component as vueComponent,
+    setGlobalProperty,
+    getGlobalProperty
+} from "./vue-utils"
 
 export const use = (plugin) => {
     if (typeof window !== 'undefined' && window.Vue) {
-        window.Vue.use(plugin)
+        vueUse(window.Vue, plugin)
     }
 }
 
 export const registerPlugin = (vm, plugin) => {
-    vm.use(plugin)
+    vueUse(vm, plugin)
 }
 
 export const registerComponent = (vm, component) => {
-    vm.component(component.name, component)
+    vueComponent(vm, component)
 }
 
 export const registerComponentProgrammatic = (vm, property, component) => {
-    if (isVue2(vm)) {
-        if (!vm.prototype.$oruga) vm.prototype.$oruga = {}
-        vm.prototype.$oruga[property] = component
-    } else {
-        if (!vm.config.globalProperties.$oruga) vm.config.globalProperties.$oruga = {}
-        vm.config.globalProperties[property] = component
-    }
+    let oruga = getGlobalProperty(vm, '$oruga')
+    if (!oruga) oruga = {}
+    oruga[property] = component
+    setGlobalProperty(vm, '$oruga', oruga)
 }

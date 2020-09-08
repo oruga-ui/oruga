@@ -1,5 +1,6 @@
 <template>
     <label
+        v-if="vueReady"
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
@@ -25,6 +26,7 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Select a single or grouped options
@@ -34,7 +36,7 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
  */
 export default {
     name: 'OCheckbox',
-    mixins: [BaseComponentMixin, CheckRadioMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, CheckRadioMixin],
     props: {
         /**
          * Same as native indeterminate

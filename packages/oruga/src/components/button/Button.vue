@@ -1,5 +1,6 @@
 <template>
     <component
+        v-if="vueReady"
         :is="computedTag"
         v-bind="$attrs"
         :type="computedNativeType"
@@ -32,6 +33,7 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -45,7 +47,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     inheritAttrs: false,
     props: {
         /**

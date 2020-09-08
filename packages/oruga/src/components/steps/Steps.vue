@@ -1,5 +1,5 @@
 <template>
-    <div :class="wrapperClasses">
+    <div v-if="vueReady" :class="wrapperClasses">
         <nav :class="mainClasses">
             <ul :class="stepItemsClasses">
                 <li
@@ -62,7 +62,8 @@ import Button from '../button/Button'
 import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import TabbedMixin from '../../utils/TabbedMixin.js'
+import VueComponentMixin from '../../utils/VueComponentMixin'
+import TabbedMixin from '../../utils/TabbedMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -79,7 +80,7 @@ export default {
         [Button.name]: Button,
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, TabbedMixin('step')],
+    mixins: [VueComponentMixin, BaseComponentMixin, TabbedMixin('step')],
     props: {
         /**
          * Icon pack to use for the navigation

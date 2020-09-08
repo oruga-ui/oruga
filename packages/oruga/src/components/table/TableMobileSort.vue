@@ -1,5 +1,5 @@
 <template>
-    <div :class="$table.mobileSortClasses">
+    <div v-if="vueReady" :class="$table.mobileSortClasses">
         <o-field>
             <o-select
                 v-model="sortMultipleSelect"
@@ -87,6 +87,8 @@ import Select from '../select/Select'
 import Icon from '../icon/Icon'
 import Field from '../field/Field'
 
+import VueComponentMixin from '../../utils/VueComponentMixin'
+
 export default {
     name: 'OTableMobileSort',
     components: {
@@ -95,6 +97,7 @@ export default {
         [Icon.name]: Icon,
         [Field.name]: Field
     },
+    mixins: [VueComponentMixin],
     inject: {
         $table: { name: '$table', default: false }
     },

@@ -1,5 +1,6 @@
 <template>
     <label
+        v-if="vueReady"
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
@@ -27,6 +28,7 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Switch between two opposing states
@@ -36,7 +38,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  */
 export default {
     name: 'OSwitch',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

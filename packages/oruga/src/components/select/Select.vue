@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <select
             :class="selectClasses"
             v-model="computedValue"
@@ -46,6 +46,7 @@ import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -60,7 +61,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {

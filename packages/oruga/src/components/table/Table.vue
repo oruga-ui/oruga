@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
 
         <slot />
 
@@ -308,11 +308,6 @@
 </template>
 
 <script>
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
-import config from '../../utils/config'
-import { VueInstance } from '../../utils/config'
-
 import Button from '../button/Button'
 import Checkbox from '../checkbox/Checkbox'
 import Icon from '../icon/Icon'
@@ -323,7 +318,12 @@ import SlotComponent from '../../utils/SlotComponent'
 import TableMobileSort from './TableMobileSort'
 import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
-import { createElement, setScopedSlot } from '../../utils/vue-utils'
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
+import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
+import config from '../../utils/config'
+import { VueInstance } from '../../utils/config'
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -345,7 +345,7 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -819,10 +819,9 @@ export default {
                     const component = new TableColumnComponent(
                         { parent: this, propsData: column }
                     )
-                    setScopedSlot(component, 'default',
+                    component.setScopedSlot('default',
                         (props) => {
-                            const vnode = createElement(
-                                component.$createElement, 
+                            const vnode = component.$createElement(
                                 'span', 
                                 { domProps: { innerHTML: getValueByPath(props.row, column.field) } }
                             )

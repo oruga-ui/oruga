@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="vueReady"
         :class="rootClasses"
         :style="tickStyle">
         <span v-if="$slots.default" :class="tickLabelClasses">
@@ -10,13 +11,14 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * @displayName SliderTick
  */
 export default {
     name: 'OSliderTick',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     inject: {
         $slider: { name: '$slider', default: false }
     },

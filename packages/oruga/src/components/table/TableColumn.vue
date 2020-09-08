@@ -1,9 +1,10 @@
 <script>
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
-import { getScopedSlot } from '../../utils/vue-utils'
 
 export default {
     name: 'OTableColumn',
+    mixins: [VueComponentMixin],
     inject: {
         $table: { name: '$table', default: false }
     },
@@ -40,16 +41,16 @@ export default {
             }
         },
         hasDefaultSlot() {
-            return !!getScopedSlot(this, 'default')
+            return !!this.getScopedSlot('default')
         },
         hasSearchableSlot() {
-            return !!getScopedSlot(this, 'searchable')
+            return !!this.getScopedSlot('searchable')
         },
         hasHeaderSlot() {
-            return !!getScopedSlot(this, 'header')
+            return !!this.getScopedSlot('header')
         },
         hasSubheadingSlot() {
-            return !!getScopedSlot(this, 'subheading')
+            return !!this.getScopedSlot('subheading')
         },
         /**
          * Return if column header is un-selectable
@@ -67,7 +68,7 @@ export default {
     },
     render() {
         // renderless
-        return null
+        return
     }
 }
 </script>

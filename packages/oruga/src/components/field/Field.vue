@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses()">
+    <div v-if="vueReady" :class="rootClasses()">
         <div
             v-if="horizontal"
             :class="labelHorizontalClasses">
@@ -49,6 +49,7 @@
 import FieldBody from './FieldBody'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -61,7 +62,7 @@ export default {
     components: {
         [FieldBody.name]: FieldBody
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin, BaseComponentMixin],
     provide() {
         return {
             $field: this
