@@ -36,25 +36,25 @@ export const createElement = (h, tag, data, children) => {
         return h(tag, data, children)
     } else {
         import('vue').then(exports => {
+            if (!data) return exports.h(tag, data, children)
             let on = {}
-            if (element.on) {
-                Object.keys(element.on).forEach(k => {
-                    // remove 'on' prefix and fix to lowercase the first char
-                    const event = k.substring(2)
-                    event[0] = event[0].toLowerCase()
-                    on[event] = element.on[k]
+            if (data.on) {
+                Object.keys(data.on).forEach(k => {
+                    // add 'on' prefix and capitalize
+                    const event = `on${k.substring(0, 1)}${k.substring(1)}`
+                    on[event] = data.on[k]
                 }) 
             } 
             const newData = {
-                staticClass: element.staticClass,
-                class: element.class,
-                style: element.style,
-                props: element.props,
-                key: element.key,
-                ref: element.ref,
-                directives: element.directives,
-                ...(element.attrs || {}),
-                ...(element.domProps || {}),
+                staticClass: data.staticClass,
+                class: data.class,
+                style: data.style,
+                props: data.props,
+                key: data.key,
+                ref: data.ref,
+                directives: data.directives,
+                ...(data.attrs || {}),
+                ...(data.domProps || {}),
                 ...(on || {})
             }
             exports.h(tag, newData, children)
