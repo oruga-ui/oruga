@@ -293,35 +293,35 @@ export default {
          * Check if exists group slot
          */
         hasGroupSlot() {
-            return !!this.getScopedSlot(this, 'group')
+            return this.existsSlot('group', true)
         },
 
         /**
          * Check if exists default slot
          */
         hasDefaultSlot() {
-            return !!this.getScopedSlot(this, 'default')
+            return this.existsSlot('default', true)
         },
 
         /**
          * Check if exists "empty" slot
          */
         hasEmptySlot() {
-            return !!this.$slots.empty
+            return this.existsSlot('empty')
         },
 
         /**
          * Check if exists "header" slot
          */
         hasHeaderSlot() {
-            return !!this.$slots.header
+            return this.existsSlot('header')
         },
 
         /**
          * Check if exists "footer" slot
          */
         hasFooterSlot() {
-            return !!this.$slots.footer
+            return this.existsSlot('footer')
         },
 
         /**

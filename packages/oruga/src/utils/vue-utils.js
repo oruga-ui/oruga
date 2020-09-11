@@ -25,8 +25,18 @@ export const getGlobalProperty = (vm, property) => {
     return isVue2() ? vm.prototype[property] : vm.config.globalProperties[property]
 }
 
-export const getScopedSlot = (cmp, name) => {
-    return isVue2() ? cmp.$scopedSlots[name] : cmp.$slots[name]
+export const existsSlot = (cmp, name, scoped = false) => {
+    if (isVue2()) {
+        return scoped ? !!cmp.$scopedSlots[name] : !!cmp.$slots[name]
+    } 
+    return cmp.$slots[name]
+}
+
+export const getSlotInstance = (cmp, name, scoped = false, props = undefined) => {
+    if (isVue2()) {
+        return scoped ? cmp.$scopedSlots[name](props) : cmp.$slots[name]
+    } 
+    return scoped ? cmp.$slots[name](props) : cmp.$slots[name]()
 }
 
 export const setScopedSlot = (cmp, name, data) => {
@@ -46,7 +56,7 @@ export const createElement = (vue, tag, data, children) => {
         const h = vue
         return h(tag, data, children)
     } else {
-        const { h, withDirectives, resolveDirective, resolveComponent, vShow, Transition } = vue
+        const { h, withDirectives, resolveDirective, vShow, Transition } = vue
         if (!data) return h(tag, data, children)
         let events = {}
         if (data.on) {

@@ -1,5 +1,5 @@
 import { isVueComponent } from './helpers'
-import { getScopedSlot } from './vue-utils'
+import { getSlotInstance } from './vue-utils'
 
 export default {
     name: 'OSlotComponent',
@@ -44,9 +44,8 @@ export default {
     },
     render(createElement) {
         if (isVueComponent(this.component)) {
-            return createElement(this.tag, {},
-                this.scoped ? getScopedSlot(this.component, this.name)(this.props)
-                    : this.component.$slots[this.name])
+            const slot = getSlotInstance(this.component, this.name, this.scoped, this.props)
+            return createElement(this.tag, {}, slot)
         }
     }
 }

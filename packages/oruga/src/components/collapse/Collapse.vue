@@ -76,11 +76,11 @@ export default {
     },
     render() {
         if (!this.vueReady) return
-        const triggerSlot = this.getScopedSlot('trigger')
         const trigger = this.$createElement('div', {
             staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
             on: { click: this.toggle }
-        }, triggerSlot ? [triggerSlot({ open: this.isOpen })] : [this.$slots.trigger()] )
+        }, this.existsSlot('trigger', true) ?
+            [ this.getSlotInstance('trigger', true, { open: this.isOpen }) ] : [ this.getSlotInstance('trigger') ] )
         const content = this.$createElement('transition', { props: { name: this.animation } }, [
             this.$createElement('div', {
                 staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
@@ -89,7 +89,7 @@ export default {
                     name: 'show',
                     value: this.isOpen
                 }]
-            }, this.$slots.default())
+            }, this.getSlotInstance('default') )
         ])
         return this.$createElement('div',
             { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },

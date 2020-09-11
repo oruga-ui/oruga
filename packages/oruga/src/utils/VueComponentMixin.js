@@ -1,4 +1,4 @@
-import { isVue2, createElement, getScopedSlot, setScopedSlot } from './vue-utils'
+import { isVue2, createElement, existsSlot, setScopedSlot, getSlotInstance } from './vue-utils'
 
 export default {
     data() {
@@ -7,8 +7,11 @@ export default {
         }
     },
     methods: {
-        getScopedSlot(name) {
-            getScopedSlot(this, name)
+        existsSlot(name, scoped) {
+            return existsSlot(this, name, scoped)
+        },
+        getSlotInstance(name, scoped, props) {
+            return getSlotInstance(this, name, scoped, props)
         },
         setScopedSlot(name, value) {
             setScopedSlot(this, name, value)

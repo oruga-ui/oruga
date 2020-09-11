@@ -348,13 +348,13 @@ export default {
         },
 
         hasDefaultSlot() {
-            return !!this.getScopedSlot('default')
+            return this.existsSlot('default', true)
         },
         hasPreviousSlot() {
-            return !!this.getScopedSlot('previous')
+            return this.existsSlot('previous', true)
         },
         hasNextSlot() {
-            return !!this.getScopedSlot('next')
+            return this.existsSlot('next', true)
         }
     },
     watch: {

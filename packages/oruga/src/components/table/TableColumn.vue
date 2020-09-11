@@ -41,16 +41,16 @@ export default {
             }
         },
         hasDefaultSlot() {
-            return !!this.getScopedSlot('default')
+            return this.existsSlot('default', true)
         },
         hasSearchableSlot() {
-            return !!this.getScopedSlot('searchable')
+            return this.existsSlot('searchable', true)
         },
         hasHeaderSlot() {
-            return !!this.getScopedSlot('header')
+            return this.existsSlot('header', true)
         },
         hasSubheadingSlot() {
-            return !!this.getScopedSlot('subheading')
+            return this.existsSlot('subheading', true)
         },
         /**
          * Return if column header is un-selectable
