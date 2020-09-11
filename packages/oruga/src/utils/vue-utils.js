@@ -2,7 +2,7 @@ import { VueInstance } from './config'
 
 export const isVue2 = (instance) => {
     const vm = instance || VueInstance
-    return vm && vm.version.indexOf('2') >= 0 
+    return vm && vm.version.indexOf('2.') == 0
 }
 
 export const use = (vm, plugin) => {
