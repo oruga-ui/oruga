@@ -2,7 +2,7 @@ import { VueInstance } from './config'
 
 export const isVue2 = (instance) => {
     const vm = instance || VueInstance
-    return vm.version.indexOf('2') >= 0 
+    return vm && vm.version.indexOf('2') >= 0 
 }
 
 export const use = (vm, plugin) => {
@@ -46,7 +46,7 @@ export const createElement = (vue, tag, data, children) => {
         const h = vue
         return h(tag, data, children)
     } else {
-        const { h, withDirectives } = vue
+        const { h, withDirectives, resolveDirective, resolveComponent, vShow, Transition } = vue
         if (!data) return h(tag, data, children)
         let events = {}
         if (data.on) {
@@ -57,8 +57,7 @@ export const createElement = (vue, tag, data, children) => {
             })
         }
         const newData = {
-            staticClass: data.staticClass,
-            class: data.class,
+            class: [...(data.class || []), ...(data.staticClass || [])],
             style: data.style,
             props: data.props,
             key: data.key,
@@ -67,10 +66,11 @@ export const createElement = (vue, tag, data, children) => {
             ...(data.domProps || {}),
             ...(events || {})
         }
-        const vnode = h(tag, newData, children)
+        const vnode = h(tag === 'transition' ? Transition : tag, newData, children)
         if (data.directives) {
-            console.log([...data.directives.map(d => [d.name, d.value])])
-            return withDirectives(vnode, [...data.directives.map(d => [d.name, d.value])])
+            return withDirectives(vnode, [...data.directives.map(d => 
+                [ d.name === 'show' ? vShow : resolveDirective(d.name), d.value])]
+            )
         }
         return vnode
     }
