@@ -1,4 +1,4 @@
-import { isVue2, createElement, existsSlot, setScopedSlot, getSlotInstance } from './vue-utils'
+import { isVue2, createElement, existsSlot, setScopedSlot, getSlotInstance, getListeners } from './vue-utils'
 
 export default {
     data() {
@@ -8,7 +8,7 @@ export default {
     },
     computed: {
         listeners() {
-            return isVue2() ? this.$listeners : this.$attrs
+            return getListeners(this)
         }
     },
     methods: {
