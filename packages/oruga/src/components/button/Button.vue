@@ -5,7 +5,7 @@
         v-bind="$attrs"
         :type="computedNativeType"
         :class="rootClasses"
-        v-on="$listeners"
+        v-on="listeners"
     >
         <o-icon
             v-if="iconLeft"

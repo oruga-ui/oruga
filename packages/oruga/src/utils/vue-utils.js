@@ -67,11 +67,11 @@ export const createElement = (vue, tag, data, children) => {
             })
         }
         const newData = {
-            class: [...(data.class || []), ...(data.staticClass || [])],
+            class: [...(data.class || []), data.staticClass],
             style: data.style,
-            props: data.props,
             key: data.key,
             ref: data.ref,
+            ...(data.props || {}),
             ...(data.attrs || {}),
             ...(data.domProps || {}),
             ...(events || {})

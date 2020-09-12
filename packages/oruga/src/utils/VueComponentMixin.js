@@ -6,6 +6,11 @@ export default {
             vueReady: false
         }
     },
+    computed: {
+        listeners() {
+            return isVue2() ? this.$listeners : this.$attrs
+        }
+    },
     methods: {
         existsSlot(name, scoped) {
             return existsSlot(this, name, scoped)
