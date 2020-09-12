@@ -25,6 +25,10 @@ export const getGlobalProperty = (vm, property) => {
     return isVue2() ? vm.prototype[property] : vm.config.globalProperties[property]
 }
 
+export const getListeners = (cmp) => {
+    return isVue2() ? cmp.$listeners : cmp.$attrs
+}
+
 export const existsSlot = (cmp, name, scoped = false) => {
     if (isVue2()) {
         return scoped ? !!cmp.$scopedSlots[name] : !!cmp.$slots[name]
