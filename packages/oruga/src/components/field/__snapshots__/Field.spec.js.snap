@@ -1,11 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OField render correctly 1`] = `
-<div class="o-field">
-    <!---->
-    <div class="o-field-horizontal-content">
-        <o-field-stub class=""></o-field-stub>
-    </div>
-    <!---->
-</div>
-`;
+exports[`OField render correctly 1`] = `""`;

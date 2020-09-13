@@ -9,6 +9,7 @@ export default (cmp) => ({
         [Icon.name]: Icon,
         [SlotComponent.name]: SlotComponent
     },
+    emits: ['update:modelValue'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

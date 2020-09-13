@@ -34,6 +34,7 @@ export default {
         [Icon.name]: Icon
     },
     mixins: [VueComponentMixin, BaseComponentMixin],
+    emits: ['update:active', 'close', 'update:full-page'],
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,

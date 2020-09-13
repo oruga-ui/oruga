@@ -73,6 +73,10 @@ function unbind(el) {
 
 const directive = {
     bind,
+    // Vue 3
+    beforeMount: bind,
+    beforeUpdate: updated,
+    beforeDestroy: unbind,
     update,
     unbind,
     instances

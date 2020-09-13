@@ -18,7 +18,7 @@ export default {
         return this.$createElement(
             'div', 
             { attrs: { 'class': this.parent.contentHorizontalClasses } }, 
-            this.$slots.default.map((element) => {
+            this.getSlotInstance('default').map((element) => {
                 // skip returns and comments
                 if (!element.tag) {
                     return element

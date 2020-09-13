@@ -62,7 +62,7 @@ export const createElement = (vue, tag, data, children) => {
     } else {
         const { h, withDirectives, resolveDirective, vShow, Transition } = vue
         if (!data) return h(tag, data, children)
-        let events = {}
+        const events = {}
         if (data.on) {
             Object.keys(data.on).map(k => {
                 // add 'on' prefix and capitalize

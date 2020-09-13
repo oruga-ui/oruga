@@ -7,7 +7,7 @@
                 v-if="hasLabel"
                 :for="labelFor"
                 :class="labelClasses">
-                <slot v-if="$slots.label" name="label"/>
+                <slot v-if="hasLabelSlot" name="label"/>
                 <template v-else>{{ label }}</template>
             </label>
         </div>
@@ -16,7 +16,7 @@
                 v-if="hasLabel"
                 :for="labelFor"
                 :class="labelClasses">
-                <slot v-if="$slots.label" name="label"/>
+                <slot v-if="hasLabelSlot" name="label"/>
                 <template v-else>{{ label }}</template>
             </label>
         </template>
@@ -39,7 +39,7 @@
             v-if="hasMessage && !horizontal"
             :class="messageClasses"
         >
-            <slot v-if="$slots.message" name="message"/>
+            <slot v-if="hasMessageSlot" name="message"/>
             <template v-else>{{ message }}</template>
         </p>
     </div>
@@ -156,11 +156,20 @@ export default {
         parent() {
             return this.$field
         },
+        hasDefaultSlot() {
+            return this.existsSlot('default')
+        },
+        hasLabelSlot() {
+            return this.existsSlot('label')
+        },
+        hasMessageSlot() {
+            return this.existsSlot('message')
+        },
         hasLabel() {
-            return this.label || this.$slots.label
+            return this.label || this.hasLabelSlot
         },
         hasMessage() {
-            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.$slots.message
+            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.hasMessageSlot
         },
         hasInnerField() {
             return this.grouped || this.groupMultiline || this.hasAddons()
@@ -211,8 +220,8 @@ export default {
         },
         hasAddons() {
             let renderedNode = 0
-            if (this.$slots.default) {
-                renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
+            if (this.hasDefaultSlot) {
+                renderedNode = this.getSlotInstance('default').reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             return (
                 renderedNode > 1 &&

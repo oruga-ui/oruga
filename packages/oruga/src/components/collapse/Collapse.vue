@@ -12,6 +12,7 @@ import { getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OCollapse',
     mixins: [VueComponentMixin, BaseComponentMixin],
+    emits: ['update:open'],
     props: {
         /**
          * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
@@ -71,7 +72,6 @@ export default {
         toggle() {
             this.isOpen = !this.isOpen
             this.$emit('update:open', this.isOpen)
-            this.$emit(this.isOpen ? 'open' : 'close')
         }
     },
     render() {
@@ -79,8 +79,7 @@ export default {
         const trigger = this.$createElement('div', {
             staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
             on: { click: this.toggle }
-        }, this.existsSlot('trigger', true) ?
-            [ this.getSlotInstance('trigger', true, { open: this.isOpen }) ] : [ this.getSlotInstance('trigger') ] )
+        }, this.existsSlot('trigger', true) ? this.getSlotInstance('trigger', true, { open: this.isOpen }) : this.getSlotInstance('trigger') )
         const content = this.$createElement('transition', { props: { name: this.animation } }, [
             this.$createElement('div', {
                 staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),

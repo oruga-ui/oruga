@@ -2,7 +2,8 @@
 
 exports[`OSelect render correctly 1`] = `
 <div class="o-control-select o-control-select-icons-right"><select class="o-select o-select-empty">
-        <!----> </select>
+        <!---->
+    </select>
     <!---->
     <o-icon-stub icon="caret-down" both="true" class="o-icon-right"></o-icon-stub>
 </div>

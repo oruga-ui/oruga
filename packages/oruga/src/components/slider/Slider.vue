@@ -79,6 +79,7 @@ export default {
             $slider: this
         }
     },
+    emits: ['update:modelValue', 'change', 'dragging', 'dragstart', 'dragend'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'
@@ -295,7 +296,7 @@ export default {
                 this.isThumbReversed = this.value1 > this.value2
             }
             if (!this.lazy || !this.dragging) {
-                this.emitValue('input')
+                this.emitValue('update:modelValue')
             }
             if (this.dragging) {
                 this.emitValue('dragging')
@@ -338,7 +339,7 @@ export default {
             this.dragging = false
             this.$emit('dragend')
             if (this.lazy) {
-                this.emitValue('input')
+                this.emitValue('update:modelValue')
             }
         },
         emitValue(value) {

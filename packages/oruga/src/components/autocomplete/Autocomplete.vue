@@ -108,6 +108,7 @@ export default {
             $elementRef: 'input'
         }
     },
+    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

@@ -46,6 +46,7 @@ export default {
             $elementRef: 'input'
         }
     },
+    emits: ['update:modelValue'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

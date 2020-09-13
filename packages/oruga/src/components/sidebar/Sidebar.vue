@@ -33,6 +33,7 @@ import { removeElement, getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OSidebar',
     mixins: [VueComponentMixin, BaseComponentMixin],
+    emits: ['update:open', 'close'],
     props: {
         /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
         open: Boolean,

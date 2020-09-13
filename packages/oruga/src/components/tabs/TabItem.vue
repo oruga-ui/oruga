@@ -28,6 +28,9 @@ export default {
                 { [this.computedClass('tabs', 'itemHeaderActiveClass', 'o-tab-active')]: this.isActive },
                 { [this.computedClass('tabs', 'itemHeaderDisabledClass', 'o-tab-disabled')]: this.disabled }
             ]
+        },
+        hasHeaderSlot() {
+            return this.existsSlot('header')
         }
     }
 }

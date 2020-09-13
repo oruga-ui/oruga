@@ -26,10 +26,7 @@ export default (parentCmp) => ({
         /**
          * Item value (it will be used as v-model of wrapper component)
          */
-        value: {
-            type: String,
-            default() { return this._uid.toString() }
-        },
+        value: [String, Number],
         /**
          * Header class of the item
          */
@@ -85,7 +82,7 @@ export default (parentCmp) => ({
                 }],
                 attrs: { 'class': this.elementClasses }
             },
-            this.$slots.default
+            this.getSlotInstance('default')
         )
         // check animated prop
         if (this.parent.animated) {

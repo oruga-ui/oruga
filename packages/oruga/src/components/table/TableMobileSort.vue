@@ -101,6 +101,7 @@ export default {
     inject: {
         $table: { name: '$table', default: false }
     },
+    emits: ['sort', 'removePriority'],
     props: {
         currentSortColumn: Object,
         sortMultipleData: Array,

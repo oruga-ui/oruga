@@ -3,7 +3,7 @@
         v-if="vueReady"
         :class="rootClasses"
         :style="tickStyle">
-        <span v-if="$slots.default" :class="tickLabelClasses">
+        <span v-if="hasDefaultSlot" :class="tickLabelClasses">
             <slot/>
         </span>
     </div>
@@ -54,6 +54,9 @@ export default {
         },
         tickStyle() {
             return { 'left': this.position + '%' }
+        },
+        hasDefaultSlot() {
+            return this.existsSlot('default')
         }
     },
     created() {

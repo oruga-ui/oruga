@@ -1,4 +1,5 @@
 export default {
+  emits: ['update:modelValue'],
   model: {
     prop: 'modelValue',
     event: 'update:modelValue'

@@ -268,7 +268,7 @@
 
                 </tbody>
 
-                <tfoot v-if="$slots.footer !== undefined">
+                <tfoot v-if="hasFooterSlot">
                     <tr :class="footerClasses">
                         <slot name="footer" v-if="hasCustomFooterSlot()"/>
                         <th :colspan="columnCount" v-else>
@@ -352,6 +352,13 @@ export default {
             $table: this
         }
     },
+    emits: [
+        'page-change', 'click', 'dblclick', 'contextmenu',
+        'check', 'check-all', 'update:checkedRows', 
+        'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
+        'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
+        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover'
+    ],
     props: {
         /** Table data */
         data: {
@@ -911,6 +918,10 @@ export default {
         */
         openedDetailed(expandedRows) {
             this.visibleDetailRows = expandedRows
+        },
+
+        hasFooterSlot() {
+            return this.existsSlot('footer')
         }
     },
     methods: {
@@ -1335,9 +1346,10 @@ export default {
         * Check if footer slot has custom content.
         */
         hasCustomFooterSlot() {
-            if (this.$slots.footer.length > 1) return true
+            const footer = this.getSlotInstance('footer')
+            if (footer.length > 1) return true
 
-            const tag = this.$slots.footer[0].tag
+            const tag = footer[0].tag
             if (tag !== 'th' && tag !== 'td') return false
 
             return true
@@ -1347,7 +1359,7 @@ export default {
         * Check if bottom-left slot exists.
         */
         hasBottomLeftSlot() {
-            return typeof this.$slots['bottom-left'] !== 'undefined'
+            return this.existsSlot('bottom-left')
         },
 
         /**
@@ -1455,7 +1467,7 @@ export default {
         },
 
         refreshSlots() {
-            this.defaultSlots = this.$slots.default || []
+            this.defaultSlots = this.getSlotInstance('default') || []
         }
     },
     mounted() {

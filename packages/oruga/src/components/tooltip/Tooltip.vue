@@ -9,7 +9,7 @@
                 ref="content"
                 :class="contentClasses">
                 <template v-if="label">{{ label }}</template>
-                <template v-else-if="$slots.content">
+                <template v-else-if="hasDefaultSlot">
                     <slot name="content" />
                 </template>
             </div>
@@ -140,6 +140,9 @@ export default {
         },
         newAnimation() {
             return this.animated ? this.animation : undefined
+        },
+        hasDefaultSlot() {
+            return this.existsSlot('default')
         }
     },
     watch: {

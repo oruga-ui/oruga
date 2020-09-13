@@ -23,6 +23,7 @@ export default {
     inject: {
         $dropdown: { name: '$dropdown', default: false }
     },
+    emits: ['click'],
     props: {
         /**
          * The value that will be returned on events and v-model

@@ -6,6 +6,7 @@ export default {
     $field: { name: "$field", default: false },
     $elementRef: { name: "$elementRef", default: false },
   },
+  emits: ['blur', 'focus'],
   props: {
     /**
      * Makes input full width when inside a grouped or addon field
@@ -82,7 +83,7 @@ export default {
     statusMessage() {
       if (!this.parentField) return;
 
-      return this.parentField.newMessage || this.parentField.$slots.message;
+      return this.parentField.newMessage || this.parentField.hasMessageSlot;
     },
   },
   methods: {

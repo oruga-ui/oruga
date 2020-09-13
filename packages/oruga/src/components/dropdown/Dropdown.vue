@@ -65,6 +65,7 @@ export default {
             $dropdown: this
         }
     },
+    emits: ['update:modelValue', 'active-change', 'change'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

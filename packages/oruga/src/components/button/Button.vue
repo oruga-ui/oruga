@@ -15,7 +15,7 @@
             :both="iconBoth"
         />
         <span v-if="label">{{ label }}</span>
-        <span v-else-if="$slots.default">
+        <span v-else-if="hasDefaultSlot">
             <slot />
         </span>
         <o-icon
@@ -154,6 +154,9 @@ export default {
                 return
             }
             return this.nativeType
+        },
+        hasDefaultSlot() {
+            return this.existsSlot('default')
         }
     }
 }

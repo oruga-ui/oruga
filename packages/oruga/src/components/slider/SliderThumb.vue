@@ -41,6 +41,7 @@ export default {
     inject: {
         $slider: { name: '$slider', default: false }
     },
+    emits: ['update:modelValue', 'dragstart', 'dragend'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

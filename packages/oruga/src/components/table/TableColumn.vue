@@ -68,7 +68,7 @@ export default {
     },
     render() {
         // renderless
-        return
+        return null
     }
 }
 </script>

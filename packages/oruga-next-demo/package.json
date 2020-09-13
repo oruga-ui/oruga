@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "npm link @oruga-ui/oruga-next && vue-cli-service serve",
+    "serve2": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -12,6 +13,7 @@
     "vue": "3.0.0-rc.10"
   },
   "devDependencies": {
+    "@oruga-ui/oruga-next": "0.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",

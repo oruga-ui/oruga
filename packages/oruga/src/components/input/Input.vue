@@ -79,6 +79,7 @@ export default {
                 : 'input'
         }
     },
+    emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'

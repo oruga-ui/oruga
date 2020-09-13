@@ -39,6 +39,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 export default {
     name: 'OSwitch',
     mixins: [VueComponentMixin, BaseComponentMixin],
+    emits: ['update:modelValue'],
     model: {
         prop: 'modelValue',
         event: 'update:modelValue'
