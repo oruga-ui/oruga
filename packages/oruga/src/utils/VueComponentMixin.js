@@ -22,7 +22,7 @@ export default {
             setScopedSlot(this, name, value)
         }
     },
-    beforeCreate() {
+    created() {
         if (isVue2()) {
             this.vueReady = true
         } else {
