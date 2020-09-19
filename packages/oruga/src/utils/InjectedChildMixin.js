@@ -12,7 +12,6 @@ export default (parentItemName, flags = 0) => {
         created() {
             if (!this.parent) {
                 if (!hasFlag(flags, optional)) {
-                    this.$destroy()
                     throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName)
                 }
             } else if (this.parent._registerItem) {
@@ -23,6 +22,10 @@ export default (parentItemName, flags = 0) => {
             if (this.parent && this.parent._unregisterItem) {
                 this.parent._unregisterItem(this)
             }
+        },
+        // Vue 3
+        beforeUnmount() {
+            this.$options.beforeDestroy.apply(this)
         }
     }
     if (hasFlag(flags, sorted)) {

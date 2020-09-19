@@ -2,7 +2,7 @@ import { VueInstance } from './config'
 
 export const isVue2 = (instance) => {
     const vm = instance || VueInstance
-    return vm && vm.version.indexOf('2.') == 0
+    return vm && vm.version.indexOf('2.') === 0
 }
 
 export const use = (vm, plugin) => {
@@ -60,32 +60,46 @@ export const createElement = (vue, tag, data, children) => {
         const h = vue
         return h(tag, data, children)
     } else {
-        const { h, withDirectives, resolveDirective, vShow, Transition } = vue
-        if (!data) return h(tag, data, children)
-        const events = {}
-        if (data.on) {
-            Object.keys(data.on).map(k => {
-                // add 'on' prefix and capitalize
-                const eventName = `on${k.substring(0, 1)}${k.substring(1)}`
-                return events[eventName] = data.on[k]
-            })
+        const { h, withDirectives } = vue
+        if (!data) {
+            return h(resolveTag(tag, vue), data, wrapChildren(tag, children))
         }
-        const newData = {
-            class: [...(data.class || []), data.staticClass],
-            style: data.style,
-            key: data.key,
-            ref: data.ref,
-            ...(data.props || {}),
-            ...(data.attrs || {}),
-            ...(data.domProps || {}),
-            ...(events || {})
-        }
-        const vnode = h(tag === 'transition' ? Transition : tag, newData, children)
-        if (data.directives) {
-            return withDirectives(vnode, [...data.directives.map(d => 
-                [ d.name === 'show' ? vShow : resolveDirective(d.name), d.value])]
-            )
-        }
-        return vnode
+        const vnode = h(resolveTag(tag, vue), convertData(data), wrapChildren(tag, children))
+        return data.directives ? withDirectives(vnode, resolveDirectives(data.directives, vue)) : vnode
     }
+}
+
+const resolveTag = (tag, vue) => {
+    const { Transition } = vue
+    return tag === 'transition' ? Transition : tag
+}
+
+const resolveDirectives = (directives, vue) => {
+    const { resolveDirective, vShow } = vue
+    return [...directives.map(d => [ d.name === 'show' ? vShow : resolveDirective(d.name), d.value])]
+}
+
+const convertData = (data) => {
+    const events = {}
+    if (data.on) {
+        Object.keys(data.on).map(k => {
+            // add 'on' prefix and capitalize
+            const eventName = `on${k.substring(0, 1)}${k.substring(1)}`
+            return events[eventName] = data.on[k]
+        })
+    }
+    return {
+        class: [...(data.class || []), data.staticClass],
+        style: data.style,
+        key: data.key,
+        ref: data.ref,
+        ...(data.props || {}),
+        ...(data.attrs || {}),
+        ...(data.domProps || {}),
+        ...(events || {})
+    }
+}
+
+const wrapChildren = (tag, children) => {
+    return tag === 'transition' ? () => children : children 
 }

@@ -31,7 +31,7 @@
     "build:scss": "sass ../oruga/src/scss/oruga-static.scss | node ../oruga/build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
     "build:style:watch": "sass ../oruga/src/scss/oruga-vars.scss dist/oruga-vars.css --watch",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
-    "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
+    "build:lib:watch": "concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
   },
   "keywords": [
     "oruga",
@@ -69,7 +69,7 @@
     "rollup": "2.12.0",
     "rollup-copy-plugin": "0.1.0",
     "rollup-plugin-terser": "6.1.0",
-    "rollup-plugin-vue": "6.0.0-beta.10",
+    "rollup-plugin-vue": "github:elevatebart/rollup-plugin-vue#fix-no-template",
     "sass": "1.18.0",
     "sinon": "9.0.3",
     "typescript": "3.8.3",

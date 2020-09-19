@@ -5,9 +5,7 @@ import { toCssDimension } from '../../utils/helpers'
 export default {
     name: 'OTableColumn',
     mixins: [VueComponentMixin],
-    inject: {
-        $table: { name: '$table', default: false }
-    },
+    inject: ['$table'],
     props: {
         label: String,
         customKey: [String, Number],
@@ -61,10 +59,16 @@ export default {
     },
     created() {
         if (!this.$table) {
-            this.$destroy()
             throw new Error('You should wrap oTableColumn on a oTable')
         }
-        this.$table.refreshSlots()
+        this.$table._addColumn(this)
+    },
+    beforeDestroy() {
+        this.$table._removeColumn(this)
+    },
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
     },
     render() {
         // renderless

@@ -164,6 +164,10 @@ export default {
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
         }
+    },
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

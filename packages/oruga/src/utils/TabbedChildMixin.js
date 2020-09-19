@@ -75,11 +75,8 @@ export default (parentCmp) => ({
         }
         const vnode = this.$createElement(
             'div',
-            {
-            directives: [{
-                    name: 'show',
-                    value: this.isActive && this.visible
-                }],
+            { 
+                directives: [{ name: 'show', value: this.isActive && this.visible }],
                 attrs: { 'class': this.elementClasses }
             },
             this.getSlotInstance('default')

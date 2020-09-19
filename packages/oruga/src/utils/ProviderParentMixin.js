@@ -24,10 +24,14 @@ export default (itemName, flags = 0) => {
         }
         mixin.methods = {
             _registerItem(item) {
-                this.childItems.push(item)
+                this.$nextTick(() => {
+                    this.childItems.push(item)
+                })
             },
             _unregisterItem(item) {
-                this.childItems = this.childItems.filter((i) => i !== item)
+                this.$nextTick(() => {
+                    this.childItems = this.childItems.filter((i) => i !== item)
+                })
             }
         }
 

@@ -27,7 +27,6 @@
         <div v-else-if="hasInnerField" :class="contentHorizontalClasses">
             <o-field
                 :addons="false"
-                :type="newType"
                 :class="innerFieldClasses">
                 <slot/>
             </o-field>
@@ -195,9 +194,6 @@ export default {
         */
         newMessage(value) {
             if (this.parent && this.parent.hasInnerField) {
-                if (!this.parent.type) {
-                    this.parent.newType = this.newType
-                }
                 this.parent.newMessage = value
             }
         }

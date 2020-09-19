@@ -451,6 +451,10 @@ export default {
         if (this.appendToBody) {
             removeElement(this.$data.bodyEl)
         }
+    },
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

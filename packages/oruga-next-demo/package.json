@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "npm link @oruga-ui/oruga-next && vue-cli-service serve",
-    "serve2": "vue-cli-service serve",
+    "serve": "concurrently \"npm-link-better --copy ../oruga-next -w\" \"vue-cli-service serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -13,12 +12,12 @@
     "vue": "3.0.0-rc.10"
   },
   "devDependencies": {
-    "@oruga-ui/oruga-next": "0.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "3.0.0-rc.10",
+    "@vue/compiler-sfc": "3.0.0-rc.12",
     "babel-eslint": "^10.1.0",
+    "concurrently": "5.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "vue-loader": "16.0.0-beta.5"

@@ -275,6 +275,10 @@ export default {
         if (this.isFixed) {
             removeElement(this.$el)
         }
+    },
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

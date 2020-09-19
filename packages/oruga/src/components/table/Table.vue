@@ -839,15 +839,14 @@ export default {
                 })
             }
             return this.defaultSlots
-                .filter((vnode) =>
-                    vnode.componentInstance &&
-                    vnode.componentInstance.$options &&
-                    vnode.componentInstance.$options.name === 'OTableColumn')
-                .map((vnode) => vnode.componentInstance)
         },
 
         sortMultipleDataComputed() {
             return this.backendSorting ? this.sortMultipleData : this.sortMultipleDataLocal
+        },
+
+        hasFooterSlot() {
+            return this.existsSlot('footer')
         }
     },
     watch: {
@@ -919,10 +918,6 @@ export default {
         openedDetailed(expandedRows) {
             this.visibleDetailRows = expandedRows
         },
-
-        hasFooterSlot() {
-            return this.existsSlot('footer')
-        }
     },
     methods: {
         thWrapClasses(column) {
@@ -1466,12 +1461,19 @@ export default {
             this.$emit('dragleave', {event, row, index})
         },
 
-        refreshSlots() {
-            this.defaultSlots = this.getSlotInstance('default') || []
+        _addColumn(column) {
+            this.$nextTick(() => {
+                this.defaultSlots.push(column)
+            })
+        },
+
+        _removeColumn(column) {
+            this.$nextTick(() => {
+                this.defaultSlots = this.defaultSlots.filter(d => d !== column)
+            })
         }
     },
     mounted() {
-        this.refreshSlots()
         this.checkPredefinedDetailedRows()
         this.checkSort()
     }

@@ -1,5 +1,5 @@
 import config from '../utils/config'
-import { isVueComponent, getValueByPath } from './helpers'
+import { getValueByPath } from './helpers'
 
 export default {
   inject: {
@@ -112,7 +112,7 @@ export default {
 
     getElement() {
       let el = this.$refs[this.$elementRef];
-      while (isVueComponent(el)) {
+      while (el.$elementRef) {
         el = el.$refs[el.$elementRef];
       }
       return el;

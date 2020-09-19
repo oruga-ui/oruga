@@ -317,6 +317,10 @@ export default {
             document.documentElement.scrollTop = savedScrollTop
             document.body.style.top = null
         }
+    },
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

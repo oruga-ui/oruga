@@ -1,8 +1,9 @@
-import { isVueComponent } from './helpers'
-import { getSlotInstance } from './vue-utils'
+import { getSlotInstance, isVue2 } from './vue-utils'
+import VueComponentMixin from './VueComponentMixin'
 
 export default {
     name: 'OSlotComponent',
+    mixins: [VueComponentMixin],
     props: {
         component: {
             type: Object,
@@ -33,19 +34,22 @@ export default {
         }
     },
     created() {
-        if (isVueComponent(this.component)) {
+        if (isVue2()) {
             this.component.$on(this.event, this.refresh)
         }
     },
     beforeDestroy() {
-        if (isVueComponent(this.component)) {
+        if (isVue2()) {
             this.component.$off(this.event, this.refresh)
         }
     },
-    render(createElement) {
-        if (isVueComponent(this.component)) {
-            const slot = getSlotInstance(this.component, this.name, this.scoped, this.props)
-            return createElement(this.tag, {}, slot)
-        }
+    // Vue 3
+    beforeUnmount() {
+        this.$options.beforeDestroy.apply(this)
+    },
+    render() {
+        if (!this.vueReady) return
+        const slot = getSlotInstance(this.component, this.name, this.scoped, this.props)
+        return this.$createElement(this.tag, {}, slot)
     }
 }
