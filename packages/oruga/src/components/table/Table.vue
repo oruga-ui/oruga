@@ -1,7 +1,9 @@
 <template>
     <div v-if="vueReady" :class="rootClasses">
 
-        <slot />
+        <div ref="slot" style="display:none">
+            <slot />
+        </div>
 
         <o-table-mobile-sort
             v-if="mobileCards && hasSortablenewColumns"
@@ -625,6 +627,7 @@ export default {
             filters: {},
             defaultSlots: [],
             firstTimeSort: true, // Used by first time initSort
+            sequence: 1
         }
     },
     computed: {
@@ -860,8 +863,7 @@ export default {
         data(value) {
             this.newData = value
             if (!this.backendFiltering) {
-                this.newData = value.filter(
-                    (row) => this.isRowFiltered(row))
+                this.newData = value.filter((row) => this.isRowFiltered(row))
             }
             if (!this.backendSorting) {
                 this.sort(this.currentSortColumn, true)
@@ -982,8 +984,7 @@ export default {
             if (this.backendFiltering) {
                 this.$emit('filters-change', value)
             } else {
-                this.newData = this.data.filter(
-                    (row) => this.isRowFiltered(row))
+                this.newData = this.data.filter((row) => this.isRowFiltered(row))
                 if (!this.backendPagination) {
                     this.newDataTotal = this.newData.length
                 }
@@ -1311,13 +1312,6 @@ export default {
                 : index[key]
         },
 
-        checkPredefinedDetailedRows() {
-            const defaultExpandedRowsDefined = this.openedDetailed.length > 0
-            if (defaultExpandedRowsDefined && !this.detailKey.length) {
-                throw new Error('If you set a predefined opened-detailed, you must provide a unique key using the prop "detail-key"')
-            }
-        },
-
         /**
         * Call initSort only first time (For example async data).
         */
@@ -1464,17 +1458,31 @@ export default {
         _addColumn(column) {
             this.$nextTick(() => {
                 this.defaultSlots.push(column)
+                window.requestAnimationFrame(() => {
+                    const div = this.$refs['slot']
+                    if (div && div.children) {
+                        const position = [...div.children].map(c =>
+                            parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
+                        if (position !== this.defaultSlots.length) {
+                            this.defaultSlots.splice(position, 0, column);
+                            this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+                        }
+                    }
+                })
             })
         },
 
         _removeColumn(column) {
             this.$nextTick(() => {
-                this.defaultSlots = this.defaultSlots.filter(d => d !== column)
+                this.defaultSlots = this.defaultSlots.filter(d => d.newKey !== column.newKey)
             })
+        },
+
+        _nextSequence() {
+            return this.sequence++
         }
     },
     mounted() {
-        this.checkPredefinedDetailedRows()
         this.checkSort()
     }
 }

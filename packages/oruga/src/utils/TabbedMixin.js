@@ -59,6 +59,7 @@ export default (cmp) => ({
         }
     },
     mounted() {
+        /*
         if (typeof this.modelValue === 'number') {
             // Backward compatibility: converts the index value to an id
             const value = bound(this.modelValue, 0, this.items.length - 1)
@@ -66,6 +67,7 @@ export default (cmp) => ({
         } else {
             this.activeId = this.value
         }
+        */
     },
     computed: {
         activeItem() {

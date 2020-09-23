@@ -29,7 +29,7 @@ export default {
     },
     data() {
         return {
-            newKey: this.customKey || this.label
+            newKey: this.$table._nextSequence()
         }
     },
     computed: {
@@ -72,7 +72,8 @@ export default {
     },
     render() {
         // renderless
-        return null
+        if (!this.vueReady) return
+        return this.$createElement('span', { domProps: { 'data-id': this.newKey } }, this.label)
     }
 }
 </script>

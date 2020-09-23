@@ -26,11 +26,9 @@ export default {
         if (isVue2()) {
             this.vueReady = true
         } else {
-            import('vue').then(vue => {
-                this.$nextTick = vue['nextTick']
-                this.$createElement = (tag, data, children) => {
-                    return createElement(vue, tag, data, children)
-                }
+            import('vue').then(module => {
+                this.$nextTick = module['nextTick']
+                this.$createElement = (tag, data, children) => createElement(module, tag, data, children)
                 this.vueReady = true
             })
         }
