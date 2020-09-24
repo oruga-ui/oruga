@@ -4,7 +4,7 @@
             <ul>
                 <li
                     v-for="childItem in items"
-                    :key="childItem.value"
+                    :key="childItem.newValue"
                     v-show="childItem.visible"
                     :class="childItem.headerClasses">
                     <o-slot-component

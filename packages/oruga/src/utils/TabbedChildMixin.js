@@ -31,13 +31,13 @@ export default (parentCmp) => ({
          * Header class of the item
          */
         headerClass: {
-            type: [String, Array, Object],
-            default: null
+            type: [String, Array, Object]
         }
     },
     data() {
         return {
-            transitionName: null
+            transitionName: null,
+            newValue: this.value
         }
     },
     computed: {

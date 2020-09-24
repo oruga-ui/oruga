@@ -17,8 +17,7 @@ export default (cmp) => ({
     props: {
         /** @model */
         modelValue: {
-            type: [String, Number],
-            default: undefined
+            type: [String, Number]
         },
         /**
         * Color of the control, optional
@@ -58,22 +57,11 @@ export default (cmp) => ({
             isTransitioning: false
         }
     },
-    mounted() {
-        /*
-        if (typeof this.modelValue === 'number') {
-            // Backward compatibility: converts the index value to an id
-            const value = bound(this.modelValue, 0, this.items.length - 1)
-            this.activeId = this.items[value].value
-        } else {
-            this.activeId = this.value
-        }
-        */
-    },
     computed: {
         activeItem() {
             return this.activeId === undefined ? this.items[0]
                 : (this.activeId === null ? null
-                    : this.childItems.filter((i) => i.value === this.activeId))[0]
+                    : this.childItems.filter((i) => i.newValue === this.activeId))[0]
         },
         items() {
             return this.sortedItems
@@ -87,7 +75,7 @@ export default (cmp) => ({
             if (typeof value === 'number') {
                 // Backward compatibility: converts the index value to an id
                 value = bound(value, 0, this.items.length - 1)
-                this.activeId = this.items[value].value
+                this.activeId = this.items[value].newValue
             } else {
                 this.activeId = value
             }
@@ -97,7 +85,7 @@ export default (cmp) => ({
          */
         activeId(val, oldValue) {
             const oldTab = oldValue !== undefined && oldValue !== null
-                ? this.childItems.filter((i) => i.value === oldValue)[0] : null
+                ? this.childItems.filter((i) => i.newValue === oldValue)[0] : null
 
             if (oldTab && this.activeItem) {
                 oldTab.deactivate(this.activeItem.index)
@@ -105,7 +93,7 @@ export default (cmp) => ({
             }
 
             val = this.activeItem
-                ? (typeof this.modelValue === 'number' ? this.items.indexOf(this.activeItem) : this.activeItem.value)
+                ? (typeof this.modelValue === 'number' ? this.items.indexOf(this.activeItem) : this.activeItem.newValue)
                 : undefined
 
             if (val !== this.value) {
@@ -118,7 +106,16 @@ export default (cmp) => ({
         * Child click listener, emit input event and change active child.
         */
         childClick(child) {
-            this.activeId = child.value
+            this.activeId = child.newValue
+        }
+    },
+    mounted() {
+        if (typeof this.modelValue === 'number') {
+            // Backward compatibility: converts the index value to an id
+            const value = bound(this.modelValue, 0, this.items.length - 1)
+            this.activeId = this.items.length ? this.items[value].newValue : undefined
+        } else {
+            this.activeId = this.modelValue
         }
     }
 })

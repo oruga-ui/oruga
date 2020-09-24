@@ -19,7 +19,8 @@ export default (itemName, flags = 0) => {
     if (hasFlag(flags, items)) {
         mixin.data = function () {
             return {
-                childItems: []
+                childItems: [],
+                sequence: 1
             }
         }
         mixin.methods = {
@@ -32,6 +33,9 @@ export default (itemName, flags = 0) => {
                 this.$nextTick(() => {
                     this.childItems = this.childItems.filter((i) => i !== item)
                 })
+            },
+            _nextSequence() {
+                return this.sequence++
             }
         }
 
@@ -42,6 +46,7 @@ export default (itemName, flags = 0) => {
                  * And mark the items with their index
                  */
                 childItems(items) {
+                    alert('a');
                     if (items.length > 0 && existsSlot(this, 'default', true)) {
                         const tag = items[0].$vnode.tag
                         let index = 0

@@ -8,8 +8,11 @@ export const Optional = optional
 
 export default (parentItemName, flags = 0) => {
     const mixin = {
-        inject: {parent: {from: 'o' + parentItemName, default: false}},
+        inject: {
+            parent: { from: 'o' + parentItemName }
+        },
         created() {
+            this.newValue = this.value === undefined ? this.parent._nextSequence() : this.value
             if (!this.parent) {
                 if (!hasFlag(flags, optional)) {
                     throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName)

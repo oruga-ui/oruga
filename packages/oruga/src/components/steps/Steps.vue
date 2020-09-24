@@ -4,7 +4,7 @@
             <ul :class="stepItemsClasses">
                 <li
                     v-for="childItem in items"
-                    :key="childItem.value"
+                    :key="childItem.newValue"
                     v-show="childItem.visible"
                     :class="childItem.itemClasses"
                 >
@@ -298,7 +298,7 @@ export default {
          */
         prev() {
             if (this.hasPrev) {
-                this.activeId = this.prevItem.value
+                this.activeId = this.prevItem.newValue
             }
         },
 
@@ -307,7 +307,7 @@ export default {
          */
         next() {
             if (this.hasNext) {
-                this.activeId = this.nextItem.value
+                this.activeId = this.nextItem.newValue
             }
         }
     }
