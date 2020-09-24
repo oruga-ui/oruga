@@ -1,4 +1,4 @@
-﻿
+.DS_Store
 node_modules
 packages/docs/.vuepress/dist/
 packages/storybook/.dist/
