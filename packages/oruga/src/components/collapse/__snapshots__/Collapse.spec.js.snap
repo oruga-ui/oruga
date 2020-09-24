@@ -1,3 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OCollapse default render correctly 1`] = `""`;
+exports[`OCollapse default render correctly 1`] = `
+<div class="o-collapse">
+    <div class="o-collapse-trigger"></div>
+    <transition-stub name="fade">
+        <div id="" aria-expanded="true" class="o-collapse-content"></div>
+    </transition-stub>
+</div>
+`;

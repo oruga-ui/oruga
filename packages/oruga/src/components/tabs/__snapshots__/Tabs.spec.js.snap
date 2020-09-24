@@ -3,13 +3,27 @@
 exports[`OTabs render correctly 1`] = `
 <div class="o-tabs-wrapper" value="tab1">
     <nav class="o-tabs">
-        <ul></ul>
+        <ul>
+            <li class="o-tab-active"><button>
+                    <!----> <span></span>
+                </button></li>
+            <li class="" style="display: none;"><button>
+                    <!----> <span></span>
+                </button></li>
+        </ul>
     </nav>
-    <section class="o-tab-content">
-        <!---->
-        <!---->
+    <section class="o-tab-content o-tab-content-transitioning">
+        <div class="o-tab-item v-enter v-enter-active" style=""></div>
+        <div class="o-tab-item" style="display: none;"></div>
     </section>
 </div>
 `;
 
-exports[`OTabs still renders if there is no item 1`] = `""`;
+exports[`OTabs still renders if there is no item 1`] = `
+<div class="o-tabs-wrapper" value="tab1">
+    <nav class="o-tabs">
+        <ul></ul>
+    </nav>
+    <section class="o-tab-content"></section>
+</div>
+`;

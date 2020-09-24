@@ -2,6 +2,7 @@ import { VueInstance } from './config'
 
 export const isVue2 = (instance) => {
     const vm = instance || VueInstance
+    if (process.env.NODE_ENV === 'test') return true
     return vm && vm.version.indexOf('2.') === 0
 }
 
