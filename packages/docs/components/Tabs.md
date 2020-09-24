@@ -245,7 +245,7 @@ title: Tabs
 
 | Prop name                  | Description                                     | Type           | Values                                                                          | Default                                       |
 | -------------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| v-model                    |                                                 | string\|number | -                                                                               | undefined                                     |
+| v-model                    |                                                 | string\|number | -                                                                               |                                               |
 | variant                    | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
 | size                       | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
 | animated                   | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
@@ -294,7 +294,7 @@ title: Tabs
 | iconPack                | Icon pack                                                    | string                | -      |         |
 | visible                 | Show/hide item                                               | boolean               | -      | true    |
 | value                   | Item value (it will be used as v-model of wrapper component) | string\|number        | -      |         |
-| headerClass             | Header class of the item                                     | string\|array\|object | -      | null    |
+| headerClass             | Header class of the item                                     | string\|array\|object | -      |         |
 | disabled                | Item will be disabled                                        | boolean               | -      |         |
 | itemClass               |                                                              | string                | -      |         |
 | itemHeaderActiveClass   |                                                              | string                | -      |         |

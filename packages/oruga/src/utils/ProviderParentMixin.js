@@ -46,7 +46,6 @@ export default (itemName, flags = 0) => {
                  * And mark the items with their index
                  */
                 childItems(items) {
-                    alert('a');
                     if (items.length > 0 && existsSlot(this, 'default', true)) {
                         const tag = items[0].$vnode.tag
                         let index = 0
