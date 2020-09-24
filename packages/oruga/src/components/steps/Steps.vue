@@ -215,7 +215,7 @@ export default {
 
         // Override mixin implementation to always have a value
         activeItem() {
-            return this.childItems.filter((i) => i.value === this.activeId)[0] || this.items[0]
+            return this.childItems.filter((i) => i.newValue === this.activeId)[0] || this.items[0]
         },
 
         /**
