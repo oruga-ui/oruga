@@ -151,7 +151,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                         position: relative;
                         &:hover {
                             @include variable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
-                            @include variable('border-color', '$tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
+                            @include variable('border-color', 'tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
                         }
                     }
                     &:first-child {
