@@ -21,7 +21,7 @@ export default {
     name: 'ODropdownItem',
     mixins: [VueComponentMixin, BaseComponentMixin],
     inject: {
-        $dropdown: { name: '$dropdown', default: false }
+        $dropdown: { name: '$dropdown' }
     },
     emits: ['click'],
     props: {

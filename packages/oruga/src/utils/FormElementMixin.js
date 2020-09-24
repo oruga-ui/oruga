@@ -3,8 +3,8 @@ import { getValueByPath } from './helpers'
 
 export default {
   inject: {
-    $field: { name: "$field" },
-    $elementRef: { name: "$elementRef" },
+    $field: { name: "$field", default: false },
+    $elementRef: { name: "$elementRef", default: false },
   },
   emits: ['blur', 'focus'],
   props: {
@@ -112,7 +112,7 @@ export default {
 
     getElement() {
       let el = this.$refs[this.$elementRef];
-      while (el.$elementRef) {
+      while (el && el.$elementRef) {
         el = el.$refs[el.$elementRef];
       }
       return el;

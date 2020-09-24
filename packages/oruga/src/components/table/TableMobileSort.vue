@@ -98,9 +98,7 @@ export default {
         [Field.name]: Field
     },
     mixins: [VueComponentMixin],
-    inject: {
-        $table: { name: '$table', default: false }
-    },
+    inject: ['$table'],
     emits: ['sort', 'removePriority'],
     props: {
         currentSortColumn: Object,

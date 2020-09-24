@@ -23,7 +23,7 @@ export default {
     name: 'OPaginationButton',
     mixins: [VueComponentMixin],
     inject: {
-        $pagination: { name: '$pagination', default: false }
+        $pagination: { name: '$pagination' }
     },
     props: {
         page: {

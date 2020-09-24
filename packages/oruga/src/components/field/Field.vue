@@ -68,7 +68,7 @@ export default {
         }
     },
     inject: {
-        $field: { name: '$field', default: false }
+        $field: { name: '$field' }
     },
     props: {
         /**

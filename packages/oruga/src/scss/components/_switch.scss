@@ -49,7 +49,6 @@ $switch-width: $switch-width-number * 1em !default;
             align-items: center;
             flex-shrink: 0;
             @include variable('width', 'switch-width', $switch-width);
-            height: #{$switch-width / 2 + $switch-padding};
             @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '+', null, '/ 2', null);
             @include variable('padding', 'switch-padding', $switch-padding);
             @include variable('background', 'switch-background', $switch-background);

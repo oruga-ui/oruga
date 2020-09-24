@@ -20,7 +20,7 @@ export default {
     name: 'OSliderTick',
     mixins: [VueComponentMixin, BaseComponentMixin],
     inject: {
-        $slider: { name: '$slider', default: false }
+        $slider: { name: '$slider' }
     },
     props: {
         /** Value of single tick */

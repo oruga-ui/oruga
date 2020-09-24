@@ -39,7 +39,7 @@ export default {
     mixins: [VueComponentMixin],
     inheritAttrs: false,
     inject: {
-        $slider: { name: '$slider', default: false }
+        $slider: { name: '$slider' }
     },
     emits: ['update:modelValue', 'dragstart', 'dragend'],
     model: {
