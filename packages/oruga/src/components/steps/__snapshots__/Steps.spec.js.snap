@@ -3,26 +3,7 @@
 exports[`OSteps render correctly 1`] = `
 <div class="o-steps-wrapper" value="1">
     <nav class="o-steps o-steps-label-bottom o-steps-animated o-steps-rounded o-steps-mobile-minimalist">
-        <ul class="o-step-items">
-            <li class="o-step-item o-step-item-active"><a class="o-step-link">
-                    <div class="o-step-marker">
-                        <!---->
-                    </div>
-                    <div class="o-step-details"><span class="o-step-title"></span></div>
-                </a></li>
-            <li class="o-step-item" style="display: none;"><a class="o-step-link">
-                    <div class="o-step-marker">
-                        <!---->
-                    </div>
-                    <div class="o-step-details"><span class="o-step-title"></span></div>
-                </a></li>
-            <li class="o-step-item"><a class="o-step-link">
-                    <div class="o-step-marker">
-                        <!---->
-                    </div>
-                    <div class="o-step-details"><span class="o-step-title"></span></div>
-                </a></li>
-        </ul>
+        <ul class="o-step-items"></ul>
     </nav>
     <section class="o-step-content">
         <!---->
