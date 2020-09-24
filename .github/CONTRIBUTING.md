@@ -52,7 +52,13 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 You need [Node.js](http://nodejs.org/) **version >= 6 and <= 12**.
 
-After cloning the repo, run:
+After cloning the repo, install [lerna](https://lerna.js.org/)
+
+```bash
+$ npm install lerna
+```
+
+and run:
 
 ```bash
 $ npm run bootstrap
