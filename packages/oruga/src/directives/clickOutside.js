@@ -75,7 +75,7 @@ const directive = {
     bind,
     // Vue 3
     beforeMount: bind,
-    beforeUpdate: updated,
+    beforeUpdate: update,
     beforeDestroy: unbind,
     update,
     unbind,
