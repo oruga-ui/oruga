@@ -20,7 +20,9 @@
                 @keydown.down.prevent="onLeftKeyDown"
                 @keydown.up.prevent="onRightKeyDown"
                 @keydown.home.prevent="onHomeKeyDown"
-                @keydown.end.prevent="onEndKeyDown"/>
+                @keydown.end.prevent="onEndKeyDown">
+                <span v-if="indicator">{{ value }}</span>
+            </div>
         </o-tooltip>
     </div>
 </template>
@@ -49,6 +51,10 @@ export default {
         tooltip: {
             type: Boolean,
             default: true
+        },
+        indicator: {
+            type: Boolean,
+            default: false
         },
         customFormatter: Function
     },
