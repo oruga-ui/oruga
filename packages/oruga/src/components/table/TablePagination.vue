@@ -28,7 +28,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 
 export default {
     name: 'OTablePagination',
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     props: {
         paginated: Boolean,
         total: [Number, String],

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OSteps render correctly 1`] = `
-<div class="o-steps-wrapper" value="1">
+<div class="o-steps-wrapper">
     <nav class="o-steps o-steps-label-bottom o-steps-animated o-steps-rounded o-steps-mobile-minimalist">
         <ul class="o-step-items">
             <li class="o-step-item o-step-item-active"><a class="o-step-link">

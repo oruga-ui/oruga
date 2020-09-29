@@ -18,7 +18,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'OSliderTick',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     inject: {
         $slider: { name: '$slider' }
     },

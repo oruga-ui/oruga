@@ -347,7 +347,7 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     inheritAttrs: false,
     provide() {
         return {

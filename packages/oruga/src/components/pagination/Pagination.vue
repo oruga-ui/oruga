@@ -138,7 +138,7 @@ export default {
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     provide() {
         return {
             $pagination: this

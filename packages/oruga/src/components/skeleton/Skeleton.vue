@@ -11,7 +11,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'OSkeleton',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     props: {
         /** Show or hide loader	 */
         active: {

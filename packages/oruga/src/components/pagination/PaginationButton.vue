@@ -21,7 +21,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 
 export default {
     name: 'OPaginationButton',
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     inject: {
         $pagination: { name: '$pagination' }
     },

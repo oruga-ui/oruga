@@ -11,7 +11,7 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OCollapse',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     emits: ['update:open'],
     props: {
         /**

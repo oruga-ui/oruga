@@ -2,7 +2,7 @@ import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
 import VueComponentMixin from './VueComponentMixin'
 
 export default (parentCmp) => ({
-    mixins: [VueComponentMixin, InjectedChildMixin(parentCmp, Sorted)],
+    mixins: [VueComponentMixin(), InjectedChildMixin(parentCmp, Sorted)],
     props: {
         /**
          * Item label

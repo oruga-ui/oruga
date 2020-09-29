@@ -47,6 +47,11 @@ import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
 
+const modelValueDef = {
+    type: [String, Number, Boolean, Object, Array],
+    default: null
+}
+
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
  * @displayName Dropdown
@@ -59,23 +64,19 @@ export default {
     directives: {
         trapFocus
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
     provide() {
         return {
             $dropdown: this
         }
     },
     emits: ['update:modelValue', 'active-change', 'change'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: {
-            type: [String, Number, Boolean, Object, Array, Function],
-            default: null
-        },
+        modelValue: modelValueDef,
+        /**
+         * Dropdown disabled
+         */
         disabled: Boolean,
         /**
          * Dropdown content (items) are shown inline, trigger is removed
@@ -297,7 +298,7 @@ export default {
                     this.$emit('change', this.selected)
                 }
             }
-            this.$emit('update:modelValue', this.selected)
+            this.emitModelValue(this.selected)
             if (!this.multiple) {
                 this.isActive = !this.closeOnClick
                 if (this.hoverable && this.closeOnClick) {
@@ -451,10 +452,6 @@ export default {
         if (this.appendToBody) {
             removeElement(this.$data.bodyEl)
         }
-    },
-    // Vue 3
-    beforeUnmount() {
-        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

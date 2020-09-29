@@ -2,23 +2,20 @@ import Icon from '../components/icon/Icon'
 import SlotComponent from '../utils/SlotComponent'
 import { default as ProviderParentMixin, Sorted } from './ProviderParentMixin'
 import { bound } from './helpers'
+import VueComponentMixin from './VueComponentMixin'
+
+const modelValueDef = [String, Number]
 
 export default (cmp) => ({
-    mixins: [ProviderParentMixin(cmp, Sorted)],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), ProviderParentMixin(cmp, Sorted)],
     components: {
         [Icon.name]: Icon,
         [SlotComponent.name]: SlotComponent
     },
     emits: ['update:modelValue'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: {
-            type: [String, Number]
-        },
+        modelValue: modelValueDef,
         /**
         * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
@@ -97,7 +94,7 @@ export default (cmp) => ({
                 : undefined
 
             if (val !== this.value) {
-                this.$emit('update:modelValue', val)
+                this.emitModelValue(val)
             }
         }
     },

@@ -33,7 +33,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     emits: ['update:active', 'close', 'update:full-page'],
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
@@ -164,10 +164,6 @@ export default {
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
         }
-    },
-    // Vue 3
-    beforeUnmount() {
-        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

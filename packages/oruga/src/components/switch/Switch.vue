@@ -30,6 +30,8 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import VueComponentMixin from '../../utils/VueComponentMixin'
 
+const modelValueDef = [String, Number, Boolean]
+
 /**
  * Switch between two opposing states
  * @displayName Switch
@@ -38,17 +40,13 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'OSwitch',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
     emits: ['update:modelValue'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /**
          * @model
          */
-        modelValue: [String, Number, Boolean],
+        modelValue: modelValueDef,
         /**
          * Same as native value
          */
@@ -142,7 +140,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.$emit('update:modelValue', value)
+                this.emitModelValue(value)
             }
         }
     },

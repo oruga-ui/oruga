@@ -8,7 +8,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin.js'
  */
 export default {
     name: 'OTabItem',
-    mixins: [VueComponentMixin, BaseComponentMixin, TabbedChildMixin('tab')],
+    mixins: [VueComponentMixin(), BaseComponentMixin, TabbedChildMixin('tab')],
     props: {
         /** Item will be disabled */
         disabled: Boolean,

@@ -61,7 +61,7 @@ export default {
     components: {
         [FieldBody.name]: FieldBody
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     provide() {
         return {
             $field: this

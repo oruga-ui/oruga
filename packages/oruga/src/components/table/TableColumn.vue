@@ -4,7 +4,7 @@ import { toCssDimension } from '../../utils/helpers'
 
 export default {
     name: 'OTableColumn',
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     inject: ['$table'],
     props: {
         label: String,
@@ -65,10 +65,6 @@ export default {
     },
     beforeDestroy() {
         this.$table._removeColumn(this)
-    },
-    // Vue 3
-    beforeUnmount() {
-        this.$options.beforeDestroy.apply(this)
     },
     render() {
         // renderless

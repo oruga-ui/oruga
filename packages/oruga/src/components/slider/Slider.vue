@@ -60,6 +60,11 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
+const modelValueDef = {
+    type: [Number, Array],
+    default: 0
+}
+
 /**
  * A slider to select a value or range from a given range
  * @displayName Slider
@@ -73,23 +78,16 @@ export default {
         [SliderThumb.name]: SliderThumb,
         [SliderTick.name]: SliderTick
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
     provide() {
         return {
             $slider: this
         }
     },
     emits: ['update:modelValue', 'change', 'dragging', 'dragstart', 'dragend'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: {
-            type: [Number, Array],
-            default: 0
-        },
+        modelValue: modelValueDef,
         /** Minimum value */
         min: {
             type: Number,

@@ -25,10 +25,6 @@ export default (parentItemName, flags = 0) => {
             if (this.parent && this.parent._unregisterItem) {
                 this.parent._unregisterItem(this)
             }
-        },
-        // Vue 3
-        beforeUnmount() {
-            this.$options.beforeDestroy.apply(this)
         }
     }
     if (hasFlag(flags, sorted)) {

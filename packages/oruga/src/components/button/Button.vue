@@ -47,7 +47,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     inheritAttrs: false,
     props: {
         /**

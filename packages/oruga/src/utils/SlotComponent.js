@@ -3,7 +3,7 @@ import VueComponentMixin from './VueComponentMixin'
 
 export default {
     name: 'OSlotComponent',
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     props: {
         component: {
             type: Object,
@@ -42,10 +42,6 @@ export default {
         if (isVue2()) {
             this.component.$off(this.event, this.refresh)
         }
-    },
-    // Vue 3
-    beforeUnmount() {
-        this.$options.beforeDestroy.apply(this)
     },
     render() {
         if (!this.vueReady) return

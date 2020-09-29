@@ -59,6 +59,8 @@ import FormElementMixin from '../../utils/FormElementMixin'
 import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
+const modelValueDef = [Number, String]
+
 /**
  * Get user Input. Use with Field to access all functionalities
  * @displayName Input
@@ -70,7 +72,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -80,13 +82,9 @@ export default {
         }
     },
     emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /**  @model */
-        modelValue: [Number, String],
+        modelValue: modelValueDef,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -183,7 +181,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.$emit('update:modelValue', value)
+                this.emitModelValue(value)
                 !this.isValid && this.checkHtml5Validity()
             }
         },

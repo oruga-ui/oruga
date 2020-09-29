@@ -26,7 +26,6 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Select a single or grouped options
@@ -36,7 +35,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'OCheckbox',
-    mixins: [VueComponentMixin, BaseComponentMixin, CheckRadioMixin],
+    mixins: [BaseComponentMixin, CheckRadioMixin],
     props: {
         /**
          * Same as native indeterminate

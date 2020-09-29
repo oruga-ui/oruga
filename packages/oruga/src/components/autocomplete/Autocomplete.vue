@@ -90,6 +90,8 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
 
+const modelValueDef = [Number, String]
+
 /**
  * Extended input that provide suggestions while the user types
  * @displayName Autocomplete
@@ -101,7 +103,7 @@ export default {
     components: {
         [Input.name]: Input
     },
-    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -109,13 +111,9 @@ export default {
         }
     },
     emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: [Number, String],
+        modelValue: modelValueDef,
         /** Options / suggestions */
         data: {
             type: Array,
@@ -378,7 +376,7 @@ export default {
          *   3. Close dropdown if value is clear or else open it
          */
         newValue(value) {
-            this.$emit('update:modelValue', value)
+            this.emitModelValue(value)
             // Check if selected is invalid
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue !== value) {
@@ -699,10 +697,6 @@ export default {
         if (this.appendToBody) {
             removeElement(this.$data.bodyEl)
         }
-    },
-    // Vue 3
-    beforeUnmount() {
-        this.$options.beforeDestroy.apply(this)
     }
 }
 </script>

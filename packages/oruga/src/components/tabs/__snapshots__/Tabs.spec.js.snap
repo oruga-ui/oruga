@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTabs render correctly 1`] = `
-<div class="o-tabs-wrapper" value="tab1">
+<div class="o-tabs-wrapper">
     <nav class="o-tabs">
         <ul>
             <li class="o-tab-active"><button>
@@ -20,7 +20,7 @@ exports[`OTabs render correctly 1`] = `
 `;
 
 exports[`OTabs still renders if there is no item 1`] = `
-<div class="o-tabs-wrapper" value="tab1">
+<div class="o-tabs-wrapper">
     <nav class="o-tabs">
         <ul></ul>
     </nav>

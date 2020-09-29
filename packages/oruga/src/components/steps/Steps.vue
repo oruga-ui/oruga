@@ -62,7 +62,6 @@ import Button from '../button/Button'
 import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
@@ -80,7 +79,7 @@ export default {
         [Button.name]: Button,
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin, BaseComponentMixin, TabbedMixin('step')],
+    mixins: [BaseComponentMixin, TabbedMixin('step')],
     props: {
         /**
          * Icon pack to use for the navigation

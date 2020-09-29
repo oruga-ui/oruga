@@ -31,26 +31,24 @@ import Tooltip from '../tooltip/Tooltip'
 
 import VueComponentMixin from '../../utils/VueComponentMixin'
 
+const modelValueDef = {
+    type: Number,
+    default: 0
+}
+
 export default {
     name: 'OSliderThumb',
     components: {
         [Tooltip.name]: Tooltip
     },
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef})],
     inheritAttrs: false,
     inject: {
         $slider: { name: '$slider' }
     },
     emits: ['update:modelValue', 'dragstart', 'dragend'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
-        modelValue: {
-            type: Number,
-            default: 0
-        },
+        modelValue: modelValueDef,
         variant: {
             variant: String,
             default: ''
@@ -190,7 +188,7 @@ export default {
             const steps = Math.round(percent / stepLength)
             let value = steps * stepLength / 100 * (this.max - this.min) + this.min
             value = parseFloat(value.toFixed(this.precision))
-            this.$emit('update:modelValue', value)
+            this.emitModelValue(value)
             if (!this.dragging && value !== this.oldValue) {
                 this.oldValue = value
             }

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses">
+    <div :class="rootClasses">
         <select
             :class="selectClasses"
             v-model="computedValue"
@@ -50,6 +50,11 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
+const modelValueDef = {
+    type: [String, Number, Boolean, Object, Array],
+    default: null
+}
+
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
  * @displayName Select
@@ -61,7 +66,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -69,16 +74,9 @@ export default {
         }
     },
     emits: ['update:modelValue', 'focus', 'blur'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: {
-            type: [String, Number, Boolean, Object, Array],
-            default: null
-        },
+        modelValue: modelValueDef,
         /**
          * Vertical size of input, optional
          * @values small, medium, large
@@ -152,7 +150,7 @@ export default {
             },
             set(value) {
                 this.selected = value
-                this.$emit('update:modelValue', value)
+                this.emitModelValue(value)
                 !this.isValid && this.checkHtml5Validity()
             }
         }

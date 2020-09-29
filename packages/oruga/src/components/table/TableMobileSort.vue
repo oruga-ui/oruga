@@ -97,7 +97,7 @@ export default {
         [Icon.name]: Icon,
         [Field.name]: Field
     },
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     inject: ['$table'],
     emits: ['sort', 'removePriority'],
     props: {

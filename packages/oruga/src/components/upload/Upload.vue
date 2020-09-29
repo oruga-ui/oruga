@@ -31,6 +31,8 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { File } from '../../utils/ssr'
 
+const modelValueDef = [Object, File, Array]
+
 /**
  * Upload one or more files
  * @displayName Upload
@@ -39,7 +41,7 @@ import { File } from '../../utils/ssr'
  */
 export default {
     name: 'OUpload',
-    mixins: [VueComponentMixin, BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -47,13 +49,9 @@ export default {
         }
     },
     emits: ['update:modelValue'],
-    model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
-    },
     props: {
         /** @model */
-        modelValue: [Object, File, Array],
+        modelValue: modelValueDef,
         /** Same as native, also push new item to v-model instead of replacing */
         multiple: Boolean,
         /** Same as native disabled */
@@ -162,7 +160,7 @@ export default {
                 }
                 if (!newValues) return
             }
-            this.$emit('update:modelValue', this.newValue)
+            this.emitModelValue(this.newValue)
             !this.dragDrop && this.checkHtml5Validity()
         },
 

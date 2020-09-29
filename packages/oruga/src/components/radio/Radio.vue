@@ -23,7 +23,6 @@
 <script>
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Select an option from a set
@@ -33,7 +32,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'ORadio',
-    mixins: [VueComponentMixin, BaseComponentMixin, CheckRadioMixin],
+    mixins: [BaseComponentMixin, CheckRadioMixin],
     props: {
         rootClass: String,
         disabledClass: String,

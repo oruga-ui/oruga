@@ -3,7 +3,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 
 export default {
     name: 'OFieldBody',
-    mixins: [VueComponentMixin],
+    mixins: [VueComponentMixin()],
     inject: {
         $field: { name: '$field', default: false }
     },

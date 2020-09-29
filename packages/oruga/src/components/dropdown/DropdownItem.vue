@@ -19,7 +19,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'ODropdownItem',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     inject: {
         $dropdown: { name: '$dropdown' }
     },
@@ -29,7 +29,7 @@ export default {
          * The value that will be returned on events and v-model
          */
         value: {
-            type: [String, Number, Boolean, Object, Array, Function],
+            type: [String, Number, Boolean, Object, Array],
             default: null
         },
         /**

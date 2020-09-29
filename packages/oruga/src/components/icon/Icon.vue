@@ -28,7 +28,7 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OIcon',
-    mixins: [VueComponentMixin, BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     props: {
         /**
          * 	Color of the icon, optional

@@ -1,12 +1,13 @@
+import VueComponentMixin from "./VueComponentMixin";
+
+const modelValueDef = [String, Number, Boolean, Array]
+
 export default {
-  emits: ['update:modelValue'],
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
+  mixins: [VueComponentMixin({vModel: modelValueDef})],
+  emits: ['update:modelValue', 'input'],
   props: {
     /** @model */
-    modelValue: [String, Number, Boolean, Array],
+    modelValue: modelValueDef,
     /**
      * Same as native value
      */
@@ -29,36 +30,36 @@ export default {
      * Size of the control, optional
      * @values small, medium, large
      */
-    size: String,
+    size: String
   },
   data() {
     return {
-      newValue: this.modelValue,
-    };
+      newValue: this.modelValue
+    }
   },
   computed: {
     computedValue: {
       get() {
-        return this.newValue;
+        return this.newValue
       },
       set(value) {
-        this.newValue = value;
-        this.$emit('update:modelValue', value);
-      },
-    },
+        this.newValue = value
+        this.emitModelValue(value)
+      }
+    }
   },
   watch: {
     /**
      * When v-model change, set internal value.
      */
     modelValue(value) {
-      this.newValue = value;
+      this.newValue = value
     },
   },
   methods: {
     focus() {
       // MacOS FireFox and Safari do not focus when clicked
-      this.$refs.input.focus();
+      this.$refs.input.focus()
     }
   }
 };
