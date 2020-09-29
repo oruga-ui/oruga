@@ -1,5 +1,4 @@
 import { hasFlag } from './helpers'
-import { existsSlot, getSlotInstance } from './vue-utils'
 
 const items = 1
 const sorted = 3
