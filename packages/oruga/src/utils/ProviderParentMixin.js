@@ -46,31 +46,8 @@ export default (itemName, flags = 0) => {
                  * And mark the items with their index
                  */
                 childItems(items) {
-                    if (items.length > 0 && existsSlot(this, 'default', true)) {
-                        const tag = items[0].$vnode.tag
-                        let index = 0
-                        const deepSearch = (children) => {
-                            for (const child of children) {
-                                if (child.tag === tag) {
-                                    // An item with the same tag will for sure be found
-                                    const it = items.filter((i) => i.$vnode === child)[0]
-                                    if (it) {
-                                        it.index = index++
-                                    }
-                                } else if (child.tag) {
-                                    const sub = child.componentInstance
-                                        ? (existsSlot(child.componentInstance, 'default', true)
-                                            ? getSlotInstance(child.componentInstance, 'default', true)
-                                            : child.componentInstance.$children)
-                                        : child.children
-                                    if (Array.isArray(sub) && sub.length > 0) {
-                                        deepSearch(sub.map((e) => e.$vnode))
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                        deepSearch(getSlotInstance(this, 'default', true))
+                    if (items.length > 0) {
+                        // see table
                     }
                 }
             }

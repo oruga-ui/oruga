@@ -12,7 +12,7 @@ import { getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OCollapse',
     mixins: [VueComponentMixin(), BaseComponentMixin],
-    emits: ['update:open'],
+    emits: ['update:open', 'open', 'close'],
     props: {
         /**
          * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
@@ -72,6 +72,7 @@ export default {
         toggle() {
             this.isOpen = !this.isOpen
             this.$emit('update:open', this.isOpen)
+            this.$emit(this.isOpen ? 'open' : 'close')
         }
     },
     render() {
