@@ -69,7 +69,9 @@ export default (params = {}) => {
     if (!isVue2()) {
         // Vue 3: beforeDestroy -> beforeUnmount
         mixin.beforeUnmount = function() {
-            this.$options.beforeDestroy.apply(this)
+            if (typeof this.$options.beforeDestroy !== 'undefined') {
+                this.$options.beforeDestroy.apply(this)
+            }
         }
     }
 
