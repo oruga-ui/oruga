@@ -86,8 +86,6 @@ export default {
     },
     emits: ['update:modelValue', 'change', 'dragging', 'dragstart', 'dragend'],
     props: {
-        /** @model */
-        modelValue: modelValueDef,
         /** Minimum value */
         min: {
             type: Number,
@@ -241,12 +239,6 @@ export default {
         }
     },
     watch: {
-        /**
-        * When v-model is changed set the new active step.
-        */
-        modelValue(value) {
-            this.setValues(value)
-        },
         value1() {
             this.onInternalValueUpdate()
         },
@@ -254,10 +246,10 @@ export default {
             this.onInternalValueUpdate()
         },
         min() {
-            this.setValues(this.modelValue)
+            this.setValues(this.getModel())
         },
         max() {
-            this.setValues(this.modelValue)
+            this.setValues(this.getModel())
         }
     },
     methods: {
@@ -266,6 +258,12 @@ export default {
                 this.computedClass('slider', 'thumbWrapperClass', 'o-slider-thumb-wrapper'),
                 { [this.computedClass('slider', 'thumbDraggingClass', 'o-slider-thumb-dragging')]: dragging },
             ]
+        },
+        /**
+        * When v-model is changed set the new active step.
+        */
+        onModelChange(value) {
+            this.setValues(value)
         },
         setValues(newValue) {
             if (this.min > this.max) {
@@ -294,7 +292,7 @@ export default {
                 this.isThumbReversed = this.value1 > this.value2
             }
             if (!this.lazy || !this.dragging) {
-                this.emitValue('update:modelValue')
+                this.emitValue('input')
             }
             if (this.dragging) {
                 this.emitValue('dragging')
@@ -337,19 +335,21 @@ export default {
             this.dragging = false
             this.$emit('dragend')
             if (this.lazy) {
-                this.emitValue('update:modelValue')
+                this.emitValue('input')
             }
         },
-        emitValue(value) {
-            this.$emit(value, this.isRange
+        emitValue(event) {
+            const val = this.isRange
                 ? [this.minValue, this.maxValue]
-                : this.value1)
+                : this.value1
+            if (event === 'input') this.emitModel(val)
+            else this.$emit(event, val)
         }
     },
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.modelValue)
+        this.setValues(this.getModel())
     }
 }
 </script>

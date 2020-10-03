@@ -13,7 +13,7 @@ exports[`OTabs render correctly 1`] = `
         </ul>
     </nav>
     <section class="o-tab-content o-tab-content-transitioning">
-        <div class="o-tab-item v-enter v-enter-active" style=""></div>
+        <div class="o-tab-item slide-prev-enter slide-prev-enter-active" style=""></div>
         <div class="o-tab-item" style="display: none;"></div>
     </section>
 </div>

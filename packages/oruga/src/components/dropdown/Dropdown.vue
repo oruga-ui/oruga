@@ -72,8 +72,6 @@ export default {
     },
     emits: ['update:modelValue', 'active-change', 'change'],
     props: {
-        /** @model */
-        modelValue: modelValueDef,
         /**
          * Dropdown disabled
          */
@@ -200,8 +198,9 @@ export default {
         expandedClass: String
     },
     data() {
+        const vm = this
         return {
-            selected: this.modelValue,
+            selected: vm.getModel(),
             isActive: false,
             isHoverable: false,
             bodyEl: undefined // Used to append to body
@@ -257,13 +256,6 @@ export default {
     },
     watch: {
         /**
-        * When v-model is changed set the new selected item.
-        */
-        modelValue(value) {
-            this.selected = value
-        },
-
-        /**
         * Emit event when isActive value is changed.
         */
         isActive(value) {
@@ -276,6 +268,12 @@ export default {
         }
     },
     methods: {
+        /**
+        * When v-model is changed set the new selected item.
+        */
+        onModelChange(value) {
+            this.selected = value
+        },
         /**
         * Click listener from DropdownItem.
         *   1. Set new selected item.
@@ -298,7 +296,7 @@ export default {
                     this.$emit('change', this.selected)
                 }
             }
-            this.emitModelValue(this.selected)
+            this.emitModel(this.selected)
             if (!this.multiple) {
                 this.isActive = !this.closeOnClick
                 if (this.hoverable && this.closeOnClick) {

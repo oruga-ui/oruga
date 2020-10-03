@@ -47,8 +47,9 @@ export default (cmp) => ({
         }
     },
     data() {
+        const vm = this
         return {
-            activeId: this.modelValue, // Internal state
+            activeId: vm.getModel(), // Internal state
             defaultSlots: [],
             contentHeight: 0,
             isTransitioning: false
@@ -66,18 +67,6 @@ export default (cmp) => ({
     },
     watch: {
         /**
-         * When v-model is changed set the new active tab.
-         */
-        modelValue(value) {
-            if (typeof value === 'number') {
-                // Backward compatibility: converts the index value to an id
-                value = bound(value, 0, this.items.length - 1)
-                this.activeId = this.items[value].newValue
-            } else {
-                this.activeId = value
-            }
-        },
-        /**
          * Sync internal state with external state
          */
         activeId(val, oldValue) {
@@ -94,11 +83,23 @@ export default (cmp) => ({
                 : undefined
 
             if (val !== this.value) {
-                this.emitModelValue(val)
+                this.emitModel(val)
             }
         }
     },
     methods: {
+        /**
+         * When v-model is changed set the new active tab.
+         */
+        onModelChange(value) {
+            if (typeof value === 'number') {
+                // Backward compatibility: converts the index value to an id
+                value = bound(value, 0, this.items.length - 1)
+                this.activeId = this.items[value].newValue
+            } else {
+                this.activeId = value
+            }
+        },
         /**
         * Child click listener, emit input event and change active child.
         */

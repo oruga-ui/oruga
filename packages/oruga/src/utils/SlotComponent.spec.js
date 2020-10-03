@@ -7,16 +7,6 @@ describe('OSlotComponent', () => {
     }
     const defaultEvent = 'hook:updated'
 
-    it('is called', () => {
-        const wrapper = shallowMount(OSlotComponent, {
-            propsData: {
-                component: {}
-            }
-        })
-
-        expect(wrapper.exists()).toBeTruthy()
-    })
-
     it('default render', () => {
         const slot = '<span>Content</span>'
         const Component = shallowMount(MockComponent, {

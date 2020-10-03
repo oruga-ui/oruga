@@ -46,7 +46,10 @@ export default (itemName, flags = 0) => {
                  */
                 childItems(items) {
                     if (items.length > 0) {
-                        // see table
+                        let index = 0
+                        items.forEach(it => {
+                            it.index = index++
+                        });
                     }
                 }
             }

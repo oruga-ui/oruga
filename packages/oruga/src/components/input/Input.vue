@@ -83,8 +83,6 @@ export default {
     },
     emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
-        /**  @model */
-        modelValue: modelValueDef,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -135,8 +133,9 @@ export default {
         variantClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.modelValue,
+            newValue: vm.getModel(),
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false
@@ -181,7 +180,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.emitModelValue(value)
+                this.emitModel(value)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -241,16 +240,14 @@ export default {
             return 0
         }
     },
-    watch: {
+    methods: {
         /**
         * When v-model is changed:
         *   1. Set internal value.
         */
-        modelValue(value) {
+        onModelChange(value) {
             this.newValue = value
-        }
-    },
-    methods: {
+        },
         /**
         * Toggle the visibility of a password-reveal input
         * by changing the type and focus the input right away.

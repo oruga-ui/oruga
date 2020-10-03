@@ -75,8 +75,6 @@ export default {
     },
     emits: ['update:modelValue', 'focus', 'blur'],
     props: {
-        /** @model */
-        modelValue: modelValueDef,
         /**
          * Vertical size of input, optional
          * @values small, medium, large
@@ -110,8 +108,9 @@ export default {
         variantClass: String
     },
     data() {
+        const vm = this
         return {
-            selected: this.modelValue
+            selected: vm.getModel()
         }
     },
     computed: {
@@ -150,18 +149,18 @@ export default {
             },
             set(value) {
                 this.selected = value
-                this.emitModelValue(value)
+                this.emitModel(value)
                 !this.isValid && this.checkHtml5Validity()
             }
         }
     },
-    watch: {
+    methods: {
         /**
         * When v-model is changed:
         *   1. Set the selected option.
         *   2. If it's invalid, validate again.
         */
-        modelValue(value) {
+        onModelChange(value) {
             this.selected = value
             !this.isValid && this.checkHtml5Validity()
         }

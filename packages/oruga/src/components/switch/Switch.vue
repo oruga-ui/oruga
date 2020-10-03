@@ -44,10 +44,6 @@ export default {
     emits: ['update:modelValue'],
     props: {
         /**
-         * @model
-         */
-        modelValue: modelValueDef,
-        /**
          * Same as native value
          */
         nativeValue: [String, Number, Boolean],
@@ -106,8 +102,9 @@ export default {
         animationClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.modelValue,
+            newValue: vm.getModel(),
             isMouseDown: false
         }
     },
@@ -140,19 +137,17 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.emitModelValue(value)
+                this.emitModel(value)
             }
         }
     },
-    watch: {
+    methods: {
         /**
         * When v-model change, set internal value.
         */
-        modelValue(value) {
+        onModelChange(value) {
             this.newValue = value
-        }
-    },
-    methods: {
+        },
         focus() {
             // MacOS FireFox and Safari do not focus when clicked
             this.$refs.input.focus()

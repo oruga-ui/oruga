@@ -89,7 +89,7 @@ export default {
                     name: 'show',
                     value: this.isOpen
                 }]
-            }, this.getSlotInstance('default') )
+            }, this.getSlotInstance('default'))
         ])
         return this.$createElement('div',
             { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },

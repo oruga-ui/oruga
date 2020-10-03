@@ -112,8 +112,6 @@ export default {
     },
     emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     props: {
-        /** @model */
-        modelValue: modelValueDef,
         /** Options / suggestions */
         data: {
             type: Array,
@@ -189,11 +187,12 @@ export default {
         inputClasses: Object
     },
     data() {
+        const vm = this
         return {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: this.modelValue,
+            newValue: vm.getModel(),
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -376,7 +375,7 @@ export default {
          *   3. Close dropdown if value is clear or else open it
          */
         newValue(value) {
-            this.emitModelValue(value)
+            this.emitModel(value)
             // Check if selected is invalid
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue !== value) {
@@ -386,15 +385,6 @@ export default {
             if (this.hasFocus && (!this.openOnFocus || value)) {
                 this.isActive = !!value
             }
-        },
-
-        /**
-         * When v-model is changed:
-         *   1. Update internal value.
-         *   2. If it's invalid, validate again.
-         */
-        modelValue(value) {
-            this.newValue = value
         },
 
         /**
@@ -420,6 +410,14 @@ export default {
                 ...this.itemClasses,
                 { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
             ]
+        },
+        /**
+         * When v-model is changed:
+         *   1. Update internal value.
+         *   2. If it's invalid, validate again.
+         */
+        onModelChange(value) {
+            this.newValue = value
         },
         /**
          * Set which option is currently hovered.

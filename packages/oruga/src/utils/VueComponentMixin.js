@@ -1,6 +1,7 @@
 import { isVue2, createElement, existsSlot, setScopedSlot, getSlotInstance, getListeners } from './vue-utils'
 
-export default (vModel = false) => {
+export default (params = {}) => {
+    const vModel = params.vModel
     const mixin = {
         data() {
             return {
@@ -22,15 +23,23 @@ export default (vModel = false) => {
             setScopedSlot(name, value) {
                 setScopedSlot(this, name, value)
             },
-            emitModelValue(value) {
+            emitModel(value) {
                 if (isVue2()) {
                     this.$emit('input', value)
                 } else {
                     this.$emit('update:modelValue', value)
                 }
+            },
+            getModel() {
+                return isVue2() ? this.value : this.modelValue
             }
         },
         created() {
+            // v-model watch, onModelChange methods as convetion
+            if (vModel && typeof this.onModelChange !== 'undefined') {
+                this.$watch(this.getModel, this.onModelChange)
+            }
+            // set ready when vue module has been loaded
             if (isVue2()) {
                 this.vueReady = true
             } else {
@@ -49,15 +58,16 @@ export default (vModel = false) => {
                 /** @model */
                 value: vModel
             }
-            mixin.watch = {
-                value(value) {
-                    this.modelValue = value
-                }
+        } else {
+            mixin.props = {
+                /** @model */
+                modelValue: vModel
             }
         }
     }
 
     if (!isVue2()) {
+        // Vue 3: beforeDestroy -> beforeUnmount
         mixin.beforeUnmount = function() {
             this.$options.beforeDestroy.apply(this)
         }

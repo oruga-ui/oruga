@@ -50,8 +50,6 @@ export default {
     },
     emits: ['update:modelValue'],
     props: {
-        /** @model */
-        modelValue: modelValueDef,
         /** Same as native, also push new item to v-model instead of replacing */
         multiple: Boolean,
         /** Same as native disabled */
@@ -86,8 +84,9 @@ export default {
         hoveredClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.modelValue,
+            newValue: vm.getModel(),
             dragDropFocus: false
         }
     },
@@ -108,22 +107,20 @@ export default {
             ]
         }
     },
-    watch: {
+    methods: {
         /**
          *   When v-model is changed:
          *   1. Set internal value.
          *   2. Reset interna input file value
          *   3. If it's invalid, validate again.
          */
-        modelValue(value) {
+        onModelChange(value) {
             this.newValue = value
             if (!value || (Array.isArray(value) && value.length === 0)) {
                 this.$refs.input.value = null
             }
             !this.isValid && !this.dragDrop && this.checkHtml5Validity()
-        }
-    },
-    methods: {
+        },
         /**
         * Listen change event on input type 'file',
         * emit 'input' event and validate
@@ -160,7 +157,7 @@ export default {
                 }
                 if (!newValues) return
             }
-            this.emitModelValue(this.newValue)
+            this.emitModel(this.newValue)
             !this.dragDrop && this.checkHtml5Validity()
         },
 

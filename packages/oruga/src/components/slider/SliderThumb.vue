@@ -48,7 +48,6 @@ export default {
     },
     emits: ['update:modelValue', 'dragstart', 'dragend'],
     props: {
-        modelValue: modelValueDef,
         variant: {
             variant: String,
             default: ''
@@ -60,13 +59,14 @@ export default {
         customFormatter: Function
     },
     data() {
+        const vm = this
         return {
             isFocused: false,
             dragging: false,
             startX: 0,
             startPosition: 0,
             newPosition: null,
-            oldValue: this.modelValue
+            oldValue: vm.getModel()
         }
     },
     computed: {
@@ -86,15 +86,15 @@ export default {
             return this.$parent.precision
         },
         currentPosition() {
-            return `${(this.modelValue - this.min) / (this.max - this.min) * 100}%`
+            return `${(this.getModel() - this.min) / (this.max - this.min) * 100}%`
         },
         wrapperStyle() {
             return { left: this.currentPosition }
         },
         tooltipLabel() {
             return typeof this.customFormatter !== 'undefined'
-                ? this.customFormatter(this.modelValue)
-                : this.modelValue.toString()
+                ? this.customFormatter(this.getModel())
+                : this.getModel().toString()
         }
     },
     methods: {
@@ -117,27 +117,27 @@ export default {
             }
         },
         onLeftKeyDown() {
-            if (this.disabled || this.modelValue === this.min) return
+            if (this.disabled || this.getModel() === this.min) return
             this.newPosition = parseFloat(this.currentPosition) -
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onRightKeyDown() {
-            if (this.disabled || this.modelValue === this.max) return
+            if (this.disabled || this.getModel() === this.max) return
             this.newPosition = parseFloat(this.currentPosition) +
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onHomeKeyDown() {
-            if (this.disabled || this.modelValue === this.min) return
+            if (this.disabled || this.getModel() === this.min) return
             this.newPosition = 0
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onEndKeyDown() {
-            if (this.disabled || this.modelValue === this.max) return
+            if (this.disabled || this.getModel() === this.max) return
             this.newPosition = 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
@@ -165,7 +165,7 @@ export default {
         onDragEnd() {
             this.dragging = false
             this.$emit('dragend')
-            if (this.modelValue !== this.oldValue) {
+            if (this.getModel() !== this.oldValue) {
                 this.$parent.emitValue('change')
             }
             this.setPosition(this.newPosition)
@@ -188,7 +188,7 @@ export default {
             const steps = Math.round(percent / stepLength)
             let value = steps * stepLength / 100 * (this.max - this.min) + this.min
             value = parseFloat(value.toFixed(this.precision))
-            this.emitModelValue(value)
+            this.emitModel(value)
             if (!this.dragging && value !== this.oldValue) {
                 this.oldValue = value
             }
