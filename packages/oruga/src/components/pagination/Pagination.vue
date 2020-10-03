@@ -162,7 +162,7 @@ export default {
             type: [Number, String],
             default: 1
         },
-        /** Number to paginatation items to show after current page */
+        /** Number of pagination items to show after current page */
         rangeAfter: {
             type: [Number, String],
             default: 1
