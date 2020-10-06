@@ -1,7 +1,5 @@
 <template>
-
   <section>
-    <!--
   <o-collapse :open="true" animation="slide">
     <template v-slot:trigger="props">
       <o-button>{{ props.open ? 'close' : 'open' }}</o-button>
@@ -87,7 +85,7 @@
         </o-tabs>
     </section>
     
-    -->
+
     <section>
     <o-field grouped group-multiline>
       <o-switch v-model="isBordered">Bordered</o-switch>
@@ -101,7 +99,6 @@
         >Mobile cards <small>(collapsed rows)</small></o-switch
       >
     </o-field>
-
 
     <o-table
       :data="isEmpty ? [] : dataTable"

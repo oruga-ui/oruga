@@ -72,17 +72,15 @@ export default (cmp) => ({
         activeId(val, oldValue) {
             const oldTab = oldValue !== undefined && oldValue !== null
                 ? this.childItems.filter((i) => i.newValue === oldValue)[0] : null
-
             if (oldTab && this.activeItem) {
                 oldTab.deactivate(this.activeItem.index)
                 this.activeItem.activate(oldTab.index)
             }
-
-            val = this.activeItem
-                ? (typeof this.modelValue === 'number' ? this.items.indexOf(this.activeItem) : this.activeItem.newValue)
+            const model = this.getModel()
+            const value = this.activeItem
+                ? (typeof model === 'number' ? this.items.indexOf(this.activeItem) : this.activeItem.newValue)
                 : undefined
-
-            if (val !== this.value) {
+            if (value !== model) {
                 this.emitModel(val)
             }
         }
@@ -94,8 +92,8 @@ export default (cmp) => ({
         onModelChange(value) {
             if (typeof value === 'number') {
                 // Backward compatibility: converts the index value to an id
-                value = bound(value, 0, this.items.length - 1)
-                this.activeId = this.items[value].newValue
+                const val = bound(value, 0, this.items.length - 1)
+                this.activeId = this.items[val].newValue
             } else {
                 this.activeId = value
             }
@@ -108,12 +106,13 @@ export default (cmp) => ({
         }
     },
     mounted() {
-        if (typeof this.modelValue === 'number') {
+        const model = this.getModel()
+        if (typeof model === 'number') {
             // Backward compatibility: converts the index value to an id
-            const value = bound(this.modelValue, 0, this.items.length - 1)
+            const value = bound(model, 0, this.items.length - 1)
             this.activeId = this.items.length ? this.items[value].newValue : undefined
         } else {
-            this.activeId = this.modelValue
+            this.activeId = model
         }
     }
 })
