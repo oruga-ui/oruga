@@ -297,7 +297,7 @@ export default {
          */
         prev() {
             if (this.hasPrev) {
-                this.activeId = this.prevItem.newValue
+                this.childClick(this.prevItem)
             }
         },
 
@@ -306,7 +306,7 @@ export default {
          */
         next() {
             if (this.hasNext) {
-                this.activeId = this.nextItem.newValue
+                this.childClick(this.nextItem)
             }
         }
     }

@@ -12,7 +12,7 @@ export default (parentItemName, flags = 0) => {
             parent: { from: 'o' + parentItemName }
         },
         created() {
-            this.newValue = this.value === undefined ? this.parent._nextSequence() : this.value
+            this.newValue = typeof this.value === 'undefined' ? this.parent._nextSequence() : this.value
             if (!this.parent) {
                 if (!hasFlag(flags, optional)) {
                     throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName)

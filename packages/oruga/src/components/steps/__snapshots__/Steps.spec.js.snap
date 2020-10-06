@@ -25,7 +25,7 @@ exports[`OSteps render correctly 1`] = `
         </ul>
     </nav>
     <section class="o-step-content o-step-content-transitioning">
-        <div class="o-step-item slide-prev-enter slide-prev-enter-active" style=""></div>
+        <div class="o-step-item v-enter v-enter-active" style=""></div>
         <div class="o-step-item" style="display: none;"></div>
         <div class="o-step-item" style="display: none;"></div>
     </section>

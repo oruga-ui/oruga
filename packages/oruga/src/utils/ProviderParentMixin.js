@@ -25,6 +25,7 @@ export default (itemName, flags = 0) => {
         mixin.methods = {
             _registerItem(item) {
                 this.$nextTick(() => {
+                    item.index = this.childItems.length
                     this.childItems.push(item)
                 })
             },
@@ -34,7 +35,7 @@ export default (itemName, flags = 0) => {
                 })
             },
             _nextSequence() {
-                return this.sequence++
+                return `${this.sequence++}`
             }
         }
 
@@ -44,10 +45,10 @@ export default (itemName, flags = 0) => {
                  * When items are added/removed deep search in the elements default's slot
                  * And mark the items with their index
                  */
-                childItems(items) {
-                    if (items.length > 0) {
+                childItems() {
+                    if (this.childItems.length > 0) {
                         let index = 0
-                        items.forEach(it => {
+                        this.childItems.forEach(it => {
                             it.index = index++
                         });
                     }

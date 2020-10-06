@@ -36,7 +36,7 @@ export default (parentCmp) => ({
     },
     data() {
         return {
-            transitionName: null,
+            transitionName: undefined,
             newValue: this.value
         }
     },

@@ -48,7 +48,7 @@
    
   <section>
         <p>
-            <o-button @click="activeTab = 1">Set Music</o-button>
+            <o-button @click="activeTab = 'music'">Set Music</o-button>
         </p>
         <p>
             <o-switch v-model="showBooks"> Show Books item </o-switch>
@@ -59,7 +59,7 @@
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
 
-            <o-tab-item label="Music">
+            <o-tab-item label="Music" value="music">
                 Lorem <br>
                 ipsum <br>
                 dolor <br>
@@ -187,7 +187,7 @@ export default {
       ];
 
       return {
-        activeTab: 0,
+        activeTab: undefined,
         showBooks: false,
         multiline: false,
         data: [
