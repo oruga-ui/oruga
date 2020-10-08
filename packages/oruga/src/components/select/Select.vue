@@ -46,8 +46,14 @@ import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
+
+const modelValueDef = {
+    type: [String, Number, Boolean, Object, Array],
+    default: null
+}
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -60,21 +66,15 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
             $elementRef: 'select'
         }
     },
+    emits: ['update:modelValue', 'focus', 'blur'],
     props: {
-        /**
-         * @model
-         */
-        value: {
-            type: [String, Number, Boolean, Object, Array],
-            default: null
-        },
         /**
          * Vertical size of input, optional
          * @values small, medium, large
@@ -108,8 +108,9 @@ export default {
         variantClass: String
     },
     data() {
+        const vm = this
         return {
-            selected: this.value
+            selected: vm.getModel()
         }
     },
     computed: {
@@ -142,25 +143,24 @@ export default {
                 this.computedClass('select', 'iconRightClass', 'o-icon-right')
             ]
         },
-
         computedValue: {
             get() {
                 return this.selected
             },
             set(value) {
                 this.selected = value
-                this.$emit('input', value)
+                this.emitModel(value)
                 !this.isValid && this.checkHtml5Validity()
             }
-        },
+        }
     },
-    watch: {
+    methods: {
         /**
         * When v-model is changed:
         *   1. Set the selected option.
         *   2. If it's invalid, validate again.
         */
-        value(value) {
+        onModelChange(value) {
             this.selected = value
             !this.isValid && this.checkHtml5Validity()
         }

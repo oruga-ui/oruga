@@ -1,10 +1,10 @@
 <template>
-    <div :class="wrapperClasses">
+    <div v-if="vueReady" :class="wrapperClasses">
         <nav :class="mainClasses">
             <ul :class="stepItemsClasses">
                 <li
                     v-for="childItem in items"
-                    :key="childItem.value"
+                    :key="childItem.newValue"
                     v-show="childItem.visible"
                     :class="childItem.itemClasses"
                 >
@@ -62,7 +62,7 @@ import Button from '../button/Button'
 import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import TabbedMixin from '../../utils/TabbedMixin.js'
+import TabbedMixin from '../../utils/TabbedMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -214,7 +214,7 @@ export default {
 
         // Override mixin implementation to always have a value
         activeItem() {
-            return this.childItems.filter((i) => i.value === this.activeId)[0] || this.items[0]
+            return this.childItems.filter((i) => i.newValue === this.activeId)[0] || this.items[0]
         },
 
         /**
@@ -297,7 +297,7 @@ export default {
          */
         prev() {
             if (this.hasPrev) {
-                this.activeId = this.prevItem.value
+                this.childClick(this.prevItem)
             }
         },
 
@@ -306,7 +306,7 @@ export default {
          */
         next() {
             if (this.hasNext) {
-                this.activeId = this.nextItem.value
+                this.childClick(this.nextItem)
             }
         }
     }

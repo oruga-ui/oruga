@@ -1,0 +1,79 @@
+{
+  "name": "@oruga-ui/oruga-next",
+  "version": "0.1.4",
+  "homepage": "https://oruga.io",
+  "description": "UI components for Vue.js and CSS framework agnostic",
+  "author": "Walter Tommasi <tommsi20@gmail.com>",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "unpkg": "dist/oruga.min.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "nuxt",
+    "types/*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oruga-ui/oruga.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oruga-ui/oruga/issues"
+  },
+  "scripts": {
+    "build:vue": "rollup -c && rollup -c --environment MINIFY",
+    "build:vue:watch": "rollup -c --watch",
+    "build:style": "npm run build:scss && npm run build:scss-vars && npm run build:scss-lite",
+    "build:scss-vars": "sass ../oruga/src/scss/oruga-vars.scss | node ../oruga/build/banner.js > dist/oruga-vars.css && cleancss -o dist/oruga-vars.min.css dist/oruga-vars.css",
+    "build:scss-lite": "sass ../oruga/src/scss/oruga-lite.scss | node ../oruga/build/banner.js > dist/oruga-lite.css && cleancss -o dist/oruga-lite.min.css dist/oruga-lite.css",
+    "build:scss": "sass ../oruga/src/scss/oruga-static.scss | node ../oruga/build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
+    "build:style:watch": "sass ../oruga/src/scss/oruga-vars.scss dist/oruga-vars.css --watch",
+    "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
+    "build:lib:watch": "concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
+  },
+  "keywords": [
+    "oruga",
+    "vue",
+    "vuejs",
+    "components",
+    "ux",
+    "ui",
+    "css",
+    "agnostic",
+    "framework"
+  ],
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "@rollup/plugin-babel": "5.0.2",
+    "@rollup/plugin-commonjs": "12.0.0",
+    "@rollup/plugin-node-resolve": "8.0.0",
+    "@rollup/plugin-replace": "2.3.2",
+    "@types/jest": "24.0.19",
+    "@typescript-eslint/eslint-plugin": "2.26.0",
+    "@typescript-eslint/parser": "2.26.0",
+    "@vue/compiler-sfc": "3.0.0-rc.10",
+    "@vue/eslint-config-typescript": "5.0.2",
+    "clean-css-cli": "4.3.0",
+    "codecov": "3.7.2",
+    "concurrently": "5.2.0",
+    "core-js": "3.6.5",
+    "eslint": "6.7.2",
+    "eslint-plugin-vue": "6.2.2",
+    "jest-serializer-vue": "0.3.0",
+    "rollup": "2.12.0",
+    "rollup-copy-plugin": "0.1.0",
+    "rollup-plugin-terser": "6.1.0",
+    "rollup-plugin-vue": "github:elevatebart/rollup-plugin-vue#fix-no-template",
+    "sass": "1.18.0",
+    "sinon": "9.0.3",
+    "typescript": "3.8.3",
+    "vue": "3.0.0-rc.10",
+    "vue-class-component": "8.0.0-alpha.6"
+  }
+}

@@ -8,7 +8,7 @@ title: Tabs
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\tabs\examples\Tabs.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -245,7 +245,6 @@ title: Tabs
 
 | Prop name                  | Description                                     | Type           | Values                                                                          | Default                                       |
 | -------------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| v-model                    |                                                 | string\|number | -                                                                               | undefined                                     |
 | variant                    | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
 | size                       | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
 | animated                   | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
@@ -269,12 +268,6 @@ title: Tabs
 | tabItemHeaderActiveClass   |                                                 | string         | -                                                                               |                                               |
 | tabItemHeaderDisabledClass |                                                 | string         | -                                                                               |                                               |
 
-### Events
-
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| input      | undefined |
-
 ### Slots
 
 | Name    | Description | Bindings |
@@ -287,24 +280,18 @@ title: Tabs
 
 ## Props
 
-| Prop name               | Description                                                  | Type                  | Values | Default                                     |
-| ----------------------- | ------------------------------------------------------------ | --------------------- | ------ | ------------------------------------------- |
-| label                   | Item label                                                   | string                | -      |                                             |
-| icon                    | Icon on the left                                             | string                | -      |                                             |
-| iconPack                | Icon pack                                                    | string                | -      |                                             |
-| visible                 | Show/hide item                                               | boolean               | -      | true                                        |
-| value                   | Item value (it will be used as v-model of wrapper component) | string                | -      | function() { return this.\_uid.toString() } |
-| headerClass             | Header class of the item                                     | string\|array\|object | -      | null                                        |
-| disabled                | Item will be disabled                                        | boolean               | -      |                                             |
-| itemClass               |                                                              | string                | -      |                                             |
-| itemHeaderActiveClass   |                                                              | string                | -      |                                             |
-| itemHeaderDisabledClass |                                                              | string                | -      |                                             |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Prop name               | Description                                                  | Type                  | Values | Default |
+| ----------------------- | ------------------------------------------------------------ | --------------------- | ------ | ------- |
+| label                   | Item label                                                   | string                | -      |         |
+| icon                    | Icon on the left                                             | string                | -      |         |
+| iconPack                | Icon pack                                                    | string                | -      |         |
+| visible                 | Show/hide item                                               | boolean               | -      | true    |
+| value                   | Item value (it will be used as v-model of wrapper component) | string\|number        | -      |         |
+| headerClass             | Header class of the item                                     | string\|array\|object | -      |         |
+| disabled                | Item will be disabled                                        | boolean               | -      |         |
+| itemClass               |                                                              | string                | -      |         |
+| itemHeaderActiveClass   |                                                              | string                | -      |         |
+| itemHeaderDisabledClass |                                                              | string                | -      |         |
 
 ## Style
 

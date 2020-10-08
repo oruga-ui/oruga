@@ -5,13 +5,15 @@ exports[`OTabs render correctly 1`] = `
     <nav class="o-tabs">
         <ul>
             <li class="o-tab-active"><button>
-                    <!----> <span></span></button></li>
+                    <!----> <span></span>
+                </button></li>
             <li class="" style="display: none;"><button>
-                    <!----> <span></span></button></li>
+                    <!----> <span></span>
+                </button></li>
         </ul>
     </nav>
-    <section class="o-tab-content">
-        <div class="o-tab-item"></div>
+    <section class="o-tab-content o-tab-content-transitioning">
+        <div class="o-tab-item v-enter v-enter-active" style=""></div>
         <div class="o-tab-item" style="display: none;"></div>
     </section>
 </div>

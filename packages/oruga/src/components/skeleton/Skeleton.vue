@@ -1,6 +1,7 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * A placeholder for content to load
@@ -10,7 +11,7 @@ import { toCssDimension } from '../../utils/helpers'
  */
 export default {
     name: 'OSkeleton',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     props: {
         /** Show or hide loader	 */
         active: {
@@ -65,31 +66,38 @@ export default {
         itemRoundedClass: String,
         sizeClass: String
     },
-    render(createElement) {
-        if (!this.active) return
+    render() {
+        if (!this.vueReady || !this.active) return
         const items = []
         const width = this.width
         const height = this.height
         for (let i = 0; i < this.count; i++) {
-            items.push(createElement('div', {
-                staticClass: this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'),
-                class: { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded },
-                key: i,
-                style: {
-                    height: toCssDimension(height),
-                    width: toCssDimension(width),
-                    borderRadius: this.circle ? '50%' : null
+            items.push(this.$createElement(
+                'div', 
+                {
+                    staticClass: this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'),
+                    class: { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded },
+                    key: i,
+                    style: {
+                        height: toCssDimension(height),
+                        width: toCssDimension(width),
+                        borderRadius: this.circle ? '50%' : null
+                    }
                 }
-            }))
+            ))
         }
-        return createElement('div', {
-            staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
-            class: [
-                { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
-                { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-')}${this.position}`]: this.position },
-                { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
-            ]
-        }, items)
+        return this.$createElement(
+            'div',
+            {
+                staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
+                class: [
+                    { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                    { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-')}${this.position}`]: this.position },
+                    { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
+                ]
+            },
+            items
+        )
     }
 }
 </script>

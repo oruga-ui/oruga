@@ -8,7 +8,7 @@ title: Collapse
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/collapse/examples/Collapse.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\collapse\examples\Collapse.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -130,25 +130,18 @@ title: Collapse
 
 ## Props
 
-| Prop name    | Description                                                                        | Type    | Values          | Default                                              |
-| ------------ | ---------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------- |
-| open         | Whether collapse is open or not, use the .sync modifier to make it two-way binding | boolean | -               | true                                                 |
-| animation    | Custom animation (transition name)                                                 | string  | -               | Config -> <code> 'collapse.animation': 'fade'</code> |
-| ariaId       | Custom animation (transition name)                                                 | string  | -               | ''                                                   |
-| position     | Trigger position                                                                   | string  | `top`, `bottom` | 'top'                                                |
-| rootClass    |                                                                                    | string  | -               |                                                      |
-| triggerClass |                                                                                    | string  | -               |                                                      |
-| contentClass |                                                                                    | string  | -               |                                                      |
+| Prop name    | Description                                                                                                            | Type    | Values          | Default                                              |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------- |
+| open         | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                 |
+| animation    | Custom animation (transition name)                                                                                     | string  | -               | Config -> <code> 'collapse.animation': 'fade'</code> |
+| ariaId       | Custom animation (transition name)                                                                                     | string  | -               | ''                                                   |
+| position     | Trigger position                                                                                                       | string  | `top`, `bottom` | 'top'                                                |
+| rootClass    |                                                                                                                        | string  | -               |                                                      |
+| triggerClass |                                                                                                                        | string  | -               |                                                      |
+| contentClass |                                                                                                                        | string  | -               |                                                      |
 
 ## Events
 
 | Event name  | Type      | Description |
 | ----------- | --------- | ----------- |
 | update:open | undefined |
-
-## Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| trigger |             |          |
-| default |             |          |

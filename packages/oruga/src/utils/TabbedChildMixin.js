@@ -1,7 +1,8 @@
 import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
+import VueComponentMixin from './VueComponentMixin'
 
 export default (parentCmp) => ({
-    mixins: [InjectedChildMixin(parentCmp, Sorted)],
+    mixins: [VueComponentMixin(), InjectedChildMixin(parentCmp, Sorted)],
     props: {
         /**
          * Item label
@@ -25,21 +26,18 @@ export default (parentCmp) => ({
         /**
          * Item value (it will be used as v-model of wrapper component)
          */
-        value: {
-            type: String,
-            default() { return this._uid.toString() }
-        },
+        value: [String, Number],
         /**
          * Header class of the item
          */
         headerClass: {
-            type: [String, Array, Object],
-            default: null
+            type: [String, Array, Object]
         }
     },
     data() {
         return {
-            transitionName: null
+            transitionName: undefined,
+            newValue: this.value
         }
     },
     computed: {
@@ -69,31 +67,35 @@ export default (parentCmp) => ({
                 : this.parent.vertical ? 'slide-up' : 'slide-prev'
         }
     },
-    render(createElement) {
+    render() {
+        if (!this.vueReady) return
         // if destroy apply v-if
         if (this.parent.destroyOnHide) {
-            if (!this.isActive || !this.visible) {
-                return
-            }
+            if (!this.isActive || !this.visible) return
         }
-        const vnode = createElement('div', {
-            directives: [{
-                name: 'show',
-                value: this.isActive && this.visible
-            }],
-            attrs: { 'class': this.elementClasses }
-        }, this.$slots.default)
+        const vnode = this.$createElement(
+            'div',
+            { 
+                directives: [{ name: 'show', value: this.isActive && this.visible }],
+                attrs: { 'class': this.elementClasses }
+            },
+            this.getSlotInstance('default')
+        )
         // check animated prop
         if (this.parent.animated) {
-            return createElement('transition', {
-                props: {
-                    'name': this.transitionName
+            return this.$createElement(
+                'transition',
+                {
+                    props: {
+                        'name': this.transitionName
+                    },
+                    on: {
+                        'before-enter': () => { this.parent.isTransitioning = true },
+                        'after-enter': () => { this.parent.isTransitioning = false }
+                    }
                 },
-                on: {
-                    'before-enter': () => { this.parent.isTransitioning = true },
-                    'after-enter': () => { this.parent.isTransitioning = false }
-                }
-            }, [vnode])
+                [vnode]
+            )
         }
         return vnode
     }

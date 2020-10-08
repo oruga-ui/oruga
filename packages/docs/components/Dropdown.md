@@ -8,7 +8,7 @@ title: Dropdown
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\dropdown\examples\Dropdown.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -208,35 +208,34 @@ title: Dropdown
 
 ## Props
 
-| Prop name              | Description                                                                                                                                            | Type                                         | Values                                   | Default                                              |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
-| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array\|func | -                                        | null                                                 |
-| disabled               |                                                                                                                                                        | boolean                                      | -                                        |                                                      |
-| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                      | -                                        |                                                      |
-| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                      | -                                        |                                                      |
-| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                               | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
-| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                       | `top-right`, `top-left`, `bottom-left`   |                                                      |
-| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                      | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
-| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                       | `list`, `menu`, `dialog`                 | null                                                 |
-| animation              | Custom animation (transition name)                                                                                                                     | string                                       | -                                        | Config -> <code> 'dropdown.animation': 'fade'</code> |
-| multiple               | Allows multiple selections                                                                                                                             | boolean                                      | -                                        |                                                      |
-| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                      | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
-| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                      | -                                        | true                                                 |
-| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                               | `escape`, `outside`                      | true                                                 |
-| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                      | -                                        |                                                      |
-| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                        | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
-| appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                      | -                                        |                                                      |
-| appendToBodyCopyParent |                                                                                                                                                        | boolean                                      | -                                        |                                                      |
-| rootClass              |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| triggerClass           |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| backgroundClass        |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| menuClass              |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| disabledClass          |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| activeClass            |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| hoverableClass         |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| inlineClass            |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| mobileClass            |                                                                                                                                                        | string                                       | -                                        |                                                      |
-| expandedClass          |                                                                                                                                                        | string                                       | -                                        |                                                      |
+| Prop name              | Description                                                                                                                                            | Type           | Values                                   | Default                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- | ---------------------------------------- | ---------------------------------------------------- |
+| disabled               | Dropdown disabled                                                                                                                                      | boolean        | -                                        |                                                      |
+| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean        | -                                        |                                                      |
+| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean        | -                                        |                                                      |
+| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
+| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string         | `top-right`, `top-left`, `bottom-left`   |                                                      |
+| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean        | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
+| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string         | `list`, `menu`, `dialog`                 | null                                                 |
+| animation              | Custom animation (transition name)                                                                                                                     | string         | -                                        | Config -> <code> 'dropdown.animation': 'fade'</code> |
+| multiple               | Allows multiple selections                                                                                                                             | boolean        | -                                        |                                                      |
+| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean        | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
+| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean        | -                                        | true                                                 |
+| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean | `escape`, `outside`                      | true                                                 |
+| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean        | -                                        |                                                      |
+| triggers               | Dropdown will be triggered by any events                                                                                                               | array          | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
+| appendToBody           | Append dropdown content to body                                                                                                                        | boolean        | -                                        |                                                      |
+| appendToBodyCopyParent |                                                                                                                                                        | boolean        | -                                        |                                                      |
+| rootClass              |                                                                                                                                                        | string         | -                                        |                                                      |
+| triggerClass           |                                                                                                                                                        | string         | -                                        |                                                      |
+| backgroundClass        |                                                                                                                                                        | string         | -                                        |                                                      |
+| menuClass              |                                                                                                                                                        | string         | -                                        |                                                      |
+| disabledClass          |                                                                                                                                                        | string         | -                                        |                                                      |
+| activeClass            |                                                                                                                                                        | string         | -                                        |                                                      |
+| hoverableClass         |                                                                                                                                                        | string         | -                                        |                                                      |
+| inlineClass            |                                                                                                                                                        | string         | -                                        |                                                      |
+| mobileClass            |                                                                                                                                                        | string         | -                                        |                                                      |
+| expandedClass          |                                                                                                                                                        | string         | -                                        |                                                      |
 
 ### Events
 
@@ -244,7 +243,6 @@ title: Dropdown
 | ------------- | --------- | ----------- |
 | active-change | undefined |
 | change        | undefined |
-| input         | undefined |
 
 ### Slots
 
@@ -259,16 +257,16 @@ title: Dropdown
 
 ## Props
 
-| Prop name         | Description                                           | Type                                         | Values | Default |
-| ----------------- | ----------------------------------------------------- | -------------------------------------------- | ------ | ------- |
-| value             | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array\|func | -      | null    |
-| disabled          | Item is disabled                                      | boolean                                      | -      |         |
-| custom            | Item is not a clickable item                          | boolean                                      | -      |         |
-| tabindex          |                                                       | number\|string                               | -      | 0       |
-| ariaRole          |                                                       | string                                       | -      | ''      |
-| itemClass         |                                                       | string                                       | -      |         |
-| itemActiveClass   |                                                       | string                                       | -      |         |
-| itemDisabledClass |                                                       | string                                       | -      |         |
+| Prop name         | Description                                           | Type                                   | Values | Default |
+| ----------------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
+| value             | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
+| disabled          | Item is disabled                                      | boolean                                | -      |         |
+| custom            | Item is not a clickable item                          | boolean                                | -      |         |
+| tabindex          |                                                       | number\|string                         | -      | 0       |
+| ariaRole          |                                                       | string                                 | -      | ''      |
+| itemClass         |                                                       | string                                 | -      |         |
+| itemActiveClass   |                                                       | string                                 | -      |         |
+| itemDisabledClass |                                                       | string                                 | -      |         |
 
 ### Events
 

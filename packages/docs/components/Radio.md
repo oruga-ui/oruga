@@ -8,7 +8,7 @@ title: Radio
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/radio/examples/Radio.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\radio\examples\Radio.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -103,27 +103,20 @@ title: Radio
 
 ## Props
 
-| Prop name     | Description                    | Type                           | Values                                                                          | Default |
-| ------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
-| v-model       |                                | string\|number\|boolean\|array | -                                                                               |         |
-| nativeValue   | Same as native value           | string\|number\|boolean        | -                                                                               |         |
-| variant       | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| disabled      | Same as native disabled        | boolean                        | -                                                                               |         |
-| required      |                                | boolean                        | -                                                                               |         |
-| name          | Same as native name            | string                         | -                                                                               |         |
-| size          | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
-| rootClass     |                                | string                         | -                                                                               |         |
-| disabledClass |                                | string                         | -                                                                               |         |
-| checkClass    |                                | string                         | -                                                                               |         |
-| labelClass    |                                | string                         | -                                                                               |         |
-| sizeClass     |                                | string                         | -                                                                               |         |
-| variantClass  |                                | string                         | -                                                                               |         |
-
-## Events
-
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| input      | undefined |
+| Prop name     | Description                    | Type                    | Values                                                                          | Default |
+| ------------- | ------------------------------ | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| nativeValue   | Same as native value           | string\|number\|boolean | -                                                                               |         |
+| variant       | Color of the control, optional | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| disabled      | Same as native disabled        | boolean                 | -                                                                               |         |
+| required      |                                | boolean                 | -                                                                               |         |
+| name          | Same as native name            | string                  | -                                                                               |         |
+| size          | Size of the control, optional  | string                  | `small`, `medium`, `large`                                                      |         |
+| rootClass     |                                | string                  | -                                                                               |         |
+| disabledClass |                                | string                  | -                                                                               |         |
+| checkClass    |                                | string                  | -                                                                               |         |
+| labelClass    |                                | string                  | -                                                                               |         |
+| sizeClass     |                                | string                  | -                                                                               |         |
+| variantClass  |                                | string                  | -                                                                               |         |
 
 ## Slots
 

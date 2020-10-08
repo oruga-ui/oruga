@@ -2,6 +2,7 @@
 
 exports[`OTable render correctly 1`] = `
 <div class="o-table">
+    <div style="display: none;"></div>
     <!---->
     <!---->
     <div class="o-table-wrapper o-table-mobile-cards">

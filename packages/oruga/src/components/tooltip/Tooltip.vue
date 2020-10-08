@@ -1,12 +1,15 @@
 <template>
-    <span ref="tooltip" :class="rootClasses">
+    <span
+        v-if="vueReady"
+        ref="tooltip"
+        :class="rootClasses">
         <transition :name="newAnimation">
             <div
                 v-show="active && (isActive || always)"
                 ref="content"
                 :class="contentClasses">
                 <template v-if="label">{{ label }}</template>
-                <template v-else-if="$slots.content">
+                <template v-else-if="hasDefaultSlot">
                     <slot name="content" />
                 </template>
             </div>
@@ -27,6 +30,7 @@
 <script>
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
@@ -37,9 +41,9 @@ import { createAbsoluteElement, removeElement, getValueByPath } from '../../util
  */
 export default {
     name: 'OTooltip',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     props: {
-        /** Whether tooltip is active or not */
+        /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: {
             type: Boolean,
             default: true
@@ -136,6 +140,9 @@ export default {
         },
         newAnimation() {
             return this.animated ? this.animation : undefined
+        },
+        hasDefaultSlot() {
+            return this.existsSlot('default')
         }
     },
     watch: {

@@ -18,55 +18,32 @@ export default (itemName, flags = 0) => {
     if (hasFlag(flags, items)) {
         mixin.data = function () {
             return {
-                childItems: []
+                childItems: [],
+                sequence: 1
             }
         }
         mixin.methods = {
             _registerItem(item) {
-                this.childItems.push(item)
+                this.$nextTick(() => {
+                    item.index = this.childItems.length
+                    this.childItems.push(item)
+                })
             },
             _unregisterItem(item) {
-                this.childItems = this.childItems.filter((i) => i !== item)
+                this.$nextTick(() => {
+                    this.childItems = this.childItems.filter((i) => i !== item)
+                    let index = 0
+                    this.childItems.forEach(it => {
+                        it.index = index++
+                    })
+                })
+            },
+            _nextSequence() {
+                return this.sequence++
             }
         }
 
         if (hasFlag(flags, sorted)) {
-            mixin.watch = {
-                /**
-                 * When items are added/removed deep search in the elements default's slot
-                 * And mark the items with their index
-                 */
-                childItems(items) {
-                    if (items.length > 0 && this.$scopedSlots.default) {
-                        const tag = items[0].$vnode.tag
-                        let index = 0
-
-                        const deepSearch = (children) => {
-                            for (const child of children) {
-                                if (child.tag === tag) {
-                                    // An item with the same tag will for sure be found
-                                    const it = items.filter((i) => i.$vnode === child)[0]
-                                    if (it) {
-                                        it.index = index++
-                                    }
-                                } else if (child.tag) {
-                                    const sub = child.componentInstance
-                                        ? (child.componentInstance.$scopedSlots.default
-                                            ? child.componentInstance.$scopedSlots.default()
-                                            : child.componentInstance.$children)
-                                        : child.children
-                                    if (Array.isArray(sub) && sub.length > 0) {
-                                        deepSearch(sub.map((e) => e.$vnode))
-                                    }
-                                }
-                            }
-                            return false
-                        }
-
-                        deepSearch(this.$scopedSlots.default())
-                    }
-                }
-            }
             mixin.computed = {
                 /**
                  * When items are added/removed sort them according to their position

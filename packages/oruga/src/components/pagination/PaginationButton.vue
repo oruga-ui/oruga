@@ -1,5 +1,6 @@
 <template>
     <component
+        v-if="vueReady"
         :is="tag"
         role="button"
         :href="href"
@@ -16,11 +17,13 @@
 <script>
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 
 export default {
     name: 'OPaginationButton',
+    mixins: [VueComponentMixin()],
     inject: {
-        $pagination: { name: '$pagination', default: false }
+        $pagination: { name: '$pagination' }
     },
     props: {
         page: {

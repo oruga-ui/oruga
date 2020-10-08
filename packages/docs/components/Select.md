@@ -8,7 +8,7 @@ title: Select
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/select/examples/Select.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\select\examples\Select.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -105,35 +105,34 @@ title: Select
 
 ## Props
 
-| Prop name             | Description                                                 | Type                                   | Values                                            | Default                                                  |
-| --------------------- | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | -------------------------------------------------------- |
-| expanded              | Makes input full width when inside a grouped or addon field | boolean                                | -                                                 |                                                          |
-| rounded               | Makes the element rounded                                   | boolean                                | -                                                 |                                                          |
-| icon                  | Icon name to be added                                       | string                                 | -                                                 |                                                          |
-| iconPack              | Icon pack to use                                            | string                                 | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
-| autocomplete          | Native options to use in HTML5 validation                   | string                                 | -                                                 |                                                          |
-| maxlength             | Same as native maxlength, plus character counter            | number\|string                         | -                                                 |                                                          |
-| useHtml5Validation    | Enable html 5 native validation                             | boolean                                | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
-| statusIcon            | Show status icon using field and variant prop               | boolean                                | -                                                 | Config -> <code> "statusIcon": true</code>               |
-| validationMessage     | The message which is shown when a validation error occurs   | string                                 | -                                                 |                                                          |
-| v-model               |                                                             | string\|number\|boolean\|object\|array | -                                                 | null                                                     |
-| size                  | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                        |                                                          |
-| iconRight             | Icon name to be added on the right side                     | string                                 | -                                                 | Config -> <code> 'select.iconRight': 'caret-down'</code> |
-| placeholder           | Text when nothing is selected                               | string                                 | -                                                 |                                                          |
-| multiple              |                                                             | boolean                                | -                                                 |                                                          |
-| nativeSize            | Same as native size                                         | string\|number                         | -                                                 |                                                          |
-| rootClass             |                                                             | string                                 | -                                                 |                                                          |
-| controlExpandedClass  |                                                             | string                                 | -                                                 |                                                          |
-| controlIconLeftClass  |                                                             | string                                 | -                                                 |                                                          |
-| controlIconRightClass |                                                             | string                                 | -                                                 |                                                          |
-| roundedClass          |                                                             | string                                 | -                                                 |                                                          |
-| multipleClass         |                                                             | string                                 | -                                                 |                                                          |
-| emptyClass            |                                                             | string                                 | -                                                 |                                                          |
-| expandedClass         |                                                             | string                                 | -                                                 |                                                          |
-| iconLeftClass         |                                                             | string                                 | -                                                 |                                                          |
-| iconRightClass        |                                                             | string                                 | -                                                 |                                                          |
-| sizeClass             |                                                             | string                                 | -                                                 |                                                          |
-| variantClass          |                                                             | string                                 | -                                                 |                                                          |
+| Prop name             | Description                                                 | Type           | Values                                            | Default                                                  |
+| --------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                          |
+| rounded               | Makes the element rounded                                   | boolean        | -                                                 |                                                          |
+| icon                  | Icon name to be added                                       | string         | -                                                 |                                                          |
+| iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
+| autocomplete          | Native options to use in HTML5 validation                   | string         | -                                                 |                                                          |
+| maxlength             | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                          |
+| useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
+| statusIcon            | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>               |
+| validationMessage     | The message which is shown when a validation error occurs   | string         | -                                                 |                                                          |
+| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                          |
+| iconRight             | Icon name to be added on the right side                     | string         | -                                                 | Config -> <code> 'select.iconRight': 'caret-down'</code> |
+| placeholder           | Text when nothing is selected                               | string         | -                                                 |                                                          |
+| multiple              |                                                             | boolean        | -                                                 |                                                          |
+| nativeSize            | Same as native size                                         | string\|number | -                                                 |                                                          |
+| rootClass             |                                                             | string         | -                                                 |                                                          |
+| controlExpandedClass  |                                                             | string         | -                                                 |                                                          |
+| controlIconLeftClass  |                                                             | string         | -                                                 |                                                          |
+| controlIconRightClass |                                                             | string         | -                                                 |                                                          |
+| roundedClass          |                                                             | string         | -                                                 |                                                          |
+| multipleClass         |                                                             | string         | -                                                 |                                                          |
+| emptyClass            |                                                             | string         | -                                                 |                                                          |
+| expandedClass         |                                                             | string         | -                                                 |                                                          |
+| iconLeftClass         |                                                             | string         | -                                                 |                                                          |
+| iconRightClass        |                                                             | string         | -                                                 |                                                          |
+| sizeClass             |                                                             | string         | -                                                 |                                                          |
+| variantClass          |                                                             | string         | -                                                 |                                                          |
 
 ## Events
 

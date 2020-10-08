@@ -1,14 +1,14 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <nav :class="navClasses">
             <ul>
                 <li
                     v-for="childItem in items"
-                    :key="childItem.value"
+                    :key="childItem.newValue"
                     v-show="childItem.visible"
                     :class="childItem.headerClasses">
                     <o-slot-component
-                        v-if="childItem.$slots.header"
+                        v-if="childItem.hasHeaderSlot"
                         :component="childItem"
                         name="header"
                         tag="button"
@@ -33,7 +33,7 @@
 
 <script>
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin.js'
 import { getValueByPath } from '../../utils/helpers'
 

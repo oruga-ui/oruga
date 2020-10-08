@@ -4,5 +4,6 @@ exports[`OButton render correctly 1`] = `
 <button type="button" class="o-button">
     <!---->
     <!---->
-    <!----></button>
+    <!---->
+</button>
 `;

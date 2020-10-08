@@ -8,7 +8,7 @@ title: Tooltip
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tooltip/examples/Tooltip.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\tooltip\examples\Tooltip.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -170,26 +170,26 @@ title: Tooltip
 
 ## Props
 
-| Prop name      | Description                                    | Type           | Values                                                                          | Default                                               |
-| -------------- | ---------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| active         | Whether tooltip is active or not               | boolean        | -                                                                               | true                                                  |
-| label          | Tooltip text                                   | string         | -                                                                               |                                                       |
-| delay          | Tooltip delay before it appears (number in ms) | number         | -                                                                               |                                                       |
-| position       | Tooltip position in relation to the element    | string         | `top`, `bottom`, `left`, `right`                                                | Config -> <code> 'tooltip.position': 'top'</code>     |
-| triggers       | Tooltip trigger events                         | array          | `hover`, `click`, `focus`, `contextmenu`                                        | Config -> <code> 'tooltip.triggers': ['hover']</code> |
-| always         | Tooltip will be always active                  | boolean        | -                                                                               |                                                       |
-| animated       | Tooltip will have an animation                 | boolean        | -                                                                               | true                                                  |
-| animation      | Tooltip default animation                      | string         | -                                                                               | Config -> <code> 'tooltip.animation': 'fade'</code>   |
-| autoClose      | Tooltip auto close options                     | array\|boolean | `true`, `false`, `'inside'`, `'outside'`                                        | true                                                  |
-| multiline      | Tooltip will be multilined                     | boolean        | -                                                                               |                                                       |
-| appendToBody   | Append tooltip content to body                 | boolean        | -                                                                               |                                                       |
-| variant        | Color of the tooltip                           | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                       |
-| rootClass      |                                                | string         | -                                                                               |                                                       |
-| contentClass   |                                                | string         | -                                                                               |                                                       |
-| triggerClass   |                                                | string         | -                                                                               |                                                       |
-| multilineClass |                                                | string         | -                                                                               |                                                       |
-| alwaysClass    |                                                | string         | -                                                                               |                                                       |
-| variantClass   |                                                | string         | -                                                                               |                                                       |
+| Prop name      | Description                                                                                                               | Type           | Values                                                                          | Default                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| active         | Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean        | -                                                                               | true                                                  |
+| label          | Tooltip text                                                                                                              | string         | -                                                                               |                                                       |
+| delay          | Tooltip delay before it appears (number in ms)                                                                            | number         | -                                                                               |                                                       |
+| position       | Tooltip position in relation to the element                                                                               | string         | `top`, `bottom`, `left`, `right`                                                | Config -> <code> 'tooltip.position': 'top'</code>     |
+| triggers       | Tooltip trigger events                                                                                                    | array          | `hover`, `click`, `focus`, `contextmenu`                                        | Config -> <code> 'tooltip.triggers': ['hover']</code> |
+| always         | Tooltip will be always active                                                                                             | boolean        | -                                                                               |                                                       |
+| animated       | Tooltip will have an animation                                                                                            | boolean        | -                                                                               | true                                                  |
+| animation      | Tooltip default animation                                                                                                 | string         | -                                                                               | Config -> <code> 'tooltip.animation': 'fade'</code>   |
+| autoClose      | Tooltip auto close options                                                                                                | array\|boolean | `true`, `false`, `'inside'`, `'outside'`                                        | true                                                  |
+| multiline      | Tooltip will be multilined                                                                                                | boolean        | -                                                                               |                                                       |
+| appendToBody   | Append tooltip content to body                                                                                            | boolean        | -                                                                               |                                                       |
+| variant        | Color of the tooltip                                                                                                      | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                       |
+| rootClass      |                                                                                                                           | string         | -                                                                               |                                                       |
+| contentClass   |                                                                                                                           | string         | -                                                                               |                                                       |
+| triggerClass   |                                                                                                                           | string         | -                                                                               |                                                       |
+| multilineClass |                                                                                                                           | string         | -                                                                               |                                                       |
+| alwaysClass    |                                                                                                                           | string         | -                                                                               |                                                       |
+| variantClass   |                                                                                                                           | string         | -                                                                               |                                                       |
 
 ## Slots
 

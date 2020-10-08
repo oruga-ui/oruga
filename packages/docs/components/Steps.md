@@ -8,7 +8,7 @@ title: Steps
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\steps\examples\Steps.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -249,7 +249,6 @@ title: Steps
 
 | Prop name                     | Description                                                                                                                   | Type           | Values                                                                          | Default                                                   |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| v-model                       |                                                                                                                               | string\|number | -                                                                               | undefined                                                 |
 | variant                       | Color of the control, optional                                                                                                | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                           |
 | size                          | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      |                                                           |
 | animated                      |                                                                                                                               | boolean        | -                                                                               | true                                                      |
@@ -283,12 +282,6 @@ title: Steps
 | stepTitleClass                |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepLinkClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
 
-### Events
-
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| input      | undefined |
-
 ### Slots
 
 | Name       | Description | Bindings                                                                  |
@@ -302,27 +295,21 @@ title: Steps
 
 ## Props
 
-| Prop name         | Description                                                                                                                         | Type                  | Values | Default                                     |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------ | ------------------------------------------- |
-| label             | Item label                                                                                                                          | string                | -      |                                             |
-| icon              | Icon on the left                                                                                                                    | string                | -      |                                             |
-| iconPack          | Icon pack                                                                                                                           | string                | -      |                                             |
-| visible           | Show/hide item                                                                                                                      | boolean               | -      | true                                        |
-| value             | Item value (it will be used as v-model of wrapper component)                                                                        | string                | -      | function() { return this.\_uid.toString() } |
-| headerClass       | Header class of the item                                                                                                            | string\|array\|object | -      | null                                        |
-| step              | Step marker content (when there is no icon)                                                                                         | string\|number        | -      |                                             |
-| variant           | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object        | -      |                                             |
-| clickable         | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean               | -      | undefined                                   |
-| itemClass         |                                                                                                                                     | string                | -      |                                             |
-| variantClass      |                                                                                                                                     | string                | -      |                                             |
-| itemActiveClass   |                                                                                                                                     | string                | -      |                                             |
-| itemPreviousClass |                                                                                                                                     | string                | -      |                                             |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Prop name         | Description                                                                                                                         | Type                  | Values | Default   |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------ | --------- |
+| label             | Item label                                                                                                                          | string                | -      |           |
+| icon              | Icon on the left                                                                                                                    | string                | -      |           |
+| iconPack          | Icon pack                                                                                                                           | string                | -      |           |
+| visible           | Show/hide item                                                                                                                      | boolean               | -      | true      |
+| value             | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number        | -      |           |
+| headerClass       | Header class of the item                                                                                                            | string\|array\|object | -      |           |
+| step              | Step marker content (when there is no icon)                                                                                         | string\|number        | -      |           |
+| variant           | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object        | -      |           |
+| clickable         | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean               | -      | undefined |
+| itemClass         |                                                                                                                                     | string                | -      |           |
+| variantClass      |                                                                                                                                     | string                | -      |           |
+| itemActiveClass   |                                                                                                                                     | string                | -      |           |
+| itemPreviousClass |                                                                                                                                     | string                | -      |           |
 
 ## Style
 

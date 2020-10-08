@@ -8,7 +8,7 @@ title: Autocomplete
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/autocomplete/examples/Autocomplete.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\autocomplete\examples\Autocomplete.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -337,7 +337,6 @@ title: Autocomplete
 | useHtml5Validation  | Enable html 5 native validation                                                                                            | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
 | statusIcon          | Show status icon using field and variant prop                                                                              | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>               |
 | validationMessage   | The message which is shown when a validation error occurs                                                                  | string         | -                                                 |                                                          |
-| v-model             |                                                                                                                            | number\|string | -                                                 |                                                          |
 | data                | Options / suggestions                                                                                                      | array          | -                                                 | []                                                       |
 | size                | Vertical size of input, optional                                                                                           | string         | `small`, `medium`, `large`                        |                                                          |
 | field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option          | string         | -                                                 | 'value'                                                  |
@@ -373,7 +372,6 @@ title: Autocomplete
 | icon-click       |           |
 | blur             | undefined |
 | focus            | undefined |
-| input            | undefined |
 | select           | undefined |
 | infinite-scroll  |           |
 | typing           | undefined |

@@ -8,7 +8,7 @@ title: Upload
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/upload/examples/Upload.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\upload\examples\Upload.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -97,30 +97,29 @@ title: Upload
 
 ## Props
 
-| Prop name          | Description                                                           | Type                      | Values                                                                          | Default                                            |
-| ------------------ | --------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------- |
-| expanded           | Upload will be expanded (full-width)                                  | boolean                   | -                                                                               | false                                              |
-| rounded            | Makes the element rounded                                             | boolean                   | -                                                                               |                                                    |
-| icon               | Icon name to be added                                                 | string                    | -                                                                               |                                                    |
-| iconPack           | Icon pack to use                                                      | string                    | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                    |
-| autocomplete       | Native options to use in HTML5 validation                             | string                    | -                                                                               |                                                    |
-| maxlength          | Same as native maxlength, plus character counter                      | number\|string            | -                                                                               |                                                    |
-| useHtml5Validation | Enable html 5 native validation                                       | boolean                   | -                                                                               | Config -> <code> "useHtml5Validation": true</code> |
-| statusIcon         | Show status icon using field and variant prop                         | boolean                   | -                                                                               | Config -> <code> "statusIcon": true</code>         |
-| validationMessage  | The message which is shown when a validation error occurs             | string                    | -                                                                               |                                                    |
-| v-model            |                                                                       | object\|func\|File\|array | -                                                                               |                                                    |
-| multiple           | Same as native, also push new item to v-model instead of replacing    | boolean                   | -                                                                               |                                                    |
-| disabled           | Same as native disabled                                               | boolean                   | -                                                                               |                                                    |
-| accept             | Same as native accept                                                 | string                    | -                                                                               |                                                    |
-| dragDrop           | Accepts drag & drop and change its style                              | boolean                   | -                                                                               |                                                    |
-| variant            | Color of the control, optional                                        | string                    | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | 'primary'                                          |
-| native             | Replace last chosen files every time (like native file input element) | boolean                   | -                                                                               | false                                              |
-| rootClass          |                                                                       | string                    | -                                                                               |                                                    |
-| draggableClass     |                                                                       | string                    | -                                                                               |                                                    |
-| variantClass       |                                                                       | string                    | -                                                                               |                                                    |
-| expandedClass      |                                                                       | string                    | -                                                                               |                                                    |
-| disabledClass      |                                                                       | string                    | -                                                                               |                                                    |
-| hoveredClass       |                                                                       | string                    | -                                                                               |                                                    |
+| Prop name          | Description                                                           | Type           | Values                                                                          | Default                                            |
+| ------------------ | --------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------- |
+| expanded           | Upload will be expanded (full-width)                                  | boolean        | -                                                                               | false                                              |
+| rounded            | Makes the element rounded                                             | boolean        | -                                                                               |                                                    |
+| icon               | Icon name to be added                                                 | string         | -                                                                               |                                                    |
+| iconPack           | Icon pack to use                                                      | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                    |
+| autocomplete       | Native options to use in HTML5 validation                             | string         | -                                                                               |                                                    |
+| maxlength          | Same as native maxlength, plus character counter                      | number\|string | -                                                                               |                                                    |
+| useHtml5Validation | Enable html 5 native validation                                       | boolean        | -                                                                               | Config -> <code> "useHtml5Validation": true</code> |
+| statusIcon         | Show status icon using field and variant prop                         | boolean        | -                                                                               | Config -> <code> "statusIcon": true</code>         |
+| validationMessage  | The message which is shown when a validation error occurs             | string         | -                                                                               |                                                    |
+| multiple           | Same as native, also push new item to v-model instead of replacing    | boolean        | -                                                                               |                                                    |
+| disabled           | Same as native disabled                                               | boolean        | -                                                                               |                                                    |
+| accept             | Same as native accept                                                 | string         | -                                                                               |                                                    |
+| dragDrop           | Accepts drag & drop and change its style                              | boolean        | -                                                                               |                                                    |
+| variant            | Color of the control, optional                                        | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | 'primary'                                          |
+| native             | Replace last chosen files every time (like native file input element) | boolean        | -                                                                               | false                                              |
+| rootClass          |                                                                       | string         | -                                                                               |                                                    |
+| draggableClass     |                                                                       | string         | -                                                                               |                                                    |
+| variantClass       |                                                                       | string         | -                                                                               |                                                    |
+| expandedClass      |                                                                       | string         | -                                                                               |                                                    |
+| disabledClass      |                                                                       | string         | -                                                                               |                                                    |
+| hoveredClass       |                                                                       | string         | -                                                                               |                                                    |
 
 ## Events
 
@@ -128,7 +127,6 @@ title: Upload
 | ---------- | --------- | ----------- |
 | blur       | undefined |
 | focus      | undefined |
-| input      | undefined |
 
 ## Slots
 

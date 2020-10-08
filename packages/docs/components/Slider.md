@@ -8,7 +8,7 @@ title: Slider
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/slider/examples/Slider.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\slider\examples\Slider.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -170,7 +170,6 @@ title: Slider
 
 | Prop name              | Description                                      | Type          | Values                                                                          | Default                                             |
 | ---------------------- | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
-| v-model                |                                                  | number\|array | -                                                                               | 0                                                   |
 | min                    | Minimum value                                    | number        | -                                                                               | 0                                                   |
 | max                    | Maximum value                                    | number        | -                                                                               | 100                                                 |
 | step                   | Step interval of ticks                           | number        | -                                                                               | 1                                                   |

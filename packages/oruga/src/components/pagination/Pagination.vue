@@ -1,7 +1,7 @@
 <template>
     <nav :class="rootClasses">
         <slot
-            v-if="$scopedSlots.previous"
+            v-if="hasPreviousSlot"
             name="previous"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
@@ -30,7 +30,7 @@
                 aria-hidden="true"/>
         </o-pagination-button>
         <slot
-            v-if="$scopedSlots.next"
+            v-if="hasNextSlot"
             name="next"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
@@ -71,7 +71,7 @@
             <!--First-->
             <li v-if="hasFirst">
                 <slot
-                    v-if="$scopedSlots.default"
+                    v-if="hasDefaultSlot"
                     :page="getPage(1)"
                     :linkClass="linkClasses"
                     :linkCurrentClass="linkCurrentClasses"
@@ -87,7 +87,7 @@
             <!--Pages-->
             <li v-for="page in pagesInRange" :key="page.number">
                 <slot
-                    v-if="$scopedSlots.default"
+                    v-if="hasDefaultSlot"
                     :page="page"
                     :linkClass="linkClasses"
                     :linkCurrentClass="linkCurrentClasses"
@@ -103,7 +103,7 @@
             <li v-if="hasLastEllipsis"><span :class="ellipsisClasses">&hellip;</span></li>
             <li v-if="hasLast">
                 <slot
-                    v-if="$scopedSlots.default"
+                    v-if="hasDefaultSlot"
                     :page="getPage(pageCount)"
                     :linkClass="linkClasses"
                     :linkCurrentClass="linkCurrentClasses"
@@ -124,8 +124,8 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
-
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
@@ -138,12 +138,13 @@ export default {
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     provide() {
         return {
             $pagination: this
         }
     },
+    emits: ['update:active', 'change'],
     props: {
         /** Total count of items */
         total: [Number, String],
@@ -152,7 +153,7 @@ export default {
             type: [Number, String],
             default: () => { return getValueByPath(config, 'pagination.perPage', 20) }
         },
-        /** Current page number, use the .sync modifier to make it two-way binding */
+        /** Current page number, use the .sync modifier (Vue 2.x) or v-model:current (Vue 3.x) to make it two-way binding */
         current: {
             type: [Number, String],
             default: 1
@@ -345,6 +346,16 @@ export default {
                 pages.push(this.getPage(i))
             }
             return pages
+        },
+
+        hasDefaultSlot() {
+            return this.existsSlot('default', true)
+        },
+        hasPreviousSlot() {
+            return this.existsSlot('previous', true)
+        },
+        hasNextSlot() {
+            return this.existsSlot('next', true)
         }
     },
     watch: {

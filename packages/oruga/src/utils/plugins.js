@@ -1,15 +1,27 @@
+import {
+    use as vueUse,
+    component as vueComponent,
+    setGlobalProperty,
+    getGlobalProperty
+} from "./vue-utils"
 
 export const use = (plugin) => {
     if (typeof window !== 'undefined' && window.Vue) {
-        window.Vue.use(plugin)
+        vueUse(window.Vue, plugin)
     }
 }
 
-export const registerComponent = (Vue, component) => {
-    Vue.component(component.name, component)
+export const registerPlugin = (vm, plugin) => {
+    vueUse(vm, plugin)
 }
 
-export const registerComponentProgrammatic = (Vue, property, component) => {
-    if (!Vue.prototype.$oruga) Vue.prototype.$oruga = {}
-    Vue.prototype.$oruga[property] = component
+export const registerComponent = (vm, component) => {
+    vueComponent(vm, component)
+}
+
+export const registerComponentProgrammatic = (vm, property, component) => {
+    let oruga = getGlobalProperty(vm, '$oruga')
+    if (!oruga) oruga = {}
+    oruga[property] = component
+    setGlobalProperty(vm, '$oruga', oruga)
 }

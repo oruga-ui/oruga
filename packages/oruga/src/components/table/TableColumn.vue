@@ -1,11 +1,11 @@
 <script>
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
 
 export default {
     name: 'OTableColumn',
-    inject: {
-        $table: { name: '$table', default: false }
-    },
+    mixins: [VueComponentMixin()],
+    inject: ['$table'],
     props: {
         label: String,
         customKey: [String, Number],
@@ -29,7 +29,7 @@ export default {
     },
     data() {
         return {
-            newKey: this.customKey || this.label
+            newKey: this.$table._nextSequence()
         }
     },
     computed: {
@@ -39,7 +39,16 @@ export default {
             }
         },
         hasDefaultSlot() {
-            return !!this.$scopedSlots.default
+            return this.existsSlot('default', true)
+        },
+        hasSearchableSlot() {
+            return this.existsSlot('searchable', true)
+        },
+        hasHeaderSlot() {
+            return this.existsSlot('header', true)
+        },
+        hasSubheadingSlot() {
+            return this.existsSlot('subheading', true)
         },
         /**
          * Return if column header is un-selectable
@@ -50,14 +59,17 @@ export default {
     },
     created() {
         if (!this.$table) {
-            this.$destroy()
             throw new Error('You should wrap oTableColumn on a oTable')
         }
-        this.$table.refreshSlots()
+        this.$table._addColumn(this)
+    },
+    beforeDestroy() {
+        this.$table._removeColumn(this)
     },
     render() {
         // renderless
-        return null
+        if (!this.vueReady) return
+        return this.$createElement('span', { domProps: { 'data-id': this.newKey } }, this.label)
     }
 }
 </script>

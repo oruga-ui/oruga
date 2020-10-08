@@ -1,22 +1,18 @@
 import Icon from '../components/icon/Icon'
 import SlotComponent from '../utils/SlotComponent'
 import { default as ProviderParentMixin, Sorted } from './ProviderParentMixin'
-import { bound } from './helpers'
+import VueComponentMixin from './VueComponentMixin'
+
+const modelValueDef = [String, Number]
 
 export default (cmp) => ({
-    mixins: [ProviderParentMixin(cmp, Sorted)],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), ProviderParentMixin(cmp, Sorted)],
     components: {
         [Icon.name]: Icon,
         [SlotComponent.name]: SlotComponent
     },
+    emits: ['update:modelValue'],
     props: {
-        /**
-         * @model
-         */
-        value: {
-            type: [String, Number],
-            default: undefined
-        },
         /**
         * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
@@ -48,72 +44,51 @@ export default (cmp) => ({
         }
     },
     data() {
+        const vm = this
         return {
-            activeId: this.value, // Internal state
-            defaultSlots: [],
+            activeId: vm.getModel(),
             contentHeight: 0,
             isTransitioning: false
         }
     },
-    mounted() {
-        if (typeof this.value === 'number') {
-            // Backward compatibility: converts the index value to an id
-            const value = bound(this.value, 0, this.items.length - 1)
-            this.activeId = this.items[value].value
-        } else {
-            this.activeId = this.value
-        }
-    },
     computed: {
         activeItem() {
-            return this.activeId === undefined ? this.items[0]
-                : (this.activeId === null ? null
-                    : this.childItems.filter((i) => i.value === this.activeId))[0]
+            return this.activeId !== undefined && this.activeId !== null
+                ? this.childItems.filter((i) => i.newValue === this.activeId)[0] : this.items[0]
         },
         items() {
             return this.sortedItems
         }
     },
-    watch: {
+    methods: {
         /**
          * When v-model is changed set the new active tab.
          */
-        value(value) {
-            if (typeof value === 'number') {
-                // Backward compatibility: converts the index value to an id
-                value = bound(value, 0, this.items.length - 1)
-                this.activeId = this.items[value].value
-            } else {
-                this.activeId = value
-            }
+        onModelChange(value) {
+            this.performAction()
+            this.activeId = value
         },
-        /**
-         * Sync internal state with external state
-         */
-        activeId(val, oldValue) {
-            const oldTab = oldValue !== undefined && oldValue !== null
-                ? this.childItems.filter((i) => i.value === oldValue)[0] : null
-
-            if (oldTab && this.activeItem) {
-                oldTab.deactivate(this.activeItem.index)
-                this.activeItem.activate(oldTab.index)
-            }
-
-            val = this.activeItem
-                ? (typeof this.value === 'number' ? this.items.indexOf(this.activeItem) : this.activeItem.value)
-                : undefined
-
-            if (val !== this.value) {
-                this.$emit('input', val)
-            }
-        }
-    },
-    methods: {
         /**
         * Child click listener, emit input event and change active child.
         */
         childClick(child) {
-            this.activeId = child.value
+            if (this.activeId !== child.newValue) {
+                this.performAction()
+                this.activeId = child.newValue
+                this.emitModel(this.activeId)
+            }
+        },
+        /**
+        * Activate next child and deactivate prev child
+        */
+        performAction() {
+            const oldValue = this.activeId
+            const oldTab = oldValue !== undefined && oldValue !== null
+                ? this.childItems.filter((i) => i.newValue === oldValue)[0] : this.items[0]
+            if (oldTab && this.activeItem) {
+                oldTab.deactivate(this.activeItem.index)
+                this.activeItem.activate(oldTab.index)
+            }
         }
     }
 })

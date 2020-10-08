@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <o-input
             v-model="newValue"
             ref="input"
@@ -85,9 +85,12 @@
 import Input from '../input/Input'
 
 import config from '../../utils/config'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+
+const modelValueDef = [Number, String]
 
 /**
  * Extended input that provide suggestions while the user types
@@ -100,16 +103,15 @@ export default {
     components: {
         [Input.name]: Input
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
             $elementRef: 'input'
         }
     },
+    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     props: {
-        /** @model */
-        value: [Number, String],
         /** Options / suggestions */
         data: {
             type: Array,
@@ -185,11 +187,12 @@ export default {
         inputClasses: Object
     },
     data() {
+        const vm = this
         return {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: this.value,
+            newValue: vm.getModel(),
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -288,35 +291,35 @@ export default {
          * Check if exists group slot
          */
         hasGroupSlot() {
-            return !!this.$scopedSlots.group
+            return this.existsSlot('group', true)
         },
 
         /**
          * Check if exists default slot
          */
         hasDefaultSlot() {
-            return !!this.$scopedSlots.default
+            return this.existsSlot('default', true)
         },
 
         /**
          * Check if exists "empty" slot
          */
         hasEmptySlot() {
-            return !!this.$slots.empty
+            return this.existsSlot('empty')
         },
 
         /**
          * Check if exists "header" slot
          */
         hasHeaderSlot() {
-            return !!this.$slots.header
+            return this.existsSlot('header')
         },
 
         /**
          * Check if exists "footer" slot
          */
         hasFooterSlot() {
-            return !!this.$slots.footer
+            return this.existsSlot('footer')
         },
 
         /**
@@ -372,7 +375,7 @@ export default {
          *   3. Close dropdown if value is clear or else open it
          */
         newValue(value) {
-            this.$emit('input', value)
+            this.emitModel(value)
             // Check if selected is invalid
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue !== value) {
@@ -382,15 +385,6 @@ export default {
             if (this.hasFocus && (!this.openOnFocus || value)) {
                 this.isActive = !!value
             }
-        },
-
-        /**
-         * When v-model is changed:
-         *   1. Update internal value.
-         *   2. If it's invalid, validate again.
-         */
-        value(value) {
-            this.newValue = value
         },
 
         /**
@@ -416,6 +410,14 @@ export default {
                 ...this.itemClasses,
                 { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
             ]
+        },
+        /**
+         * When v-model is changed:
+         *   1. Update internal value.
+         *   2. If it's invalid, validate again.
+         */
+        onModelChange(value) {
+            this.newValue = value
         },
         /**
          * Set which option is currently hovered.

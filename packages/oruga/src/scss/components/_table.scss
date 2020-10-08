@@ -48,6 +48,9 @@ $table-th-wrap-icon-margin: 0.5rem !default;
 /* @docs */
 
 @mixin table-cards {
+    .table {
+        background-color: transparent;
+    }
     thead {
         tr {
             box-shadow: none;
@@ -83,6 +86,15 @@ $table-th-wrap-icon-margin: 0.5rem !default;
         }
         &:not(:last-child) {
             @include variable('margin', 'table-card-margin', $table-card-margin);
+        }
+        // Disables is-*
+        &:not(.o-table-row-selected) {
+            background: inherit;
+            background: $table-background-color;
+            &:hover {
+                background-color: inherit;
+                background-color: $table-background-color;
+            }
         }
         &.o-table-detail {
             @include variable('margin', 'table-card-detail-margin', $table-card-detail-margin);
@@ -123,13 +135,6 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             }
         }
         &.o-table-mobile-cards {
-            tr {
-                background: $table-background-color !important;
-            }
-
-            .table {
-                background-color: transparent;
-            }
             @media screen and (max-width: $table-mobile-breakpoint - 1px) {
                 @include table-cards
             }

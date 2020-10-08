@@ -11,7 +11,6 @@ describe('OTableColumn', () => {
             sync: false,
         })
         wrapper = mount(OTableColumn, {
-            parentComponent: wrapperParent.vm,
             provide: {
                 $table: wrapperParent.vm
             }

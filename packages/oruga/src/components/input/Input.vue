@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
             ref="input"
@@ -56,7 +56,10 @@ import Icon from '../icon/Icon'
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+
+const modelValueDef = [Number, String]
 
 /**
  * Get user Input. Use with Field to access all functionalities
@@ -69,7 +72,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -78,11 +81,8 @@ export default {
                 : 'input'
         }
     },
+    emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
-        /**
-         * @model
-         */
-        value: [Number, String],
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -133,8 +133,9 @@ export default {
         variantClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.value,
+            newValue: vm.getModel(),
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false
@@ -179,7 +180,7 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.$emit('input', value)
+                this.emitModel(value)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -239,16 +240,14 @@ export default {
             return 0
         }
     },
-    watch: {
+    methods: {
         /**
         * When v-model is changed:
         *   1. Set internal value.
         */
-        value(value) {
+        onModelChange(value) {
             this.newValue = value
-        }
-    },
-    methods: {
+        },
         /**
         * Toggle the visibility of a password-reveal input
         * by changing the type and focus the input right away.

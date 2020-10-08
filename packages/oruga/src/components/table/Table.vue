@@ -1,7 +1,9 @@
 <template>
-    <div :class="rootClasses">
+    <div v-if="vueReady" :class="rootClasses">
 
-        <slot />
+        <div ref="slot" style="display:none">
+            <slot />
+        </div>
 
         <o-table-mobile-sort
             v-if="mobileCards && hasSortablenewColumns"
@@ -24,7 +26,8 @@
                     :per-page="perPage"
                     :paginated="paginated"
                     :total="newDataTotal"
-                    :current-page.sync="newCurrentPage"
+                    :current-page="newCurrentPage"
+                    @update:currentPage="newCurrentPage = $event"
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     @page-change="(event) => $emit('page-change', event)"
@@ -49,7 +52,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :value="isAllChecked"
+                                    :[modelName]="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -61,7 +64,7 @@
                             :style="column.style"
                             @click.stop="sort(column, null, $event)">
                             <div :class="thWrapClasses(column)">
-                                <template v-if="column.$scopedSlots && column.$scopedSlots.header">
+                                <template v-if="column.hasHeaderSlot">
                                     <o-slot-component
                                         :component="column"
                                         scoped
@@ -107,7 +110,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :value="isAllChecked"
+                                    :[modelName]="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -121,9 +124,7 @@
                             :key="column.newKey + ':' + index + 'subheading'"
                             :style="column.style">
                             <div :class="thWrapClasses({})">
-                                <template
-                                    v-if="column.$scopedSlots && column.$scopedSlots.subheading"
-                                >
+                                <template v-if="column.hasSubheadingSlot">
                                     <o-slot-component
                                         :component="column"
                                         scoped
@@ -147,9 +148,7 @@
                             :style="column.style">
                             <div :class="thWrapClasses({})">
                                 <template v-if="column.searchable">
-                                    <template
-                                        v-if="column.$scopedSlots
-                                        && column.$scopedSlots.searchable">
+                                    <template v-if="column.hasSearchableSlot">
                                         <o-slot-component
                                             :component="column"
                                             :scoped="true"
@@ -170,77 +169,78 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template v-for="(row, index) in visibleData">
-                        <tr
-                            :key="customRowKey ? row[customRowKey] : index"
-                            :class="rowClasses(row, index)"
-                            @click="selectRow(row)"
-                            @dblclick="$emit('dblclick', row)"
-                            @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
-                            @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
-                            @contextmenu="$emit('contextmenu', row, $event)"
-                            :draggable="draggable"
-                            @dragstart="handleDragStart($event, row, index)"
-                            @dragend="handleDragEnd($event, row, index)"
-                            @drop="handleDrop($event, row, index)"
-                            @dragover="handleDragOver($event, row, index)"
-                            @dragleave="handleDragLeave($event, row, index)">
+                    <tr
+                        v-for="(row, index) in visibleData"
+                        :key="customRowKey ? row[customRowKey] : index"
+                        :class="rowClasses(row, index)"
+                        @click="selectRow(row)"
+                        @dblclick="$emit('dblclick', row)"
+                        @mouseenter="listeners.mouseenter ? $emit('mouseenter', row) : null"
+                        @mouseleave="listeners.mouseleave ? $emit('mouseleave', row) : null"
+                        @contextmenu="$emit('contextmenu', row, $event)"
+                        :draggable="draggable"
+                        @dragstart="handleDragStart($event, row, index)"
+                        @dragend="handleDragEnd($event, row, index)"
+                        @drop="handleDrop($event, row, index)"
+                        @dragover="handleDragOver($event, row, index)"
+                        @dragleave="handleDragLeave($event, row, index)">
 
-                            <td
-                                v-if="showDetailRowIcon"
-                                :class="detailedChevronClasses"
-                            >
-                                <a
-                                    v-if="hasDetailedVisible(row)"
-                                    role="detailed"
-                                    @click.stop="toggleDetails(row)">
-                                    <o-icon
-                                        icon="chevron-right"
-                                        :pack="iconPack"
-                                        clickable
-                                        both
-                                        :class="detailedIconExpandedClasses(row)"/>
-                                </a>
-                            </td>
+                        <td
+                            v-if="showDetailRowIcon"
+                            :class="detailedChevronClasses"
+                        >
+                            <a
+                                v-if="hasDetailedVisible(row)"
+                                role="detailed"
+                                @click.stop="toggleDetails(row)">
+                                <o-icon
+                                    icon="chevron-right"
+                                    :pack="iconPack"
+                                    clickable
+                                    both
+                                    :class="detailedIconExpandedClasses(row)"/>
+                            </a>
+                        </td>
 
-                            <td
-                                :class="tdCheckboxCellClasses"
-                                v-if="checkable && checkboxPosition === 'left'">
-                                <o-checkbox
-                                    :disabled="!isRowCheckable(row)"
-                                    :value="isRowChecked(row)"
-                                    @click.native.prevent.stop="checkRow(row, index, $event)"
+                        <td
+                            :class="tdCheckboxCellClasses"
+                            v-if="checkable && checkboxPosition === 'left'">
+                            <o-checkbox
+                                :disabled="!isRowCheckable(row)"
+                                :[modelName]="isRowChecked(row)"
+                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                            />
+                        </td>
+
+                        <template v-for="(column, colindex) in visibleColumns">
+
+                            <template v-if="column.hasDefaultSlot">
+                                <o-slot-component
+                                    :key="column.newKey + index + ':' + colindex"
+                                    :component="column"
+                                    scoped
+                                    name="default"
+                                    tag="td"
+                                    :class="columnClasses(column)"
+                                    :data-label="column.label"
+                                    :props="{ row, column, index }"
                                 />
-                            </td>
-
-                            <template v-for="(column, colindex) in visibleColumns">
-
-                                <template v-if="column.$scopedSlots && column.$scopedSlots.default">
-                                    <o-slot-component
-                                        :key="column.newKey + index + ':' + colindex"
-                                        :component="column"
-                                        scoped
-                                        name="default"
-                                        tag="td"
-                                        :class="columnClasses(column)"
-                                        :data-label="column.label"
-                                        :props="{ row, column, index }"
-                                    />
-                                </template>
-
                             </template>
 
-                            <td
-                                :class="tdCheckboxCellClasses"
-                                v-if="checkable && checkboxPosition === 'right'">
-                                <o-checkbox
-                                    :disabled="!isRowCheckable(row)"
-                                    :value="isRowChecked(row)"
-                                    @click.native.prevent.stop="checkRow(row, index, $event)"
-                                />
-                            </td>
-                        </tr>
+                        </template>
 
+                        <td
+                            :class="tdCheckboxCellClasses"
+                            v-if="checkable && checkboxPosition === 'right'">
+                            <o-checkbox
+                                :disabled="!isRowCheckable(row)"
+                                :[modelName]="isRowChecked(row)"
+                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                            />
+                        </td>
+                    </tr>
+
+                    <template v-for="(row, index) in visibleData">
                         <tr
                             v-if="isActiveDetailRow(row)"
                             :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
@@ -270,7 +270,7 @@
 
                 </tbody>
 
-                <tfoot v-if="$slots.footer !== undefined">
+                <tfoot v-if="hasFooterSlot">
                     <tr :class="footerClasses">
                         <slot name="footer" v-if="hasCustomFooterSlot()"/>
                         <th :colspan="columnCount" v-else>
@@ -283,7 +283,7 @@
 
         <template v-if="loading">
             <slot name="loading">
-                <o-loading :full-page="false" :active.sync="loading" />
+                <o-loading :full-page="false" :active="loading" />
             </slot>
         </template>
 
@@ -295,7 +295,8 @@
                     :per-page="perPage"
                     :paginated="paginated"
                     :total="newDataTotal"
-                    :current-page.sync="newCurrentPage"
+                    :current-page="newCurrentPage"
+                    @update:currentPage="newCurrentPage = $event"
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     @page-change="(event) => $emit('page-change', event)"
@@ -309,11 +310,6 @@
 </template>
 
 <script>
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
-import config from '../../utils/config'
-import { VueInstance } from '../../utils/config'
-
 import Button from '../button/Button'
 import Checkbox from '../checkbox/Checkbox'
 import Icon from '../icon/Icon'
@@ -324,6 +320,12 @@ import SlotComponent from '../../utils/SlotComponent'
 import TableMobileSort from './TableMobileSort'
 import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
+import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
+import config from '../../utils/config'
+import { VueInstance } from '../../utils/config'
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -345,13 +347,20 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
     inheritAttrs: false,
     provide() {
         return {
             $table: this
         }
     },
+    emits: [
+        'page-change', 'click', 'dblclick', 'contextmenu',
+        'check', 'check-all', 'update:checkedRows', 
+        'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
+        'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
+        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover'
+    ],
     props: {
         /** Table data */
         data: {
@@ -396,14 +405,14 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
-        /** Set which row is selected, use the .sync modifier to make it two-way binding */
+        /** Set which row is selected, use the .sync modifier (Vue 2.x) or v-model:selected (Vue 3.x) to make it two-way binding */
         selected: Object,
         /** Custom method to verify if a row is selectable, works when is selected. */
         isRowSelectable: {
             type: Function,
             default: () => true
         },
-        /** Table can be focused and user can navigate with keyboard arrows (require selected.sync) and rows are highlighted when hovering */
+        /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */
         focusable: Boolean,
         /** Custom method to verify if row is checked, works when is checkable. Useful for backend pagination */
         customIsChecked: Function,
@@ -412,7 +421,7 @@ export default {
             type: Function,
             default: () => true
         },
-        /** Set which rows are checked, use the .sync modifier to make it two-way binding */
+        /** Set which rows are checked, use the .sync modifier (Vue 2.x) or v-model:checkedRows (Vue 3.x) to make it two-way binding */
         checkedRows: {
             type: Array,
             default: () => []
@@ -465,7 +474,7 @@ export default {
         },
         /** Adds pagination to the table */
         paginated: Boolean,
-        /** Current page of table data (if paginated), use the .sync modifier to make it two-way binding */
+        /** Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding */
         currentPage: {
             type: Number,
             default: 1
@@ -618,6 +627,7 @@ export default {
             filters: {},
             defaultSlots: [],
             firstTimeSort: true, // Used by first time initSort
+            sequence: 1
         }
     },
     computed: {
@@ -777,9 +787,8 @@ export default {
         * Check if has any column using subheading.
         */
         hasCustomSubheadings() {
-            if (this.$scopedSlots && this.$scopedSlots.subheading) return true
             return this.newColumns.some((column) => {
-                return column.subheading || (column.$scopedSlots && column.$scopedSlots.subheading)
+                return column.subheading || column.hasSubheadingSlot
             })
         },
 
@@ -820,29 +829,27 @@ export default {
                     const component = new TableColumnComponent(
                         { parent: this, propsData: column }
                     )
-                    component.$scopedSlots = {
-                        default: (props) => {
-                            const vnode = component.$createElement('span', {
-                                domProps: {
-                                    innerHTML: getValueByPath(props.row, column.field)
-                                }
-                            })
+                    component.setScopedSlot('default',
+                        (props) => {
+                            const vnode = component.$createElement(
+                                'span', 
+                                { domProps: { innerHTML: getValueByPath(props.row, column.field) } }
+                            )
                             return [vnode]
                         }
-                    }
+                    )
                     return component
                 })
             }
             return this.defaultSlots
-                .filter((vnode) =>
-                    vnode.componentInstance &&
-                    vnode.componentInstance.$options &&
-                    vnode.componentInstance.$options.name === 'OTableColumn')
-                .map((vnode) => vnode.componentInstance)
         },
 
         sortMultipleDataComputed() {
             return this.backendSorting ? this.sortMultipleData : this.sortMultipleDataLocal
+        },
+
+        hasFooterSlot() {
+            return this.existsSlot('footer')
         }
     },
     watch: {
@@ -856,8 +863,7 @@ export default {
         data(value) {
             this.newData = value
             if (!this.backendFiltering) {
-                this.newData = value.filter(
-                    (row) => this.isRowFiltered(row))
+                this.newData = value.filter((row) => this.isRowFiltered(row))
             }
             if (!this.backendSorting) {
                 this.sort(this.currentSortColumn, true)
@@ -913,7 +919,7 @@ export default {
         */
         openedDetailed(expandedRows) {
             this.visibleDetailRows = expandedRows
-        }
+        },
     },
     methods: {
         thWrapClasses(column) {
@@ -978,8 +984,7 @@ export default {
             if (this.backendFiltering) {
                 this.$emit('filters-change', value)
             } else {
-                this.newData = this.data.filter(
-                    (row) => this.isRowFiltered(row))
+                this.newData = this.data.filter((row) => this.isRowFiltered(row))
                 if (!this.backendPagination) {
                     this.newDataTotal = this.newData.length
                 }
@@ -1307,13 +1312,6 @@ export default {
                 : index[key]
         },
 
-        checkPredefinedDetailedRows() {
-            const defaultExpandedRowsDefined = this.openedDetailed.length > 0
-            if (defaultExpandedRowsDefined && !this.detailKey.length) {
-                throw new Error('If you set a predefined opened-detailed, you must provide a unique key using the prop "detail-key"')
-            }
-        },
-
         /**
         * Call initSort only first time (For example async data).
         */
@@ -1337,9 +1335,10 @@ export default {
         * Check if footer slot has custom content.
         */
         hasCustomFooterSlot() {
-            if (this.$slots.footer.length > 1) return true
+            const footer = this.getSlotInstance('footer')
+            if (footer.length > 1) return true
 
-            const tag = this.$slots.footer[0].tag
+            const tag = footer[0].tag
             if (tag !== 'th' && tag !== 'td') return false
 
             return true
@@ -1349,7 +1348,7 @@ export default {
         * Check if bottom-left slot exists.
         */
         hasBottomLeftSlot() {
-            return typeof this.$slots['bottom-left'] !== 'undefined'
+            return this.existsSlot('bottom-left')
         },
 
         /**
@@ -1456,13 +1455,34 @@ export default {
             this.$emit('dragleave', {event, row, index})
         },
 
-        refreshSlots() {
-            this.defaultSlots = this.$slots.default || []
+        _addColumn(column) {
+            this.$nextTick(() => {
+                this.defaultSlots.push(column)
+                window.requestAnimationFrame(() => {
+                    const div = this.$refs['slot']
+                    if (div && div.children) {
+                        const position = [...div.children].map(c =>
+                            parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
+                        if (position !== this.defaultSlots.length) {
+                            this.defaultSlots.splice(position, 0, column);
+                            this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+                        }
+                    }
+                })
+            })
+        },
+
+        _removeColumn(column) {
+            this.$nextTick(() => {
+                this.defaultSlots = this.defaultSlots.filter(d => d.newKey !== column.newKey)
+            })
+        },
+
+        _nextSequence() {
+            return this.sequence++
         }
     },
     mounted() {
-        this.refreshSlots()
-        this.checkPredefinedDetailedRows()
         this.checkSort()
     }
 }

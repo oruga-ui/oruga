@@ -8,7 +8,7 @@ title: Modal
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/modal/examples/Modal.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\modal\examples\Modal.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -220,7 +220,7 @@ title: Modal
 
 | Prop name       | Description                                                                                                                                                            | Type           | Values                             | Default                                               |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------- | ----------------------------------------------------- |
-| active          | Whether modal is active or not, use the .sync modifier to make it two-way binding                                                                                      | boolean        | -                                  |                                                       |
+| active          | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding                                                | boolean        | -                                  |                                                       |
 | component       | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                                                       |
 | content         | Text content                                                                                                                                                           | string         | -                                  |                                                       |
 | programmatic    |                                                                                                                                                                        | boolean        | -                                  |                                                       |

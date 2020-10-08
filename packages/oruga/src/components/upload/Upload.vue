@@ -1,5 +1,5 @@
 <template>
-    <label :class="rootClasses">
+    <label v-if="vueReady" :class="rootClasses">
         <template v-if="!dragDrop">
             <slot/>
         </template>
@@ -26,9 +26,12 @@
 </template>
 
 <script>
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { File } from '../../utils/ssr'
+
+const modelValueDef = [Object, File, Array]
 
 /**
  * Upload one or more files
@@ -38,20 +41,15 @@ import { File } from '../../utils/ssr'
  */
 export default {
     name: 'OUpload',
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
             $elementRef: 'input'
         }
     },
+    emits: ['update:modelValue'],
     props: {
-        /**
-         * @model
-         */
-        value: {
-            type: [Object, Function, File, Array]
-        },
         /** Same as native, also push new item to v-model instead of replacing */
         multiple: Boolean,
         /** Same as native disabled */
@@ -86,8 +84,9 @@ export default {
         hoveredClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.value,
+            newValue: vm.getModel(),
             dragDropFocus: false
         }
     },
@@ -108,22 +107,20 @@ export default {
             ]
         }
     },
-    watch: {
+    methods: {
         /**
          *   When v-model is changed:
          *   1. Set internal value.
          *   2. Reset interna input file value
          *   3. If it's invalid, validate again.
          */
-        value(value) {
+        onModelChange(value) {
             this.newValue = value
             if (!value || (Array.isArray(value) && value.length === 0)) {
                 this.$refs.input.value = null
             }
             !this.isValid && !this.dragDrop && this.checkHtml5Validity()
-        }
-    },
-    methods: {
+        },
         /**
         * Listen change event on input type 'file',
         * emit 'input' event and validate
@@ -160,7 +157,7 @@ export default {
                 }
                 if (!newValues) return
             }
-            this.$emit('input', this.newValue)
+            this.emitModel(this.newValue)
             !this.dragDrop && this.checkHtml5Validity()
         },
 

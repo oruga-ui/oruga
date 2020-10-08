@@ -1,5 +1,6 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -10,10 +11,11 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OCollapse',
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin(), BaseComponentMixin],
+    emits: ['update:open', 'open', 'close'],
     props: {
         /**
-         * Whether collapse is open or not, use the .sync modifier to make it two-way binding
+         * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
          */
         open: {
             type: Boolean,
@@ -73,25 +75,24 @@ export default {
             this.$emit(this.isOpen ? 'open' : 'close')
         }
     },
-    render(createElement) {
-        const trigger = createElement('div', {
+    render() {
+        if (!this.vueReady) return
+        const trigger = this.$createElement('div', {
             staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
             on: { click: this.toggle }
-        }, this.$scopedSlots.trigger
-            ? [this.$scopedSlots.trigger({ open: this.isOpen })]
-            : [this.$slots.trigger]
-        )
-        const content = createElement('transition', { props: { name: this.animation } }, [
-            createElement('div', {
+        }, this.existsSlot('trigger', true) ? this.getSlotInstance('trigger', true, { open: this.isOpen }) : this.getSlotInstance('trigger') )
+        const content = this.$createElement('transition', { props: { name: this.animation } }, [
+            this.$createElement('div', {
                 staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
                     value: this.isOpen
                 }]
-            }, this.$slots.default)
+            }, this.getSlotInstance('default'))
         ])
-        return createElement('div', { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
+        return this.$createElement('div',
+            { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 }

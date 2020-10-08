@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="vueReady"
         ref="dropdown"
         :class="rootClasses"
     >
@@ -41,9 +42,15 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import VueComponentMixin from '../../utils/VueComponentMixin'
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
+
+const modelValueDef = {
+    type: [String, Number, Boolean, Object, Array],
+    default: null
+}
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -57,18 +64,17 @@ export default {
     directives: {
         trapFocus
     },
-    mixins: [BaseComponentMixin],
+    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
     provide() {
         return {
             $dropdown: this
         }
     },
+    emits: ['update:modelValue', 'active-change', 'change'],
     props: {
-        /** @model */
-        value: {
-            type: [String, Number, Boolean, Object, Array, Function],
-            default: null
-        },
+        /**
+         * Dropdown disabled
+         */
         disabled: Boolean,
         /**
          * Dropdown content (items) are shown inline, trigger is removed
@@ -192,8 +198,9 @@ export default {
         expandedClass: String
     },
     data() {
+        const vm = this
         return {
-            selected: this.value,
+            selected: vm.getModel(),
             isActive: false,
             isHoverable: false,
             bodyEl: undefined // Used to append to body
@@ -249,13 +256,6 @@ export default {
     },
     watch: {
         /**
-        * When v-model is changed set the new selected item.
-        */
-        value(value) {
-            this.selected = value
-        },
-
-        /**
         * Emit event when isActive value is changed.
         */
         isActive(value) {
@@ -268,6 +268,12 @@ export default {
         }
     },
     methods: {
+        /**
+        * When v-model is changed set the new selected item.
+        */
+        onModelChange(value) {
+            this.selected = value
+        },
         /**
         * Click listener from DropdownItem.
         *   1. Set new selected item.
@@ -290,7 +296,7 @@ export default {
                     this.$emit('change', this.selected)
                 }
             }
-            this.$emit('input', this.selected)
+            this.emitModel(this.selected)
             if (!this.multiple) {
                 this.isActive = !this.closeOnClick
                 if (this.hoverable && this.closeOnClick) {
