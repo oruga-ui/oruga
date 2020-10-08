@@ -1,4 +1,4 @@
-﻿
+.DS_Store
 node_modules
 packages/docs/.vuepress/dist/
 packages/storybook/.dist/
@@ -7,3 +7,4 @@ packages/oruga/coverage/*
 packages/oruga/README.md
 
 *.json.lerna_backup
+.idea

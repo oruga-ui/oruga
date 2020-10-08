@@ -465,7 +465,7 @@ export default {
             default: () => []
         },
         /**
-         * Adds a key which will be required for multi column sorting to work. Will always be enabled if null is selected (default). Requres sort-multiple
+         * Adds a key which will be required for multi column sorting to work. Will always be enabled if null is selected (default). Requires sort-multiple
          * @values null, shiftKey, altKey, ctrlKey
          */
         sortMultipleKey: {
