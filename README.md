@@ -36,7 +36,7 @@ Browse [online documentation here](https://oruga.io/).
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.6+**.
+You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
 ### 1 Install via npm
 

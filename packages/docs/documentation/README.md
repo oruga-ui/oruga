@@ -4,7 +4,7 @@ Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/)
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.6+**.
+You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
 ## Installation
 

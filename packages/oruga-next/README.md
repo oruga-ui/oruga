@@ -34,23 +34,23 @@ Browse [online documentation here](https://oruga.io/).
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.6+**.
+You need [Vue.js](https://vuejs.org/) **version 3.x**.
 
 ### 1 Install via npm
 
 ```bash
-npm install @oruga-ui/oruga
+npm install @oruga-ui/oruga-next
 ```
 
 ### 2 Import and use Oruga
 
 Bundle
 ```javascript
-import Vue from 'vue';
-import Oruga from '@oruga-ui/oruga';
-import '@oruga-ui/oruga/dist/oruga.css';
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next';
+import '@oruga-ui/oruga-next/dist/oruga.css';
 
-Vue.use(Oruga);
+createApp(...).use(Oruga);
 
 ```
 or Individual Components (tree shaking)
@@ -60,8 +60,9 @@ import Vue from 'vue'
 import { Field, Input } from '@oruga-ui/oruga'
 import '@oruga-ui/oruga/dist/oruga.css'
 
-Vue.use(Field)
-Vue.use(Input)
+createApp(...)
+  .use(Field)
+  .use(Input)
 
 ```
 
