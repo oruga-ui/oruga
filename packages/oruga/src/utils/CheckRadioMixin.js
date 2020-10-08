@@ -4,10 +4,8 @@ const modelValueDef = [String, Number, Boolean, Array]
 
 export default {
   mixins: [VueComponentMixin({vModel: modelValueDef})],
-  emits: ['update:modelValue', 'input'],
+  emits: ['update:modelValue'],
   props: {
-    /** @model */
-    modelValue: modelValueDef,
     /**
      * Same as native value
      */

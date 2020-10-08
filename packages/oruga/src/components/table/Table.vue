@@ -52,7 +52,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :value="isAllChecked"
+                                    :[modelName]="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -110,7 +110,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :value="isAllChecked"
+                                    :[modelName]="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -207,7 +207,7 @@
                             v-if="checkable && checkboxPosition === 'left'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
-                                :value="isRowChecked(row)"
+                                :[modelName]="isRowChecked(row)"
                                 @click.native.prevent.stop="checkRow(row, index, $event)"
                             />
                         </td>
@@ -234,7 +234,7 @@
                             v-if="checkable && checkboxPosition === 'right'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
-                                :value="isRowChecked(row)"
+                                :[modelName]="isRowChecked(row)"
                                 @click.native.prevent.stop="checkRow(row, index, $event)"
                             />
                         </td>

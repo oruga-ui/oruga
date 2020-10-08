@@ -337,7 +337,6 @@ title: Autocomplete
 | useHtml5Validation  | Enable html 5 native validation                                                                                            | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
 | statusIcon          | Show status icon using field and variant prop                                                                              | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>               |
 | validationMessage   | The message which is shown when a validation error occurs                                                                  | string         | -                                                 |                                                          |
-| v-model             |                                                                                                                            | number\|string | -                                                 |                                                          |
 | data                | Options / suggestions                                                                                                      | array          | -                                                 | []                                                       |
 | size                | Vertical size of input, optional                                                                                           | string         | `small`, `medium`, `large`                        |                                                          |
 | field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option          | string         | -                                                 | 'value'                                                  |
@@ -368,16 +367,15 @@ title: Autocomplete
 
 ## Events
 
-| Event name        | Type      | Description |
-| ----------------- | --------- | ----------- |
-| icon-click        |           |
-| blur              | undefined |
-| focus             | undefined |
-| update:modelValue | undefined |
-| select            | undefined |
-| infinite-scroll   |           |
-| typing            | undefined |
-| icon-right-click  | undefined |
+| Event name       | Type      | Description |
+| ---------------- | --------- | ----------- |
+| icon-click       |           |
+| blur             | undefined |
+| focus            | undefined |
+| select           | undefined |
+| infinite-scroll  |           |
+| typing           | undefined |
+| icon-right-click | undefined |
 
 ## Slots
 

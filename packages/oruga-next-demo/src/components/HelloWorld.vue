@@ -138,6 +138,63 @@
       </o-table-column>
     </o-table>
   </section>
+
+  <section>
+    <o-field grouped group-multiline>
+      <o-button
+        variant="danger"
+        @click="checkedRows = []"
+        :disabled="!checkedRows.length"
+        icon-left="times"
+      >
+        <span>Clear checked</span>
+      </o-button>
+      <o-select v-model="checkboxPosition">
+        <option value="left">Checkbox at left</option>
+        <option value="right">Checkbox at right</option>
+      </o-select>
+    </o-field>
+
+
+<b>Total checked</b>: {{ checkedRows.length }}
+    <o-table
+      :data="dataTable"
+      :checked-rows.sync="checkedRows"
+      :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
+      checkable
+      :checkbox-position="checkboxPosition"
+    >
+
+    
+      <o-table-column field="id" label="ID" width="40" numeric v-slot="props">
+        {{ props.row.id }}
+      </o-table-column>
+
+      <o-table-column field="first_name" label="First Name" v-slot="props" v-if="!isHoverable">
+        {{ props.row.first_name }}
+      </o-table-column>
+
+      <o-table-column field="last_name" label="Last Name" v-slot="props">
+        {{ props.row.last_name }}
+      </o-table-column>
+
+      <o-table-column field="date" label="Date" centered v-slot="props">
+        {{ new Date(props.row.date).toLocaleDateString() }}
+      </o-table-column>
+
+      <o-table-column label="Gender" v-slot="props">
+        <span>
+          <o-icon
+            pack="fas"
+            :icon="props.row.gender === 'Male' ? 'mars' : 'venus'"
+          >
+          </o-icon>
+          {{ props.row.gender }}
+        </span>
+      </o-table-column>
+      
+    </o-table>
+  </section>
   </section>
 </template>
 
@@ -190,6 +247,33 @@ export default {
         activeTab: undefined,
         showBooks: false,
         multiline: false,
+        checkedRows: [data[1], data[3]],
+        columns: [
+          {
+            field: "id",
+            label: "ID",
+            width: "40",
+            numeric: true,
+          },
+          {
+            field: "first_name",
+            label: "First Name",
+          },
+          {
+            field: "last_name",
+            label: "Last Name",
+          },
+          {
+            field: "date",
+            label: "Date",
+            centered: true,
+          },
+          {
+            field: "gender",
+            label: "Gender",
+          },
+        ],
+        checkboxPosition: 'left',
         data: [
             'Angular',
             'Angular 2',

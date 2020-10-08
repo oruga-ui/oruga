@@ -11,6 +11,9 @@ export default (params = {}) => {
         computed: {
             listeners() {
                 return getListeners(this)
+            },
+            modelName() {
+                return isVue2() ? 'value' : 'modelValue'
             }
         },
         methods: {

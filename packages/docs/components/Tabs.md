@@ -245,7 +245,6 @@ title: Tabs
 
 | Prop name                  | Description                                     | Type           | Values                                                                          | Default                                       |
 | -------------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| v-model                    |                                                 | string\|number | -                                                                               |                                               |
 | variant                    | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
 | size                       | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
 | animated                   | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
@@ -268,12 +267,6 @@ title: Tabs
 | transitioningClass         |                                                 | string         | -                                                                               |                                               |
 | tabItemHeaderActiveClass   |                                                 | string         | -                                                                               |                                               |
 | tabItemHeaderDisabledClass |                                                 | string         | -                                                                               |                                               |
-
-### Events
-
-| Event name        | Type      | Description |
-| ----------------- | --------- | ----------- |
-| update:modelValue | undefined |
 
 ### Slots
 
