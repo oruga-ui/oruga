@@ -133,8 +133,9 @@ export default {
         variantClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.model,
+            newValue: vm.getModel(),
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false

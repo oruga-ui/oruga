@@ -187,11 +187,12 @@ export default {
         inputClasses: Object
     },
     data() {
+        const vm = this
         return {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: this.model,
+            newValue: vm.getModel(),
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,

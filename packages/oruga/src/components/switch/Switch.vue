@@ -102,8 +102,9 @@ export default {
         animationClass: String
     },
     data() {
+        const vm = this
         return {
-            newValue: this.model,
+            newValue: vm.getModel(),
             isMouseDown: false
         }
     },

@@ -18,9 +18,6 @@ export default (params = {}) => {
             listeners() {
                 return getListeners(this)
             },
-            model() {
-                return isVue2() ? this.value : this.modelValue
-            },
             modelName() {
                 return isVue2() ? 'value' : 'modelValue'
             }
