@@ -35,7 +35,7 @@ export default (itemName, flags = 0) => {
                 })
             },
             _nextSequence() {
-                return `${this.sequence++}`
+                return this.sequence++
             }
         }
 

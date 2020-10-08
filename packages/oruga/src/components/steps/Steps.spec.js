@@ -65,7 +65,7 @@ describe('OSteps', () => {
 
         expect(emitted).toBeTruthy()
         expect(emitted.length).toBe(1)
-        expect(emitted[0][0]).toBe('3')
+        expect(emitted[0][0]).toBe(3)
 
         expect(wrapper.vm.hasNext).toBeFalsy()
 
@@ -91,7 +91,7 @@ describe('OSteps', () => {
         )
 
         expect(wrapper.emitted().input.length).toBe(2)
-        expect(wrapper.emitted().input[1][0]).toBe('1')
+        expect(wrapper.emitted().input[1][0]).toBe(1)
         expect(wrapper.vm.hasPrev).toBeFalsy()
 
         wrapper.vm.prev()

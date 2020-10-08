@@ -3,6 +3,12 @@ import { isVue2, createElement, existsSlot, setScopedSlot, getSlotInstance, getL
 export default (params = {}) => {
     const vModel = params.vModel
     const mixin = {
+        props: {
+            /** @model */
+            value: vModel,
+            /** @ignore */
+            modelValue: vModel
+        },
         data() {
             return {
                 vueReady: false
@@ -54,32 +60,16 @@ export default (params = {}) => {
                     this.$createElement = (tag, data, children) => createElement(module, tag, data, children)
                     this.vueReady = true
                 })
+               
+        
             }
-        }
-    }
-
-    if (vModel) {
-        if (isVue2()) {
-            mixin.props = {
-                /** @model */
-                value: vModel
-            }
-        } else {
-            mixin.props = {
-                /** @model */
-                modelValue: vModel
-            }
-        }
-    }
-
-    if (!isVue2()) {
+        },
         // Vue 3: beforeDestroy -> beforeUnmount
-        mixin.beforeUnmount = function() {
+        beforeUnmount() {
             if (typeof this.$options.beforeDestroy !== 'undefined') {
                 this.$options.beforeDestroy.apply(this)
             }
         }
     }
-
     return mixin
 }
