@@ -246,10 +246,10 @@ export default {
             this.onInternalValueUpdate()
         },
         min() {
-            this.setValues(this.getModel())
+            this.setValues(this.model)
         },
         max() {
-            this.setValues(this.getModel())
+            this.setValues(this.model)
         }
     },
     methods: {
@@ -349,7 +349,7 @@ export default {
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.getModel())
+        this.setValues(this.model)
     }
 }
 </script>

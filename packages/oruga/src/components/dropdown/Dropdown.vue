@@ -198,9 +198,8 @@ export default {
         expandedClass: String
     },
     data() {
-        const vm = this
         return {
-            selected: vm.getModel(),
+            selected: this.model,
             isActive: false,
             isHoverable: false,
             bodyEl: undefined // Used to append to body

@@ -108,9 +108,8 @@ export default {
         variantClass: String
     },
     data() {
-        const vm = this
         return {
-            selected: vm.getModel()
+            selected: this.model
         }
     },
     computed: {

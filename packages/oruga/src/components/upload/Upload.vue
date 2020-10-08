@@ -84,9 +84,8 @@ export default {
         hoveredClass: String
     },
     data() {
-        const vm = this
         return {
-            newValue: vm.getModel(),
+            newValue: this.model,
             dragDropFocus: false
         }
     },

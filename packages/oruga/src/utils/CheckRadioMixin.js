@@ -31,9 +31,8 @@ export default {
     size: String
   },
   data() {
-    const vm = this
     return {
-      newValue: vm.getModel()
+      newValue: this.model
     }
   },
   computed: {

@@ -12,6 +12,9 @@ export default (params = {}) => {
             listeners() {
                 return getListeners(this)
             },
+            model() {
+                return isVue2() ? this.value : this.modelValue
+            },
             modelName() {
                 return isVue2() ? 'value' : 'modelValue'
             }
@@ -40,7 +43,7 @@ export default (params = {}) => {
         created() {
             // v-model watch, onModelChange methods as convetion
             if (vModel && typeof this.onModelChange !== 'undefined') {
-                this.$watch(this.getModel, this.onModelChange)
+                this.$watch(this.modelName, this.onModelChange)
             }
             // set ready when vue module has been loaded
             if (isVue2()) {
