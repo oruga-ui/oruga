@@ -32,6 +32,10 @@ export default (itemName, flags = 0) => {
             _unregisterItem(item) {
                 this.$nextTick(() => {
                     this.childItems = this.childItems.filter((i) => i !== item)
+                    let index = 0
+                    this.childItems.forEach(it => {
+                        it.index = index++
+                    })
                 })
             },
             _nextSequence() {
@@ -40,20 +44,6 @@ export default (itemName, flags = 0) => {
         }
 
         if (hasFlag(flags, sorted)) {
-            mixin.watch = {
-                /**
-                 * When items are added/removed deep search in the elements default's slot
-                 * And mark the items with their index
-                 */
-                childItems() {
-                    if (this.childItems.length > 0) {
-                        let index = 0
-                        this.childItems.forEach(it => {
-                            it.index = index++
-                        });
-                    }
-                }
-            }
             mixin.computed = {
                 /**
                  * When items are added/removed sort them according to their position
