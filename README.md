@@ -40,11 +40,21 @@ You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
 ### 1 Install via npm
 
+#### Vue 2
+
 ```bash
 npm install @oruga-ui/oruga
 ```
 
+#### Vue 3
+
+```bash
+npm install @oruga-ui/oruga-next
+```
+
 ### 2 Import and use Oruga
+
+#### Vue 2
 
 Bundle
 ```javascript
@@ -53,7 +63,6 @@ import Oruga from '@oruga-ui/oruga';
 import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
-
 ```
 or Individual Components (tree shaking)
 ```javascript
@@ -64,6 +73,28 @@ import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Field);
 Vue.use(Input);
+```
+
+#### Vue 3
+
+ Bundle
+```javascript
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next';
+import '@oruga-ui/oruga-next/dist/oruga.css';
+
+createApp(...).use(Oruga);
+```
+or Individual Components (tree shaking)
+```javascript
+
+import Vue from 'vue'
+import { Field, Input } from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
+
+createApp(...)
+  .use(Field)
+  .use(Input)
 ```
 
 ### 3 Customization
