@@ -378,7 +378,6 @@ $steps-details-title-font-weight: 600 !default;
                             @include variable('width', 'steps-divider-height', $steps-divider-height);
                             top: -50%;
                             left: calc(50% - #{$steps-divider-height / 2});
-                            @include variable('left', 'steps-divider-height', $steps-divider-height, 'calc', '/ 2');
                         }
                     }
 
