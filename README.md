@@ -12,6 +12,8 @@
 (🐛) => 🦋
 </p>
 
+> Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
+
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
@@ -20,7 +22,12 @@
     <a href="https://discord.gg/TP3FBY"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
-> Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
+*Next*
+
+<p align="center">
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
+</p>
 
 ## Features
 
@@ -40,11 +47,21 @@ You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
 ### 1 Install via npm
 
+#### Vue 2
+
 ```bash
 npm install @oruga-ui/oruga
 ```
 
+#### Vue 3
+
+```bash
+npm install @oruga-ui/oruga-next
+```
+
 ### 2 Import and use Oruga
+
+#### Vue 2
 
 Bundle
 ```javascript
@@ -53,7 +70,6 @@ import Oruga from '@oruga-ui/oruga';
 import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
-
 ```
 or Individual Components (tree shaking)
 ```javascript
@@ -64,6 +80,28 @@ import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Field);
 Vue.use(Input);
+```
+
+#### Vue 3
+
+ Bundle
+```javascript
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next';
+import '@oruga-ui/oruga-next/dist/oruga.css';
+
+createApp(...).use(Oruga);
+```
+or Individual Components (tree shaking)
+```javascript
+
+import Vue from 'vue'
+import { Field, Input } from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
+
+createApp(...)
+  .use(Field)
+  .use(Input)
 ```
 
 ### 3 Customization

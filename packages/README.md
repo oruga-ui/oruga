@@ -4,3 +4,4 @@
 
 1. **docs** - Oruga documentation
 2. **oruga** - Main source code for Oruga
+2. **oruga-next** - Build config for Vue 3 relative to oruga source code
