@@ -20,9 +20,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
 export default {
     name: 'ODropdownItem',
     mixins: [VueComponentMixin(), BaseComponentMixin],
-    inject: {
-        $dropdown: { name: '$dropdown' }
-    },
+    inject: ["$dropdown"],
     emits: ['click'],
     props: {
         /**
