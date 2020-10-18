@@ -86,7 +86,6 @@ export default {
     },
     created() {
         if (!this.parent) {
-            this.$destroy()
             throw new Error('You should wrap oDropdownItem on a oDropdown')
         }
     }
