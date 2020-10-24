@@ -10,6 +10,13 @@ describe('OFieldBody', () => {
         const wrapper = shallowMount(OFieldBody, {
             slots: {
                 default: 'content'
+            },
+            provide: {
+                $field: {
+                        contentHorizontalClasses:[],
+                        innerFieldClasses:[]
+
+                }
             }
         })
         expect(wrapper.exists()).toBeTruthy()
@@ -19,6 +26,13 @@ describe('OFieldBody', () => {
         const wrapper = shallowMount(OFieldBody, {
             slots: {
                 default: 'content'
+            },
+            provide: {
+                $field: {
+                    contentHorizontalClasses:[],
+                    innerFieldClasses:[]
+
+                }
             }
         })
         expect(wrapper.html()).toMatchSnapshot()
@@ -29,6 +43,13 @@ describe('OFieldBody', () => {
         const wrapper = shallowMount(OFieldBody, {
             slots: {
                 default: text
+            },
+            provide: {
+                $field: {
+                    contentHorizontalClasses:[],
+                    innerFieldClasses:[]
+
+                }
             }
         })
         expect(wrapper.text()).toBe(text)
