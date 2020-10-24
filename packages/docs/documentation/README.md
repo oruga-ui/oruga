@@ -101,9 +101,9 @@ createApp(...)
 
 ### Nuxt
 
-Oruga provides a Nuxt.js module for easily importing the library into your Nuxt.js app.
+Oruga provides a [Nuxt.js](https://nuxtjs.org) module for easily importing the library into your Nuxt.js app.
 
-Add @oruga-ui/oruga/nuxt to modules section of your nuxt.config.js file.
+Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file.
 
 ```js
 module.exports = {
@@ -111,7 +111,24 @@ module.exports = {
 }
 ```
 
-But it can be manually done by adding a plugin let's say `oruga.js` in your `plugins` folder
+You can also customize components in this section
+
+```js
+module.exports = {
+  modules: [
+    [
+      '@oruga-ui/oruga/nuxt',
+      {
+        button: {
+          override: true
+        }
+      }
+    ]
+  ]
+}
+```
+
+Alternatively you can add a plugin file (let's say `oruga.js`) in your `plugins` folder containing
 
 ```js
 import Vue from 'vue'
@@ -121,10 +138,10 @@ import '@oruga-ui/oruga/dist/oruga.css'
 Vue.use(Oruga)
 ```
 
-And then in your nuxt.config.js edit the plugin array with:
+And then add this file to the `plugins` array in your `nuxt.config.js`
 
 ```js
-plugins: [{ src: '~plugins/oruga.js', ssr: false }]
+plugins: [{ src: '~plugins/oruga.js' }]
 ```
 
 To understand how the plugins work with Nuxt.js, take a look at the [plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
