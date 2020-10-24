@@ -13,6 +13,7 @@ export default {
     },
     render() {
         if (!this.vueReady) return
+        // Todo add message underneath first child
         return this.$createElement(
             'div',
             {attrs: {'class': normalizeClass(this.parent.contentHorizontalClasses)}},
