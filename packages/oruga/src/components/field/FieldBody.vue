@@ -1,12 +1,11 @@
 <script>
 import VueComponentMixin from '../../utils/VueComponentMixin'
+import {normalizeClass,} from '@vue/shared'
 
 export default {
     name: 'OFieldBody',
     mixins: [VueComponentMixin()],
-    inject: {
-        $field: { name: '$field', default: false }
-    },
+    inject: ['$field'],
     computed: {
         parent() {
             return this.$field
@@ -14,24 +13,14 @@ export default {
     },
     render() {
         if (!this.vueReady) return
-        let first = true
         return this.$createElement(
-            'div', 
-            { attrs: { 'class': this.parent.contentHorizontalClasses } }, 
-            this.getSlotInstance('default').map((element) => {
-                // skip returns and comments
-                if (!element.tag) {
-                    return element
-                }
-                let message
-                if (first) {
-                    message = this.parent.newMessage
-                    first = false
-                }
-                return this.$createElement(
-                    this.parent.rootClass,
-                    { attrs: { variant: this.parent.newVariant, message } }, [element])
-            })
+            'div',
+            {attrs: {'class': normalizeClass(this.parent.contentHorizontalClasses)}},
+            [this.$createElement(
+                'div',
+                {attrs: {'class': normalizeClass([...this.parent.innerFieldClasses, {'o-field': 'true'}])}},
+                this.getSlotInstance('default')
+            )]
         )
     }
 }

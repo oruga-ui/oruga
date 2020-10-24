@@ -51,7 +51,7 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         *:last-child:not(:only-child) button,
         button:last-child:not(:only-child),
         *:last-child:not(:only-child) input,
-        input:last-child:not(:only-child), 
+        input:last-child:not(:only-child),
         *:last-child:not(:only-child) select,
         select:last-child:not(:only-child) {
             border-bottom-left-radius: 0;
@@ -89,8 +89,10 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
                 flex-basis: 0;
                 flex-grow: 1;
                 flex-shrink: 0;
+                align-self: center;
                 margin: $field-horizontal-label-margin;
                 text-align: right;
+
             }
             .o-field-horizontal-content {
                 display: flex;

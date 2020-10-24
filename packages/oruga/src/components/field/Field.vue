@@ -54,7 +54,7 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  * Fields are used to add functionality to controls and to attach/group components and elements together
  * @displayName Field
  * @example ./examples/Field.md
- * @style _field.scss 
+ * @style _field.scss
  */
 export default {
     name: 'OField',
@@ -67,9 +67,7 @@ export default {
             $field: this
         }
     },
-    inject: {
-        $field: { name: '$field', default: false }
-    },
+
     props: {
         /**
          * 	Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete
@@ -153,7 +151,7 @@ export default {
             ]
         },
         parent() {
-            return this.$field
+            return this
         },
         hasDefaultSlot() {
             return this.existsSlot('default')
@@ -168,7 +166,7 @@ export default {
             return this.label || this.hasLabelSlot
         },
         hasMessage() {
-            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.hasMessageSlot
+            return ((this.parent || this.parent.hasInnerField) && this.newMessage) || this.hasMessageSlot
         },
         hasInnerField() {
             return this.grouped || this.groupMultiline || this.hasAddons()
@@ -201,6 +199,7 @@ export default {
     methods: {
         rootClasses() {
             return [
+                {['o-field-horizontal']: this.horizontal},
                 this.computedClass('field', 'rootClass', 'o-field')
             ]
         },
@@ -211,8 +210,8 @@ export default {
         * Is a method to be called when component re-render.
         */
         fieldType() {
-            if (this.grouped) return 'o-field-grouped'
-            if (this.hasAddons()) return 'o-field-addons'
+            if (this.grouped) return {'o-field-grouped': true}
+            if (this.hasAddons()) return {'o-field-addons': true}
         },
         hasAddons() {
             let renderedNode = 0
