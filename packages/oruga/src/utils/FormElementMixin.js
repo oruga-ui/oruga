@@ -2,10 +2,7 @@ import config from '../utils/config'
 import { getValueByPath } from './helpers'
 
 export default {
-  inject: {
-    $field: { name: "$field", default: false },
-    $elementRef: { name: "$elementRef", default: false },
-  },
+  inject: ["$field","$elementRef"],
   emits: ['blur', 'focus'],
   props: {
     /**
@@ -85,6 +82,18 @@ export default {
 
       return this.parentField.newMessage || this.parentField.hasMessageSlot;
     },
+  },
+  watch: {
+    validationMessage(val){
+      if(this.useHtml5Validation)  return
+      if (val) {
+        this.setInvalid();
+        this.isValid = false;
+      }else{
+        this.setValidity(null, null);
+        this.isValid = true;
+      }
+    }
   },
   methods: {
     /**

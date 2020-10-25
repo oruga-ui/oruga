@@ -39,7 +39,7 @@
             :class="messageClasses"
         >
             <slot v-if="hasMessageSlot" name="message"/>
-            <template v-else>{{ message }}</template>
+            <template v-else>{{ newMessage }}</template>
         </p>
     </div>
 </template>
