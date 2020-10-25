@@ -32,14 +32,14 @@ export const getListeners = (cmp) => {
 export const existsSlot = (cmp, name, scoped = false) => {
     if (isVue2()) {
         return scoped ? !!cmp.$scopedSlots[name] : !!cmp.$slots[name]
-    } 
+    }
     return cmp.$slots[name]
 }
 
 export const getSlotInstance = (cmp, name, scoped = false, props = undefined) => {
     if (isVue2()) {
         return scoped ? cmp.$scopedSlots[name](props) : cmp.$slots[name]
-    } 
+    }
     return scoped ? cmp.$slots[name](props) : cmp.$slots[name]()
 }
 
@@ -101,5 +101,23 @@ const convertData = (data) => {
 }
 
 const wrapChildren = (tag, children) => {
-    return tag === 'transition' ? () => children : children 
+    return tag === 'transition' ? () => children : children
+}
+
+export const  normalizeClass= (value) => {
+    let res = ''
+    if (typeof value === "string") {
+        res = value
+    } else if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+            res += normalizeClass(value[i]) + ' '
+        }
+    } else if (typeof value === "object") {
+        for (const name in value) {
+            if (value[name]) {
+                res += name + ' '
+            }
+        }
+    }
+    return res.trim()
 }

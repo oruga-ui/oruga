@@ -1,6 +1,6 @@
 <script>
 import VueComponentMixin from '../../utils/VueComponentMixin'
-import {normalizeClass,} from '@vue/shared'
+import {normalizeClass} from '../../utils/vue-utils'
 
 export default {
     name: 'OFieldBody',
