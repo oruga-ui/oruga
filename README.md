@@ -135,15 +135,6 @@ While it's still in beta, version will follow **v0.Y.Z**, where:
   </tr>
 </table>
 
-## Supporting through Patreon
-
-Oruga is an open source MIT project if you are interested in supporting this project, please consider becoming a patron.
-<p align="center">
-  <a href="https://www.patreon.com/jtommy">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron" />
-  </a>
-</p>
-
 ## Credits
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
