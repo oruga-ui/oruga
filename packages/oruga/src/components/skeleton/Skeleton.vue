@@ -91,7 +91,7 @@ export default {
             {
                 staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
                 class: [
-                    { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                    { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
                     { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-')}${this.position}`]: this.position },
                     { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
                 ]

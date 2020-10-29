@@ -79,8 +79,8 @@ export default {
                 this.computedClass('icon', 'rootClass', 'o-icon'),
                 { [this.computedClass('icon', 'clickableClass', 'o-icon-clickable')]: this.clickable },
                 { [this.computedClass('icon', 'spinClass', 'o-icon-spin')]: this.spin },
-                { [`${this.computedClass('icon', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
-                { [`${this.computedClass('icon', 'variantClass', 'o-color-')}${this.newVariant}`]: this.newVariant }
+                { [`${this.computedClass('icon', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('icon', 'variantClass', 'o-color-', true)}${this.newVariant}`]: this.newVariant }
             ]
         },
         iconConfig() {

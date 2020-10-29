@@ -138,7 +138,7 @@ export default {
         contentClasses() {
             return [
                 this.computedClass('sidebar', 'contentClass', 'o-sidebar-content'),
-                { [`${this.computedClass('sidebar', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('sidebar', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
                 { [this.computedClass('sidebar', 'fixedClass', 'o-sidebar-fixed')]: this.isFixed },
                 { [this.computedClass('sidebar', 'staticClass', 'o-sidebar-static')]: this.isStatic },
                 { [this.computedClass('sidebar', 'absoluteClass', 'o-sidebar-absolute')]: this.isAbsolute },

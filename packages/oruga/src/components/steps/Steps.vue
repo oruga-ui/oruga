@@ -165,7 +165,7 @@ export default {
         wrapperClasses() {
             return [
                 this.computedClass('steps', 'rootClass', 'o-steps-wrapper'),
-                { [`${this.computedClass('steps', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('steps', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
                 { [this.computedClass('steps', 'verticalClass', 'o-steps-wrapper-vertical')]: this.vertical },
                 { [`${this.computedClass('steps', 'positionClass', 'o-steps-wrapper-position-')}${this.position}`]: this.position && this.vertical },
             ]
@@ -173,7 +173,7 @@ export default {
         mainClasses() {
             return [
                 this.computedClass('steps', 'stepsClass', 'o-steps'),
-                { [`${this.computedClass('steps', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('steps', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
                 { [`${this.computedClass('steps', 'labelPositionClass', 'o-steps-label-')}${this.labelPosition}`]: this.labelPosition },
                 { [this.computedClass('steps', 'animatedClass', 'o-steps-animated')]: this.animated },
                 { [this.computedClass('steps', 'roundedClass', 'o-steps-rounded')]: this.rounded },

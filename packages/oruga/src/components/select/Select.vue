@@ -129,8 +129,8 @@ export default {
                 { [this.computedClass('select', 'emtpyClass', 'o-select-empty')]: this.selected === null },
                 { [this.computedClass('select', 'multipleClass', 'o-select-multiple')]: this.multiple },
                 { [this.computedClass('select', 'expandedClass', 'o-select-expanded')]: this.expanded },
-                { [`${this.computedClass('select', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
-                { [`${this.computedClass('select', 'variantClass', 'o-color-')}${this.statusVariant}`]: this.statusVariant }
+                { [`${this.computedClass('select', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('select', 'variantClass', 'o-color-', true)}${this.statusVariant}`]: this.statusVariant }
             ]
         },
         iconLeftClasses() {

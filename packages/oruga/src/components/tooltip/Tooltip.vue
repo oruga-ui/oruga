@@ -122,7 +122,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('tooltip', 'rootClass', 'o-tooltip'),
-                { [`${this.computedClass('tooltip', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('tooltip', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
                 { [`${this.computedClass('tooltip', 'orderClass', 'o-tooltip-')}${this.position}`]: this.position },
                 { [this.computedClass('tooltip', 'multilineClass', 'o-tooltip-multiline')]: this.multiline },
                 { [this.computedClass('tooltip', 'alwaysClass', 'o-tooltip-always')]: this.always }

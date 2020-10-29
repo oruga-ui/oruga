@@ -66,14 +66,14 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('checkbox', 'rootClass', 'o-checkbox'),
-                { [`${this.computedClass('checkbox', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('checkbox', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
                 { [this.computedClass('checkbox', 'disabledClass', 'o-checkbox-disabled')]: this.disabled }
             ]
         },
         checkClasses() {
             return [
                 this.computedClass('checkbox', 'checkClass', 'o-checkbox-check'),
-                { [`${this.computedClass('checkbox', 'variantClass', 'o-color-')}${this.variant}`]: this.variant }
+                { [`${this.computedClass('checkbox', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant }
             ]
         },
         labelClasses() {

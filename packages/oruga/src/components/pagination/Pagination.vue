@@ -219,7 +219,7 @@ export default {
             return [
                 this.computedClass('pagination', 'rootClass', 'o-pagination'),
                 { [`${this.computedClass('pagination', 'orderClass', 'o-pagination-')}${this.order}`]: this.order },
-                { [`${this.computedClass('pagination', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
+                { [`${this.computedClass('pagination', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
                 { [this.computedClass('pagination', 'simpleClass', 'o-pagination-simple')]: this.simple },
                 { [this.computedClass('pagination', 'roundedClass', 'o-pagination-rounded')]: this.rounded }
             ]

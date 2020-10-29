@@ -100,7 +100,7 @@ export default {
         draggableClasses() {
             return [
                 this.computedClass('upload', 'draggableClass', 'o-upload-draggable'),
-                { [`${this.computedClass('upload', 'variantClass', 'o-color-')}${this.variant}`]: this.variant },
+                { [`${this.computedClass('upload', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
                 { [this.computedClass('upload', 'expandedClass', 'o-upload-expanded')]: this.expanded },
                 { [this.computedClass('upload', 'hoveredClass', 'o-upload-hovered')]: this.dragDropFocus },
                 { [this.computedClass('upload', 'disabledClass', 'o-upload-disabled')]: this.disabled }
