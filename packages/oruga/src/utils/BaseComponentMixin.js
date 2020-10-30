@@ -7,11 +7,9 @@ export default {
             const override = getValueByPath(config, `${component}.override`, false)
             const globalClass = getValueByPath(config, `${component}.${field}`, '')
             const currrentClass = this.$props[field]
-            return `
-                ${override || (overrideIfExists && (currrentClass || globalClass)) ? '' : defaultValue} 
-                ${overrideIfExists && currrentClass ? '' : blankIfUndefined(globalClass)} 
-                ${blankIfUndefined(currrentClass)} 
-            `.trim()
+            return `${override || (overrideIfExists && (currrentClass || globalClass)) ? '' : defaultValue} ` 
+               + ` ${overrideIfExists && currrentClass ? '' : blankIfUndefined(globalClass)} `
+               + ` ${blankIfUndefined(currrentClass)} `.trim()
         }
     }
 }
