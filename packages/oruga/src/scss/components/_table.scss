@@ -217,7 +217,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                             margin-right: 0;
                         }
                     }
-                    &.o-table-th-center {
+                    &.o-table-th-centered {
                         justify-content: center;
                         text-align: center;
                     }
@@ -278,7 +278,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 &.o-table-td-right {
                     text-align: right;
                 }
-                &.o-table-td-center {
+                &.o-table-td-centered {
                     text-align: center;
                 }
             }
