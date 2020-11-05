@@ -1,9 +1,6 @@
 <script>
-import VueComponentMixin from '../../utils/VueComponentMixin'
-
 export default {
     name: 'OFieldBody',
-    mixins: [VueComponentMixin()],
     inject: {
         $field: { name: '$field', default: false }
     },
@@ -12,13 +9,12 @@ export default {
             return this.$field
         }
     },
-    render() {
-        if (!this.vueReady) return
+    render(h) {
         let first = true
-        return this.$createElement(
+        return h(
             'div', 
             { attrs: { 'class': this.parent.contentHorizontalClasses } }, 
-            this.getSlotInstance('default').map((element) => {
+            this.$slots.default.map((element) => {
                 // skip returns and comments
                 if (!element.tag) {
                     return element
@@ -28,8 +24,7 @@ export default {
                     message = this.parent.newMessage
                     first = false
                 }
-                return this.$createElement(
-                    this.parent.rootClass,
+                return h(this.parent.rootClass,
                     { attrs: { variant: this.parent.newVariant, message } }, [element])
             })
         )

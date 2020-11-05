@@ -1,5 +1,5 @@
 <template>
-    <span v-if="vueReady" :class="rootClasses">
+    <span :class="rootClasses">
         <i
             v-if="!useIconComponent"
             :class="[newPack, newIcon, newCustomSize, customClass]"/>
@@ -15,7 +15,6 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
 import { getValueByPath } from '../../utils/helpers'
@@ -28,13 +27,16 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OIcon',
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     props: {
         /**
          * 	Color of the icon, optional
          *  @values primary, info, success, warning, danger, and any other custom color
          */
         variant: [String, Object],
+        /**
+         * Icon component name
+         */
         component: String,
         /**
          * Icon pack to use

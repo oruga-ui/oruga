@@ -1,6 +1,5 @@
 <template>
     <label
-        v-if="vueReady"
         :class="rootClasses"
         ref="label"
         :disabled="disabled"

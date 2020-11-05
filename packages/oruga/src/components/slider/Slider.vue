@@ -1,6 +1,5 @@
 <template>
     <div
-        v-if="vueReady"
         @click="onSliderClick"
         :class="rootClasses">
         <div
@@ -59,13 +58,7 @@ import SliderTick from './SliderTick'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
-import { getValueByPath } from '../../utils/helpers'
-
-const modelValueDef = {
-    type: [Number, Array],
-    default: 0
-}
+import { getValueByPath } from '../../utils/helpers' 
 
 /**
  * A slider to select a value or range from a given range
@@ -80,14 +73,18 @@ export default {
         [SliderThumb.name]: SliderThumb,
         [SliderTick.name]: SliderTick
     },
-    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $slider: this
         }
     },
-    emits: ['update:modelValue', 'change', 'dragging', 'dragstart', 'dragend'],
     props: {
+        /** @model */
+        value: {
+            type: [Number, Array],
+            default: 0
+        },
         /** Minimum value */
         min: {
             type: Number,
@@ -252,10 +249,16 @@ export default {
             this.onInternalValueUpdate()
         },
         min() {
-            this.setValues(this.getModel())
+            this.setValues(this.value)
         },
         max() {
-            this.setValues(this.getModel())
+            this.setValues(this.value)
+        },
+        /**
+        * When v-model is changed set the new active step.
+        */
+        value(value) {
+            this.setValues(value)
         }
     },
     methods: {
@@ -264,12 +267,6 @@ export default {
                 this.computedClass('slider', 'thumbWrapperClass', 'o-slider-thumb-wrapper'),
                 { [this.computedClass('slider', 'thumbDraggingClass', 'o-slider-thumb-dragging')]: dragging },
             ]
-        },
-        /**
-        * When v-model is changed set the new active step.
-        */
-        onModelChange(value) {
-            this.setValues(value)
         },
         setValues(newValue) {
             if (this.min > this.max) {
@@ -348,14 +345,13 @@ export default {
             const val = this.isRange
                 ? [this.minValue, this.maxValue]
                 : this.value1
-            if (event === 'input') this.emitModel(val)
-            else this.$emit(event, val)
+            this.$emit(event, val)
         }
     },
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.getModel())
+        this.setValues(this.value)
     }
 }
 </script>

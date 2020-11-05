@@ -170,6 +170,7 @@ title: Slider
 
 | Prop name              | Description                                      | Type          | Values                                                                          | Default                                             |
 | ---------------------- | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
+| v-model                |                                                  | number\|array | -                                                                               | 0                                                   |
 | min                    | Minimum value                                    | number        | -                                                                               | 0                                                   |
 | max                    | Maximum value                                    | number        | -                                                                               | 100                                                 |
 | step                   | Step interval of ticks                           | number        | -                                                                               | 1                                                   |

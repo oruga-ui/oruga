@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses">
+    <div :class="rootClasses">
         <nav :class="navClasses">
             <ul>
                 <li

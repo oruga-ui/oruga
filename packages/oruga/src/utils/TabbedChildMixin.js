@@ -1,8 +1,7 @@
 import { default as InjectedChildMixin, Sorted } from './InjectedChildMixin'
-import VueComponentMixin from './VueComponentMixin'
 
 export default (parentCmp) => ({
-    mixins: [VueComponentMixin(), InjectedChildMixin(parentCmp, Sorted)],
+    mixins: [InjectedChildMixin(parentCmp, Sorted)],
     props: {
         /**
          * Item label
@@ -67,23 +66,22 @@ export default (parentCmp) => ({
                 : this.parent.vertical ? 'slide-up' : 'slide-prev'
         }
     },
-    render() {
-        if (!this.vueReady) return
+    render(h) {
         // if destroy apply v-if
         if (this.parent.destroyOnHide) {
             if (!this.isActive || !this.visible) return
         }
-        const vnode = this.$createElement(
+        const vnode = h(
             'div',
             { 
                 directives: [{ name: 'show', value: this.isActive && this.visible }],
                 attrs: { 'class': this.elementClasses }
             },
-            this.getSlotInstance('default')
+            this.$slots.default
         )
         // check animated prop
         if (this.parent.animated) {
-            return this.$createElement(
+            return h(
                 'transition',
                 {
                     props: {

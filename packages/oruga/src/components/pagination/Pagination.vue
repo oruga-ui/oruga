@@ -124,7 +124,6 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 /**
  * A responsive and flexible pagination
@@ -138,7 +137,7 @@ export default {
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $pagination: this
@@ -349,13 +348,13 @@ export default {
         },
 
         hasDefaultSlot() {
-            return this.existsSlot('default', true)
+            return this.$scopedSlots.default
         },
         hasPreviousSlot() {
-            return this.existsSlot('previous', true)
+            return this.$scopedSlots.previous
         },
         hasNextSlot() {
-            return this.existsSlot('next', true)
+            return this.$scopedSlots.next
         }
     },
     watch: {

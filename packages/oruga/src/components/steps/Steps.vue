@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="wrapperClasses">
+    <div :class="wrapperClasses">
         <nav :class="mainClasses">
             <ul :class="stepItemsClasses">
                 <li
@@ -154,12 +154,14 @@ export default {
         roundedClass: String,
         mobileClass: String,
         stepItemsClass: String,
+        stepMarkerClass: String,
         stepContentClass: String,
         stepContentTransitioningClass: String,
         stepNavigationClass: String,
         stepDetailsClass: String,
         stepTitleClass: String,
         stepLinkClass: String,
+        stepLinkClickableClass: String
     },
     computed: {
         wrapperClasses() {

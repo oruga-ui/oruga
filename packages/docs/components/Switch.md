@@ -185,6 +185,7 @@ title: Switch
 
 | Prop name           | Description                                        | Type                    | Values                                                                          | Default |
 | ------------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| v-model             |                                                    | string\|number\|boolean | -                                                                               |         |
 | nativeValue         | Same as native value                               | string\|number\|boolean | -                                                                               |         |
 | disabled            |                                                    | boolean                 | -                                                                               |         |
 | variant             | Color of the switch, optional                      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
@@ -206,6 +207,12 @@ title: Switch
 | variantClass        |                                                    | string                  | -                                                                               |         |
 | passiveVariantClass |                                                    | string                  | -                                                                               |         |
 | animationClass      |                                                    | string                  | -                                                                               |         |
+
+## Events
+
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| input      | undefined |
 
 ## Slots
 

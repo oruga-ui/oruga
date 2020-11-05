@@ -1,9 +1,8 @@
 <template>
     <div
-        v-if="vueReady"
         :class="rootClasses"
         :style="tickStyle">
-        <span v-if="hasDefaultSlot" :class="tickLabelClasses">
+        <span v-if="$slots.default" :class="tickLabelClasses">
             <slot/>
         </span>
     </div>
@@ -11,14 +10,13 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * @displayName SliderTick
  */
 export default {
     name: 'OSliderTick',
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     inject: {
         $slider: { name: '$slider' }
     },
@@ -54,14 +52,10 @@ export default {
         },
         tickStyle() {
             return { 'left': this.position + '%' }
-        },
-        hasDefaultSlot() {
-            return this.existsSlot('default')
         }
     },
     created() {
         if (!this.$slider) {
-            this.$destroy()
             throw new Error('You should wrap oSliderTick on a oSlider')
         }
     }

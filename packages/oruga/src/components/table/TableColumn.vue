@@ -1,10 +1,8 @@
 <script>
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
 
 export default {
     name: 'OTableColumn',
-    mixins: [VueComponentMixin()],
     inject: ['$table'],
     props: {
         label: String,
@@ -39,16 +37,16 @@ export default {
             }
         },
         hasDefaultSlot() {
-            return this.existsSlot('default', true)
+            return this.$scopedSlots.default
         },
         hasSearchableSlot() {
-            return this.existsSlot('searchable', true)
+            return this.$scopedSlots.searchable
         },
         hasHeaderSlot() {
-            return this.existsSlot('header', true)
+            return this.$scopedSlots.header
         },
         hasSubheadingSlot() {
-            return this.existsSlot('subheading', true)
+            return this.$scopedSlots.subheading
         },
         /**
          * Return if column header is un-selectable
@@ -68,7 +66,6 @@ export default {
     },
     render() {
         // renderless
-        if (!this.vueReady) return
         return this.$createElement('span', { domProps: { 'data-id': this.newKey } }, this.label)
     }
 }

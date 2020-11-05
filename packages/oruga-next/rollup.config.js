@@ -3,6 +3,7 @@ import node from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
+import { eslint } from 'rollup-plugin-eslint'
 
 import fs from 'fs'
 import path from 'path'
@@ -59,6 +60,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
+                eslint(),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
@@ -76,6 +78,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
+                eslint(),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
@@ -98,6 +101,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
+                eslint(),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
@@ -115,6 +119,7 @@ export default () => {
                 node({
                     extensions: ['.vue', '.js']
                 }),
+                eslint(),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()

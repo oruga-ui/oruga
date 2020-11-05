@@ -1,6 +1,5 @@
 <template>
     <label
-        v-if="vueReady"
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
@@ -28,9 +27,6 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
-
-const modelValueDef = [String, Number, Boolean]
 
 /**
  * Switch between two opposing states
@@ -40,9 +36,10 @@ const modelValueDef = [String, Number, Boolean]
  */
 export default {
     name: 'OSwitch',
-    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin],
-    emits: ['update:modelValue'],
+    mixins: [BaseComponentMixin],
     props: {
+        /** @model */
+        value: [String, Number, Boolean],
         /**
          * Same as native value
          */
@@ -102,9 +99,8 @@ export default {
         animationClass: String
     },
     data() {
-        const vm = this
         return {
-            newValue: vm.getModel(),
+            newValue: this.value,
             isMouseDown: false
         }
     },
@@ -137,17 +133,19 @@ export default {
             },
             set(value) {
                 this.newValue = value
-                this.emitModel(value)
+                this.$emit('input', this.newValue)
             }
         }
     },
-    methods: {
+    watch: {
         /**
         * When v-model change, set internal value.
         */
-        onModelChange(value) {
+        value(value) {
             this.newValue = value
-        },
+        }
+    },
+    methods: {
         focus() {
             // MacOS FireFox and Safari do not focus when clicked
             this.$refs.input.focus()

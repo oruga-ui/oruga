@@ -139,6 +139,7 @@ title: Input
 | useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
 | statusIcon            | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
 | validationMessage     | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
+| v-model               |                                                             | number\|string | -                                                 |                                                    |
 | type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
 | size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
 | passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
@@ -165,6 +166,7 @@ title: Input
 | ---------- | --------- | ----------- |
 | blur       | undefined |
 | focus      | undefined |
+| input      | undefined |
 
 ## Style
 

@@ -1,18 +1,16 @@
 import Icon from '../components/icon/Icon'
 import SlotComponent from '../utils/SlotComponent'
 import { default as ProviderParentMixin, Sorted } from './ProviderParentMixin'
-import VueComponentMixin from './VueComponentMixin'
-
-const modelValueDef = [String, Number]
 
 export default (cmp) => ({
-    mixins: [VueComponentMixin({vModel: modelValueDef}), ProviderParentMixin(cmp, Sorted)],
+    mixins: [ProviderParentMixin(cmp, Sorted)],
     components: {
         [Icon.name]: Icon,
         [SlotComponent.name]: SlotComponent
     },
-    emits: ['update:modelValue'],
     props: {
+        /** @model */
+        value: [String, Number],
         /**
         * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
@@ -44,9 +42,8 @@ export default (cmp) => ({
         }
     },
     data() {
-        const vm = this
         return {
-            activeId: vm.getModel(),
+            activeId: this.value,
             contentHeight: 0,
             isTransitioning: false
         }
@@ -60,14 +57,16 @@ export default (cmp) => ({
             return this.sortedItems
         }
     },
-    methods: {
+    watch: {
         /**
          * When v-model is changed set the new active tab.
          */
-        onModelChange(value) {
+        value(value) {
             this.performAction()
             this.activeId = value
         },
+    },
+    methods: {
         /**
         * Child click listener, emit input event and change active child.
         */
@@ -75,7 +74,7 @@ export default (cmp) => ({
             if (this.activeId !== child.newValue) {
                 this.performAction()
                 this.activeId = child.newValue
-                this.emitModel(this.activeId)
+                this.$emit('input', this.activeId)
             }
         },
         /**

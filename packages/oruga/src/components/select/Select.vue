@@ -46,14 +46,8 @@ import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
-
-const modelValueDef = {
-    type: [String, Number, Boolean, Object, Array],
-    default: null
-}
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -66,7 +60,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
+    mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -75,6 +69,11 @@ export default {
     },
     emits: ['update:modelValue', 'focus', 'blur'],
     props: {
+        /** @model */
+        value: {
+            type: [String, Number, Boolean, Object, Array],
+            default: null
+        },
         /**
          * Vertical size of input, optional
          * @values small, medium, large
@@ -108,9 +107,8 @@ export default {
         variantClass: String
     },
     data() {
-        const vm = this
         return {
-            selected: vm.getModel()
+            selected: this.value
         }
     },
     computed: {
@@ -149,18 +147,18 @@ export default {
             },
             set(value) {
                 this.selected = value
-                this.emitModel(value)
+                this.$emit('input', value)
                 !this.isValid && this.checkHtml5Validity()
             }
         }
     },
-    methods: {
+    watch: {
         /**
         * When v-model is changed:
         *   1. Set the selected option.
         *   2. If it's invalid, validate again.
         */
-        onModelChange(value) {
+        value(value) {
             this.selected = value
             !this.isValid && this.checkHtml5Validity()
         }

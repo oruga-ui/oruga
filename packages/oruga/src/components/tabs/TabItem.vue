@@ -1,14 +1,13 @@
 <script>
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
-import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
-import VueComponentMixin from '../../utils/VueComponentMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import TabbedChildMixin from '../../utils/TabbedChildMixin'
 
 /**
  * @displayName Tab Item
  */
 export default {
     name: 'OTabItem',
-    mixins: [VueComponentMixin(), BaseComponentMixin, TabbedChildMixin('tab')],
+    mixins: [BaseComponentMixin, TabbedChildMixin('tab')],
     props: {
         /** Item will be disabled */
         disabled: Boolean,
@@ -28,9 +27,6 @@ export default {
                 { [this.computedClass('tabs', 'itemHeaderActiveClass', 'o-tab-active')]: this.isActive },
                 { [this.computedClass('tabs', 'itemHeaderDisabledClass', 'o-tab-disabled')]: this.disabled }
             ]
-        },
-        hasHeaderSlot() {
-            return this.existsSlot('header')
         }
     }
 }

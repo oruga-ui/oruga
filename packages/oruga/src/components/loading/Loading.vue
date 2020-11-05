@@ -2,7 +2,7 @@
     <transition :name="animation" >
         <div
             :class="rootClasses"
-            v-if="vueReady && isActive">
+            v-if="isActive">
             <div :class="backgroundClasses" @click="cancel"/>
             <slot>
                 <div :class="iconClasses">
@@ -18,7 +18,6 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
@@ -33,8 +32,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
-    emits: ['update:active', 'close', 'update:full-page'],
+    mixins: [BaseComponentMixin],
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,

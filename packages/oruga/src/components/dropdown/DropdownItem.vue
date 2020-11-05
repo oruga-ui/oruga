@@ -1,6 +1,5 @@
 <template>
     <component
-        v-if="vueReady"
         :is="custom ? 'div' : 'a'"
         :class="rootClasses"
         @click="selectItem"
@@ -12,16 +11,14 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * @displayName DropdownItem
  */
 export default {
     name: 'ODropdownItem',
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     inject: ["$dropdown"],
-    emits: ['click'],
     props: {
         /**
          * The value that will be returned on events and v-model

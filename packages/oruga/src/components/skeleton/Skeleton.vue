@@ -1,7 +1,6 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * A placeholder for content to load
@@ -11,14 +10,14 @@ import VueComponentMixin from '../../utils/VueComponentMixin'
  */
 export default {
     name: 'OSkeleton',
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     props: {
         /** Show or hide loader	 */
         active: {
             type: Boolean,
             default: true
         },
-        /** Show a loading animation	 */
+        /** Show a loading animation */
         animated: {
             type: Boolean,
             default: true
@@ -66,14 +65,13 @@ export default {
         itemRoundedClass: String,
         sizeClass: String
     },
-    render() {
-        if (!this.vueReady || !this.active) return
+    render(h) {
+        if (!this.active) return
         const items = []
         const width = this.width
         const height = this.height
         for (let i = 0; i < this.count; i++) {
-            items.push(this.$createElement(
-                'div', 
+            items.push(h('div', 
                 {
                     staticClass: this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'),
                     class: { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded },
@@ -86,8 +84,7 @@ export default {
                 }
             ))
         }
-        return this.$createElement(
-            'div',
+        return h('div',
             {
                 staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
                 class: [

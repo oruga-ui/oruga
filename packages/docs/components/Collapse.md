@@ -145,3 +145,10 @@ title: Collapse
 | Event name  | Type      | Description |
 | ----------- | --------- | ----------- |
 | update:open | undefined |
+
+## Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| trigger |             |          |
+| default |             |          |

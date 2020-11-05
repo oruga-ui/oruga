@@ -6,7 +6,7 @@
         @after-leave="afterLeave"
     >
         <div
-            v-if="vueReady && !destroyed"
+            v-if="!destroyed"
             v-show="isActive"
             :class="rootClasses"
             v-trap-focus="trapFocus"
@@ -39,7 +39,6 @@
 <script>
 import trapFocus from '../../directives/trapFocus'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 
@@ -54,8 +53,7 @@ export default {
     directives: {
         trapFocus
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
-    emits: ['update:active', 'close'],
+    mixins: [BaseComponentMixin],
     props: {
         /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,

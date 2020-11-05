@@ -249,6 +249,7 @@ title: Steps
 
 | Prop name                     | Description                                                                                                                   | Type           | Values                                                                          | Default                                                   |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| v-model                       |                                                                                                                               | string\|number | -                                                                               |                                                           |
 | variant                       | Color of the control, optional                                                                                                | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                           |
 | size                          | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      |                                                           |
 | animated                      |                                                                                                                               | boolean        | -                                                                               | true                                                      |
@@ -275,12 +276,20 @@ title: Steps
 | roundedClass                  |                                                                                                                               | string         | -                                                                               |                                                           |
 | mobileClass                   |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepItemsClass                |                                                                                                                               | string         | -                                                                               |                                                           |
+| stepMarkerClass               |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepContentClass              |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepContentTransitioningClass |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepNavigationClass           |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepDetailsClass              |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepTitleClass                |                                                                                                                               | string         | -                                                                               |                                                           |
 | stepLinkClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
+| stepLinkClickableClass        |                                                                                                                               | string         | -                                                                               |                                                           |
+
+### Events
+
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| input      | undefined |
 
 ### Slots
 
@@ -310,6 +319,12 @@ title: Steps
 | variantClass      |                                                                                                                                     | string                | -      |           |
 | itemActiveClass   |                                                                                                                                     | string                | -      |           |
 | itemPreviousClass |                                                                                                                                     | string                | -      |           |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 ## Style
 

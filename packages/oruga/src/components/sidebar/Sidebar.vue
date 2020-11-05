@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses">
+    <div :class="rootClasses">
         <div
             :class="backgroundClasses"
             v-if="overlay && isOpen"
@@ -21,7 +21,6 @@
 <script>
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
@@ -32,8 +31,7 @@ import { removeElement, getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OSidebar',
-    mixins: [VueComponentMixin(), BaseComponentMixin],
-    emits: ['update:open', 'close'],
+    mixins: [BaseComponentMixin],
     props: {
         /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
         open: Boolean,
@@ -42,6 +40,7 @@ export default {
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: [String, Object],
+        /** Show an overlay like modal */
         overlay: Boolean,
         /**
          * Skeleton position in relation to the window

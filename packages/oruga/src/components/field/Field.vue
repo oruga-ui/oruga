@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses()">
+    <div :class="rootClasses()">
         <div
             v-if="horizontal"
             :class="labelHorizontalClasses">
@@ -48,7 +48,6 @@
 import FieldBody from './FieldBody'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -61,7 +60,7 @@ export default {
     components: {
         [FieldBody.name]: FieldBody
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     provide() {
         return {
             $field: this
@@ -155,14 +154,11 @@ export default {
         parent() {
             return this.$field
         },
-        hasDefaultSlot() {
-            return this.existsSlot('default')
-        },
         hasLabelSlot() {
-            return this.existsSlot('label')
+            return this.$slots.label
         },
         hasMessageSlot() {
-            return this.existsSlot('message')
+            return this.$slots.message
         },
         hasLabel() {
             return this.label || this.hasLabelSlot
@@ -216,8 +212,8 @@ export default {
         },
         hasAddons() {
             let renderedNode = 0
-            if (this.hasDefaultSlot) {
-                renderedNode = this.getSlotInstance('default').reduce((i, node) => node.tag ? i + 1 : i, 0)
+            if (this.$slots.default) {
+                renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             return (
                 renderedNode > 1 &&

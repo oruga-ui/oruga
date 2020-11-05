@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses">
+    <div :class="rootClasses">
         <o-input
             v-model="newValue"
             ref="input"
@@ -33,7 +33,7 @@
                 :style="menuStyle"
                 ref="dropdown">
                 <div
-                    v-if="hasHeaderSlot"
+                    v-if="$slots.header"
                     :class="itemClasses">
                     <slot name="header"/>
                 </div>
@@ -43,7 +43,7 @@
                         :key="groupindex + 'group'"
                         :class="itemEmptyClasses">
                         <slot
-                            v-if="hasGroupSlot"
+                            v-if="$scopedSlots.group"
                             name="group"
                             :group="element.group"
                             :index="groupindex" />
@@ -58,7 +58,7 @@
                         @click="setSelected(option, undefined, $event)"
                     >
                         <slot
-                            v-if="hasDefaultSlot"
+                            v-if="$scopedSlots.default"
                             :option="option"
                             :index="index" />
                         <span v-else>
@@ -67,12 +67,12 @@
                     </a>
                 </template>
                 <div
-                    v-if="isEmpty && hasEmptySlot"
+                    v-if="isEmpty && $slots.empty"
                     :class="itemEmptyClasses">
                     <slot name="empty" />
                 </div>
                 <div
-                    v-if="hasFooterSlot"
+                    v-if="$slots.footer"
                     :class="itemClasses">
                     <slot name="footer"/>
                 </div>
@@ -85,12 +85,9 @@
 import Input from '../input/Input'
 
 import config from '../../utils/config'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
-
-const modelValueDef = [Number, String]
 
 /**
  * Extended input that provide suggestions while the user types
@@ -103,15 +100,16 @@ export default {
     components: {
         [Input.name]: Input
     },
-    mixins: [VueComponentMixin({vModel: modelValueDef}), BaseComponentMixin, FormElementMixin],
+    mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
         return {
             $elementRef: 'input'
         }
     },
-    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     props: {
+        /** @model */
+        value: [Number, String],
         /** Options / suggestions */
         data: {
             type: Array,
@@ -187,12 +185,11 @@ export default {
         inputClasses: Object
     },
     data() {
-        const vm = this
         return {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: vm.getModel(),
+            newValue: this.model,
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -288,41 +285,6 @@ export default {
         },
 
         /**
-         * Check if exists group slot
-         */
-        hasGroupSlot() {
-            return this.existsSlot('group', true)
-        },
-
-        /**
-         * Check if exists default slot
-         */
-        hasDefaultSlot() {
-            return this.existsSlot('default', true)
-        },
-
-        /**
-         * Check if exists "empty" slot
-         */
-        hasEmptySlot() {
-            return this.existsSlot('empty')
-        },
-
-        /**
-         * Check if exists "header" slot
-         */
-        hasHeaderSlot() {
-            return this.existsSlot('header')
-        },
-
-        /**
-         * Check if exists "footer" slot
-         */
-        hasFooterSlot() {
-            return this.existsSlot('footer')
-        },
-
-        /**
          * Apply dropdownPosition property
          */
         isOpenedTop() {
@@ -351,6 +313,15 @@ export default {
     },
     watch: {
         /**
+         * When v-model is changed:
+         *   1. Update internal value.
+         *   2. If it's invalid, validate again.
+         */
+        value(value) {
+            this.newValue = value
+        },
+
+        /**
          * When dropdown is toggled, check the visibility to know when
          * to open upwards.
          */
@@ -375,7 +346,7 @@ export default {
          *   3. Close dropdown if value is clear or else open it
          */
         newValue(value) {
-            this.emitModel(value)
+            this.$emit('input', value)
             // Check if selected is invalid
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue !== value) {
@@ -411,14 +382,7 @@ export default {
                 { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
             ]
         },
-        /**
-         * When v-model is changed:
-         *   1. Update internal value.
-         *   2. If it's invalid, validate again.
-         */
-        onModelChange(value) {
-            this.newValue = value
-        },
+
         /**
          * Set which option is currently hovered.
          */
@@ -607,10 +571,11 @@ export default {
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            if (this.debounceTyping)
+            if (this.debounceTyping) {
                 this.debouncedEmitTyping()
-            else
+            } else {
                 this.emitTyping()
+            }
         },
         emitTyping() {
             this.$emit('typing', this.newValue)

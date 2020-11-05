@@ -1,11 +1,10 @@
 <template>
     <component
-        v-if="vueReady"
         :is="computedTag"
         v-bind="$attrs"
         :type="computedNativeType"
         :class="rootClasses"
-        v-on="listeners"
+        v-on="$listeners"
     >
         <o-icon
             v-if="iconLeft"
@@ -15,7 +14,7 @@
             :both="iconBoth"
         />
         <span v-if="label">{{ label }}</span>
-        <span v-else-if="hasDefaultSlot">
+        <span v-else-if="$slots.default">
             <slot />
         </span>
         <o-icon
@@ -33,7 +32,6 @@ import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -47,7 +45,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
         /**
@@ -154,9 +152,6 @@ export default {
                 return
             }
             return this.nativeType
-        },
-        hasDefaultSlot() {
-            return this.existsSlot('default')
         }
     }
 }

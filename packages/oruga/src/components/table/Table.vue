@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="rootClasses">
+    <div :class="rootClasses">
 
         <div ref="slot" style="display:none">
             <slot />
@@ -52,7 +52,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :[modelName]="isAllChecked"
+                                    :value="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -110,7 +110,7 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    :[modelName]="isAllChecked"
+                                    :value="isAllChecked"
                                     :disabled="isAllUncheckable"
                                     @change.native="checkAll"/>
                             </template>
@@ -169,78 +169,77 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr
-                        v-for="(row, index) in visibleData"
-                        :key="customRowKey ? row[customRowKey] : index"
-                        :class="rowClasses(row, index)"
-                        @click="selectRow(row)"
-                        @dblclick="$emit('dblclick', row)"
-                        @mouseenter="listeners.mouseenter ? $emit('mouseenter', row) : null"
-                        @mouseleave="listeners.mouseleave ? $emit('mouseleave', row) : null"
-                        @contextmenu="$emit('contextmenu', row, $event)"
-                        :draggable="draggable"
-                        @dragstart="handleDragStart($event, row, index)"
-                        @dragend="handleDragEnd($event, row, index)"
-                        @drop="handleDrop($event, row, index)"
-                        @dragover="handleDragOver($event, row, index)"
-                        @dragleave="handleDragLeave($event, row, index)">
+                    <template v-for="(row, index) in visibleData">
+                        <tr
+                            :key="customRowKey ? row[customRowKey] : index"
+                            :class="rowClasses(row, index)"
+                            @click="selectRow(row)"
+                            @dblclick="$emit('dblclick', row)"
+                            @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
+                            @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
+                            @contextmenu="$emit('contextmenu', row, $event)"
+                            :draggable="draggable"
+                            @dragstart="handleDragStart($event, row, index)"
+                            @dragend="handleDragEnd($event, row, index)"
+                            @drop="handleDrop($event, row, index)"
+                            @dragover="handleDragOver($event, row, index)"
+                            @dragleave="handleDragLeave($event, row, index)">
 
-                        <td
-                            v-if="showDetailRowIcon"
-                            :class="detailedChevronClasses"
-                        >
-                            <a
-                                v-if="hasDetailedVisible(row)"
-                                role="detailed"
-                                @click.stop="toggleDetails(row)">
-                                <o-icon
-                                    icon="chevron-right"
-                                    :pack="iconPack"
-                                    clickable
-                                    both
-                                    :class="detailedIconExpandedClasses(row)"/>
-                            </a>
-                        </td>
+                            <td
+                                v-if="showDetailRowIcon"
+                                :class="detailedChevronClasses"
+                            >
+                                <a
+                                    v-if="hasDetailedVisible(row)"
+                                    role="detailed"
+                                    @click.stop="toggleDetails(row)">
+                                    <o-icon
+                                        icon="chevron-right"
+                                        :pack="iconPack"
+                                        clickable
+                                        both
+                                        :class="detailedIconExpandedClasses(row)"/>
+                                </a>
+                            </td>
 
-                        <td
-                            :class="tdCheckboxCellClasses"
-                            v-if="checkable && checkboxPosition === 'left'">
-                            <o-checkbox
-                                :disabled="!isRowCheckable(row)"
-                                :[modelName]="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
-                            />
-                        </td>
-
-                        <template v-for="(column, colindex) in visibleColumns">
-
-                            <template v-if="column.hasDefaultSlot">
-                                <o-slot-component
-                                    :key="column.newKey + index + ':' + colindex"
-                                    :component="column"
-                                    scoped
-                                    name="default"
-                                    tag="td"
-                                    :class="columnClasses(column)"
-                                    :data-label="column.label"
-                                    :props="{ row, column, index }"
+                            <td
+                                :class="tdCheckboxCellClasses"
+                                v-if="checkable && checkboxPosition === 'left'">
+                                <o-checkbox
+                                    :disabled="!isRowCheckable(row)"
+                                    :value="isRowChecked(row)"
+                                    @click.native.prevent.stop="checkRow(row, index, $event)"
                                 />
+                            </td>
+
+                            <template v-for="(column, colindex) in visibleColumns">
+
+                                <template v-if="column.hasDefaultSlot">
+                                    <o-slot-component
+                                        :key="column.newKey + index + ':' + colindex"
+                                        :component="column"
+                                        scoped
+                                        name="default"
+                                        tag="td"
+                                        :class="columnClasses(column)"
+                                        :data-label="column.label"
+                                        :props="{ row, column, index }"
+                                    />
+                                </template>
+
                             </template>
 
-                        </template>
+                            <td
+                                :class="tdCheckboxCellClasses"
+                                v-if="checkable && checkboxPosition === 'right'">
+                                <o-checkbox
+                                    :disabled="!isRowCheckable(row)"
+                                    :value="isRowChecked(row)"
+                                    @click.native.prevent.stop="checkRow(row, index, $event)"
+                                />
+                            </td>
+                        </tr>
 
-                        <td
-                            :class="tdCheckboxCellClasses"
-                            v-if="checkable && checkboxPosition === 'right'">
-                            <o-checkbox
-                                :disabled="!isRowCheckable(row)"
-                                :[modelName]="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
-                            />
-                        </td>
-                    </tr>
-
-                    <template v-for="(row, index) in visibleData">
                         <tr
                             v-if="isActiveDetailRow(row)"
                             :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
@@ -270,7 +269,7 @@
 
                 </tbody>
 
-                <tfoot v-if="hasFooterSlot">
+                <tfoot v-if="$slots.footer">
                     <tr :class="footerClasses">
                         <slot name="footer" v-if="hasCustomFooterSlot()"/>
                         <th :colspan="columnCount" v-else>
@@ -287,7 +286,7 @@
             </slot>
         </template>
 
-        <template v-if="(checkable && hasBottomLeftSlot()) ||
+        <template v-if="(checkable && this.$slots['bottom-left']) ||
             (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
             <slot name="pagination">
                 <o-table-pagination
@@ -322,7 +321,6 @@ import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import VueComponentMixin from '../../utils/VueComponentMixin'
 import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
@@ -347,20 +345,13 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [VueComponentMixin(), BaseComponentMixin],
+    mixins: [BaseComponentMixin],
     inheritAttrs: false,
     provide() {
         return {
             $table: this
         }
     },
-    emits: [
-        'page-change', 'click', 'dblclick', 'contextmenu',
-        'check', 'check-all', 'update:checkedRows', 
-        'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
-        'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
-        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover'
-    ],
     props: {
         /** Table data */
         data: {
@@ -829,15 +820,15 @@ export default {
                     const component = new TableColumnComponent(
                         { parent: this, propsData: column }
                     )
-                    component.setScopedSlot('default',
-                        (props) => {
+                    component.$scopedSlots = {
+                        'default': (props) => {
                             const vnode = component.$createElement(
                                 'span', 
                                 { domProps: { innerHTML: getValueByPath(props.row, column.field) } }
                             )
                             return [vnode]
                         }
-                    )
+                    }
                     return component
                 })
             }
@@ -846,10 +837,6 @@ export default {
 
         sortMultipleDataComputed() {
             return this.backendSorting ? this.sortMultipleData : this.sortMultipleDataLocal
-        },
-
-        hasFooterSlot() {
-            return this.existsSlot('footer')
         }
     },
     watch: {
@@ -1335,20 +1322,13 @@ export default {
         * Check if footer slot has custom content.
         */
         hasCustomFooterSlot() {
-            const footer = this.getSlotInstance('footer')
+            const footer = this.$slots.footer
             if (footer.length > 1) return true
 
             const tag = footer[0].tag
             if (tag !== 'th' && tag !== 'td') return false
 
             return true
-        },
-
-        /**
-        * Check if bottom-left slot exists.
-        */
-        hasBottomLeftSlot() {
-            return this.existsSlot('bottom-left')
         },
 
         /**

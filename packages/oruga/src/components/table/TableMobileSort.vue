@@ -1,5 +1,5 @@
 <template>
-    <div v-if="vueReady" :class="$table.mobileSortClasses">
+    <div :class="$table.mobileSortClasses">
         <o-field>
             <o-select
                 v-model="sortMultipleSelect"
@@ -87,8 +87,6 @@ import Select from '../select/Select'
 import Icon from '../icon/Icon'
 import Field from '../field/Field'
 
-import VueComponentMixin from '../../utils/VueComponentMixin'
-
 export default {
     name: 'OTableMobileSort',
     components: {
@@ -97,9 +95,7 @@ export default {
         [Icon.name]: Icon,
         [Field.name]: Field
     },
-    mixins: [VueComponentMixin()],
     inject: ['$table'],
-    emits: ['sort', 'removePriority'],
     props: {
         currentSortColumn: Object,
         sortMultipleData: Array,
@@ -150,7 +146,6 @@ export default {
         },
         mobileSort(column) {
             if (this.currentSortColumn === column) return
-
             this.$emit('sort', column, this.defaultEvent)
         },
         currentSortColumn(column) {
@@ -159,7 +154,7 @@ export default {
     },
     methods: {
         removePriority() {
-            this.$emit('removePriority', this.sortMultipleSelect)
+            this.$emit('remove-priority', this.sortMultipleSelect)
             // ignore the watcher to sort when we just change whats displayed in the select
             // otherwise the direction will be flipped
             // The sort event is already triggered by the emit
