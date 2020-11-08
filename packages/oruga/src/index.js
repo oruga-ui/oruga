@@ -27,5 +27,7 @@ export * from './components'
 // export programmatic components
 export { LoadingProgrammatic } from './components/loading'
 export { ModalProgrammatic } from './components/modal'
+export { DialogProgrammatic } from './components/dialog'
+
 // export config plugin
 export { Plugin as Config } from './utils/config'

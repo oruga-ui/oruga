@@ -3,6 +3,7 @@ import Button from './button'
 import Checkbox from './checkbox'
 import Collapse from './collapse'
 import Dropdown from './dropdown'
+import Dialog from './dialog'
 import Field from './field'
 import Icon from './icon'
 import Input from './input'
@@ -27,6 +28,7 @@ export {
     Checkbox,
     Collapse,
     Dropdown,
+    Dialog,
     Field,
     Icon,
     Input,
