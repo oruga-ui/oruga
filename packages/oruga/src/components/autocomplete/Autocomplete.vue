@@ -29,7 +29,7 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
-                v-show="isActive && (!isEmpty || hasEmptySlot || hasHeaderSlot)"
+                v-show="isActive && (!isEmpty || $slots.empty || $slots.header)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
