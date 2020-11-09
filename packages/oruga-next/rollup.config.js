@@ -3,16 +3,16 @@ import node from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
-import { eslint } from 'rollup-plugin-eslint'
+import typescript from 'rollup-plugin-typescript2';
 
 import fs from 'fs'
 import path from 'path'
 
 import pack from './package.json'
 
-const bannerTxt = `/*! Oruga Next v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
+const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
 
-const baseFolder = '../oruga/src/components/'
+const baseFolder = './src/components/'
 
 const components = fs
     .readdirSync(baseFolder)
@@ -21,8 +21,8 @@ const components = fs
     )
 
 const entries = {
-    'index': '../oruga/src/index.js',
-    'helpers': '../oruga/src/utils/helpers.js',
+    'index': './src/index.ts',
+    'helpers': './src/utils/helpers.ts',
     ...components.reduce((obj, name) => {
         obj[name] = (baseFolder + name)
         return obj
@@ -58,9 +58,11 @@ export default () => {
             },
             plugins: [
                 node({
-                    extensions: ['.vue', '.js']
+                    extensions: ['.vue', '.ts']
                 }),
-                eslint(),
+                typescript({
+                    typescript: require('typescript')
+                }),    
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
@@ -76,16 +78,18 @@ export default () => {
             },
             plugins: [
                 node({
-                    extensions: ['.vue', '.js']
+                    extensions: ['.vue', '.ts']
                 }),
-                eslint(),
+                typescript({
+                    typescript: require('typescript')
+                }),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
         },
         {
-            input: '../oruga/src/index.js',
+            input: 'src/index.ts',
             external: ['vue'],
             output: {
                 format: 'umd',
@@ -99,16 +103,18 @@ export default () => {
             },
             plugins: [
                 node({
-                    extensions: ['.vue', '.js']
+                    extensions: ['.vue', '.ts']
                 }),
-                eslint(),
+                typescript({
+                    typescript: require('typescript')
+                }),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
             ]
         },
         {
-            input: '../oruga/src/index.js',
+            input: 'src/index.ts',
             external: ['vue'],
             output: {
                 format: 'esm',
@@ -117,9 +123,11 @@ export default () => {
             },
             plugins: [
                 node({
-                    extensions: ['.vue', '.js']
+                    extensions: ['.vue', '.ts']
                 }),
-                eslint(),
+                typescript({
+                    typescript: require('typescript')
+                }),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()

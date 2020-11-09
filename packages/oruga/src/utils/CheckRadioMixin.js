@@ -1,7 +1,7 @@
 export default {
 	props: {
 		/** @model */
-		value: [String, Number, Boolean, Array],
+		value: [String, Number, Boolean],
 		/**
 		 * Same as native value
 		 */

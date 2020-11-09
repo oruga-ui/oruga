@@ -9,8 +9,7 @@ export const registerComponent = (app: App, component: DefineComponent) => {
     app.component(component.name, component)
 }
 
-export const registerComponentProgrammatic = (app: App, property: string, component: DefineComponent) => {
-    let oruga = app.config.globalProperties.$oruga
-    if (!oruga) oruga = {}
+export const registerComponentProgrammatic = (app: App, property: string, component: any) => {
+    if (!app.config.globalProperties.$oruga) app.config.globalProperties.$oruga = {}
     app.config.globalProperties.$oruga[property] = component
 }

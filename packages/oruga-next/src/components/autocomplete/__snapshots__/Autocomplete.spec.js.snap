@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OAutocomplete render correctly 1`] = `
+<div class="o-autocomplete">
+    <div class="o-control-input"><input autocomplete="off" type="text" class="o-input">
+        <!---->
+        <!---->
+        <!---->
+    </div>
+    <div class="o-autocomplete-menu" style="display: none;">
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+    </div>
+</div>
+`;

@@ -28,9 +28,6 @@ export default {
                 return getValueByPath(config, 'collapse.animation', 'fade')
             }
         },
-        /**
-         * Custom animation (transition name)
-         */
         ariaId: {
             type: String,
             default: ''

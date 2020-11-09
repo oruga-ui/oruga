@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OLoading active render correctly 1`] = `
+<transition-stub name="fade">
+    <div class="o-loading-overlay o-loading-fullpage">
+        <div class="o-loading-background"></div>
+        <div class="o-loading-icon">
+            <o-icon-stub icon="spin" spin="true" both="true"></o-icon-stub>
+        </div>
+    </div>
+</transition-stub>
+`;

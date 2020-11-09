@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
 import { getValueByPath } from '../../utils/helpers'
-import { defineComponent } from 'vue'
 
 /**
  * Icons take an important role of any application
@@ -138,7 +139,7 @@ export default defineComponent({
         /**
         * Equivalent icon name of the MDI.
         */
-        getEquivalentIconOf(value) {
+        getEquivalentIconOf(value: string): string {
             // Only transform the class if the both prop is set to true
             if (!this.both) {
                 return value

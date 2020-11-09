@@ -16,7 +16,7 @@
             :sort-icon="sortIcon"
             :sort-icon-size="sortIconSize"
             @sort="(column, event) => sort(column, null, event)"
-            @removePriority="(column) => removeSortingPriority(column)"
+            @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
@@ -151,7 +151,7 @@
                                     <template v-if="column.hasSearchableSlot">
                                         <o-slot-component
                                             :component="column"
-                                            :scoped="true"
+                                            scoped
                                             name="searchable"
                                             tag="span"
                                             :props="{ column, filters }"

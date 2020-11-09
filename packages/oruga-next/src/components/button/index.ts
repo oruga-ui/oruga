@@ -3,13 +3,11 @@ import Button from './Button.vue'
 
 import { registerComponent } from '../../utils/plugins'
 
-const Plugin: Plugin = {
+export default {
     install(app: App) {
         registerComponent(app, Button)
     }
-}
-
-export default Plugin
+} as Plugin
 
 export {
     Button as OButton

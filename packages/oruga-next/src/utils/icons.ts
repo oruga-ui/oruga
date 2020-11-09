@@ -1,7 +1,7 @@
 import config from '../utils/config'
 import { merge, getValueByPath } from '../utils/helpers'
 
-const mdiIcons = {
+const mdiIcons: any = {
     sizes: {
         'default': 'mdi-24px',
         'small': null,
@@ -12,7 +12,7 @@ const mdiIcons = {
 }
 
 const faIcons = () => {
-    const iconComponent = getValueByPath(config, 'iconComponent')
+    const iconComponent: any = getValueByPath(config, 'iconComponent')
     const faIconPrefix = iconComponent ? '' : 'fa-'
     return {
         sizes: {
@@ -40,17 +40,17 @@ const faIcons = () => {
 }
 
 const getIcons = () => {
-    let icons = {
-        mdi: mdiIcons,
-        fa: faIcons(),
-        fas: faIcons(),
-        far: faIcons(),
-        fad: faIcons(),
-        fab: faIcons(),
-        fal: faIcons()
+    let icons: any = {
+        'mdi': mdiIcons,
+        'fa': faIcons(),
+        'fas': faIcons(),
+        'far': faIcons(),
+        'fad': faIcons(),
+        'fab': faIcons(),
+        'fal': faIcons()
     }
 
-    const customIconPacks = getValueByPath(config, 'customIconPacks')
+    const customIconPacks: any = getValueByPath(config, 'customIconPacks')
     if (customIconPacks) {
         icons = merge(icons, customIconPacks, true)
     }

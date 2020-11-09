@@ -110,10 +110,12 @@ export default {
         rootClass: String,
         horizontalClass: String,
         expandedClass: String,
+        groupedClass: String,
         groupMultilineClass: String,
         labelClass: String,
         labelHorizontalClass: String,
         contentHorizontalClass: String,
+        addonsClass: String,
         messageClass: String,
         variantClass: String
     },
@@ -207,8 +209,8 @@ export default {
         * Is a method to be called when component re-render.
         */
         fieldType() {
-            if (this.grouped) return 'o-field-grouped'
-            if (this.hasAddons()) return 'o-field-addons'
+            if (this.grouped) return this.computedClass('field', 'groupedClass', 'o-field-grouped')
+            if (this.hasAddons()) return this.computedClass('field', 'addonsClass', 'o-field-addons')
         },
         hasAddons() {
             let renderedNode = 0

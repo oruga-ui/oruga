@@ -14,7 +14,7 @@ const Oruga = {
         setOptions(merge(config, options, true))
         // Components
         for (const componentKey in components) {
-            registerPlugin(app, components[componentKey])
+            registerPlugin(app, (components as any)[componentKey])
         }
     }
 }

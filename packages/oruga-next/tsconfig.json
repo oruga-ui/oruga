@@ -10,6 +10,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
     "baseUrl": ".",
     "types": [],
     "paths": {

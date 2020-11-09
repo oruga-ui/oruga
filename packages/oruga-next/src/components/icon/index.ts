@@ -4,13 +4,11 @@ import Icon from './Icon.vue'
 
 import { registerComponent } from '../../utils/plugins'
 
-const Plugin: Plugin = {
+export default {
     install(app: App) {
         registerComponent(app, Icon)
     }
-}
-
-export default Plugin
+} as Plugin
 
 export {
     Icon as OIcon
