@@ -67,14 +67,19 @@
 </template>
 
 <script>
-import trapFocus from '../../directives/trapFocus'
 import Modal from '../modal/Modal'
 import Button from '../button/Button'
-
 import Icon from '../icon/Icon'
+
+import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement } from '../../utils/helpers'
 
+/**
+ * Dialogs inform users about a specific task and may contain critical information or require decisions
+ * @displayName Dialog
+ * @example ./examples/Dialog.md
+ */
 export default {
     name: 'ODialog',
     components: {
