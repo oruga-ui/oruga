@@ -197,6 +197,7 @@ title: Switch
 | falseValue          | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
 | rounded             | Rounded style                                      | boolean                 | -                                                                               | true    |
 | outlined            | Outlined style                                     | boolean                 | -                                                                               | false   |
+| leftLabel           | Show label on left                                 | boolean                 | -                                                                               | false   |
 | rootClass           |                                                    | string                  | -                                                                               |         |
 | disabledClass       |                                                    | string                  | -                                                                               |         |
 | checkClass          |                                                    | string                  | -                                                                               |         |
@@ -207,6 +208,7 @@ title: Switch
 | variantClass        |                                                    | string                  | -                                                                               |         |
 | passiveVariantClass |                                                    | string                  | -                                                                               |         |
 | animationClass      |                                                    | string                  | -                                                                               |         |
+| leftLabelClass      |                                                    | string                  | -                                                                               |         |
 
 ## Events
 

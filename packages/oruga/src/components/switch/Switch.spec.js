@@ -51,4 +51,18 @@ describe('OSwitch', () => {
         const switchElement = wrapper.find('.o-switch-check')
         expect(switchElement.classes()).toContain('o-color-danger-passive')
     })
+
+    it('does not have a label at left by default', () => {
+        const value = false
+        wrapper.setProps({ value })
+        expect(wrapper.classes()).not.toContain('o-switch-left')
+    })
+
+    it('has label at left is left-label prop has been sent', async () => {
+        const leftLabel = true
+        const value = false
+        wrapper.setProps({ leftLabel, value })
+        await wrapper.vm.$nextTick()
+        expect(wrapper.classes()).toContain('o-switch-left')
+    })
 })

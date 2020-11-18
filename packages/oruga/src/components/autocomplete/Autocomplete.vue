@@ -264,7 +264,7 @@ export default {
             const whiteList = []
             whiteList.push(this.$refs.input.$el.querySelector('input'))
             whiteList.push(this.$refs.dropdown)
-            // Add all chidren from dropdown
+            // Add all children from dropdown
             if (this.$refs.dropdown !== undefined) {
                 const children = this.$refs.dropdown.querySelectorAll('*')
                 for (const child of children) {
@@ -584,6 +584,7 @@ export default {
         rightIconClick(event) {
             if (this.clearable) {
                 this.newValue = ''
+                this.setSelected(null, false)
                 if (this.openOnFocus) {
                     this.$refs.input.$el.focus()
                 }

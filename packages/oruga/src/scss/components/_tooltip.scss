@@ -44,7 +44,7 @@ $tooltip-content-zindex: 38 !default;
         border-bottom-style: solid;
         border-bottom-color: transparent;
         @include variable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include variable('border-bottom-width', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
+        @include variable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "left") {
         border-left-style: solid;
         @include variable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);

@@ -6,9 +6,9 @@ Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/)
 
 You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
-## Vue 2
-
 ## Installation
+
+### Vue 2
 
 ### Npm
 
@@ -22,6 +22,22 @@ npm install @oruga-ui/oruga --save
 yarn add @oruga-ui/oruga
 ```
 
+### Vue 3
+
+### Npm
+
+```bash
+npm install @oruga-ui/oruga-next --save
+```
+
+### Yarn
+
+```bash
+yarn add @oruga-ui/oruga-next
+```
+
+### Vue 2
+
 ### CDN
 
 ```html
@@ -29,7 +45,18 @@ yarn add @oruga-ui/oruga
 <script src="//unpkg.com/oruga/dist/oruga.js"></script>
 ```
 
+### Vue 3
+
+### CDN
+
+```html
+<link rel="stylesheet" href="//unpkg.com/oruga-next/dist/oruga.css" />
+<script src="//unpkg.com/oruga-next/dist/oruga.js"></script>
+```
+
 ## Usage
+
+### Vue 2
 
 ### Full bundle
 
@@ -52,30 +79,7 @@ Vue.use(Autocomplete)
 Vue.use(Sidebar)
 ```
 
-## Vue 3
-
-## Installation
-
-### Npm
-
-```bash
-npm install @oruga-ui/oruga-next --save
-```
-
-### Yarn
-
-```bash
-yarn add @oruga-ui/oruga-next
-```
-
-### CDN
-
-```html
-<link rel="stylesheet" href="//unpkg.com/oruga-next/dist/oruga.css" />
-<script src="//unpkg.com/oruga-next/dist/oruga.js"></script>
-```
-
-## Usage
+### Vue 3
 
 ### Full bundle
 

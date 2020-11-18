@@ -184,4 +184,15 @@ $switch-width: $switch-width-number * 1em !default;
     &[disabled] {
         @include variable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
     }
+    &.o-switch-left {
+        flex-direction: row-reverse;
+        .o-switch-label {
+            padding-right: $control-padding-horizontal;
+        }
+    }
+    &:not(.o-switch-left) {
+        .o-switch-label {
+            padding-left: $control-padding-horizontal;
+        }
+    }
 }

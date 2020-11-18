@@ -23,6 +23,9 @@
                 :indicator="indicator"
                 ref="button1"
                 role="slider"
+                :format="format"
+                :locale="locale"
+                :tooltip-always="tooltipAlways"
                 :aria-valuenow="value1"
                 :aria-valuemin="min"
                 :aria-valuemax="max"
@@ -40,6 +43,9 @@
                 ref="button2"
                 v-if="isRange"
                 role="slider"
+                :format="format"
+                :locale="locale"
+                :tooltip-always="tooltipAlways"
                 :aria-valuenow="value2"
                 :aria-valuemin="min"
                 :aria-valuemax="max"
@@ -151,6 +157,27 @@ export default defineComponent({
         indicator: {
             type: Boolean,
             default: false
+        },
+        format: {
+            type: String,
+            default: 'raw',
+            validator: (value: string) => {
+                return [
+                    'raw',
+                    'percent'
+                ].indexOf(value) >= 0
+            }
+        },
+        locale: {
+            type: [String, Array],
+            default: () => {
+                return getValueByPath(config, 'locale')
+            }
+        },
+        /** Tooltip displays always */
+        tooltipAlways: {
+            type: Boolean,
+            default: false  
         },
         rootClass: String,
         trackClass: String,

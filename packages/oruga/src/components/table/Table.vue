@@ -30,6 +30,7 @@
                     @update:currentPage="newCurrentPage = $event"
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
+                    :rounded="paginationRounded"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="top-left"/>
@@ -223,7 +224,9 @@
                                         tag="td"
                                         :class="columnClasses(column)"
                                         :data-label="column.label"
-                                        :props="{ row, column, index }"
+                                        :props="{ row, column, index, colindex, toggleDetails }"
+                                        @click.native="$emit('cell-click',row, column,
+                                                             index, colindex, $event)"
                                     />
                                 </template>
 
@@ -298,6 +301,7 @@
                     @update:currentPage="newCurrentPage = $event"
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
+                    :rounded="paginationRounded"
                     @page-change="(event) => $emit('page-change', event)"
                 >
                     <slot name="bottom-left"/>
@@ -566,6 +570,13 @@ export default {
             type: Boolean,
             default: () => { return getValueByPath(config, 'table.showHeader', true) }
         },
+        /** Make the checkbox column sticky when checkable */
+        stickyCheckbox: {
+            type: Boolean,
+            default: false
+        },
+        /** Rounded pagination if paginated */
+        paginationRounded: Boolean,
         rootClass: String,
         wrapperClass: String,
         footerClass: String,
@@ -671,7 +682,8 @@ export default {
         },
         tdCheckboxCellClasses() {
             return [
-                this.computedClass('table', 'tdCheckboxCellClass', 'o-table-checkbox-cell')
+                this.computedClass('table', 'tdCheckboxCellClass', 'o-table-checkbox-cell'),
+                ...this.thStickyClasses({ sticky: this.stickyCheckbox })
             ]
         },
         detailedClasses() {
@@ -787,7 +799,7 @@ export default {
         * Return total column count based if it's checkable or expanded
         */
         columnCount() {
-            let count = this.newColumns.length
+            let count = this.visibleColumns.length
             count += this.checkable ? 1 : 0
             count += (this.detailed && this.showDetailIcon) ? 1 : 0
 
@@ -907,6 +919,10 @@ export default {
         openedDetailed(expandedRows) {
             this.visibleDetailRows = expandedRows
         },
+
+        newCurrentPage(newVal) {
+            this.$emit('update:currentPage', newVal)
+        }
     },
     methods: {
         thWrapClasses(column) {
@@ -1408,30 +1424,35 @@ export default {
         * Emits drag start event
         */
         handleDragStart(event, row, index) {
+            if (!this.draggable) return
             this.$emit('dragstart', {event, row, index})
         },
         /**
         * Emits drag leave event
         */
         handleDragEnd(event, row, index) {
+            if (!this.draggable) return
             this.$emit('dragend', {event, row, index})
         },
         /**
         * Emits drop event
         */
         handleDrop(event, row, index) {
+            if (!this.draggable) return
             this.$emit('drop', {event, row, index})
         },
         /**
         * Emits drag over event
         */
         handleDragOver(event, row, index) {
+            if (!this.draggable) return
             this.$emit('dragover', {event, row, index})
         },
         /**
         * Emits drag leave event
         */
         handleDragLeave(event, row, index) {
+            if (!this.draggable) return
             this.$emit('dragleave', {event, row, index})
         },
 

@@ -53,4 +53,5 @@ describe('OSlider', () => {
             expect(subject.exists()).toBeTruthy()
         })
     })
+
 })

@@ -70,6 +70,7 @@
 import Modal from '../modal/Modal'
 import Button from '../button/Button'
 import Icon from '../icon/Icon'
+import Input from '../input/Input'
 
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
@@ -84,7 +85,8 @@ export default {
     name: 'ODialog',
     components: {
         [Icon.name]: Icon,
-        [Button.name]: Button
+        [Button.name]: Button,
+        [Input.name]: Input
     },
     directives: {
         trapFocus

@@ -586,6 +586,7 @@ export default defineComponent({
         rightIconClick(event) {
             if (this.clearable) {
                 this.newValue = ''
+                this.setSelected(null, false)
                 if (this.openOnFocus) {
                     this.$refs.input.$el.focus()
                 }

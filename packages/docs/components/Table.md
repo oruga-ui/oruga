@@ -1418,6 +1418,8 @@ title: Table
 | cardLayout                | Force to show table with cards layout                                                                                                            | boolean        | -                                       |                                                              |
 | debounceSearch            | Filtering debounce time (in milliseconds)                                                                                                        | number         | -                                       |                                                              |
 | showHeader                | Show header                                                                                                                                      | boolean        | -                                       | Config -> <code> 'table.showHeader': true</code>             |
+| stickyCheckbox            | Make the checkbox column sticky when checkable                                                                                                   | boolean        | -                                       | false                                                        |
+| paginationRounded         | Rounded pagination if paginated                                                                                                                  | boolean        | -                                       |                                                              |
 | rootClass                 |                                                                                                                                                  | string         | -                                       |                                                              |
 | wrapperClass              |                                                                                                                                                  | string         | -                                       |                                                              |
 | footerClass               |                                                                                                                                                  | string         | -                                       |                                                              |
@@ -1464,6 +1466,8 @@ title: Table
 | mouseenter               |           |
 | mouseleave               |           |
 | contextmenu              |           |
+| cell-click               |           |
+| update:currentPage       | undefined |
 | filters-change           | undefined |
 | sorting-priority-removed | undefined |
 | sort                     | undefined |

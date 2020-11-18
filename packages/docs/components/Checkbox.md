@@ -142,24 +142,24 @@ title: Checkbox
 
 ## Props
 
-| Prop name     | Description                                        | Type                           | Values                                                                          | Default |
-| ------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
-| v-model       |                                                    | string\|number\|boolean\|array | -                                                                               |         |
-| nativeValue   | Same as native value                               | string\|number\|boolean        | -                                                                               |         |
-| variant       | Color of the control, optional                     | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| disabled      | Same as native disabled                            | boolean                        | -                                                                               |         |
-| required      |                                                    | boolean                        | -                                                                               |         |
-| name          | Same as native name                                | string                         | -                                                                               |         |
-| size          | Size of the control, optional                      | string                         | `small`, `medium`, `large`                                                      |         |
-| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               |         |
-| trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean        | -                                                                               | true    |
-| falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean        | -                                                                               | false   |
-| rootClass     |                                                    | string                         | -                                                                               |         |
-| disabledClass |                                                    | string                         | -                                                                               |         |
-| checkClass    |                                                    | string                         | -                                                                               |         |
-| labelClass    |                                                    | string                         | -                                                                               |         |
-| sizeClass     |                                                    | string                         | -                                                                               |         |
-| variantClass  |                                                    | string                         | -                                                                               |         |
+| Prop name     | Description                                        | Type                    | Values                                                                          | Default |
+| ------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| v-model       |                                                    | string\|number\|boolean | -                                                                               |         |
+| nativeValue   | Same as native value                               | string\|number\|boolean | -                                                                               |         |
+| variant       | Color of the control, optional                     | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| disabled      | Same as native disabled                            | boolean                 | -                                                                               |         |
+| required      |                                                    | boolean                 | -                                                                               |         |
+| name          | Same as native name                                | string                  | -                                                                               |         |
+| size          | Size of the control, optional                      | string                  | `small`, `medium`, `large`                                                      |         |
+| indeterminate | Same as native indeterminate                       | boolean                 | -                                                                               |         |
+| trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
+| falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
+| rootClass     |                                                    | string                  | -                                                                               |         |
+| disabledClass |                                                    | string                  | -                                                                               |         |
+| checkClass    |                                                    | string                  | -                                                                               |         |
+| labelClass    |                                                    | string                  | -                                                                               |         |
+| sizeClass     |                                                    | string                  | -                                                                               |         |
+| variantClass  |                                                    | string                  | -                                                                               |         |
 
 ## Events
 

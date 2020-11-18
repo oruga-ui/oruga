@@ -59,7 +59,6 @@ $dialog-zindex: 40 !default;
         flex-direction: column;
         max-height: calc(100vh - 40px);
         overflow: hidden;
-        -ms-overflow-y: visible;
         font-size: $dialog-font-size;
         font-weight: $dialog-font-weight;
         @include variable('background-color', 'dialog-header-background-color', $dialog-header-background-color);
@@ -136,8 +135,6 @@ $dialog-zindex: 40 !default;
         @include variable('background-color', 'dialog-footer-background-color', $dialog-footer-background-color);
         @include variable('margin', 'dialog-footer-margin', $dialog-footer-margin);
         @include variable('padding', 'dialog-footer-padding', $dialog-footer-padding);
-
-
     }
     @media screen and (min-width: $field-horizontal-breakpoint) {
         min-width: 320px;

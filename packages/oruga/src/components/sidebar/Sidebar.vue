@@ -167,7 +167,19 @@ export default {
         },
         isAbsolute() {
             return this.position === 'absolute'
-        },
+        }
+    },
+    watch: {
+        open: {
+            handler(value) {
+                this.isOpen = value
+                const open = this.right ? !value : value
+                this.transitionName = !open ? 'slide-prev' : 'slide-next'
+            },
+            immediate: true
+        }
+    },
+    methods: {
         /**
          * White-listed items to not close when clicked.
          * Add sidebar content and all children.
@@ -183,20 +195,7 @@ export default {
                 }
             }
             return whiteList
-        }
-    },
-    watch: {
-        open: {
-            handler(value) {
-                this.isOpen = value
-                const open = this.right ? !value : value
-                this.transitionName = !open ? 'slide-prev' : 'slide-next'
-            },
-            immediate: true
-        }
-    },
-    methods: {
-
+        },
         /**
         * Keypress event that is bound to the document.
         */
@@ -232,7 +231,7 @@ export default {
         clickedOutside(event) {
             if (this.isFixed) {
                 if (this.isOpen && !this.animating) {
-                    if (this.whiteList.indexOf(event.target) < 0) {
+                    if (this.whiteList().indexOf(event.target) < 0) {
                         this.cancel('outside')
                     }
                 }

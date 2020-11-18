@@ -3,9 +3,9 @@
         :class="$slider.thumbWrapperClasses(dragging)"
         :style="wrapperStyle">
         <o-tooltip
-            :label="tooltipLabel"
+            :label="formattedValue"
             :variant="variant"
-            :always="dragging || isFocused"
+            :always="dragging || isFocused || tooltipAlways"
             :active="!disabled && tooltip">
             <div
                 :class="$slider.thumbClasses"
@@ -21,7 +21,7 @@
                 @keydown.up.prevent="onRightKeyDown"
                 @keydown.home.prevent="onHomeKeyDown"
                 @keydown.end.prevent="onEndKeyDown">
-                <span v-if="indicator">{{ value }}</span>
+                <span v-if="indicator">{{ formattedValue }}</span>
             </div>
         </o-tooltip>
     </div>
@@ -31,6 +31,9 @@
 import { defineComponent } from 'vue'
 
 import Tooltip from '../tooltip/Tooltip.vue'
+
+import config from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 export default defineComponent({
     name: 'OSliderThumb',
@@ -57,7 +60,27 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
-        customFormatter: Function
+        customFormatter: Function,
+        format: {
+            type: String,
+            default: 'raw',
+            validator: (value: string) => {
+                return [
+                    'raw',
+                    'percent'
+                ].indexOf(value) >= 0
+            }
+        },
+        locale: {
+            type: [String, Array],
+            default: () => {
+                return getValueByPath(config, 'locale')
+            }
+        },
+        tooltipAlways: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -91,10 +114,19 @@ export default defineComponent({
         wrapperStyle() {
             return { left: this.currentPosition }
         },
-        tooltipLabel() {
-            return typeof this.customFormatter !== 'undefined'
-                ? this.customFormatter(this.getModel())
-                : this.getModel().toString()
+        formattedValue() {
+            if (typeof this.customFormatter !== 'undefined') {
+                return this.customFormatter(this.value)
+            }
+            if (this.format === 'percent') {
+                return new Intl.NumberFormat(
+                    this.locale,
+                    {
+                        style: 'percent'
+                    }
+                ).format(((this.value - this.min)) / (this.max - this.min))
+            }
+            return new Intl.NumberFormat(this.locale).format(this.value)
         }
     },
     methods: {

@@ -130,6 +130,13 @@ export default {
                 return getValueByPath(config, 'modal.destroyOnHide', true)
             }
         },
+        /** Automatically focus modal when active */
+        autoFocus: {
+            type: Boolean,
+            default: () => {
+                return getValueByPath(config, 'modal.autoFocus', true)
+            }
+        },
         rootClass: String,
         backgroundClass: String,
         contentClass: String,
@@ -192,7 +199,7 @@ export default {
             if (value) this.destroyed = false
             this.handleScroll()
             this.$nextTick(() => {
-                if (value && this.$el && this.$el.focus) {
+                if (value && this.$el && this.$el.focus && this.autoFocus) {
                     this.$el.focus()
                 }
             })

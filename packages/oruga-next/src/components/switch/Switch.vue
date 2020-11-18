@@ -90,6 +90,11 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        /** Show label on left */
+        leftLabel: {
+            type: Boolean,
+            default: false
+        },
         rootClass: String,
         disabledClass: String,
         checkClass: String,
@@ -99,7 +104,8 @@ export default defineComponent({
         sizeClass: String,
         variantClass: String,
         passiveVariantClass: String,
-        animationClass: String
+        animationClass: String,
+        leftLabelClass: String
     },
     data() {
         return {
@@ -114,7 +120,8 @@ export default defineComponent({
                 { [`${this.computedClass('switch', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
                 { [this.computedClass('switch', 'disabledClass', 'o-switch-disabled')]: this.disabled },
                 { [this.computedClass('switch', 'roundedClass', 'o-switch-rounded')]: this.rounded },
-                { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined }
+                { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined },
+                { [this.computedClass('switch', 'leftLabelClass', 'o-switch-left')]: this.leftLabel }
             ]
         },
         checkClasses() {
