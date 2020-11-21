@@ -130,8 +130,7 @@ export default defineComponent({
         useIconComponent() {
             if (this.component) return this.component
             const component = getValueByPath(config, 'iconComponent')
-            const iconPack = getValueByPath(config, 'iconPack')
-            if (component && (!this.pack || this.pack === iconPack)) return component
+            if (component) return component
             return null;
         }
     },
