@@ -2,7 +2,7 @@
 
 exports[`ODropdown render correctly 1`] = `
 <div class="o-dropdown o-dropdown-mobile">
-    <div role="button" aria-haspopup="true" class="o-dropdown-trigger"></div>
+    <div role="button" aria-haspopup="true" class="o-dropdown-trigger"><button class="trigger">trigger</button></div>
     <transition-stub name="fade">
         <div aria-hidden="true" class="o-dropdown-background" style="display: none;"></div>
     </transition-stub>

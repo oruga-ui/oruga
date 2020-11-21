@@ -117,6 +117,8 @@ export default {
          * Make the icon right clickable
          */
         iconRightClickable: Boolean,
+        /** Variant of right icon */
+        iconRightType: String,
         rootClass: String,
         controlExpandedClass: String,
         controlIconLeftClass: String,
@@ -194,7 +196,7 @@ export default {
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return
+                return this.iconRightType || null
             }
             return this.statusVariant
         },

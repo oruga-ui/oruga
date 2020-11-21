@@ -76,8 +76,8 @@ describe('OAutocomplete', () => {
 
         const itemsInDropdown = findStringsStartingWith(DATA_LIST, VALUE_TYPED)
 
-        $input.trigger('keydown.down')
-        $input.trigger('keydown.enter')
+        $input.trigger('keydown', {'key': 'Down'})
+        $input.trigger('keydown', {'key': 'Enter'})
         await wrapper.vm.$nextTick()
 
         expect($input.element.value).toBe(itemsInDropdown[0])
@@ -124,7 +124,7 @@ describe('OAutocomplete', () => {
         expect(wrapper.vm.isActive).toBeFalsy()
 
         $input.trigger('focus')
-        $input.trigger('keydown.down')
+        $input.trigger('keydown', {'key': 'Down'})
         await wrapper.vm.$nextTick()
 
         expect(wrapper.vm.isActive).toBeTruthy()
@@ -132,7 +132,7 @@ describe('OAutocomplete', () => {
 
     it('manages tab pressed as expected', async () => {
         // hovered is null
-        $input.trigger('keydown.tab')
+        $input.trigger('keydown', {'key': 'Tab'})
         await wrapper.vm.$nextTick()
         expect($dropdown.isVisible()).toBeFalsy()
 
@@ -149,7 +149,7 @@ describe('OAutocomplete', () => {
         $input.trigger('focus')
         await wrapper.vm.$nextTick()
 
-        $input.trigger('keydown.tab')
+        $input.trigger('keydown', {'key': 'Tab'})
         await wrapper.vm.$nextTick()
         expect($input.element.value).toBe(DATA_LIST[0])
     })

@@ -20,8 +20,7 @@ $autocomplete-menu-zindex : 20 !default;
     position: relative;
     .o-autocomplete-menu {
         display: block;
-        min-width: 100%;
-        max-width: 100%;
+        width: 100%;
         position: absolute;
         left: 0;
         top: 100%;

@@ -32,6 +32,10 @@
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
                     @page-change="(event) => $emit('page-change', event)"
+                    :aria-next-label="ariaNextLabel"
+                    :aria-previous-label="ariaPreviousLabel"
+                    :aria-page-label="ariaPageLabel"
+                    :aria-current-label="ariaCurrentLabel"
                 >
                     <slot name="top-left"/>
                 </o-table-pagination>
@@ -303,6 +307,10 @@
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
                     @page-change="(event) => $emit('page-change', event)"
+                    :aria-next-label="ariaNextLabel"
+                    :aria-previous-label="ariaPreviousLabel"
+                    :aria-page-label="ariaPageLabel"
+                    :aria-current-label="ariaCurrentLabel"
                 >
                     <slot name="bottom-left"/>
                 </o-table-pagination>
@@ -325,7 +333,7 @@ import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce } from '../../utils/helpers'
+import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
@@ -1292,13 +1300,19 @@ export default {
                     delete this.filters[key]
                     return true
                 }
-                const value = this.getValueByPath(row, key)
-                if (value == null) return false
-                if (Number.isInteger(value)) {
-                    if (value !== Number(this.filters[key])) return false
+                const input = this.filters[key]
+                const column = this.newColumns.filter((c) => c.field === key)[0]
+                if (column && column.customSearch && typeof column.customSearch === 'function') {
+                    return column.customSearch(row, input)
                 } else {
-                    const re = new RegExp(this.filters[key], 'i')
-                    if (!re.test(value)) return false
+                    let value = this.getValueByPath(row, key)
+                    if (value == null) return false
+                    if (Number.isInteger(value)) {
+                        if (value !== Number(input)) return false
+                    } else {
+                        const re = new RegExp(escapeRegExpChars(input), 'i')
+                        if (!re.test(value)) return false
+                    }
                 }
             }
             return true

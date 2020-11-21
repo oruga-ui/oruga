@@ -18,8 +18,7 @@
             @focus="focused"
             @blur="onBlur"
             @keyup.native.esc.prevent="isActive = false"
-            @keydown.native.tab="tabPressed"
-            @keydown.native.enter.prevent="enterPressed"
+            @keydown.native="keydown"
             @keydown.native.up.prevent="keyArrows('up')"
             @keydown.native.down.prevent="keyArrows('down')"
             @icon-right-click="rightIconClick"
@@ -168,6 +167,11 @@ export default {
         iconRightClickable: Boolean,
         /** Append autocomplete content to body */
         appendToBody: Boolean,
+        /** Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) */
+        confirmKeys: {
+            type: Array,
+            default: () => ['Tab', 'Enter']
+        },
         /** Root class */
         rootClass: String,
         /** Options menu class */
@@ -426,25 +430,21 @@ export default {
         },
 
         /**
-         * Enter key listener.
+         * Key listener.
          * Select the hovered option.
          */
-        enterPressed(event) {
+        keydown(event) {
+            const { key } = event // cannot destructure preventDefault (https://stackoverflow.com/a/49616808/2774496)
+            // Close dropdown on Tab & no hovered
+            this.isActive = key !== 'Tab'
             if (this.hovered === null) return
-            this.setSelected(this.hovered, !this.keepOpen, event)
-        },
-
-        /**
-         * Tab key listener.
-         * Select hovered option if it exists, close dropdown, then allow
-         * native handling to move to next tabbable element.
-         */
-        tabPressed(event) {
-            if (this.hovered === null) {
-                this.isActive = false
-                return
+            if (this.confirmKeys.indexOf(key) >= 0) {
+                // If adding by comma, don't add the comma to the input
+                if (key === ',') event.preventDefault()
+                // Close dropdown on select by Tab
+                const closeDropdown = !this.keepOpen || key === 'Tab'
+                this.setSelected(this.hovered, closeDropdown, event)
             }
-            this.setSelected(this.hovered, !this.keepOpen, event)
         },
 
         /**

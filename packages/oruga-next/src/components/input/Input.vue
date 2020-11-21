@@ -120,6 +120,8 @@ export default defineComponent({
          * Make the icon right clickable
          */
         iconRightClickable: Boolean,
+        /** Variant of right icon */
+        iconRightVariant: String,
         rootClass: String,
         controlExpandedClass: String,
         controlIconLeftClass: String,
@@ -197,7 +199,7 @@ export default defineComponent({
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return
+                return this.iconRightType || null
             }
             return this.statusVariant
         },

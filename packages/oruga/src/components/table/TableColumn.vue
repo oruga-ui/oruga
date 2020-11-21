@@ -20,6 +20,7 @@ export default {
         },
         subheading: [String, Number],
         customSort: Function,
+        customSearch: Function,
         sticky: Boolean,
         headerSelectable: Boolean,
         headerClass: String,

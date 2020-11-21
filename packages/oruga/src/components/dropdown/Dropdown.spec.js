@@ -1,15 +1,22 @@
 import { shallowMount } from '@vue/test-utils'
 import ODropdown from '@components/dropdown/Dropdown'
 
-let wrapper
-
 describe('ODropdown', () => {
+    const val1 = 'val1'
+    const val2 = 'val2'
+    let wrapper
+
     beforeEach(() => {
-        wrapper = shallowMount(ODropdown)
+        wrapper = shallowMount(ODropdown, {
+            slots: {
+                trigger: '<button class="trigger">trigger</button>'
+            }
+        })
     })
 
     it('is called', () => {
-        expect(wrapper.exists()).toBeTruthy()
+        expect(wrapper.name()).toBe('ODropdown')
+        expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
     it('render correctly', () => {
@@ -20,6 +27,7 @@ describe('ODropdown', () => {
         const position = wrapper.vm.$options.props.position
 
         expect(position.type).toBe(String)
+        expect(position.validator && position.validator('top')).toBeFalsy()
         expect(position.validator && position.validator('top-left')).toBeTruthy()
         expect(position.validator && position.validator('top-right')).toBeTruthy()
         expect(position.validator && position.validator('bottom-left')).toBeTruthy()
@@ -33,32 +41,57 @@ describe('ODropdown', () => {
     })
 
     it('emit activity when it changes', async () => {
+        wrapper.vm.updateAppendToBody = jest.fn(() => wrapper.vm.updateAppendToBody)
+        wrapper.setProps({ appendToBody: true })
+
         wrapper.vm.isActive = true
         await wrapper.vm.$nextTick()
         expect(wrapper.emitted()['active-change']).toBeTruthy()
+
+        expect(wrapper.vm.updateAppendToBody).toHaveBeenCalled()
     })
 
-    it('react accordingly when an item is selected', () => {
+    it('react accordingly on mouse over', () => {
+        const trigger = wrapper.find({ ref: 'trigger' })
+        trigger.trigger('mouseenter')
+        expect(wrapper.vm.isHoverable).toBeFalsy()
+
+        wrapper.setProps({ triggers: ['hover'] })
+        trigger.trigger('mouseenter')
+        expect(wrapper.vm.isHoverable).toBeTruthy()
+    })
+
+    it('react accordingly when new item is selected', () => {
         jest.useFakeTimers()
 
-        const val1 = 'val1'
         wrapper.vm.selectItem(val1)
-        expect(wrapper.emitted()['input']).toBeTruthy()
-
-        wrapper.vm.selectItem(val1)
-        expect(wrapper.emitted()['input']).toBeTruthy()
+        expect(wrapper.emitted().input).toHaveLength(1)
+        expect(wrapper.emitted().input[0]).toEqual([val1])
+        expect(wrapper.emitted().change).toHaveLength(1)
+        expect(wrapper.emitted().change[0]).toEqual([val1])
 
         wrapper.setProps({
-            triggers: ['hover'],
+            hoverable: true,
             closeOnClick: true
         })
 
-        const val2 = 'val2'
         wrapper.vm.selectItem(val2)
-        expect(wrapper.vm.selected).toBe(val2)
-        expect(wrapper.emitted()['change']).toBeTruthy()
+        expect(wrapper.emitted().input).toHaveLength(2)
+        expect(wrapper.emitted().input[1]).toEqual([val2])
+        expect(wrapper.emitted().change).toHaveLength(2)
+        expect(wrapper.emitted().change[1]).toEqual([val2])
 
         expect(wrapper.vm.isHoverable).toBeFalsy()
+    })
+
+    it('react accordingly when same item is selected', () => {
+        jest.useFakeTimers()
+
+        // will emit only input event
+        wrapper.setProps({ value: val1 })
+        wrapper.vm.selectItem(val1)
+        expect(wrapper.emitted().input).toHaveLength(1)
+        expect(wrapper.emitted().input[0]).toEqual([val1])
     })
 
     it('react accordingly when an item is selected with multiple prop', () => {
@@ -69,29 +102,45 @@ describe('ODropdown', () => {
         wrapper.vm.selected = null
 
         // no initial value, will return an array with the only selected option
-        const val1 = 'val1'
         wrapper.vm.selectItem(val1)
-        expect(wrapper.vm.selected).toEqual([val1])
-        expect(wrapper.emitted()['change']).toBeTruthy()
+        expect(wrapper.emitted().input).toHaveLength(1)
+        expect(wrapper.emitted().input[0]).toEqual([[val1]])
+        expect(wrapper.emitted().change).toHaveLength(1)
+        expect(wrapper.emitted().change[0]).toEqual([[val1]])
 
         // will return an array with the new value appended
-        const val2 = 'val2'
+        wrapper.setProps({ value: [val1] })
         wrapper.vm.selectItem(val2)
-        expect(wrapper.vm.selected).toEqual([val1, val2])
+        expect(wrapper.emitted().input).toHaveLength(2)
+        expect(wrapper.emitted().input[1]).toEqual([[val1, val2]])
+        expect(wrapper.emitted().change).toHaveLength(2)
+        expect(wrapper.emitted().change[1]).toEqual([[val1, val2]])
 
         // will remove the last selection since it was part of the list
+        wrapper.setProps({ value: [val1, val2] })
         wrapper.vm.selectItem(val2)
-        expect(wrapper.vm.selected).toEqual([val1])
+        expect(wrapper.emitted().input).toHaveLength(3)
+        expect(wrapper.emitted().input[2]).toEqual([[val1]])
+        expect(wrapper.emitted().change).toHaveLength(3)
+        expect(wrapper.emitted().change[2]).toEqual([[val1]])
     })
 
     it('manage the whitelisted items accordingly', () => {
         let el = wrapper.vm.$refs.dropdownMenu
         expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
 
+        el = wrapper.vm.$refs.dropdownMenu.children[0]
+        expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
+
         wrapper.vm.$refs.dropdownMenu = undefined
 
         el = wrapper.vm.$refs.trigger
         expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
+
+        el = wrapper.vm.$refs.trigger.querySelector('.trigger')
+        expect(wrapper.vm.isInWhiteList(el)).toBeTruthy()
+
+        wrapper.vm.$refs.trigger = undefined
 
         el = document.createElement('div')
         expect(wrapper.vm.isInWhiteList(el)).toBeFalsy()
@@ -126,13 +175,13 @@ describe('ODropdown', () => {
 
     it('close on escape', () => {
         wrapper.vm.isActive = true
-        const event = new KeyboardEvent('keyup', {'key': 'Escape'})
+        const event = new KeyboardEvent('keyup', { 'key': 'Escape' })
         wrapper.vm.keyPress({})
         wrapper.vm.keyPress(event)
         expect(wrapper.vm.isActive).toBeFalsy()
 
         wrapper.vm.isActive = true
-        wrapper.setProps({canClose: ['click']})
+        wrapper.setProps({ canClose: ['click'] })
         wrapper.vm.keyPress(event)
         expect(wrapper.vm.isActive).toBeTruthy()
     })
@@ -156,5 +205,14 @@ describe('ODropdown', () => {
             expect(wrapper.vm.isActive).toBeTruthy()
             done()
         })
+    })
+
+    it('reset events before destroy', () => {
+        document.removeEventListener = jest.fn()
+
+        wrapper.destroy()
+
+        expect(document.removeEventListener).toBeCalledWith('click', expect.any(Function))
+        expect(document.removeEventListener).toBeCalledWith('keyup', expect.any(Function))
     })
 })

@@ -16,10 +16,12 @@
         <div
             ref="trigger"
             :class="triggerClasses"
+            :style="triggerStyle"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
             @focus.capture="onFocus"
+            @blur.capture="close"
             @mouseleave="close">
             <slot ref="slot" />
         </div>
@@ -115,6 +117,7 @@ export default defineComponent({
     data() {
         return {
             isActive: false,
+            triggerStyle: {},
             bodyEl: undefined // Used to append to body
         }
     },
@@ -178,6 +181,7 @@ export default defineComponent({
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
                 wrapper.style.zIndex = this.isActive || this.always ? '9999' : '-1'
+                this.triggerStyle = { zIndex: this.isActive || this.always ? '100' : undefined }
             }
         },
         onClick() {
