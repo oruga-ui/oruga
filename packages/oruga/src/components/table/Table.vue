@@ -586,6 +586,7 @@ export default {
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
         rootClass: String,
+        tableClass: String,
         wrapperClass: String,
         footerClass: String,
         emptyClass: String,
@@ -648,6 +649,7 @@ export default {
         },
         tableClasses() {
             return [
+                this.computedClass('table', 'tableClass', ''),
                 { [this.computedClass('table', 'borderedClass', 'o-table-bordered')]: this.bordered },
                 { [this.computedClass('table', 'stripedClass', 'o-table-striped')]: this.striped },
                 { [this.computedClass('table', 'narrowClass', 'o-table-narrow')]: this.narrowed },
