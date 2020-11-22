@@ -74,7 +74,7 @@ title: Loading
     <p style="position: relative">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
       <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
-        <o-icon pack="fas" icon="sync-alt" size="ilarge" spin> </o-icon>
+        <o-icon pack="fas" icon="sync-alt" size="large" spin> </o-icon>
       </o-loading>
     </p>
   </section>

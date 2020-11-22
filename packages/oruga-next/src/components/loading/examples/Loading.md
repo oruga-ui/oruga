@@ -62,7 +62,7 @@
                 <o-icon
                     pack="fas"
                     icon="sync-alt"
-                    size="ilarge"
+                    size="large"
                     spin>
                 </o-icon>
             </o-loading>
