@@ -147,6 +147,7 @@ title: Input
 | hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                                 | Config -> <code> 'input.counter': false</code>     |
 | iconRight             | Icon name to be added on the right side                     | string         | -                                                 |                                                    |
 | iconRightClickable    | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
+| iconRightType         | Variant of right icon                                       | string         | -                                                 |                                                    |
 | rootClass             |                                                             | string         | -                                                 |                                                    |
 | controlExpandedClass  |                                                             | string         | -                                                 |                                                    |
 | controlIconLeftClass  |                                                             | string         | -                                                 |                                                    |
