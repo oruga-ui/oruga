@@ -59,13 +59,19 @@
 }
 
 @mixin evariable($attribute, $expression, $parameters...) {
+    $is_valid: true;
     @each $parameter in $parameters {
+        @if list.nth($parameter, 2) == null {
+            $is_valid: false;
+        }
         @if str-slice(list.nth($parameter, 1), 0, 1) != "$" {
             @error "Parameter #{list.nth($parameter, 1)} should start with $.";
         }
         $expression: str-replace($expression, list.nth($parameter, 1), list.nth($parameter, 2));
     }
-    #{$attribute}: #{$expression};
+    @if $is_valid {
+        #{$attribute}: #{$expression};
+    }
 }
 
 @function eparam($key, $value) {
@@ -82,5 +88,8 @@
 }
 
 @mixin variable($attribute, $name, $value) {
-    #{$attribute}: variable($name, $value);
+    $variable: variable($name, $value);
+    @if $variable != null {
+        #{$attribute}: variable($name, $value);
+    }
 }
