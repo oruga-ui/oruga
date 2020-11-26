@@ -14,6 +14,8 @@ $tooltip-content-weight-normal: 400 !default;
 $tooltip-content-zindex: 38 !default;
 /* @docs */
 
+$TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
+
 @mixin tooltip-arrow($direction, $name, $color) {
     @if ($direction == "top") {
         border-top-style: solid;
@@ -64,11 +66,19 @@ $tooltip-content-zindex: 38 !default;
             @if ($direction == "top") {
                 top: auto;
                 right: auto;
-                @include mvariable('bottom', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
+                @include evariable(
+                    'bottom', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
+                );
                 left: 50%;
                 transform: translateX(-50%);
             } @else if ($direction == "bottom") {
-                @include mvariable('top', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
+                @include evariable(
+                    'top', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
+                );
                 right: auto;
                 bottom: auto;
                 left: 50%;
@@ -77,11 +87,19 @@ $tooltip-content-zindex: 38 !default;
                 top: 50%;
                 right: auto;
                 bottom: auto;
-                @include mvariable('left', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
+                @include evariable(
+                    'left', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
+                );
                 transform: translateY(-50%);
             } @else if ($direction == "left") {
                 top: 50%;
-                @include mvariable('right', 'tooltip-arrow-size', $tooltip-arrow-size, 'tooltip-arrow-margin', $tooltip-arrow-margin, 'calc', '+', '+ 100%');
+                @include evariable(
+                    'right', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
+                );
                 bottom: auto;
                 left: auto;
                 transform: translateY(-50%);
@@ -151,7 +169,7 @@ $tooltip-content-zindex: 38 !default;
         position: absolute;
         content: "";
         pointer-events: none;
-        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex); 
+        @include variable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
     }
     .o-tooltip-trigger {
         width: 100%;

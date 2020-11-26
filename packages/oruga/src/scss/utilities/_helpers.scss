@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // Helper function to replace characters in a string
 @function str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
@@ -73,21 +75,18 @@
     }
 }
 
-@mixin mvariable($attribute, $name1, $value1, $name2, $value2, $function: null, $operator: null, $argument: null, $argument1: null, $argument2: null, $preargument: null) {
-    @if $css-vars == true {
-        // fallback IE 11 #{$attribute}: #{$value1} #{$value2};
-        @if ($function != null) {
-            #{$attribute}: #{$function}#{'('}(#{$preargument} var(#{$variable-prefix}#{$name1}, #{$value1}) #{$argument1} #{$operator} var(#{$variable-prefix}#{$name2}, #{$value2}) #{$argument2}#{')'} #{$argument});
-        } @else {
-            #{$attribute}: var(#{$variable-prefix}#{$name1}, #{$value1}), var(#{$variable-prefix}#{$name2}, #{$value2});
+@mixin evariable($attribute, $expression, $parameters...) {
+    @each $parameter in $parameters {
+        @if str-slice(list.nth($parameter, 1), 0, 1) != "$" {
+            @error "Parameter #{list.nth($parameter, 1)} should start with $.";
         }
-    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
-        @if ($function != null) {
-            #{$attribute}: #{$function}#{'('}(#{$value1} #{$argument1} #{$operator} #{$value2} #{$argument2}#{')'} #{$argument});
-        } @else {
-            #{$attribute}: #{$value1} #{$value2};
-        }
+        $expression: str-replace($expression, list.nth($parameter, 1), list.nth($parameter, 2));
     }
+    #{$attribute}: #{$expression};
+}
+
+@function eparam($key, $value) {
+    @return $key, $value;
 }
 
 @function variable($name, $value) {

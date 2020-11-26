@@ -13,6 +13,8 @@ $radio-size: 1.25em !default;
 $radio-line-height: 1.25 !default;
 /* @docs */
 
+$BOXSHADOW_EXPRESSION: "$param1 $param2";
+
 .o-radio {
     outline: none;
     display: inline-flex;
@@ -83,12 +85,20 @@ $radio-line-height: 1.25 !default;
                 @include variable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
             }
             &:checked + .o-radio-check {
-                @include mvariable('box-shadow', 'radio-checked-box-shadow-length', $radio-checked-box-shadow-length, 'radio-active-background-color', $radio-active-background-color);
+                @include evariable(
+                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
+                    eparam('$param2', variable('radio-active-background-color', $radio-active-background-color))
+                );
                 // box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
-                        @include mvariable('box-shadow', 'radio-checked-box-shadow-length', $radio-checked-box-shadow-length, ('color-' + #{name}), $color);
+                        @include evariable(
+                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
+                            eparam('$param2', variable('color-' + #{name}, $color))
+                        );
                         // box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
                     }
                 }

@@ -28,6 +28,8 @@ $switch-width-number: 2.75 !default;
 $switch-width: $switch-width-number * 1em !default;
 /* @docs */
 
+$BOXSHADOW_EXPRESSION: "$param1 $param2";
+
 .o-switch {
     cursor: pointer;
     display: inline-flex;
@@ -49,7 +51,11 @@ $switch-width: $switch-width-number * 1em !default;
             align-items: center;
             flex-shrink: 0;
             @include variable('width', 'switch-width', $switch-width);
-            @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '+', null, '/ 2', null);
+            @include evariable(
+                'height', 'calc($width / 2 + $padding)',
+                eparam('$width', variable('switch-width', $switch-width)),
+                eparam('$padding', variable('switch-padding', $switch-padding))
+            );
             @include variable('padding', 'switch-padding', $switch-padding);
             @include variable('background', 'switch-background', $switch-background);
             @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
@@ -66,8 +72,16 @@ $switch-width: $switch-width-number * 1em !default;
             &:before {
                 content: "";
                 display: block;
-                @include mvariable('width', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
-                @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
+                @include evariable(
+                    'height', 'calc(($width - $padding * 2) / 2)',
+                    eparam('$width', variable('switch-width', $switch-width)),
+                    eparam('$padding', variable('switch-padding', $switch-padding))
+                );
+                @include evariable(
+                    'width', 'calc(($width - $padding * 2) / 2)',
+                    eparam('$width', variable('switch-width', $switch-width)),
+                    eparam('$padding', variable('switch-padding', $switch-padding))
+                );
                 @include variable('background', 'swtich-action-background', $swtich-action-background);
                 @include variable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
                 transition-property: transform;
@@ -100,23 +114,39 @@ $switch-width: $switch-width-number * 1em !default;
             outline: none;
             + .o-switch-check {
                 // box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
-                @include mvariable('box-shadow', 'switch-active-box-shadow-length', $switch-active-box-shadow-length, 'switch-active-box-shadow-color', $switch-active-box-shadow-color);
+                @include evariable(
+                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
+                    eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
+                );
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
                         box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
-                        @include mvariable('box-shadow', 'switch-active-box-shadow-length', $switch-active-box-shadow-length, ('color-' + $name), $color);
+                        @include evariable(
+                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
+                            eparam('$param2', variable('color-' + $name, $color))
+                        );
                     }
                 }
             }
             &:checked + .o-switch-check {
                 // box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
-                @include mvariable('box-shadow', 'switch-checked-box-shadow-length', $switch-checked-box-shadow-length, 'switch-checked-box-shadow-color', $switch-checked-box-shadow-color);
+                @include evariable(
+                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
+                    eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
+                );
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
                         // box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
-                        @include mvariable('box-shadow', 'switch-checked-box-shadow-length', $switch-checked-box-shadow-length, ('color-' + $name), $color);
+                        @include evariable(
+                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
+                            eparam('$param2', variable('color-' + $name, $color))
+                        );
                     }
                 }
             }

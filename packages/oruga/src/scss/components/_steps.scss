@@ -19,6 +19,8 @@ $steps-content-padding: 1rem !default;
 $steps-details-title-font-weight: 600 !default;
 /* @docs */
 
+$LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
+
 @mixin steps-size($size, $name: null) {
     .o-steps {
         @include variable('font-size', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
@@ -67,7 +69,11 @@ $steps-details-title-font-weight: 600 !default;
                     .o-step-item {
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
-                                @include mvariable('left', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
+                                @include evariable(
+                                    'left', $LR_CALC_EXPRESSION,
+                                    eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                                    eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                                );
                             }
                         }
                     }
@@ -79,7 +85,11 @@ $steps-details-title-font-weight: 600 !default;
                         &:not(:first-child), &:only-child {
                             &::before, &::after {
                                 left: auto;
-                                @include mvariable('right', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
+                                @include evariable(
+                                    'right', $LR_CALC_EXPRESSION,
+                                    eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                                    eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                                );
                             }
                         }
                     }
@@ -94,7 +104,11 @@ $steps-details-title-font-weight: 600 !default;
                         .o-step-item {
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
-                                    @include mvariable('left', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
+                                    @include evariable(
+                                        'left', $LR_CALC_EXPRESSION,
+                                        eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                                        eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                                    );
                                 }
                             }
                         }
@@ -106,7 +120,11 @@ $steps-details-title-font-weight: 600 !default;
                             &:not(:first-child), &:only-child {
                                 &::before, &::after {
                                     left: auto;
-                                    @include mvariable('right', if($name != null, ('size-' + #{$name}), 'steps-size'), $size, 'steps-divider-height', $steps-divider-height, 'calc', ' - ', ' / 2');
+                                    @include evariable(
+                                        'right', $LR_CALC_EXPRESSION,
+                                        eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                                        eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                                    );
                                 }
                             }
                         }
