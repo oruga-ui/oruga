@@ -58,23 +58,6 @@
     user-select: none;
 }
 
-@mixin variable($attribute, $name, $value, $function: null, $argument: null, $preargument: null) {
-    @if $css-vars == true {
-        // fallback IE 11 #{$attribute}: #{$value};
-        @if ($function != null) {
-            #{$attribute}: #{$function}(#{$preargument} var(#{$variable-prefix}#{$name}, #{$value}) #{$argument});
-        } @else {
-            #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
-        }
-    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
-        @if ($function != null) {
-            #{$attribute}: #{$function}(#{$value} #{$argument});
-        } @else {
-            #{$attribute}: #{$value};
-        }
-    }
-}
-
 @mixin evariable($attribute, $expression, $parameters...) {
     @each $parameter in $parameters {
         @if str-slice(list.nth($parameter, 1), 0, 1) != "$" {
@@ -95,5 +78,9 @@
     } @else if ($sass-vars == true or index($whitelist, $name) != null) {
         @return #{$value};
     }
-    @return null
+    @return null;
+}
+
+@mixin variable($attribute, $name, $value) {
+    #{$attribute}: variable($name, $value);
 }

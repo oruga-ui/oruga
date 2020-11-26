@@ -17,8 +17,6 @@ $checkbox-size: 1.25em !default;
 $checkbox-line-height: 1.25 !default;
 /* @docs */
 
-$BOXSHADOW_EXPRESSION: "$param1 $param2";
-
 .o-checkbox {
     outline: none;
     display: inline-flex;
@@ -86,7 +84,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
             }
             &:checked + .o-checkbox-check {
                 @include evariable(
-                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    'box-shadow', $JOIN_EXPRESSION,
                     eparam('$param1', variable('checkbox-checked-box-shadow-length', $checkbox-checked-box-shadow-length)),
                     eparam('$param2', variable('checkbox-active-background-color', rgba($checkbox-active-background-color, $checkbox-checked-box-shadow-opacity)))
                 );
@@ -95,7 +93,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
                         @include evariable(
-                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('checkbox-checked-box-shadow-length', $checkbox-checked-box-shadow-length)),
                             eparam('$param2', variable('color-' + #{$name}, $color))
                         );

@@ -14,7 +14,10 @@ $sidebar-zindex: 38 !default;
         @include variable('background-color', 'sidebar-content-background-color', $sidebar-content-background-color);
         @include variable('box-shadow', 'sidebar-box-shadow', $sidebar-box-shadow);
         @include variable('width', 'sidebar-width', $sidebar-width);
-        @include variable('z-index', 'sidebar-zindex', $sidebar-zindex, 'calc', '+ 1');
+        @include evariable(
+            'z-index', 'calc($z-index + 1)',
+            eparam('$z-index', variable('sidebar-zindex', $sidebar-zindex))
+        );
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &.o-color-#{$name} {

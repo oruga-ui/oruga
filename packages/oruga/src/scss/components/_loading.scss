@@ -21,8 +21,14 @@ $loading-zindex: 999 !default;
     &.o-loading-fullpage {
         position: fixed;
         .o-loading-icon {
-            @include variable('top', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
-            @include variable('left', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
+            @include evariable(
+                'top', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
+            );
+            @include evariable(
+                'left', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
+            );
             .o-icon {
                 * {
                     @include variable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
@@ -33,9 +39,15 @@ $loading-zindex: 999 !default;
     }
     &:not(.o-loading-fullpage) {
         .o-loading-icon {
-            @include variable('top', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
-            @include variable('left', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
-            .o-icon {    
+            @include evariable(
+                'top', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
+            );
+            @include evariable(
+                'left', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
+            );
+            .o-icon {
                 * {
                     @include variable('width', 'loading-icon-size', $loading-icon-size);
                     @include variable('height', 'loading-icon-size', $loading-icon-size);

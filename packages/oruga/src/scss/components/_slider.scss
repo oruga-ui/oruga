@@ -64,7 +64,10 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
             @include variable('font-size', 'slider-mark-size', $slider-mark-size);
         }
         position: absolute;
-        @include variable('top', 'slider-tick-label-top-' + #{$name}, $track-height, 'calc', '/2 + 2px');
+        @include evariable(
+            'top', 'calc($label-top / 2 + 2px)',
+            eparam('$label-top', variable('slider-tick-label-top-' + #{$name}, $track-height))
+        );
         // top: calc(#{$track-height} / 2 + 2px);
         left: 50%;
         transform: translateX(-50%);

@@ -13,7 +13,7 @@ $radio-size: 1.25em !default;
 $radio-line-height: 1.25 !default;
 /* @docs */
 
-$BOXSHADOW_EXPRESSION: "$param1 $param2";
+$HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
 
 .o-radio {
     outline: none;
@@ -53,10 +53,16 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
                 border-radius: 50%;
                 transform: scale(0);
                 transition-property: transform;
+                @include evariable(
+                    'margin-bottom', $HALF_MARGIN_EXPRESSION,
+                    eparam('$margin', variable('radio-size', -$radio-size))
+                );
+                @include evariable(
+                    'margin-left', $HALF_MARGIN_EXPRESSION,
+                    eparam('$margin', variable('radio-size', -$radio-size))
+                );
                 @include variable('transition-duration', 'transition-duration', $speed-slow);
                 @include variable('transition-timing-function', 'transition-timing', $easing);
-                @include variable('margin-bottom', 'radio-size', -$radio-size, 'calc', '/2');
-                @include variable('margin-left', 'radio-size', -$radio-size, 'calc', '/2');
                 @include variable('width', 'radio-size', $radio-size);
                 @include variable('height', 'radio-size', $radio-size);
                 @include variable('background-color', 'radio-active-background-color', $radio-active-background-color);
@@ -86,7 +92,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
             }
             &:checked + .o-radio-check {
                 @include evariable(
-                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    'box-shadow', $JOIN_EXPRESSION,
                     eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
                     eparam('$param2', variable('radio-active-background-color', $radio-active-background-color))
                 );
@@ -95,7 +101,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
                         @include evariable(
-                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
                             eparam('$param2', variable('color-' + #{name}, $color))
                         );

@@ -47,6 +47,7 @@ $table-th-padding: 0.5em 0.75em !default;
 $table-th-wrap-icon-margin: 0.5rem !default;
 /* @docs */
 
+
 @mixin table-cards {
     .table {
         background-color: transparent;
@@ -213,7 +214,11 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                         flex-direction: row-reverse;
                         text-align: right;
                         .o-icon-sort {
-                            @include variable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin, 'calc', '/ 2');
+                            @include evariable(
+                                'margin-left', $DIVIDE_EXPRESSION,
+                                eparam('$param', variable('table-th-wrap-icon-margin', $table-th-wrap-icon-margin)),
+                                eparam('$factor', 2)
+                            );
                             margin-right: 0;
                         }
                     }
@@ -252,7 +257,11 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    @include variable('z-index', 'table-sticky-zindex', $table-sticky-zindex, 'calc', '+ 2');
+                    @include evariable(
+                        'z-index', $SUM_EXPRESSION,
+                        eparam('$param', variable('table-sticky-zindex', $table-sticky-zindex)),
+                        eparam('$factor', 2)
+                    );
                     @include variable('background', 'table-background-color', $table-background-color);
                 }
                 &.o-table-th-unselectable {

@@ -28,8 +28,6 @@ $switch-width-number: 2.75 !default;
 $switch-width: $switch-width-number * 1em !default;
 /* @docs */
 
-$BOXSHADOW_EXPRESSION: "$param1 $param2";
-
 .o-switch {
     cursor: pointer;
     display: inline-flex;
@@ -115,7 +113,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
             + .o-switch-check {
                 // box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
                 @include evariable(
-                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    'box-shadow', $JOIN_EXPRESSION,
                     eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
                     eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
                 );
@@ -124,7 +122,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
                     &.o-color-#{$name} {
                         box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
                         @include evariable(
-                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
                             eparam('$param2', variable('color-' + $name, $color))
                         );
@@ -134,7 +132,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
             &:checked + .o-switch-check {
                 // box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
                 @include evariable(
-                    'box-shadow', $BOXSHADOW_EXPRESSION,
+                    'box-shadow', $JOIN_EXPRESSION,
                     eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
                     eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
                 );
@@ -143,7 +141,7 @@ $BOXSHADOW_EXPRESSION: "$param1 $param2";
                     &.o-color-#{$name} {
                         // box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
                         @include evariable(
-                            'box-shadow', $BOXSHADOW_EXPRESSION,
+                            'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
                             eparam('$param2', variable('color-' + $name, $color))
                         );
