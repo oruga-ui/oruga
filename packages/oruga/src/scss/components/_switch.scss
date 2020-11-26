@@ -26,7 +26,6 @@ $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
 $switch-width-number: 2.75 !default;
 $switch-width: $switch-width-number * 1em !default;
-$switch-left-label-padding: $control-padding-horizontal;
 /* @docs */
 
 .o-switch {
@@ -49,22 +48,15 @@ $switch-left-label-padding: $control-padding-horizontal;
             display: flex;
             align-items: center;
             flex-shrink: 0;
-            width: $switch-width;
-            height: ($switch-width / 2) + $switch-padding;
-            padding: $switch-padding;
-            // @include variable('width', 'switch-width', $switch-width);
-            // @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '+', null, '/ 2', null);
-            // @include variable('padding', 'switch-padding', $switch-padding);
-            background: $switch-background;
-            border-radius: $switch-border-radius;
-            // @include variable('background', 'switch-background', $switch-background);
-            // @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
+            @include variable('width', 'switch-width', $switch-width);
+            @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '+', null, '/ 2', null);
+            @include variable('padding', 'switch-padding', $switch-padding);
+            @include variable('background', 'switch-background', $switch-background);
+            @include variable('border-radius', 'switch-border-radius', $switch-border-radius);
             transition-property: background;
-            transition-duration: $speed-slow;
-            transition-timing-function: $easing;
             @include variable('transition-duration', 'transition-duration', $speed-slow);
             @include variable('transition-timing-function', 'transition-timing', $easing);
-            // FIX IT transition: background $speed-slow $easing, box-shadow $speed-slow $easing;
+            // transition: background $speed-slow $easing, box-shadow $speed-slow $easing;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name}-passive {
@@ -74,18 +66,13 @@ $switch-left-label-padding: $control-padding-horizontal;
             &:before {
                 content: "";
                 display: block;
-                width: ($switch-width / 2) - $switch-padding;
-                height: ($switch-width / 2) - $switch-padding;
-                // @include mvariable('width', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
-                // @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
-                background: $swtich-action-background;
-                // @include variable('background', 'swtich-action-background', $swtich-action-background);
-                // @include variable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
+                @include mvariable('width', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
+                @include mvariable('height', 'switch-width', $switch-width, 'switch-padding', $switch-padding, 'calc', '-', '/ 2', null, '* 2');
+                @include variable('background', 'swtich-action-background', $swtich-action-background);
+                @include variable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
                 transition-property: transform;
-                transition-duration: $speed-slow;
-                transition-timing-function: $easing;
-                // @include variable('transition-duration', 'transition-duration', $speed-slow);
-                // @include variable('transition-timing-function', 'transition-timing', $easing);
+                @include variable('transition-duration', 'transition-duration', $speed-slow);
+                @include variable('transition-timing-function', 'transition-timing', $easing);
                 will-change: transform;
                 transform-origin: left;
             }
@@ -94,8 +81,7 @@ $switch-left-label-padding: $control-padding-horizontal;
             }
         }
         &:checked + .o-switch-check {
-            background: $switch-active-background-color;
-            // @include variable('background', 'switch-active-background-color', $switch-active-background-color);
+            @include variable('background', 'switch-active-background-color', $switch-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
@@ -113,23 +99,23 @@ $switch-left-label-padding: $control-padding-horizontal;
         &:focus, &:active {
             outline: none;
             + .o-switch-check {
-                // FIX IT box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
+                // box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
                 @include mvariable('box-shadow', 'switch-active-box-shadow-length', $switch-active-box-shadow-length, 'switch-active-box-shadow-color', $switch-active-box-shadow-color);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
-                        // FIX IT box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
+                        box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
                         @include mvariable('box-shadow', 'switch-active-box-shadow-length', $switch-active-box-shadow-length, ('color-' + $name), $color);
                     }
                 }
             }
             &:checked + .o-switch-check {
-                // FIX IT box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
+                // box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
                 @include mvariable('box-shadow', 'switch-checked-box-shadow-length', $switch-checked-box-shadow-length, 'switch-checked-box-shadow-color', $switch-checked-box-shadow-color);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
-                        // FIX IT box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
+                        // box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
                         @include mvariable('box-shadow', 'switch-checked-box-shadow-length', $switch-checked-box-shadow-length, ('color-' + $name), $color);
                     }
                 }
@@ -142,15 +128,12 @@ $switch-left-label-padding: $control-padding-horizontal;
     &.o-switch-rounded {
         input[type=checkbox] {
             + .o-switch-check {
-                border-radius: $switch-rounded-border-radius;
-                // @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
+                @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 &:before {
-                    border-radius: $switch-rounded-border-radius;
-                    // @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
+                    @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 }
                 &.o-switch-elastic:before {
-                    border-radius: $switch-rounded-border-radius;
-                    // @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
+                    @include variable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
                 }
             }
         }
@@ -159,12 +142,9 @@ $switch-left-label-padding: $control-padding-horizontal;
         input[type=checkbox] {
             + .o-switch-check {
                 background: transparent;
-                border-width: border-width;
-                border-style: $switch-outlined-border-style;
-                border-color:  $switch-outlined-border-color;
-                // @include variable('border-width', 'switch-outlined-border-width', $switch-outlined-border-width);
-                // @include variable('border-style', 'switch-outlined-border-style', $switch-outlined-border-style);
-                // @include variable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
+                @include variable('border-width', 'switch-outlined-border-width', $switch-outlined-border-width);
+                @include variable('border-style', 'switch-outlined-border-style', $switch-outlined-border-style);
+                @include variable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name}-passive {
@@ -175,13 +155,11 @@ $switch-left-label-padding: $control-padding-horizontal;
                     }
                 }
                 &:before {
-                    background: $switch-outlined-background;
-                    // @include variable('background', 'switch-outlined-background', $switch-outlined-background);
+                    @include variable('background', 'switch-outlined-background', $switch-outlined-background);
                 }
             }
             &:checked + .o-switch-check {
-                border-color: $switch-active-background-color;
-                // @include variable('border-color', 'switch-active-background-color', $switch-active-background-color);
+                @include variable('border-color', 'switch-active-background-color', $switch-active-background-color);
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
@@ -193,8 +171,7 @@ $switch-left-label-padding: $control-padding-horizontal;
                     }
                 }
                 &:before {
-                    background: $switch-active-background-color;
-                    // @include variable('background', 'switch-active-background-color', $switch-active-background-color);
+                    @include variable('background', 'switch-active-background-color', $switch-active-background-color);
                 }
             }
         }
@@ -205,18 +182,17 @@ $switch-left-label-padding: $control-padding-horizontal;
         }
     }
     &[disabled] {
-        opacity: $switch-disabled-opacity;
-        // @include variable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
+        @include variable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
     }
     &.o-switch-left {
         flex-direction: row-reverse;
         .o-switch-label {
-            @include variable('padding-right', 'switch-left-label-padding', $switch-left-label-padding);
+            padding-right: $control-padding-horizontal;
         }
     }
     &:not(.o-switch-left) {
         .o-switch-label {
-            @include variable('padding-left', 'switch-left-label-padding', $switch-left-label-padding);
+            padding-left: $control-padding-horizontal;
         }
     }
 }
