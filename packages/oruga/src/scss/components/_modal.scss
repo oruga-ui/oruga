@@ -27,14 +27,14 @@ $modal-zindex: 40 !default;
     left: 0;
     right: 0;
     top: 0;
-    @include variable('z-index', 'modal-zindex', $modal-zindex);
+    @include avariable('z-index', 'modal-zindex', $modal-zindex);
     &.o-modal-full-screen {
         > .o-modal-content {
             width: 100%;
             height: 100%;
             max-height: 100vh;
             margin: 0;
-            @include variable('background-color', 'modal-content-fullscreen-background-color', $modal-content-fullscreen-background-color);
+            @include avariable('background-color', 'modal-content-fullscreen-background-color', $modal-content-fullscreen-background-color);
         }
     }
     .o-modal-background {
@@ -43,17 +43,17 @@ $modal-zindex: 40 !default;
         position: absolute;
         right: 0;
         top: 0;
-        @include variable('background-color', 'modal-background-background-color', $modal-background-background-color);
+        @include avariable('background-color', 'modal-background-background-color', $modal-background-background-color);
     }
     .o-modal-content {
         position: relative;
         max-height: calc(100vh - 160px);
         overflow: auto;
-        @include variable('margin', 'modal-content-margin', $modal-content-margin);
-        @include variable('max-height', 'modal-content-max-height', $modal-content-max-height);
-        @include variable('background-color', 'modal-content-background-color', $modal-content-background-color);
-        @include variable('padding', 'modal-content-padding', $modal-content-padding);
-        @include variable('border-radius', 'modal-content-border-radius', $modal-content-border-radius);
+        @include avariable('margin', 'modal-content-margin', $modal-content-margin);
+        @include avariable('max-height', 'modal-content-max-height', $modal-content-max-height);
+        @include avariable('background-color', 'modal-content-background-color', $modal-content-background-color);
+        @include avariable('padding', 'modal-content-padding', $modal-content-padding);
+        @include avariable('border-radius', 'modal-content-border-radius', $modal-content-border-radius);
         @media screen and (max-width: $modal-mobile-breakpoint - 1px) {
             width: 100%;
         }
@@ -70,11 +70,11 @@ $modal-zindex: 40 !default;
         font-size: 0;
         outline: none;
         vertical-align: top;
-        @include variable('border-radius', 'modal-close-border-radius', $modal-close-border-radius);
-        @include variable('right', 'modal-close-right', $modal-close-right);
-        @include variable('top', 'modal-close-top', $modal-close-top);
-        @include variable('height', 'modal-close-height', $modal-close-height);
-        @include variable('width', 'modal-close-width', $modal-close-width);
+        @include avariable('border-radius', 'modal-close-border-radius', $modal-close-border-radius);
+        @include avariable('right', 'modal-close-right', $modal-close-right);
+        @include avariable('top', 'modal-close-top', $modal-close-top);
+        @include avariable('height', 'modal-close-height', $modal-close-height);
+        @include avariable('width', 'modal-close-width', $modal-close-width);
         &:before, &:after {
             background-color: #fff;
             content: "";

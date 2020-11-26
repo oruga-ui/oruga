@@ -17,7 +17,7 @@ $loading-zindex: 999 !default;
     display: flex;
     justify-content: center;
     overflow: hidden;
-    @include variable('z-index', 'loading-zindex', $loading-zindex);
+    @include avariable('z-index', 'loading-zindex', $loading-zindex);
     &.o-loading-fullpage {
         position: fixed;
         .o-loading-icon {
@@ -31,8 +31,8 @@ $loading-zindex: 999 !default;
             );
             .o-icon {
                 * {
-                    @include variable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
-                    @include variable('height', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
+                    @include avariable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
+                    @include avariable('height', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
                 }
             }
         }
@@ -49,8 +49,8 @@ $loading-zindex: 999 !default;
             );
             .o-icon {
                 * {
-                    @include variable('width', 'loading-icon-size', $loading-icon-size);
-                    @include variable('height', 'loading-icon-size', $loading-icon-size);
+                    @include avariable('width', 'loading-icon-size', $loading-icon-size);
+                    @include avariable('height', 'loading-icon-size', $loading-icon-size);
                 }
             }
         }
@@ -61,7 +61,7 @@ $loading-zindex: 999 !default;
         left: 0;
         right: 0;
         top: 0;
-        @include variable('background', 'loading-background-legacy', $loading-background-legacy);
-        @include variable('background', 'loading-background', $loading-background);
+        @include avariable('background', 'loading-background-legacy', $loading-background-legacy);
+        @include avariable('background', 'loading-background', $loading-background);
     }
 }

@@ -11,9 +11,9 @@ $sidebar-zindex: 38 !default;
 
 .o-sidebar {
     .o-sidebar-content {
-        @include variable('background-color', 'sidebar-content-background-color', $sidebar-content-background-color);
-        @include variable('box-shadow', 'sidebar-box-shadow', $sidebar-box-shadow);
-        @include variable('width', 'sidebar-width', $sidebar-width);
+        @include avariable('background-color', 'sidebar-content-background-color', $sidebar-content-background-color);
+        @include avariable('box-shadow', 'sidebar-box-shadow', $sidebar-box-shadow);
+        @include avariable('width', 'sidebar-width', $sidebar-width);
         @include evariable(
             'z-index', 'calc($z-index + 1)',
             eparam('$z-index', variable('sidebar-zindex', $sidebar-zindex))
@@ -21,7 +21,7 @@ $sidebar-zindex: 38 !default;
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &.o-color-#{$name} {
-                @include variable('background-color', ('color-' + #{$name}), $color);
+                @include avariable('background-color', ('color-' + #{$name}), $color);
             }
         }
         &.o-sidebar-fixed {
@@ -43,13 +43,13 @@ $sidebar-zindex: 38 !default;
             }
         }
         &.o-sidebar-mini {
-            @include variable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
+            @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
             &.o-sidebar-mini-expand:hover {
                 transition: width;
-                @include variable('transition-duration', 'transition-duration', $speed-slow);
-                @include variable('transition-timing-function', 'transition-timing', $easing);
+                @include avariable('transition-duration', 'transition-duration', $speed-slow);
+                @include avariable('transition-timing-function', 'transition-timing', $easing);
                 &:not(.o-sidebar-fullwidth) {
-                    @include variable('width', 'sidebar-width', $sidebar-width);
+                    @include avariable('width', 'sidebar-width', $sidebar-width);
                     &.o-sidebar-mini-expand-fixed {
                         position: fixed;
                     }
@@ -77,10 +77,10 @@ $sidebar-zindex: 38 !default;
         }
         @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
             &.o-sidebar-mini-mobile {
-                @include variable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
+                @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
                 &.o-sidebar-mini-expand:hover {
                     &:not(.o-sidebar-fullwidth-mobile) {
-                        @include variable('width', 'sidebar-width', $sidebar-width);
+                        @include avariable('width', 'sidebar-width', $sidebar-width);
                         &.o-sidebar-mini-expand-fixed {
                             position: fixed;
                         }
@@ -104,7 +104,7 @@ $sidebar-zindex: 38 !default;
         right: 0;
         top: 0;
         position: fixed;
-        @include variable('background', 'sidebar-background', $sidebar-background);
-        @include variable('z-index', 'sidebar-zindex', $sidebar-zindex);
+        @include avariable('background', 'sidebar-background', $sidebar-background);
+        @include avariable('z-index', 'sidebar-zindex', $sidebar-zindex);
     }
 }

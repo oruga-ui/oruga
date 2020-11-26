@@ -26,11 +26,11 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     display: flex;
     justify-content: center;
     text-align: center;
-    @include variable('font-size', 'pagination-font-size', $pagination-font-size);
-    @include variable('margin', 'pagination-margin', $pagination-margin);
+    @include avariable('font-size', 'pagination-font-size', $pagination-font-size);
+    @include avariable('margin', 'pagination-margin', $pagination-margin);
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            @include variable('font-size', ('pagination-font-size-' + #{$name}), $value);
+            @include avariable('font-size', ('pagination-font-size-' + #{$name}), $value);
         }
     }
     &.o-pagination-simple {
@@ -44,23 +44,23 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     }
     &.o-pagination-rounded {
         .o-pagination-link {
-            @include variable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
+            @include avariable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
         }
     }
     .o-pagination-ellipsis {
         pointer-events: none;
-        @include variable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
+        @include avariable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
     }
     .o-pagination-ellipsis, .o-pagination-link, .o-pagination-next, .o-pagination-previous {
         justify-content: center;
         text-align: center;
-        @include variable('margin', 'pagination-link-margin', $pagination-link-margin);
+        @include avariable('margin', 'pagination-link-margin', $pagination-link-margin);
     }
     .o-pagination-next, .o-pagination-previous {
         white-space: nowrap;
         &.o-pagination-disabled {
             pointer-events: none;
-            @include variable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
+            @include avariable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
         }
     }
     .o-pagination-link, .o-pagination-next, .o-pagination-previous {
@@ -72,25 +72,25 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         position: relative;
         vertical-align: top;
         @include unselectable;
-        @include variable('line-height', 'pagination-link-line-height', $pagination-link-line-height);
-        @include variable('border', 'pagination-link-border', $pagination-link-border);
-        @include variable('border-radius', 'pagination-link-border-radius', $pagination-link-border-radius);
-        @include variable('border-color', 'pagination-link-border-color', $pagination-link-border-color);
-        @include variable('color', 'pagination-link-color', $pagination-link-color);
-        @include variable('min-width', 'pagination-link-min-width', $pagination-link-min-width);
-        @include variable('height', 'pagination-link-height', $pagination-link-height);
+        @include avariable('line-height', 'pagination-link-line-height', $pagination-link-line-height);
+        @include avariable('border', 'pagination-link-border', $pagination-link-border);
+        @include avariable('border-radius', 'pagination-link-border-radius', $pagination-link-border-radius);
+        @include avariable('border-color', 'pagination-link-border-color', $pagination-link-border-color);
+        @include avariable('color', 'pagination-link-color', $pagination-link-color);
+        @include avariable('min-width', 'pagination-link-min-width', $pagination-link-min-width);
+        @include avariable('height', 'pagination-link-height', $pagination-link-height);
         &:hover {
-            @include variable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
-            @include variable('color', 'pagination-link-hover-color', $pagination-link-hover-color);
+            @include avariable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
+            @include avariable('color', 'pagination-link-hover-color', $pagination-link-hover-color);
         }
     }
     .o-pagination-link {
         cursor: pointer;
         &.o-pagination-link-current {
             pointer-events: none;
-            @include variable('background-color', 'pagination-link-current-background-color', $pagination-link-current-background-color);
-            @include variable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
-            @include variable('color', 'pagination-link-current-color', $pagination-link-current-color);
+            @include avariable('background-color', 'pagination-link-current-background-color', $pagination-link-current-background-color);
+            @include avariable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
+            @include avariable('color', 'pagination-link-current-color', $pagination-link-current-color);
         }
     }
     a {

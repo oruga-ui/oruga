@@ -20,13 +20,13 @@ $icon-spin-duration: 2s !default;
     justify-content: center;
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            @include variable('font-size', ('icon-font-size-' + #{$name}), $value);
+            @include avariable('font-size', ('icon-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.o-color-#{$name} {
-            @include variable('color', ('color-' + #{$name}), $color);
+            @include avariable('color', ('color-' + #{$name}), $color);
         }
     }
     &.o-icon-clickable {
@@ -37,6 +37,6 @@ $icon-spin-duration: 2s !default;
         animation-name: icon-spin;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
-        @include variable('animation-duration', 'icon-spin-duration', $icon-spin-duration);
+        @include avariable('animation-duration', 'icon-spin-duration', $icon-spin-duration);
     }
 }

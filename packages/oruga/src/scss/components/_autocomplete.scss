@@ -25,14 +25,14 @@ $autocomplete-menu-zindex : 20 !default;
         left: 0;
         top: 100%;
         overflow: auto;
-        @include variable('z-index', 'autocomplete-menu-zindex', $autocomplete-menu-zindex);
-        @include variable('background-color', 'autocomplete-menu-background', $autocomplete-menu-background);
-        @include variable('border-radius', 'autocomplete-menu-border-radius', $autocomplete-menu-border-radius);
-        @include variable('box-shadow', 'autocomplete-menu-box-shadow', $autocomplete-menu-box-shadow);
-        @include variable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
-        @include variable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
-        @include variable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
-        
+        @include avariable('z-index', 'autocomplete-menu-zindex', $autocomplete-menu-zindex);
+        @include avariable('background-color', 'autocomplete-menu-background', $autocomplete-menu-background);
+        @include avariable('border-radius', 'autocomplete-menu-border-radius', $autocomplete-menu-border-radius);
+        @include avariable('box-shadow', 'autocomplete-menu-box-shadow', $autocomplete-menu-box-shadow);
+        @include avariable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
+        @include avariable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
+        @include avariable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
+
         .o-autocomplete-item {
             display: block;
             position: relative;
@@ -41,17 +41,17 @@ $autocomplete-menu-zindex : 20 !default;
             text-overflow: ellipsis;
             text-decoration: none;
             cursor: pointer;
-            @include variable('color', 'autocomplete-item-color', $autocomplete-item-color);
-            @include variable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
-            @include variable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
-            @include variable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
+            @include avariable('color', 'autocomplete-item-color', $autocomplete-item-color);
+            @include avariable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
+            @include avariable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
+            @include avariable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
             &.o-autocomplete-item-disabled {
                 pointer-events: none;
-                @include variable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
+                @include avariable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
             }
             &:hover, &.o-autocomplete-item-hovered {
-                @include variable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
-                @include variable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
+                @include avariable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
+                @include avariable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
                 text-decoration: none;
             }
         }

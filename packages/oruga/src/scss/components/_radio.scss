@@ -21,8 +21,8 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     align-items: center;
     cursor: pointer;
     @include unselectable;
-    @include variable('line-height', 'radio-line-height', $radio-line-height);
-    @include variable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
+    @include avariable('line-height', 'radio-line-height', $radio-line-height);
+    @include avariable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
     & + .o-radio:last-child {
         margin-right: 0;
     }
@@ -38,12 +38,12 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             position: relative;
             cursor: pointer;
             border-radius: 50%;
-            @include variable('width', 'radio-size', $radio-size);
-            @include variable('height', 'radio-size', $radio-size);
+            @include avariable('width', 'radio-size', $radio-size);
+            @include avariable('height', 'radio-size', $radio-size);
             transition-property: background;
-            @include variable('transition-duration', 'transition-duration', $speed-slow);
-            @include variable('transition-timing-function', 'transition-timing', $easing);
-            @include variable('border', 'radio-border', $radio-border);
+            @include avariable('transition-duration', 'transition-duration', $speed-slow);
+            @include avariable('transition-timing-function', 'transition-timing', $easing);
+            @include avariable('border', 'radio-border', $radio-border);
             &:before {
                 content: "";
                 display: flex;
@@ -61,25 +61,25 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
                     'margin-left', $HALF_MARGIN_EXPRESSION,
                     eparam('$margin', variable('radio-size', -$radio-size))
                 );
-                @include variable('transition-duration', 'transition-duration', $speed-slow);
-                @include variable('transition-timing-function', 'transition-timing', $easing);
-                @include variable('width', 'radio-size', $radio-size);
-                @include variable('height', 'radio-size', $radio-size);
-                @include variable('background-color', 'radio-active-background-color', $radio-active-background-color);
+                @include avariable('transition-duration', 'transition-duration', $speed-slow);
+                @include avariable('transition-timing-function', 'transition-timing', $easing);
+                @include avariable('width', 'radio-size', $radio-size);
+                @include avariable('height', 'radio-size', $radio-size);
+                @include avariable('background-color', 'radio-active-background-color', $radio-active-background-color);
             }
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name}:before {
-                    @include variable('background', ('color-' + #{$name}), $color);
+                    @include avariable('background', ('color-' + #{$name}), $color);
                 }
             }
         }
         &:checked + .o-radio-check {
-            @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
+            @include avariable('border-color', 'radio-active-background-color', $radio-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
-                    @include variable('border-color', ('color-' + #{$name}), $color);
+                    @include avariable('border-color', ('color-' + #{$name}), $color);
                 }
             }
             &:before {
@@ -88,7 +88,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         }
         &:focus {
             + .o-radio-check {
-                @include variable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
+                @include avariable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
             }
             &:checked + .o-radio-check {
                 @include evariable(
@@ -112,28 +112,28 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         }
     }
     .o-radio-label {
-        @include variable('padding', 'radio-label-padding', $radio-label-padding);
+        @include avariable('padding', 'radio-label-padding', $radio-label-padding);
     }
     &.o-radio-button {
         display: flex;
     }
     &[disabled] {
-        @include variable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
+        @include avariable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
     }
     &:hover {
         input[type=radio]:not(:disabled) + .o-radio-check {
-            @include variable('border-color', 'radio-active-background-color', $radio-active-background-color);
+            @include avariable('border-color', 'radio-active-background-color', $radio-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
-                    @include variable('border-color', ('color-' + #{$name}), $color);
+                    @include avariable('border-color', ('color-' + #{$name}), $color);
                 }
             }
         }
     }
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            @include variable('font-size', ('radio-font-size-' + #{$name}), $value);
+            @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
         }
     }
 }

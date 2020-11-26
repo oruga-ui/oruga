@@ -18,9 +18,9 @@ $skeleton-margin: .5rem 0 0 0 !default;
 @mixin steps-size($size, $name: null) {
     > .o-skeleton-item {
         @if ($name != null) {
-            @include variable('line-height', ('skeleton-font-size-' + #{$name}), $size);
+            @include avariable('line-height', ('skeleton-font-size-' + #{$name}), $size);
         } @else {
-            @include variable('line-height', 'skeleton-font-size', $size);
+            @include avariable('line-height', 'skeleton-font-size', $size);
         }
     }
 }
@@ -32,15 +32,15 @@ $skeleton-margin: .5rem 0 0 0 !default;
     width: 100%;
     > .o-skeleton-item {
         width: 100%;
-        @include variable('background', 'skeleton-background', $skeleton-background);
+        @include avariable('background', 'skeleton-background', $skeleton-background);
         &.o-skeleton-item-rounded {
-            @include variable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
+            @include avariable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
         }
         &::after {
             content: "\00a0";
         }
         + .o-skeleton-item {
-            @include variable('margin', 'skeleton-margin', $skeleton-margin);
+            @include avariable('margin', 'skeleton-margin', $skeleton-margin);
         }
     }
     &.o-skeleton-animated {
@@ -48,7 +48,7 @@ $skeleton-margin: .5rem 0 0 0 !default;
             background-size: 400% 100%;
             animation-name: skeleton-loading;
             animation-iteration-count: infinite;
-            @include variable('animation-duration', 'skeleton-duration', $skeleton-duration);
+            @include avariable('animation-duration', 'skeleton-duration', $skeleton-duration);
         }
     }
     &.o-skeleton-centered {
@@ -58,7 +58,7 @@ $skeleton-margin: .5rem 0 0 0 !default;
         align-items: flex-end;
     }
     + .o-skeleton {
-        @include variable('margin', 'skeleton-margin', $skeleton-margin);
+        @include avariable('margin', 'skeleton-margin', $skeleton-margin);
     }
     @include steps-size($base-font-size);
     @each $name, $value in $sizes {

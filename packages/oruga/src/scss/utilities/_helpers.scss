@@ -87,7 +87,7 @@
     @return null;
 }
 
-@mixin variable($attribute, $name, $value) {
+@mixin avariable($attribute, $name, $value) {
     $variable: variable($name, $value);
     @if $variable != null {
         #{$attribute}: variable($name, $value);

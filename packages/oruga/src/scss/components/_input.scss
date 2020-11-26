@@ -25,18 +25,18 @@ $input-width: 100% !default;
 
 .o-control-input {
     position: relative;
-    @include variable('font-size', 'base-font-size', $base-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     &.o-control-input-icons-left .o-icon, &.o-control-input-icons-right .o-icon {
         position: absolute;
         top: 0;
-        @include variable('height', 'input-height', $input-height);
-        @include variable('width', 'input-height', $input-height);
-        @include variable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
+        @include avariable('height', 'input-height', $input-height);
+        @include avariable('width', 'input-height', $input-height);
+        @include avariable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
         &:not(.o-icon-clickable) {
             pointer-events: none;
         }
         &:not([class*="o-color-"]) {
-            @include variable('color', 'input-control-icon-color', $input-control-icon-color);
+            @include avariable('color', 'input-control-icon-color', $input-control-icon-color);
         }
     }
     &.o-control-input-icons-right .o-icon.o-icon-right {
@@ -47,10 +47,10 @@ $input-width: 100% !default;
         pointer-events: none;
     }
     &.o-control-input-icons-left .o-input {
-        @include variable('padding-left', 'input-height', $input-height);
+        @include avariable('padding-left', 'input-height', $input-height);
     }
     &.o-control-input-icons-right .o-input {
-        @include variable('padding-right', 'input-height', $input-height);
+        @include avariable('padding-right', 'input-height', $input-height);
     }
     &.o-control-input-expanded {
         flex-grow: 1;
@@ -65,32 +65,32 @@ $input-width: 100% !default;
     position: relative;
     vertical-align: top;
     outline: none;
-    @include variable('box-shadow', 'input-box-shadow', $input-box-shadow);
-    @include variable('max-width', 'input-max-width', $input-max-width);
-    @include variable('width', 'input-width', $input-width);
-    @include variable('background-color', 'input-background-color', $input-background-color);
-    @include variable('border-color', 'input-border-color', $input-border-color);
-    @include variable('border-style', 'input-border-style', $input-border-style);
-    @include variable('border-width', 'input-border-width', $input-border-width);
-    @include variable('border-radius', 'input-border-radius', $input-border-radius);
-    @include variable('color', 'input-color', $input-color);
-    @include variable('font-size', 'base-font-size', $base-font-size);
-    @include variable('height', 'input-height', $input-height);
-    @include variable('line-height', 'input-line-height', $input-line-height);
-    @include variable('padding', 'input-padding', $input-padding);
-    @include variable('margin', 'input-margin', $input-margin);
+    @include avariable('box-shadow', 'input-box-shadow', $input-box-shadow);
+    @include avariable('max-width', 'input-max-width', $input-max-width);
+    @include avariable('width', 'input-width', $input-width);
+    @include avariable('background-color', 'input-background-color', $input-background-color);
+    @include avariable('border-color', 'input-border-color', $input-border-color);
+    @include avariable('border-style', 'input-border-style', $input-border-style);
+    @include avariable('border-width', 'input-border-width', $input-border-width);
+    @include avariable('border-radius', 'input-border-radius', $input-border-radius);
+    @include avariable('color', 'input-color', $input-color);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
+    @include avariable('height', 'input-height', $input-height);
+    @include avariable('line-height', 'input-line-height', $input-line-height);
+    @include avariable('padding', 'input-padding', $input-padding);
+    @include avariable('margin', 'input-margin', $input-margin);
     &.o-input-rounded {
-        @include variable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
+        @include avariable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
     }
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            @include variable('font-size', ('input-font-size-' + #{$name}), $value);
+            @include avariable('font-size', ('input-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.o-color-#{$name} {
-            @include variable('border-color', ('color-' + #{$name}), $color);
+            @include avariable('border-color', ('color-' + #{$name}), $color);
         }
     }
     @at-root {
@@ -99,18 +99,18 @@ $input-width: 100% !default;
             max-width: 100%;
             min-width: 100%;
             resize: vertical;
-            @include variable('padding', 'input-textarea-padding', $input-textarea-padding);
+            @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
             &:not([rows]) {
-                @include variable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
-                @include variable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
+                @include avariable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
+                @include avariable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
             }
         }
     }
     .o-input-counter {
         display: block;
         float: right;
-        @include variable('font-size', 'input-counter-font-size', $input-counter-font-size);
-        @include variable('margin', 'input-counter-margin', $input-counter-margin);
+        @include avariable('font-size', 'input-counter-font-size', $input-counter-font-size);
+        @include avariable('margin', 'input-counter-margin', $input-counter-margin);
         &.o-input-counter-invisible {
             visibility: hidden;
         }

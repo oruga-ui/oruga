@@ -28,18 +28,18 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
 .o-control-select {
     display: inline-flex;
     position: relative;
-    @include variable('font-size', 'base-font-size', $base-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     &.o-control-select-icons-left .o-icon, &.o-control-select-icons-right .o-icon {
         position: absolute;
         top: 0;
-        @include variable('height', 'select-height', $select-height);
-        @include variable('width', 'select-height', $select-height);
-        @include variable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
+        @include avariable('height', 'select-height', $select-height);
+        @include avariable('width', 'select-height', $select-height);
+        @include avariable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
         &:not(.o-icon-clickable) {
             pointer-events: none;
         }
         &:not([class*="o-color-"]) {
-            @include variable('color', 'select-control-icon-color', $select-control-icon-color);
+            @include avariable('color', 'select-control-icon-color', $select-control-icon-color);
         }
     }
     &.o-control-select-icons-right .o-icon.o-icon-right {
@@ -50,10 +50,10 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
         pointer-events: none;
     }
     &.o-control-select-icons-left .o-select {
-        @include variable('padding-left', 'select-height', $select-height);
+        @include avariable('padding-left', 'select-height', $select-height);
     }
     &.o-control-select-icons-right .o-select {
-        @include variable('padding-right', 'select-height', $select-height);
+        @include avariable('padding-right', 'select-height', $select-height);
     }
     &.o-control-select-expanded {
         flex-grow: 1;
@@ -71,47 +71,47 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     justify-content: flex-start;
     align-items: center;
     outline: none;
-    @include variable('font-size', 'select-font-size', $select-font-size);
-    @include variable('max-width', 'select-max-width', $select-max-width);
-    @include variable('background-color', 'select-background-color', $select-background-color);
-    @include variable('border-color', 'select-border-color', $select-border-color);
-    @include variable('border-width', 'select-border-width', $select-border-width);
-    @include variable('border-style', 'select-border-style', $select-border-style);
-    @include variable('border-radius', 'select-border-radius', $select-border-radius);
-    @include variable('color', 'select-color', $select-color);
-    @include variable('margin', 'select-margin', $select-margin);
-    @include variable('box-shadow', 'select-box-shadow', $select-box-shadow);
-    @include variable('line-height', 'select-line-height', $select-line-height);
-    @include variable('padding', 'select-padding', $select-padding);
+    @include avariable('font-size', 'select-font-size', $select-font-size);
+    @include avariable('max-width', 'select-max-width', $select-max-width);
+    @include avariable('background-color', 'select-background-color', $select-background-color);
+    @include avariable('border-color', 'select-border-color', $select-border-color);
+    @include avariable('border-width', 'select-border-width', $select-border-width);
+    @include avariable('border-style', 'select-border-style', $select-border-style);
+    @include avariable('border-radius', 'select-border-radius', $select-border-radius);
+    @include avariable('color', 'select-color', $select-color);
+    @include avariable('margin', 'select-margin', $select-margin);
+    @include avariable('box-shadow', 'select-box-shadow', $select-box-shadow);
+    @include avariable('line-height', 'select-line-height', $select-line-height);
+    @include avariable('padding', 'select-padding', $select-padding);
     &:not(.o-select-multiple) {
-        @include variable('height', 'select-height', $select-height);
+        @include avariable('height', 'select-height', $select-height);
     }
     @each $name, $value in $sizes {
         &.o-size-#{$name} {
-            @include variable('font-size', ('select-font-size-' + #{$name}), $value);
+            @include avariable('font-size', ('select-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.o-color-#{$name} {
-            @include variable('border-color', ('color-' + #{$name}), $color);
+            @include avariable('border-color', ('color-' + #{$name}), $color);
         }
-    } 
+    }
     option {
-        @include variable('color', 'select-option-color', $select-option-color);
-        @include variable('padding', 'select-option-padding', $select-option-padding);
+        @include avariable('color', 'select-option-color', $select-option-color);
+        @include avariable('padding', 'select-option-padding', $select-option-padding);
     }
     option:disabled {
-        @include variable('opacity', 'select-option-disabled-opacity', $select-option-disabled-opacity);
+        @include avariable('opacity', 'select-option-disabled-opacity', $select-option-disabled-opacity);
     }
     optgroup {
-        @include variable('color', 'select-optgroup-color', $select-optgroup-color);
-        @include variable('font-weight', 'select-optgroup-font-weight', $select-optgroup-font-weight);
-        @include variable('font-style', 'select-optgroup-font-style', $select-optgroup-font-style);
-        @include variable('padding', 'select-optgroup-padding', $select-optgroup-padding);
+        @include avariable('color', 'select-optgroup-color', $select-optgroup-color);
+        @include avariable('font-weight', 'select-optgroup-font-weight', $select-optgroup-font-weight);
+        @include avariable('font-style', 'select-optgroup-font-style', $select-optgroup-font-style);
+        @include avariable('padding', 'select-optgroup-padding', $select-optgroup-padding);
     }
     &.o-select-empty select {
-        @include variable('color', 'select-empty-color', $select-empty-color);
+        @include avariable('color', 'select-empty-color', $select-empty-color);
     }
     &.o-select-expanded {
         width: 100%;
