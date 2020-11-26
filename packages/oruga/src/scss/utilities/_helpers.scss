@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // Helper function to replace characters in a string
 @function str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
@@ -56,38 +58,24 @@
     user-select: none;
 }
 
-@mixin variable($attribute, $name, $value, $function: null, $argument: null, $preargument: null) {
-    @if $css-vars == true {
-        // fallback IE 11 #{$attribute}: #{$value};
-        @if ($function != null) {
-            #{$attribute}: #{$function}(#{$preargument} var(#{$variable-prefix}#{$name}, #{$value}) #{$argument});
-        } @else {
-            #{$attribute}: var(#{$variable-prefix}#{$name}, #{$value});
+@mixin evariable($attribute, $expression, $parameters...) {
+    $is_valid: true;
+    @each $parameter in $parameters {
+        @if list.nth($parameter, 2) == null {
+            $is_valid: false;
         }
-    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
-        @if ($function != null) {
-            #{$attribute}: #{$function}(#{$value} #{$argument});
-        } @else {
-            #{$attribute}: #{$value};
+        @if str-slice(list.nth($parameter, 1), 0, 1) != "$" {
+            @error "Parameter #{list.nth($parameter, 1)} should start with $.";
         }
+        $expression: str-replace($expression, list.nth($parameter, 1), list.nth($parameter, 2));
+    }
+    @if $is_valid {
+        #{$attribute}: #{$expression};
     }
 }
 
-@mixin mvariable($attribute, $name1, $value1, $name2, $value2, $function: null, $operator: null, $argument: null, $argument1: null, $argument2: null, $preargument: null) {
-    @if $css-vars == true {
-        // fallback IE 11 #{$attribute}: #{$value1} #{$value2};
-        @if ($function != null) {
-            #{$attribute}: #{$function}#{'('}(#{$preargument} var(#{$variable-prefix}#{$name1}, #{$value1}) #{$argument1} #{$operator} var(#{$variable-prefix}#{$name2}, #{$value2}) #{$argument2}#{')'} #{$argument});
-        } @else {
-            #{$attribute}: var(#{$variable-prefix}#{$name1}, #{$value1}), var(#{$variable-prefix}#{$name2}, #{$value2});
-        }
-    } @else if ($sass-vars == true or index($whitelist, $attribute) != null) {
-        @if ($function != null) {
-            #{$attribute}: #{$function}#{'('}(#{$value1} #{$argument1} #{$operator} #{$value2} #{$argument2}#{')'} #{$argument});
-        } @else {
-            #{$attribute}: #{$value1} #{$value2};
-        }
-    }
+@function eparam($key, $value) {
+    @return $key, $value;
 }
 
 @function variable($name, $value) {
@@ -96,5 +84,12 @@
     } @else if ($sass-vars == true or index($whitelist, $name) != null) {
         @return #{$value};
     }
-    @return null
+    @return null;
+}
+
+@mixin avariable($attribute, $name, $value) {
+    $variable: variable($name, $value);
+    @if $variable != null {
+        #{$attribute}: variable($name, $value);
+    }
 }

@@ -33,38 +33,41 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
 
     .o-slider-track {
         @if ($name != null) {
-            @include variable('height', ('slider-track-height-' + #{$name}), $track-height);
+            @include avariable('height', ('slider-track-height-' + #{$name}), $track-height);
         } @else {
-            @include variable('height', 'slider-track-height', $track-height);
+            @include avariable('height', 'slider-track-height', $track-height);
         }
     }
 
 	.o-slider-thumb {
         @if ($name != null) {
-            @include variable('height', 'slider-thumb-size-' + #{$name}, $thumb-size);
-            @include variable('width', 'slider-thumb-size-' + #{$name}, $thumb-size);
+            @include avariable('height', 'slider-thumb-size-' + #{$name}, $thumb-size);
+            @include avariable('width', 'slider-thumb-size-' + #{$name}, $thumb-size);
         } @else {
-            @include variable('height', 'slider-thumb-size', $thumb-size);
-            @include variable('width', 'slider-thumb-size', $thumb-size);
+            @include avariable('height', 'slider-thumb-size', $thumb-size);
+            @include avariable('width', 'slider-thumb-size', $thumb-size);
         }
     }
 
     .o-slider-tick {
         @if ($name != null) {
-            @include variable('height', 'slider-tick-height-' + #{$name}, $tick-height);
+            @include avariable('height', 'slider-tick-height-' + #{$name}, $tick-height);
         } @else {
-            @include variable('height', 'slider-tick-height', $tick-height);
+            @include avariable('height', 'slider-tick-height', $tick-height);
         }
     }
 
     .o-slider-tick-label {
         @if ($name != null) {
-            @include variable('font-size', 'slider-mark-size-' + #{$name}, $slider-mark-size);
+            @include avariable('font-size', 'slider-mark-size-' + #{$name}, $slider-mark-size);
         } @else {
-            @include variable('font-size', 'slider-mark-size', $slider-mark-size);
+            @include avariable('font-size', 'slider-mark-size', $slider-mark-size);
         }
         position: absolute;
-        @include variable('top', 'slider-tick-label-top-' + #{$name}, $track-height, 'calc', '/2 + 2px');
+        @include evariable(
+            'top', 'calc($label-top / 2 + 2px)',
+            eparam('$label-top', variable('slider-tick-label-top-' + #{$name}, $track-height))
+        );
         // top: calc(#{$track-height} / 2 + 2px);
         left: 50%;
         transform: translateX(-50%);
@@ -72,24 +75,24 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
 }
 
 .o-slider {
-    @include variable('margin', 'slider-margin', $slider-margin);
-    @include variable('background', 'slider-background', $slider-background);
+    @include avariable('margin', 'slider-margin', $slider-margin);
+    @include avariable('background', 'slider-background', $slider-background);
     width: 100%;
     .o-slider-track {
         display: flex;
         align-items: center;
         position: relative;
         cursor: pointer;
-        @include variable('background', 'slider-track-background', $slider-track-background);
-        @include variable('border-radius', 'slider-track-border-radius', $slider-track-border-radius);
+        @include avariable('background', 'slider-track-background', $slider-track-background);
+        @include avariable('border-radius', 'slider-track-border-radius', $slider-track-border-radius);
     }
     .o-slider-fill {
         position: absolute;
         height: 100%;
-        @include variable('box-shadow', 'slider-track-shadow', $slider-track-shadow);
-        @include variable('background', 'slider-track-background', $slider-track-background);
-        @include variable('border-radius', 'slider-track-radius', $slider-track-radius);
-        @include variable('border', 'slider-track-border', $slider-track-border);
+        @include avariable('box-shadow', 'slider-track-shadow', $slider-track-shadow);
+        @include avariable('background', 'slider-track-background', $slider-track-background);
+        @include avariable('border-radius', 'slider-track-radius', $slider-track-radius);
+        @include avariable('border', 'slider-track-border', $slider-track-border);
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
@@ -103,43 +106,43 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         top: 50%;
         flex-direction: column; // Fix shrinked thumb at the end in IE 11
         .o-slider-thumb {
-            @include variable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
-            @include variable('border', 'slider-thumb-border', $slider-thumb-border);
-            @include variable('border-radius', 'slider-thumb-radius', $slider-thumb-radius);
-            @include variable('background', 'slider-thumb-background', $slider-thumb-background);
+            @include avariable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
+            @include avariable('border', 'slider-thumb-border', $slider-thumb-border);
+            @include avariable('border-radius', 'slider-thumb-radius', $slider-thumb-radius);
+            @include avariable('background', 'slider-thumb-background', $slider-thumb-background);
             &:focus {
-                @include variable('transform', 'slider-thumb-transform', $slider-thumb-transform);
+                @include avariable('transform', 'slider-thumb-transform', $slider-thumb-transform);
             }
         }
 
         &.o-slider-dragging {
             cursor: grabbing;
             .o-slider-thumb {
-                @include variable('transform', 'slider-thumb-transform', $slider-thumb-transform);
+                @include avariable('transform', 'slider-thumb-transform', $slider-thumb-transform);
             }
         }
     }
 
     &.o-slider-focus{
-        @include variable('padding', 'slider-focus-padding', $slider-focus-padding);
-        @include variable('margin', 'slider-focus-margin', $slider-focus-margin);
+        @include avariable('padding', 'slider-focus-padding', $slider-focus-padding);
+        @include avariable('margin', 'slider-focus-margin', $slider-focus-margin);
         cursor: pointer;
     }
 
     &.o-slider-rounded {
         .o-slider-thumb {
-            @include variable('border-radius', 'slider-rounded-borded-radius', $slider-rounded-borded-radius);
+            @include avariable('border-radius', 'slider-rounded-borded-radius', $slider-rounded-borded-radius);
         }
     }
     &.o-slider-disabled {
         .o-slider-track {
             cursor: not-allowed;
-            @include variable('opacity', 'slider-track-disabled', $slider-track-disabled);
+            @include avariable('opacity', 'slider-track-disabled', $slider-track-disabled);
         }
         .o-slider-thumb-wrapper {
             cursor: not-allowed;
             .o-slider-thumb {
-                @include variable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
+                @include avariable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
             }
         }
     }
@@ -153,7 +156,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         $color: nth($pair, 1);
         &.o-color-#{$name} {
             .o-slider-fill {
-                @include variable('background', ('color-' + #{$name}), $color);
+                @include avariable('background', ('color-' + #{$name}), $color);
             }
         }
     }
@@ -161,9 +164,9 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         position: absolute;
         transform: translate(-50%, -50%);
         top: 50%;
-		@include variable('width', 'slider-tick-width', $slider-tick-width);
-        @include variable('background', 'slider-tick-background', $slider-tick-background);
-        @include variable('border-radius', 'slider-tick-radius', $slider-tick-radius);
+		@include avariable('width', 'slider-tick-width', $slider-tick-width);
+        @include avariable('background', 'slider-tick-background', $slider-tick-background);
+        @include avariable('border-radius', 'slider-tick-radius', $slider-tick-radius);
         &.o-slider-tick-hidden {
             background: transparent;
         }

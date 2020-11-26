@@ -17,28 +17,40 @@ $loading-zindex: 999 !default;
     display: flex;
     justify-content: center;
     overflow: hidden;
-    @include variable('z-index', 'loading-zindex', $loading-zindex);
+    @include avariable('z-index', 'loading-zindex', $loading-zindex);
     &.o-loading-fullpage {
         position: fixed;
         .o-loading-icon {
-            @include variable('top', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
-            @include variable('left', 'loading-fullpage-icon-size', $loading-fullpage-icon-size, 'calc', '/ 2', '50% -');
+            @include evariable(
+                'top', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
+            );
+            @include evariable(
+                'left', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
+            );
             .o-icon {
                 * {
-                    @include variable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
-                    @include variable('height', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
+                    @include avariable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
+                    @include avariable('height', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
                 }
             }
         }
     }
     &:not(.o-loading-fullpage) {
         .o-loading-icon {
-            @include variable('top', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
-            @include variable('left', 'loading-icon-size', $loading-icon-size, 'calc', '/ 2', '50% -');
-            .o-icon {    
+            @include evariable(
+                'top', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
+            );
+            @include evariable(
+                'left', 'calc(50% - $icon-size / 2)',
+                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
+            );
+            .o-icon {
                 * {
-                    @include variable('width', 'loading-icon-size', $loading-icon-size);
-                    @include variable('height', 'loading-icon-size', $loading-icon-size);
+                    @include avariable('width', 'loading-icon-size', $loading-icon-size);
+                    @include avariable('height', 'loading-icon-size', $loading-icon-size);
                 }
             }
         }
@@ -49,7 +61,7 @@ $loading-zindex: 999 !default;
         left: 0;
         right: 0;
         top: 0;
-        @include variable('background', 'loading-background-legacy', $loading-background-legacy);
-        @include variable('background', 'loading-background', $loading-background);
+        @include avariable('background', 'loading-background-legacy', $loading-background-legacy);
+        @include avariable('background', 'loading-background', $loading-background);
     }
 }

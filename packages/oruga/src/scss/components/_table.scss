@@ -47,6 +47,7 @@ $table-th-padding: 0.5em 0.75em !default;
 $table-th-wrap-icon-margin: 0.5rem !default;
 /* @docs */
 
+
 @mixin table-cards {
     .table {
         background-color: transparent;
@@ -73,7 +74,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
          }
     }
     tr {
-        @include variable('box-shadow', 'table-card-box-shadow', $table-card-box-shadow);
+        @include avariable('box-shadow', 'table-card-box-shadow', $table-card-box-shadow);
         max-width: 100%;
         position: relative;
         display: block;
@@ -85,7 +86,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             }
         }
         &:not(:last-child) {
-            @include variable('margin', 'table-card-margin', $table-card-margin);
+            @include avariable('margin', 'table-card-margin', $table-card-margin);
         }
         // Disables is-*
         &:not(.o-table-row-selected) {
@@ -97,7 +98,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             }
         }
         &.o-table-detail {
-            @include variable('margin', 'table-card-detail-margin', $table-card-detail-margin);
+            @include avariable('margin', 'table-card-detail-margin', $table-card-detail-margin);
         }
     }
     tr:not(.o-table-detail):not(.o-table-empty):not(.o-table-footer) {
@@ -106,12 +107,12 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             width: auto;
             justify-content: space-between;
             text-align: right;
-            @include variable('border-bottom', 'table-background', ($table-background 1px solid));
+            @include avariable('border-bottom', 'table-background', ($table-background 1px solid));
             &:before {
                 content: attr(data-label);
-                @include variable('font-weight', 'table-card-cell-font-weight', $table-card-cell-font-weight);
-                @include variable('padding-right', 'table-card-cell-padding', $table-card-cell-padding);
-                @include variable('text-align', 'table-card-cell-text-align', $table-card-cell-text-align);
+                @include avariable('font-weight', 'table-card-cell-font-weight', $table-card-cell-font-weight);
+                @include avariable('padding-right', 'table-card-cell-padding', $table-card-cell-padding);
+                @include avariable('text-align', 'table-card-cell-text-align', $table-card-cell-text-align);
             }
         }
     }
@@ -125,7 +126,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             overflow-x: auto;
         }
         &.o-table-sticky-header {
-            @include variable('height', 'table-sticky-header-height', $table-sticky-header-height);
+            @include avariable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
             &.o-table-mobile-cards {
                 @media screen and (max-width: $table-mobile-breakpoint - 1px) {
@@ -181,23 +182,23 @@ $table-th-wrap-icon-margin: 0.5rem !default;
     table {
         display: table;
         width: 100%;
-        @include variable('border', 'table-boder', $table-boder);
-        @include variable('border-radius', 'table-border-radius', $table-border-radius);
+        @include avariable('border', 'table-boder', $table-boder);
+        @include avariable('border-radius', 'table-border-radius', $table-border-radius);
         border-collapse: separate;
         border-spacing: 0;
-        @include variable('background-color', 'table-background-color', $table-background-color);
-        @include variable('color', 'table-color', $table-color);
+        @include avariable('background-color', 'table-background-color', $table-background-color);
+        @include avariable('color', 'table-color', $table-color);
         tbody tr:not(.o-table-row-selected):nth-child(2n) {
-            @include variable('background-color', 'table-background-color', $table-background-color);
+            @include avariable('background-color', 'table-background-color', $table-background-color);
         }
         tr {
             th {
-                @include variable('font-weight', 'table-th-font-weight', $table-th-font-weight);
-                @include variable('border-width', 'table-th-border-width', $table-th-border-width);
-                @include variable('color', 'table-th-color', $table-th-color);
-                @include variable('border-color', 'table-th-border-color', $table-th-border-color);
-                @include variable('border-style', 'table-th-border-style', $table-th-border-style);
-                @include variable('padding', 'table-th-padding', $table-th-padding);
+                @include avariable('font-weight', 'table-th-font-weight', $table-th-font-weight);
+                @include avariable('border-width', 'table-th-border-width', $table-th-border-width);
+                @include avariable('color', 'table-th-color', $table-th-color);
+                @include avariable('border-color', 'table-th-border-color', $table-th-border-color);
+                @include avariable('border-style', 'table-th-border-style', $table-th-border-style);
+                @include avariable('padding', 'table-th-padding', $table-th-padding);
                 vertical-align: top;
                 .o-table-th-wrap {
                     display: flex;
@@ -206,14 +207,18 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                         position: relative;
                     }
                     .o-icon-sort {
-                        @include variable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin);
+                        @include avariable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin);
                         margin-right: 0;
                     }
                     &.o-table-th-right {
                         flex-direction: row-reverse;
                         text-align: right;
                         .o-icon-sort {
-                            @include variable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin, 'calc', '/ 2');
+                            @include evariable(
+                                'margin-left', $DIVIDE_EXPRESSION,
+                                eparam('$param', variable('table-th-wrap-icon-margin', $table-th-wrap-icon-margin)),
+                                eparam('$factor', 2)
+                            );
                             margin-right: 0;
                         }
                     }
@@ -226,14 +231,14 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     text-align: left;
                 }
                 &.o-table-th-checkbox {
-                    @include variable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
+                    @include avariable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
                 }
                 &.o-table-th-current-sort {
-                    @include variable('border-color', 'table-current-sort-border-color', $table-current-sort-border-color);
-                    @include variable('font-weight', 'table-current-sort-font-weight', $table-current-sort-font-weight);
+                    @include avariable('border-color', 'table-current-sort-border-color', $table-current-sort-border-color);
+                    @include avariable('font-weight', 'table-current-sort-font-weight', $table-current-sort-font-weight);
                 }
                 &.o-table-th-sortable:hover {
-                    @include variable('border-color', 'table-current-sort-hover-border-color', $table-current-sort-hover-border-color);
+                    @include avariable('border-color', 'table-current-sort-hover-border-color', $table-current-sort-hover-border-color);
                 }
                 &.o-table-th-sortable,
                 &.o-table-th-sortable .th-wrap {
@@ -246,34 +251,38 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                     transform: translateY(50%);
                 }
                 .o-icon-sort-multi-cancel-icon {
-                    @include variable('margin', 'table-multi-column-reset-icon-margin', $table-multi-column-reset-icon-margin);
+                    @include avariable('margin', 'table-multi-column-reset-icon-margin', $table-multi-column-reset-icon-margin);
                 }
                 &.o-table-th-sticky {
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    @include variable('z-index', 'table-sticky-zindex', $table-sticky-zindex, 'calc', '+ 2');
-                    @include variable('background', 'table-background-color', $table-background-color);
+                    @include evariable(
+                        'z-index', $SUM_EXPRESSION,
+                        eparam('$param', variable('table-sticky-zindex', $table-sticky-zindex)),
+                        eparam('$factor', 2)
+                    );
+                    @include avariable('background', 'table-background-color', $table-background-color);
                 }
                 &.o-table-th-unselectable {
                    @include unselectable;
                 }
                 &.o-table-th-detail {
-                   @include variable('width', 'table-th-detail-width', $table-th-detail-width);
+                   @include avariable('width', 'table-th-detail-width', $table-th-detail-width);
                 }
             }
             td {
-                @include variable('border-color', 'table-td-border-color', $table-td-border-color);
-                @include variable('border-style', 'table-td-border-style', $table-td-border-style);
-                @include variable('border-width', 'table-td-border-width', $table-td-border-width);
-                @include variable('padding', 'table-td-padding', $table-td-padding);
+                @include avariable('border-color', 'table-td-border-color', $table-td-border-color);
+                @include avariable('border-style', 'table-td-border-style', $table-td-border-style);
+                @include avariable('border-width', 'table-td-border-width', $table-td-border-width);
+                @include avariable('padding', 'table-td-padding', $table-td-padding);
                 vertical-align: top;
                 &.o-table-td-sticky {
                     position: -webkit-sticky;
                     position: sticky;
                     left: 0;
-                    @include variable('z-index', 'table-sticky-zindex', $table-sticky-zindex);
-                    @include variable('background', 'table-background-color', $table-background-color);
+                    @include avariable('z-index', 'table-sticky-zindex', $table-sticky-zindex);
+                    @include avariable('background', 'table-background-color', $table-background-color);
                 }
                 &.o-table-td-right {
                     text-align: right;
@@ -290,11 +299,11 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                         background: $table-row-active-color url(checkmark($table-row-active-background-color)) no-repeat center center;
                         background-position: center;
                         background-repeat: no-repeat;
-                        @include variable('background-color', 'table-row-active-color', $table-row-active-color);
-                        @include variable('background-image', 'table-checkmark-row-active-color', url(checkmark($table-row-active-background-color)));
+                        @include avariable('background-color', 'table-row-active-color', $table-row-active-color);
+                        @include avariable('background-image', 'table-checkmark-row-active-color', url(checkmark($table-row-active-background-color)));
                     }
                     + .o-checkbox-check {
-                        @include variable('border-color', 'table-row-active-color', $table-row-active-color);
+                        @include avariable('border-color', 'table-row-active-color', $table-row-active-color);
                     }
                 }
             }
@@ -308,9 +317,9 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             }
             .o-table-chevron-cell {
                 vertical-align: middle;
-                @include variable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
+                @include avariable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
                 > a {
-                    @include variable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
+                    @include avariable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
                     .o-table-detail-icon-expanded {
                         transform: rotate(90deg);
                     }
@@ -323,40 +332,40 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 }
             }
             .o-table-detail {
-                @include variable('box-shadow', 'table-detail-box-shadow', $table-detail-box-shadow);
-                @include variable('background', 'table-detail-background', $table-detail-background);
+                @include avariable('box-shadow', 'table-detail-box-shadow', $table-detail-box-shadow);
+                @include avariable('background', 'table-detail-background', $table-detail-background);
                 td {
-                    @include variable('padding', 'table-detail-padding', $table-detail-padding);
+                    @include avariable('padding', 'table-detail-padding', $table-detail-padding);
                 }
             }
         }
         &:focus {
-            @include variable('border-color', 'table-focus-border-color', $table-focus-border-color);
-            @include variable('box-shadow', 'table-focus-box-shadow', $table-focus-box-shadow);
+            @include avariable('border-color', 'table-focus-border-color', $table-focus-border-color);
+            @include avariable('box-shadow', 'table-focus-box-shadow', $table-focus-box-shadow);
         }
         &.o-table-bordered {
             tr:last-child {
                 td, th {
-                    @include variable('border-bottom-width', 'table-bordered-border-width', $table-bordered-border-width);
+                    @include avariable('border-bottom-width', 'table-bordered-border-width', $table-bordered-border-width);
                 }
             }
             td, th {
-                @include variable('border-width', 'table-bordered-border-width', $table-bordered-border-width);
+                @include avariable('border-width', 'table-bordered-border-width', $table-bordered-border-width);
             }
         }
         &.o-table-striped {
             tbody tr:not(.o-table-row-selected):nth-child(2n) {
-                @include variable('background-color', 'table-striped-background-color', $table-striped-background-color);
+                @include avariable('background-color', 'table-striped-background-color', $table-striped-background-color);
             }
         }
         &.o-table-narrow {
             td, th {
-                @include variable('padding', 'table-narrow-padding', $table-narrow-padding);
+                @include avariable('padding', 'table-narrow-padding', $table-narrow-padding);
             }
         }
         &.o-table-hoverable {
             tbody tr:not(.o-table-row-selected):hover {
-                @include variable('background-color', 'table-hoverable-background-color', $table-hoverable-background-color);
+                @include avariable('background-color', 'table-hoverable-background-color', $table-hoverable-background-color);
             }
         }
     }
