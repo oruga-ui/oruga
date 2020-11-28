@@ -50,7 +50,7 @@
                             {{ element.group }}
                         </span>
                     </div>
-                    <a
+                    <div
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
@@ -63,7 +63,7 @@
                         <span v-else>
                             {{ getValue(option, true) }}
                         </span>
-                    </a>
+                    </div>
                 </template>
                 <div
                     v-if="isEmpty && $slots.empty"
@@ -140,7 +140,7 @@ export default {
         clearable: Boolean,
         /** Max height of dropdown content */
         maxHeight: [String, Number],
-        /** 
+        /**
          * Position of dropdown
          * @values auto, top, bottom
          */
@@ -205,7 +205,7 @@ export default {
             return [
                 this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
                 { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded },
-                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-opened-top')]: (this.isOpenedTop && !this.appendToBody)  }
+                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-top')]: (this.isOpenedTop && !this.appendToBody)  }
             ]
         },
         menuClasses() {

@@ -18,52 +18,54 @@ $autocomplete-menu-zindex : 20 !default;
 
 .o-autocomplete {
     position: relative;
-    .o-autocomplete-menu {
-        display: block;
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 100%;
-        overflow: auto;
-        @include avariable('z-index', 'autocomplete-menu-zindex', $autocomplete-menu-zindex);
-        @include avariable('background-color', 'autocomplete-menu-background', $autocomplete-menu-background);
-        @include avariable('border-radius', 'autocomplete-menu-border-radius', $autocomplete-menu-border-radius);
-        @include avariable('box-shadow', 'autocomplete-menu-box-shadow', $autocomplete-menu-box-shadow);
-        @include avariable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
-        @include avariable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
-        @include avariable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
+}
 
-        .o-autocomplete-item {
-            display: block;
-            position: relative;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-decoration: none;
-            cursor: pointer;
-            @include avariable('color', 'autocomplete-item-color', $autocomplete-item-color);
-            @include avariable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
-            @include avariable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
-            @include avariable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
-            &.o-autocomplete-item-disabled {
-                pointer-events: none;
-                @include avariable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
-            }
-            &:hover, &.o-autocomplete-item-hovered {
-                @include avariable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
-                @include avariable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
-                text-decoration: none;
-            }
-        }
-    }
-    &.o-autocomplete-opened-top .o-autocomplete-menu {
-        top: auto;
-        bottom: 100%;
-    }
-    &.o-autocomplete-expanded {
-        width: 100%;
-        .o-autocomplete-menu {
-            width: 100%;
-        }
-    }
+.o-autocomplete-menu {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    overflow: auto;
+    @include avariable('z-index', 'autocomplete-menu-zindex', $autocomplete-menu-zindex);
+    @include avariable('background-color', 'autocomplete-menu-background', $autocomplete-menu-background);
+    @include avariable('border-radius', 'autocomplete-menu-border-radius', $autocomplete-menu-border-radius);
+    @include avariable('box-shadow', 'autocomplete-menu-box-shadow', $autocomplete-menu-box-shadow);
+    @include avariable('padding', 'autocomplete-menu-padding', $autocomplete-menu-padding);
+    @include avariable('margin', 'autocomplete-menu-margin', $autocomplete-menu-margin);
+    @include avariable('max-height', 'autocomplete-menu-max-height', $autocomplete-menu-max-height);
+}
+
+.o-autocomplete-item {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    cursor: pointer;
+    @include avariable('color', 'autocomplete-item-color', $autocomplete-item-color);
+    @include avariable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
+    @include avariable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
+    @include avariable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
+}
+
+.o-autocomplete-item-disabled {
+    pointer-events: none;
+    @include avariable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
+}
+
+.o-autocomplete-item-hovered, .o-autocomplete-item:hover {
+    @include avariable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
+    @include avariable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
+    text-decoration: none;
+}
+ 
+.o-autocomplete-menu-top {
+    top: auto;
+    bottom: 100%;
+}
+
+.o-autocomplete-expanded {
+    width: 100%;
 }
