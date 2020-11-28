@@ -137,8 +137,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('button', 'rootClass', 'o-btn'),
-                { [`${this.computedClass('button', 'sizeClass', 'o-btn-size--', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('button', 'variantClass', 'o-btn-variant--', true)}${this.variant}`]: this.variant },
+                { [`${this.computedClass('button', 'sizeClass', 'o-btn--', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('button', 'variantClass', 'o-btn--', true)}${this.variant}`]: this.variant },
                 { [`${this.computedClass('button', 'outlinedClass', 'o-btn--outlined-', true)}${this.variant}`]: this.outlined },
                 { [`${this.computedClass('button', 'invertedClass', 'o-btn--inverted-', true)}${this.variant}`]: this.inverted },
                 { [this.computedClass('button', 'expandedClass', 'o-btn--expanded')]: this.expanded },

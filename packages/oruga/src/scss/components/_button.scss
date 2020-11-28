@@ -69,14 +69,14 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         }
     }
     @each $name, $value in $sizes {
-        &-size--#{$name} {
+        &--#{$name} {
             @include avariable('font-size', ('button-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         $color-invert: nth($pair, 2);
-        &-variant--#{$name} {
+        &--#{$name} {
             border-color: transparent;
             @include avariable('background-color', ('variant-' + #{$name}), $color);
             @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
