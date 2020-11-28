@@ -7,6 +7,7 @@
                 v-show="active && (isActive || always)"
                 ref="content"
                 :class="contentClasses">
+                <span :class="arrowClasses"></span>
                 <template v-if="label">{{ label }}</template>
                 <template v-else-if="$slots.default">
                     <slot name="content" />
@@ -110,7 +111,9 @@ export default {
         triggerClass: String,
         multilineClass: String,
         alwaysClass: String,
-        variantClass: String
+        variantClass: String,
+        arrowClass: String,
+        arrowOrderClass: String
     },
     data() {
         return {
@@ -131,6 +134,12 @@ export default {
         triggerClasses() {
             return [
                 this.computedClass('tooltip', 'triggerClass', 'o-tip__trigger'),
+            ]
+        },
+        arrowClasses() {
+            return [
+                this.computedClass('tooltip', 'arrowClass', 'o-tip__arrow'),
+                { [`${this.computedClass('tooltip', 'arrowOrderClass', 'o-tip__arrow--')}${this.position}`]: this.position }
             ]
         },
         contentClasses() {

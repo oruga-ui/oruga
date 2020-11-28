@@ -61,6 +61,45 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
 }
 
 @mixin tooltip($direction) {
+    &__arrow {
+        @if ($direction == "bottom") {
+            &--bottom {
+                top: auto;
+                right: auto;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                @include tooltip-arrow($direction, null, $tooltip-background-color);
+            }
+        } @else if ($direction == "top") {
+            &--top {
+                top: 100%;
+                right: auto;
+                bottom: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                @include tooltip-arrow($direction, null, $tooltip-background-color);
+            }
+        } @else if ($direction == "left") {
+            &--left {
+                top: 50%;
+                right: auto;
+                bottom: auto;
+                left: 100%;
+                transform: translateY(-50%);
+                @include tooltip-arrow($direction, null, $tooltip-background-color);
+            }
+        } @else if ($direction == "right") {
+            &--right {
+                top: 50%;
+                right: 100%;
+                bottom: auto;
+                left: auto;
+                transform: translateY(-50%);
+                @include tooltip-arrow($direction, null, $tooltip-background-color);
+            }
+        }
+    }
     &__content {
         @if ($direction == "top") {
             &--top {
@@ -73,15 +112,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 );
                 left: 50%;
                 transform: translateX(-50%);
-
-                &::before {
-                    top: 100%;
-                    right: auto;
-                    bottom: auto;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    @include tooltip-arrow($direction, null, $tooltip-background-color);
-                }
             }
         } @else if ($direction == "bottom") {
             &--bottom {
@@ -94,15 +124,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 bottom: auto;
                 left: 50%;
                 transform: translateX(-50%);
-
-                &::before {
-                    top: auto;
-                    right: auto;
-                    bottom: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    @include tooltip-arrow($direction, null, $tooltip-background-color);
-                }
             }
         } @else if ($direction == "right") {
             &--right{
@@ -115,15 +136,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                     eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 transform: translateY(-50%);
-
-                &::before {
-                    top: 50%;
-                    right: 100%;
-                    bottom: auto;
-                    left: auto;
-                    transform: translateY(-50%);
-                    @include tooltip-arrow($direction, null, $tooltip-background-color);
-                }
             }
         } @else if ($direction == "left") {
             &--left {
@@ -136,15 +148,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 bottom: auto;
                 left: auto;
                 transform: translateY(-50%);
-
-                &::before {
-                    top: 50%;
-                    right: auto;
-                    bottom: auto;
-                    left: 100%;
-                    transform: translateY(-50%);
-                    @include tooltip-arrow($direction, null, $tooltip-background-color);
-                }
             }
         }
     }
@@ -166,6 +169,12 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     @include tooltip("left");
     position: relative;
     display: inline-flex;
+    &__arrow {
+        position: absolute;
+        content: "";
+        pointer-events: none;
+        @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
+    }
     &__content {
         position: absolute;
         white-space: nowrap;
@@ -178,12 +187,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
         @include avariable('color', 'tooltip-background-color', $tooltip-color);
-        &::before {
-            position: absolute;
-            content: "";
-            pointer-events: none;
-            @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
-        }
         &--always {
             opacity: 1;
             visibility: visible;
