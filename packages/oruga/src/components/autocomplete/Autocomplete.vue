@@ -203,25 +203,25 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
-                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded },
-                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-top')]: (this.isOpenedTop && !this.appendToBody)  }
+                this.computedClass('autocomplete', 'rootClass', 'o-acp'),
+                { [this.computedClass('autocomplete', 'expandedClass', 'o-acp--expanded')]: this.expanded }
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('autocomplete', 'menuClass', 'o-autocomplete-menu')
+                this.computedClass('autocomplete', 'menuClass', 'o-acp__menu'),
+                { [this.computedClass('autocomplete', 'openedTopClass', 'o-acp__menu--top')]: (this.isOpenedTop && !this.appendToBody)  }
             ]
         },
         itemClasses() {
             return [
-                this.computedClass('autocomplete', 'itemClass', 'o-autocomplete-item')
+                this.computedClass('autocomplete', 'itemClass', 'o-acp__item')
             ]
         },
         itemEmptyClasses() {
             return [
                 ...this.itemClasses,
-                this.computedClass('autocomplete', 'itemDisabledClass', 'o-autocomplete-item-disabled')
+                this.computedClass('autocomplete', 'itemDisabledClass', 'o-acp__item--disabled')
             ]
         },
         inputBind() {
@@ -383,7 +383,7 @@ export default {
         itemOptionClasses(option) {
             return [
                 ...this.itemClasses,
-                { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
+                { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-acp__item--hovered')]: option === this.hovered }
             ]
         },
 
