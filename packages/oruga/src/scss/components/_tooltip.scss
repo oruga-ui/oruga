@@ -61,9 +61,9 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
 }
 
 @mixin tooltip($direction) {
-    &.o-tooltip-#{$direction} {
-        .o-tooltip-content {
-            @if ($direction == "top") {
+    &__content {
+        @if ($direction == "top") {
+            &--top {
                 top: auto;
                 right: auto;
                 @include evariable(
@@ -73,7 +73,18 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 );
                 left: 50%;
                 transform: translateX(-50%);
-            } @else if ($direction == "bottom") {
+
+                &::before {
+                    top: 100%;
+                    right: auto;
+                    bottom: auto;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    @include tooltip-arrow($direction, null, $tooltip-background-color);
+                }
+            }
+        } @else if ($direction == "bottom") {
+            &--bottom {
                 @include evariable(
                     'top', $TBLR_CALC_EXPRESSION,
                     eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
@@ -83,7 +94,18 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 bottom: auto;
                 left: 50%;
                 transform: translateX(-50%);
-            } @else if ($direction == "right") {
+
+                &::before {
+                    top: auto;
+                    right: auto;
+                    bottom: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    @include tooltip-arrow($direction, null, $tooltip-background-color);
+                }
+            }
+        } @else if ($direction == "right") {
+            &--right{
                 top: 50%;
                 right: auto;
                 bottom: auto;
@@ -93,7 +115,18 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                     eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 transform: translateY(-50%);
-            } @else if ($direction == "left") {
+
+                &::before {
+                    top: 50%;
+                    right: 100%;
+                    bottom: auto;
+                    left: auto;
+                    transform: translateY(-50%);
+                    @include tooltip-arrow($direction, null, $tooltip-background-color);
+                }
+            }
+        } @else if ($direction == "left") {
+            &--left {
                 top: 50%;
                 @include evariable(
                     'right', $TBLR_CALC_EXPRESSION,
@@ -103,56 +136,37 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 bottom: auto;
                 left: auto;
                 transform: translateY(-50%);
-            }
-        }
-        .o-tooltip-content::before {
-            @if ($direction == "bottom") {
-                top: auto;
-                right: auto;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "top") {
-                top: 100%;
-                right: auto;
-                bottom: auto;
-                left: 50%;
-                transform: translateX(-50%);
-            } @else if ($direction == "left") {
-                top: 50%;
-                right: auto;
-                bottom: auto;
-                left: 100%;
-                transform: translateY(-50%);
-            } @else if ($direction == "right") {
-                top: 50%;
-                right: 100%;
-                bottom: auto;
-                left: auto;
-                transform: translateY(-50%);
-            }
-            @include tooltip-arrow($direction, null, $tooltip-background-color);
-        }
-        @each $name, $pair in $colors {
-            $color: nth($pair, 1);
-            &.o-color-#{$name} {
-                .o-tooltip-content::before {
-                    @include tooltip-arrow($direction, $name, $color)
+
+                &::before {
+                    top: 50%;
+                    right: auto;
+                    bottom: auto;
+                    left: 100%;
+                    transform: translateY(-50%);
+                    @include tooltip-arrow($direction, null, $tooltip-background-color);
                 }
             }
         }
     }
+    // @each $name, $pair in $colors {
+    //     $color: nth($pair, 1);
+    //     &.o-color-#{$name} {
+    //         .o-tooltip-content::before {
+    //             @include tooltip-arrow($direction, $name, $color)
+    //         }
+    //     }
+    // }
 }
 
 // Base
-.o-tooltip {
+.o-tip {
     @include tooltip("top");
     @include tooltip("right");
     @include tooltip("bottom");
     @include tooltip("left");
     position: relative;
     display: inline-flex;
-    .o-tooltip-content {
+    &__content {
         position: absolute;
         white-space: nowrap;
         @include avariable('max-width', 'tooltip-content-max-width', $tooltip-content-max-width);
@@ -164,38 +178,33 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
         @include avariable('color', 'tooltip-background-color', $tooltip-color);
-    }
-    .o-tooltip-content::before {
-        position: absolute;
-        content: "";
-        pointer-events: none;
-        @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
-    }
-    .o-tooltip-trigger {
-        width: 100%;
-    }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        $color-invert: nth($pair, 2);
-        &.o-color-#{$name} {
-            .o-tooltip-content {
-                @include avariable('background', ('color-' + #{$name}), $color);
-                @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
-            }
+        &::before {
+            position: absolute;
+            content: "";
+            pointer-events: none;
+            @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         }
-    }
-    &.o-tooltip-always {
-        .o-tooltip-content::before,
-        .o-tooltip-content {
+        &--always {
             opacity: 1;
             visibility: visible;
         }
-    }
-    &.o-tooltip-multiline {
-        .o-tooltip-content {
+        &--multiline {
             text-align: center;
             white-space: normal;
             @include avariable('width', 'tooltip-content-multiline-width', $tooltip-content-multiline-width);
         }
     }
+    &__trigger {
+        width: 100%;
+    }
+    // @each $name, $pair in $colors {
+    //     $color: nth($pair, 1);
+    //     $color-invert: nth($pair, 2);
+    //     &.o-color-#{$name} {
+    //         .o-tooltip-content {
+    //             @include avariable('background', ('color-' + #{$name}), $color);
+    //             @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
+    //         }
+    //     }
+    // }
 }

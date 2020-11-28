@@ -122,21 +122,21 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('tooltip', 'rootClass', 'o-tooltip'),
+                this.computedClass('tooltip', 'rootClass', 'o-tip'),
                 { [`${this.computedClass('tooltip', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('tooltip', 'orderClass', 'o-tooltip-')}${this.position}`]: this.position },
-                { [this.computedClass('tooltip', 'multilineClass', 'o-tooltip-multiline')]: this.multiline },
-                { [this.computedClass('tooltip', 'alwaysClass', 'o-tooltip-always')]: this.always }
+                { [this.computedClass('tooltip', 'multilineClass', 'o-tip--multiline')]: this.multiline },
+                { [this.computedClass('tooltip', 'alwaysClass', 'o-tip--always')]: this.always }
             ]
         },
         triggerClasses() {
             return [
-                this.computedClass('tooltip', 'triggerClass', 'o-tooltip-trigger')
+                this.computedClass('tooltip', 'triggerClass', 'o-tip__trigger'),
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('tooltip', 'contentClass', 'o-tooltip-content')
+                this.computedClass('tooltip', 'contentClass', 'o-tip__content'),
+                { [`${this.computedClass('tooltip', 'orderClass', 'o-tip__content--')}${this.position}`]: this.position }
             ]
         },
         newAnimation() {
