@@ -18,7 +18,7 @@ $button-rounded-border-radius: $base-rounded-border-radius !default;
 $button-disabled-opacity: $base-disabled-opacity !default;
 /* @docs */
 
-.o-button {
+.o-btn {
     -moz-appearance: none;
     -webkit-appearance: none;
     display: inline-flex;
@@ -46,84 +46,72 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     &:hover {
         text-decoration: none;
     }
-    &.o-button-expanded {
+    &--expanded {
         width: 100%;
     }
-    &.o-button-rounded {
+    &--rounded {
         @include avariable('border-radius', 'button-border-radius', $button-rounded-border-radius);
     }
-    &.o-button-disabled {
+    &--disabled {
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
     }
-    > .o-icon {
+    &__icon {
         @include avariable('height', 'button-icon-width', $button-icon-width);
         @include avariable('width', 'button-icon-width', $button-icon-width);
-    }
-    > .o-icon:first-child:not(:last-child) {
-        @include avariable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-        @include avariable('margin-right', 'button-margin-icon-to-text', $button-margin-icon-to-text);
-    }
-    > .o-icon:last-child:not(:first-child) {
-        @include avariable('margin-left', 'button-margin-icon-to-text', $button-margin-icon-to-text);
-        @include avariable('margin-right', 'button-margin-border-to-icon', $button-margin-border-to-icon);
+        &:first-child:not(:last-child) {
+            @include avariable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
+            @include avariable('margin-right', 'button-margin-icon-to-text', $button-margin-icon-to-text);
+        }
+        &:last-child:not(:first-child) {
+            @include avariable('margin-right', 'button-margin-border-to-icon', $button-margin-border-to-icon);
+            @include avariable('margin-left', 'button-margin-icon-to-text', $button-margin-icon-to-text);
+        }
     }
     @each $name, $value in $sizes {
-        &.o-size-#{$name} {
+        &-size--#{$name} {
             @include avariable('font-size', ('button-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         $color-invert: nth($pair, 2);
-        &.o-color-#{$name} {
+        &-variant--#{$name} {
             border-color: transparent;
-            @include avariable('background-color', ('color-' + #{$name}), $color);
-            @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
+            @include avariable('background-color', ('variant-' + #{$name}), $color);
+            @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
             &:hover {
                 // background-color: darken($color, 2.5%)
                 // IE 11 needs polyfill
                 filter: brightness(97.5%);
             }
-            &.o-button-outlined {
-                background-color: transparent;
-                @include avariable('border-color', ('color-' + #{$name}), $color);
-                @include avariable('color', ('color-' + #{$name}), $color);
-                &:hover {
-                    border-color: transparent;
-                    @include avariable('background-color', ('color-' + #{$name}), $color);
-                    @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
-                }
+        }
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+        &--outlined-#{$name} {
+            background-color: transparent;
+            @include avariable('border-color', ('variant-' + #{$name}), $color);
+            @include avariable('color', ('variant-' + #{$name}), $color);
+            &:hover {
+                border-color: transparent;
+                @include avariable('background-color', ('variant-' + #{$name}), $color);
+                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
             }
-            &.o-button-inverted {
-                @include avariable('background-color', ('color-invert-' + #{$name}), $color-invert);
-                @include avariable('border-color', ('color-invert-' + #{$name}), $color-invert);
-                @include avariable('color', ('color-' + #{$name}), $color);
-                &:hover {
-                    // background-color: darken($color-invert, 5%)
-                    // IE 11 needs polyfill
-                    filter: brightness(95%);
-                }
-            }
-            &.o-button-inverted {
-                @include avariable('background-color', ('color-invert-' + #{$name}), $color-invert);
-                @include avariable('border-color', ('color-invert-' + #{$name}), $color-invert);
-                @include avariable('color', ('color-' + #{$name}), $color);
-                &:hover {
-                    // background-color: darken($color-invert, 5%)
-                    // IE 11 needs polyfill
-                    filter: brightness(95%);
-                }
-            }
-            &.o-button-inverted.o-button-outlined {
-                background-color: transparent;
-                @include avariable('border-color', ('color-invert-' + #{$name}), $color-invert);
-                @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
-                &:hover {
-                    @include avariable('background-color', ('color-invert-' + #{$name}), $color-invert);
-                    @include avariable('border-color', ('color-invert-' + #{$name}), $color-invert);
-                    @include avariable('color', ('color-' + #{$name}), $color);
-                }
+        }
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+        &--inverted-#{$name} {
+            @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
+            @include avariable('border-color', ('variant-invert-' + #{$name}), $color-invert);
+            @include avariable('color', ('variant-' + #{$name}), $color);
+            &:hover {
+                // background-color: darken($color-invert, 5%)
+                // IE 11 needs polyfill
+                filter: brightness(95%);
             }
         }
     }

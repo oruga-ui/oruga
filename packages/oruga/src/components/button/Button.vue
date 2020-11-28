@@ -12,6 +12,7 @@
             :icon="iconLeft"
             :size="size"
             :both="iconBoth"
+            :class="iconClasses"
         />
         <span v-if="label">{{ label }}</span>
         <span v-else-if="$slots.default">
@@ -23,6 +24,7 @@
             :icon="iconRight"
             :size="size"
             :both="iconBoth"
+            :class="iconClasses"
         />
     </component>
 </template>
@@ -87,7 +89,7 @@ export default {
          */
         outlined: Boolean,
         /**
-         * Button will be expanded (full-width)	
+         * Button will be expanded (full-width)
          */
         expanded: Boolean,
         inverted: Boolean,
@@ -107,7 +109,7 @@ export default {
         },
         /**
          * Button tag name
-         * @values button, a, input, router-link, nuxt-link or other nuxt alias
+         * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
          */
         tag: {
             type: String,
@@ -125,21 +127,29 @@ export default {
         expandedClass: String,
         roundedClass: String,
         disabledClass: String,
+        iconClass: String,
+        iconLeftClass: String,
+        iconRightClass: String,
         sizeClass: String,
         variantClass: String
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('button', 'rootClass', 'o-button'),
-                { [`${this.computedClass('button', 'sizeClass', 'o-size-')}${this.size}`]: this.size },
-                { [`${this.computedClass('button', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('button', 'outlinedClass', 'o-button-outlined')]: this.outlined },
-                { [this.computedClass('button', 'invertedClass', 'o-button-inverted')]: this.inverted },
-                { [this.computedClass('button', 'expandedClass', 'o-button-expanded')]: this.expanded },
-                { [this.computedClass('button', 'roundedClass', 'o-button-rounded')]: this.rounded },
-                { [this.computedClass('button', 'disabledClass', 'o-button-disabled')]: this.disabled },
+                this.computedClass('button', 'rootClass', 'o-btn'),
+                { [`${this.computedClass('button', 'sizeClass', 'o-btn-size--', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('button', 'variantClass', 'o-btn-variant--', true)}${this.variant}`]: this.variant },
+                { [`${this.computedClass('button', 'outlinedClass', 'o-btn--outlined-', true)}${this.variant}`]: this.outlined },
+                { [`${this.computedClass('button', 'invertedClass', 'o-btn--inverted-', true)}${this.variant}`]: this.inverted },
+                { [this.computedClass('button', 'expandedClass', 'o-btn--expanded')]: this.expanded },
+                { [this.computedClass('button', 'roundedClass', 'o-btn--rounded')]: this.rounded },
+                { [this.computedClass('button', 'disabledClass', 'o-btn--disabled')]: this.disabled },
             ]
+        },
+        iconClasses() {
+          return [
+            this.computedClass('button', 'iconClass', 'o-btn__icon'),
+          ]
         },
         computedTag() {
             if (this.disabled !== undefined && this.disabled !== false) {
