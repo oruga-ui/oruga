@@ -38,10 +38,6 @@ describe('OAutocomplete', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('has an input type', () => {
-        expect(wrapper.contains('.o-control-input .o-input[type=text]')).toBeTruthy()
-    })
-
     it('has a dropdown menu hidden by default', () => {
         expect(wrapper.contains(dropdownMenu)).toBeTruthy()
         expect($dropdown.isVisible()).toBeFalsy()

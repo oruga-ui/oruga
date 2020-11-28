@@ -9,7 +9,7 @@ export default {
             const currrentClass = this.$props[field]
             return (`${override || (overrideIfExists && (currrentClass || globalClass)) ? '' : defaultValue} `
                + `${overrideIfExists && currrentClass ? '' : blankIfUndefined(globalClass)} `
-               + `${blankIfUndefined(currrentClass)}`).replace(/\s\s+/g, ' ');
+               + `${blankIfUndefined(currrentClass)}`).trim().replace(/\s\s+/g, ' ');
         }
     }
 }
