@@ -195,4 +195,4 @@ title: Button
 | CSS Variable                    | SASS Variable             | Default |
 | ------------------------------- | ------------------------- | ------- |
 | --oruga-button-background-color | \$button-background-color | #ffffff |
-| \$button-border-radius          |
+| \$button-color                  |

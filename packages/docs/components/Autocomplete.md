@@ -358,13 +358,13 @@ title: Autocomplete
 | iconRightClickable  | Clickable icon right if exists                                                                                                                         | boolean        | -                                                 |                                                          |
 | appendToBody        | Append autocomplete content to body                                                                                                                    | boolean        | -                                                 |                                                          |
 | confirmKeys         | Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) | array          | -                                                 | ['Tab', 'Enter']                                         |
-| rootClass           | Root class                                                                                                                                             | string         | -                                                 |                                                          |
-| menuClass           | Options menu class                                                                                                                                     | string         | -                                                 |                                                          |
-| expandedClass       | Expanded options menu class                                                                                                                            | string         | -                                                 |                                                          |
-| openedTopClass      |                                                                                                                                                        | string         | -                                                 |                                                          |
-| itemClass           | Option class                                                                                                                                           | string         | -                                                 |                                                          |
-| itemHoveredClass    | Option hovered class                                                                                                                                   | string         | -                                                 |                                                          |
-| itemDisabledClass   | Option disabled class                                                                                                                                  | string         | -                                                 |                                                          |
+| rootClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
+| menuClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
+| expandedClass       |                                                                                                                                                        | string         | -                                                 |                                                          |
+| menuPositionClass   |                                                                                                                                                        | string         | -                                                 |                                                          |
+| itemClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
+| itemHoverClass      |                                                                                                                                                        | string         | -                                                 |                                                          |
+| itemDisabledClass   |                                                                                                                                                        | string         | -                                                 |                                                          |
 | inputClasses        | Classes to apply on internal input (@see o-input style docs)                                                                                           | object         | -                                                 |                                                          |
 
 ## Events
@@ -392,19 +392,7 @@ title: Autocomplete
 
 ## Style
 
-| CSS Variable                                     | SASS Variable                              | Default                                                              |
-| ------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------- |
-| --oruga-autocomplete-item-color                  | \$autocomplete-item-color                  | #000000                                                              |
-| --oruga-autocomplete-item-disabled-opacity       | \$autocomplete-item-disabled-opacity       | \$base-disabled-opacity                                              |
-| --oruga-autocomplete-item-font-size              | \$autocomplete-item-font-size              | \$base-font-size                                                     |
-| --oruga-autocomplete-item-hover-background-color | \$autocomplete-item-hover-background-color | #f5f5f5                                                              |
-| --oruga-autocomplete-item-hover-color            | \$autocomplete-item-hover-color            | #000000                                                              |
-| --oruga-autocomplete-item-line-height            | \$autocomplete-item-line-height            | \$base-line-height                                                   |
-| --oruga-autocomplete-item-padding                | \$autocomplete-item-padding                | .375rem 1rem                                                         |
-| --oruga-autocomplete-menu-background             | \$autocomplete-menu-background             | #ffffff                                                              |
-| --oruga-autocomplete-menu-border-radius          | \$autocomplete-menu-border-radius          | \$base-border-radius                                                 |
-| --oruga-autocomplete-menu-box-shadow             | \$autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
-| --oruga-autocomplete-menu-margin                 | \$autocomplete-menu-margin                 | 0                                                                    |
-| --oruga-autocomplete-menu-max-height             | \$autocomplete-menu-max-height             | 200px                                                                |
-| --oruga-autocomplete-menu-padding                | \$autocomplete-menu-padding                | .5rem 0 .5rem 0                                                      |
-| --oruga-autocomplete-menu-zindex                 | \$autocomplete-menu-zindex                 | 20                                                                   |
+| CSS Variable                         | SASS Variable             | Default |
+| ------------------------------------ | ------------------------- | ------- |
+| --oruga-autocomplete-item-color      | \$autocomplete-item-color | #000000 |
+| \$autocomplete-item-disabled-opacity |
