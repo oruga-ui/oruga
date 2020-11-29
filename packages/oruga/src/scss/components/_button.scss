@@ -1,10 +1,10 @@
 
 /* @docs */
 $button-background-color: #ffffff !default;
-$button-border-radius: $base-border-radius !default;
-$button-border: 1px solid #000000 !default;
-$button-box-shadow: none !default;
 $button-color: #000000 !default;
+$button-border-radius: $base-border-radius !default;
+$button-border: 1px solid $button-color !default;
+$button-box-shadow: none !default;
 $button-font-size: $base-font-size !default;
 $button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
@@ -43,9 +43,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     @include avariable('line-height', 'button-line-height', $button-line-height);
     @include avariable('margin', 'button-margin', $button-margin);
     @include avariable('height', 'button-height', $button-height);
-    &:hover {
-        text-decoration: none;
-    }
     &--expanded {
         width: 100%;
     }
@@ -87,31 +84,51 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             }
         }
     }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        $color-invert: nth($pair, 2);
-        &--outlined-#{$name} {
-            background-color: transparent;
-            @include avariable('border-color', ('variant-' + #{$name}), $color);
-            @include avariable('color', ('variant-' + #{$name}), $color);
-            &:hover {
-                border-color: transparent;
-                @include avariable('background-color', ('variant-' + #{$name}), $color);
-                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
+    &--outlined {
+        background-color: transparent;
+        @include avariable('border-color', 'button-background-color', $button-background-color);
+        @include avariable('color', 'button-background-color', $button-background-color);
+        &:hover {
+            border-color: transparent;
+            @include avariable('background-color', 'button-background-color', $button-background-color);
+            @include avariable('color', 'button-color', $button-color);
+        }
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &-#{$name} {
+                background-color: transparent;
+                @include avariable('border-color', ('variant-' + #{$name}), $color);
+                @include avariable('color', ('variant-' + #{$name}), $color);
+                &:hover {
+                    border-color: transparent;
+                    @include avariable('background-color', ('variant-' + #{$name}), $color);
+                    @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
+                }
             }
         }
     }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        $color-invert: nth($pair, 2);
-        &--inverted-#{$name} {
-            @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
-            @include avariable('border-color', ('variant-invert-' + #{$name}), $color-invert);
-            @include avariable('color', ('variant-' + #{$name}), $color);
-            &:hover {
-                // background-color: darken($color-invert, 5%)
-                // IE 11 needs polyfill
-                filter: brightness(95%);
+    &--inverted {
+        @include avariable('background-color', 'button-color', $button-color);
+        @include avariable('border-color', 'button-color', $button-color);
+        @include avariable('color', 'button-background-color', $button-background-color);
+        &:hover {
+            // background-color: darken($color-invert, 5%)
+            // IE 11 needs polyfill
+            filter: brightness(95%);
+        }
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &-#{$name} {
+                @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
+                @include avariable('border-color', ('variant-invert-' + #{$name}), $color-invert);
+                @include avariable('color', ('variant-' + #{$name}), $color);
+                &:hover {
+                    // background-color: darken($color-invert, 5%)
+                    // IE 11 needs polyfill
+                    filter: brightness(95%);
+                }
             }
         }
     }
