@@ -16,55 +16,47 @@ $skeleton-margin: .5rem 0 0 0 !default;
 }
 
 @mixin steps-size($size, $name: null) {
-    > .o-skeleton-item {
-        @if ($name != null) {
-            @include avariable('line-height', ('skeleton-font-size-' + #{$name}), $size);
-        } @else {
-            @include avariable('line-height', 'skeleton-font-size', $size);
-        }
+    @if ($name != null) {
+        @include avariable('line-height', ('skeleton-font-size-' + #{$name}), $size);
+    } @else {
+        @include avariable('line-height', 'skeleton-font-size', $size);
     }
 }
 
-.o-skeleton {
+.o-sklt {
     display: inline-flex;
     flex-direction: column;
     vertical-align: middle;
     width: 100%;
-    > .o-skeleton-item {
+    &__item {
         width: 100%;
         @include avariable('background', 'skeleton-background', $skeleton-background);
-        &.o-skeleton-item-rounded {
+        &--rounded {
             @include avariable('border-radius', 'skeleton-border-radius', $skeleton-border-radius);
         }
-        &::after {
-            content: "\00a0";
-        }
-        + .o-skeleton-item {
-            @include avariable('margin', 'skeleton-margin', $skeleton-margin);
-        }
-    }
-    &.o-skeleton-animated {
-        > .o-skeleton-item {
+        &--animated {
             background-size: 400% 100%;
             animation-name: skeleton-loading;
             animation-iteration-count: infinite;
             @include avariable('animation-duration', 'skeleton-duration', $skeleton-duration);
         }
-    }
-    &.o-skeleton-centered {
-        align-items: center;
-    }
-    &.o-skeleton-right {
-        align-items: flex-end;
-    }
-    + .o-skeleton {
+        &::after {
+            content: "\00a0";
+        }
         @include avariable('margin', 'skeleton-margin', $skeleton-margin);
-    }
-    @include steps-size($base-font-size);
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            @include steps-size($value, $name);
+
+        @include steps-size($base-font-size);
+        @each $name, $value in $sizes {
+            &--#{$name} {
+                @include steps-size($value, $name);
+            }
         }
     }
+    &--centered {
+        align-items: center;
+    }
+    &--right {
+        align-items: flex-end;
+        @include avariable('margin', 'skeleton-margin', $skeleton-margin);
+    }
 }
-

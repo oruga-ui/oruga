@@ -71,10 +71,14 @@ export default {
         const width = this.width
         const height = this.height
         for (let i = 0; i < this.count; i++) {
-            items.push(h('div', 
+            items.push(h('div',
                 {
-                    staticClass: this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'),
-                    class: { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded },
+                    staticClass: this.computedClass('skeleton', 'itemClass', 'o-sklt__item'),
+                    class: [
+                      { [this.computedClass('skeleton', 'itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
+                      { [this.computedClass('skeleton', 'animationClass', 'o-sklt__item--animated')]: this.animated },
+                      { [`${this.computedClass('skeleton', 'sizeClass', 'o-sklt__item--', true)}${this.size}`]: this.size },
+                    ],
                     key: i,
                     style: {
                         height: toCssDimension(height),
@@ -86,11 +90,9 @@ export default {
         }
         return h('div',
             {
-                staticClass: this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
+                staticClass: this.computedClass('skeleton', 'rootClass', 'o-sklt'),
                 class: [
-                    { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                    { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-')}${this.position}`]: this.position },
-                    { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
+                    { [`${this.computedClass('skeleton', 'positionClass', 'o-sklt--')}${this.position}`]: this.position }
                 ]
             },
             items
