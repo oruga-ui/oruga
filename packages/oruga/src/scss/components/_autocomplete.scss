@@ -52,7 +52,7 @@ $autocomplete-menu-zindex : 20 !default;
             pointer-events: none;
             @include avariable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
         }
-        &--hovered, &:hover {
+        &--hover, &:hover {
             @include avariable('background', 'autocomplete-item-hover-background-color', $autocomplete-item-hover-background-color);
             @include avariable('color', 'autocomplete-item-hover-color', $autocomplete-item-hover-color);
         }

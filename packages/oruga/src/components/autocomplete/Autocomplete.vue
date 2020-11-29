@@ -172,18 +172,12 @@ export default {
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        /** Root class */
         rootClass: String,
-        /** Options menu class */
         menuClass: String,
-        /** Expanded options menu class */
         expandedClass: String,
-        openedTopClass: String,
-        /** Option class */
+        menuPositionClass: String,
         itemClass: String,
-        /** Option hovered class */
-        itemHoveredClass: String,
-        /** Option disabled class */
+        itemHoverClass: String,
         itemDisabledClass: String,
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
@@ -210,7 +204,7 @@ export default {
         menuClasses() {
             return [
                 this.computedClass('autocomplete', 'menuClass', 'o-acp__menu'),
-                { [this.computedClass('autocomplete', 'openedTopClass', 'o-acp__menu--top')]: (this.isOpenedTop && !this.appendToBody)  }
+                { [`${this.computedClass('button', 'menuPositionClass', 'o-acp__menu--', true)}${this.newDropdownPosition}`]: !this.appendToBody },
             ]
         },
         itemClasses() {
@@ -288,11 +282,11 @@ export default {
             return whiteList
         },
 
-        /**
-         * Apply dropdownPosition property
-         */
-        isOpenedTop() {
-            return this.dropdownPosition === 'top' || (this.dropdownPosition === 'auto' && !this.isListInViewportVertically)
+        newDropdownPosition() {
+            if (this.dropdownPosition === 'top' || (this.dropdownPosition === 'auto' && !this.isListInViewportVertically)) {
+              return 'top'
+            }
+            return 'bottom'
         },
 
         newIconRight() {
@@ -383,7 +377,7 @@ export default {
         itemOptionClasses(option) {
             return [
                 ...this.itemClasses,
-                { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-acp__item--hovered')]: option === this.hovered }
+                { [this.computedClass('autocomplete', 'itemHoverClass', 'o-acp__item--hover')]: option === this.hovered }
             ]
         },
 
@@ -619,7 +613,7 @@ export default {
                 const rect = trigger.getBoundingClientRect()
                 let top = rect.top + window.scrollY
                 const left = rect.left + window.scrollX
-                if (!this.isOpenedTop) {
+                if (this.newDropdownPosition !== 'top') {
                     top += trigger.clientHeight
                 } else {
                     top -= dropdownMenu.clientHeight
