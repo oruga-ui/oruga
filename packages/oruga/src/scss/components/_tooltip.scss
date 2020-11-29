@@ -20,7 +20,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     @if ($direction == "top") {
         border-top-style: solid;
         @include avariable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include avariable('border-top-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-right-style: solid;
         border-right-color: transparent;
         border-left-style: solid;
@@ -30,7 +29,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     } @else if ($direction == "bottom") {
         border-bottom-style: solid;
         @include avariable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include avariable('border-bottom-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-right-style: solid;
         border-right-color: transparent;
         border-left-style: solid;
@@ -40,7 +38,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     } @else if ($direction == "right") {
         border-right-style: solid;
         @include avariable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include avariable('border-right-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-top-style: solid;
         border-top-color: transparent;
         border-bottom-style: solid;
@@ -50,7 +47,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     } @else if ($direction == "left") {
         border-left-style: solid;
         @include avariable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
-        @include avariable('border-left-color', if($name != null, ('color-' + #{$name}), 'tooltip-background-color'), $color);
         border-top-style: solid;
         border-top-color: transparent;
         border-bottom-style: solid;
@@ -151,14 +147,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
             }
         }
     }
-    // @each $name, $pair in $colors {
-    //     $color: nth($pair, 1);
-    //     &.o-color-#{$name} {
-    //         .o-tooltip-content::before {
-    //             @include tooltip-arrow($direction, $name, $color)
-    //         }
-    //     }
-    // }
 }
 
 // Base
@@ -174,6 +162,15 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         content: "";
         pointer-events: none;
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
+        @include avariable('color', 'tooltip-background-color', $tooltip-background-color);
+
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &--#{$name} {
+                @include avariable('color', ('color-' + #{$name}), $color);
+            }
+        }
     }
     &__content {
         position: absolute;
@@ -187,6 +184,14 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
         @include avariable('color', 'tooltip-background-color', $tooltip-color);
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &--#{$name} {
+                @include avariable('background', ('color-' + #{$name}), $color);
+                @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
+            }
+        }
         &--always {
             opacity: 1;
             visibility: visible;
@@ -200,14 +205,4 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
     &__trigger {
         width: 100%;
     }
-    // @each $name, $pair in $colors {
-    //     $color: nth($pair, 1);
-    //     $color-invert: nth($pair, 2);
-    //     &.o-color-#{$name} {
-    //         .o-tooltip-content {
-    //             @include avariable('background', ('color-' + #{$name}), $color);
-    //             @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
-    //         }
-    //     }
-    // }
 }

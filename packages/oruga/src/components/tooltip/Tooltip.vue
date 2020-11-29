@@ -125,10 +125,7 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('tooltip', 'rootClass', 'o-tip'),
-                { [`${this.computedClass('tooltip', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('tooltip', 'multilineClass', 'o-tip--multiline')]: this.multiline },
-                { [this.computedClass('tooltip', 'alwaysClass', 'o-tip--always')]: this.always }
+                this.computedClass('tooltip', 'rootClass', 'o-tip')
             ]
         },
         triggerClasses() {
@@ -139,13 +136,17 @@ export default {
         arrowClasses() {
             return [
                 this.computedClass('tooltip', 'arrowClass', 'o-tip__arrow'),
-                { [`${this.computedClass('tooltip', 'arrowOrderClass', 'o-tip__arrow--')}${this.position}`]: this.position }
+                { [`${this.computedClass('tooltip', 'arrowOrderClass', 'o-tip__arrow--')}${this.position}`]: this.position },
+                { [`${this.computedClass('tooltip', 'variantArrowClass', 'o-tip__arrow--', true)}${this.variant}`]: this.variant },
             ]
         },
         contentClasses() {
             return [
                 this.computedClass('tooltip', 'contentClass', 'o-tip__content'),
-                { [`${this.computedClass('tooltip', 'orderClass', 'o-tip__content--')}${this.position}`]: this.position }
+                { [`${this.computedClass('tooltip', 'orderClass', 'o-tip__content--')}${this.position}`]: this.position },
+                { [`${this.computedClass('tooltip', 'variantClass', 'o-tip__content--', true)}${this.variant}`]: this.variant },
+                { [this.computedClass('tooltip', 'multilineClass', 'o-tip__content--multiline')]: this.multiline },
+                { [this.computedClass('tooltip', 'alwaysClass', 'o-tip__content--always')]: this.always }
             ]
         },
         newAnimation() {
