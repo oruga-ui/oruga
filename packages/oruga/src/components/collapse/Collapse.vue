@@ -72,12 +72,12 @@ export default {
     },
     render(h) {
         const trigger = h('div', {
-            staticClass: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
+            staticClass: this.computedClass('collapse', 'triggerClass', 'o-clps__trigger'),
             on: { click: this.toggle }
         }, this.$scopedSlots.trigger ? this.$scopedSlots.trigger({ open: this.isOpen }) : this.$slots.trigger )
         const content = h('transition', { props: { name: this.animation } }, [
             h('div', {
-                staticClass: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
+                staticClass: this.computedClass('collapse', 'contentClass', 'o-clps__content'),
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
@@ -86,7 +86,7 @@ export default {
             }, this.$slots.default)
         ])
         return h('div',
-            { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
+            { staticClass: this.computedClass('collapse', 'rootClass', 'o-clps') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 }

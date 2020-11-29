@@ -1,9 +1,9 @@
-.o-collapse {
-    .o-collapse-trigger {
+.o-clps {
+    &__trigger {
         display: inline;
         cursor: pointer;
     }
-    .o-collapse-content {
+    &__content {
         display: inherit;
     }
 }
