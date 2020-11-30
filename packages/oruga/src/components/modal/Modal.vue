@@ -30,7 +30,7 @@
                     v-if="showX"
                     v-show="!animating"
                     :class="closeClasses"
-                    @click="cancel('x')"/>
+                    @click="cancel('x')"> {{ closeButtonContent }} </button>
             </div>
         </div>
     </transition>
@@ -61,6 +61,11 @@ export default {
         component: [Object, Function],
         /** Text content */
         content: String,
+        /** Close button text content */
+        closeButtonContent: {
+          type: String,
+          default: '✕'
+        },
         programmatic: Boolean,
         /** Props to be binded to the injected component */
         props: Object,
@@ -156,22 +161,22 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('modal', 'rootClass', 'o-modal'),
-                { [this.computedClass('modal', 'fullScreenClass', 'o-modal-fullscreen')]: this.fullScreen }
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('modal', 'backgroundClass', 'o-modal-background')
+                this.computedClass('modal', 'backgroundClass', 'o-modal__background')
             ]
         },
         contentClasses() {
             return [
-                { [this.computedClass('modal', 'contentClass', 'o-modal-content')]: !this.custom }
+                { [this.computedClass('modal', 'contentClass', 'o-modal__content')]: !this.custom },
+                { [this.computedClass('modal', 'fullScreenClass', 'o-modal__content--fullscreen')]: this.fullScreen }
             ]
         },
         closeClasses() {
             return [
-                this.computedClass('modal', 'closeClass', 'o-modal-close')
+                this.computedClass('modal', 'closeClass', 'o-modal__close')
             ]
         },
         cancelOptions() {
