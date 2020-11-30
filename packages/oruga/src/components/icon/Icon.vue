@@ -23,7 +23,7 @@ import { getValueByPath } from '../../utils/helpers'
  * Icons take an important role of any application
  * @displayName Icon
  * @example ./examples/Icon.md
- * @style _icon.scss 
+ * @style _icon.scss
  */
 export default {
     name: 'OIcon',
@@ -79,10 +79,10 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('icon', 'rootClass', 'o-icon'),
-                { [this.computedClass('icon', 'clickableClass', 'o-icon-clickable')]: this.clickable },
-                { [this.computedClass('icon', 'spinClass', 'o-icon-spin')]: this.spin },
-                { [`${this.computedClass('icon', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('icon', 'variantClass', 'o-color-', true)}${this.newVariant}`]: this.newVariant }
+                { [this.computedClass('icon', 'clickableClass', 'o-icon--clickable')]: this.clickable },
+                { [this.computedClass('icon', 'spinClass', 'o-icon--spin')]: this.spin },
+                { [`${this.computedClass('icon', 'sizeClass', 'o-icon--', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('icon', 'variantClass', 'o-icon--', true)}${this.newVariant}`]: this.newVariant }
             ]
         },
         iconConfig() {

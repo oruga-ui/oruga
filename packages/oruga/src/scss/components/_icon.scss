@@ -19,21 +19,21 @@ $icon-spin-duration: 2s !default;
     display: inline-flex;
     justify-content: center;
     @each $name, $value in $sizes {
-        &.o-size-#{$name} {
+        &--#{$name} {
             @include avariable('font-size', ('icon-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
-        &.o-color-#{$name} {
+        &--#{$name} {
             @include avariable('color', ('color-' + #{$name}), $color);
         }
     }
-    &.o-icon-clickable {
+    &--clickable {
         pointer-events: auto;
         cursor: pointer;
     }
-    &.o-icon-spin {
+    &--spin {
         animation-name: icon-spin;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
