@@ -2,12 +2,34 @@
 $upload-draggable-border: 1px dashed $grey-light !default;
 $upload-draggable-border-radius: $base-border-radius !default;
 $upload-draggable-disabled-opacity: $base-disabled-opacity !default;
-$upload-draggable-padding: 0.25em !default;
+$upload-draggable-hover-border-color: $grey !default;
 /* @docs */
 
-.o-upload {
+.o-upl {
     position: relative;
     display: inline-flex;
+    &--expanded {
+        width: 100%;
+    }
+    &__draggable {
+        cursor: pointer;
+        width: 100%;
+        @include avariable('border', 'upload-draggable-border', $upload-draggable-border);
+        @include avariable('border-radius', 'upload-draggable-border-radius', $upload-draggable-border-radius);
+        &--hovered {
+            @include avariable('border-color', 'upload-draggable-hover-border-color', $upload-draggable-hover-border-color);
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &-#{$name} {
+                    @include avariable('border-color', ('variant-' + #{$name}), $color);
+                }
+            }
+        }
+        &--disabled {
+            @include avariable('opacity', 'upload-draggable-disabled-opacity', $upload-draggable-disabled-opacity);
+            cursor: not-allowed;
+        }
+    }
     input[type=file] {
         position: absolute;
         top: 0;
@@ -18,47 +40,5 @@ $upload-draggable-padding: 0.25em !default;
         outline: none;
         cursor: pointer;
         z-index: -1;
-    }
-    .o-upload-draggable {
-        cursor: pointer;
-        @include avariable('padding', 'upload-draggable-padding', $upload-draggable-padding);
-        @include avariable('border', 'upload-draggable-border', $upload-draggable-border);
-        @include avariable('border-radius', 'upload-draggable-border-radius', $upload-draggable-border-radius);
-        &.o-upload-disabled {
-            @include avariable('opacity', 'upload-draggable-disabled-opacity', $upload-draggable-disabled-opacity);
-            cursor: not-allowed;
-        }
-        &:hover,
-        &.o-upload-hovered {
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name} {
-                    @include avariable('border-color', ('color-' + #{$name}), $color);
-                    &:before {
-                        content: "";
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        left: 0;
-                        @include avariable('background', ('color-' + #{$name}), $color);
-                        opacity: 0.05;
-                    }
-                }
-            }
-        }
-    }
-    .o-upload-expanded {
-        width: 100%;
-    }
-}
-// temporary IE 11 hack !!!
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-    .o-upload {
-        input[type=file] {
-            z-index: auto;
-        }
-        .o-upload-draggable + input[type=file] {
-            z-index: -1;
-        }
     }
 }

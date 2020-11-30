@@ -113,7 +113,7 @@ title: Upload
 | disabled           | Same as native disabled                                               | boolean             | -                                                                               |                                                    |
 | accept             | Same as native accept                                                 | string              | -                                                                               |                                                    |
 | dragDrop           | Accepts drag & drop and change its style                              | boolean             | -                                                                               |                                                    |
-| variant            | Color of the control, optional                                        | string              | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | 'primary'                                          |
+| variant            | Color of the control, optional                                        | string              | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                    |
 | native             | Replace last chosen files every time (like native file input element) | boolean             | -                                                                               | false                                              |
 | rootClass          |                                                                       | string              | -                                                                               |                                                    |
 | draggableClass     |                                                                       | string              | -                                                                               |                                                    |
@@ -138,9 +138,7 @@ title: Upload
 
 ## Style
 
-| CSS Variable                              | SASS Variable                       | Default                 |
-| ----------------------------------------- | ----------------------------------- | ----------------------- |
-| --oruga-upload-draggable-border           | \$upload-draggable-border           | 1px dashed \$grey-light |
-| --oruga-upload-draggable-border-radius    | \$upload-draggable-border-radius    | \$base-border-radius    |
-| --oruga-upload-draggable-disabled-opacity | \$upload-draggable-disabled-opacity | \$base-disabled-opacity |
-| --oruga-upload-draggable-padding          | \$upload-draggable-padding          | 0.25em                  |
+| CSS Variable                     | SASS Variable             | Default                 |
+| -------------------------------- | ------------------------- | ----------------------- |
+| --oruga-upload-draggable-border  | \$upload-draggable-border | 1px dashed \$grey-light |
+| \$upload-draggable-border-radius |

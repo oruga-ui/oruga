@@ -7,6 +7,8 @@
         <div
             v-else
             :class="draggableClasses"
+            @mouseenter="updateDragDropFocus(true)"
+            @mouseleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
@@ -61,8 +63,7 @@ export default {
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: {
-            type: String,
-            default: 'primary'
+            type: String
         },
         /** Replace last chosen files every time (like native file input element) */
         native: {
@@ -90,17 +91,17 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('upload', 'rootClass', 'o-upload'),
-                { [this.computedClass('upload', 'expandedClass', 'o-upload-expanded')]: this.expanded }
+                this.computedClass('upload', 'rootClass', 'o-upl'),
+                { [this.computedClass('upload', 'expandedClass', 'o-upl--expanded')]: this.expanded }
             ]
         },
         draggableClasses() {
             return [
-                this.computedClass('upload', 'draggableClass', 'o-upload-draggable'),
-                { [`${this.computedClass('upload', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('upload', 'expandedClass', 'o-upload-expanded')]: this.expanded },
-                { [this.computedClass('upload', 'hoveredClass', 'o-upload-hovered')]: this.dragDropFocus },
-                { [this.computedClass('upload', 'disabledClass', 'o-upload-disabled')]: this.disabled }
+                this.computedClass('upload', 'draggableClass', 'o-upl__draggable'),
+                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--', true)}${this.variant}`]: this.variant },
+                { [this.computedClass('upload', 'hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
+                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--hovered-', true)}${this.variant}`]: this.variant && this.dragDropFocus },
+                { [this.computedClass('upload', 'disabledClass', 'o-upl__draggable--disabled')]: this.disabled }
             ]
         }
     },
@@ -164,7 +165,7 @@ export default {
         * Listen drag-drop to update internal variable
         */
         updateDragDropFocus(focus) {
-            if (!this.disabled && !this.loading) {
+            if (!this.disabled) {
                 this.dragDropFocus = focus
             }
         },
