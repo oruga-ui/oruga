@@ -3,6 +3,7 @@ $upload-draggable-border: 1px dashed $grey-light !default;
 $upload-draggable-border-radius: $base-border-radius !default;
 $upload-draggable-disabled-opacity: $base-disabled-opacity !default;
 $upload-draggable-hover-border-color: $grey !default;
+$upload-draggable-padding: 0.25em !default;
 /* @docs */
 
 .o-upl {
@@ -14,6 +15,7 @@ $upload-draggable-hover-border-color: $grey !default;
     &__draggable {
         cursor: pointer;
         width: 100%;
+        @include avariable('padding', 'upload-draggable-padding', $upload-draggable-padding);
         @include avariable('border', 'upload-draggable-border', $upload-draggable-border);
         @include avariable('border-radius', 'upload-draggable-border-radius', $upload-draggable-border-radius);
         &--hovered {
