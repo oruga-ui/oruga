@@ -63,8 +63,8 @@ export default {
         content: String,
         /** Close button text content */
         closeButtonContent: {
-          type: String,
-          default: '✕'
+            type: String,
+            default: '✕'
         },
         programmatic: Boolean,
         /** Props to be binded to the injected component */
