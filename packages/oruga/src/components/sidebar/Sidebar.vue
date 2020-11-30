@@ -139,30 +139,30 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('sidebar', 'rootClass', 'o-sidebar')
+                this.computedClass('sidebar', 'rootClass', 'o-side')
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('sidebar', 'backgroundClass', 'o-sidebar-background')
+                this.computedClass('sidebar', 'backgroundClass', 'o-side__background')
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('sidebar', 'contentClass', 'o-sidebar-content'),
-                { [`${this.computedClass('sidebar', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('sidebar', 'fixedClass', 'o-sidebar-fixed')]: this.isFixed },
-                { [this.computedClass('sidebar', 'staticClass', 'o-sidebar-static')]: this.isStatic },
-                { [this.computedClass('sidebar', 'absoluteClass', 'o-sidebar-absolute')]: this.isAbsolute },
-                { [this.computedClass('sidebar', 'fullheightClass', 'o-sidebar-fullheight')]: this.fullheight },
-                { [this.computedClass('sidebar', 'fullwidthClass', 'o-sidebar-fullwidth')]: this.fullwidth },
-                { [this.computedClass('sidebar', 'rightClass', 'o-sidebar-right')]: this.right },
-                { [this.computedClass('sidebar', 'reduceClass', 'o-sidebar-mini')]: this.reduce },
-                { [this.computedClass('sidebar', 'expandOnHoverClass', 'o-sidebar-mini-expand')]: this.expandOnHover },
-                { [this.computedClass('sidebar', 'expandOnHoverFixedClass', 'o-sidebar-expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed) },
-                { [this.computedClass('sidebar', 'mobileReduceClass', 'o-sidebar-mini-mobile')]: this.mobile === 'reduce' },
-                { [this.computedClass('sidebar', 'mobileHideClass', 'o-sidebar-hidden-mobile')]: this.mobile === 'hide' },
-                { [this.computedClass('sidebar', 'mobileFullwidthClass', 'o-sidebar-mini-fullwidth')]: this.mobile === 'fullwidth' }
+                this.computedClass('sidebar', 'contentClass', 'o-side__content'),
+                { [`${this.computedClass('sidebar', 'variantClass', 'o-side__content--', true)}${this.variant}`]: this.variant },
+                { [this.computedClass('sidebar', 'fixedClass', 'o-side__content--fixed')]: this.isFixed },
+                { [this.computedClass('sidebar', 'staticClass', 'o-side__content--static')]: this.isStatic },
+                { [this.computedClass('sidebar', 'absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },
+                { [this.computedClass('sidebar', 'fullheightClass', 'o-side__content--fullheight')]: this.fullheight },
+                { [this.computedClass('sidebar', 'fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth },
+                { [this.computedClass('sidebar', 'rightClass', 'o-side__content--right')]: this.right },
+                { [this.computedClass('sidebar', 'reduceClass', 'o-side__content--mini')]: this.reduce },
+                { [this.computedClass('sidebar', 'expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
+                { [this.computedClass('sidebar', 'expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
+                { [this.computedClass('sidebar', 'mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduce' },
+                { [this.computedClass('sidebar', 'mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hide' },
+                { [this.computedClass('sidebar', 'mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' }
             ]
         },
         cancelOptions() {
