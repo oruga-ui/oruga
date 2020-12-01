@@ -5,9 +5,7 @@
             v-if="isActive">
             <div :class="backgroundClasses" @click="cancel"/>
             <slot>
-                <div :class="iconClasses">
-                    <o-icon :icon="icon" :spin="iconSpin" both />
-                </div>
+                <o-icon :icon="icon" :spin="iconSpin" :size="iconSize" :class="iconClasses"/>
             </slot>
         </div>
     </transition>
@@ -61,16 +59,21 @@ export default {
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.icom', 'spin') }
+            default: () => { return getValueByPath(config, 'loading.icon', 'spin') }
         },
         /** Enable spin effect on icon */
         iconSpin: {
             type: Boolean,
             default: true
         },
+        iconSize: {
+            type: String,
+            default: 'medium'
+        },
         rootClass: String,
         backgroundClass: String,
-        iconClass: String
+        iconClass: String,
+        fullPageIconClass: String,
     },
     data() {
         return {
@@ -89,18 +92,19 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('loading', 'rootClass', 'o-loading-overlay'),
-                { [this.computedClass('loading', 'fullPageClass', 'o-loading-fullpage')]: this.displayInFullPage }
+                this.computedClass('loading', 'rootClass', 'o-load'),
+                { [this.computedClass('loading', 'fullPageClass', 'o-load--fullpage')]: this.displayInFullPage }
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('loading', 'backgroundClass', 'o-loading-background')
+                this.computedClass('loading', 'backgroundClass', 'o-load__background')
             ]
         },
         iconClasses() {
             return [
-                this.computedClass('loading', 'iconClass', 'o-loading-icon')
+                this.computedClass('loading', 'iconClass', 'o-load__icon'),
+                { [this.computedClass('loading', 'fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
             ]
         }
     },

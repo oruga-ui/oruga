@@ -2,12 +2,10 @@
 /* @docs */
 $loading-background-legacy: #7f7f7f !default;
 $loading-background: rgba(255,255,255,0.5) !default;
-$loading-fullpage-icon-size: 5em !default;
-$loading-icon-size: 2.5em !default;
 $loading-zindex: 999 !default;
 /* @docs */
 
-.o-loading-overlay {
+.o-load {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -18,44 +16,14 @@ $loading-zindex: 999 !default;
     justify-content: center;
     overflow: hidden;
     @include avariable('z-index', 'loading-zindex', $loading-zindex);
-    &.o-loading-fullpage {
+    &--fullpage {
         position: fixed;
-        .o-loading-icon {
-            @include evariable(
-                'top', 'calc(50% - $icon-size / 2)',
-                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
-            );
-            @include evariable(
-                'left', 'calc(50% - $icon-size / 2)',
-                eparam('$icon-size', variable('loading-fullpage-icon-size', $loading-fullpage-icon-size))
-            );
-            .o-icon {
-                * {
-                    @include avariable('width', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
-                    @include avariable('height', 'loading-fullpage-icon-size', $loading-fullpage-icon-size);
-                }
-            }
+    }
+    &__icon {
+        &--fullpage {
         }
     }
-    &:not(.o-loading-fullpage) {
-        .o-loading-icon {
-            @include evariable(
-                'top', 'calc(50% - $icon-size / 2)',
-                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
-            );
-            @include evariable(
-                'left', 'calc(50% - $icon-size / 2)',
-                eparam('$icon-size', variable('loading-icon-size', $loading-icon-size))
-            );
-            .o-icon {
-                * {
-                    @include avariable('width', 'loading-icon-size', $loading-icon-size);
-                    @include avariable('height', 'loading-icon-size', $loading-icon-size);
-                }
-            }
-        }
-    }
-    .o-loading-background {
+    &__background {
         position: absolute;
         bottom: 0;
         left: 0;
