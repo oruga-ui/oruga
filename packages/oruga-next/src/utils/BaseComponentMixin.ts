@@ -6,10 +6,10 @@ export default {
         computedClass(component: string, field: string, defaultValue: string, overrideIfExists: boolean = false): string {
             const override = getValueByPath(config, `${component}.override`, false)
             const globalClass = getValueByPath(config, `${component}.${field}`, '')
-            const currrentClass = this.$props[field]
-            return (`${override || (overrideIfExists && (currrentClass || globalClass)) ? '' : defaultValue} ` 
-               + `${overrideIfExists && currrentClass ? '' : blankIfUndefined(globalClass)} `
-               + `${blankIfUndefined(currrentClass)}`).trim()
+            const currentClass = this.$props[field]
+            return (`${override || (overrideIfExists && (currentClass || globalClass)) ? '' : defaultValue} `
+               + `${overrideIfExists && currentClass ? '' : blankIfUndefined(globalClass)} `
+               + `${blankIfUndefined(currentClass)}`).trim()
         }
     }
 }
