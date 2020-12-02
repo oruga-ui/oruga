@@ -216,46 +216,46 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('pagination', 'rootClass', 'o-pagination'),
-                { [`${this.computedClass('pagination', 'orderClass', 'o-pagination-')}${this.order}`]: this.order },
-                { [`${this.computedClass('pagination', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('pagination', 'simpleClass', 'o-pagination-simple')]: this.simple },
-                { [this.computedClass('pagination', 'roundedClass', 'o-pagination-rounded')]: this.rounded }
+                this.computedClass('pagination', 'rootClass', 'o-pag'),
+                { [`${this.computedClass('pagination', 'orderClass', 'o-pag--', true)}${this.order}`]: this.order },
+                { [`${this.computedClass('pagination', 'sizeClass', 'o-pag--', true)}${this.size}`]: this.size },
+                { [this.computedClass('pagination', 'simpleClass', 'o-pag--simple')]: this.simple },
             ]
         },
         prevBtnClasses() {
             return [
-                this.computedClass('pagination', 'prevBtnClass', 'o-pagination-previous')
+                this.computedClass('pagination', 'prevBtnClass', 'o-pag__previous')
             ]
         },
         nextBtnClasses() {
             return [
-                this.computedClass('pagination', 'nextBtnClass', 'o-pagination-next')
+                this.computedClass('pagination', 'nextBtnClass', 'o-pag__next')
             ]
         },
         infoClasses() {
             return [
-                this.computedClass('pagination', 'infoClass', 'o-pagination-info')
+                this.computedClass('pagination', 'infoClass', 'o-pag__info')
             ]
         },
         ellipsisClasses() {
             return [
-                this.computedClass('pagination', 'ellipsisClass', 'o-pagination-ellipsis')
+                this.computedClass('pagination', 'ellipsisClass', 'o-pag__ellipsis')
             ]
         },
         listClasses() {
             return [
-                this.computedClass('pagination', 'listClass', 'o-pagination-list')
+                this.computedClass('pagination', 'listClass', 'o-pag__list')
             ]
         },
         linkClasses() {
             return [
-                this.computedClass('pagination', 'linkClass', 'o-pagination-link')
+                this.computedClass('pagination', 'linkClass', 'o-pag__link'),
+                { [this.computedClass('pagination', 'roundedClass', 'o-pag__link--rounded')]: this.rounded }
             ]
         },
         linkCurrentClasses() {
             return [
-                this.computedClass('pagination', 'linkCurrentClass', 'o-pagination-link-current')
+                this.computedClass('pagination', 'linkCurrentClass', 'o-pag__link--current')
             ]
         },
 
