@@ -60,7 +60,7 @@ describe('OInput', () => {
         expect(wrapper.vm.isPasswordVisible).toBeFalsy()
         expect(wrapper.find('input').attributes().type).toBe('password')
 
-        const visibilityIcon = wrapper.find('.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon--clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
 
         visibilityIcon.trigger('click')
@@ -117,7 +117,7 @@ describe('OInput', () => {
 
         expect(wrapper.find('input').exists()).toBeTruthy()
 
-        const visibilityIcon = wrapper.find('.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon--clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
 
         visibilityIcon.trigger('click')

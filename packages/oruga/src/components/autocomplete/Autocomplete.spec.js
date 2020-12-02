@@ -18,7 +18,7 @@ const DATA_LIST = [
     'RxJS',
     'Vue.js'
 ]
-const dropdownMenu = '.o-autocomplete-menu'
+const dropdownMenu = '.o-acp__menu'
 let wrapper, $input, $dropdown, stubs
 
 describe('OAutocomplete', () => {

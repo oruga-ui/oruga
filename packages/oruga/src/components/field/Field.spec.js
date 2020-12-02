@@ -28,7 +28,7 @@ describe('OField', () => {
         wrapper.setProps({ variant })
         await wrapper.vm.$nextTick()
         expect(wrapper.find('.o-control-input').classes()).toContain('o-control-input-icons-right')
-        expect(wrapper.find('.o-control-input').find('.o-icon').classes()).toContain('o-color-danger')
+        expect(wrapper.find('.o-control-input').find('.o-icon').classes()).toContain('o-icon--danger')
     })
 
     describe('Passing a message prop', () => {
@@ -80,7 +80,7 @@ describe('OField', () => {
                 }
             })
             const innerField = wrapper.find('.o-field-horizontal-content').find('.o-field')
-            expect(innerField.classes()).toContain('o-field-grouped')  
+            expect(innerField.classes()).toContain('o-field-grouped')
         })
 
         it('contains "o-field-grouped-multiline" when prop "groupMultiline" is set', () => {

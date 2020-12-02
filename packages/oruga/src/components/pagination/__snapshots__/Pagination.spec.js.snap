@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OPagination render correctly 1`] = `
-<nav class="o-pagination">
-    <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pagination-link" linkcurrentclass="o-pagination-link-current" class="o-pagination-previous">
+<nav class="o-pag">
+    <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pag__link,[object Object]" linkcurrentclass="o-pag__link--current" class="o-pag__previous">
         <o-icon-stub icon="chevron-left" both="true" aria-hidden="true"></o-icon-stub>
     </o-pagination-button-stub>
-    <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pagination-link" linkcurrentclass="o-pagination-link-current" class="o-pagination-next">
+    <o-pagination-button-stub page="[object Object]" tag="a" disabled="true" linkclass="o-pag__link,[object Object]" linkcurrentclass="o-pag__link--current" class="o-pag__next">
         <o-icon-stub icon="chevron-right" both="true" aria-hidden="true"></o-icon-stub>
     </o-pagination-button-stub>
-    <ul class="o-pagination-list">
+    <ul class="o-pag__list">
         <!---->
         <!---->
         <!---->
