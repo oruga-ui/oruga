@@ -147,20 +147,22 @@ title: Loading
 
 ## Props
 
-| Prop name       | Description                                                                                                             | Type                      | Values | Default                                             |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | --------------------------------------------------- |
-| active          | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                     |
-| programmatic    |                                                                                                                         | boolean                   | -      |                                                     |
-| container       |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
-| fullPage        | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
-| animation       |                                                                                                                         | string                    | -      | Config -> <code> 'loading.animation': 'fade'</code> |
-| canCancel       | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                               |
-| onCancel        | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
-| icon            | Icon name                                                                                                               | string                    | -      | Config -> <code> 'loading.icom': 'spin'</code>      |
-| iconSpin        | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
-| rootClass       |                                                                                                                         | string                    | -      |                                                     |
-| backgroundClass |                                                                                                                         | string                    | -      |                                                     |
-| iconClass       |                                                                                                                         | string                    | -      |                                                     |
+| Prop name         | Description                                                                                                             | Type                      | Values | Default                                             |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | --------------------------------------------------- |
+| active            | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                     |
+| programmatic      |                                                                                                                         | boolean                   | -      |                                                     |
+| container         |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
+| fullPage          | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
+| animation         |                                                                                                                         | string                    | -      | Config -> <code> 'loading.animation': 'fade'</code> |
+| canCancel         | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                               |
+| onCancel          | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
+| icon              | Icon name                                                                                                               | string                    | -      | Config -> <code> 'loading.icon': 'spin'</code>      |
+| iconSpin          | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
+| iconSize          |                                                                                                                         | string                    | -      | 'medium'                                            |
+| rootClass         |                                                                                                                         | string                    | -      |                                                     |
+| backgroundClass   |                                                                                                                         | string                    | -      |                                                     |
+| iconClass         |                                                                                                                         | string                    | -      |                                                     |
+| fullPageIconClass |                                                                                                                         | string                    | -      |                                                     |
 
 ## Events
 
@@ -178,10 +180,8 @@ title: Loading
 
 ## Style
 
-| CSS Variable                       | SASS Variable                | Default               |
-| ---------------------------------- | ---------------------------- | --------------------- |
-| --oruga-loading-background-legacy  | \$loading-background-legacy  | #7f7f7f               |
-| --oruga-loading-background         | \$loading-background         | rgba(255,255,255,0.5) |
-| --oruga-loading-fullpage-icon-size | \$loading-fullpage-icon-size | 5em                   |
-| --oruga-loading-icon-size          | \$loading-icon-size          | 2.5em                 |
-| --oruga-loading-zindex             | \$loading-zindex             | 999                   |
+| CSS Variable                      | SASS Variable               | Default               |
+| --------------------------------- | --------------------------- | --------------------- |
+| --oruga-loading-background-legacy | \$loading-background-legacy | #7f7f7f               |
+| --oruga-loading-background        | \$loading-background        | rgba(255,255,255,0.5) |
+| --oruga-loading-zindex            | \$loading-zindex            | 999                   |
