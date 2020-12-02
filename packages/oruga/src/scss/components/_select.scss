@@ -5,63 +5,32 @@ $select-border-color: $grey-lighter !default;
 $select-border-width: 1px !default;
 $select-border-style: solid !default;
 $select-border-radius: $base-border-radius !default;
+$select-rounded-border-radius: $base-rounded-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
 $select-control-icon-zindex: 4 !default;
 $select-control-icon-color: $grey-lighter !default;
-$select-empty-color: rgba($grey, 0.7) !default;
 $select-font-size: $base-font-size !default;
 $select-height: $control-height !default;
 $select-line-height: $base-line-height !default;
 $select-margin: 0 !default;
 $select-max-width: 100% !default;
-$select-optgroup-color: $grey-light !default;
-$select-optgroup-font-style: normal !default;
-$select-optgroup-font-weight: 500 !default;
-$select-optgroup-padding: 0.25em 0 !default;
-$select-option-color: #4a4a4a !default;
-$select-option-disabled-opacity: $base-disabled-opacity !default;
-$select-option-padding: .25em .5em !default;
+$select-placeholder-opacity: $base-disabled-opacity !default;
 $select-padding: $control-padding-vertical $control-padding-horizontal !default;
 /* @docs */
 
-.o-control-select {
+.o-ctrl-sel {
     display: inline-flex;
     position: relative;
     @include avariable('font-size', 'base-font-size', $base-font-size);
-    &.o-control-select-icons-left .o-icon, &.o-control-select-icons-right .o-icon {
-        position: absolute;
-        top: 0;
-        @include avariable('height', 'select-height', $select-height);
-        @include avariable('width', 'select-height', $select-height);
-        @include avariable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-        &:not([class*="o-color-"]) {
-            @include avariable('color', 'select-control-icon-color', $select-control-icon-color);
-        }
-    }
-    &.o-control-select-icons-right .o-icon.o-icon-right {
-        right: 0;
-    }
-    &.o-control-select-icons-left .o-icon.o-icon-left {
-        left: 0;
-        pointer-events: none;
-    }
-    &.o-control-select-icons-left .o-select {
-        @include avariable('padding-left', 'select-height', $select-height);
-    }
-    &.o-control-select-icons-right .o-select {
-        @include avariable('padding-right', 'select-height', $select-height);
-    }
-    &.o-control-select-expanded {
+    &--expanded {
+        width: 100%;
         flex-grow: 1;
         flex-shrink: 1;
     }
 }
 
-.o-select {
+.o-sel {
     -moz-appearance: none;
     -webkit-appearance: none;
     display: inline-block;
@@ -71,6 +40,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     justify-content: flex-start;
     align-items: center;
     outline: none;
+    width: 100%;
     @include avariable('font-size', 'select-font-size', $select-font-size);
     @include avariable('max-width', 'select-max-width', $select-max-width);
     @include avariable('background-color', 'select-background-color', $select-background-color);
@@ -83,37 +53,46 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     @include avariable('box-shadow', 'select-box-shadow', $select-box-shadow);
     @include avariable('line-height', 'select-line-height', $select-line-height);
     @include avariable('padding', 'select-padding', $select-padding);
-    &:not(.o-select-multiple) {
-        @include avariable('height', 'select-height', $select-height);
+    @include avariable('height', 'select-height', $select-height);
+    &-icons-left {
+        @include avariable('padding-left', 'select-height', $select-height);
+    }
+    &-icons-right {
+        @include avariable('padding-right', 'select-height', $select-height);
     }
     @each $name, $value in $sizes {
-        &.o-size-#{$name} {
+        &--#{$name} {
             @include avariable('font-size', ('select-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
-        &.o-color-#{$name} {
+        &--#{$name} {
             @include avariable('border-color', ('color-' + #{$name}), $color);
         }
     }
-    option {
-        @include avariable('color', 'select-option-color', $select-option-color);
-        @include avariable('padding', 'select-option-padding', $select-option-padding);
+    &--rounded {
+        @include avariable('border-radius', 'select-rounded-border-radius', $select-rounded-border-radius);
     }
-    option:disabled {
-        @include avariable('opacity', 'select-option-disabled-opacity', $select-option-disabled-opacity);
+    &--multiple {
+        height: auto;
+        padding: 0;
     }
-    optgroup {
-        @include avariable('color', 'select-optgroup-color', $select-optgroup-color);
-        @include avariable('font-weight', 'select-optgroup-font-weight', $select-optgroup-font-weight);
-        @include avariable('font-style', 'select-optgroup-font-style', $select-optgroup-font-style);
-        @include avariable('padding', 'select-optgroup-padding', $select-optgroup-padding);
+    &--placeholder {
+        @include avariable('opacity', 'select-placeholder-opacity', $select-placeholder-opacity);
     }
-    &.o-select-empty select {
-        @include avariable('color', 'select-empty-color', $select-empty-color);
+    &__icon-left, &__icon-right {
+        position: absolute;
+        top: 0;
+        pointer-events: none;
+        @include avariable('height', 'select-height', $select-height);
+        @include avariable('width', 'select-height', $select-height);
+        @include avariable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
     }
-    &.o-select-expanded {
-        width: 100%;
+    &__icon-right {
+        right: 0;
+    }
+    &__icon-left {
+        left: 0;
     }
 }
