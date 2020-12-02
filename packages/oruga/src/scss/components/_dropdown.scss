@@ -27,11 +27,11 @@ $dropdown-mobile-width: calc(100vw - 40px) !default;
 $dropdown-mobile-zindex: 50 !default;
 /* @docs */
 
-.o-dropdown {
+.o-drop {
     display: inline-flex;
     position: relative;
     vertical-align: top;
-    .o-dropdown-background {
+    &__background {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -44,10 +44,12 @@ $dropdown-mobile-zindex: 50 !default;
             display: none;
         }
     }
-    .o-dropdown-menu {
+    &__menu {
         position: absolute;
         left: 0;
         top: 100%;
+        display: block;
+        width: 100%;
         @include avariable('min-width', 'dropdown-menu-width', $dropdown-menu-width);
         @include avariable('z-index', 'dropdown-menu-zindex', $dropdown-menu-zindex);
         @include avariable('background-color', 'dropdown-menu-background', $dropdown-menu-background);
@@ -55,108 +57,26 @@ $dropdown-mobile-zindex: 50 !default;
         @include avariable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
         @include avariable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
         @include avariable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
-        &.o-dropdown-menu-animation {
-            display: block;
-        }
-        .o-dropdown-item {
-            display: block;
-            position: relative;
-            outline: none;
-            @include avariable('color', 'dropdown-item-color', $dropdown-item-color);
-            @include avariable('font-size', 'dropdown-item-font-size', $dropdown-item-font-size);
-            @include avariable('line-height', 'dropdown-item-line-height', $dropdown-item-line-height);
-            @include avariable('padding', 'dropdown-item-padding', $dropdown-item-padding);
-            &.o-dropdown-item-disabled {
-                pointer-events: none;
-            }
-            &.o-dropdown-item-active {
-                @include avariable('background-color', 'dropdown-item-background-active', $dropdown-item-background-active);
-                @include avariable('color', 'dropdown-item-color-active', $dropdown-item-color-active);
-            }
-        }
-        a {
-            &.o-dropdown-item {
-                cursor: pointer;
-                text-decoration: none;
-                @include avariable('font-weight', 'dropdown-item-font-weight', $dropdown-item-font-weight);
-                &:hover &:not(.o-dropdown-item-active) {
-                    @include avariable('background-color', 'dropdown-item-hover-background-color', $dropdown-item-hover-background-color);
-                    @include avariable('color', 'dropdown-item-hover-color', $dropdown-item-hover-color);
-                    text-decoration: none;
-                }
-            }
-        }
-    }
-    &.o-dropdown-hoverable:not(.o-dropdown-active) {
-        .o-dropdown-menu {
-            display: none;
-        }
-    }
-    &.o-dropdown-hoverable {
-        &:hover {
-            .o-dropdown-menu {
-                display: block;
-            }
-        }
-    }
-    &.o-dropdown-expanded {
-        width: 100%;
-        .o-dropdown-trigger {
-            width: 100%;
-        }
-        .o-dropdown-menu {
-            width: 100%;
-        }
-        &.o-dropdown-mobile {
-            .o-dropdown-menu {
-                max-width: 100%;
-            }
-        }
-    }
-    &:not(.o-dropdown-disabled) {
-        .o-dropdown-menu {
-            .o-dropdown-item {
-                &.o-dropdown-item-disabled {
-                    @include avariable('opacity', 'dropdown-item-disabled-opacity', $dropdown-item-disabled-opacity);
-                }
-            }
-        }
-    }
-    &.o-dropdown-disabled {
-        @include avariable('opacity', 'dropdown-disabled-opacity', $dropdown-disabled-opacity);
-        .o-dropdown-trigger {
-            pointer-events: none;
-        }
-    }
-    &.o-dropdown-inline {
-        .o-dropdown-menu {
+        &---inline {
             position: static;
             display: inline-block;
         }
-    }
-    &.o-dropdown-top-right {
-        .o-dropdown-menu {
-            top: auto;
-            bottom: 100%;
-        }
-    }
-    &.o-dropdown-top-left {
-        .o-dropdown-menu {
+        &--top-left {
             top: auto;
             bottom: 100%;
             right: 0;
             left: auto;
         }
-    }
-    &.o-dropdown-bottom-left {
-        .o-dropdown-menu {
+        &--bottom-left {
             right: 0;
             left: auto;
         }
-    }
-    @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
-        &.o-dropdown-mobile {
-            > .o-dropdown-menu {
+        &--top-right {
+            top: auto;
+            bottom: 100%;
+        }
+        @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
+            &--mobile {
                 position: fixed;
                 top: 25%;
                 left: 50%;
@@ -170,5 +90,35 @@ $dropdown-mobile-zindex: 50 !default;
                 @include avariable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
             }
         }
+    }
+    &__item {
+        display: block;
+        position: relative;
+        outline: none;
+        cursor: pointer;
+        @include avariable('color', 'dropdown-item-color', $dropdown-item-color);
+        @include avariable('font-size', 'dropdown-item-font-size', $dropdown-item-font-size);
+        @include avariable('font-weight', 'dropdown-item-font-weight', $dropdown-item-font-weight);
+        @include avariable('line-height', 'dropdown-item-line-height', $dropdown-item-line-height);
+        @include avariable('padding', 'dropdown-item-padding', $dropdown-item-padding);
+        &--disabled {
+            @include avariable('opacity', 'dropdown-item-disabled-opacity', $dropdown-item-disabled-opacity);
+            pointer-events: none;
+        }
+        &--active {
+            @include avariable('background-color', 'dropdown-item-background-active', $dropdown-item-background-active);
+            @include avariable('color', 'dropdown-item-color-active', $dropdown-item-color-active);
+        }
+        &:hover:not(&--active) {
+            @include avariable('background-color', 'dropdown-item-hover-background-color', $dropdown-item-hover-background-color);
+            @include avariable('color', 'dropdown-item-hover-color', $dropdown-item-hover-color);
+        }
+    }
+    &--expanded {
+        width: 100%;
+    }
+    &--disabled {
+        @include avariable('opacity', 'dropdown-disabled-opacity', $dropdown-disabled-opacity);
+        pointer-events: none;
     }
 }

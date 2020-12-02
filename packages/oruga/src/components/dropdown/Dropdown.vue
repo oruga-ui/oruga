@@ -11,6 +11,7 @@
             @click="onClick"
             @contextmenu.prevent="onContextMenu"
             @mouseenter="onHover"
+            @mouseleave="isHoverable = false"
             @focus.capture="onFocus"
             aria-haspopup="true">
             <slot name="trigger" :active="isActive"/>
@@ -32,6 +33,8 @@
                 :aria-hidden="!isActive"
                 :role="ariaRole"
                 :style="menuStyle"
+                @mouseenter="onHover"
+                @mouseleave="isHoverable = false"
                 v-trap-focus="trapFocus">
                 <slot/>
             </div>
@@ -50,7 +53,7 @@ import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } 
  * @displayName Dropdown
  * @requires ./DropdownItem.vue
  * @example ./examples/Dropdown.md
- * @style _dropdown.scss 
+ * @style _dropdown.scss
  */
 export default {
     name: 'ODropdown',
@@ -189,7 +192,6 @@ export default {
         menuClass: String,
         disabledClass: String,
         activeClass: String,
-        hoverableClass: String,
         inlineClass: String,
         mobileClass: String,
         expandedClass: String
@@ -205,29 +207,28 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'rootClass', 'o-dropdown'),
-                { [this.computedClass('dropdown', 'disabledClass', 'o-dropdown-disabled')]: this.disabled },
-                { [`${this.computedClass('dropdown', 'positionClass', 'o-dropdown-')}${this.position}`]: this.position },
-                { [this.computedClass('dropdown', 'activeClass', 'o-dropdown-active')]: (this.isActive || this.inline) },
-                { [this.computedClass('dropdown', 'hoverableClass', 'o-dropdown-hoverable')]: this.hoverable },
-                { [this.computedClass('dropdown', 'inlineClass', 'o-dropdown-inline')]: this.inline },
-                { [this.computedClass('dropdown', 'expandedClass', 'o-dropdown-expanded')]: this.expanded },
-                { [this.computedClass('dropdown', 'mobileClass', 'o-dropdown-mobile')]: this.isMobileModal },
+                this.computedClass('dropdown', 'rootClass', 'o-drop'),
+                { [this.computedClass('dropdown', 'disabledClass', 'o-drop--disabled')]: this.disabled },
+                { [this.computedClass('dropdown', 'expandedClass', 'o-drop--expanded')]: this.expanded }
             ]
         },
         triggerClasses() {
             return [
-                this.computedClass('dropdown', 'triggerClass', 'o-dropdown-trigger')
+                this.computedClass('dropdown', 'triggerClass', 'o-drop__trigger')
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('dropdown', 'backgroundClass', 'o-dropdown-background')
+                this.computedClass('dropdown', 'backgroundClass', 'o-drop__background')
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('dropdown', 'menuClass', 'o-dropdown-menu o-dropdown-menu-animation')
+                this.computedClass('dropdown', 'menuClass', 'o-drop__menu'),
+                { [`${this.computedClass('dropdown', 'positionClass', 'o-drop__menu-')}${this.position}`]: this.position },
+                { [this.computedClass('dropdown', 'activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
+                { [this.computedClass('dropdown', 'inlineClass', 'o-drop__menu--inline')]: this.inline },
+                { [this.computedClass('dropdown', 'mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },
         isMobileModal() {

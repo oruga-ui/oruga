@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="custom ? 'div' : 'a'"
+        :is="'div'"
         :class="rootClasses"
         @click="selectItem"
         :role="ariaRoleItem"
@@ -53,9 +53,9 @@ export default {
         },
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'itemClass', 'o-dropdown-item'),
-                { [this.computedClass('dropdown', 'itemDisabledClass', 'o-dropdown-item-disabled')]: (this.parent.disabled || this.disabled) },
-                { [this.computedClass('dropdown', 'itemActiveClass', 'o-dropdown-item-active')]: this.isActive }
+                this.computedClass('dropdown', 'itemClass', 'o-drop__item'),
+                { [this.computedClass('dropdown', 'itemDisabledClass', 'o-drop__item--disabled')]: (this.parent.disabled || this.disabled) },
+                { [this.computedClass('dropdown', 'itemActiveClass', 'o-drop__item--active')]: this.isActive }
             ]
         },
         ariaRoleItem() {
