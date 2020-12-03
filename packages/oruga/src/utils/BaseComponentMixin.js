@@ -31,7 +31,7 @@ export default {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix)
             }
             return (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
-               + `${overrideClass && currentClass ? '' : blankIfUndefined(globalClass)} `
+               + `${blankIfUndefined(globalClass)} `
                + `${blankIfUndefined(currentClass)}`).trim().replace(/\s\s+/g, ' ');
         }
     }
