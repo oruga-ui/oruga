@@ -84,7 +84,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('tabs', 'rootClass', 'o-tabs-wrapper'),
-                { [`${this.computedClass('tabs', 'positionWrapperClass', 'o-tabs-wrapper-position-')}${this.position}`]: this.position && this.vertical },
+                { [this.computedClass('tabs', 'positionWrapperClass', 'o-tabs-wrapper-position-', this.position)]: this.position && this.vertical },
                 { [this.computedClass('tabs', 'expandedWrapperClass', 'o-tabs-wrapper-fullwidth')]: this.expanded },
                 { [this.computedClass('tabs', 'verticalWrapperClass', 'o-tabs-wrapper-vertical')]: this.vertical },
                 { [this.computedClass('tabs', 'multilineWrapperClass', 'o-tabs-wrapper-multiline')]: this.multiline }
@@ -93,9 +93,9 @@ export default {
         navClasses() {
             return [
                 this.computedClass('tabs', 'tabsClass', 'o-tabs'),
-                { [`${this.computedClass('tabs', 'typeClass', 'o-tabs-', this.type)}`]: this.type },
-                { [`${this.computedClass('tabs', 'sizeClass', 'o-size-', this.size)}`]: this.size },
-                { [`${this.computedClass('tabs', 'positionClass', 'o-tabs-position-', this.position)}`]: this.position && !this.vertical },
+                { [this.computedClass('tabs', 'typeClass', 'o-tabs-', this.type)]: this.type },
+                { [this.computedClass('tabs', 'sizeClass', 'o-size-', this.size)]: this.size },
+                { [this.computedClass('tabs', 'positionClass', 'o-tabs-position-', this.position)]: this.position && !this.vertical },
             ]
         },
         contentClasses() {

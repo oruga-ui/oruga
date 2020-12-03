@@ -31,7 +31,7 @@ export default {
             return [
                 this.headerClass,
                 this.computedClass('steps', 'itemClass', 'o-step-item'),
-                { [`${this.computedClass('steps', 'variantClass', 'o-color-', getStyleValue(this.variant) || this.parent.$props.variant)}`]: getStyleValue(this.variant) || this.parent.$props.variant },
+                { [this.computedClass('steps', 'variantClass', 'o-color-', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
                 { [this.computedClass('steps', 'itemActiveClass', 'o-step-item-active')]: this.isActive },
                 { [this.computedClass('steps', 'itemPreviousClass', 'o-step-item-previous')]: this.parent.activeItem.index > this.index }
             ]

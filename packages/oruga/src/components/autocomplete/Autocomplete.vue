@@ -204,7 +204,7 @@ export default {
         menuClasses() {
             return [
                 this.computedClass('autocomplete', 'menuClass', 'o-acp__menu'),
-                { [`${this.computedClass('button', 'menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)}`]: !this.appendToBody },
+                { [this.computedClass('button', 'menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)]: !this.appendToBody },
             ]
         },
         itemClasses() {

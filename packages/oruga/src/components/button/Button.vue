@@ -137,12 +137,12 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('button', 'rootClass', 'o-btn'),
-                { [`${this.computedClass('button', 'sizeClass', 'o-btn--', this.size)}`]: this.size },
-                { [`${this.computedClass('button', 'variantClass', 'o-btn--', this.variant)}`]: this.variant },
+                { [this.computedClass('button', 'sizeClass', 'o-btn--', this.size)]: this.size },
+                { [this.computedClass('button', 'variantClass', 'o-btn--', this.variant)]: this.variant },
                 { [this.computedClass('button', 'outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
                 { [this.computedClass('button', 'invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
-                { [`${this.computedClass('button', 'outlinedClass', 'o-btn--outlined-', this.variant)}`]: this.outlined && this.variant },
-                { [`${this.computedClass('button', 'invertedClass', 'o-btn--inverted-', this.variant)}`]: this.inverted && this.variant },
+                { [this.computedClass('button', 'outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
+                { [this.computedClass('button', 'invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
                 { [this.computedClass('button', 'expandedClass', 'o-btn--expanded')]: this.expanded },
                 { [this.computedClass('button', 'roundedClass', 'o-btn--rounded')]: this.rounded },
                 { [this.computedClass('button', 'disabledClass', 'o-btn--disabled')]: this.disabled },

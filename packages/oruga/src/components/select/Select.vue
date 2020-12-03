@@ -124,8 +124,8 @@ export default {
                 this.computedClass('select', 'selectClass', 'o-sel'),
                 { [this.computedClass('select', 'roundedClass', 'o-sel--rounded')]: this.rounded },
                 { [this.computedClass('select', 'multipleClass', 'o-sel--multiple')]: this.multiple },
-                { [`${this.computedClass('select', 'sizeClass', 'o-sel--', this.size)}`]: this.size },
-                { [`${this.computedClass('select', 'variantClass', 'o-sel--', this.statusVariant)}`]: this.statusVariant },
+                { [this.computedClass('select', 'sizeClass', 'o-sel--', this.size)]: this.size },
+                { [this.computedClass('select', 'variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
                 { [this.computedClass('select', 'iconsLeftClass', 'o-sel-icons-left')]: this.icon },
                 { [this.computedClass('select', 'iconsRightClass', 'o-sel-icons-right')]: this.iconRight },
                 { [this.computedClass('select', 'placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }

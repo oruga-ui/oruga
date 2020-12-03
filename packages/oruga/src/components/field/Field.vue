@@ -129,7 +129,7 @@ export default {
         messageClasses() {
             return [
                 this.computedClass('field', 'messageClass', 'o-field-message'),
-                { [`${this.computedClass('field', 'variantClass', 'o-color-', this.newVariant)}`]: this.newVariant }
+                { [this.computedClass('field', 'variantClass', 'o-color-', this.newVariant)]: this.newVariant }
             ]
         },
         labelClasses() {

@@ -206,8 +206,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('slider', 'rootClass', 'o-slider'),
-                { [`${this.computedClass('slider', 'variantClass', 'o-color-', this.variant)}`]: this.variant },
-                { [`${this.computedClass('slider', 'sizeClass', 'o-size-', this.size)}`]: this.size },
+                { [this.computedClass('slider', 'variantClass', 'o-color-', this.variant)]: this.variant },
+                { [this.computedClass('slider', 'sizeClass', 'o-size-', this.size)]: this.size },
                 { [this.computedClass('slider', 'roundedClass', 'o-slider-rounded')]: this.rounded },
                 { [this.computedClass('slider', 'draggingClass', 'o-slider-dragging')]: this.dragging },
                 { [this.computedClass('slider', 'disabledClass', 'o-slider-disabled')]: this.disabled },

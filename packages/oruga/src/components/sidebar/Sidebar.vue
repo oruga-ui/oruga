@@ -150,7 +150,7 @@ export default {
         contentClasses() {
             return [
                 this.computedClass('sidebar', 'contentClass', 'o-side__content'),
-                { [`${this.computedClass('sidebar', 'variantClass', 'o-side__content--', this.variant)}`]: this.variant },
+                { [this.computedClass('sidebar', 'variantClass', 'o-side__content--', this.variant)]: this.variant },
                 { [this.computedClass('sidebar', 'fixedClass', 'o-side__content--fixed')]: this.isFixed },
                 { [this.computedClass('sidebar', 'staticClass', 'o-side__content--static')]: this.isStatic },
                 { [this.computedClass('sidebar', 'absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },

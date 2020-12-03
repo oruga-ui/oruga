@@ -44,14 +44,14 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('radio', 'rootClass', 'o-radio'),
-                { [`${this.computedClass('radio', 'sizeClass', 'o-size-', this.size)}`]: this.size },
+                { [this.computedClass('radio', 'sizeClass', 'o-size-', this.size)]: this.size },
                 { [this.computedClass('radio', 'disabledClass', 'o-radio-disabled')]: this.disabled }
             ]
         },
         checkClasses() {
             return [
                 this.computedClass('radio', 'checkClass', 'o-radio-check'),
-                { [`${this.computedClass('radio', 'variantClass', 'o-color-', this.variant)}`]: this.variant }
+                { [this.computedClass('radio', 'variantClass', 'o-color-', this.variant)]: this.variant }
             ]
         },
         labelClasses() {

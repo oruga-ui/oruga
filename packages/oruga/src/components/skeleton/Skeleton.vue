@@ -77,7 +77,7 @@ export default {
                     class: [
                       { [this.computedClass('skeleton', 'itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
                       { [this.computedClass('skeleton', 'animationClass', 'o-sklt__item--animated')]: this.animated },
-                      { [`${this.computedClass('skeleton', 'sizeClass', 'o-sklt__item--', this.size)}`]: this.size },
+                      { [this.computedClass('skeleton', 'sizeClass', 'o-sklt__item--', this.size)]: this.size },
                     ],
                     key: i,
                     style: {
@@ -92,7 +92,7 @@ export default {
             {
                 staticClass: this.computedClass('skeleton', 'rootClass', 'o-sklt'),
                 class: [
-                    { [`${this.computedClass('skeleton', 'positionClass', 'o-sklt--', this.position)}`]: this.position }
+                    { [this.computedClass('skeleton', 'positionClass', 'o-sklt--', this.position)]: this.position }
                 ]
             },
             items
