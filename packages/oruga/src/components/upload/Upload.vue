@@ -98,9 +98,9 @@ export default {
         draggableClasses() {
             return [
                 this.computedClass('upload', 'draggableClass', 'o-upl__draggable'),
-                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--', true)}${this.variant}`]: this.variant },
+                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--', this.variant)}`]: this.variant },
                 { [this.computedClass('upload', 'hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
-                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--hovered-', true)}${this.variant}`]: this.variant && this.dragDropFocus },
+                { [`${this.computedClass('upload', 'variantClass', 'o-upl__draggable--hovered-', this.variant)}`]: this.variant && this.dragDropFocus },
                 { [this.computedClass('upload', 'disabledClass', 'o-upl__draggable--disabled')]: this.disabled }
             ]
         }

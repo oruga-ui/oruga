@@ -64,7 +64,7 @@ import SliderTick from './SliderTick'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath } from '../../utils/helpers' 
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * A slider to select a value or range from a given range
@@ -181,7 +181,7 @@ export default {
         /** Tooltip displays always */
         tooltipAlways: {
             type: Boolean,
-            default: false  
+            default: false
         },
         rootClass: String,
         trackClass: String,
@@ -206,8 +206,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('slider', 'rootClass', 'o-slider'),
-                { [`${this.computedClass('slider', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('slider', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('slider', 'variantClass', 'o-color-', this.variant)}`]: this.variant },
+                { [`${this.computedClass('slider', 'sizeClass', 'o-size-', this.size)}`]: this.size },
                 { [this.computedClass('slider', 'roundedClass', 'o-slider-rounded')]: this.rounded },
                 { [this.computedClass('slider', 'draggingClass', 'o-slider-dragging')]: this.dragging },
                 { [this.computedClass('slider', 'disabledClass', 'o-slider-disabled')]: this.disabled },

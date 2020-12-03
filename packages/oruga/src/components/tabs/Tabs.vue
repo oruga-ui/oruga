@@ -54,7 +54,7 @@ export default {
          */
         type: [String, Object],
          /**
-         * Tabs will be expanded (full-width)	
+         * Tabs will be expanded (full-width)
          */
         expanded: Boolean,
         /** Tab will have an animation */
@@ -93,9 +93,9 @@ export default {
         navClasses() {
             return [
                 this.computedClass('tabs', 'tabsClass', 'o-tabs'),
-                { [`${this.computedClass('tabs', 'typeClass', 'o-tabs-')}${this.type}`]: this.type },
-                { [`${this.computedClass('tabs', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('tabs', 'positionClass', 'o-tabs-position-')}${this.position}`]: this.position && !this.vertical },
+                { [`${this.computedClass('tabs', 'typeClass', 'o-tabs-', this.type)}`]: this.type },
+                { [`${this.computedClass('tabs', 'sizeClass', 'o-size-', this.size)}`]: this.size },
+                { [`${this.computedClass('tabs', 'positionClass', 'o-tabs-position-', this.position)}`]: this.position && !this.vertical },
             ]
         },
         contentClasses() {

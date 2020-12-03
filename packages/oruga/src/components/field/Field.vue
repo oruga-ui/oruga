@@ -53,7 +53,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  * Fields are used to add functionality to controls and to attach/group components and elements together
  * @displayName Field
  * @example ./examples/Field.md
- * @style _field.scss 
+ * @style _field.scss
  */
 export default {
     name: 'OField',
@@ -129,7 +129,7 @@ export default {
         messageClasses() {
             return [
                 this.computedClass('field', 'messageClass', 'o-field-message'),
-                { [`${this.computedClass('field', 'variantClass', 'o-color-', true)}${this.newVariant}`]: this.newVariant }
+                { [`${this.computedClass('field', 'variantClass', 'o-color-', this.newVariant)}`]: this.newVariant }
             ]
         },
         labelClasses() {

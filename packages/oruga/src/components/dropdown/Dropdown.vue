@@ -225,7 +225,7 @@ export default {
         menuClasses() {
             return [
                 this.computedClass('dropdown', 'menuClass', 'o-drop__menu'),
-                { [`${this.computedClass('dropdown', 'positionClass', 'o-drop__menu-')}${this.position}`]: this.position },
+                { [`${this.computedClass('dropdown', 'positionClass', 'o-drop__menu-', this.position)}`]: this.position },
                 { [this.computedClass('dropdown', 'activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
                 { [this.computedClass('dropdown', 'inlineClass', 'o-drop__menu--inline')]: this.inline },
                 { [this.computedClass('dropdown', 'mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },

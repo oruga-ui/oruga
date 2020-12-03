@@ -153,8 +153,8 @@ export default {
             return [
                 this.computedClass('input', 'inputClass', 'o-input'),
                 { [this.computedClass('input', 'roundedClass', 'o-input-rounded')]: this.rounded },
-                { [`${this.computedClass('input', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('input', 'variantClass', 'o-color-', true)}${this.statusVariant}`]: this.statusVariant }
+                { [`${this.computedClass('input', 'sizeClass', 'o-size-', this.size)}`]: this.size },
+                { [`${this.computedClass('input', 'variantClass', 'o-color-', this.statusVariant)}`]: this.statusVariant }
             ]
         },
         iconLeftClasses() {

@@ -114,7 +114,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('switch', 'rootClass', 'o-switch'),
-                { [`${this.computedClass('switch', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('switch', 'sizeClass', 'o-size-', this.size)}`]: this.size },
                 { [this.computedClass('switch', 'disabledClass', 'o-switch-disabled')]: this.disabled },
                 { [this.computedClass('switch', 'roundedClass', 'o-switch-rounded')]: this.rounded },
                 { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined },
@@ -125,8 +125,8 @@ export default {
             return [
                 this.computedClass('switch', 'checkClass', 'o-switch-check'),
                 { [this.computedClass('switch', 'animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
-                { [`${this.computedClass('switch', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('switch', 'passiveVariantClass', 'o-color-', true)}${this.passiveVariant}-passive`]: this.passiveVariant }
+                { [`${this.computedClass('switch', 'variantClass', 'o-color-', this.variant)}`]: this.variant },
+                { [`${this.computedClass('switch', 'passiveVariantClass', 'o-color-', this.passiveVariant + '-passive')}`]: this.passiveVariant }
             ]
         },
         labelClasses() {
