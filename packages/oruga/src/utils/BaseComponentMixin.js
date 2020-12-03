@@ -1,15 +1,38 @@
 import config from '../utils/config'
 import { getValueByPath, blankIfUndefined } from './helpers'
 
+const _defaultSuffixProcessor = (input, suffix) => {
+    return blankIfUndefined(input)
+        .split(' ')
+        .filter((cls) => cls.length > 0)
+        .map((cls) => cls + suffix)
+        .join(' ');
+}
+
 export default {
     methods: {
-        computedClass(component, field, defaultValue, overrideIfExists = false) {
-            const override = getValueByPath(config, `${component}.override`, false)
-            const globalClass = getValueByPath(config, `${component}.${field}`, '')
-            const currrentClass = this.$props[field]
-            return (`${override || (overrideIfExists && (currrentClass || globalClass)) ? '' : defaultValue} `
-               + `${overrideIfExists && currrentClass ? '' : blankIfUndefined(globalClass)} `
-               + `${blankIfUndefined(currrentClass)}`).trim().replace(/\s\s+/g, ' ');
+        computedClass(component, field, defaultValue, suffix='') {
+            let override = getValueByPath(config, `${component}.override`, false)
+            let overrideClass = getValueByPath(config, `${component}.${field}.override`, override)
+
+            let globalClass = getValueByPath(config, `${component}.${field}.class`, '') || getValueByPath(config, `${component}.${field}`, '')
+            let currentClass = this.$props[field]
+
+            defaultValue = defaultValue + suffix
+
+            if (typeof currentClass === "function") {
+                currentClass = currentClass(suffix)
+            } else {
+                currentClass = _defaultSuffixProcessor(currentClass, suffix)
+            }
+            if (typeof globalClass === "function") {
+                globalClass = globalClass(suffix)
+            } else {
+                globalClass = _defaultSuffixProcessor(globalClass, suffix)
+            }
+            return (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
+               + `${overrideClass && currentClass ? '' : blankIfUndefined(globalClass)} `
+               + `${blankIfUndefined(currentClass)}`).trim().replace(/\s\s+/g, ' ');
         }
     }
 }
