@@ -85,7 +85,7 @@ export default {
          */
         iconRight: {
             type: String,
-            default: (vm) => {
+            default: () => {
                 return getValueByPath(config, 'select.iconRight', 'caret-down')
             }
         },
