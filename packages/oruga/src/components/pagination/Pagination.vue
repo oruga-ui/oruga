@@ -217,8 +217,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('pagination', 'rootClass', 'o-pag'),
-                { [`${this.computedClass('pagination', 'orderClass', 'o-pag--', true)}${this.order}`]: this.order },
-                { [`${this.computedClass('pagination', 'sizeClass', 'o-pag--', true)}${this.size}`]: this.size },
+                { [`${this.computedClass('pagination', 'orderClass', 'o-pag--', this.order)}`]: this.order },
+                { [`${this.computedClass('pagination', 'sizeClass', 'o-pag--', this.size)}`]: this.size },
                 { [this.computedClass('pagination', 'simpleClass', 'o-pag--simple')]: this.simple },
             ]
         },
