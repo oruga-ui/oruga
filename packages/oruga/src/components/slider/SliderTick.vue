@@ -33,13 +33,13 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('slider', 'tickClass', 'o-slider-tick'),
-                { [this.computedClass('slider', 'tickHiddenClass', 'o-slider-tick-hidden')]: this.hidden },
+                this.computedClass('slider', 'tickClass', 'o-slide__tick'),
+                { [this.computedClass('slider', 'tickHiddenClass', 'o-slide__tick--hidden')]: this.hidden },
             ]
         },
         tickLabelClasses() {
             return [
-                this.computedClass('slider', 'tickLabelClass', 'o-slider-tick-label')
+                this.computedClass('slider', 'tickLabelClass', 'o-slide__tick-label')
             ]
         },
         position() {

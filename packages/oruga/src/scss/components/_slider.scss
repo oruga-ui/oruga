@@ -31,7 +31,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
 	$tick-height: $track-height * $slider-tick-to-track-ratio;
 	$thumb-size: $size;
 
-    .o-slider-track {
+    .o-slide__track {
         @if ($name != null) {
             @include avariable('height', ('slider-track-height-' + #{$name}), $track-height);
         } @else {
@@ -39,7 +39,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         }
     }
 
-	.o-slider-thumb {
+	.o-slide__thumb {
         @if ($name != null) {
             @include avariable('height', 'slider-thumb-size-' + #{$name}, $thumb-size);
             @include avariable('width', 'slider-thumb-size-' + #{$name}, $thumb-size);
@@ -49,7 +49,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         }
     }
 
-    .o-slider-tick {
+    .o-slide__tick {
         @if ($name != null) {
             @include avariable('height', 'slider-tick-height-' + #{$name}, $tick-height);
         } @else {
@@ -57,7 +57,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         }
     }
 
-    .o-slider-tick-label {
+    .o-slide__tick-label {
         @if ($name != null) {
             @include avariable('font-size', 'slider-mark-size-' + #{$name}, $slider-mark-size);
         } @else {
@@ -74,11 +74,29 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
     }
 }
 
-.o-slider {
+.o-slide {
     @include avariable('margin', 'slider-margin', $slider-margin);
     @include avariable('background', 'slider-background', $slider-background);
     width: 100%;
-    .o-slider-track {
+
+    &__thumb {
+        @include avariable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
+        @include avariable('border', 'slider-thumb-border', $slider-thumb-border);
+        @include avariable('border-radius', 'slider-thumb-radius', $slider-thumb-radius);
+        @include avariable('background', 'slider-thumb-background', $slider-thumb-background);
+        &:focus {
+            @include avariable('transform', 'slider-thumb-transform', $slider-thumb-transform);
+        }
+        &--rounded {
+            @include avariable('border-radius', 'slider-rounded-borded-radius', $slider-rounded-borded-radius);
+        }
+        &--dragging {
+            cursor: grabbing;
+            filter: brightness(0.8);
+        }
+    }
+
+    &__track {
         display: flex;
         align-items: center;
         position: relative;
@@ -86,7 +104,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         @include avariable('background', 'slider-track-background', $slider-track-background);
         @include avariable('border-radius', 'slider-track-border-radius', $slider-track-border-radius);
     }
-    .o-slider-fill {
+    &__fill {
         position: absolute;
         height: 100%;
         @include avariable('box-shadow', 'slider-track-shadow', $slider-track-shadow);
@@ -96,8 +114,51 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            &--#{$name} {
+                @include avariable('background', ('color-' + #{$name}), $color);
+            }
+        }
     }
-    .o-slider-thumb-wrapper {
+
+
+    &--focus{
+        @include avariable('padding', 'slider-focus-padding', $slider-focus-padding);
+        @include avariable('margin', 'slider-focus-margin', $slider-focus-margin);
+        cursor: pointer;
+    }
+
+    &--disabled {
+        .o-slide__track {
+            cursor: not-allowed;
+            @include avariable('opacity', 'slider-track-disabled', $slider-track-disabled);
+        }
+
+        .o-slide__thumb  {
+            cursor: not-allowed;
+            @include avariable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
+        }
+    }
+    @include slider-size($base-font-size);
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include slider-size($value, $name);
+        }
+    }
+
+    &__tick {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+		@include avariable('width', 'slider-tick-width', $slider-tick-width);
+        @include avariable('background', 'slider-tick-background', $slider-tick-background);
+        @include avariable('border-radius', 'slider-tick-radius', $slider-tick-radius);
+        &--hidden {
+            background: transparent;
+        }
+    }
+    &__thumb-wrapper {
         display: inline-flex;
         align-items: center;
         position: absolute;
@@ -105,70 +166,5 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         transform: translate(-50%, -50%);
         top: 50%;
         flex-direction: column; // Fix shrinked thumb at the end in IE 11
-        .o-slider-thumb {
-            @include avariable('box-shadow', 'slider-thumb-shadow', $slider-thumb-shadow);
-            @include avariable('border', 'slider-thumb-border', $slider-thumb-border);
-            @include avariable('border-radius', 'slider-thumb-radius', $slider-thumb-radius);
-            @include avariable('background', 'slider-thumb-background', $slider-thumb-background);
-            &:focus {
-                @include avariable('transform', 'slider-thumb-transform', $slider-thumb-transform);
-            }
-        }
-
-        &.o-slider-dragging {
-            cursor: grabbing;
-            .o-slider-thumb {
-                @include avariable('transform', 'slider-thumb-transform', $slider-thumb-transform);
-            }
-        }
-    }
-
-    &.o-slider-focus{
-        @include avariable('padding', 'slider-focus-padding', $slider-focus-padding);
-        @include avariable('margin', 'slider-focus-margin', $slider-focus-margin);
-        cursor: pointer;
-    }
-
-    &.o-slider-rounded {
-        .o-slider-thumb {
-            @include avariable('border-radius', 'slider-rounded-borded-radius', $slider-rounded-borded-radius);
-        }
-    }
-    &.o-slider-disabled {
-        .o-slider-track {
-            cursor: not-allowed;
-            @include avariable('opacity', 'slider-track-disabled', $slider-track-disabled);
-        }
-        .o-slider-thumb-wrapper {
-            cursor: not-allowed;
-            .o-slider-thumb {
-                @include avariable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
-            }
-        }
-    }
-    @include slider-size($base-font-size);
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            @include slider-size($value, $name);
-        }
-    }
-    @each $name, $pair in $colors {
-        $color: nth($pair, 1);
-        &.o-color-#{$name} {
-            .o-slider-fill {
-                @include avariable('background', ('color-' + #{$name}), $color);
-            }
-        }
-    }
-    .o-slider-tick {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-		@include avariable('width', 'slider-tick-width', $slider-tick-width);
-        @include avariable('background', 'slider-tick-background', $slider-tick-background);
-        @include avariable('border-radius', 'slider-tick-radius', $slider-tick-radius);
-        &.o-slider-tick-hidden {
-            background: transparent;
-        }
     }
 }

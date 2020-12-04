@@ -205,28 +205,30 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('slider', 'rootClass', 'o-slider'),
-                { [this.computedClass('slider', 'variantClass', 'o-color-', this.variant)]: this.variant },
-                { [this.computedClass('slider', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('slider', 'roundedClass', 'o-slider-rounded')]: this.rounded },
-                { [this.computedClass('slider', 'draggingClass', 'o-slider-dragging')]: this.dragging },
-                { [this.computedClass('slider', 'disabledClass', 'o-slider-disabled')]: this.disabled },
-                { [this.computedClass('slider', 'biggerSliderFocusClass', 'o-slider-focus')]: this.biggerSliderFocus }
+                this.computedClass('slider', 'rootClass', 'o-slide'),
+                //{ [this.computedClass('slider', 'variantClass', 'o-slide--', this.variant)]: this.variant },
+                { [this.computedClass('slider', 'sizeClass', 'o-slide--', this.size)]: this.size },
+                { [this.computedClass('slider', 'disabledClass', 'o-slide--disabled')]: this.disabled },
+                { [this.computedClass('slider', 'biggerSliderFocusClass', 'o-slide--focus')]: this.biggerSliderFocus }
             ]
         },
         trackClasses() {
             return [
-                this.computedClass('slider', 'trackClass', 'o-slider-track'),
+                this.computedClass('slider', 'trackClass', 'o-slide__track'),
             ]
         },
         fillClasses() {
             return [
-                this.computedClass('slider', 'fillClass', 'o-slider-fill'),
+                this.computedClass('slider', 'fillClass', 'o-slide__fill'),
+                { [this.computedClass('slider', 'variantClass', 'o-slide__fill--', this.variant)]: this.variant },
             ]
         },
         thumbClasses() {
             return [
-                this.computedClass('slider', 'thumbClass', 'o-slider-thumb'),
+                this.computedClass('slider', 'thumbClass', 'o-slide__thumb'),
+                { [this.computedClass('slider', 'draggingClass', 'o-slide__thumb--dragging')]: this.dragging },
+                { [this.computedClass('slider', 'roundedClass', 'o-slide__thumb--rounded')]: this.rounded },
+
             ]
         },
         newTooltipVariant() {
@@ -293,8 +295,7 @@ export default {
     methods: {
         thumbWrapperClasses(dragging) {
              return [
-                this.computedClass('slider', 'thumbWrapperClass', 'o-slider-thumb-wrapper'),
-                { [this.computedClass('slider', 'thumbDraggingClass', 'o-slider-thumb-dragging')]: dragging },
+                this.computedClass('slider', 'thumbWrapperClass', 'o-slide__thumb-wrapper'),
             ]
         },
         setValues(newValue) {
