@@ -49,7 +49,7 @@ describe('OSlider', () => {
         it('renders a component with sliderFocus class', async () => {
             wrapper.setProps({biggerSliderFocus: true})
             await wrapper.vm.$nextTick()
-            const subject = wrapper.find('.o-slider-focus')
+            const subject = wrapper.find('.o-slide--focus')
             expect(subject.exists()).toBeTruthy()
         })
     })

@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="$slider.thumbWrapperClasses(dragging)"
+        :class="$slider.thumbWrapperClasses"
         :style="wrapperStyle">
         <o-tooltip
             :label="formattedValue"

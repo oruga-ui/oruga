@@ -293,7 +293,7 @@ export default {
         }
     },
     methods: {
-        thumbWrapperClasses(dragging) {
+        thumbWrapperClasses() {
              return [
                 this.computedClass('slider', 'thumbWrapperClass', 'o-slide__thumb-wrapper'),
             ]
