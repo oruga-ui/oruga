@@ -41,7 +41,6 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     justify-content: flex-start;
     align-items: center;
     outline: none;
-    width: 100%;
     @include avariable('font-size', 'select-font-size', $select-font-size);
     @include avariable('max-width', 'select-max-width', $select-max-width);
     @include avariable('width', 'select-width', $select-width);

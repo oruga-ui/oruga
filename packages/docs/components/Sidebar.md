@@ -19,7 +19,7 @@ title: Sidebar
 ```html
 <template>
   <section>
-    <o-sidebar variant="primary" :fullheight="fullheight" :fullwidth="fullwidth" :overlay="overlay" :right="right" :open.sync="open">
+    <o-sidebar :fullheight="fullheight" :fullwidth="fullwidth" :overlay="overlay" :right="right" :open.sync="open">
       <o-button v-if="fullwidth" icon-left="times" label="Close" @click="open = false" />
       <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" alt="Lightweight UI components for Vue.js" />
       <h3>Example</h3>
@@ -64,16 +64,18 @@ title: Sidebar
 <template>
   <div class="sidebar-page">
     <section class="sidebar-layout">
-      <o-sidebar position="static" :mobile="mobile" :expand-on-hover="expandOnHover" :reduce="reduce" variant="primary" open>
+      <o-sidebar position="static" :mobile="mobile" :expand-on-hover="expandOnHover" :reduce="reduce" open>
         <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" alt="Lightweight UI components for Vue.js" />
-        <h5>Example 1</h5>
-        <h5>Example 2</h5>
-        <h5>Example 3</h5>
-        <h5>Example 4</h5>
-        <h5>Example 5</h5>
+        <section style="padding: 1em">
+          <h5>Example 1</h5>
+          <h5>Example 2</h5>
+          <h5>Example 3</h5>
+          <h5>Example 4</h5>
+          <h5>Example 5</h5>
+        </section>
       </o-sidebar>
 
-      <div>
+      <div style="padding: 1em">
         <o-field>
           <o-switch v-model="reduce">Reduced</o-switch>
         </o-field>
@@ -173,12 +175,7 @@ title: Sidebar
 
 ## Style
 
-| CSS Variable                             | SASS Variable                      | Default                             |
-| ---------------------------------------- | ---------------------------------- | ----------------------------------- |
-| --oruga-sidebar-background               | \$sidebar-background               | hsla(0,0%,4%,.86)                   |
-| --oruga-sidebar-box-shadow               | \$sidebar-box-shadow               | 5px 0px 13px 3px rgba(\$black, 0.1) |
-| --oruga-sidebar-content-background-color | \$sidebar-content-background-color | \$grey-lighter                      |
-| --oruga-sidebar-mobile-breakpoint        | \$sidebar-mobile-breakpoint        | 1024px                              |
-| --oruga-sidebar-mobile-width             | \$sidebar-mobile-width             | 80px                                |
-| --oruga-sidebar-width                    | \$sidebar-width                    | 260px                               |
-| --oruga-sidebar-zindex                   | \$sidebar-zindex                   | 38                                  |
+| CSS Variable               | SASS Variable        | Default           |
+| -------------------------- | -------------------- | ----------------- |
+| --oruga-sidebar-background | \$sidebar-background | hsla(0,0%,4%,.86) |
+| \$sidebar-box-shadow       |
