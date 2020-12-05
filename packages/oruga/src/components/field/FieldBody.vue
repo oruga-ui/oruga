@@ -12,8 +12,8 @@ export default {
     render(h) {
         let first = true
         return h(
-            'div', 
-            { attrs: { 'class': this.parent.contentHorizontalClasses } }, 
+            'div',
+            { attrs: { 'class': this.parent.contentHorizontalClasses } },
             this.$slots.default.map((element) => {
                 // skip returns and comments
                 if (!element.tag) {
@@ -24,7 +24,7 @@ export default {
                     message = this.parent.newMessage
                     first = false
                 }
-                return h(this.parent.rootClass,
+                return h('o-field',
                     { attrs: { variant: this.parent.newVariant, message } }, [element])
             })
         )
