@@ -43,7 +43,7 @@
             @click.native="rightIconClick"/>
 
         <small
-            v-if="maxlength && hasCounter && type !== 'number'"
+            v-if="maxlength && hasCounter && isFocused && type !== 'number'"
             :class="counterClasses">
             {{ valueLength }} / {{ maxlength }}
         </small>
@@ -121,14 +121,13 @@ export default {
         iconRightType: String,
         rootClass: String,
         controlExpandedClass: String,
-        controlIconLeftClass: String,
-        controlIconRightClass: String,
+        iconsLeftClass: String,
+        iconsRightClass: String,
         inputClass: String,
         roundedClass: String,
         iconLeftClass: String,
         iconRightClass: String,
         counterClass: String,
-        counterInvisibleClass: String,
         sizeClass: String,
         variantClass: String
     },
@@ -143,34 +142,34 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('input', 'rootClass', 'o-control-input'),
-                { [this.computedClass('input', 'controlExpandedClass', 'o-control-input-expanded')]: this.expanded },
-                { [this.computedClass('input', 'controlIconLeftClass', 'o-control-input-icons-left')]: this.icon },
-                { [this.computedClass('input', 'controlIconRightClass', 'o-control-input-icons-right')]: this.hasIconRight }
+                this.computedClass('input', 'rootClass', 'o-ctrl-input'),
+                { [this.computedClass('input', 'controlExpandedClass', 'o-ctrl-input--expanded')]: this.expanded }
             ]
         },
         inputClasses() {
             return [
                 this.computedClass('input', 'inputClass', 'o-input'),
-                { [this.computedClass('input', 'roundedClass', 'o-input-rounded')]: this.rounded },
-                { [this.computedClass('input', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('input', 'variantClass', 'o-color-', this.statusVariant)]: this.statusVariant }
+                { [this.computedClass('input', 'roundedClass', 'o-input--rounded')]: this.rounded },
+                { [this.computedClass('input', 'sizeClass', 'o-input--', this.size)]: this.size },
+                { [this.computedClass('input', 'variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('input', 'textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
+                { [this.computedClass('input', 'iconsLeftClass', 'o-input-icons-left')]: this.icon },
+                { [this.computedClass('input', 'iconsRightClass', 'o-input-icons-right')]: this.hasIconRight }
             ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('input', 'iconLeftClass', 'o-icon-left')
+                this.computedClass('input', 'iconLeftClass', 'o-input__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('input', 'iconRightClass', 'o-icon-right')
+                this.computedClass('input', 'iconRightClass', 'o-input__icon-right')
             ]
         },
         counterClasses() {
             return [
-                this.computedClass('input', 'counterClass', 'o-input-counter'),
-                { [this.computedClass('input', 'counterInvisibleClass', 'o-input-counter-invisible')]: !this.isFocused }
+                this.computedClass('input', 'counterClass', 'o-input__counter')
             ]
         },
         computedValue: {

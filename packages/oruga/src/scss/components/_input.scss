@@ -8,8 +8,8 @@ $input-border-radius: $base-border-radius !default;
 $input-rounded-border-radius: $base-rounded-border-radius !default;
 $input-box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1) !default;
 $input-color: #363636 !default;
-$input-control-icon-zindex: 4 !default;
-$input-control-icon-color: $grey-lighter !default;
+$input-icon-zindex: 4 !default;
+$input-icon-color: $grey-lighter !default;
 $input-counter-font-size: .75rem !default;
 $input-counter-margin: .25rem 0 0 .5rem !default;
 $input-height: $control-height !default;
@@ -23,36 +23,11 @@ $input-textarea-padding: 0.625em !default;
 $input-width: 100% !default;
 /* @docs */
 
-.o-control-input {
+.o-ctrl-input {
     position: relative;
     @include avariable('font-size', 'base-font-size', $base-font-size);
-    &.o-control-input-icons-left .o-icon, &.o-control-input-icons-right .o-icon {
-        position: absolute;
-        top: 0;
-        @include avariable('height', 'input-height', $input-height);
-        @include avariable('width', 'input-height', $input-height);
-        @include avariable('z-index', 'input-control-icon-zindex', $input-control-icon-zindex);
-        &:not(.o-icon-clickable) {
-            pointer-events: none;
-        }
-        &:not([class*="o-color-"]) {
-            @include avariable('color', 'input-control-icon-color', $input-control-icon-color);
-        }
-    }
-    &.o-control-input-icons-right .o-icon.o-icon-right {
-        right: 0;
-    }
-    &.o-control-input-icons-left .o-icon.o-icon-left {
-        left: 0;
-        pointer-events: none;
-    }
-    &.o-control-input-icons-left .o-input {
-        @include avariable('padding-left', 'input-height', $input-height);
-    }
-    &.o-control-input-icons-right .o-input {
-        @include avariable('padding-right', 'input-height', $input-height);
-    }
-    &.o-control-input-expanded {
+    &--expanded {
+        width: 100%;
         flex-grow: 1;
         flex-shrink: 1;
     }
@@ -79,40 +54,59 @@ $input-width: 100% !default;
     @include avariable('line-height', 'input-line-height', $input-line-height);
     @include avariable('padding', 'input-padding', $input-padding);
     @include avariable('margin', 'input-margin', $input-margin);
-    &.o-input-rounded {
+    &-icons-left {
+        @include avariable('padding-left', 'input-height', $input-height);
+    }
+    &-icons-right {
+        @include avariable('padding-right', 'input-height', $input-height);
+    }
+    &--rounded {
         @include avariable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
     }
     @each $name, $value in $sizes {
-        &.o-size-#{$name} {
+        &--#{$name} {
             @include avariable('font-size', ('input-font-size-' + #{$name}), $value);
         }
     }
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
-        &.o-color-#{$name} {
+        &--#{$name} {
             @include avariable('border-color', ('color-' + #{$name}), $color);
         }
     }
-    @at-root {
-        textarea#{&} {
-            display: block;
-            max-width: 100%;
-            min-width: 100%;
-            resize: vertical;
-            @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
-            &:not([rows]) {
-                @include avariable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
-                @include avariable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
-            }
+    &__textarea {
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
+        resize: vertical;
+        @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
+        &:not([rows]) {
+            @include avariable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
+            @include avariable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
         }
     }
-    .o-input-counter {
+    &__counter {
         display: block;
         float: right;
         @include avariable('font-size', 'input-counter-font-size', $input-counter-font-size);
         @include avariable('margin', 'input-counter-margin', $input-counter-margin);
-        &.o-input-counter-invisible {
-            visibility: hidden;
+    }
+    &__icon-left, &__icon-right {
+        position: absolute;
+        top: 0;
+        @include avariable('height', 'input-height', $input-height);
+        @include avariable('width', 'input-height', $input-height);
+        @include avariable('z-index', 'input-icon-zindex', $input-icon-zindex);
+        /*
+        &:not([class*="o-icon--"]) {
+            @include avariable('color', 'input-icon-color', $input-icon-color);
         }
+        */
+    }
+    &__icon-right {
+        right: 0;
+    }
+    &__icon-left {
+        left: 0;
     }
 }

@@ -8,13 +8,14 @@ $select-border-radius: $base-border-radius !default;
 $select-rounded-border-radius: $base-rounded-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
-$select-control-icon-zindex: 4 !default;
-$select-control-icon-color: $grey-lighter !default;
+$select-icon-zindex: 4 !default;
+$select-icon-color: $grey-lighter !default;
 $select-font-size: $base-font-size !default;
 $select-height: $control-height !default;
 $select-line-height: $base-line-height !default;
 $select-margin: 0 !default;
 $select-max-width: 100% !default;
+$select-width: 100% !default;
 $select-placeholder-opacity: $base-disabled-opacity !default;
 $select-padding: $control-padding-vertical $control-padding-horizontal !default;
 /* @docs */
@@ -43,6 +44,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     width: 100%;
     @include avariable('font-size', 'select-font-size', $select-font-size);
     @include avariable('max-width', 'select-max-width', $select-max-width);
+    @include avariable('width', 'select-width', $select-width);
     @include avariable('background-color', 'select-background-color', $select-background-color);
     @include avariable('border-color', 'select-border-color', $select-border-color);
     @include avariable('border-width', 'select-border-width', $select-border-width);
@@ -87,7 +89,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
         pointer-events: none;
         @include avariable('height', 'select-height', $select-height);
         @include avariable('width', 'select-height', $select-height);
-        @include avariable('z-index', 'select-control-icon-zindex', $select-control-icon-zindex);
+        @include avariable('z-index', 'select-icon-zindex', $select-icon-zindex);
     }
     &__icon-right {
         right: 0;

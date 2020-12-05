@@ -128,38 +128,37 @@ title: Input
 
 ## Props
 
-| Prop name             | Description                                                 | Type           | Values                                            | Default                                            |
-| --------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------- |
-| expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                    |
-| rounded               | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
-| icon                  | Icon name to be added                                       | string         | -                                                 |                                                    |
-| iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
-| autocomplete          | Native options to use in HTML5 validation                   | string         | -                                                 |                                                    |
-| maxlength             | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
-| useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
-| statusIcon            | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
-| validationMessage     | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
-| v-model               |                                                             | number\|string | -                                                 |                                                    |
-| type                  | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
-| size                  | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
-| passwordReveal        | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
-| iconClickable         | Makes the icon clickable                                    | boolean        | -                                                 |                                                    |
-| hasCounter            | Show character counter when maxlength prop is passed        | boolean        | -                                                 | Config -> <code> 'input.counter': false</code>     |
-| iconRight             | Icon name to be added on the right side                     | string         | -                                                 |                                                    |
-| iconRightClickable    | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
-| iconRightType         | Variant of right icon                                       | string         | -                                                 |                                                    |
-| rootClass             |                                                             | string         | -                                                 |                                                    |
-| controlExpandedClass  |                                                             | string         | -                                                 |                                                    |
-| controlIconLeftClass  |                                                             | string         | -                                                 |                                                    |
-| controlIconRightClass |                                                             | string         | -                                                 |                                                    |
-| inputClass            |                                                             | string         | -                                                 |                                                    |
-| roundedClass          |                                                             | string         | -                                                 |                                                    |
-| iconLeftClass         |                                                             | string         | -                                                 |                                                    |
-| iconRightClass        |                                                             | string         | -                                                 |                                                    |
-| counterClass          |                                                             | string         | -                                                 |                                                    |
-| counterInvisibleClass |                                                             | string         | -                                                 |                                                    |
-| sizeClass             |                                                             | string         | -                                                 |                                                    |
-| variantClass          |                                                             | string         | -                                                 |                                                    |
+| Prop name            | Description                                                 | Type           | Values                                            | Default                                            |
+| -------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------- |
+| expanded             | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                    |
+| rounded              | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
+| icon                 | Icon name to be added                                       | string         | -                                                 |                                                    |
+| iconPack             | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
+| autocomplete         | Native options to use in HTML5 validation                   | string         | -                                                 |                                                    |
+| maxlength            | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
+| useHtml5Validation   | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
+| statusIcon           | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
+| validationMessage    | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
+| v-model              |                                                             | number\|string | -                                                 |                                                    |
+| type                 | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
+| size                 | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
+| passwordReveal       | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
+| iconClickable        | Makes the icon clickable                                    | boolean        | -                                                 |                                                    |
+| hasCounter           | Show character counter when maxlength prop is passed        | boolean        | -                                                 | Config -> <code> 'input.counter': false</code>     |
+| iconRight            | Icon name to be added on the right side                     | string         | -                                                 |                                                    |
+| iconRightClickable   | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
+| iconRightType        | Variant of right icon                                       | string         | -                                                 |                                                    |
+| rootClass            |                                                             | string         | -                                                 |                                                    |
+| controlExpandedClass |                                                             | string         | -                                                 |                                                    |
+| iconsLeftClass       |                                                             | string         | -                                                 |                                                    |
+| iconsRightClass      |                                                             | string         | -                                                 |                                                    |
+| inputClass           |                                                             | string         | -                                                 |                                                    |
+| roundedClass         |                                                             | string         | -                                                 |                                                    |
+| iconLeftClass        |                                                             | string         | -                                                 |                                                    |
+| iconRightClass       |                                                             | string         | -                                                 |                                                    |
+| counterClass         |                                                             | string         | -                                                 |                                                    |
+| sizeClass            |                                                             | string         | -                                                 |                                                    |
+| variantClass         |                                                             | string         | -                                                 |                                                    |
 
 ## Events
 
@@ -171,26 +170,7 @@ title: Input
 
 ## Style
 
-| CSS Variable                        | SASS Variable                 | Default                                               |
-| ----------------------------------- | ----------------------------- | ----------------------------------------------------- |
-| --oruga-input-background-color      | \$input-background-color      | #ffffff                                               |
-| --oruga-input-border-color          | \$input-border-color          | \$grey-lighter                                        |
-| --oruga-input-border-style          | \$input-border-style          | solid                                                 |
-| --oruga-input-border-width          | \$input-border-width          | 1px                                                   |
-| --oruga-input-border-radius         | \$input-border-radius         | \$base-border-radius                                  |
-| --oruga-input-rounded-border-radius | \$input-rounded-border-radius | \$base-rounded-border-radius                          |
-| --oruga-input-box-shadow            | \$input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
-| --oruga-input-color                 | \$input-color                 | #363636                                               |
-| --oruga-input-control-icon-zindex   | \$input-control-icon-zindex   | 4                                                     |
-| --oruga-input-control-icon-color    | \$input-control-icon-color    | \$grey-lighter                                        |
-| --oruga-input-counter-font-size     | \$input-counter-font-size     | .75rem                                                |
-| --oruga-input-counter-margin        | \$input-counter-margin        | .25rem 0 0 .5rem                                      |
-| --oruga-input-height                | \$input-height                | \$control-height                                      |
-| --oruga-input-line-height           | \$input-line-height           | \$base-line-height                                    |
-| --oruga-input-margin                | \$input-margin                | 0                                                     |
-| --oruga-input-max-width             | \$input-max-width             | 100%                                                  |
-| --oruga-input-padding               | \$input-padding               | $control-padding-vertical $control-padding-horizontal |
-| --oruga-input-textarea-max-height   | \$input-textarea-max-height   | 600px                                                 |
-| --oruga-input-textarea-min-height   | \$input-textarea-min-height   | 120px                                                 |
-| --oruga-input-textarea-padding      | \$input-textarea-padding      | 0.625em                                               |
-| --oruga-input-width                 | \$input-width                 | 100%                                                  |
+| CSS Variable                   | SASS Variable            | Default |
+| ------------------------------ | ------------------------ | ------- |
+| --oruga-input-background-color | \$input-background-color | #ffffff |
+| \$input-border-color           |
