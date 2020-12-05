@@ -16,6 +16,7 @@ $pagination-link-hover-color: #363636 !default;
 $pagination-link-line-height: $base-line-height !default;
 $pagination-link-margin: .25rem !default;
 $pagination-link-min-width: 2.25em !default;
+$pagination-link-padding: .5em .5em !default;
 $pagination-margin: -.25rem !default;
 $pagination-mobile-breakpoint: 768px !default;
 $pagination-rounded-border-radius: $base-rounded-border-radius !default;
@@ -73,6 +74,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         @include avariable('color', 'pagination-link-color', $pagination-link-color);
         @include avariable('min-width', 'pagination-link-min-width', $pagination-link-min-width);
         @include avariable('height', 'pagination-link-height', $pagination-link-height);
+        @include avariable('padding', 'pagination-link-padding', $pagination-link-padding);
         &:hover {
             text-decoration: none;
             @include avariable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
