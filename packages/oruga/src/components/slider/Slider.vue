@@ -231,6 +231,11 @@ export default {
 
             ]
         },
+        thumbWrapperClasses() {
+             return [
+                this.computedClass('slider', 'thumbWrapperClass', 'o-slide__thumb-wrapper'),
+            ]
+        },
         newTooltipVariant() {
             return this.tooltipVariant ? this.tooltipVariant : this.variant
         },
@@ -293,11 +298,6 @@ export default {
         }
     },
     methods: {
-        thumbWrapperClasses() {
-             return [
-                this.computedClass('slider', 'thumbWrapperClass', 'o-slide__thumb-wrapper'),
-            ]
-        },
         setValues(newValue) {
             if (this.min > this.max) {
                 return
