@@ -13,7 +13,7 @@ export default {
         let first = true
         return h(
             'div',
-            { attrs: { 'class': this.parent.contentHorizontalClasses } },
+            { attrs: { 'class': this.parent.bodyClasses } },
             this.$slots.default.map((element) => {
                 // skip returns and comments
                 if (!element.tag) {

@@ -6,103 +6,100 @@ $field-label-font-weight: 600 !default;
 $field-margin-bottom: .75rem !default;
 $field-message-font-size: .75rem !default;
 $field-message-margin-top: .25rem !default;
+$field-margin-right: .75rem !default;
 $field-horizontal-breakpoint: 768px !default;
 $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
 /* @docs */
 
 .o-field {
+    flex-grow: 1;
     &:not(:last-child) {
         @include avariable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
     }
-    .o-field-label {
+    &__label {
         display: block;
         @include avariable('color', 'field-label-color', $field-label-color);
         @include avariable('font-size', 'field-label-font-size', $field-label-font-size);
         @include avariable('font-weight', 'field-label-font-weight', $field-label-font-weight);
         @each $name, $value in $sizes {
-            &.o-size-#{$name} {
+            &-#{$name} {
                 @include avariable('font-size', ('field-font-size-' + #{$name}), $value);
             }
         }
     }
-    > .o-field-message {
+    &__message {
         display: block;
         @include avariable('font-size', 'field-message-font-size', $field-message-font-size);
         @include avariable('margin-top', 'field-message-margin-top', $field-message-margin-top);
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
-            &.o-color-#{$name} {
-                @include avariable('color', ('color-' + #{$name}), $color);
+            &-#{$name} {
+                @include avariable('color', ('variant-' + #{$name}), $color);
             }
         }
     }
-    &.o-field-addons {
+    &--addons {
         display: flex;
         justify-content: flex-start;
-        *:first-child:not(:only-child) button,
-        button:first-child:not(:only-child),
-        *:first-child:not(:only-child) input,
-        input:first-child:not(:only-child),
-        *:first-child:not(:only-child) select,
-        select:first-child:not(:only-child) {
+        > *:first-child:not(:only-child) button,
+        > button:first-child,
+        > *:first-child:not(:only-child) input,
+        > input:first-child,
+        > *:first-child:not(:only-child) select,
+        > select:first-child {
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
         }
-        *:last-child:not(:only-child) button,
-        button:last-child:not(:only-child),
-        *:last-child:not(:only-child) input,
-        input:last-child:not(:only-child),
-        *:last-child:not(:only-child) select,
-        select:last-child:not(:only-child) {
+        > *:last-child:not(:only-child) button,
+        > button:last-child,
+        > *:last-child:not(:only-child) input,
+        > input:last-child,
+        > *:last-child:not(:only-child) button,
+        > select:last-child {
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
         }
-        > *[class$="-expanded"] {
-            flex-grow: 1;
-            flex-shrink: 1;
+        > *:not(:first-child):not(:last-child) button,
+        > button:not(:first-child):not(:last-child),
+        > *:not(:first-child):not(:last-child) input,
+        > input:not(:first-child):not(:last-child),
+        > *:not(:first-child):not(:last-child) select,
+        > select:not(:first-child):not(:last-child) {
+            border-radius: 0;
         }
     }
-    &.o-field-grouped {
+    &--grouped {
         display: flex;
         justify-content: flex-start;
-        > * {
-            flex-shrink: 0;
-        }
         > *:not(:last-child) {
-            @include avariable('margin-right', 'field-margin-bottom', $field-margin-bottom);
+            @include avariable('margin-right', 'field-margin-bottom', $field-margin-right);
         }
-        > *[class$="-expanded"] {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
-        &.o-field-grouped-multiline {
-            flex-wrap: wrap;
-            &:last-child {
-                @include avariable('margin-bottom', 'field-margin-bottom', -$field-margin-bottom);
-            }
+    }
+    &--grouped-multiline {
+        flex-wrap: wrap;
+        &:last-child {
+            @include avariable('margin-bottom', 'field-margin-bottom', -$field-margin-bottom);
         }
     }
     @media screen and (min-width: $field-horizontal-breakpoint) {
-        &.o-field-horizontal {
+        &__body {
             display: flex;
-            .o-field-horizontal-label {
-                flex-basis: 0;
-                flex-grow: 1;
-                flex-shrink: 0;
-                margin: $field-horizontal-label-margin;
-                text-align: right;
+            flex-basis: 0;
+            flex-grow: 5;
+            flex-shrink: 1;
+            .o-field:not(:last-child) {
+                @include avariable('margin-right', 'field-margin-bottom', $field-margin-right);
             }
-            .o-field-horizontal-content {
-                display: flex;
-                flex-basis: 0;
-                flex-grow: 5;
-                flex-shrink: 1;
-                > .o-field {
-                    flex-grow: 1;
-                    flex-shrink: 1;
-                    margin-bottom: 0;
-                }
-            }
+        }
+        &--horizontal {
+            display: flex;
+        }
+        &__horizontal-label {
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+            margin: $field-horizontal-label-margin;
+            text-align: right;
         }
     }
 }
