@@ -5,7 +5,7 @@ import OInput from '@components/input/Input'
 
 const localVue = createLocalVue()
 localVue.component('o-field', OField)
-localVue.component('o-field-horizontal-content', OFieldBody)
+localVue.component('o-field__body', OFieldBody)
 localVue.component('o-input', OInput)
 
 describe('OField', () => {
@@ -27,8 +27,7 @@ describe('OField', () => {
         })
         wrapper.setProps({ variant })
         await wrapper.vm.$nextTick()
-        expect(wrapper.find('.o-control-input').classes()).toContain('o-control-input-icons-right')
-        expect(wrapper.find('.o-control-input').find('.o-icon').classes()).toContain('o-icon--danger')
+        expect(wrapper.find('.o-ctrl-input').find('.o-icon').classes()).toContain('o-icon--danger')
     })
 
     describe('Passing a message prop', () => {
@@ -46,7 +45,7 @@ describe('OField', () => {
             const message = 'Some string message'
             const mountOptions = generateMountOptions({message})
             const wrapper = shallowMount(OField, mountOptions)
-            expect(wrapper.find('.o-field').find('p.o-field-message').text()).toEqual(message)
+            expect(wrapper.find('.o-field').find('p.o-field__message').text()).toEqual(message)
         })
 
         it('changes the <p> element content in the root div.field when "message" prop is changed dynamically', async () => {
@@ -55,7 +54,7 @@ describe('OField', () => {
             const wrapper = shallowMount(OField, mountOptions)
             wrapper.setProps({ message })
             await wrapper.vm.$nextTick()
-            expect(wrapper.find('.o-field').find('p.o-field-message').text()).toEqual(message)
+            expect(wrapper.find('.o-field').find('p.o-field__message').text()).toEqual(message)
         })
     })
 
@@ -70,7 +69,7 @@ describe('OField', () => {
             }
         }
 
-        it('contains "o-field-grouped" when prop "grouped" is set', () => {
+        it('contains "o-field--grouped" when prop "grouped" is set', () => {
             const {propsData} = mountOptions
             const wrapper = mount(OField, {
                 ...mountOptions,
@@ -79,11 +78,11 @@ describe('OField', () => {
                     grouped: true
                 }
             })
-            const innerField = wrapper.find('.o-field-horizontal-content').find('.o-field')
-            expect(innerField.classes()).toContain('o-field-grouped')
+            const innerField = wrapper.find('.o-field__body').find('.o-field')
+            expect(innerField.classes()).toContain('o-field--grouped')
         })
 
-        it('contains "o-field-grouped-multiline" when prop "groupMultiline" is set', () => {
+        it('contains "o-field--grouped-multiline" when prop "groupMultiline" is set', () => {
             const {propsData} = mountOptions
             const wrapper = mount(OField, {
                 ...mountOptions,
@@ -92,8 +91,8 @@ describe('OField', () => {
                     groupMultiline: true
                 }
             })
-            const innerField = wrapper.find('.o-field-horizontal-content').find('.o-field')
-            expect(innerField.classes()).toContain('o-field-grouped-multiline')
+            const innerField = wrapper.find('.o-field__body').find('.o-field')
+            expect(innerField.classes()).toContain('o-field--grouped-multiline')
         })
 
         it('adds a label element under the root div.field when "label" prop is passed', () => {

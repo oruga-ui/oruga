@@ -18,7 +18,7 @@ describe('OInput', () => {
 
     it('renders input element by default', () => {
         expect(wrapper.contains('input')).toBeTruthy()
-        expect(wrapper.classes()).toContain('o-control-input')
+        expect(wrapper.classes()).toContain('o-ctrl-input')
     })
 
     it('render textarea element when type is textarea', async () => {
@@ -85,7 +85,7 @@ describe('OInput', () => {
         wrapper.setProps({ expanded: true })
         await wrapper.vm.$nextTick()
 
-        expect(wrapper.classes()).toContain('o-control-input-expanded')
+        expect(wrapper.classes()).toContain('o-ctrl-input--expanded')
     })
 
     it('keep its value on blur', async () => {
