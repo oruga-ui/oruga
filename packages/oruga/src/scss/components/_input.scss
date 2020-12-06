@@ -9,7 +9,6 @@ $input-rounded-border-radius: $base-rounded-border-radius !default;
 $input-box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1) !default;
 $input-color: #363636 !default;
 $input-icon-zindex: 4 !default;
-$input-icon-color: $grey-lighter !default;
 $input-counter-font-size: .75rem !default;
 $input-counter-margin: .25rem 0 0 .5rem !default;
 $input-height: $control-height !default;
@@ -97,11 +96,6 @@ $input-width: 100% !default;
         @include avariable('height', 'input-height', $input-height);
         @include avariable('width', 'input-height', $input-height);
         @include avariable('z-index', 'input-icon-zindex', $input-icon-zindex);
-        /*
-        &:not([class*="o-icon--"]) {
-            @include avariable('color', 'input-icon-color', $input-icon-color);
-        }
-        */
     }
     &__icon-right {
         right: 0;
