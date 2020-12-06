@@ -264,24 +264,7 @@ title: Pagination
 
 ## Style
 
-| CSS Variable                                     | SASS Variable                              | Default                      |
-| ------------------------------------------------ | ------------------------------------------ | ---------------------------- |
-| --oruga-pagination-disabled-opacity              | \$pagination-disabled-opacity              | \$base-disabled-opacity      |
-| --oruga-pagination-ellipsis-color                | \$pagination-ellipsis-color                | #b5b5b5                      |
-| --oruga-pagination-font-size                     | \$pagination-font-size                     | 1rem                         |
-| --oruga-pagination-link-border-color             | \$pagination-link-border-color             | #dbdbdb                      |
-| --oruga-pagination-link-border-radius            | \$pagination-link-border-radius            | \$base-border-radius         |
-| --oruga-pagination-link-border                   | \$pagination-link-border                   | 1px solid transparent        |
-| --oruga-pagination-link-color                    | \$pagination-link-color                    | #363636                      |
-| --oruga-pagination-link-current-background-color | \$pagination-link-current-background-color | \$primary                    |
-| --oruga-pagination-link-current-border-color     | \$pagination-link-current-border-color     | \$primary                    |
-| --oruga-pagination-link-current-color            | \$pagination-link-current-color            | #fff                         |
-| --oruga-pagination-link-height                   | \$pagination-link-height                   | 2.25em                       |
-| --oruga-pagination-link-hover-border-color       | \$pagination-link-hover-border-color       | #b5b5b5                      |
-| --oruga-pagination-link-hover-color              | \$pagination-link-hover-color              | #363636                      |
-| --oruga-pagination-link-line-height              | \$pagination-link-line-height              | \$base-line-height           |
-| --oruga-pagination-link-margin                   | \$pagination-link-margin                   | .25rem                       |
-| --oruga-pagination-link-min-width                | \$pagination-link-min-width                | 2.25em                       |
-| --oruga-pagination-margin                        | \$pagination-margin                        | -.25rem                      |
-| --oruga-pagination-mobile-breakpoint             | \$pagination-mobile-breakpoint             | 768px                        |
-| --oruga-pagination-rounded-border-radius         | \$pagination-rounded-border-radius         | \$base-rounded-border-radius |
+| CSS Variable                        | SASS Variable                 | Default                 |
+| ----------------------------------- | ----------------------------- | ----------------------- |
+| --oruga-pagination-disabled-opacity | \$pagination-disabled-opacity | \$base-disabled-opacity |
+| \$pagination-ellipsis-color         |

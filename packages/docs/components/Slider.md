@@ -234,29 +234,7 @@ title: Slider
 
 ## Style
 
-| CSS Variable                            | SASS Variable                     | Default                      |
-| --------------------------------------- | --------------------------------- | ---------------------------- |
-| --oruga-slider-background               | \$slider-background               | transparent                  |
-| --oruga-slider-focus-margin             | \$slider-focus-margin             | -20px 0 -20px 0              |
-| --oruga-slider-focus-padding            | \$slider-focus-padding            | 20px 0 20px 0                |
-| --oruga-slider-margin                   | \$slider-margin                   | 1em 0                        |
-| --oruga-slider-mark-size                | \$slider-mark-size                | 0.75rem                      |
-| --oruga-slider-radius                   | \$slider-radius                   | \$base-border-radius         |
-| --oruga-slider-rounded-borded-radius    | \$slider-rounded-borded-radius    | \$base-rounded-border-radius |
-| --oruga-slider-thumb-background         | \$slider-thumb-background         | \$white                      |
-| --oruga-slider-thumb-border             | \$slider-thumb-border             | 1px solid \$grey-light       |
-| --oruga-slider-thumb-disabled-transform | \$slider-thumb-disabled-transform | scale(1)                     |
-| --oruga-slider-thumb-radius             | \$slider-thumb-radius             | \$base-border-radius         |
-| --oruga-slider-thumb-shadow             | \$slider-thumb-shadow             | none                         |
-| --oruga-slider-thumb-to-track-ratio     | \$slider-thumb-to-track-ratio     | 2                            |
-| --oruga-slider-thumb-transform          | \$slider-thumb-transform          | scale(1.25)                  |
-| --oruga-slider-tick-background          | \$slider-tick-background          | \$grey-light                 |
-| --oruga-slider-tick-radius              | \$slider-tick-radius              | \$base-border-radius         |
-| --oruga-slider-tick-to-track-ratio      | \$slider-tick-to-track-ratio      | 0.5                          |
-| --oruga-slider-tick-width               | \$slider-tick-width               | 3px                          |
-| --oruga-slider-track-background         | \$slider-track-background         | \$grey-lighter               |
-| --oruga-slider-track-border-radius      | \$slider-track-border-radius      | \$base-border-radius         |
-| --oruga-slider-track-border             | \$slider-track-border             | 0px solid \$grey             |
-| --oruga-slider-track-disabled           | \$slider-track-disabled           | 0.5                          |
-| --oruga-slider-track-radius             | \$slider-track-radius             | \$base-border-radius         |
-| --oruga-slider-track-shadow             | \$slider-track-shadow             | 0px 0px 0px \$grey           |
+| CSS Variable              | SASS Variable       | Default     |
+| ------------------------- | ------------------- | ----------- |
+| --oruga-slider-background | \$slider-background | transparent |
+| \$slider-focus-margin     |
