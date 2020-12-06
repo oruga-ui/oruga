@@ -65,7 +65,7 @@ title: Field
 
     <o-field>
       <o-input placeholder="This is expanded" expanded></o-input>
-      <span class="o-button">@gmail.com</span>
+      <o-button>@gmail.com</o-button>
     </o-field>
 
     <hr />
@@ -185,6 +185,50 @@ title: Field
 
 :::
 
+### Horizontal
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-field horizontal label="Subject" variant="danger" message="Please enter a subject">
+      <o-input name="subject" expanded></o-input>
+    </o-field>
+
+    <o-field horizontal label="From">
+      <o-input name="name" placeholder="Name" expanded></o-input>
+      <o-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></o-input>
+    </o-field>
+
+    <o-field horizontal label="Topic">
+      <o-select placeholder="Select a topic">
+        <option value="1">Oruga</option>
+        <option value="2">Vue.js</option>
+        <option value="3">UI</option>
+      </o-select>
+    </o-field>
+
+    <o-field horizontal label="Message">
+      <o-input type="textarea"></o-input>
+    </o-field>
+
+    <o-field horizontal
+      ><!-- Label left empty for spacing -->
+      <o-button variant="primary">
+        Send message
+      </o-button>
+    </o-field>
+  </section>
+</template>
+
+<script>
+  export default {}
+</script>
+```
+
+:::
+
 ### Slots
 
 ::: demo
@@ -219,28 +263,28 @@ title: Field
 
 ## Props
 
-| Prop name              | Description                                                                                                      | Type           | Values                                                                          | Default |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------- |
-| variant                | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| label                  | Field label                                                                                                      | string         | -                                                                               |         |
-| labelFor               | Same as native for set on the label                                                                              | string         | -                                                                               |         |
-| message                | Help message text                                                                                                | string         | -                                                                               |         |
-| grouped                | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean        | -                                                                               |         |
-| groupMultiline         | Allow controls to fill up multiple lines, making it responsive                                                   | boolean        | -                                                                               |         |
-| expanded               |                                                                                                                  | boolean        | -                                                                               |         |
-| horizontal             | Group label and control on the same line for horizontal forms                                                    | boolean        | -                                                                               |         |
-| addons                 | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
-| rootClass              |                                                                                                                  | string         | -                                                                               |         |
-| horizontalClass        |                                                                                                                  | string         | -                                                                               |         |
-| expandedClass          |                                                                                                                  | string         | -                                                                               |         |
-| groupedClass           |                                                                                                                  | string         | -                                                                               |         |
-| groupMultilineClass    |                                                                                                                  | string         | -                                                                               |         |
-| labelClass             |                                                                                                                  | string         | -                                                                               |         |
-| labelHorizontalClass   |                                                                                                                  | string         | -                                                                               |         |
-| contentHorizontalClass |                                                                                                                  | string         | -                                                                               |         |
-| addonsClass            |                                                                                                                  | string         | -                                                                               |         |
-| messageClass           |                                                                                                                  | string         | -                                                                               |         |
-| variantClass           |                                                                                                                  | string         | -                                                                               |         |
+| Prop name            | Description                                                                                                      | Type           | Values                                                                          | Default |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------- |
+| variant              | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| label                | Field label                                                                                                      | string         | -                                                                               |         |
+| labelFor             | Same as native for set on the label                                                                              | string         | -                                                                               |         |
+| message              | Help message text                                                                                                | string         | -                                                                               |         |
+| grouped              | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean        | -                                                                               |         |
+| groupMultiline       | Allow controls to fill up multiple lines, making it responsive                                                   | boolean        | -                                                                               |         |
+| horizontal           | Group label and control on the same line for horizontal forms                                                    | boolean        | -                                                                               |         |
+| addons               | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
+| labelSize            | Vertical size of input, optional                                                                                 | string         | `small`, `medium`, `large`                                                      |         |
+| rootClass            |                                                                                                                  | string         | -                                                                               |         |
+| horizontalClass      |                                                                                                                  | string         | -                                                                               |         |
+| groupedClass         |                                                                                                                  | string         | -                                                                               |         |
+| groupMultilineClass  |                                                                                                                  | string         | -                                                                               |         |
+| labelClass           |                                                                                                                  | string         | -                                                                               |         |
+| labelSizeClass       |                                                                                                                  | string         | -                                                                               |         |
+| labelHorizontalClass |                                                                                                                  | string         | -                                                                               |         |
+| bodyClass            |                                                                                                                  | string         | -                                                                               |         |
+| addonsClass          |                                                                                                                  | string         | -                                                                               |         |
+| messageClass         |                                                                                                                  | string         | -                                                                               |         |
+| variantClass         |                                                                                                                  | string         | -                                                                               |         |
 
 ## Slots
 
@@ -260,5 +304,6 @@ title: Field
 | --oruga-field-margin-bottom           | \$field-margin-bottom           | .75rem           |
 | --oruga-field-message-font-size       | \$field-message-font-size       | .75rem           |
 | --oruga-field-message-margin-top      | \$field-message-margin-top      | .25rem           |
+| --oruga-field-margin-right            | \$field-margin-right            | .75rem           |
 | --oruga-field-horizontal-breakpoint   | \$field-horizontal-breakpoint   | 768px            |
 | --oruga-field-horizontal-label-margin | \$field-horizontal-label-margin | 0 1.5rem 0 0     |

@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const os = require('os');
 
 const src = '../oruga/src';
 
@@ -92,7 +91,7 @@ function renderStyleDocs(config, name) {
   const content = fs.readFileSync(cssFile, 'utf8');
   const docsRegex = '/* @docs */';
   const docs = content.substring(content.indexOf(docsRegex) + docsRegex.length, content.lastIndexOf(docsRegex));
-  const variables = docs.split(os.EOL).filter(d => !!d);
+  const variables = docs.split(/\r?\n/).filter(d => !!d);
   return `
 ## Style
 

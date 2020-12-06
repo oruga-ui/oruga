@@ -170,7 +170,23 @@ title: Select
 
 ## Style
 
-| CSS Variable                    | SASS Variable             | Default |
-| ------------------------------- | ------------------------- | ------- |
-| --oruga-select-background-color | \$select-background-color | #fff    |
-| \$select-border-color           |
+| CSS Variable                         | SASS Variable                  | Default                                               |
+| ------------------------------------ | ------------------------------ | ----------------------------------------------------- |
+| --oruga-select-background-color      | \$select-background-color      | #fff                                                  |
+| --oruga-select-border-color          | \$select-border-color          | \$grey-lighter                                        |
+| --oruga-select-border-width          | \$select-border-width          | 1px                                                   |
+| --oruga-select-border-style          | \$select-border-style          | solid                                                 |
+| --oruga-select-border-radius         | \$select-border-radius         | \$base-border-radius                                  |
+| --oruga-select-rounded-border-radius | \$select-rounded-border-radius | \$base-rounded-border-radius                          |
+| --oruga-select-box-shadow            | \$select-box-shadow            | none                                                  |
+| --oruga-select-color                 | \$select-color                 | #363636                                               |
+| --oruga-select-icon-zindex           | \$select-icon-zindex           | 4                                                     |
+| --oruga-select-icon-color            | \$select-icon-color            | \$grey-lighter                                        |
+| --oruga-select-font-size             | \$select-font-size             | \$base-font-size                                      |
+| --oruga-select-height                | \$select-height                | \$control-height                                      |
+| --oruga-select-line-height           | \$select-line-height           | \$base-line-height                                    |
+| --oruga-select-margin                | \$select-margin                | 0                                                     |
+| --oruga-select-max-width             | \$select-max-width             | 100%                                                  |
+| --oruga-select-width                 | \$select-width                 | 100%                                                  |
+| --oruga-select-placeholder-opacity   | \$select-placeholder-opacity   | \$base-disabled-opacity                               |
+| --oruga-select-padding               | \$select-padding               | $control-padding-vertical $control-padding-horizontal |

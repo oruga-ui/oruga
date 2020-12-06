@@ -170,7 +170,26 @@ title: Input
 
 ## Style
 
-| CSS Variable                   | SASS Variable            | Default |
-| ------------------------------ | ------------------------ | ------- |
-| --oruga-input-background-color | \$input-background-color | #ffffff |
-| \$input-border-color           |
+| CSS Variable                        | SASS Variable                 | Default                                               |
+| ----------------------------------- | ----------------------------- | ----------------------------------------------------- |
+| --oruga-input-background-color      | \$input-background-color      | #ffffff                                               |
+| --oruga-input-border-color          | \$input-border-color          | \$grey-lighter                                        |
+| --oruga-input-border-style          | \$input-border-style          | solid                                                 |
+| --oruga-input-border-width          | \$input-border-width          | 1px                                                   |
+| --oruga-input-border-radius         | \$input-border-radius         | \$base-border-radius                                  |
+| --oruga-input-rounded-border-radius | \$input-rounded-border-radius | \$base-rounded-border-radius                          |
+| --oruga-input-box-shadow            | \$input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
+| --oruga-input-color                 | \$input-color                 | #363636                                               |
+| --oruga-input-icon-zindex           | \$input-icon-zindex           | 4                                                     |
+| --oruga-input-icon-color            | \$input-icon-color            | \$grey-lighter                                        |
+| --oruga-input-counter-font-size     | \$input-counter-font-size     | .75rem                                                |
+| --oruga-input-counter-margin        | \$input-counter-margin        | .25rem 0 0 .5rem                                      |
+| --oruga-input-height                | \$input-height                | \$control-height                                      |
+| --oruga-input-line-height           | \$input-line-height           | \$base-line-height                                    |
+| --oruga-input-margin                | \$input-margin                | 0                                                     |
+| --oruga-input-max-width             | \$input-max-width             | 100%                                                  |
+| --oruga-input-padding               | \$input-padding               | $control-padding-vertical $control-padding-horizontal |
+| --oruga-input-textarea-max-height   | \$input-textarea-max-height   | 600px                                                 |
+| --oruga-input-textarea-min-height   | \$input-textarea-min-height   | 120px                                                 |
+| --oruga-input-textarea-padding      | \$input-textarea-padding      | 0.625em                                               |
+| --oruga-input-width                 | \$input-width                 | 100%                                                  |

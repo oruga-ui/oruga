@@ -138,7 +138,10 @@ title: Upload
 
 ## Style
 
-| CSS Variable                     | SASS Variable             | Default                 |
-| -------------------------------- | ------------------------- | ----------------------- |
-| --oruga-upload-draggable-border  | \$upload-draggable-border | 1px dashed \$grey-light |
-| \$upload-draggable-border-radius |
+| CSS Variable                                | SASS Variable                         | Default                 |
+| ------------------------------------------- | ------------------------------------- | ----------------------- |
+| --oruga-upload-draggable-border             | \$upload-draggable-border             | 1px dashed \$grey-light |
+| --oruga-upload-draggable-border-radius      | \$upload-draggable-border-radius      | \$base-border-radius    |
+| --oruga-upload-draggable-disabled-opacity   | \$upload-draggable-disabled-opacity   | \$base-disabled-opacity |
+| --oruga-upload-draggable-hover-border-color | \$upload-draggable-hover-border-color | \$grey                  |
+| --oruga-upload-draggable-padding            | \$upload-draggable-padding            | 0.25em                  |

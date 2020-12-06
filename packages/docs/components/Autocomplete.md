@@ -392,7 +392,19 @@ title: Autocomplete
 
 ## Style
 
-| CSS Variable                         | SASS Variable             | Default |
-| ------------------------------------ | ------------------------- | ------- |
-| --oruga-autocomplete-item-color      | \$autocomplete-item-color | #000000 |
-| \$autocomplete-item-disabled-opacity |
+| CSS Variable                                     | SASS Variable                              | Default                                                              |
+| ------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------- |
+| --oruga-autocomplete-item-color                  | \$autocomplete-item-color                  | #000000                                                              |
+| --oruga-autocomplete-item-disabled-opacity       | \$autocomplete-item-disabled-opacity       | \$base-disabled-opacity                                              |
+| --oruga-autocomplete-item-font-size              | \$autocomplete-item-font-size              | \$base-font-size                                                     |
+| --oruga-autocomplete-item-hover-background-color | \$autocomplete-item-hover-background-color | #f5f5f5                                                              |
+| --oruga-autocomplete-item-hover-color            | \$autocomplete-item-hover-color            | #000000                                                              |
+| --oruga-autocomplete-item-line-height            | \$autocomplete-item-line-height            | \$base-line-height                                                   |
+| --oruga-autocomplete-item-padding                | \$autocomplete-item-padding                | .375rem 1rem                                                         |
+| --oruga-autocomplete-menu-background             | \$autocomplete-menu-background             | #ffffff                                                              |
+| --oruga-autocomplete-menu-border-radius          | \$autocomplete-menu-border-radius          | \$base-border-radius                                                 |
+| --oruga-autocomplete-menu-box-shadow             | \$autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| --oruga-autocomplete-menu-margin                 | \$autocomplete-menu-margin                 | 0                                                                    |
+| --oruga-autocomplete-menu-max-height             | \$autocomplete-menu-max-height             | 200px                                                                |
+| --oruga-autocomplete-menu-padding                | \$autocomplete-menu-padding                | .5rem 0 .5rem 0                                                      |
+| --oruga-autocomplete-menu-zindex                 | \$autocomplete-menu-zindex                 | 20                                                                   |
