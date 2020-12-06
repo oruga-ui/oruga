@@ -26,7 +26,7 @@ $icon-spin-duration: 2s !default;
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
-            @include avariable('color', ('color-' + #{$name}), $color);
+            @include avariable('color', ('variant-' + #{$name}), $color);
         }
     }
     &--clickable {

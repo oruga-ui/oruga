@@ -168,7 +168,7 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
             &--#{$name} {
-                @include avariable('color', ('color-' + #{$name}), $color);
+                @include avariable('color', ('variant-' + #{$name}), $color);
             }
         }
     }
@@ -188,8 +188,8 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
             &--#{$name} {
-                @include avariable('background', ('color-' + #{$name}), $color);
-                @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
+                @include avariable('background', ('variant-' + #{$name}), $color);
+                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
             }
         }
         &--always {

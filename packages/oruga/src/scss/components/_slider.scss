@@ -117,7 +117,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
-                @include avariable('background', ('color-' + #{$name}), $color);
+                @include avariable('background', ('variant-' + #{$name}), $color);
             }
         }
     }

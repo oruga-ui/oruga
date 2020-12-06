@@ -70,7 +70,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name}:before {
-                    @include avariable('background', ('color-' + #{$name}), $color);
+                    @include avariable('background', ('variant-' + #{$name}), $color);
                 }
             }
         }
@@ -79,7 +79,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
-                    @include avariable('border-color', ('color-' + #{$name}), $color);
+                    @include avariable('border-color', ('variant-' + #{$name}), $color);
                 }
             }
             &:before {
@@ -103,7 +103,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
                         @include evariable(
                             'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
-                            eparam('$param2', variable('color-' + #{name}, $color))
+                            eparam('$param2', variable('variant-' + #{name}, $color))
                         );
                         // box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
                     }
@@ -126,7 +126,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
-                    @include avariable('border-color', ('color-' + #{$name}), $color);
+                    @include avariable('border-color', ('variant-' + #{$name}), $color);
                 }
             }
         }

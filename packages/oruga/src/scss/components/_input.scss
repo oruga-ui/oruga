@@ -71,7 +71,7 @@ $input-width: 100% !default;
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
-            @include avariable('border-color', ('color-' + #{$name}), $color);
+            @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
     &__textarea {

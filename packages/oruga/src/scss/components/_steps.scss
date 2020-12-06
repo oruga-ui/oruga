@@ -209,9 +209,9 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         }
                         &.o-step-item-active {
                             .o-step-marker {
-                                @include avariable('background-color', ('color-invert-' + #{$name}), $color-invert);
-                                @include avariable('border-color', ('color-' + #{$name}), $color);
-                                @include avariable('color', ('color-' + #{$name}), $color);
+                                @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
+                                @include avariable('border-color', ('variant-' + #{$name}), $color);
+                                @include avariable('color', ('variant-' + #{$name}), $color);
                             }
 
                             &::before, &::after {
@@ -220,8 +220,8 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         }
                         &.o-step-item-previous {
                             .o-step-marker {
-                                @include avariable('color', ('color-invert-' + #{$name}), $color-invert);
-                                @include avariable('background-color', ('color-' + #{$name}), $color);
+                                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
+                                @include avariable('background-color', ('variant-' + #{$name}), $color);
                             }
 
                             &::before, &::after {

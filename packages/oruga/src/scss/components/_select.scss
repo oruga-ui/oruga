@@ -69,7 +69,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
-            @include avariable('border-color', ('color-' + #{$name}), $color);
+            @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
     &--rounded {

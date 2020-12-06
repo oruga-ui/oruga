@@ -21,7 +21,7 @@ $sidebar-zindex: 38 !default;
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
-                @include avariable('background-color', ('color-' + #{$name}), $color);
+                @include avariable('background-color', ('variant-' + #{$name}), $color);
             }
         }
         &--fixed {

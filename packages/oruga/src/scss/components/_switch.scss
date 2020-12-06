@@ -64,7 +64,7 @@ $switch-width: $switch-width-number * 1em !default;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name}-passive {
-                    @include avariable('background', ('color-' + #{$name}), $color);
+                    @include avariable('background', ('variant-' + #{$name}), $color);
                 }
             }
             &:before {
@@ -97,7 +97,7 @@ $switch-width: $switch-width-number * 1em !default;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &.o-color-#{$name} {
-                    @include avariable('background', ('color-' + #{$name}), $color);
+                    @include avariable('background', ('variant-' + #{$name}), $color);
                 }
             }
             &:before {
@@ -124,7 +124,7 @@ $switch-width: $switch-width-number * 1em !default;
                         @include evariable(
                             'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                            eparam('$param2', variable('color-' + $name, $color))
+                            eparam('$param2', variable('variant-' + $name, $color))
                         );
                     }
                 }
@@ -143,7 +143,7 @@ $switch-width: $switch-width-number * 1em !default;
                         @include evariable(
                             'box-shadow', $JOIN_EXPRESSION,
                             eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                            eparam('$param2', variable('color-' + $name, $color))
+                            eparam('$param2', variable('variant-' + $name, $color))
                         );
                     }
                 }
@@ -176,9 +176,9 @@ $switch-width: $switch-width-number * 1em !default;
                 @each $name, $pair in $colors {
                     $color: nth($pair, 1);
                     &.o-color-#{$name}-passive {
-                        @include avariable('border-color', ('color-' + #{$name}), $color);
+                        @include avariable('border-color', ('variant-' + #{$name}), $color);
                         &:before {
-                            @include avariable('background', ('color-' + #{$name}), $color);
+                            @include avariable('background', ('variant-' + #{$name}), $color);
                         }
                     }
                 }
@@ -192,9 +192,9 @@ $switch-width: $switch-width-number * 1em !default;
                     $color: nth($pair, 1);
                     &.o-color-#{$name} {
                         background: transparent;
-                        @include avariable('border-color', ('color-' + #{$name}), $color);
+                        @include avariable('border-color', ('variant-' + #{$name}), $color);
                         &:before {
-                            @include avariable('background', ('color-' + #{$name}), $color);
+                            @include avariable('background', ('variant-' + #{$name}), $color);
                         }
                     }
                 }
