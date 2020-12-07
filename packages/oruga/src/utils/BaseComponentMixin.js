@@ -18,6 +18,10 @@ export default {
             let globalClass = getValueByPath(config, `${component}.${field}.class`, '') || getValueByPath(config, `${component}.${field}`, '')
             let currentClass = this.$props[field]
 
+            if (Array.isArray(currentClass)) {
+                currentClass = currentClass.join(' ')
+            }
+
             defaultValue = defaultValue + suffix
 
             if (typeof currentClass === "function") {

@@ -66,6 +66,31 @@ describe('BaseComponentMixin', () => {
             expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue}`)
         })
 
+        it('applies local classes defined as array', async () => {
+            // TODO test local classes -- rootClass
+            const initialRootClassValue = 'initial-class'
+            const newGlobalRootClassValue = 'new-global-class'
+            const newRootClassValue = ['my-new-class', 'new-class']
+
+            setOptions(merge(config, {
+                button: {
+                    rootClass: newGlobalRootClassValue,
+                    override: false
+                }
+            }, true))
+            wrapper.setProps({ rootClass: newRootClassValue })
+            await wrapper.vm.$nextTick()
+            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
+
+            setOptions(merge(config, {
+                button: {
+                    override: true
+                }
+            }, true))
+            await wrapper.vm.$nextTick()
+            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
+        })
+
         it('applies override to single classes', async () => {
             const initialRootClassValue = 'initial-class'
             const newGlobalRootClassValue = 'new-global-class'
