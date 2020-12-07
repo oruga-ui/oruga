@@ -1,29 +1,29 @@
 <template>
     <div :class="rootClasses">
         <nav :class="navClasses">
-            <ul>
-                <li
-                    v-for="childItem in items"
-                    :key="childItem.newValue"
-                    v-show="childItem.visible"
-                    :class="childItem.headerClasses">
+            <div
+                v-for="childItem in items"
+                :key="childItem.newValue"
+                v-show="childItem.visible"
+                :class="itemWrapperClasses">
                     <o-slot-component
                         v-if="childItem.$scopedSlots.header"
                         :component="childItem"
                         name="header"
                         tag="button"
                         @click.native="childClick(childItem)"
+                        :class="childItem.headerClasses"
                     />
-                    <button v-else @click="childClick(childItem)">
+                    <button v-else @click="childClick(childItem)" :class="itemHeaderClasses(childItem)">
                         <o-icon
                             v-if="childItem.icon"
+                            :rootClass="itemHeaderIconClasses.join(' ')"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size"/>
-                        <span>{{ childItem.label }}</span>
+                        <span :class="itemHeaderTextClasses">{{ childItem.label }}</span>
                     </button>
-                </li>
-            </ul>
+            </div>
         </nav>
         <section :class="contentClasses">
             <slot/>
@@ -77,31 +77,59 @@ export default {
         positionClass: String,
         contentClass: String,
         transitioningClass: String,
+        tabItemHeaderClass: String,
+        tabItemHeaderIconClass: String,
+        tabItemHeaderTextClass: String,
         tabItemHeaderActiveClass: String,
-        tabItemHeaderDisabledClass: String
+        tabItemHeaderDisabledClass: String,
+        tabItemWrapperClass: String
+    },
+    methods: {
+        itemHeaderClasses(childItem) {
+            return [
+                this.computedClass('tabs', 'tabItemHeaderClass', 'o-tabs__nav-item'),
+                { [this.computedClass('tabs', 'tabItemHeaderActiveClass', 'o-tabs__nav-item--active')]: childItem.isActive },
+                { [this.computedClass('tabs', 'tabItemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: childItem.disabled }
+            ]
+        }
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('tabs', 'rootClass', 'o-tabs-wrapper'),
-                { [this.computedClass('tabs', 'positionWrapperClass', 'o-tabs-wrapper-position-', this.position)]: this.position && this.vertical },
-                { [this.computedClass('tabs', 'expandedWrapperClass', 'o-tabs-wrapper-fullwidth')]: this.expanded },
-                { [this.computedClass('tabs', 'verticalWrapperClass', 'o-tabs-wrapper-vertical')]: this.vertical },
-                { [this.computedClass('tabs', 'multilineWrapperClass', 'o-tabs-wrapper-multiline')]: this.multiline }
+                this.computedClass('tabs', 'rootClass', 'o-tabs'),
+                { [this.computedClass('tabs', 'positionWrapperClass', 'o-tabs--', this.position)]: this.position && this.vertical },
+                { [this.computedClass('tabs', 'expandedWrapperClass', 'o-tabs--fullwidth')]: this.expanded },
+                { [this.computedClass('tabs', 'verticalWrapperClass', 'o-tabs--vertical')]: this.vertical },
+                { [this.computedClass('tabs', 'multilineWrapperClass', 'o-tabs--multiline')]: this.multiline }
+            ]
+        },
+        itemWrapperClasses() {
+            return [
+                this.computedClass('tabs', 'tabItemWrapperClass', 'o-tabs__nav-item-wrapper'),
             ]
         },
         navClasses() {
             return [
-                this.computedClass('tabs', 'tabsClass', 'o-tabs'),
-                { [this.computedClass('tabs', 'typeClass', 'o-tabs-', this.type)]: this.type },
-                { [this.computedClass('tabs', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('tabs', 'positionClass', 'o-tabs-position-', this.position)]: this.position && !this.vertical },
+                this.computedClass('tabs', 'tabsClass', 'o-tabs__nav'),
+                { [this.computedClass('tabs', 'typeClass', 'o-tabs__nav--', this.type)]: this.type },
+                { [this.computedClass('tabs', 'sizeClass', 'o-tabs__nav--', this.size)]: this.size },
+                { [this.computedClass('tabs', 'positionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('tabs', 'contentClass', 'o-tab-content'),
-                { [this.computedClass('tabs', 'transitioningClass', 'o-tab-content-transitioning')]: this.isTransitioning }
+                this.computedClass('tabs', 'contentClass', 'o-tabs__content'),
+                { [this.computedClass('tabs', 'transitioningClass', 'o-tabs__content--transitioning')]: this.isTransitioning }
+            ]
+        },
+        itemHeaderIconClasses() {
+            return [
+                this.computedClass('tabs', 'tabItemHeaderIconClass', 'o-tabs__nav-item-icon')
+            ]
+        },
+        itemHeaderTextClasses() {
+            return [
+                this.computedClass('tabs', 'tabItemHeaderTextClass', 'o-tabs__nav-item-text')
             ]
         }
     }

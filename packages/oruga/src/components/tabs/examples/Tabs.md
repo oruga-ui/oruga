@@ -67,13 +67,13 @@
     <o-tabs type="boxed">
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="info-circle"></o-icon>
+                <o-icon icon="info-circle" rootClass="custom-icon"></o-icon>
                 <span> Issues 3 </span>
             </template>
         </o-tab-item>
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="retweet"></o-icon>
+                <o-icon icon="retweet" rootClass="custom-icon"></o-icon>
                 <span> Pull Requests {{count}} </span>
             </template>
         </o-tab-item>
@@ -94,6 +94,12 @@ export default {
     }
 }
 </script>
+
+<style>
+.custom-icon {
+  margin-right: 5px;
+}
+</style>
 ```
 :::
 
