@@ -17,9 +17,9 @@ $tabs-link-padding: 0.5em 1em !default;
 $tabs-boxed-link-radius: $base-border-radius !default;
 $tabs-boxed-link-hover-background-color: hsl(0, 0%, 96%) !default;
 $tabs-boxed-link-hover-border-bottom-color: hsl(0, 0%, 86%) !default;
-$tabs-boxed-link-active-background-color: hsl(0, 0%, 100%) !default;
-$tabs-boxed-link-active-border-color: hsl(0, 0%, 86%) !default;
-$tabs-boxed-link-active-border-bottom-color: transparent !default;
+$tabs-boxed-link-active-background-color: hsl(0, 0%, 100%) !default; // !!!
+$tabs-boxed-link-active-border-color: hsl(0, 0%, 86%) !default; //!!!
+$tabs-boxed-link-active-border-bottom-color: transparent !default; // !!!
 $tabs-toggle-link-border-color: hsl(0, 0%, 86%) !default;
 $tabs-toggle-link-border-style:	solid !default;
 $tabs-toggle-link-border-width: 1px !default;
@@ -121,6 +121,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             border: 1px solid transparent;
             background-color: transparent;
             align-items: center;
+            line-height: $tabs-link-line-height;
             @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
             @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
             @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
@@ -162,9 +163,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 }
             }
             .o-tabs__nav-item--active {
-                @include avariable('border-color', 'tabs-border-color', $tabs-border-bottom-color);
-                border-bottom-color: transparent;
-                background-color: #fff;
+                @include avariable('background-color', 'tabs-boxed-link-active-background-color', $tabs-boxed-link-active-background-color);
+                @include avariable('border-color', 'tabs-boxed-link-active-border-color', $tabs-boxed-link-active-border-color);
+                @include avariable('border-bottom-color', 'tabs-boxed-link-active-border-bottom-color', $tabs-boxed-link-active-border-bottom-color);
             }
         }
 
