@@ -6,7 +6,6 @@
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current - 1, {
-                disabled: !hasPrev,
                 class: prevBtnClasses,
                 'aria-label': ariaPreviousLabel
         })">
@@ -21,7 +20,6 @@
             :class="prevBtnClasses"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
-            :disabled="!hasPrev"
             :page="getPage(current - 1)">
             <o-icon
                 :icon="iconPrev"
@@ -35,7 +33,6 @@
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current + 1, {
-                disabled: !hasNext,
                 class: nextBtnClasses,
                 'aria-label': ariaNextLabel,
         })">
@@ -50,7 +47,6 @@
             :class="nextBtnClasses"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
-            :disabled="!hasNext"
             :page="getPage(current + 1)">
             <o-icon
                 :icon="iconNext"
@@ -211,6 +207,7 @@ export default {
         orderClass: String,
         simpleClass: String,
         roundedClass: String,
+        linkDisabledClass: String,
         sizeClass: String
     },
     computed: {
@@ -224,12 +221,14 @@ export default {
         },
         prevBtnClasses() {
             return [
-                this.computedClass('pagination', 'prevBtnClass', 'o-pag__previous')
+                this.computedClass('pagination', 'prevBtnClass', 'o-pag__previous'),
+                { [this.computedClass('pagination', 'linkDisabledClass', 'o-pag__link--disabled')]: !this.hasPrev }
             ]
         },
         nextBtnClasses() {
             return [
-                this.computedClass('pagination', 'nextBtnClass', 'o-pag__next')
+                this.computedClass('pagination', 'nextBtnClass', 'o-pag__next'),
+                { [this.computedClass('pagination', 'linkDisabledClass', 'o-pag__link--disabled')]: !this.hasNext }
             ]
         },
         infoClasses() {
@@ -255,7 +254,7 @@ export default {
         },
         linkCurrentClasses() {
             return [
-                this.computedClass('pagination', 'linkCurrentClass', 'o-pag__link--current')
+                this.computedClass('pagination', 'linkCurrentClass', 'o-pag__link--current'),
             ]
         },
 

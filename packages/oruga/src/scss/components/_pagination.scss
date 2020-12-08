@@ -8,7 +8,7 @@ $pagination-link-border-radius: $base-border-radius !default;
 $pagination-link-border: 1px solid transparent !default;
 $pagination-link-color: #363636 !default;
 $pagination-link-current-background-color: $primary !default;
-$pagination-link-current-border-color: $primary !default;
+$pagination-link-current-border-color: $primary !default; // !!!
 $pagination-link-current-color: #fff !default;
 $pagination-link-height: 2.25em !default;
 $pagination-link-hover-border-color: #b5b5b5 !default;
@@ -49,6 +49,11 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
 
         &--rounded {
             @include avariable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
+        }
+
+        &--disabled {
+            pointer-events: none;
+            @include avariable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
         }
 
         cursor: pointer;
