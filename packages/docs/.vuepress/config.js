@@ -76,7 +76,7 @@ module.exports = {
     ],
     sidebar: [
       {
-        title: 'Introduction',
+        title: 'Get started',
         collapsable: true,
         path: '/documentation/',
         sidebarDepth: 2
