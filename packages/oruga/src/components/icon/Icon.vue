@@ -1,15 +1,17 @@
 <template>
-    <span :class="rootClasses">
+    <span
+        :class="rootClasses"
+        :style="rootStyle">
         <i
             v-if="!useIconComponent"
             :class="[newPack, newIcon, newCustomSize, customClass]"/>
-
+        <!-- custom icon component -->
         <component
             v-else
             :is="useIconComponent"
             :icon="[newPack, newIcon]"
             :size="newCustomSize"
-            :class="[customClass]"/>
+            :class="[customClass]" />
     </span>
 </template>
 
@@ -17,7 +19,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
-import { getValueByPath } from '../../utils/helpers'
+import { defaultIfUndefined, getValueByPath } from '../../utils/helpers'
 
 /**
  * Icons take an important role of any application
@@ -67,6 +69,8 @@ export default {
         clickable: Boolean,
         /** Enable spin effect on icon */
         spin: Boolean,
+        /** Rotation 0-360 */
+        rotation: [Number, String],
         /** @ignore */
         both: Boolean, // This is used internally
         rootClass: String,
@@ -84,6 +88,11 @@ export default {
                 { [this.computedClass('icon', 'sizeClass', 'o-icon--', this.size)]: this.size },
                 { [this.computedClass('icon', 'variantClass', 'o-icon--', this.newVariant)]: this.newVariant }
             ]
+        },
+        rootStyle() {
+            return {
+                transform: `rotate(${defaultIfUndefined(this.rotation, 0)}deg)`
+            }
         },
         iconConfig() {
             return getIcons()[this.newPack]
