@@ -37,6 +37,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default {
     name: 'OSwitch',
     mixins: [BaseComponentMixin],
+    configField: 'switch',
     props: {
         /** @model */
         value: [String, Number, Boolean],
@@ -113,25 +114,25 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('switch', 'rootClass', 'o-switch'),
-                { [this.computedClass('switch', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('switch', 'disabledClass', 'o-switch-disabled')]: this.disabled },
-                { [this.computedClass('switch', 'roundedClass', 'o-switch-rounded')]: this.rounded },
-                { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined },
-                { [this.computedClass('switch', 'leftLabelClass', 'o-switch-left')]: this.leftLabel }
+                this.computedClass('rootClass', 'o-switch'),
+                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-switch-disabled')]: this.disabled },
+                { [this.computedClass('roundedClass', 'o-switch-rounded')]: this.rounded },
+                { [this.computedClass('outlinedClass', 'o-switch-outlined')]: this.outlined },
+                { [this.computedClass('leftLabelClass', 'o-switch-left')]: this.leftLabel }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('switch', 'checkClass', 'o-switch-check'),
-                { [this.computedClass('switch', 'animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
-                { [this.computedClass('switch', 'variantClass', 'o-color-', this.variant)]: this.variant },
-                { [this.computedClass('switch', 'passiveVariantClass', 'o-color-', this.passiveVariant + '-passive')]: this.passiveVariant }
+                this.computedClass('checkClass', 'o-switch-check'),
+                { [this.computedClass('animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
+                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant },
+                { [this.computedClass('passiveVariantClass', 'o-color-', this.passiveVariant + '-passive')]: this.passiveVariant }
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('switch', 'labelClass', 'o-switch-label')
+                this.computedClass('labelClass', 'o-switch-label')
             ]
         },
         computedValue: {

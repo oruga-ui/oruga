@@ -41,6 +41,7 @@ import { File } from '../../utils/ssr'
 export default {
     name: 'OUpload',
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'upload',
     inheritAttrs: false,
     provide() {
         return {
@@ -91,17 +92,17 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('upload', 'rootClass', 'o-upl'),
-                { [this.computedClass('upload', 'expandedClass', 'o-upl--expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-upl'),
+                { [this.computedClass('expandedClass', 'o-upl--expanded')]: this.expanded }
             ]
         },
         draggableClasses() {
             return [
-                this.computedClass('upload', 'draggableClass', 'o-upl__draggable'),
-                { [this.computedClass('upload', 'variantClass', 'o-upl__draggable--', this.variant)]: this.variant },
-                { [this.computedClass('upload', 'hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
-                { [this.computedClass('upload', 'variantClass', 'o-upl__draggable--hovered-', this.variant)]: this.variant && this.dragDropFocus },
-                { [this.computedClass('upload', 'disabledClass', 'o-upl__draggable--disabled')]: this.disabled }
+                this.computedClass('draggableClass', 'o-upl__draggable'),
+                { [this.computedClass('variantClass', 'o-upl__draggable--', this.variant)]: this.variant },
+                { [this.computedClass('hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
+                { [this.computedClass('variantClass', 'o-upl__draggable--hovered-', this.variant)]: this.variant && this.dragDropFocus },
+                { [this.computedClass('disabledClass', 'o-upl__draggable--disabled')]: this.disabled }
             ]
         }
     },

@@ -11,6 +11,7 @@ import { getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OCollapse',
     mixins: [BaseComponentMixin],
+    configField: 'collapse',
     props: {
         /**
          * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
@@ -72,12 +73,12 @@ export default {
     },
     render(h) {
         const trigger = h('div', {
-            staticClass: this.computedClass('collapse', 'triggerClass', 'o-clps__trigger'),
+            staticClass: this.computedClass('triggerClass', 'o-clps__trigger'),
             on: { click: this.toggle }
         }, this.$scopedSlots.trigger ? this.$scopedSlots.trigger({ open: this.isOpen }) : this.$slots.trigger )
         const content = h('transition', { props: { name: this.animation } }, [
             h('div', {
-                staticClass: this.computedClass('collapse', 'contentClass', 'o-clps__content'),
+                staticClass: this.computedClass('contentClass', 'o-clps__content'),
                 attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
                 directives: [{
                     name: 'show',
@@ -86,7 +87,7 @@ export default {
             }, this.$slots.default)
         ])
         return h('div',
-            { staticClass: this.computedClass('collapse', 'rootClass', 'o-clps') },
+            { staticClass: this.computedClass('rootClass', 'o-clps') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 }

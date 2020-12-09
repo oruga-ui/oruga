@@ -22,6 +22,7 @@ export default {
     inject: {
         $pagination: { name: '$pagination' }
     },
+    configField: 'pagination',
     props: {
         page: {
             type: Object,

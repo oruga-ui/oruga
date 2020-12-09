@@ -8,6 +8,7 @@ import TabbedChildMixin from '../../utils/TabbedChildMixin'
 export default {
     name: 'OTabItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('tab')],
+    configField: 'tabs',
     props: {
         /** Item will be disabled */
         disabled: Boolean,
@@ -19,14 +20,14 @@ export default {
     computed: {
         elementClasses() {
             return [
-                this.computedClass('tabs', 'itemClass', 'o-tab-item__content')
+                this.computedClass('itemClass', 'o-tab-item__content')
             ]
         },
         headerClasses() {
             return [
-                this.headerClass || this.computedClass('tabs', 'itemHeaderClass', 'o-tabs__nav-item'),
-                { [this.computedClass('tabs', 'itemHeaderActiveClass', 'o-tabs__nav-item--active')]: this.isActive },
-                { [this.computedClass('tabs', 'itemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: this.disabled }
+                this.headerClass || this.computedClass('itemHeaderClass', 'o-tabs__nav-item'),
+                { [this.computedClass('itemHeaderActiveClass', 'o-tabs__nav-item--active')]: this.isActive },
+                { [this.computedClass('itemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: this.disabled }
             ]
         }
     }

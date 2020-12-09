@@ -60,6 +60,7 @@ export default {
     directives: {
         trapFocus
     },
+    configField: 'dropdown',
     mixins: [BaseComponentMixin],
     provide() {
         return {
@@ -207,28 +208,28 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'rootClass', 'o-drop'),
-                { [this.computedClass('dropdown', 'disabledClass', 'o-drop--disabled')]: this.disabled },
-                { [this.computedClass('dropdown', 'expandedClass', 'o-drop--expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-drop'),
+                { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
+                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded }
             ]
         },
         triggerClasses() {
             return [
-                this.computedClass('dropdown', 'triggerClass', 'o-drop__trigger')
+                this.computedClass('triggerClass', 'o-drop__trigger')
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('dropdown', 'backgroundClass', 'o-drop__background')
+                this.computedClass('backgroundClass', 'o-drop__background')
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('dropdown', 'menuClass', 'o-drop__menu'),
-                { [this.computedClass('dropdown', 'positionClass', 'o-drop__menu-', this.position)]: this.position },
-                { [this.computedClass('dropdown', 'activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('dropdown', 'inlineClass', 'o-drop__menu--inline')]: this.inline },
-                { [this.computedClass('dropdown', 'mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
+                this.computedClass('menuClass', 'o-drop__menu'),
+                { [this.computedClass('positionClass', 'o-drop__menu-', this.position)]: this.position },
+                { [this.computedClass('activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
+                { [this.computedClass('inlineClass', 'o-drop__menu--inline')]: this.inline },
+                { [this.computedClass('mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },
         isMobileModal() {

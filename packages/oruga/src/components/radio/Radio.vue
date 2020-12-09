@@ -32,6 +32,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default {
     name: 'ORadio',
     mixins: [BaseComponentMixin, CheckRadioMixin],
+    configField: 'radio',
     props: {
         rootClass: String,
         disabledClass: String,
@@ -43,20 +44,20 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('radio', 'rootClass', 'o-radio'),
-                { [this.computedClass('radio', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('radio', 'disabledClass', 'o-radio-disabled')]: this.disabled }
+                this.computedClass('rootClass', 'o-radio'),
+                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-radio-disabled')]: this.disabled }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('radio', 'checkClass', 'o-radio-check'),
-                { [this.computedClass('radio', 'variantClass', 'o-color-', this.variant)]: this.variant }
+                this.computedClass('checkClass', 'o-radio-check'),
+                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant }
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('radio', 'labelClass', 'o-radio-label')
+                this.computedClass('labelClass', 'o-radio-label')
             ]
         }
     }

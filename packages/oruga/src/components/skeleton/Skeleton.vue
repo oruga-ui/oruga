@@ -11,6 +11,7 @@ import { toCssDimension } from '../../utils/helpers'
 export default {
     name: 'OSkeleton',
     mixins: [BaseComponentMixin],
+    configField: 'skeleton',
     props: {
         /** Show or hide loader	 */
         active: {
@@ -73,11 +74,11 @@ export default {
         for (let i = 0; i < this.count; i++) {
             items.push(h('div',
                 {
-                    staticClass: this.computedClass('skeleton', 'itemClass', 'o-sklt__item'),
+                    staticClass: this.computedClass('itemClass', 'o-sklt__item'),
                     class: [
-                      { [this.computedClass('skeleton', 'itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
-                      { [this.computedClass('skeleton', 'animationClass', 'o-sklt__item--animated')]: this.animated },
-                      { [this.computedClass('skeleton', 'sizeClass', 'o-sklt__item--', this.size)]: this.size },
+                      { [this.computedClass('itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
+                      { [this.computedClass('animationClass', 'o-sklt__item--animated')]: this.animated },
+                      { [this.computedClass('sizeClass', 'o-sklt__item--', this.size)]: this.size },
                     ],
                     key: i,
                     style: {
@@ -90,9 +91,9 @@ export default {
         }
         return h('div',
             {
-                staticClass: this.computedClass('skeleton', 'rootClass', 'o-sklt'),
+                staticClass: this.computedClass('rootClass', 'o-sklt'),
                 class: [
-                    { [this.computedClass('skeleton', 'positionClass', 'o-sklt--', this.position)]: this.position }
+                    { [this.computedClass('positionClass', 'o-sklt--', this.position)]: this.position }
                 ]
             },
             items

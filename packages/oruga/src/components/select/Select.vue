@@ -62,6 +62,7 @@ export default {
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'select',
     inheritAttrs: false,
     provide() {
         return {
@@ -115,30 +116,30 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('select', 'rootClass', 'o-ctrl-sel'),
-                { [this.computedClass('select', 'expandedClass', 'o-ctrl-sel--expanded')]: this.expanded },
+                this.computedClass('rootClass', 'o-ctrl-sel'),
+                { [this.computedClass('expandedClass', 'o-ctrl-sel--expanded')]: this.expanded },
             ]
         },
         selectClasses() {
             return [
-                this.computedClass('select', 'selectClass', 'o-sel'),
-                { [this.computedClass('select', 'roundedClass', 'o-sel--rounded')]: this.rounded },
-                { [this.computedClass('select', 'multipleClass', 'o-sel--multiple')]: this.multiple },
-                { [this.computedClass('select', 'sizeClass', 'o-sel--', this.size)]: this.size },
-                { [this.computedClass('select', 'variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
-                { [this.computedClass('select', 'iconsLeftClass', 'o-sel-icons-left')]: this.icon },
-                { [this.computedClass('select', 'iconsRightClass', 'o-sel-icons-right')]: this.iconRight },
-                { [this.computedClass('select', 'placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }
+                this.computedClass('selectClass', 'o-sel'),
+                { [this.computedClass('roundedClass', 'o-sel--rounded')]: this.rounded },
+                { [this.computedClass('multipleClass', 'o-sel--multiple')]: this.multiple },
+                { [this.computedClass('sizeClass', 'o-sel--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('iconsLeftClass', 'o-sel-icons-left')]: this.icon },
+                { [this.computedClass('iconsRightClass', 'o-sel-icons-right')]: this.iconRight },
+                { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }
             ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('select', 'iconLeftClass', 'o-sel__icon-left')
+                this.computedClass('iconLeftClass', 'o-sel__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('select', 'iconRightClass', 'o-sel__icon-right')
+                this.computedClass('iconRightClass', 'o-sel__icon-right')
             ]
         },
         placeholderVisible() {

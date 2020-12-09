@@ -4,6 +4,7 @@ export default {
     inject: {
         $field: { name: '$field', default: false }
     },
+    configField: 'field',
     computed: {
         parent() {
             return this.$field

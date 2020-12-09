@@ -11,11 +11,11 @@ const _defaultSuffixProcessor = (input, suffix) => {
 
 export default {
     methods: {
-        computedClass(component, field, defaultValue, suffix='') {
-            let override = getValueByPath(config, `${component}.override`, false)
-            let overrideClass = getValueByPath(config, `${component}.${field}.override`, override)
+        computedClass(field, defaultValue, suffix='') {
+            let override = getValueByPath(config, `${this.$options.configField}.override`, false)
+            let overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
 
-            let globalClass = getValueByPath(config, `${component}.${field}.class`, '') || getValueByPath(config, `${component}.${field}`, '')
+            let globalClass = getValueByPath(config, `${this.$options.configField}.${field}.class`, '') || getValueByPath(config, `${this.$options.configField}.${field}`, '')
             let currentClass = this.$props[field]
 
             if (Array.isArray(currentClass)) {

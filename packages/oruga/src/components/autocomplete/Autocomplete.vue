@@ -96,6 +96,7 @@ import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, d
  */
 export default {
     name: 'OAutocomplete',
+    configField: 'autocomplete',
     components: {
         [Input.name]: Input
     },
@@ -197,25 +198,25 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('autocomplete', 'rootClass', 'o-acp'),
-                { [this.computedClass('autocomplete', 'expandedClass', 'o-acp--expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-acp'),
+                { [this.computedClass('expandedClass', 'o-acp--expanded')]: this.expanded }
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('autocomplete', 'menuClass', 'o-acp__menu'),
-                { [this.computedClass('autocomplete', 'menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)]: !this.appendToBody },
+                this.computedClass('menuClass', 'o-acp__menu'),
+                { [this.computedClass('menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)]: !this.appendToBody },
             ]
         },
         itemClasses() {
             return [
-                this.computedClass('autocomplete', 'itemClass', 'o-acp__item')
+                this.computedClass('itemClass', 'o-acp__item')
             ]
         },
         itemEmptyClasses() {
             return [
                 ...this.itemClasses,
-                this.computedClass('autocomplete', 'itemDisabledClass', 'o-acp__item--disabled')
+                this.computedClass('itemDisabledClass', 'o-acp__item--disabled')
             ]
         },
         inputBind() {
@@ -377,7 +378,7 @@ export default {
         itemOptionClasses(option) {
             return [
                 ...this.itemClasses,
-                { [this.computedClass('autocomplete', 'itemHoverClass', 'o-acp__item--hover')]: option === this.hovered }
+                { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: option === this.hovered }
             ]
         },
 

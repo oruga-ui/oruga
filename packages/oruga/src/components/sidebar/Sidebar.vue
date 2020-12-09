@@ -32,6 +32,7 @@ import { removeElement, getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OSidebar',
     mixins: [BaseComponentMixin],
+    configField: 'sidebar',
     props: {
         /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
         open: Boolean,
@@ -139,30 +140,30 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('sidebar', 'rootClass', 'o-side')
+                this.computedClass('rootClass', 'o-side')
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('sidebar', 'backgroundClass', 'o-side__background')
+                this.computedClass('backgroundClass', 'o-side__background')
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('sidebar', 'contentClass', 'o-side__content'),
-                { [this.computedClass('sidebar', 'variantClass', 'o-side__content--', this.variant)]: this.variant },
-                { [this.computedClass('sidebar', 'fixedClass', 'o-side__content--fixed')]: this.isFixed },
-                { [this.computedClass('sidebar', 'staticClass', 'o-side__content--static')]: this.isStatic },
-                { [this.computedClass('sidebar', 'absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },
-                { [this.computedClass('sidebar', 'fullheightClass', 'o-side__content--fullheight')]: this.fullheight },
-                { [this.computedClass('sidebar', 'fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth },
-                { [this.computedClass('sidebar', 'rightClass', 'o-side__content--right')]: this.right },
-                { [this.computedClass('sidebar', 'reduceClass', 'o-side__content--mini')]: this.reduce },
-                { [this.computedClass('sidebar', 'expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
-                { [this.computedClass('sidebar', 'expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
-                { [this.computedClass('sidebar', 'mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduce' },
-                { [this.computedClass('sidebar', 'mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hide' },
-                { [this.computedClass('sidebar', 'mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' }
+                this.computedClass('contentClass', 'o-side__content'),
+                { [this.computedClass('variantClass', 'o-side__content--', this.variant)]: this.variant },
+                { [this.computedClass('fixedClass', 'o-side__content--fixed')]: this.isFixed },
+                { [this.computedClass('staticClass', 'o-side__content--static')]: this.isStatic },
+                { [this.computedClass('absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },
+                { [this.computedClass('fullheightClass', 'o-side__content--fullheight')]: this.fullheight },
+                { [this.computedClass('fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth },
+                { [this.computedClass('rightClass', 'o-side__content--right')]: this.right },
+                { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce },
+                { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
+                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
+                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduce' },
+                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hide' },
+                { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' }
             ]
         },
         cancelOptions() {

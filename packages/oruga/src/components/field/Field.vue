@@ -60,6 +60,7 @@ export default {
     components: {
         [FieldBody.name]: FieldBody
     },
+    configField: 'field',
     mixins: [BaseComponentMixin],
     provide() {
         return {
@@ -132,37 +133,37 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('field', 'rootClass', 'o-field'),
-                { [this.computedClass('field', 'horizontalClass', 'o-field--horizontal')]: this.horizontal }
+                this.computedClass('rootClass', 'o-field'),
+                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal }
             ]
         },
         messageClasses() {
             return [
-                this.computedClass('field', 'messageClass', 'o-field__message'),
-                { [this.computedClass('field', 'variantClass', 'o-field__message-', this.newVariant)]: this.newVariant }
+                this.computedClass('messageClass', 'o-field__message'),
+                { [this.computedClass('variantClass', 'o-field__message-', this.newVariant)]: this.newVariant }
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('field', 'labelClass', 'o-field__label'),
-                { [this.computedClass('field', 'labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize }
+                this.computedClass('labelClass', 'o-field__label'),
+                { [this.computedClass('labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize }
             ]
         },
         labelHorizontalClasses() {
             return [
-                this.computedClass('field', 'labelHorizontalClass', 'o-field__horizontal-label')
+                this.computedClass('labelHorizontalClass', 'o-field__horizontal-label')
             ]
         },
         bodyClasses() {
             return [
-                this.computedClass('field', 'bodyClass', 'o-field__body')
+                this.computedClass('bodyClass', 'o-field__body')
             ]
         },
         innerFieldClasses() {
             return [
-                { [this.computedClass('field', 'groupMultilineClass', 'o-field--grouped-multiline')]: this.groupMultiline },
-                { [this.computedClass('field', 'groupedClass', 'o-field--grouped')]: this.grouped },
-                { [this.computedClass('field', 'addonsClass', 'o-field--addons')]: !this.grouped && this.hasAddons() },
+                { [this.computedClass('groupMultilineClass', 'o-field--grouped-multiline')]: this.groupMultiline },
+                { [this.computedClass('groupedClass', 'o-field--grouped')]: this.grouped },
+                { [this.computedClass('addonsClass', 'o-field--addons')]: !this.grouped && this.hasAddons() },
             ]
         },
         parent() {

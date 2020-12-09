@@ -38,6 +38,7 @@ export default {
     components: {
         [Tooltip.name]: Tooltip
     },
+    configField: 'slider',
     inheritAttrs: false,
     inject: {
         $slider: { name: '$slider' }

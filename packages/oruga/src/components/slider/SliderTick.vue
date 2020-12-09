@@ -17,6 +17,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default {
     name: 'OSliderTick',
     mixins: [BaseComponentMixin],
+    configField: 'slider',
     inject: {
         $slider: { name: '$slider' }
     },
@@ -33,13 +34,13 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('slider', 'tickClass', 'o-slide__tick'),
-                { [this.computedClass('slider', 'tickHiddenClass', 'o-slide__tick--hidden')]: this.hidden },
+                this.computedClass('tickClass', 'o-slide__tick'),
+                { [this.computedClass('tickHiddenClass', 'o-slide__tick--hidden')]: this.hidden },
             ]
         },
         tickLabelClasses() {
             return [
-                this.computedClass('slider', 'tickLabelClass', 'o-slide__tick-label')
+                this.computedClass('tickLabelClass', 'o-slide__tick-label')
             ]
         },
         position() {

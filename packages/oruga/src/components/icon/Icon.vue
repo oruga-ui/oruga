@@ -30,6 +30,7 @@ import { defaultIfUndefined, getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OIcon',
     mixins: [BaseComponentMixin],
+    configField: 'icon',
     props: {
         /**
          * 	Color of the icon, optional
@@ -82,11 +83,11 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('icon', 'rootClass', 'o-icon'),
-                { [this.computedClass('icon', 'clickableClass', 'o-icon--clickable')]: this.clickable },
-                { [this.computedClass('icon', 'spinClass', 'o-icon--spin')]: this.spin },
-                { [this.computedClass('icon', 'sizeClass', 'o-icon--', this.size)]: this.size },
-                { [this.computedClass('icon', 'variantClass', 'o-icon--', this.newVariant)]: this.newVariant }
+                this.computedClass('rootClass', 'o-icon'),
+                { [this.computedClass('clickableClass', 'o-icon--clickable')]: this.clickable },
+                { [this.computedClass('spinClass', 'o-icon--spin')]: this.spin },
+                { [this.computedClass('sizeClass', 'o-icon--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-icon--', this.newVariant)]: this.newVariant }
             ]
         },
         rootStyle() {

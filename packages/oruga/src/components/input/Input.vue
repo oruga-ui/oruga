@@ -70,6 +70,7 @@ export default {
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'input',
     inheritAttrs: false,
     provide() {
         return {
@@ -142,34 +143,34 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('input', 'rootClass', 'o-ctrl-input'),
-                { [this.computedClass('input', 'controlExpandedClass', 'o-ctrl-input--expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-ctrl-input'),
+                { [this.computedClass('controlExpandedClass', 'o-ctrl-input--expanded')]: this.expanded }
             ]
         },
         inputClasses() {
             return [
-                this.computedClass('input', 'inputClass', 'o-input'),
-                { [this.computedClass('input', 'roundedClass', 'o-input--rounded')]: this.rounded },
-                { [this.computedClass('input', 'sizeClass', 'o-input--', this.size)]: this.size },
-                { [this.computedClass('input', 'variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
-                { [this.computedClass('input', 'textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
-                { [this.computedClass('input', 'iconsLeftClass', 'o-input-icons-left')]: this.icon },
-                { [this.computedClass('input', 'iconsRightClass', 'o-input-icons-right')]: this.hasIconRight }
+                this.computedClass('inputClass', 'o-input'),
+                { [this.computedClass('roundedClass', 'o-input--rounded')]: this.rounded },
+                { [this.computedClass('sizeClass', 'o-input--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
+                { [this.computedClass('iconsLeftClass', 'o-input-icons-left')]: this.icon },
+                { [this.computedClass('iconsRightClass', 'o-input-icons-right')]: this.hasIconRight }
             ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('input', 'iconLeftClass', 'o-input__icon-left')
+                this.computedClass('iconLeftClass', 'o-input__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('input', 'iconRightClass', 'o-input__icon-right')
+                this.computedClass('iconRightClass', 'o-input__icon-right')
             ]
         },
         counterClasses() {
             return [
-                this.computedClass('input', 'counterClass', 'o-input__counter')
+                this.computedClass('counterClass', 'o-input__counter')
             ]
         },
         computedValue: {

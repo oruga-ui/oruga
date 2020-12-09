@@ -30,7 +30,7 @@ describe('BaseComponentMixin', () => {
                 }
             }, true))
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'test', initialTestValue)).toBe(`${initialTestValue} ${newTestValue}`)
+            expect(wrapper.vm.computedClass('test', initialTestValue)).toBe(`${initialTestValue} ${newTestValue}`)
 
             setOptions(merge(config, {
                 button: {
@@ -38,7 +38,7 @@ describe('BaseComponentMixin', () => {
                 }
             }, true))
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'test', initialTestValue)).toBe(newTestValue)
+            expect(wrapper.vm.computedClass('test', initialTestValue)).toBe(newTestValue)
         })
 
         it('applies local classes as expected', async () => {
@@ -55,7 +55,7 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
             setOptions(merge(config, {
                 button: {
@@ -63,7 +63,7 @@ describe('BaseComponentMixin', () => {
                 }
             }, true))
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue}`)
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue}`)
         })
 
         it('applies local classes defined as array', async () => {
@@ -80,7 +80,7 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
 
             setOptions(merge(config, {
                 button: {
@@ -88,7 +88,7 @@ describe('BaseComponentMixin', () => {
                 }
             }, true))
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
         })
 
         it('applies override to single classes', async () => {
@@ -117,10 +117,10 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue))
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
                 .toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
-            expect(wrapper.vm.computedClass('button', 'sizeClass', initialSizeClassValue, sizeSuffix))
+            expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
                 .toBe(`${newGlobalSizeClassValue}${sizeSuffix} ${newSizeClassValue}${sizeSuffix}`)
 
 
@@ -138,10 +138,10 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue))
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
                 .toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
-            expect(wrapper.vm.computedClass('button', 'sizeClass', initialSizeClassValue, sizeSuffix))
+            expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
                 .toBe(`${newGlobalSizeClassValue}${sizeSuffix} ${newSizeClassValue}${sizeSuffix}`)
 
             /* Override sizeClass using a function */
@@ -160,10 +160,10 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue))
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
                 .toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
-            expect(wrapper.vm.computedClass('button', 'sizeClass', initialSizeClassValue, sizeSuffix))
+            expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
                 .toBe(`${newGlobalSizeClassValue}suff-${sizeSuffix} ${newSizeClassValue}${sizeSuffix}`)
 
             /* Override sizeClass from prop using a function */
@@ -182,10 +182,10 @@ describe('BaseComponentMixin', () => {
             }, true))
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: (suffix) => `${newSizeClassValue}suff-${suffix}` })
             await wrapper.vm.$nextTick()
-            expect(wrapper.vm.computedClass('button', 'rootClass', initialRootClassValue))
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
                 .toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
-            expect(wrapper.vm.computedClass('button', 'sizeClass', initialSizeClassValue, sizeSuffix))
+            expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
                 .toBe(`${newGlobalSizeClassValue}suff-${sizeSuffix} ${newSizeClassValue}suff-${sizeSuffix}`)
         })
     })

@@ -6,6 +6,7 @@ import { getStyleValue } from '../../utils/helpers'
 export default {
     name: 'OStepItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('step')],
+    configField: 'steps',
     props: {
         /** Step marker content (when there is no icon) */
         step: [String, Number],
@@ -24,16 +25,16 @@ export default {
     computed: {
         elementClasses() {
             return [
-                this.computedClass('steps', 'itemClass', 'o-step-item')
+                this.computedClass('itemClass', 'o-step-item')
             ]
         },
         itemClasses() {
             return [
                 this.headerClass,
-                this.computedClass('steps', 'itemClass', 'o-step-item'),
-                { [this.computedClass('steps', 'variantClass', 'o-color-', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
-                { [this.computedClass('steps', 'itemActiveClass', 'o-step-item-active')]: this.isActive },
-                { [this.computedClass('steps', 'itemPreviousClass', 'o-step-item-previous')]: this.parent.activeItem.index > this.index }
+                this.computedClass('itemClass', 'o-step-item'),
+                { [this.computedClass('variantClass', 'o-color-', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
+                { [this.computedClass('itemActiveClass', 'o-step-item-active')]: this.isActive },
+                { [this.computedClass('itemPreviousClass', 'o-step-item-previous')]: this.parent.activeItem.index > this.index }
             ]
         }
     }

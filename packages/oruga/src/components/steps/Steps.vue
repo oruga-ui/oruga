@@ -79,6 +79,7 @@ export default {
         [Button.name]: Button,
         [Icon.name]: Icon
     },
+    configField: 'steps',
     mixins: [BaseComponentMixin, TabbedMixin('step')],
     props: {
         /**
@@ -166,51 +167,51 @@ export default {
     computed: {
         wrapperClasses() {
             return [
-                this.computedClass('steps', 'rootClass', 'o-steps-wrapper'),
-                { [this.computedClass('steps', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('steps', 'verticalClass', 'o-steps-wrapper-vertical')]: this.vertical },
-                { [this.computedClass('steps', 'positionClass', 'o-steps-wrapper-position-', this.position)]: this.position && this.vertical },
+                this.computedClass('rootClass', 'o-steps-wrapper'),
+                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
+                { [this.computedClass('verticalClass', 'o-steps-wrapper-vertical')]: this.vertical },
+                { [this.computedClass('positionClass', 'o-steps-wrapper-position-', this.position)]: this.position && this.vertical },
             ]
         },
         mainClasses() {
             return [
-                this.computedClass('steps', 'stepsClass', 'o-steps'),
-                { [this.computedClass('steps', 'variantClass', 'o-color-', this.variant)]: this.variant },
-                { [this.computedClass('steps', 'labelPositionClass', 'o-steps-label-', this.labelPosition)]: this.labelPosition },
-                { [this.computedClass('steps', 'animatedClass', 'o-steps-animated')]: this.animated },
-                { [this.computedClass('steps', 'roundedClass', 'o-steps-rounded')]: this.rounded },
-                { [this.computedClass('steps', 'sizeClass', 'o-steps-mobile-', this.mobileMode)]: this.mobileMode }
+                this.computedClass('stepsClass', 'o-steps'),
+                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant },
+                { [this.computedClass('labelPositionClass', 'o-steps-label-', this.labelPosition)]: this.labelPosition },
+                { [this.computedClass('animatedClass', 'o-steps-animated')]: this.animated },
+                { [this.computedClass('roundedClass', 'o-steps-rounded')]: this.rounded },
+                { [this.computedClass('sizeClass', 'o-steps-mobile-', this.mobileMode)]: this.mobileMode }
             ]
         },
         stepItemsClasses() {
             return [
-                this.computedClass('steps', 'stepItemsClass', 'o-step-items')
+                this.computedClass('stepItemsClass', 'o-step-items')
             ]
         },
         stepMarkerClasses() {
             return [
-                this.computedClass('steps', 'stepMarkerClass', 'o-step-marker')
+                this.computedClass('stepMarkerClass', 'o-step-marker')
             ]
         },
         stepContentClasses() {
             return [
-                this.computedClass('steps', 'stepContentClass', 'o-step-content'),
-                { [this.computedClass('steps', 'stepContentTransitioningClass', 'o-step-content-transitioning')]: this.isTransitioning }
+                this.computedClass('stepContentClass', 'o-step-content'),
+                { [this.computedClass('stepContentTransitioningClass', 'o-step-content-transitioning')]: this.isTransitioning }
             ]
         },
         stepNavigationClasses() {
             return [
-                this.computedClass('steps', 'stepNavigationClass', 'o-step-navigation')
+                this.computedClass('stepNavigationClass', 'o-step-navigation')
             ]
         },
         stepDetailsClasses() {
             return [
-                this.computedClass('steps', 'stepDetailsClass', 'o-step-details')
+                this.computedClass('stepDetailsClass', 'o-step-details')
             ]
         },
         stepTitleClasses() {
             return [
-                this.computedClass('steps', 'stepTitleClass', 'o-step-title')
+                this.computedClass('stepTitleClass', 'o-step-title')
             ]
         },
 
@@ -280,8 +281,8 @@ export default {
     methods: {
         stepLinkClasses(childItem) {
             return [
-                this.computedClass('steps', 'stepLinkClass', 'o-step-link'),
-                { [this.computedClass('steps', 'stepLinkClickableClass', 'o-step-link-clickable')]: this.isItemClickable(childItem) }
+                this.computedClass('stepLinkClass', 'o-step-link'),
+                { [this.computedClass('stepLinkClickableClass', 'o-step-link-clickable')]: this.isItemClickable(childItem) }
             ]
         },
         /**

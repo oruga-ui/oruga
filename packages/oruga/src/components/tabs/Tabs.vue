@@ -47,6 +47,7 @@ import { getValueByPath } from '../../utils/helpers'
 export default {
     name: 'OTabs',
     mixins: [BaseComponentMixin, TabbedMixin('tab')],
+    configField: 'tabs',
     props: {
         /**
          * Tab type
@@ -87,49 +88,49 @@ export default {
     methods: {
         itemHeaderClasses(childItem) {
             return [
-                this.computedClass('tabs', 'tabItemHeaderClass', 'o-tabs__nav-item'),
-                { [this.computedClass('tabs', 'tabItemHeaderActiveClass', 'o-tabs__nav-item--active')]: childItem.isActive },
-                { [this.computedClass('tabs', 'tabItemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: childItem.disabled }
+                this.computedClass('tabItemHeaderClass', 'o-tabs__nav-item'),
+                { [this.computedClass('tabItemHeaderActiveClass', 'o-tabs__nav-item--active')]: childItem.isActive },
+                { [this.computedClass('tabItemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: childItem.disabled }
             ]
         }
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('tabs', 'rootClass', 'o-tabs'),
-                { [this.computedClass('tabs', 'positionWrapperClass', 'o-tabs--', this.position)]: this.position && this.vertical },
-                { [this.computedClass('tabs', 'expandedWrapperClass', 'o-tabs--fullwidth')]: this.expanded },
-                { [this.computedClass('tabs', 'verticalWrapperClass', 'o-tabs--vertical')]: this.vertical },
-                { [this.computedClass('tabs', 'multilineWrapperClass', 'o-tabs--multiline')]: this.multiline }
+                this.computedClass('rootClass', 'o-tabs'),
+                { [this.computedClass('positionWrapperClass', 'o-tabs--', this.position)]: this.position && this.vertical },
+                { [this.computedClass('expandedWrapperClass', 'o-tabs--fullwidth')]: this.expanded },
+                { [this.computedClass('verticalWrapperClass', 'o-tabs--vertical')]: this.vertical },
+                { [this.computedClass('multilineWrapperClass', 'o-tabs--multiline')]: this.multiline }
             ]
         },
         itemWrapperClasses() {
             return [
-                this.computedClass('tabs', 'tabItemWrapperClass', 'o-tabs__nav-item-wrapper'),
+                this.computedClass('tabItemWrapperClass', 'o-tabs__nav-item-wrapper'),
             ]
         },
         navClasses() {
             return [
-                this.computedClass('tabs', 'tabsClass', 'o-tabs__nav'),
-                { [this.computedClass('tabs', 'typeClass', 'o-tabs__nav--', this.type)]: this.type },
-                { [this.computedClass('tabs', 'sizeClass', 'o-tabs__nav--', this.size)]: this.size },
-                { [this.computedClass('tabs', 'positionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
+                this.computedClass('tabsClass', 'o-tabs__nav'),
+                { [this.computedClass('typeClass', 'o-tabs__nav--', this.type)]: this.type },
+                { [this.computedClass('sizeClass', 'o-tabs__nav--', this.size)]: this.size },
+                { [this.computedClass('positionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('tabs', 'contentClass', 'o-tabs__content'),
-                { [this.computedClass('tabs', 'transitioningClass', 'o-tabs__content--transitioning')]: this.isTransitioning }
+                this.computedClass('contentClass', 'o-tabs__content'),
+                { [this.computedClass('transitioningClass', 'o-tabs__content--transitioning')]: this.isTransitioning }
             ]
         },
         itemHeaderIconClasses() {
             return [
-                this.computedClass('tabs', 'tabItemHeaderIconClass', 'o-tabs__nav-item-icon')
+                this.computedClass('tabItemHeaderIconClass', 'o-tabs__nav-item-icon')
             ]
         },
         itemHeaderTextClasses() {
             return [
-                this.computedClass('tabs', 'tabItemHeaderTextClass', 'o-tabs__nav-item-text')
+                this.computedClass('tabItemHeaderTextClass', 'o-tabs__nav-item-text')
             ]
         }
     }

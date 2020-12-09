@@ -58,6 +58,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
+    configField: 'modal',
     directives: {
         trapFocus
     },
@@ -178,23 +179,23 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('modal', 'rootClass', 'o-modal'),
+                this.computedClass('rootClass', 'o-modal'),
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('modal', 'backgroundClass', 'o-modal__background')
+                this.computedClass('backgroundClass', 'o-modal__background')
             ]
         },
         contentClasses() {
             return [
-                { [this.computedClass('modal', 'contentClass', 'o-modal__content')]: !this.custom },
-                { [this.computedClass('modal', 'fullScreenClass', 'o-modal__content--fullscreen')]: this.fullScreen }
+                { [this.computedClass('contentClass', 'o-modal__content')]: !this.custom },
+                { [this.computedClass('fullScreenClass', 'o-modal__content--fullscreen')]: this.fullScreen }
             ]
         },
         closeClasses() {
             return [
-                this.computedClass('modal', 'closeClass', 'o-modal__close')
+                this.computedClass('closeClass', 'o-modal__close')
             ]
         },
         cancelOptions() {

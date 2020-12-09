@@ -47,6 +47,7 @@ export default {
     components: {
         [Icon.name]: Icon
     },
+    configField: 'button',
     mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
@@ -136,21 +137,21 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('button', 'rootClass', 'o-btn'),
-                { [this.computedClass('button', 'sizeClass', 'o-btn--', this.size)]: this.size },
-                { [this.computedClass('button', 'variantClass', 'o-btn--', this.variant)]: this.variant },
-                { [this.computedClass('button', 'outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
-                { [this.computedClass('button', 'invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
-                { [this.computedClass('button', 'outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
-                { [this.computedClass('button', 'invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
-                { [this.computedClass('button', 'expandedClass', 'o-btn--expanded')]: this.expanded },
-                { [this.computedClass('button', 'roundedClass', 'o-btn--rounded')]: this.rounded },
-                { [this.computedClass('button', 'disabledClass', 'o-btn--disabled')]: this.disabled },
+                this.computedClass('rootClass', 'o-btn'),
+                { [this.computedClass('sizeClass', 'o-btn--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-btn--', this.variant)]: this.variant },
+                { [this.computedClass('outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
+                { [this.computedClass('invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
+                { [this.computedClass('outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
+                { [this.computedClass('invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
+                { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
+                { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
+                { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
             ]
         },
         iconClasses() {
           return [
-            this.computedClass('button', 'iconClass', 'o-btn__icon'),
+            this.computedClass('iconClass', 'o-btn__icon'),
           ]
         },
         computedTag() {

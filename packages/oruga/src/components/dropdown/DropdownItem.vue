@@ -18,6 +18,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default {
     name: 'ODropdownItem',
     mixins: [BaseComponentMixin],
+    configField: 'dropdown',
     inject: ["$dropdown"],
     props: {
         /**
@@ -53,9 +54,9 @@ export default {
         },
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'itemClass', 'o-drop__item'),
-                { [this.computedClass('dropdown', 'itemDisabledClass', 'o-drop__item--disabled')]: (this.parent.disabled || this.disabled) },
-                { [this.computedClass('dropdown', 'itemActiveClass', 'o-drop__item--active')]: this.isActive }
+                this.computedClass('itemClass', 'o-drop__item'),
+                { [this.computedClass('itemDisabledClass', 'o-drop__item--disabled')]: (this.parent.disabled || this.disabled) },
+                { [this.computedClass('itemActiveClass', 'o-drop__item--active')]: this.isActive }
             ]
         },
         ariaRoleItem() {

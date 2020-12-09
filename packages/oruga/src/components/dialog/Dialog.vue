@@ -88,6 +88,7 @@ export default {
         [Button.name]: Button,
         [Input.name]: Input
     },
+    configField: 'dialog',
     directives: {
         trapFocus
     },
@@ -173,40 +174,40 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('dialog', 'rootClass', 'o-dialog'),
-                { [this.computedClass('dialog', 'fullScreenClass', 'o-dialog-fullscreen')]: this.fullScreen }
+                this.computedClass('rootClass', 'o-dialog'),
+                { [this.computedClass('fullScreenClass', 'o-dialog-fullscreen')]: this.fullScreen }
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('dialog', 'backgroundClass', 'o-dialog-background')
+                this.computedClass('backgroundClass', 'o-dialog-background')
             ]
         },
         cardClasses() {
             return [
-                this.computedClass('dialog', 'cardClass', 'o-dialog-card')
+                this.computedClass('cardClass', 'o-dialog-card')
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('dialog', 'contentClass', 'o-dialog-content'),
-                { [this.computedClass('dialog', 'is-titleless', 'is-titleless')]: !this.title },
-                { [this.computedClass('dialog', 'is-flex', 'is-flex')]: this.hasIcon }
+                this.computedClass('contentClass', 'o-dialog-content'),
+                { [this.computedClass('is-titleless', 'is-titleless')]: !this.title },
+                { [this.computedClass('is-flex', 'is-flex')]: this.hasIcon }
             ]
         },
         headerClasses() {
             return [
-                this.computedClass('dialog', 'headerClass', 'o-dialog-header')
+                this.computedClass('headerClass', 'o-dialog-header')
             ]
         },
         footerClasses() {
             return [
-                this.computedClass('dialog', 'footerClass', 'o-dialog-footer')
+                this.computedClass('footerClass', 'o-dialog-footer')
             ]
         },
         closeClasses() {
             return [
-                this.computedClass('dialog', 'closeClass', 'o-dialog-close')
+                this.computedClass('closeClass', 'o-dialog-close')
             ]
         },
         /**

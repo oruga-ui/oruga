@@ -31,6 +31,7 @@ export default {
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin],
+    configField: 'loading',
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
@@ -92,19 +93,19 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('loading', 'rootClass', 'o-load'),
-                { [this.computedClass('loading', 'fullPageClass', 'o-load--fullpage')]: this.displayInFullPage }
+                this.computedClass('rootClass', 'o-load'),
+                { [this.computedClass('fullPageClass', 'o-load--fullpage')]: this.displayInFullPage }
             ]
         },
         backgroundClasses() {
             return [
-                this.computedClass('loading', 'backgroundClass', 'o-load__background')
+                this.computedClass('backgroundClass', 'o-load__background')
             ]
         },
         iconClasses() {
             return [
-                this.computedClass('loading', 'iconClass', 'o-load__icon'),
-                { [this.computedClass('loading', 'fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
+                this.computedClass('iconClass', 'o-load__icon'),
+                { [this.computedClass('fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
             ]
         }
     },

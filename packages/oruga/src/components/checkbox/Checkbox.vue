@@ -35,6 +35,7 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
 export default {
     name: 'OCheckbox',
     mixins: [BaseComponentMixin, CheckRadioMixin],
+    configField: 'checkbox',
     props: {
         /**
          * Same as native indeterminate
@@ -64,20 +65,20 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('checkbox', 'rootClass', 'o-checkbox'),
-                { [this.computedClass('checkbox', 'sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('checkbox', 'disabledClass', 'o-checkbox-disabled')]: this.disabled }
+                this.computedClass('rootClass', 'o-checkbox'),
+                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-checkbox-disabled')]: this.disabled }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('checkbox', 'checkClass', 'o-checkbox-check'),
-                { [this.computedClass('checkbox', 'variantClass', 'o-color-', this.variant)]: this.variant }
+                this.computedClass('checkClass', 'o-checkbox-check'),
+                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant }
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('checkbox', 'labelClass', 'o-checkbox-label')
+                this.computedClass('labelClass', 'o-checkbox-label')
             ]
         }
     }
