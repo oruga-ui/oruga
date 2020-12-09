@@ -29,10 +29,10 @@ exports[`OSteps render correctly 1`] = `
         <div class="o-step-item" style="display: none;"></div>
         <div class="o-step-item" style="display: none;"></div>
     </section>
-    <nav class="o-step-navigation"><button type="button" role="button" class="o-btn o-btn--disabled"><span class="o-icon o-btn__icon"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+    <nav class="o-step-navigation"><button type="button" role="button" class="o-btn o-btn--disabled"><span class="o-icon o-btn__icon" style="transform: rotate(0deg);"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
             <!---->
             <!---->
-        </button> <button type="button" role="button" class="o-btn"><span class="o-icon o-btn__icon"><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+        </button> <button type="button" role="button" class="o-btn"><span class="o-icon o-btn__icon" style="transform: rotate(0deg);"><i class="mdi mdi-chevron-right mdi-24px"></i></span>
             <!---->
             <!---->
         </button></nav>

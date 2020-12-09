@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OIcon render correctly 1`] = `<span class="o-icon"><i class="mdi mdi-undefined mdi-24px"></i></span>`;
+exports[`OIcon render correctly 1`] = `<span class="o-icon" style="transform: rotate(0deg);"><i class="mdi mdi-undefined mdi-24px"></i></span>`;

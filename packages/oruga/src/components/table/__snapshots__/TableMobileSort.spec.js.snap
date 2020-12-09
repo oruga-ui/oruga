@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTableMobileSort render correctly 1`] = `
-<div class="o-table">
+<div class="rootClasso-table">
     <div style="display: none;"></div>
     <o-table-mobile-sort-stub currentsortcolumn="[object Object]" sortmultipledata="" columns="[object Object]" sorticon="arrow-up" sorticonsize="small"></o-table-mobile-sort-stub>
     <!---->
-    <div class="o-table-wrapper o-table-mobile-cards">
-        <table class="">
+    <div class="wrapperClasso-table-wrapper mobileCardsClasso-table-mobile-cards">
+        <table class="tableClass">
             <thead>
                 <tr>
                     <!---->
                     <!---->
-                    <th class="o-table-th-sortable o-table-th-unselectable" style="width: 40px;">
-                        <div class="o-table-th-wrap o-table-th-right"><span class="o-table-th-content">
+                    <th class="thSortableClasso-table-th-sortable thUnselectableClasso-table-th-unselectable" style="width: 40px;">
+                        <div class="thWrapClasso-table-th-wrap thRightClasso-table-th-right"><span class="thContentClasso-table-th-content">
                                     ID
-                                    <o-icon-stub icon="arrow-up" size="small" both="true" class="o-icon-sort o-icon-sort-invisible"></o-icon-stub></span></div>
+                                    <o-icon-stub icon="arrow-up" size="small" both="true" class="iconSortClasso-icon-sort iconSortInvisibleClasso-icon-sort-invisible"></o-icon-stub></span></div>
                     </th>
                     <!---->
                 </tr>
@@ -22,7 +22,7 @@ exports[`OTableMobileSort render correctly 1`] = `
                 <!---->
             </thead>
             <tbody>
-                <tr class="o-table-empty">
+                <tr class="emptyClasso-table-empty">
                     <td colspan="1"></td>
                 </tr>
             </tbody>
