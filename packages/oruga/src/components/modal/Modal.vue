@@ -25,12 +25,14 @@
                     @close="close"/>
                 <div v-else-if="content"> {{ content }} </div>
                 <slot v-else/>
-                <button
-                    type="button"
+                <o-icon
                     v-if="showX"
                     v-show="!animating"
+                    clickable
                     :class="closeClasses"
-                    @click="cancel('x')"> {{ closeButtonContent }} </button>
+                    :icon="closeIcon"
+                    :size="closeIconSize"
+                    @click.native="cancel('x')"/>
             </div>
         </div>
     </transition>
@@ -42,6 +44,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 
+import Icon from '../icon/Icon'
+
+
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Modal
@@ -50,6 +55,9 @@ import config from '../../utils/config'
  */
 export default {
     name: 'OModal',
+    components: {
+        [Icon.name]: Icon
+    },
     directives: {
         trapFocus
     },
@@ -146,7 +154,17 @@ export default {
         backgroundClass: String,
         contentClass: String,
         closeClass: String,
-        fullScreenClass: String
+        fullScreenClass: String,
+
+        /** Icon name */
+        closeIcon: {
+            type: String,
+            default: () => { return getValueByPath(config, 'close.icon', 'times') }
+        },
+        closeIconSize: {
+            type: String,
+            default: 'medium'
+        }
     },
     data() {
         return {
