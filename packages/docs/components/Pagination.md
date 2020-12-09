@@ -8,7 +8,7 @@ title: Pagination
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\pagination\examples\Pagination.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/pagination/examples/Pagination.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -245,6 +245,7 @@ title: Pagination
 | orderClass        |                                                                                                               | string         | -                                                 |                                                                |
 | simpleClass       |                                                                                                               | string         | -                                                 |                                                                |
 | roundedClass      |                                                                                                               | string         | -                                                 |                                                                |
+| linkDisabledClass |                                                                                                               | string         | -                                                 |                                                                |
 | sizeClass         |                                                                                                               | string         | -                                                 |                                                                |
 
 ## Events
@@ -274,7 +275,7 @@ title: Pagination
 | --oruga-pagination-link-border                   | \$pagination-link-border                   | 1px solid transparent        |
 | --oruga-pagination-link-color                    | \$pagination-link-color                    | #363636                      |
 | --oruga-pagination-link-current-background-color | \$pagination-link-current-background-color | \$primary                    |
-| --oruga-pagination-link-current-border-color     | \$pagination-link-current-border-color     | \$primary                    |
+| --oruga-pagination-link-current-border-color     | \$pagination-link-current-border-color     | \$primary // !!!             |
 | --oruga-pagination-link-current-color            | \$pagination-link-current-color            | #fff                         |
 | --oruga-pagination-link-height                   | \$pagination-link-height                   | 2.25em                       |
 | --oruga-pagination-link-hover-border-color       | \$pagination-link-hover-border-color       | #b5b5b5                      |

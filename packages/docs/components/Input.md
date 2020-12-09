@@ -8,7 +8,7 @@ title: Input
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\input\examples\Input.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/input/examples/Input.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -98,7 +98,7 @@ title: Input
       <o-input placeholder="Search..." type="search" icon="search" icon-clickable @icon-click="searchIconClick"> </o-input>
     </o-field>
 
-    <o-field>
+    <o-field variant="success">
       <o-input placeholder="Email" v-model="email" type="email" icon="envelope" icon-right="times-circle" icon-right-clickable @icon-right-click="clearIconClick"> </o-input>
     </o-field>
   </section>
@@ -181,7 +181,6 @@ title: Input
 | --oruga-input-box-shadow            | \$input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
 | --oruga-input-color                 | \$input-color                 | #363636                                               |
 | --oruga-input-icon-zindex           | \$input-icon-zindex           | 4                                                     |
-| --oruga-input-icon-color            | \$input-icon-color            | \$grey-lighter                                        |
 | --oruga-input-counter-font-size     | \$input-counter-font-size     | .75rem                                                |
 | --oruga-input-counter-margin        | \$input-counter-margin        | .25rem 0 0 .5rem                                      |
 | --oruga-input-height                | \$input-height                | \$control-height                                      |

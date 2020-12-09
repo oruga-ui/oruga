@@ -8,7 +8,7 @@ title: Select
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/..\oruga\src\components\select\examples\Select.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/select/examples/Select.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -181,7 +181,6 @@ title: Select
 | --oruga-select-box-shadow            | \$select-box-shadow            | none                                                  |
 | --oruga-select-color                 | \$select-color                 | #363636                                               |
 | --oruga-select-icon-zindex           | \$select-icon-zindex           | 4                                                     |
-| --oruga-select-icon-color            | \$select-icon-color            | \$grey-lighter                                        |
 | --oruga-select-font-size             | \$select-font-size             | \$base-font-size                                      |
 | --oruga-select-height                | \$select-height                | \$control-height                                      |
 | --oruga-select-line-height           | \$select-line-height           | \$base-line-height                                    |
