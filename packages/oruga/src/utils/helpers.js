@@ -202,6 +202,10 @@ export function blankIfUndefined(value) {
     return typeof value !== 'undefined' && value !== null ? value : ''
 }
 
+export function defaultIfUndefined(value, defaultValue) {
+    return typeof value !== 'undefined' && value !== null ? value : defaultValue
+}
+
 /**
  * Return month names according to a specified locale
  * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
