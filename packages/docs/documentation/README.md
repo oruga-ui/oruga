@@ -97,7 +97,7 @@ createApp(...)
 
 ### With Nuxt
 
-Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily use the library in your Nuxt.js app.
+Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
 
 Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file.
 
@@ -107,7 +107,7 @@ module.exports = {
 }
 ```
 
-You can also customize components in this section
+You can also extend and/or override classes in this section (see how to [add new classes](#adding-new-classes) or [override existing classes](#overriding-classes) in Oruga)
 
 ```js
 module.exports = {
@@ -124,7 +124,7 @@ module.exports = {
 }
 ```
 
-Alternatively you can add a plugin file (let's say `oruga.js`) in your `plugins` folder containing
+Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
 
 ```js
 import Vue from 'vue'
@@ -134,7 +134,7 @@ import '@oruga-ui/oruga/dist/oruga.css'
 Vue.use(Oruga)
 ```
 
-And then add this file to the `plugins` array in your `nuxt.config.js`
+To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
 
 ```js
 plugins: [{ src: '~plugins/oruga.js' }]
@@ -157,7 +157,7 @@ You can mix them, for example adding new classes and using css variables!
 
 ### Using variables
 
-Take a look at the [Base Style section](documentation/#base-style) to know all the global variables available. You should be able to create a custom theme setting your values (global and components) and/or remove a few css class attributes and enable css var. As you can see in the [Autocomplete component style section](components/Autocomplete.html#style) you have the complete list of all the css variables you can redefine for a component (the default value is the relative SASS/SCSS variable) that you can redefine in your project, for example:
+You can customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables with default values, mostly of them inerithed from [Base Style](documentation/#base-style) defined in [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss).
 
 ### CSS Variables
 
@@ -167,14 +167,24 @@ To use css variables you have to import `oruga-vars.css` stylesheet
 import '@oruga-ui/oruga/dist/oruga-vars.css'
 ```
 
-and then redefine the variables you want to change
+and then redefine the variables you want to change. For example globally you can change variants
 
 ```css
 :root {
-  --oruga-color-primary: green;
-  --oruga-color-danger: red;
+  --oruga-variant-primary: green;
+  --oruga-variant-danger: red;
 }
 ```
+
+alternatively you can change a specific component, such as button icon width
+
+```css
+:root {
+  --oruga-button-icon-width: 2.5em;
+}
+```
+
+As you can see in the [Button component style section](components/Button.html#style) you have the complete list of all the css variables you can redefine for each component.
 
 ### SASS/SCSS Variables
 
@@ -216,7 +226,7 @@ $colors: (
 This way allows to append one or more classes to already existing classes.
 It's really easy and you can do it importing the library/component (global) and in this case all component instances are using the same custom classes, otherwise the library allows to add new classes on a single component instance (local).
 
-#### Global
+#### Globally
 
 ```js
 import Vue from 'vue';
@@ -233,7 +243,7 @@ Vue.use(Oruga, {
 });
 ```
 
-#### Local
+#### Locally
 
 ```vue
 <o-autocomplete root-class="myautocomplete-root" menu-class="myautocomplete-menu" item-class="myautocomplete-item" />
@@ -397,37 +407,37 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ## Base Style
 
-| CSS Variable                          | SASS Variable                | Default                                                                                                                                                                                                          |
-| ------------------------------------- | -----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CSS Variable                          | \$base-border-radius         | 4px                                                                                                                                                                                                              |
-| CSS Variable                          | \$base-font-size             | 1rem                                                                                                                                                                                                             |
-| CSS Variable                          | \$base-rounded-border-radius | 9999px                                                                                                                                                                                                           |
-| CSS Variable                          | \$base-line-height           | 1.5                                                                                                                                                                                                              |
-| CSS Variable                          | \$base-disabled-opacity      | 0.5                                                                                                                                                                                                              |
-| CSS Variable                          | \$speed                      | 300ms                                                                                                                                                                                                            |
-| CSS Variable                          | \$speed-slow                 | 150ms                                                                                                                                                                                                            |
-| CSS Variable                          | \$speed-slower               | 250ms                                                                                                                                                                                                            |
-| CSS Variable                          | \$easing                     | ease-out                                                                                                                                                                                                         |
-| CSS Variable                          | \$control-border-width       | 1px                                                                                                                                                                                                              |
-| CSS Variable                          | \$control-height             | 2.25em                                                                                                                                                                                                           |
-| CSS Variable                          | \$white                      | #ffffff                                                                                                                                                                                                          |
-| CSS Variable                          | \$black                      | #000000                                                                                                                                                                                                          |
-| CSS Variable                          | \$grey                       | #7a7a7a                                                                                                                                                                                                          |
-| CSS Variable                          | \$grey-light                 | #b5b5b5                                                                                                                                                                                                          |
-| CSS Variable                          | \$grey-lighter               | #dbdbdb                                                                                                                                                                                                          |
-| CSS Variable                          | \$primary                    | #445e00                                                                                                                                                                                                          |
-| CSS Variable                          | \$primary-invert             | \$white                                                                                                                                                                                                          |
-| CSS Variable                          | \$danger                     | #b60000                                                                                                                                                                                                          |
-| CSS Variable                          | \$danger-invert              | \$white                                                                                                                                                                                                          |
-| CSS Variable                          | \$warning                    | #f4c300                                                                                                                                                                                                          |
-| CSS Variable                          | \$warning-invert             | \$black                                                                                                                                                                                                          |
-| CSS Variable                          | \$success                    | #006724                                                                                                                                                                                                          |
-| CSS Variable                          | \$success-invert             | \$white                                                                                                                                                                                                          |
-| CSS Variable                          | \$info                       | #005C98                                                                                                                                                                                                          |
-| CSS Variable                          | \$info-invert                | \$white                                                                                                                                                                                                          |
-| CSS Variable                          | \$whitelist                  | ()                                                                                                                                                                                                               |
-| CSS Variable                          | \$sass-vars                  | true                                                                                                                                                                                                             |
-| CSS Variable                          | \$css-vars                   | true                                                                                                                                                                                                             |
-| CSS Variable                          | \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
-| CSS Variable                          | \$sizes                      | (<br>"small": .75rem,<br>"medium": 1.25rem,<br>"large": 1.5rem<br>)                                                                                                                                              |
-| CSS Variable                          | \$colors                     | (<br>"primary": ($primary, $primary-invert),<br>"danger": ($danger, $danger-invert),<br>"warning": ($warning, $warning-invert),<br>"success": ($success, $success-invert),<br>"info": ($info, $info-invert)<br>) |
+| SASS Variable                | Default                                                                                                                                                                                                          |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \$base-border-radius         | 4px                                                                                                                                                                                                              |
+| \$base-font-size             | 1rem                                                                                                                                                                                                             |
+| \$base-rounded-border-radius | 9999px                                                                                                                                                                                                           |
+| \$base-line-height           | 1.5                                                                                                                                                                                                              |
+| \$base-disabled-opacity      | 0.5                                                                                                                                                                                                              |
+| \$speed                      | 300ms                                                                                                                                                                                                            |
+| \$speed-slow                 | 150ms                                                                                                                                                                                                            |
+| \$speed-slower               | 250ms                                                                                                                                                                                                            |
+| \$easing                     | ease-out                                                                                                                                                                                                         |
+| \$control-border-width       | 1px                                                                                                                                                                                                              |
+| \$control-height             | 2.25em                                                                                                                                                                                                           |
+| \$white                      | #ffffff                                                                                                                                                                                                          |
+| \$black                      | #000000                                                                                                                                                                                                          |
+| \$grey                       | #7a7a7a                                                                                                                                                                                                          |
+| \$grey-light                 | #b5b5b5                                                                                                                                                                                                          |
+| \$grey-lighter               | #dbdbdb                                                                                                                                                                                                          |
+| \$primary                    | #445e00                                                                                                                                                                                                          |
+| \$primary-invert             | \$white                                                                                                                                                                                                          |
+| \$danger                     | #b60000                                                                                                                                                                                                          |
+| \$danger-invert              | \$white                                                                                                                                                                                                          |
+| \$warning                    | #f4c300                                                                                                                                                                                                          |
+| \$warning-invert             | \$black                                                                                                                                                                                                          |
+| \$success                    | #006724                                                                                                                                                                                                          |
+| \$success-invert             | \$white                                                                                                                                                                                                          |
+| \$info                       | #005C98                                                                                                                                                                                                          |
+| \$info-invert                | \$white                                                                                                                                                                                                          |
+| \$whitelist                  | ()                                                                                                                                                                                                               |
+| \$sass-vars                  | true                                                                                                                                                                                                             |
+| \$css-vars                   | true                                                                                                                                                                                                             |
+| \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
+| \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
+| \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
