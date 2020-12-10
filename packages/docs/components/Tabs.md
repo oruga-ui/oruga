@@ -249,35 +249,40 @@ title: Tabs
 
 ## Props
 
-| Prop name                  | Description                                     | Type           | Values                                                                          | Default                                       |
-| -------------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| v-model                    |                                                 | string\|number | -                                                                               |                                               |
-| variant                    | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
-| size                       | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
-| animated                   | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
-| vertical                   | Show tab in vertical layout                     | boolean        | -                                                                               | false                                         |
-| position                   | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
-| destroyOnHide              | Destroy tab on hide                             | boolean        | -                                                                               | false                                         |
-| type                       | Tab type                                        | string\|object | `boxed`, `toggle`                                                               |                                               |
-| expanded                   | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
-| multiline                  | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
-| rootClass                  |                                                 | string         | -                                                                               |                                               |
-| positionWrapperClass       |                                                 | string         | -                                                                               |                                               |
-| expandedWrapperClass       |                                                 | string         | -                                                                               |                                               |
-| verticalWrapperClass       |                                                 | string         | -                                                                               |                                               |
-| multilineWrapperClass      |                                                 | string         | -                                                                               |                                               |
-| tabsClass                  |                                                 | string         | -                                                                               |                                               |
-| typeClass                  |                                                 | string         | -                                                                               |                                               |
-| sizeClass                  |                                                 | string         | -                                                                               |                                               |
-| positionClass              |                                                 | string         | -                                                                               |                                               |
-| contentClass               |                                                 | string         | -                                                                               |                                               |
-| transitioningClass         |                                                 | string         | -                                                                               |                                               |
-| tabItemHeaderClass         |                                                 | string         | -                                                                               |                                               |
-| tabItemHeaderIconClass     |                                                 | string         | -                                                                               |                                               |
-| tabItemHeaderTextClass     |                                                 | string         | -                                                                               |                                               |
-| tabItemHeaderActiveClass   |                                                 | string         | -                                                                               |                                               |
-| tabItemHeaderDisabledClass |                                                 | string         | -                                                                               |                                               |
-| tabItemWrapperClass        |                                                 | string         | -                                                                               |                                               |
+| Prop name     | Description                                     | Type           | Values                                                                          | Default                                       |
+| ------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
+| v-model       |                                                 | string\|number | -                                                                               |                                               |
+| variant       | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
+| size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
+| animated      | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
+| vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | false                                         |
+| position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
+| destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | false                                         |
+| type          | Tab type                                        | string\|object | `boxed`, `toggle`                                                               |                                               |
+| expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
+| multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
+
+## Class props
+
+| Prop name                  | Description | Type   | Values | Default |
+| -------------------------- | ----------- | ------ | ------ | ------- |
+| rootClass                  |             | string | -      |         |
+| positionWrapperClass       |             | string | -      |         |
+| expandedWrapperClass       |             | string | -      |         |
+| verticalWrapperClass       |             | string | -      |         |
+| multilineWrapperClass      |             | string | -      |         |
+| tabsClass                  |             | string | -      |         |
+| typeClass                  |             | string | -      |         |
+| sizeClass                  |             | string | -      |         |
+| positionClass              |             | string | -      |         |
+| contentClass               |             | string | -      |         |
+| transitioningClass         |             | string | -      |         |
+| tabItemHeaderClass         |             | string | -      |         |
+| tabItemHeaderIconClass     |             | string | -      |         |
+| tabItemHeaderTextClass     |             | string | -      |         |
+| tabItemHeaderActiveClass   |             | string | -      |         |
+| tabItemHeaderDisabledClass |             | string | -      |         |
+| tabItemWrapperClass        |             | string | -      |         |
 
 ### Events
 
@@ -297,19 +302,24 @@ title: Tabs
 
 ## Props
 
-| Prop name               | Description                                                  | Type                  | Values | Default |
-| ----------------------- | ------------------------------------------------------------ | --------------------- | ------ | ------- |
-| label                   | Item label                                                   | string                | -      |         |
-| icon                    | Icon on the left                                             | string                | -      |         |
-| iconPack                | Icon pack                                                    | string                | -      |         |
-| visible                 | Show/hide item                                               | boolean               | -      | true    |
-| value                   | Item value (it will be used as v-model of wrapper component) | string\|number        | -      |         |
-| headerClass             | Header class of the item                                     | string\|array\|object | -      |         |
-| disabled                | Item will be disabled                                        | boolean               | -      |         |
-| itemClass               |                                                              | string                | -      |         |
-| itemHeaderClass         |                                                              | string                | -      |         |
-| itemHeaderActiveClass   |                                                              | string                | -      |         |
-| itemHeaderDisabledClass |                                                              | string                | -      |         |
+| Prop name | Description                                                  | Type           | Values | Default |
+| --------- | ------------------------------------------------------------ | -------------- | ------ | ------- |
+| label     | Item label                                                   | string         | -      |         |
+| icon      | Icon on the left                                             | string         | -      |         |
+| iconPack  | Icon pack                                                    | string         | -      |         |
+| visible   | Show/hide item                                               | boolean        | -      | true    |
+| value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |         |
+| disabled  | Item will be disabled                                        | boolean        | -      |         |
+
+## Class props
+
+| Prop name               | Description              | Type                  | Values | Default |
+| ----------------------- | ------------------------ | --------------------- | ------ | ------- |
+| headerClass             | Header class of the item | string\|array\|object | -      |         |
+| itemClass               |                          | string                | -      |         |
+| itemHeaderClass         |                          | string                | -      |         |
+| itemHeaderActiveClass   |                          | string                | -      |         |
+| itemHeaderDisabledClass |                          | string                | -      |         |
 
 ### Slots
 

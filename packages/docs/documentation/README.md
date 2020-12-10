@@ -207,7 +207,7 @@ Remember that a complete customization you can import `@oruga-ui/oruga/dist/orug
 
 #### Adding classes
 
-You can add classes to a component using class properties (see [Autocomplete class props](/components/Autocomplete.html#props) for example)
+You can add classes to a component using class properties (see [Autocomplete class props](/components/Autocomplete.html#class-props) for example)
 
 ```vue
 <o-autocomplete root-class="myautocomplete-root" menu-class="myautocomplete-menu" item-class="myautocomplete-item" />

@@ -154,12 +154,17 @@ title: Checkbox
 | indeterminate | Same as native indeterminate                       | boolean                 | -                                                                               |         |
 | trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
 | falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
-| rootClass     |                                                    | string                  | -                                                                               |         |
-| disabledClass |                                                    | string                  | -                                                                               |         |
-| checkClass    |                                                    | string                  | -                                                                               |         |
-| labelClass    |                                                    | string                  | -                                                                               |         |
-| sizeClass     |                                                    | string                  | -                                                                               |         |
-| variantClass  |                                                    | string                  | -                                                                               |         |
+
+## Class props
+
+| Prop name     | Description | Type   | Values | Default |
+| ------------- | ----------- | ------ | ------ | ------- |
+| rootClass     |             | string | -      |         |
+| disabledClass |             | string | -      |         |
+| checkClass    |             | string | -      |         |
+| labelClass    |             | string | -      |         |
+| sizeClass     |             | string | -      |         |
+| variantClass  |             | string | -      |         |
 
 ## Events
 

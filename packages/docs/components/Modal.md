@@ -239,13 +239,18 @@ title: Modal
 | ariaModal          |                                                                                                                                                                        | boolean        | -                                  |                                                       |
 | destroyOnHide      | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | Config -> <code> 'modal.destroyOnHide': true</code>   |
 | autoFocus          | Automatically focus modal when active                                                                                                                                  | boolean        | -                                  | Config -> <code> 'modal.autoFocus': true</code>       |
-| rootClass          |                                                                                                                                                                        | string         | -                                  |                                                       |
-| backgroundClass    |                                                                                                                                                                        | string         | -                                  |                                                       |
-| contentClass       |                                                                                                                                                                        | string         | -                                  |                                                       |
-| closeClass         |                                                                                                                                                                        | string         | -                                  |                                                       |
-| fullScreenClass    |                                                                                                                                                                        | string         | -                                  |                                                       |
 | closeIcon          | Icon name                                                                                                                                                              | string         | -                                  | Config -> <code> 'close.icon': 'times'</code>         |
 | closeIconSize      |                                                                                                                                                                        | string         | -                                  | 'medium'                                              |
+
+## Class props
+
+| Prop name       | Description | Type   | Values | Default |
+| --------------- | ----------- | ------ | ------ | ------- |
+| rootClass       |             | string | -      |         |
+| backgroundClass |             | string | -      |         |
+| contentClass    |             | string | -      |         |
+| closeClass      |             | string | -      |         |
+| fullScreenClass |             | string | -      |         |
 
 ## Events
 

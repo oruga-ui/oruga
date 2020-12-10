@@ -358,14 +358,19 @@ title: Autocomplete
 | iconRightClickable  | Clickable icon right if exists                                                                                                                         | boolean        | -                                                 |                                                          |
 | appendToBody        | Append autocomplete content to body                                                                                                                    | boolean        | -                                                 |                                                          |
 | confirmKeys         | Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) | array          | -                                                 | ['Tab', 'Enter']                                         |
-| rootClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
-| menuClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
-| expandedClass       |                                                                                                                                                        | string         | -                                                 |                                                          |
-| menuPositionClass   |                                                                                                                                                        | string         | -                                                 |                                                          |
-| itemClass           |                                                                                                                                                        | string         | -                                                 |                                                          |
-| itemHoverClass      |                                                                                                                                                        | string         | -                                                 |                                                          |
-| itemDisabledClass   |                                                                                                                                                        | string         | -                                                 |                                                          |
 | inputClasses        | Classes to apply on internal input (@see o-input style docs)                                                                                           | object         | -                                                 |                                                          |
+
+## Class props
+
+| Prop name         | Description | Type   | Values | Default |
+| ----------------- | ----------- | ------ | ------ | ------- |
+| rootClass         |             | string | -      |         |
+| menuClass         |             | string | -      |         |
+| expandedClass     |             | string | -      |         |
+| menuPositionClass |             | string | -      |         |
+| itemClass         |             | string | -      |         |
+| itemHoverClass    |             | string | -      |         |
+| itemDisabledClass |             | string | -      |         |
 
 ## Events
 
