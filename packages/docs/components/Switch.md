@@ -133,6 +133,7 @@ title: Switch
     <o-field grouped>
       <o-switch v-model="isRounded">Rounded</o-switch>
       <o-switch v-model="isOutlined">Outlined</o-switch>
+      <o-switch v-model="isLabelLeft">Label on left</o-switch>
     </o-field>
     <o-field label="Variant">
       <o-select expanded v-model="variant" placeholder="Variant">
@@ -160,7 +161,7 @@ title: Switch
         <option value="large">large</option>
       </o-select>
     </o-field>
-    <o-switch :rounded="isRounded" :outlined="isOutlined" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
+    <o-switch :rounded="isRounded" :outlined="isOutlined" :leftLabel="isLabelLeft" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
   </section>
 </template>
 
@@ -172,7 +173,8 @@ title: Switch
         variant: null,
         passive: null,
         isRounded: false,
-        isOutlined: false
+        isOutlined: false,
+        isLabelLeft: false
       }
     }
   }
@@ -206,6 +208,7 @@ title: Switch
 | rootClass           |             | string | -      |         |
 | disabledClass       |             | string | -      |         |
 | checkClass          |             | string | -      |         |
+| checkSwitchClass    |             | string | -      |         |
 | roundedClass        |             | string | -      |         |
 | outlinedClass       |             | string | -      |         |
 | labelClass          |             | string | -      |         |

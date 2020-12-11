@@ -20,7 +20,9 @@
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses"/>
+        <span :class="checkClasses">
+            <span :class="checkSwitchClasses"></span>
+        </span>
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -96,6 +98,7 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
+        checkSwitchClass: String,
         roundedClass: String,
         outlinedClass: String,
         labelClass: String,
@@ -119,16 +122,21 @@ export default {
                 { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
                 { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
                 { [this.computedClass('outlinedClass', 'o-switch--outlined')]: this.outlined },
-                { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel }
+                { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel },
+                { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
+                { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
             ]
         },
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-switch__check'),
                 { [this.computedClass('animationClass', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
-                { [this.computedClass('animationClass', 'o-switch__check--elastic')]: (this.isMouseDown && !this.disabled)},
-                { [this.computedClass('variantClass', 'o-switch__check--', this.variant)]: this.variant },
-                { [this.computedClass('passiveVariantClass', 'o-switch__check--', this.passiveVariant + '-passive')]: this.passiveVariant }
+                { [this.computedClass('animationClass', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)}
+            ]
+        },
+        checkSwitchClasses() {
+            return [
+                this.computedClass('checkSwitchClass', 'o-switch__check-switch')
             ]
         },
         labelClasses() {

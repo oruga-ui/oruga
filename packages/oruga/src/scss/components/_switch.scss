@@ -36,6 +36,64 @@ $switch-width: $switch-width-number * 1em !default;
     @include unselectable;
     @include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
 
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &--#{$name} {
+            .o-switch__check--checked {
+                @include avariable('background', ('variant-' + #{$name}), $color);
+            }
+            &.o-switch--outlined {
+                .o-switch__check--checked{
+                    @include avariable('border-color', 'switch-outlined-border-color', $color);
+                    .o-switch__check-switch {
+                        @include avariable('background', 'switch-active-background-color', $color);
+                    }
+                }
+            }
+        }
+        &--#{$name}-passive {
+            .o-switch__check--unchecked {
+                @include avariable('background', ('variant-' + #{$name}), $color);
+            }
+            &.o-switch--outlined {
+                .o-switch__check--unchecked{
+                    @include avariable('border-color', 'switch-active-background-color', $color);
+                    .o-switch__check-switch {
+                        @include avariable('background', 'switch-active-background-color', $color);
+                    }
+                }
+            }
+        }
+    }
+
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('font-size-' + #{name}), $value);
+        }
+    }
+
+    &__check-switch {
+        content: "";
+        display: block;
+        @include evariable(
+            'height', 'calc(($width - $padding * 2) / 2)',
+            eparam('$width', variable('switch-width', $switch-width)),
+            eparam('$padding', variable('switch-padding', $switch-padding))
+        );
+        @include evariable(
+            'width', 'calc(($width - $padding * 2) / 2)',
+            eparam('$width', variable('switch-width', $switch-width)),
+            eparam('$padding', variable('switch-padding', $switch-padding))
+        );
+        @include avariable('background', 'swtich-action-background', $swtich-action-background);
+        @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
+        transition-property: transform;
+        @include avariable('transition-duration', 'transition-duration', $speed-slow);
+        @include avariable('transition-timing-function', 'transition-timing', $easing);
+        will-change: transform;
+        transform-origin: left;
+    }
+
     &__check {
         display: flex;
         align-items: center;
@@ -52,53 +110,12 @@ $switch-width: $switch-width-number * 1em !default;
         transition-property: background;
         @include avariable('transition-duration', 'transition-duration', $speed-slow);
         @include avariable('transition-timing-function', 'transition-timing', $easing);
-        // transition: background $speed-slow $easing, box-shadow $speed-slow $easing;
-        @each $name, $pair in $colors {
-            $color: nth($pair, 1);
-            &.o-color-#{$name}-passive {
-                @include avariable('background', ('variant-' + #{$name}), $color);
-            }
-        }
 
         &--checked {
             @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name} {
-                    @include avariable('background', ('variant-' + #{$name}), $color);
-                }
-            }
-            &:before {
+            .o-switch__check-switch {
                 transform: translate3d(100%, 0, 0);
             }
-            &.o-switch__check--elastic:before {
-                // Might be a little offset if base font is not 16px
-                transform: translate3d(50%, 0, 0) scaleX(1.5);
-            }
-        }
-        &:before {
-            content: "";
-            display: block;
-            @include evariable(
-                'height', 'calc(($width - $padding * 2) / 2)',
-                eparam('$width', variable('switch-width', $switch-width)),
-                eparam('$padding', variable('switch-padding', $switch-padding))
-            );
-            @include evariable(
-                'width', 'calc(($width - $padding * 2) / 2)',
-                eparam('$width', variable('switch-width', $switch-width)),
-                eparam('$padding', variable('switch-padding', $switch-padding))
-            );
-            @include avariable('background', 'swtich-action-background', $swtich-action-background);
-            @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
-            transition-property: transform;
-            @include avariable('transition-duration', 'transition-duration', $speed-slow);
-            @include avariable('transition-timing-function', 'transition-timing', $easing);
-            will-change: transform;
-            transform-origin: left;
-        }
-        &.o-switch__check--elastic:before {
-            transform: scaleX(1.5);
         }
     }
 
@@ -108,18 +125,15 @@ $switch-width: $switch-width-number * 1em !default;
         opacity: 0;
         outline: none;
         z-index: -1;
-
     }
     &__label {
         @include avariable('padding', 'switch-label-padding', $switch-label-padding);
+        padding-left: $control-padding-horizontal;
     }
     &--rounded {
         .o-switch__check {
             @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-            &:before {
-                @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-            }
-            &.o-switch__check--elastic:before {
+            .o-switch__check-switch {
                 @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
             }
         }
@@ -130,41 +144,18 @@ $switch-width: $switch-width-number * 1em !default;
             @include avariable('border-width', 'switch-outlined-border-width', $switch-outlined-border-width);
             @include avariable('border-style', 'switch-outlined-border-style', $switch-outlined-border-style);
             @include avariable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &--#{$name}-passive {
-                    @include avariable('border-color', ('variant-' + #{$name}), $color);
-                    &:before {
-                        @include avariable('background', ('variant-' + #{$name}), $color);
-                    }
-                }
-            }
-            &:before {
-                @include avariable('background', 'switch-outlined-background', $switch-outlined-background);
-            }
+        }
+        .o-switch__check-switch {
+            @include avariable('background', 'switch-outlined-background', $switch-outlined-background);
         }
         .o-switch__check--checked{
             @include avariable('border-color', 'switch-active-background-color', $switch-active-background-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &--#{$name} {
-                    background: transparent;
-                    @include avariable('border-color', ('variant-' + #{$name}), $color);
-                    &:before {
-                        @include avariable('background', ('variant-' + #{$name}), $color);
-                    }
-                }
-            }
-            &:before {
+            .o-switch__check-switch {
                 @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
             }
         }
     }
-    @each $name, $value in $sizes {
-        &--#{$name} {
-            @include avariable('font-size', ('font-size-' + #{name}), $value);
-        }
-    }
+
     &--disabled {
         @include avariable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
     }
@@ -172,11 +163,6 @@ $switch-width: $switch-width-number * 1em !default;
         flex-direction: row-reverse;
         .o-switch__label {
             padding-right: $control-padding-horizontal;
-        }
-    }
-    &:not(.o-switch--left) {
-        .o-switch__label {
-            padding-left: $control-padding-horizontal;
         }
     }
 }
