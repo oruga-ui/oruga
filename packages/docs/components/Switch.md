@@ -132,7 +132,6 @@ title: Switch
   <section>
     <o-field grouped>
       <o-switch v-model="isRounded">Rounded</o-switch>
-      <o-switch v-model="isOutlined">Outlined</o-switch>
       <o-switch v-model="isLabelLeft">Label on left</o-switch>
     </o-field>
     <o-field label="Variant">
@@ -161,7 +160,7 @@ title: Switch
         <option value="large">large</option>
       </o-select>
     </o-field>
-    <o-switch :rounded="isRounded" :outlined="isOutlined" :leftLabel="isLabelLeft" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
+    <o-switch :rounded="isRounded" :leftLabel="isLabelLeft" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
   </section>
 </template>
 
@@ -173,7 +172,6 @@ title: Switch
         variant: null,
         passive: null,
         isRounded: false,
-        isOutlined: false,
         isLabelLeft: false
       }
     }
@@ -198,7 +196,6 @@ title: Switch
 | trueValue      | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
 | falseValue     | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
 | rounded        | Rounded style                                      | boolean                 | -                                                                               | true    |
-| outlined       | Outlined style                                     | boolean                 | -                                                                               | false   |
 | leftLabel      | Show label on left                                 | boolean                 | -                                                                               | false   |
 
 ## Class props
@@ -210,7 +207,6 @@ title: Switch
 | checkClass          |             | string | -      |         |
 | checkSwitchClass    |             | string | -      |         |
 | roundedClass        |             | string | -      |         |
-| outlinedClass       |             | string | -      |         |
 | labelClass          |             | string | -      |         |
 | sizeClass           |             | string | -      |         |
 | variantClass        |             | string | -      |         |
@@ -252,11 +248,6 @@ title: Switch
 | --oruga-switch-hover-border-color              | \$switch-hover-border-color              | #b5b5b5                                                                                          |
 | --oruga-switch-label-padding                   | \$switch-label-padding                   | 0 0 0 .5em                                                                                       |
 | --oruga-switch-margin-sibling                  | \$switch-margin-sibling                  | 0.5em                                                                                            |
-| --oruga-switch-outlined-background             | \$switch-outlined-background             | #b5b5b5                                                                                          |
-| --oruga-switch-outlined-border-color-opacity   | \$switch-outlined-border-color-opacity   | 0.9                                                                                              |
-| --oruga-switch-outlined-border-color           | \$switch-outlined-border-color           | \$switch-outlined-background                                                                     |
-| --oruga-switch-outlined-border-style           | \$switch-outlined-border-style           | solid                                                                                            |
-| --oruga-switch-outlined-border-width           | \$switch-outlined-border-width           | .1rem                                                                                            |
 | --oruga-switch-padding                         | \$switch-padding                         | 0.2em                                                                                            |
 | --oruga-switch-rounded-border-radius           | \$switch-rounded-border-radius           | \$base-rounded-border-radius                                                                     |
 | --oruga-switch-width-number                    | \$switch-width-number                    | 2.75                                                                                             |

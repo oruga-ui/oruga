@@ -121,7 +121,6 @@ export default {
     <section>
         <o-field grouped>
             <o-switch v-model="isRounded">Rounded</o-switch>
-            <o-switch v-model="isOutlined">Outlined</o-switch>
             <o-switch v-model="isLabelLeft">Label on left</o-switch>
         </o-field>
         <o-field label="Variant">
@@ -152,7 +151,6 @@ export default {
         </o-field>
         <o-switch
             :rounded="isRounded"
-            :outlined="isOutlined"
             :leftLabel="isLabelLeft"
             :size="size"
             :variant="variant"
@@ -168,7 +166,6 @@ export default {
                 variant: null,
                 passive: null,
                 isRounded: false,
-                isOutlined: false,
                 isLabelLeft: false
             }
         }

@@ -17,11 +17,6 @@ $switch-hover-border-color-opacity: 0.9 !default;
 $switch-hover-border-color: #b5b5b5 !default;
 $switch-label-padding: 0 0 0 .5em !default;
 $switch-margin-sibling: 0.5em !default;
-$switch-outlined-background: #b5b5b5 !default;
-$switch-outlined-border-color-opacity: 0.9 !default;
-$switch-outlined-border-color: $switch-outlined-background !default;
-$switch-outlined-border-style: solid !default;
-$switch-outlined-border-width: .1rem !default;
 $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
 $switch-width-number: 2.75 !default;
@@ -42,26 +37,10 @@ $switch-width: $switch-width-number * 1em !default;
             .o-switch__check--checked {
                 @include avariable('background', ('variant-' + #{$name}), $color);
             }
-            &.o-switch--outlined {
-                .o-switch__check--checked{
-                    @include avariable('border-color', 'switch-outlined-border-color', $color);
-                    .o-switch__check-switch {
-                        @include avariable('background', 'switch-active-background-color', $color);
-                    }
-                }
-            }
         }
         &--#{$name}-passive {
             .o-switch__check--unchecked {
                 @include avariable('background', ('variant-' + #{$name}), $color);
-            }
-            &.o-switch--outlined {
-                .o-switch__check--unchecked{
-                    @include avariable('border-color', 'switch-active-background-color', $color);
-                    .o-switch__check-switch {
-                        @include avariable('background', 'switch-active-background-color', $color);
-                    }
-                }
             }
         }
     }
@@ -135,23 +114,6 @@ $switch-width: $switch-width-number * 1em !default;
             @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
             .o-switch__check-switch {
                 @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-            }
-        }
-    }
-    &--outlined {
-        .o-switch__check {
-            background: transparent;
-            @include avariable('border-width', 'switch-outlined-border-width', $switch-outlined-border-width);
-            @include avariable('border-style', 'switch-outlined-border-style', $switch-outlined-border-style);
-            @include avariable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
-        }
-        .o-switch__check-switch {
-            @include avariable('background', 'switch-outlined-background', $switch-outlined-background);
-        }
-        .o-switch__check--checked{
-            @include avariable('border-color', 'switch-active-background-color', $switch-active-background-color);
-            .o-switch__check-switch {
-                @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
             }
         }
     }

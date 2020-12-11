@@ -85,11 +85,6 @@ export default {
             type: Boolean,
             default: true
         },
-        /** Outlined style */
-        outlined: {
-            type: Boolean,
-            default: false
-        },
         /** Show label on left */
         leftLabel: {
             type: Boolean,
@@ -100,7 +95,6 @@ export default {
         checkClass: String,
         checkSwitchClass: String,
         roundedClass: String,
-        outlinedClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String,
@@ -121,7 +115,6 @@ export default {
                 { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
                 { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
-                { [this.computedClass('outlinedClass', 'o-switch--outlined')]: this.outlined },
                 { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel },
                 { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
                 { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
