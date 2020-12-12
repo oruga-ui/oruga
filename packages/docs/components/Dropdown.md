@@ -227,15 +227,20 @@ title: Dropdown
 | triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
 | appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                      |
 | appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                      |
-| rootClass              |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| triggerClass           |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| backgroundClass        |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| menuClass              |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| disabledClass          |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| activeClass            |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| inlineClass            |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| mobileClass            |                                                                                                                                                        | string                                 | -                                        |                                                      |
-| expandedClass          |                                                                                                                                                        | string                                 | -                                        |                                                      |
+
+## Class props
+
+| Prop name       | Description | Type   | Values | Default |
+| --------------- | ----------- | ------ | ------ | ------- |
+| rootClass       |             | string | -      |         |
+| triggerClass    |             | string | -      |         |
+| backgroundClass |             | string | -      |         |
+| menuClass       |             | string | -      |         |
+| disabledClass   |             | string | -      |         |
+| activeClass     |             | string | -      |         |
+| inlineClass     |             | string | -      |         |
+| mobileClass     |             | string | -      |         |
+| expandedClass   |             | string | -      |         |
 
 ### Events
 
@@ -258,16 +263,21 @@ title: Dropdown
 
 ## Props
 
-| Prop name         | Description                                           | Type                                   | Values | Default |
-| ----------------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
-| value             | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
-| disabled          | Item is disabled                                      | boolean                                | -      |         |
-| custom            | Item is not a clickable item                          | boolean                                | -      |         |
-| tabindex          |                                                       | number\|string                         | -      | 0       |
-| ariaRole          |                                                       | string                                 | -      | ''      |
-| itemClass         |                                                       | string                                 | -      |         |
-| itemActiveClass   |                                                       | string                                 | -      |         |
-| itemDisabledClass |                                                       | string                                 | -      |         |
+| Prop name | Description                                           | Type                                   | Values | Default |
+| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
+| disabled  | Item is disabled                                      | boolean                                | -      |         |
+| custom    | Item is not a clickable item                          | boolean                                | -      |         |
+| tabindex  |                                                       | number\|string                         | -      | 0       |
+| ariaRole  |                                                       | string                                 | -      | ''      |
+
+## Class props
+
+| Prop name         | Description | Type   | Values | Default |
+| ----------------- | ----------- | ------ | ------ | ------- |
+| itemClass         |             | string | -      |         |
+| itemActiveClass   |             | string | -      |         |
+| itemDisabledClass |             | string | -      |         |
 
 ### Events
 

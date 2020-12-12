@@ -247,43 +247,48 @@ title: Steps
 
 ## Props
 
-| Prop name                     | Description                                                                                                                   | Type           | Values                                                                          | Default                                                   |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| v-model                       |                                                                                                                               | string\|number | -                                                                               |                                                           |
-| variant                       | Color of the control, optional                                                                                                | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                           |
-| size                          | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      |                                                           |
-| animated                      |                                                                                                                               | boolean        | -                                                                               | true                                                      |
-| vertical                      | Show tab in vertical layout                                                                                                   | boolean        | -                                                                               | false                                                     |
-| position                      | Position of the tab, optional                                                                                                 | string         | `centered`, `right`                                                             |                                                           |
-| destroyOnHide                 | Destroy tab on hide                                                                                                           | boolean        | -                                                                               | false                                                     |
-| iconPack                      | Icon pack to use for the navigation                                                                                           | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                           |
-| iconPrev                      | Icon to use for navigation button                                                                                             | string         | -                                                                               | Config -> <code> 'steps.iconPrev': 'chevron-left'</code>  |
-| iconNext                      | Icon to use for navigation button                                                                                             | string         | -                                                                               | Config -> <code> 'steps.iconNext': 'chevron-right'</code> |
-| hasNavigation                 | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean        | -                                                                               | true                                                      |
-| labelPosition                 | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | 'bottom'                                                  |
-| rounded                       | Rounded step markers                                                                                                          | boolean        | -                                                                               | true                                                      |
-| mobileMode                    | How Steps will be displayed for mobile user                                                                                   | string         | `minimalist`, `compact`, `null`                                                 | 'minimalist'                                              |
-| ariaNextLabel                 |                                                                                                                               | string         | -                                                                               |                                                           |
-| ariaPreviousLabel             |                                                                                                                               | string         | -                                                                               |                                                           |
-| rootClass                     |                                                                                                                               | string         | -                                                                               |                                                           |
-| sizeClass                     |                                                                                                                               | string         | -                                                                               |                                                           |
-| verticalClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
-| positionClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepsClass                    |                                                                                                                               | string         | -                                                                               |                                                           |
-| variantClass                  |                                                                                                                               | string         | -                                                                               |                                                           |
-| animatedClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
-| labelPositionClass            |                                                                                                                               | string         | -                                                                               |                                                           |
-| roundedClass                  |                                                                                                                               | string         | -                                                                               |                                                           |
-| mobileClass                   |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepItemsClass                |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepMarkerClass               |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepContentClass              |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepContentTransitioningClass |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepNavigationClass           |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepDetailsClass              |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepTitleClass                |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepLinkClass                 |                                                                                                                               | string         | -                                                                               |                                                           |
-| stepLinkClickableClass        |                                                                                                                               | string         | -                                                                               |                                                           |
+| Prop name         | Description                                                                                                                   | Type           | Values                                                                          | Default                                                   |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| v-model           |                                                                                                                               | string\|number | -                                                                               |                                                           |
+| variant           | Color of the control, optional                                                                                                | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                           |
+| size              | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      |                                                           |
+| animated          |                                                                                                                               | boolean        | -                                                                               | true                                                      |
+| vertical          | Show tab in vertical layout                                                                                                   | boolean        | -                                                                               | false                                                     |
+| position          | Position of the tab, optional                                                                                                 | string         | `centered`, `right`                                                             |                                                           |
+| destroyOnHide     | Destroy tab on hide                                                                                                           | boolean        | -                                                                               | false                                                     |
+| iconPack          | Icon pack to use for the navigation                                                                                           | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                           |
+| iconPrev          | Icon to use for navigation button                                                                                             | string         | -                                                                               | Config -> <code> 'steps.iconPrev': 'chevron-left'</code>  |
+| iconNext          | Icon to use for navigation button                                                                                             | string         | -                                                                               | Config -> <code> 'steps.iconNext': 'chevron-right'</code> |
+| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean        | -                                                                               | true                                                      |
+| labelPosition     | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | 'bottom'                                                  |
+| rounded           | Rounded step markers                                                                                                          | boolean        | -                                                                               | true                                                      |
+| mobileMode        | How Steps will be displayed for mobile user                                                                                   | string         | `minimalist`, `compact`, `null`                                                 | 'minimalist'                                              |
+| ariaNextLabel     |                                                                                                                               | string         | -                                                                               |                                                           |
+| ariaPreviousLabel |                                                                                                                               | string         | -                                                                               |                                                           |
+
+## Class props
+
+| Prop name                     | Description | Type   | Values | Default |
+| ----------------------------- | ----------- | ------ | ------ | ------- |
+| rootClass                     |             | string | -      |         |
+| sizeClass                     |             | string | -      |         |
+| verticalClass                 |             | string | -      |         |
+| positionClass                 |             | string | -      |         |
+| stepsClass                    |             | string | -      |         |
+| variantClass                  |             | string | -      |         |
+| animatedClass                 |             | string | -      |         |
+| labelPositionClass            |             | string | -      |         |
+| roundedClass                  |             | string | -      |         |
+| mobileClass                   |             | string | -      |         |
+| stepItemsClass                |             | string | -      |         |
+| stepMarkerClass               |             | string | -      |         |
+| stepContentClass              |             | string | -      |         |
+| stepContentTransitioningClass |             | string | -      |         |
+| stepNavigationClass           |             | string | -      |         |
+| stepDetailsClass              |             | string | -      |         |
+| stepTitleClass                |             | string | -      |         |
+| stepLinkClass                 |             | string | -      |         |
+| stepLinkClickableClass        |             | string | -      |         |
 
 ### Events
 
@@ -304,21 +309,26 @@ title: Steps
 
 ## Props
 
-| Prop name         | Description                                                                                                                         | Type                  | Values | Default   |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------ | --------- |
-| label             | Item label                                                                                                                          | string                | -      |           |
-| icon              | Icon on the left                                                                                                                    | string                | -      |           |
-| iconPack          | Icon pack                                                                                                                           | string                | -      |           |
-| visible           | Show/hide item                                                                                                                      | boolean               | -      | true      |
-| value             | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number        | -      |           |
-| headerClass       | Header class of the item                                                                                                            | string\|array\|object | -      |           |
-| step              | Step marker content (when there is no icon)                                                                                         | string\|number        | -      |           |
-| variant           | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object        | -      |           |
-| clickable         | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean               | -      | undefined |
-| itemClass         |                                                                                                                                     | string                | -      |           |
-| variantClass      |                                                                                                                                     | string                | -      |           |
-| itemActiveClass   |                                                                                                                                     | string                | -      |           |
-| itemPreviousClass |                                                                                                                                     | string                | -      |           |
+| Prop name | Description                                                                                                                         | Type           | Values | Default   |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
+| label     | Item label                                                                                                                          | string         | -      |           |
+| icon      | Icon on the left                                                                                                                    | string         | -      |           |
+| iconPack  | Icon pack                                                                                                                           | string         | -      |           |
+| visible   | Show/hide item                                                                                                                      | boolean        | -      | true      |
+| value     | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number | -      |           |
+| step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
+| variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
+| clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
+
+## Class props
+
+| Prop name         | Description              | Type                  | Values | Default |
+| ----------------- | ------------------------ | --------------------- | ------ | ------- |
+| headerClass       | Header class of the item | string\|array\|object | -      |         |
+| itemClass         |                          | string                | -      |         |
+| variantClass      |                          | string                | -      |         |
+| itemActiveClass   |                          | string                | -      |         |
+| itemPreviousClass |                          | string                | -      |         |
 
 ### Slots
 

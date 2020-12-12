@@ -17,11 +17,6 @@ $switch-hover-border-color-opacity: 0.9 !default;
 $switch-hover-border-color: #b5b5b5 !default;
 $switch-label-padding: 0 0 0 .5em !default;
 $switch-margin-sibling: 0.5em !default;
-$switch-outlined-background: #b5b5b5 !default;
-$switch-outlined-border-color-opacity: 0.9 !default;
-$switch-outlined-border-color: $switch-outlined-background !default;
-$switch-outlined-border-style: solid !default;
-$switch-outlined-border-width: .1rem !default;
 $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
 $switch-width-number: 2.75 !default;
@@ -35,192 +30,101 @@ $switch-width: $switch-width-number * 1em !default;
     position: relative;
     @include unselectable;
     @include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
-    & + .o-switch:last-child {
-        margin-right: 0;
+
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &--#{$name} {
+            .o-switch__check--checked {
+                @include avariable('background', ('variant-' + #{$name}), $color);
+            }
+        }
+        &--#{$name}-passive {
+            .o-switch__check--unchecked {
+                @include avariable('background', ('variant-' + #{$name}), $color);
+            }
+        }
     }
+
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('font-size-' + #{name}), $value);
+        }
+    }
+
+    &__check-switch {
+        content: "";
+        display: block;
+        @include evariable(
+            'height', 'calc(($width - $padding * 2) / 2)',
+            eparam('$width', variable('switch-width', $switch-width)),
+            eparam('$padding', variable('switch-padding', $switch-padding))
+        );
+        @include evariable(
+            'width', 'calc(($width - $padding * 2) / 2)',
+            eparam('$width', variable('switch-width', $switch-width)),
+            eparam('$padding', variable('switch-padding', $switch-padding))
+        );
+        @include avariable('background', 'swtich-action-background', $swtich-action-background);
+        @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
+        transition-property: transform;
+        @include avariable('transition-duration', 'transition-duration', $speed-slow);
+        @include avariable('transition-timing-function', 'transition-timing', $easing);
+        will-change: transform;
+        transform-origin: left;
+    }
+
+    &__check {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        @include avariable('width', 'switch-width', $switch-width);
+        @include evariable(
+            'height', 'calc($width / 2 + $padding)',
+            eparam('$width', variable('switch-width', $switch-width)),
+            eparam('$padding', variable('switch-padding', $switch-padding))
+        );
+        @include avariable('padding', 'switch-padding', $switch-padding);
+        @include avariable('background', 'switch-background', $switch-background);
+        @include avariable('border-radius', 'switch-border-radius', $switch-border-radius);
+        transition-property: background;
+        @include avariable('transition-duration', 'transition-duration', $speed-slow);
+        @include avariable('transition-timing-function', 'transition-timing', $easing);
+
+        &--checked {
+            @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
+            .o-switch__check-switch {
+                transform: translate3d(100%, 0, 0);
+            }
+        }
+    }
+
     input[type=checkbox] {
         position: absolute;
         left: 0;
         opacity: 0;
         outline: none;
         z-index: -1;
-        + .o-switch-check {
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            @include avariable('width', 'switch-width', $switch-width);
-            @include evariable(
-                'height', 'calc($width / 2 + $padding)',
-                eparam('$width', variable('switch-width', $switch-width)),
-                eparam('$padding', variable('switch-padding', $switch-padding))
-            );
-            @include avariable('padding', 'switch-padding', $switch-padding);
-            @include avariable('background', 'switch-background', $switch-background);
-            @include avariable('border-radius', 'switch-border-radius', $switch-border-radius);
-            transition-property: background;
-            @include avariable('transition-duration', 'transition-duration', $speed-slow);
-            @include avariable('transition-timing-function', 'transition-timing', $easing);
-            // transition: background $speed-slow $easing, box-shadow $speed-slow $easing;
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name}-passive {
-                    @include avariable('background', ('variant-' + #{$name}), $color);
-                }
-            }
-            &:before {
-                content: "";
-                display: block;
-                @include evariable(
-                    'height', 'calc(($width - $padding * 2) / 2)',
-                    eparam('$width', variable('switch-width', $switch-width)),
-                    eparam('$padding', variable('switch-padding', $switch-padding))
-                );
-                @include evariable(
-                    'width', 'calc(($width - $padding * 2) / 2)',
-                    eparam('$width', variable('switch-width', $switch-width)),
-                    eparam('$padding', variable('switch-padding', $switch-padding))
-                );
-                @include avariable('background', 'swtich-action-background', $swtich-action-background);
-                @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
-                transition-property: transform;
-                @include avariable('transition-duration', 'transition-duration', $speed-slow);
-                @include avariable('transition-timing-function', 'transition-timing', $easing);
-                will-change: transform;
-                transform-origin: left;
-            }
-            &.o-switch-elastic:before {
-                transform: scaleX(1.5);
-            }
-        }
-        &:checked + .o-switch-check {
-            @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name} {
-                    @include avariable('background', ('variant-' + #{$name}), $color);
-                }
-            }
-            &:before {
-                transform: translate3d(100%, 0, 0);
-            }
-            &.o-switch-elastic:before {
-                // Might be a little offset if base font is not 16px
-                transform: translate3d(50%, 0, 0) scaleX(1.5);
-            }
-        }
-        &:focus, &:active {
-            outline: none;
-            + .o-switch-check {
-                // box-shadow: $switch-active-box-shadow-length rgba($switch-active-box-shadow-color, $switch-active-box-shadow-opacity);
-                @include evariable(
-                    'box-shadow', $JOIN_EXPRESSION,
-                    eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                    eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
-                );
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        box-shadow: $switch-active-box-shadow-length rgba($color, $switch-active-box-shadow-opacity);
-                        @include evariable(
-                            'box-shadow', $JOIN_EXPRESSION,
-                            eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                            eparam('$param2', variable('variant-' + $name, $color))
-                        );
-                    }
-                }
-            }
-            &:checked + .o-switch-check {
-                // box-shadow: $switch-checked-box-shadow-length rgba($switch-checked-box-shadow-color, $switch-checked-box-shadow-opacity);
-                @include evariable(
-                    'box-shadow', $JOIN_EXPRESSION,
-                    eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                    eparam('$param2', variable('switch-active-box-shadow-color', $switch-active-box-shadow-color))
-                );
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        // box-shadow: $switch-checked-box-shadow-length rgba($color, $switch-checked-box-shadow-opacity);
-                        @include evariable(
-                            'box-shadow', $JOIN_EXPRESSION,
-                            eparam('$param1', variable('switch-active-box-shadow-length', $switch-active-box-shadow-length)),
-                            eparam('$param2', variable('variant-' + $name, $color))
-                        );
-                    }
-                }
-            }
-        }
     }
-    .o-switch-label {
+    &__label {
         @include avariable('padding', 'switch-label-padding', $switch-label-padding);
+        padding-left: $control-padding-horizontal;
     }
-    &.o-switch-rounded {
-        input[type=checkbox] {
-            + .o-switch-check {
-                @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-                &:before {
-                    @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-                }
-                &.o-switch-elastic:before {
-                    @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-                }
-            }
+    &--rounded {
+        .o-switch__check {
+            @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
+        }
+        .o-switch__check-switch {
+            @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
         }
     }
-    &.o-switch-outlined {
-        input[type=checkbox] {
-            + .o-switch-check {
-                background: transparent;
-                @include avariable('border-width', 'switch-outlined-border-width', $switch-outlined-border-width);
-                @include avariable('border-style', 'switch-outlined-border-style', $switch-outlined-border-style);
-                @include avariable('border-color', 'switch-outlined-border-color', $switch-outlined-border-color);
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.o-color-#{$name}-passive {
-                        @include avariable('border-color', ('variant-' + #{$name}), $color);
-                        &:before {
-                            @include avariable('background', ('variant-' + #{$name}), $color);
-                        }
-                    }
-                }
-                &:before {
-                    @include avariable('background', 'switch-outlined-background', $switch-outlined-background);
-                }
-            }
-            &:checked + .o-switch-check {
-                @include avariable('border-color', 'switch-active-background-color', $switch-active-background-color);
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        background: transparent;
-                        @include avariable('border-color', ('variant-' + #{$name}), $color);
-                        &:before {
-                            @include avariable('background', ('variant-' + #{$name}), $color);
-                        }
-                    }
-                }
-                &:before {
-                    @include avariable('background', 'switch-active-background-color', $switch-active-background-color);
-                }
-            }
-        }
-    }
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            @include avariable('font-size', ('font-size-' + #{name}), $value);
-        }
-    }
-    &[disabled] {
+
+    &--disabled {
         @include avariable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
     }
-    &.o-switch-left {
+    &--left {
         flex-direction: row-reverse;
-        .o-switch-label {
+        .o-switch__label {
             padding-right: $control-padding-horizontal;
-        }
-    }
-    &:not(.o-switch-left) {
-        .o-switch-label {
-            padding-left: $control-padding-horizontal;
         }
     }
 }

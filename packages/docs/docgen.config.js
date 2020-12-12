@@ -57,16 +57,27 @@ ${style ? renderStyleDocs(config, style[0].description) : ''}
 | Prop name     | Description | Type      | Values      | Default     |
 | ------------- |-------------| --------- | ----------- | ----------- |
 ${tmplProps(props)}
+
+## Class props
+| Prop name     | Description | Type      | Values      | Default     |
+| ------------- |-------------| --------- | ----------- | ----------- |
+${tmplProps(props, true)}
 `
     }
   }
 };
 
-function tmplProps(props) {
+function tmplProps(props, parseClasses=false) {
   let ret = ''
 
   props.forEach(pr => {
     const p = pr.name
+    if (parseClasses && !p.endsWith("Class")) {
+      return;
+    }
+    if (!parseClasses && p.endsWith("Class")) {
+        return;
+    }
     const n = pr.type && pr.type.name ? pr.type.name : ''
     let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''
     const v = pr.values ? pr.values.map(pv => `\`${pv}\``).join(', ') : '-'

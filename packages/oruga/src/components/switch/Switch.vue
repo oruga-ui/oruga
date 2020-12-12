@@ -20,7 +20,9 @@
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses"/>
+        <span :class="checkClasses">
+            <span :class="checkSwitchClasses"></span>
+        </span>
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -83,11 +85,6 @@ export default {
             type: Boolean,
             default: true
         },
-        /** Outlined style */
-        outlined: {
-            type: Boolean,
-            default: false
-        },
         /** Show label on left */
         leftLabel: {
             type: Boolean,
@@ -96,13 +93,14 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
+        checkClassChecked: String,
+        checkClassUnchecked: String,
+        checkSwitchClass: String,
         roundedClass: String,
-        outlinedClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String,
         passiveVariantClass: String,
-        animationClass: String,
         leftLabelClass: String
     },
     data() {
@@ -115,24 +113,29 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-switch'),
-                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('disabledClass', 'o-switch-disabled')]: this.disabled },
-                { [this.computedClass('roundedClass', 'o-switch-rounded')]: this.rounded },
-                { [this.computedClass('outlinedClass', 'o-switch-outlined')]: this.outlined },
-                { [this.computedClass('leftLabelClass', 'o-switch-left')]: this.leftLabel }
+                { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
+                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
+                { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel },
+                { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
+                { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('checkClass', 'o-switch-check'),
-                { [this.computedClass('animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
-                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant },
-                { [this.computedClass('passiveVariantClass', 'o-color-', this.passiveVariant + '-passive')]: this.passiveVariant }
+                this.computedClass('checkClass', 'o-switch__check'),
+                { [this.computedClass('checkClassChecked', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
+                { [this.computedClass('checkClassUnchecked', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)},
+            ]
+        },
+        checkSwitchClasses() {
+            return [
+                this.computedClass('checkSwitchClass', 'o-switch__check-switch'),
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('labelClass', 'o-switch-label')
+                this.computedClass('labelClass', 'o-switch__label')
             ]
         },
         computedValue: {

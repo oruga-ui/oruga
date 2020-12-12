@@ -142,18 +142,23 @@ title: Select
 | placeholder        | Text when nothing is selected                               | string                                 | -                                                 |                                                          |
 | multiple           |                                                             | boolean                                | -                                                 |                                                          |
 | nativeSize         | Same as native size                                         | string\|number                         | -                                                 |                                                          |
-| rootClass          |                                                             | string                                 | -                                                 |                                                          |
-| iconsLeftClass     |                                                             | string                                 | -                                                 |                                                          |
-| iconsRightClass    |                                                             | string                                 | -                                                 |                                                          |
-| roundedClass       |                                                             | string                                 | -                                                 |                                                          |
-| multipleClass      |                                                             | string                                 | -                                                 |                                                          |
-| emptyClass         |                                                             | string                                 | -                                                 |                                                          |
-| expandedClass      |                                                             | string                                 | -                                                 |                                                          |
-| iconLeftClass      |                                                             | string                                 | -                                                 |                                                          |
-| iconRightClass     |                                                             | string                                 | -                                                 |                                                          |
-| sizeClass          |                                                             | string                                 | -                                                 |                                                          |
-| variantClass       |                                                             | string                                 | -                                                 |                                                          |
-| placeholderClass   |                                                             | string                                 | -                                                 |                                                          |
+
+## Class props
+
+| Prop name        | Description | Type   | Values | Default |
+| ---------------- | ----------- | ------ | ------ | ------- |
+| rootClass        |             | string | -      |         |
+| iconsLeftClass   |             | string | -      |         |
+| iconsRightClass  |             | string | -      |         |
+| roundedClass     |             | string | -      |         |
+| multipleClass    |             | string | -      |         |
+| emptyClass       |             | string | -      |         |
+| expandedClass    |             | string | -      |         |
+| iconLeftClass    |             | string | -      |         |
+| iconRightClass   |             | string | -      |         |
+| sizeClass        |             | string | -      |         |
+| variantClass     |             | string | -      |         |
+| placeholderClass |             | string | -      |         |
 
 ## Events
 
