@@ -112,9 +112,9 @@ $switch-width: $switch-width-number * 1em !default;
     &--rounded {
         .o-switch__check {
             @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-            .o-switch__check-switch {
-                @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-            }
+        }
+        .o-switch__check-switch {
+            @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
         }
     }
 

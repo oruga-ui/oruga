@@ -93,13 +93,14 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
+        checkClassChecked: String,
+        checkClassUnchecked: String,
         checkSwitchClass: String,
         roundedClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String,
         passiveVariantClass: String,
-        animationClass: String,
         leftLabelClass: String
     },
     data() {
@@ -123,13 +124,13 @@ export default {
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-switch__check'),
-                { [this.computedClass('animationClass', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
-                { [this.computedClass('animationClass', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)}
+                { [this.computedClass('checkClassChecked', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
+                { [this.computedClass('checkClassUnchecked', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)},
             ]
         },
         checkSwitchClasses() {
             return [
-                this.computedClass('checkSwitchClass', 'o-switch__check-switch')
+                this.computedClass('checkSwitchClass', 'o-switch__check-switch'),
             ]
         },
         labelClasses() {

@@ -48,14 +48,16 @@ describe('OSwitch', () => {
         const value = false
         wrapper.setProps({ passiveVariant, value })
         await wrapper.vm.$nextTick()
-        const switchElement = wrapper.find('.o-switch-check')
-        expect(switchElement.classes()).toContain('o-color-danger-passive')
+        const switchCheckElement = wrapper.find('.o-switch__check')
+        expect(switchCheckElement.classes()).toContain('o-switch__check--unchecked')
+        const switchElement = wrapper.find('.o-switch')
+        expect(switchElement.classes()).toContain('o-switch--danger-passive')
     })
 
     it('does not have a label at left by default', () => {
         const value = false
         wrapper.setProps({ value })
-        expect(wrapper.classes()).not.toContain('o-switch-left')
+        expect(wrapper.classes()).not.toContain('o-switch--left')
     })
 
     it('has label at left is left-label prop has been sent', async () => {
@@ -63,6 +65,6 @@ describe('OSwitch', () => {
         const value = false
         wrapper.setProps({ leftLabel, value })
         await wrapper.vm.$nextTick()
-        expect(wrapper.classes()).toContain('o-switch-left')
+        expect(wrapper.classes()).toContain('o-switch--left')
     })
 })
