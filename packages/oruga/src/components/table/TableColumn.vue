@@ -11,7 +11,20 @@ export default {
         meta: [String, Number, Boolean, Function, Object, Array],
         width: [Number, String],
         numeric: Boolean,
-        centered: Boolean,
+        /**
+         * Optional, position of column content
+         * @values centered, right
+         */
+        position: {
+            type: String,
+            validator(value) {
+                return [
+                    'left',
+                    'centered',
+                    'right'
+                ].indexOf(value) > -1
+            }
+        },
         searchable: Boolean,
         sortable: Boolean,
         visible: {

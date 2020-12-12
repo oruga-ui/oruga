@@ -1,5 +1,8 @@
 <template>
-    <div :class="rootClasses">
+    <div
+        :class="tableWrapperClasses"
+        :style="tableWrapperStyle"
+    >
 
         <div ref="slot" style="display:none">
             <slot />
@@ -8,20 +11,19 @@
         <o-table-mobile-sort
             v-if="mobileCards && hasSortablenewColumns"
             :current-sort-column="currentSortColumn"
-            :sort-multiple="sortMultiple"
-            :sort-multiple-data="sortMultipleDataComputed"
             :columns="newColumns"
             :placeholder="mobileSortPlaceholder"
             :icon-pack="iconPack"
             :sort-icon="sortIcon"
             :sort-icon-size="sortIconSize"
+            :is-asc="isAsc"
             @sort="(column, event) => sort(column, null, event)"
             @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
             <slot name="pagination">
-                <o-table-pagination  
+                <o-table-pagination
                     v-bind="$attrs"
                     :per-page="perPage"
                     :paginated="paginated"
@@ -42,250 +44,220 @@
             </slot>
         </template>
 
-        <div
-            :class="tableWrapperClasses"
-            :style="tableWrapperStyle"
-        >
-            <table
-                :class="tableClasses"
-                :tabindex="!focusable ? false : 0"
-                @keydown.self.prevent.up="pressedArrow(-1)"
-                @keydown.self.prevent.down="pressedArrow(1)">
-                <thead v-if="newColumns.length && showHeader">
-                    <tr>
-                        <th v-if="showDetailRowIcon" width="40px"/>
-                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
-                            <template v-if="headerCheckable">
-                                <o-checkbox
-                                    :value="isAllChecked"
-                                    :disabled="isAllUncheckable"
-                                    @change.native="checkAll"/>
-                            </template>
-                        </th>
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'header'"
-                            :class="thClasses(column)"
-                            :style="column.style"
-                            @click.stop="sort(column, null, $event)">
-                            <div :class="thWrapClasses(column)">
-                                <template v-if="column.hasHeaderSlot">
-                                    <o-slot-component
-                                        :component="column"
-                                        scoped
-                                        name="header"
-                                        tag="span"
-                                        :props="{ column, index }"
-                                    />
-                                </template>
-                                <template v-else>
-                                    <span :class="thContentClasses">
-                                        {{ column.label }}
-                                        <template
-                                            v-if="sortMultiple &&
-                                                sortMultipleDataComputed &&
-                                                sortMultipleDataComputed.length > 0 &&
-                                                sortMultipleDataComputed.filter(i => i.field === column.field).length > 0">
-                                            <o-icon
-                                                :icon="sortIcon"
-                                                :pack="iconPack"
-                                                both
-                                                :size="sortIconSize"
-                                                :class="iconSortMultipleClasses(column)"
-                                            />
-                                            {{ findIndexOfSortData(column) }}
-                                            <o-button
-                                                native-type="button"
-                                                size="small"
-                                                @click.stop="removeSortingPriority(column)"/>
-                                        </template>
+        <table
+            :class="tableClasses"
+            :tabindex="!focusable ? false : 0"
+            @keydown.self.prevent.up="pressedArrow(-1)"
+            @keydown.self.prevent.down="pressedArrow(1)">
+            <thead v-if="newColumns.length && showHeader">
+                <tr>
+                    <th v-if="showDetailRowIcon" width="40px"/>
+                    <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
+                        <template v-if="headerCheckable">
+                            <o-checkbox
+                                :value="isAllChecked"
+                                :disabled="isAllUncheckable"
+                                @change.native="checkAll"/>
+                        </template>
+                    </th>
+                    <th
+                        v-for="(column, index) in visibleColumns"
+                        :key="column.newKey + ':' + index + 'header'"
+                        :class="thClasses(column)"
+                        :style="column.style"
+                        @click.stop="sort(column, null, $event)">
 
-                                        <o-icon
-                                            v-else
-                                            :icon="sortIcon"
-                                            :pack="iconPack"
-                                            both
-                                            :size="sortIconSize"
-                                            :class="iconSortClasses(column)"
-                                        />
-                                    </span>
-                                </template>
-                            </div>
-                        </th>
-                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
-                            <template v-if="headerCheckable">
-                                <o-checkbox
-                                    :value="isAllChecked"
-                                    :disabled="isAllUncheckable"
-                                    @change.native="checkAll"/>
-                            </template>
-                        </th>
-                    </tr>
-                    <tr v-if="hasCustomSubheadings" :class="subheadingClasses">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                        <th v-if="checkable && checkboxPosition === 'left'" />
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'subheading'"
-                            :style="column.style">
-                            <div :class="thWrapClasses({})">
-                                <template v-if="column.hasSubheadingSlot">
-                                    <o-slot-component
-                                        :component="column"
-                                        scoped
-                                        name="subheading"
-                                        tag="span"
-                                        :props="{ column, index }"
-                                    />
-                                </template>
-                                <template v-else>{{ column.subheading }}</template>
-                            </div>
-                        </th>
-                        <th v-if="checkable && checkboxPosition === 'right'" />
-                    </tr>
-                    <tr v-if="hasSearchablenewColumns">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                        <th v-if="checkable && checkboxPosition === 'left'" />
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'searchable'"
-                            :class="thStickyClasses(column)"
-                            :style="column.style">
-                            <div :class="thWrapClasses({})">
-                                <template v-if="column.searchable">
-                                    <template v-if="column.hasSearchableSlot">
-                                        <o-slot-component
-                                            :component="column"
-                                            scoped
-                                            name="searchable"
-                                            tag="span"
-                                            :props="{ column, filters }"
-                                        />
-                                    </template>
-                                    <o-input
-                                        v-else
-                                        @[filtersEvent].native="onFiltersEvent"
-                                        v-model="filters[column.field]"
-                                        :type="column.numeric ? 'number' : 'text'" />
-                                </template>
-                            </div>
-                        </th>
-                        <th v-if="checkable && checkboxPosition === 'right'" />
-                    </tr>
-                </thead>
-                <tbody>
-                    <template v-for="(row, index) in visibleData">
-                        <tr
-                            :key="customRowKey ? row[customRowKey] : index"
-                            :class="rowClasses(row, index)"
-                            @click="selectRow(row)"
-                            @dblclick="$emit('dblclick', row)"
-                            @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
-                            @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
-                            @contextmenu="$emit('contextmenu', row, $event)"
-                            :draggable="draggable"
-                            @dragstart="handleDragStart($event, row, index)"
-                            @dragend="handleDragEnd($event, row, index)"
-                            @drop="handleDrop($event, row, index)"
-                            @dragover="handleDragOver($event, row, index)"
-                            @dragleave="handleDragLeave($event, row, index)">
-
-                            <td
-                                v-if="showDetailRowIcon"
-                                :class="detailedChevronClasses"
-                            >
-                                <a
-                                    v-if="hasDetailedVisible(row)"
-                                    role="detailed"
-                                    @click.stop="toggleDetails(row)">
+                        <template v-if="column.hasHeaderSlot">
+                            <o-slot-component
+                                :component="column"
+                                scoped
+                                name="header"
+                                tag="span"
+                                :props="{ column, index }"
+                            />
+                        </template>
+                        <template v-else>
+                            <span>
+                                {{ column.label }}
+                                <span
+                                    v-show="column.sortable && currentSortColumn === column"
+                                    :class="thSortIconClasses(column)">
                                     <o-icon
-                                        icon="chevron-right"
+                                        :icon="sortIcon"
                                         :pack="iconPack"
-                                        clickable
                                         both
-                                        :class="detailedIconExpandedClasses(row)"/>
-                                </a>
-                            </td>
-
-                            <td
-                                :class="tdCheckboxCellClasses"
-                                v-if="checkable && checkboxPosition === 'left'">
-                                <o-checkbox
-                                    :disabled="!isRowCheckable(row)"
-                                    :value="isRowChecked(row)"
-                                    @click.native.prevent.stop="checkRow(row, index, $event)"
+                                        :size="sortIconSize"
+                                        :rotation="!isAsc ? 180 : 0" />
+                                </span>
+                            </span>
+                        </template>
+                    </th>
+                    <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
+                        <template v-if="headerCheckable">
+                            <o-checkbox
+                                :value="isAllChecked"
+                                :disabled="isAllUncheckable"
+                                @change.native="checkAll"/>
+                        </template>
+                    </th>
+                </tr>
+                <tr v-if="hasCustomSubheadings" :class="subheadingClasses">
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
+                    <th v-if="checkable && checkboxPosition === 'left'" />
+                    <th
+                        v-for="(column, index) in visibleColumns"
+                        :key="column.newKey + ':' + index + 'subheading'"
+                        :style="column.style">
+                        <template v-if="column.hasSubheadingSlot">
+                            <o-slot-component
+                                :component="column"
+                                scoped
+                                name="subheading"
+                                tag="span"
+                                :props="{ column, index }"
+                            />
+                        </template>
+                        <template v-else>{{ column.subheading }}</template>
+                    </th>
+                    <th v-if="checkable && checkboxPosition === 'right'" />
+                </tr>
+                <tr v-if="hasSearchablenewColumns">
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
+                    <th v-if="checkable && checkboxPosition === 'left'" />
+                    <th
+                        v-for="(column, index) in visibleColumns"
+                        :key="column.newKey + ':' + index + 'searchable'"
+                        :class="thClasses(column)"
+                        :style="column.style">
+                        <template v-if="column.searchable">
+                            <template v-if="column.hasSearchableSlot">
+                                <o-slot-component
+                                    :component="column"
+                                    scoped
+                                    name="searchable"
+                                    tag="span"
+                                    :props="{ column, filters }"
                                 />
-                            </td>
+                            </template>
+                            <o-input
+                                v-else
+                                @[filtersEvent].native="onFiltersEvent"
+                                v-model="filters[column.field]"
+                                :type="column.numeric ? 'number' : 'text'" />
+                        </template>
+                    </th>
+                    <th v-if="checkable && checkboxPosition === 'right'" />
+                </tr>
+            </thead>
+            <tbody>
+                <template v-for="(row, index) in visibleData">
+                    <tr
+                        :key="customRowKey ? row[customRowKey] : index"
+                        :class="rowClasses(row, index)"
+                        @click="selectRow(row)"
+                        @dblclick="$emit('dblclick', row)"
+                        @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
+                        @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
+                        @contextmenu="$emit('contextmenu', row, $event)"
+                        :draggable="draggable"
+                        @dragstart="handleDragStart($event, row, index)"
+                        @dragend="handleDragEnd($event, row, index)"
+                        @drop="handleDrop($event, row, index)"
+                        @dragover="handleDragOver($event, row, index)"
+                        @dragleave="handleDragLeave($event, row, index)">
 
-                            <template v-for="(column, colindex) in visibleColumns">
+                        <td
+                            v-if="showDetailRowIcon"
+                            :class="tdChevronClasses"
+                        >
 
-                                <template v-if="column.hasDefaultSlot">
-                                    <o-slot-component
-                                        :key="column.newKey + index + ':' + colindex"
-                                        :component="column"
-                                        scoped
-                                        name="default"
-                                        tag="td"
-                                        :class="columnClasses(column)"
-                                        :data-label="column.label"
-                                        :props="{ row, column, index, colindex, toggleDetails }"
-                                        @click.native="$emit('cell-click',row, column,
-                                                             index, colindex, $event)"
-                                    />
-                                </template>
+                            <o-icon
+                                v-if="hasDetailedVisible(row)"
+                                icon="chevron-right"
+                                :pack="iconPack"
+                                :rotation="isVisibleDetailRow(row) ? 90 : 0"
+                                role="button"
+                                @click.native.stop="toggleDetails(row)"
+                                clickable
+                                both />
+                        </td>
 
+                        <td
+                            :class="tdCheckboxCellClasses"
+                            v-if="checkable && checkboxPosition === 'left'">
+                            <o-checkbox
+                                :disabled="!isRowCheckable(row)"
+                                :value="isRowChecked(row)"
+                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                            />
+                        </td>
+
+                        <template v-for="(column, colindex) in visibleColumns">
+
+                            <template v-if="column.hasDefaultSlot">
+                                <o-slot-component
+                                    :key="column.newKey + index + ':' + colindex"
+                                    :component="column"
+                                    scoped
+                                    name="default"
+                                    tag="td"
+                                    :class="tdClasses(column)"
+                                    :data-label="column.label"
+                                    :props="{ row, column, index, colindex, toggleDetails }"
+                                    @click.native="$emit('cell-click',row, column,
+                                                            index, colindex, $event)"
+                                />
                             </template>
 
-                            <td
-                                :class="tdCheckboxCellClasses"
-                                v-if="checkable && checkboxPosition === 'right'">
-                                <o-checkbox
-                                    :disabled="!isRowCheckable(row)"
-                                    :value="isRowChecked(row)"
-                                    @click.native.prevent.stop="checkRow(row, index, $event)"
-                                />
-                            </td>
-                        </tr>
+                        </template>
 
-                        <tr
-                            v-if="isActiveDetailRow(row)"
-                            :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                            :class="detailedClasses">
-                            <td :colspan="columnCount">
-                                <slot
-                                    name="detail"
-                                    :row="row"
-                                    :index="index"/>
-                            </td>
-                        </tr>
-                        <slot
-                            v-if="isActiveCustomDetailRow(row)"
-                            name="detail"
-                            :row="row"
-                            :index="index"
-                        />
-                    </template>
-
-                    <tr
-                        v-if="!visibleData.length"
-                        :class="emptyClasses">
-                        <td :colspan="columnCount">
-                            <slot name="empty"/>
+                        <td
+                            :class="tdCheckboxCellClasses"
+                            v-if="checkable && checkboxPosition === 'right'">
+                            <o-checkbox
+                                :disabled="!isRowCheckable(row)"
+                                :value="isRowChecked(row)"
+                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                            />
                         </td>
                     </tr>
 
-                </tbody>
-
-                <tfoot v-if="$slots.footer">
-                    <tr :class="footerClasses">
-                        <slot name="footer" v-if="hasCustomFooterSlot()"/>
-                        <th :colspan="columnCount" v-else>
-                            <slot name="footer"/>
-                        </th>
+                    <tr
+                        v-if="isActiveDetailRow(row)"
+                        :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
+                        :class="detailedClasses">
+                        <td :colspan="columnCount">
+                            <slot
+                                name="detail"
+                                :row="row"
+                                :index="index"/>
+                        </td>
                     </tr>
-                </tfoot>
-            </table>
-        </div>
+                    <slot
+                        v-if="isActiveCustomDetailRow(row)"
+                        name="detail"
+                        :row="row"
+                        :index="index"
+                    />
+                </template>
+
+                <tr v-if="!visibleData.length">
+                    <td :colspan="columnCount">
+                        <slot name="empty"/>
+                    </td>
+                </tr>
+
+            </tbody>
+
+            <tfoot v-if="$slots.footer">
+                <tr :class="footerClasses">
+                    <slot name="footer" v-if="hasCustomFooterSlot()"/>
+                    <th :colspan="columnCount" v-else>
+                        <slot name="footer"/>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
 
         <template v-if="loading">
             <slot name="loading">
@@ -316,7 +288,7 @@
                 </o-table-pagination>
             </slot>
         </template>
-        
+
     </div>
 </template>
 
@@ -333,7 +305,7 @@ import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, indexOf, multiColumnSort, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
+import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
@@ -358,6 +330,7 @@ export default {
         [TablePagination.name]: TablePagination
     },
     mixins: [BaseComponentMixin],
+    configField: 'table',
     inheritAttrs: false,
     provide() {
         return {
@@ -457,24 +430,6 @@ export default {
             type: String,
             default: () => { return getValueByPath(config, 'table.sortIconSize', 'small') }
         },
-        /** Adds multiple column sorting */
-        sortMultiple: {
-            type: Boolean,
-            default: false
-        },
-        /** Used in combination with backend-sorting */
-        sortMultipleData: {
-            type: Array,
-            default: () => []
-        },
-        /**
-         * Adds a key which will be required for multi column sorting to work. Will always be enabled if null is selected (default). Requires sort-multiple
-         * @values null, shiftKey, altKey, ctrlKey
-         */
-        sortMultipleKey: {
-            type: String,
-            default: null
-        },
         /** Adds pagination to the table */
         paginated: Boolean,
         /** Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding */
@@ -569,8 +524,6 @@ export default {
             type: String,
             default: ''
         },
-        /** Force to show table with cards layout */
-        cardLayout: Boolean,
         /** Filtering debounce time (in milliseconds) */
         debounceSearch: Number,
         /** Show header */
@@ -591,26 +544,24 @@ export default {
         footerClass: String,
         emptyClass: String,
         detailedClass: String,
-        detailedChevronClass: String,
-        detailedIconExpandedClass: String,
         borderedClass: String,
         stripedClass: String,
         narrowClass: String,
         hoverableClass: String,
-        thWrapClass: String,
-        thContentClass: String,
-        thRightClass: String,
-        thCenteredClass: String,
+        thClass: String,
+        tdClass: String,
+        thPositionClass: String,
         thStickyClass: String,
         thCheckboxClass: String,
         thCurrentSortClass: String,
         thSortableClass: String,
         thUnselectableClass: String,
+        thSortIconClass: String,
         thDetailedClass: String,
-        tdRightClass: String,
-        tdCenteredClass: String,
+        tdPositionClass: String,
         tdStickyClass: String,
         tdCheckboxCellClass: String,
+        tdChevronClass: String,
         tdSelectedClass: String,
         subheadingClass: String,
         stickyHeaderClass: String,
@@ -618,14 +569,10 @@ export default {
         cardsClass: String,
         scrollableClass: String,
         mobileSortClass: String,
-        iconSortDescClass: String,
-        iconSortClass: String,
-        iconSortInvisibleClass: String,
-        paginationWrapperClass: String
+        paginationClass: String
     },
     data() {
         return {
-            sortMultipleDataLocal: [],
             getValueByPath,
             visibleDetailRows: this.openedDetailed,
             newData: this.data,
@@ -642,88 +589,82 @@ export default {
         }
     },
     computed: {
-        rootClasses() {
-            return [
-                this.computedClass('table', 'rootClass', 'o-table')
-            ]
-        },
         tableClasses() {
             return [
-                this.computedClass('table', 'tableClass', ''),
-                { [this.computedClass('table', 'borderedClass', 'o-table-bordered')]: this.bordered },
-                { [this.computedClass('table', 'stripedClass', 'o-table-striped')]: this.striped },
-                { [this.computedClass('table', 'narrowClass', 'o-table-narrow')]: this.narrowed },
-                { [this.computedClass('table', 'hoverableClass', 'o-table-hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) }
+                this.computedClass('tableClass', 'o-table'),
+                { [this.computedClass('borderedClass', 'o-table--bordered')]: this.bordered },
+                { [this.computedClass('stripedClass', 'o-table--striped')]: this.striped },
+                { [this.computedClass('narrowClass', 'o-table--narrow')]: this.narrowed },
+                { [this.computedClass('hoverableClass', 'o-table--hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) },
+                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length },
             ]
         },
         tableWrapperClasses() {
             return [
-                this.computedClass('table', 'wrapperClass', 'o-table-wrapper'),
-                { [this.computedClass('table', 'mobileCardsClass', 'o-table-mobile-cards')]: this.mobileCards },
-                { [this.computedClass('table', 'stickyHeaderClass', 'o-table-sticky-header')]: this.stickyHeader },
-                { [this.computedClass('table', 'cardsClass', 'o-table-cards')]: this.cardLayout },
-                { [this.computedClass('table', 'scrollableClass', 'o-table-scrollable')]: this.isScrollable }
+                this.computedClass('wrapperClass', 'o-table__wrapper'),
+                { [this.computedClass('mobileCardsClass', 'o-table__wrapper--mobile-cards')]: this.mobileCards },
+                { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
+                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable }
             ]
         },
         footerClasses() {
             return [
-                this.computedClass('table', 'footerClass', 'o-table-footer')
+                this.computedClass('footerClass', 'o-table__footer')
             ]
         },
-        emptyClasses() {
+        thBaseClasses() {
             return [
-                this.computedClass('table', 'emptyClass', 'o-table-empty')
+                this.computedClass('thClass', 'o-table__th')
             ]
         },
-        thContentClasses() {
+        tdBaseClasses() {
             return [
-                this.computedClass('table', 'thContentClass', 'o-table-th-content')
+                this.computedClass('tdClass', 'o-table__td')
             ]
         },
         thCheckboxClasses() {
             return [
-                this.computedClass('table', 'thCheckboxClass', 'o-table-th-checkbox')
+                ...this.thBaseClasses,
+                this.computedClass('thCheckboxClass', 'o-table__th-checkbox')
             ]
         },
         thDetailedClasses() {
             return [
-                this.computedClass('table', 'thDetailedClass', 'o-table-th-detail')
+                 ...this.thBaseClasses,
+                this.computedClass('thDetailedClass', 'o-table__th--detailed')
             ]
         },
         tdCheckboxCellClasses() {
             return [
-                this.computedClass('table', 'tdCheckboxCellClass', 'o-table-checkbox-cell'),
+                ...this.tdBaseClasses,
+                this.computedClass('tdCheckboxCellClass', 'o-table__td-checkbox'),
                 ...this.thStickyClasses({ sticky: this.stickyCheckbox })
             ]
         },
         detailedClasses() {
             return [
-                this.computedClass('table', 'detailedClass', 'o-table-detail')
+                this.computedClass('detailedClass', 'o-table__detail')
             ]
         },
-        detailedChevronClasses() {
+        tdChevronClasses() {
             return [
-                this.computedClass('table', 'detailedChevronClass', 'o-table-chevron-cell')
+                ...this.tdBaseClasses,
+                this.computedClass('tdChevronClass', 'o-table__td-chevron')
             ]
         },
         subheadingClasses() {
             return [
-                this.computedClass('table', 'subheadingClass', 'o-table-subheading')
+                this.computedClass('subheadingClass', 'o-table__subheading')
             ]
         },
         mobileSortClasses() {
             return [
-                this.computedClass('table', 'mobileSortClass', 'o-table-mobile-sort')
+                this.computedClass('mobileSortClass', 'o-table__mobile-sort')
             ]
         },
         paginationWrapperClasses() {
             return [
-                this.computedClass('table', 'paginationWrapperClass', 'o-pagination-wrapper')
-            ]
-        },
-        iconSortDescClasses() {
-            return [
-                { [this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc')]: !this.isAsc },
+                this.computedClass('paginationClass', 'o-table__pagination')
             ]
         },
         tableWrapperStyle() {
@@ -845,7 +786,7 @@ export default {
                     component.$scopedSlots = {
                         'default': (props) => {
                             const vnode = component.$createElement(
-                                'span', 
+                                'span',
                                 { domProps: { innerHTML: getValueByPath(props.row, column.field) } }
                             )
                             return [vnode]
@@ -855,10 +796,6 @@ export default {
                 })
             }
             return this.defaultSlots
-        },
-
-        sortMultipleDataComputed() {
-            return this.backendSorting ? this.sortMultipleData : this.sortMultipleDataLocal
         }
     },
     watch: {
@@ -935,59 +872,39 @@ export default {
         }
     },
     methods: {
-        thWrapClasses(column) {
-            return [
-                this.computedClass('table', 'thWrapClass', 'o-table-th-wrap'),
-                { [this.computedClass('table', 'thRightClass', 'o-table-th-right')]: column.numeric },
-                { [this.computedClass('table', 'thCenteredClass', 'o-table-th-centered')]: column.centered }
-            ]
-        },
         thClasses(column) {
             return [
                 column.headerClass,
-                { [this.computedClass('table', 'thCurrentSortClass', 'o-table-th-current-sort')]: (!this.sortMultiple && this.currentSortColumn === column) },
-                { [this.computedClass('table', 'thSortableClass', 'o-table-th-sortable')]: column.sortable },
-                { [this.computedClass('table', 'thUnselectableClass', 'o-table-th-unselectable')]: column.isHeaderUnselectable },
+                ...this.thBaseClasses,
+                { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
+                { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
+                { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
+                { [this.computedClass('thPositionClass', 'o-table__th--', column.position)]: column.position },
                 ...this.thStickyClasses(column)
             ]
         },
         thStickyClasses(column) {
             return [
-                { [this.computedClass('table', 'thStickyClass', 'o-table-th-sticky')]: column.sticky }
+                { [this.computedClass('thStickyClass', 'o-table__th--sticky')]: column.sticky || this.stickyHeader }
             ]
         },
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('table', 'tdSelectedClass', 'o-table-row-selected')]: this.isRowSelected(row, this.selected) }
+                { [this.computedClass('tdSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
             ]
         },
-        iconSortClasses(column) {
+        thSortIconClasses(column) {
             return [
-                this.computedClass('table', 'iconSortClass', 'o-icon-sort'),
-                { [this.computedClass('table', 'iconSortInvisibleClass', 'o-icon-sort-invisible')]: column && this.currentSortColumn !== column },
-                ...this.iconSortDescClasses
+                this.computedClass('thSortIconClass', 'o-table__th__sort-icon'),
             ]
         },
-        iconSortMultipleClasses(column) {
-            return [
-                {
-                    [ this.computedClass('table', 'iconSortDescClass', 'o-icon-sort-desc') ]: 
-                        this.sortMultipleDataComputed.filter(i => i.field === column.field)[0].order === 'desc'
-                }
-            ]
-        },
-        columnClasses(column) {
+        tdClasses(column) {
             return [
                 column.cellClass,
-                { [this.computedClass('table', 'tdRightClass', 'o-table-td-right')]: (column.numeric && !column.centered) },
-                { [this.computedClass('table', 'tdCenteredClass', 'o-table-td-centered')]: column.centered },
-                { [this.computedClass('table', 'tdStickyClass', 'o-table-td-sticky')]: column.sticky }
-            ]
-        },
-        detailedIconExpandedClasses(row) {
-            return [
-                { [this.computedClass('table', 'detailedIconExpandedClass', 'o-table-detail-icon-expanded')]: this.isVisibleDetailRow(row) }
+                ...this.tdBaseClasses,
+                { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
+                { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]
         },
         onFiltersEvent(event) {
@@ -1002,36 +919,13 @@ export default {
                     this.newDataTotal = this.newData.length
                 }
                 if (!this.backendSorting) {
-                    if (this.sortMultiple &&
-                        this.sortMultipleDataLocal && this.sortMultipleDataLocal.length > 0) {
-                        this.doSortMultiColumn()
-                    } else if (Object.keys(this.currentSortColumn).length > 0) {
+                    if (Object.keys(this.currentSortColumn).length > 0) {
                         this.doSortSingleColumn(this.currentSortColumn)
                     }
                 }
             }
         },
-        findIndexOfSortData(column) {
-            const sortObj = this.sortMultipleDataComputed.filter((i) => i.field === column.field)[0]
-            return this.sortMultipleDataComputed.indexOf(sortObj) + 1
-        },
-        removeSortingPriority(column) {
-            if (this.backendSorting) {
-                this.$emit('sorting-priority-removed', column.field)
-            } else {
-                this.sortMultipleDataLocal = this.sortMultipleDataLocal.filter(
-                    (priority) => priority.field !== column.field)
-                const formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
-                    return (i.order && i.order === 'desc' ? '-' : '') + i.field
-                })
-                this.newData = multiColumnSort(this.newData, formattedSortingPriority)
-            }
-        },
-        resetMultiSorting() {
-            this.sortMultipleDataLocal = []
-            this.currentSortColumn = {}
-            this.newData = this.data
-        },
+
         /**
         * Sort an array by key without mutating original data.
         * Call the user sort function if it was passed.
@@ -1072,64 +966,26 @@ export default {
             return sorted
         },
 
-        sortMultiColumn(column) {
-            this.currentSortColumn = {}
-            if (!this.backendSorting) {
-                const existingPriority = this.sortMultipleDataLocal.filter((i) =>
-                    i.field === column.field)[0]
-                if (existingPriority) {
-                    existingPriority.order = existingPriority.order === 'desc' ? 'asc' : 'desc'
-                } else {
-                    this.sortMultipleDataLocal.push(
-                        {field: column.field, order: column.isAsc}
-                    )
-                }
-                this.doSortMultiColumn()
-            }
-        },
-
-        doSortMultiColumn() {
-            const formattedSortingPriority = this.sortMultipleDataLocal.map((i) => {
-                return (i.order && i.order === 'desc' ? '-' : '') + i.field
-            })
-            this.newData = multiColumnSort(this.newData, formattedSortingPriority)
-        },
-
         /**
         * Sort the column.
         * Toggle current direction on column if it's sortable
         * and not just updating the prop.
         */
         sort(column, updatingData = false, event = null) {
-            if (
-                // if backend sorting is enabled, just emit the sort press like usual
-                // if the correct key combination isnt pressed, sort like usual
-                !this.backendSorting &&
-                this.sortMultiple &&
-                ((this.sortMultipleKey && event[this.sortMultipleKey]) || !this.sortMultipleKey)
-            ) {
-                this.sortMultiColumn(column)
-            } else {
-                if (!column || !column.sortable) return
+            if (!column || !column.sortable) return
 
-                // sort multiple is enabled but the correct key combination isnt pressed so reset
-                if (this.sortMultiple) {
-                    this.sortMultipleDataLocal = []
-                }
-
-                if (!updatingData) {
-                    this.isAsc = column === this.currentSortColumn
-                        ? !this.isAsc
-                        : (this.defaultSortDirection.toLowerCase() !== 'desc')
-                }
-                if (!this.firstTimeSort) {
-                    this.$emit('sort', column.field, this.isAsc ? 'asc' : 'desc', event)
-                }
-                if (!this.backendSorting) {
-                    this.doSortSingleColumn(column)
-                }
-                this.currentSortColumn = column
+            if (!updatingData) {
+                this.isAsc = column === this.currentSortColumn
+                    ? !this.isAsc
+                    : (this.defaultSortDirection.toLowerCase() !== 'desc')
             }
+            if (!this.firstTimeSort) {
+                this.$emit('sort', column.field, this.isAsc ? 'asc' : 'desc', event)
+            }
+            if (!this.backendSorting) {
+                this.doSortSingleColumn(column)
+            }
+            this.currentSortColumn = column
         },
 
         doSortSingleColumn(column) {
@@ -1412,28 +1268,22 @@ export default {
         * Initial sorted column based on the default-sort prop.
         */
         initSort() {
-            if (this.sortMultiple && this.sortMultipleData) {
-                this.sortMultipleData.forEach((column) => {
-                    this.sortMultiColumn(column)
-                })
+            if (!this.defaultSort) return
+            let sortField = ''
+            let sortDirection = this.defaultSortDirection
+            if (Array.isArray(this.defaultSort)) {
+                sortField = this.defaultSort[0]
+                if (this.defaultSort[1]) {
+                    sortDirection = this.defaultSort[1]
+                }
             } else {
-                if (!this.defaultSort) return
-                let sortField = ''
-                let sortDirection = this.defaultSortDirection
-                if (Array.isArray(this.defaultSort)) {
-                    sortField = this.defaultSort[0]
-                    if (this.defaultSort[1]) {
-                        sortDirection = this.defaultSort[1]
-                    }
-                } else {
-                    sortField = this.defaultSort
-                }
-                const sortColumn = this.newColumns.filter(
-                    (column) => (column.field === sortField))[0]
-                if (sortColumn) {
-                    this.isAsc = sortDirection.toLowerCase() !== 'desc'
-                    this.sort(sortColumn, true)
-                }
+                sortField = this.defaultSort
+            }
+            const sortColumn = this.newColumns.filter(
+                (column) => (column.field === sortField))[0]
+            if (sortColumn) {
+                this.isAsc = sortDirection.toLowerCase() !== 'desc'
+                this.sort(sortColumn, true)
             }
         },
         /**

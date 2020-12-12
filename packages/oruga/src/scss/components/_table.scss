@@ -16,7 +16,7 @@ $table-color: black !default;
 $table-current-sort-border-color: $grey !default;
 $table-current-sort-font-weight: 700 !default;
 $table-current-sort-hover-border-color: $grey !default;
-$table-detail-background: black !default;
+$table-detail-background: #fafafa !default;
 $table-detail-box-shadow: inset 0 1px 3px $grey !default;
 $table-detail-chevron-color: $primary !default;
 $table-detail-chevron-width: 40px !default;
@@ -25,7 +25,6 @@ $table-focus-border-color: $primary !default;
 $table-focus-box-shadow: 0 0 0 0.125em rgba($primary, 0.25) !default;
 $table-hoverable-background-color: #fafafa !default;
 $table-mobile-breakpoint: 1024px !default;
-$table-multi-column-reset-icon-margin: 0 0 0 10px !default;
 $table-narrow-padding: .25em .5em !default;
 $table-row-active-background-color: $primary !default;
 $table-row-active-color: $primary-invert !default;
@@ -44,9 +43,7 @@ $table-th-color: #363636 !default;
 $table-th-detail-width: 14px !default;
 $table-th-font-weight: 600 !default;
 $table-th-padding: 0.5em 0.75em !default;
-$table-th-wrap-icon-margin: 0.5rem !default;
 /* @docs */
-
 
 @mixin table-cards {
     .table {
@@ -89,7 +86,7 @@ $table-th-wrap-icon-margin: 0.5rem !default;
             @include avariable('margin', 'table-card-margin', $table-card-margin);
         }
         // Disables is-*
-        &:not(.o-table-row-selected) {
+        &:not(.o-table__tr--selected) {
             background: inherit;
             background: $table-background-color;
             &:hover {
@@ -97,11 +94,11 @@ $table-th-wrap-icon-margin: 0.5rem !default;
                 background-color: $table-background-color;
             }
         }
-        &.o-table-detail {
+        &.o-table--detailed {
             @include avariable('margin', 'table-card-detail-margin', $table-card-detail-margin);
         }
     }
-    tr:not(.o-table-detail):not(.o-table-empty):not(.o-table-footer) {
+    tr:not(.o-table--detailed):not(.o-table--empty):not(.o-table__footer) {
         td {
             display: flex;
             width: auto;
@@ -119,257 +116,196 @@ $table-th-wrap-icon-margin: 0.5rem !default;
 }
 
 .o-table {
-    transition: opacity $speed $easing;
-    position: relative;
-    .o-table-wrapper {
+
+    display: table;
+    width: 100%;
+    @include avariable('border', 'table-boder', $table-boder);
+    @include avariable('border-radius', 'table-border-radius', $table-border-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    @include avariable('background-color', 'table-background-color', $table-background-color);
+    @include avariable('color', 'table-color', $table-color);
+
+    &__wrapper {
+        transition: opacity $speed $easing;
+        position: relative;
         @media screen and (max-width: $table-mobile-breakpoint - 1px) {
             overflow-x: auto;
         }
-        &.o-table-sticky-header {
+        &--sticky-header {
             @include avariable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
+            /*
             &.o-table-mobile-cards {
                 @media screen and (max-width: $table-mobile-breakpoint - 1px) {
                     height: initial;
                     overflow-y: initial;
                 }
             }
+            */
         }
-        &.o-table-mobile-cards {
+        &--mobile-cards {
             @media screen and (max-width: $table-mobile-breakpoint - 1px) {
                 @include table-cards
             }
         }
-        &.o-table-cards {
-            @include table-cards
-        }
-        &.o-table-scrollable {
+        &--scrollable {
             -webkit-overflow-scrolling: touch;
-            overflow: auto;
-            overflow-y: hidden;
+            overflow-x: auto;
             max-width: 100%;
         }
     }
 
-    .o-table-mobile-sort {
+    &__mobile-sort {
         @media screen and (min-width: $table-mobile-breakpoint) {
             display: none;
         }
-        .o-icon {
-            &.o-icon-sort {
-                &.o-icon-sort-desc {
-                    transform: rotate(180deg);
-                }
+    }
+
+    &__th {
+        vertical-align: top;
+        text-align: left;
+        position: relative;
+        @include avariable('font-weight', 'table-th-font-weight', $table-th-font-weight);
+        @include avariable('border-width', 'table-th-border-width', $table-th-border-width);
+        @include avariable('color', 'table-th-color', $table-th-color);
+        @include avariable('border-color', 'table-th-border-color', $table-th-border-color);
+        @include avariable('border-style', 'table-th-border-style', $table-th-border-style);
+        @include avariable('padding', 'table-th-padding', $table-th-padding);
+        &--centered {
+            text-align: center;
+        }
+        &--right {
+            text-align: right;
+        }
+        &__sort-icon {
+            position: absolute;
+            right: 0;
+            // icon (TODO: use transition vuejs)
+            span {
+                transition: transform $speed-slow $easing, opacity $speed $easing;
+            }
+        }
+        &-checkbox {
+            @include avariable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
+        }
+        &-current-sort {
+            @include avariable('border-color', 'table-current-sort-border-color', $table-current-sort-border-color);
+            @include avariable('font-weight', 'table-current-sort-font-weight', $table-current-sort-font-weight);
+        }
+        &--sortable {
+            cursor: pointer;
+            &:hover {
+                @include avariable('border-color', 'table-current-sort-hover-border-color', $table-current-sort-hover-border-color);
+            }
+        }
+        &--sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            top: 0;
+            @include evariable(
+                'z-index', $SUM_EXPRESSION,
+                eparam('$param', variable('table-sticky-zindex', $table-sticky-zindex)),
+                eparam('$factor', 2)
+            );
+            @include avariable('background', 'table-background-color', $table-background-color);
+        }
+        &--unselectable {
+            @include unselectable;
+        }
+        &--detailed {
+            @include avariable('width', 'table-th-detail-width', $table-th-detail-width);
+        }
+    }
+
+    &__td {
+        vertical-align: top;
+        text-align: left;
+        @include avariable('border-color', 'table-td-border-color', $table-td-border-color);
+        @include avariable('border-style', 'table-td-border-style', $table-td-border-style);
+        @include avariable('border-width', 'table-td-border-width', $table-td-border-width);
+        @include avariable('padding', 'table-td-padding', $table-td-padding);
+        &--sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            @include avariable('z-index', 'table-sticky-zindex', $table-sticky-zindex);
+            @include avariable('background', 'table-background-color', $table-background-color);
+        }
+        &--right {
+            text-align: right;
+        }
+        &--centered {
+            text-align: center;
+        }
+        &-chevron {
+            vertical-align: middle;
+            @include avariable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
+            @include avariable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
+            // icon (TODO: use transition vuejs)
+            span {
+                transition: transform $speed-slow $easing, opacity $speed $easing;
             }
         }
     }
 
-    .o-icon {
-        transition: transform $speed-slow $easing, opacity $speed $easing;
-        &.o-icon-sort-expanded {
-            transform: rotate(90deg);
+    &:focus {
+        @include avariable('border-color', 'table-focus-border-color', $table-focus-border-color);
+        @include avariable('box-shadow', 'table-focus-box-shadow', $table-focus-box-shadow);
+    }
+
+    &--bordered {
+        tr:last-child {
+            td, th {
+                @include avariable('border-bottom-width', 'table-bordered-border-width', $table-bordered-border-width);
+            }
         }
-        &.o-icon-sort-invisible {
-            visibility: hidden;
+        td, th {
+            @include avariable('border-width', 'table-bordered-border-width', $table-bordered-border-width);
         }
-        &.o-icon-sort {
-            &.o-icon-sort-desc {
-                transform: rotate(180deg) translateY(-50%);
+    }
+
+    &--striped {
+        tbody tr:not(.o-table__tr--selected):nth-child(2n) {
+            @include avariable('background-color', 'table-striped-background-color', $table-striped-background-color);
+        }
+    }
+
+    &--narrow {
+        td, th {
+            @include avariable('padding', 'table-narrow-padding', $table-narrow-padding);
+        }
+    }
+
+    &--hoverable {
+        tbody tr:not(.o-table__tr--selected):hover {
+            @include avariable('background-color', 'table-hoverable-background-color', $table-hoverable-background-color);
+        }
+    }
+
+    &__detail {
+        @include avariable('box-shadow', 'table-detail-box-shadow', $table-detail-box-shadow);
+        @include avariable('background', 'table-detail-background', $table-detail-background);
+        td {
+            @include avariable('padding', 'table-detail-padding', $table-detail-padding);
+        }
+    }
+
+    &__tr--selected {
+        background-color: $table-row-active-background-color;
+        color: $table-row-active-color;
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &-#{$name} {
+                background-color: $color;
+                color: $color-invert;
             }
         }
     }
 
-    table {
-        display: table;
-        width: 100%;
-        @include avariable('border', 'table-boder', $table-boder);
-        @include avariable('border-radius', 'table-border-radius', $table-border-radius);
-        border-collapse: separate;
-        border-spacing: 0;
-        @include avariable('background-color', 'table-background-color', $table-background-color);
-        @include avariable('color', 'table-color', $table-color);
-        tbody tr:not(.o-table-row-selected):nth-child(2n) {
-            @include avariable('background-color', 'table-background-color', $table-background-color);
-        }
-        tr {
-            th {
-                @include avariable('font-weight', 'table-th-font-weight', $table-th-font-weight);
-                @include avariable('border-width', 'table-th-border-width', $table-th-border-width);
-                @include avariable('color', 'table-th-color', $table-th-color);
-                @include avariable('border-color', 'table-th-border-color', $table-th-border-color);
-                @include avariable('border-style', 'table-th-border-style', $table-th-border-style);
-                @include avariable('padding', 'table-th-padding', $table-th-padding);
-                vertical-align: top;
-                .o-table-th-wrap {
-                    display: flex;
-                    align-items: center;
-                    .o-table-th-content {
-                        position: relative;
-                    }
-                    .o-icon-sort {
-                        @include avariable('margin-left', 'table-th-wrap-icon-margin', $table-th-wrap-icon-margin);
-                        margin-right: 0;
-                    }
-                    &.o-table-th-right {
-                        flex-direction: row-reverse;
-                        text-align: right;
-                        .o-icon-sort {
-                            @include evariable(
-                                'margin-left', $DIVIDE_EXPRESSION,
-                                eparam('$param', variable('table-th-wrap-icon-margin', $table-th-wrap-icon-margin)),
-                                eparam('$factor', 2)
-                            );
-                            margin-right: 0;
-                        }
-                    }
-                    &.o-table-th-centered {
-                        justify-content: center;
-                        text-align: center;
-                    }
-                }
-                &:not([align]) {
-                    text-align: left;
-                }
-                &.o-table-th-checkbox {
-                    @include avariable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
-                }
-                &.o-table-th-current-sort {
-                    @include avariable('border-color', 'table-current-sort-border-color', $table-current-sort-border-color);
-                    @include avariable('font-weight', 'table-current-sort-font-weight', $table-current-sort-font-weight);
-                }
-                &.o-table-th-sortable:hover {
-                    @include avariable('border-color', 'table-current-sort-hover-border-color', $table-current-sort-hover-border-color);
-                }
-                &.o-table-th-sortable,
-                &.o-table-th-sortable .th-wrap {
-                    cursor: pointer;
-                }
-                .o-icon-sort, .o-icon-sort-multi-cancel-icon {
-                    position: absolute;
-                    bottom: 50%;
-                    left: 100%;
-                    transform: translateY(50%);
-                }
-                .o-icon-sort-multi-cancel-icon {
-                    @include avariable('margin', 'table-multi-column-reset-icon-margin', $table-multi-column-reset-icon-margin);
-                }
-                &.o-table-th-sticky {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    left: 0;
-                    @include evariable(
-                        'z-index', $SUM_EXPRESSION,
-                        eparam('$param', variable('table-sticky-zindex', $table-sticky-zindex)),
-                        eparam('$factor', 2)
-                    );
-                    @include avariable('background', 'table-background-color', $table-background-color);
-                }
-                &.o-table-th-unselectable {
-                   @include unselectable;
-                }
-                &.o-table-th-detail {
-                   @include avariable('width', 'table-th-detail-width', $table-th-detail-width);
-                }
-            }
-            td {
-                @include avariable('border-color', 'table-td-border-color', $table-td-border-color);
-                @include avariable('border-style', 'table-td-border-style', $table-td-border-style);
-                @include avariable('border-width', 'table-td-border-width', $table-td-border-width);
-                @include avariable('padding', 'table-td-padding', $table-td-padding);
-                vertical-align: top;
-                &.o-table-td-sticky {
-                    position: -webkit-sticky;
-                    position: sticky;
-                    left: 0;
-                    @include avariable('z-index', 'table-sticky-zindex', $table-sticky-zindex);
-                    @include avariable('background', 'table-background-color', $table-background-color);
-                }
-                &.o-table-td-right {
-                    text-align: right;
-                }
-                &.o-table-td-centered {
-                    text-align: center;
-                }
-            }
-            &.o-table-row-selected {
-                background-color: $table-row-active-background-color;
-                color: $table-row-active-color;
-                .o-checkbox input {
-                    &:checked + .o-checkbox-check {
-                        background: $table-row-active-color url(checkmark($table-row-active-background-color)) no-repeat center center;
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        @include avariable('background-color', 'table-row-active-color', $table-row-active-color);
-                        @include avariable('background-image', 'table-checkmark-row-active-color', url(checkmark($table-row-active-background-color)));
-                    }
-                    + .o-checkbox-check {
-                        @include avariable('border-color', 'table-row-active-color', $table-row-active-color);
-                    }
-                }
-            }
-            &.o-table-empty:hover {
-                background-color: transparent;
-            }
-            &:last-child {
-                td {
-                    border-bottom-width: 0;
-                }
-            }
-            .o-table-chevron-cell {
-                vertical-align: middle;
-                @include avariable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
-                > a {
-                    @include avariable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
-                    .o-table-detail-icon-expanded {
-                        transform: rotate(90deg);
-                    }
-                }
-                .o-checkbox {
-                    vertical-align: middle;
-                    .o-checkbox-check {
-                        transition: none;
-                    }
-                }
-            }
-            .o-table-detail {
-                @include avariable('box-shadow', 'table-detail-box-shadow', $table-detail-box-shadow);
-                @include avariable('background', 'table-detail-background', $table-detail-background);
-                td {
-                    @include avariable('padding', 'table-detail-padding', $table-detail-padding);
-                }
-            }
-        }
-        &:focus {
-            @include avariable('border-color', 'table-focus-border-color', $table-focus-border-color);
-            @include avariable('box-shadow', 'table-focus-box-shadow', $table-focus-box-shadow);
-        }
-        &.o-table-bordered {
-            tr:last-child {
-                td, th {
-                    @include avariable('border-bottom-width', 'table-bordered-border-width', $table-bordered-border-width);
-                }
-            }
-            td, th {
-                @include avariable('border-width', 'table-bordered-border-width', $table-bordered-border-width);
-            }
-        }
-        &.o-table-striped {
-            tbody tr:not(.o-table-row-selected):nth-child(2n) {
-                @include avariable('background-color', 'table-striped-background-color', $table-striped-background-color);
-            }
-        }
-        &.o-table-narrow {
-            td, th {
-                @include avariable('padding', 'table-narrow-padding', $table-narrow-padding);
-            }
-        }
-        &.o-table-hoverable {
-            tbody tr:not(.o-table-row-selected):hover {
-                @include avariable('background-color', 'table-hoverable-background-color', $table-hoverable-background-color);
-            }
-        }
-    }
-    .o-pagination-wrapper {
+    &__pagination {
         align-items: center;
         justify-content: space-between;
         @media screen and (min-width: $table-mobile-breakpoint) {
