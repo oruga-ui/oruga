@@ -23,117 +23,86 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     @include unselectable;
     @include avariable('line-height', 'radio-line-height', $radio-line-height);
     @include avariable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
-    & + .o-radio:last-child {
-        margin-right: 0;
-    }
+
     input[type=radio] {
         position: absolute;
         left: 0;
         opacity: 0;
         outline: none;
         z-index: -1;
-        + .o-radio-check {
-            display: flex;
-            flex-shrink: 0;
-            position: relative;
-            cursor: pointer;
-            border-radius: 50%;
-            @include avariable('width', 'radio-size', $radio-size);
-            @include avariable('height', 'radio-size', $radio-size);
-            transition-property: background;
-            @include avariable('transition-duration', 'transition-duration', $speed-slow);
-            @include avariable('transition-timing-function', 'transition-timing', $easing);
-            @include avariable('border', 'radio-border', $radio-border);
-            &:before {
-                content: "";
-                display: flex;
-                position: absolute;
-                left: 50%;
-                bottom: 50%;
-                border-radius: 50%;
-                transform: scale(0);
-                transition-property: transform;
-                @include evariable(
-                    'margin-bottom', $HALF_MARGIN_EXPRESSION,
-                    eparam('$margin', variable('radio-size', -$radio-size))
-                );
-                @include evariable(
-                    'margin-left', $HALF_MARGIN_EXPRESSION,
-                    eparam('$margin', variable('radio-size', -$radio-size))
-                );
-                @include avariable('transition-duration', 'transition-duration', $speed-slow);
-                @include avariable('transition-timing-function', 'transition-timing', $easing);
-                @include avariable('width', 'radio-size', $radio-size);
-                @include avariable('height', 'radio-size', $radio-size);
-                @include avariable('background-color', 'radio-active-background-color', $radio-active-background-color);
-            }
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name}:before {
-                    @include avariable('background', ('variant-' + #{$name}), $color);
-                }
-            }
-        }
-        &:checked + .o-radio-check {
+    }
+
+    &__check {
+        display: flex;
+        flex-shrink: 0;
+        position: relative;
+        cursor: pointer;
+        border-radius: 50%;
+        @include avariable('width', 'radio-size', $radio-size);
+        @include avariable('height', 'radio-size', $radio-size);
+        transition-property: background;
+        @include avariable('transition-duration', 'transition-duration', $speed-slow);
+        @include avariable('transition-timing-function', 'transition-timing', $easing);
+        @include avariable('border', 'radio-border', $radio-border);
+
+        &--checked {
             @include avariable('border-color', 'radio-active-background-color', $radio-active-background-color);
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
-                &.o-color-#{$name} {
+                &--#{$name} {
                     @include avariable('border-color', ('variant-' + #{$name}), $color);
                 }
             }
-            &:before {
+            .o-radio__circle {
                 transform: scale(.5);
             }
         }
-        &:focus {
-            + .o-radio-check {
-                @include avariable('box-shadow', 'radio-focus-sibiling-box-shadow', $radio-focus-sibiling-box-shadow);
-            }
-            &:checked + .o-radio-check {
-                @include evariable(
-                    'box-shadow', $JOIN_EXPRESSION,
-                    eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
-                    eparam('$param2', variable('radio-active-background-color', $radio-active-background-color))
-                );
-                // box-shadow: $radio-checked-box-shadow-length rgba($radio-active-background-color, $radio-checked-box-shadow-opacity);
-                @each $name, $pair in $colors {
-                    $color: nth($pair, 1);
-                    &.o-color-#{$name} {
-                        @include evariable(
-                            'box-shadow', $JOIN_EXPRESSION,
-                            eparam('$param1', variable('radio-checked-box-shadow-length', $radio-checked-box-shadow-length)),
-                            eparam('$param2', variable('variant-' + #{name}, $color))
-                        );
-                        // box-shadow: $radio-checked-box-shadow-length rgba($color, $radio-checked-box-shadow-opacity);
-                    }
-                }
-            }
-        }
     }
-    .o-radio-label {
+    &__label {
         @include avariable('padding', 'radio-label-padding', $radio-label-padding);
     }
-    &.o-radio-button {
+    &__circle {
+        content: "";
         display: flex;
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        border-radius: 50%;
+        transform: scale(0);
+        transition-property: transform;
+        @include evariable(
+            'margin-bottom', $HALF_MARGIN_EXPRESSION,
+            eparam('$margin', variable('radio-size', -$radio-size))
+        );
+        @include evariable(
+            'margin-left', $HALF_MARGIN_EXPRESSION,
+            eparam('$margin', variable('radio-size', -$radio-size))
+        );
+        @include avariable('transition-duration', 'transition-duration', $speed-slow);
+        @include avariable('transition-timing-function', 'transition-timing', $easing);
+        @include avariable('width', 'radio-size', $radio-size);
+        @include avariable('height', 'radio-size', $radio-size);
+        @include avariable('background-color', 'radio-active-background-color', $radio-active-background-color);
     }
-    &[disabled] {
+    &--disabled {
         @include avariable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
     }
-    &:hover {
-        input[type=radio]:not(:disabled) + .o-radio-check {
-            @include avariable('border-color', 'radio-active-background-color', $radio-active-background-color);
-            @each $name, $pair in $colors {
-                $color: nth($pair, 1);
-                &.o-color-#{$name} {
-                    @include avariable('border-color', ('variant-' + #{$name}), $color);
-                }
-            }
+
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
         }
     }
-    @each $name, $value in $sizes {
-        &.o-size-#{$name} {
-            @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
+
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &--#{$name} {
+            .o-radio__check--checked {
+                @include avariable('border-color', ('variant-' + #{$name}), $color);
+            }
+            .o-radio__circle {
+                @include avariable('background-color', ('variant-' + #{$name}), $color);
+            }
         }
     }
 }

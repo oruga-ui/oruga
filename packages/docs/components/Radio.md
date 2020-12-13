@@ -115,14 +115,15 @@ title: Radio
 
 ## Class props
 
-| Prop name     | Description | Type   | Values | Default |
-| ------------- | ----------- | ------ | ------ | ------- |
-| rootClass     |             | string | -      |         |
-| disabledClass |             | string | -      |         |
-| checkClass    |             | string | -      |         |
-| labelClass    |             | string | -      |         |
-| sizeClass     |             | string | -      |         |
-| variantClass  |             | string | -      |         |
+| Prop name        | Description | Type   | Values | Default |
+| ---------------- | ----------- | ------ | ------ | ------- |
+| rootClass        |             | string | -      |         |
+| disabledClass    |             | string | -      |         |
+| checkClass       |             | string | -      |         |
+| checkCircleClass |             | string | -      |         |
+| labelClass       |             | string | -      |         |
+| sizeClass        |             | string | -      |         |
+| variantClass     |             | string | -      |         |
 
 ## Events
 

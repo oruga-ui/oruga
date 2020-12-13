@@ -14,7 +14,9 @@
             :required="required"
             :name="name"
             :value="nativeValue">
-        <span :class="checkClasses" />
+        <span :class="checkClasses" >
+            <span :class="checkCircleClasses" />
+        </span>
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -37,6 +39,7 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
+        checkCircleClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String
@@ -45,19 +48,27 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-radio'),
-                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('disabledClass', 'o-radio-disabled')]: this.disabled }
+                { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
+                { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }
+
             ]
         },
         checkClasses() {
+            console.log(this.value)
             return [
-                this.computedClass('checkClass', 'o-radio-check'),
-                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant }
+                this.computedClass('checkClass', 'o-radio__check'),
+                { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.value === this.nativeValue },
+            ]
+        },
+        checkCircleClasses() {
+            return [
+                this.computedClass('checkCircleClass', 'o-radio__circle'),
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('labelClass', 'o-radio-label')
+                this.computedClass('labelClass', 'o-radio__label')
             ]
         }
     }
