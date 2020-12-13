@@ -38,11 +38,14 @@ module.exports = {
       'demo-block',
       {
         settings: {
-          jsLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.js'],
-          cssLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.css'],
-          vue: 'https://cdn.jsdelivr.net/npm/vue',
-          jsfiddle: false,
-          codepen: true
+            jsLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.js'],
+            cssLib: [
+                'https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.css',
+                'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
+            ],
+            vue: 'https://cdn.jsdelivr.net/npm/vue',
+            jsfiddle: false,
+            codepen: true
         }
       }
     ]
