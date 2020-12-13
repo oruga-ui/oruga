@@ -25,16 +25,16 @@ export default {
     computed: {
         elementClasses() {
             return [
-                this.computedClass('itemClass', 'o-step-item')
+                this.computedClass('itemClass', 'o-steps__item')
             ]
         },
         itemClasses() {
             return [
                 this.headerClass,
-                this.computedClass('itemClass', 'o-step-item'),
-                { [this.computedClass('variantClass', 'o-color-', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
-                { [this.computedClass('itemActiveClass', 'o-step-item-active')]: this.isActive },
-                { [this.computedClass('itemPreviousClass', 'o-step-item-previous')]: this.parent.activeItem.index > this.index }
+                this.computedClass('itemClass', 'o-steps__item'),
+                { [this.computedClass('variantClass', 'o-steps__item--', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
+                { [this.computedClass('itemActiveClass', 'o-steps__item-active')]: this.isActive },
+                { [this.computedClass('itemPreviousClass', 'o-steps__item-previous')]: this.parent.activeItem.index > this.index }
             ]
         }
     }
