@@ -181,10 +181,6 @@ $table-th-padding: 0.5em 0.75em !default;
         &__sort-icon {
             position: absolute;
             right: 0;
-            // icon (TODO: use transition vuejs)
-            span {
-                transition: transform $speed-slow $easing, opacity $speed $easing;
-            }
         }
         &-checkbox {
             @include avariable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
@@ -243,10 +239,6 @@ $table-th-padding: 0.5em 0.75em !default;
             vertical-align: middle;
             @include avariable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
             @include avariable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
-            // icon (TODO: use transition vuejs)
-            span {
-                transition: transform $speed-slow $easing, opacity $speed $easing;
-            }
         }
     }
 
