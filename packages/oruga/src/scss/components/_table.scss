@@ -65,10 +65,10 @@ $table-th-padding: 0.5em 0.75em !default;
         }
     }
     tfoot {
-         th {
+        th {
             border: 0;
             display: inherit;
-         }
+        }
     }
     tr {
         @include avariable('box-shadow', 'table-card-box-shadow', $table-card-box-shadow);
@@ -85,7 +85,6 @@ $table-th-padding: 0.5em 0.75em !default;
         &:not(:last-child) {
             @include avariable('margin', 'table-card-margin', $table-card-margin);
         }
-        // Disables is-*
         &:not(.o-table__tr--selected) {
             background: inherit;
             background: $table-background-color;
@@ -135,14 +134,6 @@ $table-th-padding: 0.5em 0.75em !default;
         &--sticky-header {
             @include avariable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
-            /*
-            &.o-table-mobile-cards {
-                @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-                    height: initial;
-                    overflow-y: initial;
-                }
-            }
-            */
         }
         &--mobile-cards {
             @media screen and (max-width: $table-mobile-breakpoint - 1px) {
@@ -181,10 +172,6 @@ $table-th-padding: 0.5em 0.75em !default;
         &__sort-icon {
             position: absolute;
             right: 0;
-            // icon (TODO: use transition vuejs)
-            span {
-                transition: transform $speed-slow $easing, opacity $speed $easing;
-            }
         }
         &-checkbox {
             @include avariable('width', 'table-th-checkbox-width', $table-th-checkbox-width);
@@ -243,10 +230,6 @@ $table-th-padding: 0.5em 0.75em !default;
             vertical-align: middle;
             @include avariable('width', 'table-detail-chevron-width', $table-detail-chevron-width);
             @include avariable('color', 'table-detail-chevron-color', $table-detail-chevron-color);
-            // icon (TODO: use transition vuejs)
-            span {
-                transition: transform $speed-slow $easing, opacity $speed $easing;
-            }
         }
     }
 
