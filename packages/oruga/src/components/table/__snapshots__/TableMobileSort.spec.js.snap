@@ -1,34 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTableMobileSort render correctly 1`] = `
-<div class="rootClasso-table">
+<div class="o-table__wrapper o-table__wrapper--mobile-cards">
     <div style="display: none;"></div>
-    <o-table-mobile-sort-stub currentsortcolumn="[object Object]" sortmultipledata="" columns="[object Object]" sorticon="arrow-up" sorticonsize="small"></o-table-mobile-sort-stub>
+    <o-table-mobile-sort-stub currentsortcolumn="[object Object]" columns="[object Object]" sorticon="arrow-up" sorticonsize="small" isasc="true"></o-table-mobile-sort-stub>
     <!---->
-    <div class="wrapperClasso-table-wrapper mobileCardsClasso-table-mobile-cards">
-        <table class="tableClass">
-            <thead>
-                <tr>
-                    <!---->
-                    <!---->
-                    <th class="thSortableClasso-table-th-sortable thUnselectableClasso-table-th-unselectable" style="width: 40px;">
-                        <div class="thWrapClasso-table-th-wrap thRightClasso-table-th-right"><span class="thContentClasso-table-th-content">
-                                    ID
-                                    <o-icon-stub icon="arrow-up" size="small" both="true" class="iconSortClasso-icon-sort iconSortInvisibleClasso-icon-sort-invisible"></o-icon-stub></span></div>
-                    </th>
-                    <!---->
-                </tr>
+    <table class="o-table o-table--table__empty">
+        <thead>
+            <tr>
                 <!---->
                 <!---->
-            </thead>
-            <tbody>
-                <tr class="emptyClasso-table-empty">
-                    <td colspan="1"></td>
-                </tr>
-            </tbody>
+                <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;"><span>
+                            ID
+                            <span class="o-table__th__sort-icon" style="display: none;"><o-icon-stub icon="arrow-up" size="small" rotation="0" both="true"></o-icon-stub></span></span></th>
+                <!---->
+            </tr>
             <!---->
-        </table>
-    </div>
+            <!---->
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="1"></td>
+            </tr>
+        </tbody>
+        <!---->
+    </table>
     <!---->
     <!---->
 </div>

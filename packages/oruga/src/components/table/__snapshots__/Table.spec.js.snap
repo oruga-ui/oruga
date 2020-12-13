@@ -1,21 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTable render correctly 1`] = `
-<div class="rootClasso-table">
+<div class="o-table__wrapper o-table__wrapper--mobile-cards">
     <div style="display: none;"></div>
     <!---->
     <!---->
-    <div class="wrapperClasso-table-wrapper mobileCardsClasso-table-mobile-cards">
-        <table class="tableClass">
-            <!---->
-            <tbody>
-                <tr class="emptyClasso-table-empty">
-                    <td colspan="0"></td>
-                </tr>
-            </tbody>
-            <!---->
-        </table>
-    </div>
+    <table class="o-table o-table--table__empty">
+        <!---->
+        <tbody>
+            <tr>
+                <td colspan="0"></td>
+            </tr>
+        </tbody>
+        <!---->
+    </table>
     <!---->
     <!---->
 </div>

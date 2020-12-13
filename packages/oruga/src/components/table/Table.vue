@@ -894,7 +894,7 @@ export default {
                 { [this.computedClass('tdSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
             ]
         },
-        thSortIconClasses(column) {
+        thSortIconClasses() {
             return [
                 this.computedClass('thSortIconClass', 'o-table__th__sort-icon'),
             ]
