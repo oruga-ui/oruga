@@ -1,6 +1,14 @@
 @use "sass:list";
 
-// Helper function to replace characters in a string
+/// Replaces characters in a string
+///
+/// @param {string} $string
+///   String where the replace happens
+/// @param {string} $search
+///   Portion of string to find and replace
+/// @param {string} $replace
+///   Replacement. Default is ''.
+/// @return {string} string with characters replaced.
 @function str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
     @return if($index,
@@ -10,7 +18,11 @@
         $string);
 }
 
-// Encode svg function by http://codepen.io/jakob-e/pen/doMoML
+/// Encodes an inline svg. Original source code: http://codepen.io/jakob-e/pen/doMoML
+///
+/// @param {string} $svg
+///   Inline svg to encode
+/// @return {string} encoded svg.
 @function svg-encode($svg){
     // Chunk up string in order to avoid "stack level too deep" error
     $encoded:'';
@@ -32,22 +44,6 @@
         $index: $index + $slice;
     }
     @return "data:image/svg+xml,#{$encoded}";
-}
-
-@function checkmark($color) {
-    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
-    $content: '<path style="fill:#{$color}" d="M 0.04038059,0.6267767 0.14644661,0.52071068 0.42928932,0.80355339 0.3232233,0.90961941 z M 0.21715729,0.80355339 0.85355339,0.16715729 0.95961941,0.2732233 0.3232233,0.90961941 z"></path>';
-    $end: '</svg>';
-
-    @return svg-encode("#{$start}#{$content}#{$end}");
-}
-
-@function indeterminate($color) {
-    $start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">';
-    $content: '<rect style="fill:#{$color}" width="0.7" height="0.2" x=".15" y=".4"></rect>';
-    $end: '</svg>';
-
-    @return svg-encode("#{$start}#{$content}#{$end}");
 }
 
 /// Appends a list of variables to $whitelist and return a new whitelist.
