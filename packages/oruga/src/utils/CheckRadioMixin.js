@@ -1,11 +1,11 @@
 export default {
 	props: {
 		/** @model */
-		value: [String, Number, Boolean],
+		value: [String, Number, Boolean, Array],
 		/**
 		 * Same as native value
 		 */
-		nativeValue: [String, Number, Boolean],
+		nativeValue: [String, Number, Boolean, Array],
 		/**
 		 * Color of the control, optional
 		 * @values primary, info, success, warning, danger, and any other custom color

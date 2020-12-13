@@ -58,6 +58,8 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
+        checkCheckedClass: String,
+        checkIndeterminateClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String
@@ -65,20 +67,22 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-checkbox'),
-                { [this.computedClass('sizeClass', 'o-size-', this.size)]: this.size },
-                { [this.computedClass('disabledClass', 'o-checkbox-disabled')]: this.disabled }
+                this.computedClass('rootClass', 'o-chk'),
+                { [this.computedClass('sizeClass', 'o-chk--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-chk--disabled')]: this.disabled },
+                { [this.computedClass('variantClass', 'o-chk--', this.variant)]: this.variant }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('checkClass', 'o-checkbox-check'),
-                { [this.computedClass('variantClass', 'o-color-', this.variant)]: this.variant }
+                this.computedClass('checkClass', 'o-chk__check'),
+                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.includes(this.nativeValue) },
+                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.$refs.input ? this.$refs.input.indeterminate : this.indeterminate },
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('labelClass', 'o-checkbox-label')
+                this.computedClass('labelClass', 'o-chk__label')
             ]
         }
     }

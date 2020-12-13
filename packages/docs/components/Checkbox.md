@@ -142,29 +142,31 @@ title: Checkbox
 
 ## Props
 
-| Prop name     | Description                                        | Type                    | Values                                                                          | Default |
-| ------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
-| v-model       |                                                    | string\|number\|boolean | -                                                                               |         |
-| nativeValue   | Same as native value                               | string\|number\|boolean | -                                                                               |         |
-| variant       | Color of the control, optional                     | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| disabled      | Same as native disabled                            | boolean                 | -                                                                               |         |
-| required      |                                                    | boolean                 | -                                                                               |         |
-| name          | Same as native name                                | string                  | -                                                                               |         |
-| size          | Size of the control, optional                      | string                  | `small`, `medium`, `large`                                                      |         |
-| indeterminate | Same as native indeterminate                       | boolean                 | -                                                                               |         |
-| trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
-| falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
+| Prop name     | Description                                        | Type                           | Values                                                                          | Default |
+| ------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
+| v-model       |                                                    | string\|number\|boolean\|array | -                                                                               |         |
+| nativeValue   | Same as native value                               | string\|number\|boolean\|array | -                                                                               |         |
+| variant       | Color of the control, optional                     | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| disabled      | Same as native disabled                            | boolean                        | -                                                                               |         |
+| required      |                                                    | boolean                        | -                                                                               |         |
+| name          | Same as native name                                | string                         | -                                                                               |         |
+| size          | Size of the control, optional                      | string                         | `small`, `medium`, `large`                                                      |         |
+| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               |         |
+| trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean        | -                                                                               | true    |
+| falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean        | -                                                                               | false   |
 
 ## Class props
 
-| Prop name     | Description | Type   | Values | Default |
-| ------------- | ----------- | ------ | ------ | ------- |
-| rootClass     |             | string | -      |         |
-| disabledClass |             | string | -      |         |
-| checkClass    |             | string | -      |         |
-| labelClass    |             | string | -      |         |
-| sizeClass     |             | string | -      |         |
-| variantClass  |             | string | -      |         |
+| Prop name               | Description | Type   | Values | Default |
+| ----------------------- | ----------- | ------ | ------ | ------- |
+| rootClass               |             | string | -      |         |
+| disabledClass           |             | string | -      |         |
+| checkClass              |             | string | -      |         |
+| checkCheckedClass       |             | string | -      |         |
+| checkIndeterminateClass |             | string | -      |         |
+| labelClass              |             | string | -      |         |
+| sizeClass               |             | string | -      |         |
+| variantClass            |             | string | -      |         |
 
 ## Events
 
@@ -183,8 +185,8 @@ title: Checkbox
 | CSS Variable                                | SASS Variable                         | Default                                                                                |
 | ------------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
 | --oruga-checkbox-active-background-color    | \$checkbox-active-background-color    | \$primary                                                                              |
-| --oruga-checkbox-background-color           | \$checkbox-background-color           | transparent                                                                            |
-| --oruga-checkbox-border-color               | \$checkbox-border-color               | \$grey                                                                                 |
+| --oruga-checkbox-background-color           | \$checkbox-background-color           | \$primary                                                                              |
+| --oruga-checkbox-border-color               | \$checkbox-border-color               | \$primary                                                                              |
 | --oruga-checkbox-border-radius              | \$checkbox-border-radius              | \$base-border-radius                                                                   |
 | --oruga-checkbox-border-width               | \$checkbox-border-width               | 2px                                                                                    |
 | --oruga-checkbox-checked-box-shadow-color   | \$checkbox-checked-box-shadow-color   | \$checkbox-active-background-color                                                     |

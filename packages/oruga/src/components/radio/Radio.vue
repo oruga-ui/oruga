@@ -14,9 +14,7 @@
             :required="required"
             :name="name"
             :value="nativeValue">
-        <span :class="checkClasses" >
-            <span :class="checkCircleClasses" />
-        </span>
+        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -39,7 +37,6 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
-        checkCircleClass: String,
         labelClass: String,
         sizeClass: String,
         variantClass: String
@@ -55,15 +52,9 @@ export default {
             ]
         },
         checkClasses() {
-            console.log(this.value)
             return [
                 this.computedClass('checkClass', 'o-radio__check'),
                 { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.value === this.nativeValue },
-            ]
-        },
-        checkCircleClasses() {
-            return [
-                this.computedClass('checkCircleClass', 'o-radio__circle'),
             ]
         },
         labelClasses() {
