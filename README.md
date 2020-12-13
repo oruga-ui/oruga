@@ -140,6 +140,8 @@ While it's still in beta, version will follow **v0.Y.Z**, where:
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
 
+Oruga svg images for Checkbox and Radio components created by [Fabrizio Masini](https://github.com/Nemesis19)
+
 ## License <a href="https://github.com/oruga-ui/oruga/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@oruga-ui/oruga.svg?logo=github" /></a>
 
 Code released under [MIT](https://github.com/oruga-ui/oruga/blob/master/LICENSE) license.
