@@ -39,11 +39,9 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     @include avariable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
 
     input[type=radio] {
-        position: absolute;
-        left: 0;
-        opacity: 0;
+        appearance: none;
+        user-select: none;
         outline: none;
-        z-index: -1;
     }
 
     &__check {
