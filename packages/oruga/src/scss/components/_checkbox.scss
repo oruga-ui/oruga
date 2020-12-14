@@ -51,6 +51,7 @@ $checkbox-line-height: 1.25 !default;
 
     &__check {
         flex-shrink: 0;
+        background-repeat: no-repeat;
         @include avariable('width', 'checkbox-size', $checkbox-size);
         @include avariable('height', 'checkbox-size', $checkbox-size);
         @include avariable('background', 'checkbox-background-color', $checkbox-background-color);
@@ -63,15 +64,11 @@ $checkbox-line-height: 1.25 !default;
         @include avariable('transition-timing-function', 'transition-timing', $easing);
 
         &--checked {
-            background-position: center;
-            background-repeat: no-repeat;
             @include avariable('background-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('background-image', 'checkbox-checkmark-color', url(svg_checkmark($checkbox-checkmark-color)));
         }
         &--indeterminate {
-            background-position: center;
-            background-repeat: no-repeat;
             @include avariable('background-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('background-image', 'checkbox-checkmark-color', url(svg_indeterminate($checkbox-checkmark-color)));

@@ -15,9 +15,9 @@ $radio-line-height: 1.25 !default;
 
 $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
 
-@function svg_radio_fill($color) {
+@function svg_radio_fill($color, $background-color: 'transparent') {
     $start: '<svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">';
-    $content: '<g transform="matrix(4.38544,0,0,4.38544,-94.4336,-58.9876)"><path d="M32.935,13.679C39.102,13.679 44.108,18.685 44.108,24.852C44.108,31.019 39.102,36.025 32.935,36.025C26.768,36.025 21.761,31.019 21.761,24.852C21.761,18.685 26.768,13.679 32.935,13.679ZM32.798,17.05C37.105,17.05 40.601,20.546 40.601,24.852C40.601,29.158 37.105,32.655 32.798,32.655C28.492,32.655 24.996,29.158 24.996,24.852C24.996,20.546 28.492,17.05 32.798,17.05Z" style="fill:#{$color};"/></g>';
+    $content: '<g transform="matrix(4.38544,0,0,4.38544,-94.4336,-58.9876)"><path d="M32.935,13.679C39.102,13.679 44.108,18.685 44.108,24.852C44.108,31.019 39.102,36.025 32.935,36.025C26.768,36.025 21.761,31.019 21.761,24.852C21.761,18.685 26.768,13.679 32.935,13.679ZM32.798,17.05C37.105,17.05 40.601,20.546 40.601,24.852C40.601,29.158 37.105,32.655 32.798,32.655C28.492,32.655 24.996,29.158 24.996,24.852C24.996,20.546 28.492,17.05 32.798,17.05Z" style="fill:#{$color};"/><circle cx="32.84" cy="24.8" r="7.9" style="fill:#{$background-color};"/></g>';
     $end: '</svg>';
     @return svg-encode("#{$start}#{$content}#{$end}");
 }
@@ -49,7 +49,6 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     &__check {
         border-radius: 50%;
         cursor: pointer;
-        background-position: center;
         background-repeat: no-repeat;
         transition-property: background;
         @include avariable('transition-duration', 'transition-duration', $speed-slow);
@@ -80,12 +79,10 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         $color-invert: nth($pair, 2);
         &--#{$name} {
             .o-radio__check {
-                background-color: $color-invert;
                 @include avariable('background-image', ('variant-' + #{$name}), url(svg_radio_empty($color)));
             }
             .o-radio__check--checked {
-                background-color: $color-invert;
-                @include avariable('background-image', ('variant-' + #{$name}), url(svg_radio_fill($color)));
+                @include avariable('background-image', ('variant-' + #{$name}), url(svg_radio_fill($color, $color-invert)));
             }
         }
     }
