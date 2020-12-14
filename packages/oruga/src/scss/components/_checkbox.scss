@@ -42,10 +42,11 @@ $checkbox-line-height: 1.25 !default;
     @include avariable('margin-right', 'checkbox-margin-sibiling', $checkbox-margin-sibiling);
 
     input[type=checkbox] {
-        appearance: none;
-        user-select: none;
+        position: absolute;
+        left: 0;
+        opacity: 0;
         outline: none;
-        cursor: pointer;
+        z-index: -1;
     }
 
     &__check {

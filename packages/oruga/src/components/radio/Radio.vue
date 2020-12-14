@@ -13,8 +13,8 @@
             :disabled="disabled"
             :required="required"
             :name="name"
-            :class="checkClasses"
             :value="nativeValue">
+        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
