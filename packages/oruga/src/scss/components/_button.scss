@@ -31,6 +31,7 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     vertical-align: top;
     text-decoration: none;
     outline: none;
+    @include side-flex-gap($button-margin-icon-to-text);
     @include unselectable;
     @include avariable('background-color', 'button-background-color', $button-background-color);
     @include avariable('color', 'button-color', $button-color);
@@ -58,11 +59,9 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         @include avariable('width', 'button-icon-width', $button-icon-width);
         &:first-child:not(:last-child) {
             @include avariable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-            @include avariable('margin-right', 'button-margin-icon-to-text', $button-margin-icon-to-text);
         }
         &:last-child:not(:first-child) {
             @include avariable('margin-right', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-            @include avariable('margin-left', 'button-margin-icon-to-text', $button-margin-icon-to-text);
         }
     }
     @each $name, $value in $sizes {

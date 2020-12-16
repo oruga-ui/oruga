@@ -79,10 +79,12 @@ $input-width: 100% !default;
         min-width: 100%;
         resize: vertical;
         @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
+        /* REMOVE ON LITE */
         &:not([rows]) {
             @include avariable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
             @include avariable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
         }
+        /* --- */
     }
     &__counter {
         display: block;
