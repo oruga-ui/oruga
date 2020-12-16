@@ -115,7 +115,6 @@ export default {
                 this.computedClass('rootClass', 'o-switch'),
                 { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
-                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
                 { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel },
                 { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
                 { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
@@ -126,11 +125,13 @@ export default {
                 this.computedClass('checkClass', 'o-switch__check'),
                 { [this.computedClass('checkClassChecked', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
                 { [this.computedClass('checkClassUnchecked', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)},
+                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
             ]
         },
         checkSwitchClasses() {
             return [
                 this.computedClass('checkSwitchClass', 'o-switch__check-switch'),
+                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
             ]
         },
         labelClasses() {

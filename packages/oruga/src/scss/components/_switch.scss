@@ -15,7 +15,7 @@ $switch-disabled-opacity: $base-disabled-opacity !default;
 $switch-hover-background-color: rgba(#b5b5b5, 0.9) !default;
 $switch-hover-border-color-opacity: 0.9 !default;
 $switch-hover-border-color: #b5b5b5 !default;
-$switch-label-padding: 0 0 0 .5em !default;
+$switch-margin-separator: .25em !default;
 $switch-margin-sibling: 0.5em !default;
 $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
@@ -28,6 +28,7 @@ $switch-width: $switch-width-number * 1em !default;
     display: inline-flex;
     align-items: center;
     position: relative;
+    @include side-flex-gap($switch-margin-separator);
     @include unselectable;
     @include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
 
@@ -106,16 +107,9 @@ $switch-width: $switch-width-number * 1em !default;
         z-index: -1;
     }
     &__label {
-        @include avariable('padding', 'switch-label-padding', $switch-label-padding);
-        padding-left: $control-padding-horizontal;
     }
     &--rounded {
-        .o-switch__check {
-            @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-        }
-        .o-switch__check-switch {
-            @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
-        }
+        @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
     }
 
     &--disabled {
@@ -123,8 +117,5 @@ $switch-width: $switch-width-number * 1em !default;
     }
     &--left {
         flex-direction: row-reverse;
-        .o-switch__label {
-            padding-right: $control-padding-horizontal;
-        }
     }
 }
