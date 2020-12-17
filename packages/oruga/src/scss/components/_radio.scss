@@ -67,7 +67,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     &--disabled {
         @include avariable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
     }
-
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
@@ -86,4 +86,5 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             }
         }
     }
+    /* --- */
 }

@@ -120,6 +120,7 @@ export default {
         labelSizeClass: String,
         labelHorizontalClass: String,
         bodyClass: String,
+        bodyHorizontalClass: String,
         addonsClass: String,
         messageClass: String,
         variantClass: String
@@ -157,6 +158,11 @@ export default {
         bodyClasses() {
             return [
                 this.computedClass('bodyClass', 'o-field__body')
+            ]
+        },
+        bodyHorizontalClasses() {
+            return [
+                this.computedClass('bodyHorizontalClass', 'o-field__horizontal-body')
             ]
         },
         innerFieldClasses() {

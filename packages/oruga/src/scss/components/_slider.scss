@@ -114,39 +114,29 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
+        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
                 @include avariable('background', ('variant-' + #{$name}), $color);
             }
         }
+        /* --- */
     }
-
 
     &--focus{
         @include avariable('padding', 'slider-focus-padding', $slider-focus-padding);
         @include avariable('margin', 'slider-focus-margin', $slider-focus-margin);
         cursor: pointer;
     }
-
-    &--disabled {
-        .o-slide__track {
-            cursor: not-allowed;
-            @include avariable('opacity', 'slider-track-disabled', $slider-track-disabled);
-        }
-
-        .o-slide__thumb  {
-            cursor: not-allowed;
-            @include avariable('transform', 'slider-thumb-disabled-transform', $slider-thumb-disabled-transform);
-        }
-    }
+    /* REMOVE ON LITE */
     @include slider-size($base-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include slider-size($value, $name);
         }
     }
-
+    /* --- */
     &__tick {
         position: absolute;
         transform: translate(-50%, -50%);
@@ -166,5 +156,10 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         transform: translate(-50%, -50%);
         top: 50%;
         flex-direction: column; // Fix shrinked thumb at the end in IE 11
+    }
+    &--disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        @include avariable('opacity', 'slider-track-disabled', $slider-track-disabled);
     }
 }

@@ -60,6 +60,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     &-icons-right {
         @include avariable('padding-right', 'select-height', $select-height);
     }
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('select-font-size-' + #{$name}), $value);
@@ -71,6 +72,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
             @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
+    /* --- */
     &--rounded {
         @include avariable('border-radius', 'select-rounded-border-radius', $select-rounded-border-radius);
     }

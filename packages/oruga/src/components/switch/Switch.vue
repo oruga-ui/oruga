@@ -20,10 +20,12 @@
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses">
-            <span :class="checkSwitchClasses"></span>
+        <span :class="elementsWrapperClasses">
+            <span :class="checkClasses">
+                <span :class="checkSwitchClasses"></span>
+            </span>
+            <span :class="labelClasses"><slot/></span>
         </span>
-        <span :class="labelClasses"><slot/></span>
     </label>
 </template>
 
@@ -100,6 +102,7 @@ export default {
         labelClass: String,
         sizeClass: String,
         variantClass: String,
+        elementsWrapperClass: String,
         passiveVariantClass: String,
         leftLabelClass: String
     },
@@ -115,7 +118,6 @@ export default {
                 this.computedClass('rootClass', 'o-switch'),
                 { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
-                { [this.computedClass('leftLabelClass', 'o-switch--left')]: this.leftLabel },
                 { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
                 { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
             ]
@@ -126,6 +128,12 @@ export default {
                 { [this.computedClass('checkClassChecked', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
                 { [this.computedClass('checkClassUnchecked', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)},
                 { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
+            ]
+        },
+        elementsWrapperClasses() {
+            return [
+                this.computedClass('elementsWrapperClass', 'o-switch__wrapper'),
+                { [this.computedClass('leftLabelClass', 'o-switch__wrapper--left')]: this.leftLabel },
             ]
         },
         checkSwitchClasses() {

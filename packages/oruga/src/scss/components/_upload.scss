@@ -20,12 +20,14 @@ $upload-draggable-padding: 0.25em !default;
         @include avariable('border-radius', 'upload-draggable-border-radius', $upload-draggable-border-radius);
         &--hovered {
             @include avariable('border-color', 'upload-draggable-hover-border-color', $upload-draggable-hover-border-color);
+            /* REMOVE ON LITE */
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &-#{$name} {
                     @include avariable('border-color', ('variant-' + #{$name}), $color);
                 }
             }
+            /* ---- */
         }
         &--disabled {
             @include avariable('opacity', 'upload-draggable-disabled-opacity', $upload-draggable-disabled-opacity);

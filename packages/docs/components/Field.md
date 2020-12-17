@@ -287,6 +287,7 @@ title: Field
 | labelSizeClass       |             | string | -      |         |
 | labelHorizontalClass |             | string | -      |         |
 | bodyClass            |             | string | -      |         |
+| bodyHorizontalClass  |             | string | -      |         |
 | addonsClass          |             | string | -      |         |
 | messageClass         |             | string | -      |         |
 | variantClass         |             | string | -      |         |
@@ -309,6 +310,6 @@ title: Field
 | --oruga-field-margin-bottom           | \$field-margin-bottom           | .75rem           |
 | --oruga-field-message-font-size       | \$field-message-font-size       | .75rem           |
 | --oruga-field-message-margin-top      | \$field-message-margin-top      | .25rem           |
-| --oruga-field-margin-right            | \$field-margin-right            | .75rem           |
+| --oruga-field-margin-right            | \$field-margin-right            | .37rem           |
 | --oruga-field-horizontal-breakpoint   | \$field-horizontal-breakpoint   | 768px            |
 | --oruga-field-horizontal-label-margin | \$field-horizontal-label-margin | 0 1.5rem 0 0     |

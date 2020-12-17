@@ -25,13 +25,9 @@ $switch-width: $switch-width-number * 1em !default;
 
 .o-switch {
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    @include side-flex-gap($switch-margin-separator);
     @include unselectable;
-    @include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
-
+    //@include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
+    /* REMOVE ON LITE */
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
@@ -49,6 +45,18 @@ $switch-width: $switch-width-number * 1em !default;
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('font-size-' + #{name}), $value);
+        }
+    }
+    /* --- */
+
+    &__wrapper {
+        @include side-flex-gap($switch-margin-separator);
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+
+        &--left {
+            flex-direction: row-reverse;
         }
     }
 
@@ -114,8 +122,5 @@ $switch-width: $switch-width-number * 1em !default;
 
     &--disabled {
         @include avariable('opacity', 'switch-disabled-opacity', $switch-disabled-opacity);
-    }
-    &--left {
-        flex-direction: row-reverse;
     }
 }

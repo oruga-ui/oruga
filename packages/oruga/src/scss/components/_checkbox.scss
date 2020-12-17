@@ -80,6 +80,7 @@ $checkbox-line-height: 1.25 !default;
     &--disabled {
         @include avariable('opacity', 'checkbox-disabled-opacity', $checkbox-disabled-opacity);
     }
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('checkbox-font-size-' + #{$name}), $value);
@@ -101,4 +102,5 @@ $checkbox-line-height: 1.25 !default;
             }
         }
     }
+    /* --- */
 }

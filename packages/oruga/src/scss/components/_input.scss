@@ -62,6 +62,7 @@ $input-width: 100% !default;
     &--rounded {
         @include avariable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
     }
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('input-font-size-' + #{$name}), $value);
@@ -73,6 +74,7 @@ $input-width: 100% !default;
             @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
+    /* --- */
     &__textarea {
         display: block;
         max-width: 100%;

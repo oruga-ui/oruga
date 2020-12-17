@@ -29,11 +29,13 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     text-align: center;
     @include avariable('font-size', 'pagination-font-size', $pagination-font-size);
     @include avariable('margin', 'pagination-margin', $pagination-margin);
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('pagination-font-size-' + #{$name}), $value);
         }
     }
+    /* --- */
     @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
         justify-content: space-between;
     }
@@ -109,6 +111,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     }
     &--centered {
         justify-content: center;
+        /* REMOVE ON LITE */
         .o-pag__previous {
             order: 1;
         }
@@ -119,9 +122,11 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             justify-content: center;
             order: 2;
         }
+        /* ---- */
     }
     &--right {
         justify-content: flex-end;
+        /* REMOVE ON LITE */
         .o-pag__previous {
             order: 1;
         }
@@ -132,6 +137,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             justify-content: flex-end;
             order: 2;
         }
+        /* --- */
     }
 
 

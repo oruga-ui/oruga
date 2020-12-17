@@ -46,11 +46,13 @@ $skeleton-margin: .5rem 0 0 0 !default;
         @include avariable('margin', 'skeleton-margin', $skeleton-margin);
 
         @include steps-size($base-font-size);
+        /* REMOVE ON LITE */
         @each $name, $value in $sizes {
             &--#{$name} {
                 @include steps-size($value, $name);
             }
         }
+        /* --- */
     }
     &--centered {
         align-items: center;

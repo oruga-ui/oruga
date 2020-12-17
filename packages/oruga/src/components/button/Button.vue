@@ -6,26 +6,28 @@
         :class="rootClasses"
         v-on="$listeners"
     >
-        <o-icon
-            v-if="iconLeft"
-            :pack="iconPack"
-            :icon="iconLeft"
-            :size="size"
-            :both="iconBoth"
-            :class="iconClasses"
-        />
-        <span v-if="label">{{ label }}</span>
-        <span v-else-if="$slots.default">
-            <slot />
+        <span :class="elementsWrapperClasses">
+            <o-icon
+                v-if="iconLeft"
+                :pack="iconPack"
+                :icon="iconLeft"
+                :size="size"
+                :both="iconBoth"
+                :class="iconClasses"
+            />
+            <span v-if="label">{{ label }}</span>
+            <span v-else-if="$slots.default">
+                <slot />
+            </span>
+            <o-icon
+                v-if="iconRight"
+                :pack="iconPack"
+                :icon="iconRight"
+                :size="size"
+                :both="iconBoth"
+                :class="iconClasses"
+            />
         </span>
-        <o-icon
-            v-if="iconRight"
-            :pack="iconPack"
-            :icon="iconRight"
-            :size="size"
-            :both="iconBoth"
-            :class="iconClasses"
-        />
     </component>
 </template>
 
@@ -153,6 +155,11 @@ export default {
           return [
             this.computedClass('iconClass', 'o-btn__icon'),
           ]
+        },
+        elementsWrapperClasses() {
+            return [
+                this.computedClass('elementsWrapperClass', 'o-btn__wrapper'),
+            ]
         },
         computedTag() {
             if (this.disabled !== undefined && this.disabled !== false) {

@@ -148,9 +148,9 @@
 }
 
 @mixin side-flex-gap ($gap) {
+    //flex-wrap: wrap;
     margin-left: -$gap;
     margin-right: -$gap;
-    width: calc(100% + $gap);
 
     & > * {
         margin-left: $gap;

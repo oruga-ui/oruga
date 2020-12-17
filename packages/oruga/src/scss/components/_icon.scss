@@ -19,6 +19,7 @@ $icon-spin-duration: 2s !default;
     display: inline-flex;
     justify-content: center;
     transition: transform $speed-slow $easing, opacity $speed $easing;
+    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('icon-font-size-' + #{$name}), $value);
@@ -30,6 +31,7 @@ $icon-spin-duration: 2s !default;
             @include avariable('color', ('variant-' + #{$name}), $color);
         }
     }
+    /* --- */
     &--clickable {
         pointer-events: auto;
         cursor: pointer;

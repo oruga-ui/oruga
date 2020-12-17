@@ -202,18 +202,19 @@ title: Switch
 
 ## Class props
 
-| Prop name           | Description | Type   | Values | Default |
-| ------------------- | ----------- | ------ | ------ | ------- |
-| rootClass           |             | string | -      |         |
-| disabledClass       |             | string | -      |         |
-| checkClass          |             | string | -      |         |
-| checkSwitchClass    |             | string | -      |         |
-| roundedClass        |             | string | -      |         |
-| labelClass          |             | string | -      |         |
-| sizeClass           |             | string | -      |         |
-| variantClass        |             | string | -      |         |
-| passiveVariantClass |             | string | -      |         |
-| leftLabelClass      |             | string | -      |         |
+| Prop name            | Description | Type   | Values | Default |
+| -------------------- | ----------- | ------ | ------ | ------- |
+| rootClass            |             | string | -      |         |
+| disabledClass        |             | string | -      |         |
+| checkClass           |             | string | -      |         |
+| checkSwitchClass     |             | string | -      |         |
+| roundedClass         |             | string | -      |         |
+| labelClass           |             | string | -      |         |
+| sizeClass            |             | string | -      |         |
+| variantClass         |             | string | -      |         |
+| elementsWrapperClass |             | string | -      |         |
+| passiveVariantClass  |             | string | -      |         |
+| leftLabelClass       |             | string | -      |         |
 
 ## Events
 
@@ -247,7 +248,7 @@ title: Switch
 | --oruga-switch-hover-background-color          | \$switch-hover-background-color          | rgba(#b5b5b5, 0.9)                                                                               |
 | --oruga-switch-hover-border-color-opacity      | \$switch-hover-border-color-opacity      | 0.9                                                                                              |
 | --oruga-switch-hover-border-color              | \$switch-hover-border-color              | #b5b5b5                                                                                          |
-| --oruga-switch-label-padding                   | \$switch-label-padding                   | 0 0 0 .5em                                                                                       |
+| --oruga-switch-margin-separator                | \$switch-margin-separator                | .25em                                                                                            |
 | --oruga-switch-margin-sibling                  | \$switch-margin-sibling                  | 0.5em                                                                                            |
 | --oruga-switch-padding                         | \$switch-padding                         | 0.2em                                                                                            |
 | --oruga-switch-rounded-border-radius           | \$switch-rounded-border-radius           | \$base-rounded-border-radius                                                                     |
