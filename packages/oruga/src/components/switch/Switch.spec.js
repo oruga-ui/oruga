@@ -65,6 +65,7 @@ describe('OSwitch', () => {
         const value = false
         wrapper.setProps({ leftLabel, value })
         await wrapper.vm.$nextTick()
-        expect(wrapper.classes()).toContain('o-switch--left')
+        const wrapperElement = wrapper.find('.o-switch__wrapper')
+        expect(wrapperElement.classes()).toContain('o-switch__wrapper--left')
     })
 })
