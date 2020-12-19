@@ -64,7 +64,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             flex-grow: 1;
             flex-shrink: 0;
         }
-        .o-tabs__nav-item {
+        .o-tabs__nav-item-default,  .o-tabs__nav-item-boxed, .o-tabs__nav-item-toggle{
             height: 100%;
         }
     }
@@ -115,9 +115,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         flex-shrink: 0;
         justify-content: flex-start;
         @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
-        @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-        @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
-        @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
+        // @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+        // @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
+        // @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
         /* REMOVE ON LITE */
         @each $name, $value in $sizes {
             &--#{$name} {
@@ -173,7 +173,6 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 /* REMOVE ON LITE */
                 &:hover:not(.o-tabs__nav-item-boxed--active){
                     @include avariable('background-color', 'tabs-boxed-link-hover-background-color', $tabs-boxed-link-hover-background-color);
-                    @include avariable('border-bottom-color', 'tabs-boxed-link-hover-border-bottom-color', $tabs-boxed-link-hover-border-bottom-color);
                 }
                 /* ---- */
             }
@@ -185,8 +184,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                 margin-bottom: 0;
                 position: relative;
                 &--active {
-                    @include avariable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
-                    @include avariable('color', 'tabs-link-active-color', $tabs-link-active-color);
+                    @include avariable('background-color', 'tabs-toggle-link-active-background-color', $tabs-toggle-link-active-background-color);
+                    @include avariable('border-color', 'tabs-toggle-link-active-border-color', $tabs-toggle-link-active-border-color);
+                    @include avariable('color', 'tabs-toggle-link-active-color', $tabs-toggle-link-active-color);
                 }
                 &--disabled {
                     pointer-events: none;
