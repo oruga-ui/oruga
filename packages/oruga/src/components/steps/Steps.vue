@@ -1,30 +1,32 @@
 <template>
     <div :class="wrapperClasses">
         <nav :class="mainClasses">
-            <ul :class="stepItemsClasses">
-                <li
-                    v-for="childItem in items"
-                    :key="childItem.newValue"
-                    v-show="childItem.visible"
-                    :class="childItem.itemClasses"
-                >
-                    <a
-                        :class="stepLinkClasses(childItem)"
-                        @click="isItemClickable(childItem) && childClick(childItem)">
-                        <div :class="stepMarkerClasses">
-                            <o-icon
-                                v-if="childItem.icon"
-                                :icon="childItem.icon"
-                                :pack="childItem.iconPack"
-                                :size="size"/>
-                            <span v-else-if="childItem.step">{{ childItem.step }}</span>
-                        </div>
-                        <div :class="stepDetailsClasses">
-                            <span :class="stepTitleClasses">{{ childItem.label }}</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+            <div
+                v-for="(childItem, index) in items"
+                :key="childItem.newValue"
+                v-show="childItem.visible"
+                :class="childItem.itemClasses"
+            >
+                <span
+                    v-if="index > 0"
+                    :class="stepDividerClasses">
+                </span>
+                <a
+                    :class="stepLinkClasses(childItem)"
+                    @click="isItemClickable(childItem) && childClick(childItem)">
+                    <div :class="stepMarkerClasses">
+                        <o-icon
+                            v-if="childItem.icon"
+                            :icon="childItem.icon"
+                            :pack="childItem.iconPack"
+                            :size="size"/>
+                        <span v-else-if="childItem.step">{{ childItem.step }}</span>
+                    </div>
+                    <div :class="stepDetailsClasses">
+                        <span :class="stepTitleClasses">{{ childItem.label }}</span>
+                    </div>
+                </a>
+            </div>
         </nav>
         <section :class="stepContentClasses">
             <slot/>
@@ -128,20 +130,6 @@ export default {
             type: Boolean,
             default: true
         },
-        /**
-         * How Steps will be displayed for mobile user
-         * @values minimalist, compact, null
-         */
-        mobileMode: {
-            type: String,
-            validator(value) {
-                return [
-                    'minimalist',
-                    'compact'
-                ].indexOf(value) > -1
-            },
-            default: 'minimalist'
-        },
         ariaNextLabel: String,
         ariaPreviousLabel: String,
         rootClass: String,
@@ -153,8 +141,7 @@ export default {
         animatedClass: String,
         labelPositionClass: String,
         roundedClass: String,
-        mobileClass: String,
-        stepItemsClass: String,
+        stepDividerClass: String,
         stepMarkerClass: String,
         stepContentClass: String,
         stepContentTransitioningClass: String,
@@ -179,13 +166,12 @@ export default {
                 { [this.computedClass('variantClass', 'o-steps-', this.variant)]: this.variant },
                 { [this.computedClass('labelPositionClass', 'o-steps--label-', this.labelPosition)]: this.labelPosition },
                 { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated },
-                { [this.computedClass('roundedClass', 'o-steps--rounded')]: this.rounded },
-                { [this.computedClass('sizeClass', 'o-steps--mobile-', this.mobileMode)]: this.mobileMode }
+                { [this.computedClass('roundedClass', 'o-steps--rounded')]: this.rounded }
             ]
         },
-        stepItemsClasses() {
+        stepDividerClasses() {
             return [
-                this.computedClass('stepItemsClass', 'o-steps__items')
+                this.computedClass('stepDividerClass', 'o-steps__divider')
             ]
         },
         stepMarkerClasses() {
@@ -281,8 +267,8 @@ export default {
     methods: {
         stepLinkClasses(childItem) {
             return [
-                this.computedClass('stepLinkClass', 'o-steps__item-link'),
-                { [this.computedClass('stepLinkClickableClass', 'o-steps__item-link-clickable')]: this.isItemClickable(childItem) }
+                this.computedClass('stepLinkClass', 'o-steps__link'),
+                { [this.computedClass('stepLinkClickableClass', 'o-steps__link-clickable')]: this.isItemClickable(childItem) }
             ]
         },
         /**

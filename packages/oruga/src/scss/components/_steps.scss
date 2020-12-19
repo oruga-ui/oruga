@@ -30,26 +30,15 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         eparam('$factor', 2)
     );
 
-    &__nav-item {
-        &:not(:first-child), &:only-child {
-            &::before {
-                @include avariable('height', 'steps-divider-height', $steps-divider-height);
-                @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-            }
-        }
-        &:only-child {
-            &::after {
-                @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-            }
-        }
+    .o-steps__divider {
+        @include avariable('height', 'steps-divider-height', $steps-divider-height);
+        @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
         @media screen and (max-width: $steps-mobile-max-width - 1px) {
-            &::before, &::after, &:not(:first-child)::before {
-                @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-            }
+            @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
         }
     }
 
-    &__marker {
+    .o-steps__marker {
         @include evariable(
             'height', $MULTIPLY_EXPRESSION,
             eparam('$param', variable(if($name != null, ('size-' + #{$name}), 'steps-size'), $size)),
@@ -60,16 +49,9 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             eparam('$param', variable(if($name != null, ('size-' + #{$name}), 'steps-size'), $size)),
             eparam('$factor', 2)
         );
-        /*
-        .o-icon {
-            *, *:before {
-                @include avariable('font-size', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-            }
-        }
-        */
     }
 
-    &__title {
+    .o-steps__title {
         @include evariable(
             'font-size', $MULTIPLY_EXPRESSION,
             eparam('$param', variable(if($name != null, ('size-' + #{$name}), 'steps-size'), $size)),
@@ -79,63 +61,45 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @include avariable('line-height', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
     }
 
-    &__wrapper-vertical {
+    .o-steps__wrapper-vertical {
         .o-steps--label-right {
-            .o-step-item {
-                &:not(:first-child), &:only-child {
-                    &::before, &::after {
-                        @include evariable(
-                            'left', $LR_CALC_EXPRESSION,
-                            eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
-                            eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
-                        );
-                    }
-                }
+            .o-steps__divider {
+                @include evariable(
+                    'left', $LR_CALC_EXPRESSION,
+                    eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                    eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                );
             }
         }
         .o-steps--label-left {
-            .o-step-items {
-                .o-step-item {
-                    &:not(:first-child), &:only-child {
-                        &::before, &::after {
-                            left: auto;
-                            @include evariable(
-                                'right', $LR_CALC_EXPRESSION,
-                                eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
-                                eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
-                            );
-                        }
-                    }
-                }
+            .o-steps__divider {
+                left: auto;
+                @include evariable(
+                    'right', $LR_CALC_EXPRESSION,
+                    eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                    eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                );
             }
         }
 
         &.o-steps__wrapper-position-right {
-            &.o-steps--label-right {
-                .o-step__item {
-                    &:not(:first-child), &:only-child {
-                        &::before, &::after {
-                            @include evariable(
-                                'left', $LR_CALC_EXPRESSION,
-                                eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
-                                eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
-                            );
-                        }
-                    }
+            .o-steps--label-right {
+                .o-steps__divider {
+                    @include evariable(
+                        'left', $LR_CALC_EXPRESSION,
+                        eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                        eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                    );
                 }
             }
             .o-steps--label-left {
-                .o-steps__item {
-                    &:not(:first-child), &:only-child {
-                        &::before, &::after {
-                            left: auto;
-                            @include evariable(
-                                'right', $LR_CALC_EXPRESSION,
-                                eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
-                                eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
-                            );
-                        }
-                    }
+                .o-steps__divider {
+                    left: auto;
+                    @include evariable(
+                        'right', $LR_CALC_EXPRESSION,
+                        eparam('$size', variable(if($name != null, ('size-' + #{$name}), 'steps-size'),  $size)),
+                        eparam('$divider-height', variable('steps-divider-height', $steps-divider-height))
+                    );
                 }
             }
         }
@@ -143,6 +107,10 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
 }
 
 .o-steps {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
 
     @include steps-size($base-font-size);
     @each $name, $value in $sizes {
@@ -163,22 +131,16 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
-
             &--#{$name} {
-                &::before, &::after {
-                    background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
-                    background-size: 200% 100%;
-                    background-position: right bottom;
-                }
                 &.o-steps__nav-item-active {
                     .o-steps__marker {
                         @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('border-color', ('variant-' + #{$name}), $color);
                         @include avariable('color', ('variant-' + #{$name}), $color);
                     }
-
-                    &::before, &::after {
-                        background-position: left bottom;
+                    .o-steps__divider {
+                        background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                        background-size: 200% 100%;
                     }
                 }
                 &.o-steps__nav-item-previous {
@@ -186,53 +148,26 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('background-color', ('variant-' + #{$name}), $color);
                     }
-
-                    &::before, &::after {
-                        background-position: left bottom;
+                    .o-steps__divider {
+                        background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                        background-size: 200% 100%;
                     }
                 }
             }
         }
+    }
 
-        &:not(:first-child), &:only-child {
-            flex-shrink: 1;
-
-            &::before {
-                // This will contain the divider
-                content: " ";
-                display: block;
-                position: absolute;
-                width: 100%;
-                bottom: 0;
-                left: -50%;
-            }
-        }
-        &:only-child {
-            &::after {
-                // This will contain the divider
-                content: " ";
-                display: block;
-                position: absolute;
-                @include avariable('height', 'steps-divider-height', $steps-divider-height);
-                bottom: 0;
-            }
-            &::before, &::after {
-                width: 25%;
-                left: 50%;
-            }
-            &::before {
-                right: 50%;
-                left: auto;
-            }
-        }
-
-        &::before, &::after {
-            background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
-
-            background-size: 200% 100%;
-            background-position: right bottom;
-        }
-
+    &__divider {
+        background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
+        background-size: 200% 100%;
+        background-position: right bottom;
+        // This will contain the divider
+        content: " ";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: -50%;
+        width: 100%;
     }
 
     &__content {
@@ -246,28 +181,15 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-
-    &__items {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    &__animated {
-        .o-steps__item {
-            &:not(:first-child), &:only-child {
-                &::before {
-                    transition-property: background;
-                    @include avariable('transition-duration', 'transition-duration', $speed-slow);
-                    @include avariable('transition-timing-function', 'transition-timing', $easing);
-                }
-            }
+    &--animated {
+        .o-steps__divider {
+            transition-property: background;
+            @include avariable('transition-duration', 'transition-duration', $speed-slow);
+            @include avariable('transition-timing-function', 'transition-timing', $easing);
         }
     }
 
-    &__item-link {
+    &__link {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -311,7 +233,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             @include avariable('color', 'steps-active-color', $steps-active-color);
         }
 
-        &::before, &::after {
+        .o-steps__divider {
             background-position: left bottom;
         }
     }
@@ -322,7 +244,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             @include avariable('background-color', 'steps-previous-color', $steps-previous-color);
         }
 
-        &::before, &::after {
+        .o-steps__divider {
             background-position: left bottom;
         }
     }
@@ -333,17 +255,17 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-    &__label-right, &__label-left {
+    &--label-right, &--label-left {
         .o-steps__link {
             flex-direction: row;
-            > .o-steps__details {
-                @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
-                @include avariable('padding', 'steps-details-padding', $steps-details-padding);
-            }
+        }
+        .o-steps__details {
+            @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
+            @include avariable('padding', 'steps-details-padding', $steps-details-padding);
         }
     }
 
-    &__label-left {
+    &--label-left {
         .o-steps__link {
             flex-direction: row-reverse;
         }
@@ -359,139 +281,72 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         flex-direction: row;
         flex-wrap: wrap;
 
-        > .o-steps {
-            .o-step__items {
-                height: 100%;
-                flex-direction: column;
-                border-bottom-color: transparent;
+        .o-steps {
+            height: 100%;
+            flex-direction: column;
+            border-bottom-color: transparent;
+        }
 
-                .o-step__item {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    @include avariable('padding', 'steps-vertical-padding', $steps-vertical-padding);
+        .o-steps__divider {
+            background: linear-gradient(to top, $steps-default-color 50%, $steps-active-color 50%);
+            background-size: 100% 200%;
+            background-position: 0 100%;
+            height: 100%;
+            @include avariable('width', 'steps-divider-height', $steps-divider-height);
+            top: -50%;
+            left: calc(50% - #{$steps-divider-height / 2});
+        }
 
-                    &::before, &::after {
-                        background: linear-gradient(to top, $steps-default-color 50%, $steps-active-color 50%);
+        .o-steps__item-active, .o-steps__item-previous {
+            .o-steps__divider {
+                background-position: right top;
+            }
+        }
+
+        .o-steps__nav-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @include avariable('padding', 'steps-vertical-padding', $steps-vertical-padding);
+            // Override marker connector color per step
+            @each $name, $pair in $colors {
+                $color: nth($pair, 1);
+                &--#{$name} {
+                    .o-steps__divider {
+                        background: linear-gradient(to top, $steps-default-color 50%, $color 50%);
                         background-size: 100% 200%;
                         background-position: left bottom;
                     }
-
-                    // Override marker connector color per step
-                    @each $name, $pair in $colors {
-                        $color: nth($pair, 1);
-
-                        &.o-color-#{$name} {
-                            &::before, &::after {
-                                background: linear-gradient(to top, $steps-default-color 50%, $color 50%);
-                                background-size: 100% 200%;
-                                background-position: left bottom;
-                            }
-                        }
-                    }
-
-                    &:not(:first-child), &:only-child {
-                        &::before {
-                            height: 100%;
-                            @include avariable('width', 'steps-divider-height', $steps-divider-height);
-                            top: -50%;
-                            left: calc(50% - #{$steps-divider-height / 2});
-                        }
-                    }
-
-                    &.o-steps__item-active, &.o-steps__item-previous {
-                        &::before, &::after {
-                            background-position: right top;
-                        }
-                    }
-
-                    &:only-child {
-                        &::before {
-                            top: 50%;
-                        }
-                        &::after {
-                            @include avariable('width', 'steps-divider-height', $steps-divider-height);
-                            top: auto;
-                            bottom: 50%;
-                        }
-                        &::before, &::after {
-                            height: 25%;
-                        }
-                    }
-                }
-            }
-
-            &.o-steps--label-right {
-                .o-steps__item {
-                    justify-content: flex-start;
-                }
-            }
-            &.o-steps--label-left {
-                .o-steps__item {
-                    justify-content: flex-end;
-                }
-            }
-            &:not(.o-steps--label-right):not(.o-steps.-label-left) {
-                .o-steps__link {
-                    > .o-steps__details {
-                        @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
-                    }
                 }
             }
         }
 
-        > .o-steps__content {
+        &.o-steps--label-right {
+            .o-steps__nav-item {
+                justify-content: flex-start;
+            }
+        }
+        &.o-steps--label-left {
+            .o-steps__nav-item {
+                justify-content: flex-end;
+            }
+        }
+
+        .o-steps__details {
+            @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
+        }
+
+        .o-steps__content {
             flex-grow: 1;
         }
 
-        > .o-steps__navigation {
+        .o-steps__navigation {
             flex-basis: 100%;
         }
 
         &.o-steps__wrapper-position-right {
             flex-direction: row-reverse;
-        }
-    }
-
-    &:not(.o-steps-wrapper-vertical) {
-        .o-steps {
-            @media screen and (max-width: $steps-mobile-max-width - 1px) {
-                &.o-steps-mobile-minimalist {
-                    .o-step-items {
-                        .o-step-item {
-                            &:not(.o-step-item-active) {
-                                display: none;
-                            }
-                            &::before, &::after, &:not(:first-child)::before {
-                                // This will contain the divider
-                                content: " ";
-                                display: block;
-                                position: absolute;
-                                @include avariable('height', 'steps-divider-height', $steps-divider-height);
-                                width: 25%;
-                                bottom: 0;
-                                left: 50%;
-                            }
-                            &::before, &:not(:first-child)::before {
-                                right: 50%;
-                                left: auto;
-                            }
-                        }
-                    }
-                }
-                &.o-steps-mobile-compact {
-                    .o-step-items {
-                        .o-step-item {
-                            &:not(.o-step-item-active) {
-                                .o-step-details {
-                                    display: none;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
