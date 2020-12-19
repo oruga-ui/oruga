@@ -2,27 +2,27 @@
 
 exports[`OSteps render correctly 1`] = `
 <div class="o-steps__wrapper">
-    <nav class="o-steps o-steps--label-bottom o-steps--animated o-steps--rounded o-steps--mobile-minimalist">
-        <ul class="o-steps__items">
-            <li class="o-steps__item o-steps__item-active"><a class="o-steps__item-link">
-                    <div class="o-steps__marker">
-                        <!---->
-                    </div>
-                    <div class="o-steps__details"><span class="o-steps__title"></span></div>
-                </a></li>
-            <li class="o-steps__item" style="display: none;"><a class="o-steps__item-link">
-                    <div class="o-steps__marker">
-                        <!---->
-                    </div>
-                    <div class="o-steps__details"><span class="o-steps__title"></span></div>
-                </a></li>
-            <li class="o-steps__item"><a class="o-steps__item-link">
-                    <div class="o-steps__marker">
-                        <!---->
-                    </div>
-                    <div class="o-steps__details"><span class="o-steps__title"></span></div>
-                </a></li>
-        </ul>
+    <nav class="o-steps o-steps--label-bottom o-steps--animated o-steps--rounded">
+        <div class="o-steps__nav-item o-steps__nav-item-active">
+            <!----> <a class="o-steps__link">
+                <div class="o-steps__marker">
+                    <!---->
+                </div>
+                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+            </a>
+        </div>
+        <div class="o-steps__nav-item" style="display: none;"><span class="o-steps__divider"></span> <a class="o-steps__link">
+                <div class="o-steps__marker">
+                    <!---->
+                </div>
+                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+            </a></div>
+        <div class="o-steps__nav-item"><span class="o-steps__divider"></span> <a class="o-steps__link">
+                <div class="o-steps__marker">
+                    <!---->
+                </div>
+                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+            </a></div>
     </nav>
     <section class="o-steps__content o-steps__content-transitioning">
         <div class="o-steps__item v-enter v-enter-active" style=""></div>

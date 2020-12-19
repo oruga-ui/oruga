@@ -101,13 +101,13 @@ describe('OSteps', () => {
     })
 
     it('manage wrapper classes as expected', () => {
-        expect(wrapper.vm.wrapperClasses[2]['o-steps-wrapper-vertical']).toBeFalsy()
+        expect(wrapper.vm.wrapperClasses[2]['o-steps__wrapper-vertical']).toBeFalsy()
 
         wrapper.setProps({vertical: true})
-        expect(wrapper.vm.wrapperClasses[2]['o-steps-wrapper-vertical']).toBeTruthy()
+        expect(wrapper.vm.wrapperClasses[2]['o-steps__wrapper-vertical']).toBeTruthy()
 
         wrapper.setProps({position: 'right'})
-        expect(wrapper.vm.wrapperClasses[3]['o-steps-wrapper-position-right']).toBeTruthy()
+        expect(wrapper.vm.wrapperClasses[3]['o-steps__wrapper-position-right']).toBeTruthy()
     })
 
     it('throws an error when there is no item', () => {
