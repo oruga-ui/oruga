@@ -171,7 +171,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                     background-position: right bottom;
                 }
                 &.o-steps__nav-item-active {
-                    .o-steps-marker {
+                    .o-steps__marker {
                         @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('border-color', ('variant-' + #{$name}), $color);
                         @include avariable('color', ('variant-' + #{$name}), $color);
@@ -182,7 +182,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                     }
                 }
                 &.o-steps__nav-item-previous {
-                    .o-steps-marker {
+                    .o-steps__marker {
                         @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('background-color', ('variant-' + #{$name}), $color);
                     }
