@@ -262,7 +262,6 @@ title: Steps
 | hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean        | -                                                                               | true                                                      |
 | labelPosition     | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | 'bottom'                                                  |
 | rounded           | Rounded step markers                                                                                                          | boolean        | -                                                                               | true                                                      |
-| mobileMode        | How Steps will be displayed for mobile user                                                                                   | string         | `minimalist`, `compact`, `null`                                                 | 'minimalist'                                              |
 | ariaNextLabel     |                                                                                                                               | string         | -                                                                               |                                                           |
 | ariaPreviousLabel |                                                                                                                               | string         | -                                                                               |                                                           |
 
@@ -279,8 +278,7 @@ title: Steps
 | animatedClass                 |             | string | -      |         |
 | labelPositionClass            |             | string | -      |         |
 | roundedClass                  |             | string | -      |         |
-| mobileClass                   |             | string | -      |         |
-| stepItemsClass                |             | string | -      |         |
+| stepDividerClass              |             | string | -      |         |
 | stepMarkerClass               |             | string | -      |         |
 | stepContentClass              |             | string | -      |         |
 | stepContentTransitioningClass |             | string | -      |         |
