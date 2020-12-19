@@ -39,6 +39,19 @@
         }
     }
 }
-tr:nth-child(2n) {
-    background-color: transparent;
+
+// Override Vuepress Theme
+.theme-default-content:not(.custom)  {
+  .vuepress-plugin-demo-block__display {
+    a:hover {
+      text-decoration: none;
+    }
+  }
 }
+.vuepress-plugin-demo-block__display {
+  tr:nth-child(2n) {
+      background-color: transparent;
+  }
+}
+
+
