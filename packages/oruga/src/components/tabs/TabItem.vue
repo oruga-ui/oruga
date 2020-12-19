@@ -15,7 +15,8 @@ export default {
         itemClass: String,
         itemHeaderClass: String,
         itemHeaderActiveClass: String,
-        itemHeaderDisabledClass: String
+        itemHeaderDisabledClass: String,
+        itemHeaderTypeClass: String
     },
     computed: {
         elementClasses() {
@@ -25,9 +26,13 @@ export default {
         },
         headerClasses() {
             return [
-                this.headerClass || this.computedClass('itemHeaderClass', 'o-tabs__nav-item'),
-                { [this.computedClass('itemHeaderActiveClass', 'o-tabs__nav-item--active')]: this.isActive },
-                { [this.computedClass('itemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: this.disabled }
+                { [this.computedClass('itemHeaderActiveClass', 'o-tabs__nav-item-{*}--active', this.$parent.type)]: this.isActive },
+                { [this.computedClass('itemHeaderDisabledClass', 'o-tabs__nav-item-{*}--disabled', this.$parent.type)]: this.disabled },
+                { [this.computedClass('itemHeaderTypeClass', 'o-tabs__nav-item-', this.$parent.type)]: this.$parent.type },
+                // this.headerClass || this.computedClass('itemHeaderClass', 'o-tabs__nav-item'),
+                // { [this.computedClass('itemHeaderTypeClass', 'o-tabs__nav-item--', this.$parent.type)]: this.$parent.type },
+                // { [this.computedClass('itemHeaderActiveClass', 'o-tabs__nav-item--active')]: this.isActive },
+                // { [this.computedClass('itemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: this.disabled }
             ]
         }
     }

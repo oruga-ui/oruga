@@ -141,7 +141,7 @@ title: Tabs
       </o-field>
       <o-field label="Type">
         <o-select v-model="type" placeholder="Type">
-          <option :value="null">Default</option>
+          <option value="default">Default</option>
           <option value="boxed">Boxed</option>
           <option value="toggle">Toggle</option>
         </o-select>
@@ -182,7 +182,7 @@ title: Tabs
         expanded: false,
         atRight: false,
         size: null,
-        type: null
+        type: 'default'
       }
     }
   }
@@ -258,7 +258,7 @@ title: Tabs
 | vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | false                                         |
 | position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
 | destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | false                                         |
-| type          | Tab type                                        | string\|object | `boxed`, `toggle`                                                               |                                               |
+| type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | 'default'                                     |
 | expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
 | multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
 
@@ -272,12 +272,12 @@ title: Tabs
 | verticalWrapperClass       |             | string | -      |         |
 | multilineWrapperClass      |             | string | -      |         |
 | tabsClass                  |             | string | -      |         |
-| typeClass                  |             | string | -      |         |
 | sizeClass                  |             | string | -      |         |
 | positionClass              |             | string | -      |         |
 | contentClass               |             | string | -      |         |
 | transitioningClass         |             | string | -      |         |
 | tabItemHeaderClass         |             | string | -      |         |
+| tabItemHeaderTypeClass     |             | string | -      |         |
 | tabItemHeaderIconClass     |             | string | -      |         |
 | tabItemHeaderTextClass     |             | string | -      |         |
 | tabItemHeaderActiveClass   |             | string | -      |         |
@@ -320,6 +320,7 @@ title: Tabs
 | itemHeaderClass         |                          | string                | -      |         |
 | itemHeaderActiveClass   |                          | string                | -      |         |
 | itemHeaderDisabledClass |                          | string                | -      |         |
+| itemHeaderTypeClass     |                          | string                | -      |         |
 
 ### Slots
 

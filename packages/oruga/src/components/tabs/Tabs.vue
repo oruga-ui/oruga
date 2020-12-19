@@ -53,7 +53,10 @@ export default {
          * Tab type
          * @values boxed, toggle
          */
-        type: [String, Object],
+        type: {
+            type: String,
+            default: 'default'
+        },
          /**
          * Tabs will be expanded (full-width)
          */
@@ -73,24 +76,24 @@ export default {
         verticalWrapperClass: String,
         multilineWrapperClass: String,
         tabsClass: String,
-        typeClass: String,
         sizeClass: String,
         positionClass: String,
         contentClass: String,
         transitioningClass: String,
         tabItemHeaderClass: String,
+        tabItemHeaderTypeClass: String,
         tabItemHeaderIconClass: String,
         tabItemHeaderTextClass: String,
         tabItemHeaderActiveClass: String,
         tabItemHeaderDisabledClass: String,
-        tabItemWrapperClass: String
+        tabItemWrapperClass: String,
     },
     methods: {
         itemHeaderClasses(childItem) {
             return [
-                this.computedClass('tabItemHeaderClass', 'o-tabs__nav-item'),
-                { [this.computedClass('tabItemHeaderActiveClass', 'o-tabs__nav-item--active')]: childItem.isActive },
-                { [this.computedClass('tabItemHeaderDisabledClass', 'o-tabs__nav-item--disabled')]: childItem.disabled }
+                { [this.computedClass('tabItemHeaderActiveClass', 'o-tabs__nav-item-{*}--active', this.type)]: childItem.isActive },
+                { [this.computedClass('tabItemHeaderDisabledClass', 'o-tabs__nav-item-{*}--disabled', this.type)]: childItem.disabled },
+                { [this.computedClass('tabItemHeaderTypeClass', 'o-tabs__nav-item-', this.type)]: this.type },
             ]
         }
     },
@@ -112,7 +115,6 @@ export default {
         navClasses() {
             return [
                 this.computedClass('tabsClass', 'o-tabs__nav'),
-                { [this.computedClass('typeClass', 'o-tabs__nav--', this.type)]: this.type },
                 { [this.computedClass('sizeClass', 'o-tabs__nav--', this.size)]: this.size },
                 { [this.computedClass('positionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
             ]

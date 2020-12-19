@@ -126,7 +126,7 @@ export default {
             </o-field>
             <o-field label="Type">
                 <o-select v-model="type" placeholder="Type">
-                    <option :value="null">Default</option>
+                    <option value="default">Default</option>
                     <option value="boxed">Boxed</option>
                     <option value="toggle">Toggle</option>
                 </o-select>
@@ -173,7 +173,7 @@ export default {
                 expanded: false,
                 atRight: false,
                 size: null,
-                type: null
+                type: 'default'
             }
         }
     }

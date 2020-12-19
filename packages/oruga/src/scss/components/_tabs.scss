@@ -31,6 +31,32 @@ $tabs-toggle-link-active-border-color: $primary !default;
 $tabs-toggle-link-active-color: $primary-invert !default;
 /* @docs */
 
+
+@mixin item {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    align-items: center;
+    line-height: $tabs-link-line-height;
+    @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
+    @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+    @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
+    @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
+    @include avariable('color', 'tabs-link-color', $tabs-link-color);
+    display: flex;
+    justify-content: center;
+    margin-bottom: -1px;
+    @include avariable('padding', 'tabs-link-padding', $tabs-link-padding);
+    vertical-align: top;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .o-tabs {
     &--fullwidth {
         width: 100%;
@@ -51,35 +77,28 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             align-items: stretch;
             flex-grow: 0;
             border-bottom: none;
+        }
 
-            &-item {
-                width: 100%;
-            }
-
-            &--boxed {
-                .o-tabs__nav-item {
-                    border-bottom-color: transparent;
-                    @include avariable('border-right-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-                    @include avariable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
-                }
-                .o-tabs__nav-item--active {
-                    @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-                    border-right-color: transparent;
-                }
+        .o-tabs__nav-item-boxed {
+            border-bottom-color: transparent;
+            @include avariable('border-right-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+            @include avariable('border-radius', 'tabs-border-bottom-color', #{$tabs-toggle-link-radius} 0 0 #{$tabs-toggle-link-radius});
+            &--active {
+                @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+                border-right-color: transparent;
             }
         }
+
     }
     &--right {
         flex-direction: row-reverse;
 
-        .o-tabs__nav--boxed {
-            .o-tabs__nav-item {
-                border-bottom-color: transparent;
-                border-right-color: transparent;
-                @include avariable('border-left-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-                @include avariable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-boxed-link-radius} #{$tabs-boxed-link-radius} 0);
-            }
-            .o-tabs__nav-item--active {
+        .o-tabs__nav-item-boxed {
+            border-bottom-color: transparent;
+            border-right-color: transparent;
+            @include avariable('border-left-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
+            @include avariable('border-radius', 'tabs-border-bottom-color', 0 #{$tabs-boxed-link-radius} #{$tabs-boxed-link-radius} 0);
+            &--active {
                 @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
                 @include avariable('border-right-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
                 border-left-color: transparent;
@@ -99,11 +118,13 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
         @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
         @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
+        /* REMOVE ON LITE */
         @each $name, $value in $sizes {
             &--#{$name} {
                 @include avariable('font-size', ('tabs-font-size-' + #{$name}), $value);
             }
         }
+        /* ---- */
         &--centered {
             justify-content: center;
         }
@@ -112,80 +133,72 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         }
 
         &-item {
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            outline: none;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            border: 1px solid transparent;
-            background-color: transparent;
-            align-items: center;
-            line-height: $tabs-link-line-height;
-            @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
-            @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-            @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
-            @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
-            @include avariable('color', 'tabs-link-color', $tabs-link-color);
-            display: flex;
-            justify-content: center;
-            margin-bottom: -1px;
-            @include avariable('padding', 'tabs-link-padding', $tabs-link-padding);
-            vertical-align: top;
-            cursor: pointer;
-            text-decoration: none;
-            &:hover:not(.o-tabs__nav-item--active) {
-                @include avariable('border-bottom-color', 'tabs-link-hover-border-bottom-color', $tabs-link-hover-border-bottom-color);
-                @include avariable('color', 'tabs-link-hover-color', $tabs-link-hover-color);
-                text-decoration: none;
-            }
             &-icon {
                 @include avariable('margin-right', 'tabs-icon-margin', $tabs-icon-margin);
             }
-            &--active {
-                @include avariable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
-                @include avariable('color', 'tabs-link-active-color', $tabs-link-active-color);
+            &-default {
+                @include item;
+                &--active {
+                    @include avariable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
+                    @include avariable('color', 'tabs-link-active-color', $tabs-link-active-color);
+                }
+                &--disabled {
+                    pointer-events: none;
+                    cursor: not-allowed;
+                    @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
+                }
+                /* REMOVE ON LITE */
+                &:hover:not(.o-tabs__nav-item-default--active){
+                    @include avariable('background-color', 'tabs-link-hover-background-color', $tabs-boxed-link-hover-background-color);
+                    @include avariable('border-bottom-color', 'tabs-link-hover-border-bottom-color', $tabs-boxed-link-hover-border-bottom-color);
+                }
+                /* ---- */
             }
-            &--disabled {
-                pointer-events: none;
-                cursor: not-allowed;
-                @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
-            }
-        }
-
-        &--boxed {
-            .o-tabs__nav-item {
+            &-boxed {
+                @include item;
                 @include avariable('border-radius', 'tabs-border-bottom-color', #{$tabs-boxed-link-radius} #{$tabs-boxed-link-radius} 0 0);
                 border-bottom-color: transparent;
-                &:hover:not(.o-tabs__nav-item--active){
+                &--active {
+                    @include avariable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
+                    @include avariable('color', 'tabs-link-active-color', $tabs-link-active-color);
+                    @include avariable('background-color', 'tabs-boxed-link-active-background-color', $tabs-boxed-link-active-background-color);
+                    @include avariable('border-color', 'tabs-boxed-link-active-border-color', $tabs-boxed-link-active-border-color);
+                    @include avariable('border-bottom-color', 'tabs-boxed-link-active-border-bottom-color', $tabs-boxed-link-active-border-bottom-color);
+                }
+                &--disabled {
+                    pointer-events: none;
+                    cursor: not-allowed;
+                    @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
+                }
+                /* REMOVE ON LITE */
+                &:hover:not(.o-tabs__nav-item-boxed--active){
                     @include avariable('background-color', 'tabs-boxed-link-hover-background-color', $tabs-boxed-link-hover-background-color);
                     @include avariable('border-bottom-color', 'tabs-boxed-link-hover-border-bottom-color', $tabs-boxed-link-hover-border-bottom-color);
                 }
+                /* ---- */
             }
-            .o-tabs__nav-item--active {
-                @include avariable('background-color', 'tabs-boxed-link-active-background-color', $tabs-boxed-link-active-background-color);
-                @include avariable('border-color', 'tabs-boxed-link-active-border-color', $tabs-boxed-link-active-border-color);
-                @include avariable('border-bottom-color', 'tabs-boxed-link-active-border-bottom-color', $tabs-boxed-link-active-border-bottom-color);
-            }
-        }
-
-        &--toggle {
-            border-bottom: none;
-            .o-tabs__nav-item {
+            &-toggle {
+                @include item;
                 @include avariable('border-color', 'tabs-toggle-link-border-color', $tabs-toggle-link-border-color);
                 @include avariable('border-style', 'tabs-toggle-link-border-style', $tabs-toggle-link-border-style);
                 @include avariable('border-width', 'tabs-toggle-link-border-width', $tabs-toggle-link-border-width);
                 margin-bottom: 0;
                 position: relative;
-                &:hover:not(.o-tabs__nav-item--active){
+                &--active {
+                    @include avariable('border-bottom-color', 'tabs-link-active-border-bottom-color', $tabs-link-active-border-bottom-color);
+                    @include avariable('color', 'tabs-link-active-color', $tabs-link-active-color);
+                }
+                &--disabled {
+                    pointer-events: none;
+                    cursor: not-allowed;
+                    @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
+                }
+                /* REMOVE ON LITE */
+                &:hover:not(.o-tabs__nav-item-toggle--active){
                     @include avariable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
                     @include avariable('border-color', 'tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
                 }
-            }
-            .o-tabs__nav-item--active {
-                @include avariable('background-color', 'tabs-toggle-link-active-background-color', $tabs-toggle-link-active-background-color);
-                @include avariable('border-color', 'tabs-toggle-link-active-border-color', $tabs-toggle-link-active-border-color);
-                @include avariable('color', 'tabs-toggle-link-active-color', $tabs-toggle-link-active-color);
+                /* ---- */
             }
         }
     }
@@ -202,7 +215,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             overflow: hidden;
         }
     }
+    /* REMOVE ON LITE */
     &:not(:last-child) {
         @include avariable('margin-bottom', 'tabs-margin-bottom', $tabs-margin-bottom);
     }
+    /* --- */
 }
