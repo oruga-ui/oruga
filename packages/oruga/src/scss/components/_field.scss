@@ -12,7 +12,6 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
 /* @docs */
 
 .o-field {
-    flex-grow: 1;
     &:not(:last-child) {
         @include avariable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
     }
@@ -94,6 +93,9 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         }
         &--horizontal {
             display: flex;
+            .o-field {
+                flex-grow: 1;
+            }
         }
         &__horizontal-label {
             flex-basis: 0;
