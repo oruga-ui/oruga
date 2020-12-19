@@ -22,7 +22,11 @@ export default {
                 currentClass = currentClass.join(' ')
             }
 
-            defaultValue = defaultValue + suffix
+            if (defaultValue.search("{*}") !== -1) {
+                defaultValue = defaultValue.replace(/\{\*\}/g, suffix);
+            } else {
+                defaultValue = defaultValue + suffix
+            }
 
             if (typeof currentClass === "function") {
                 currentClass = currentClass(suffix)
