@@ -30,7 +30,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         eparam('$factor', 2)
     );
 
-    &__item {
+    &__nav-item {
         &:not(:first-child), &:only-child {
             &::before {
                 @include avariable('height', 'steps-divider-height', $steps-divider-height);
@@ -151,7 +151,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-    &__item {
+    &__nav-item {
         margin: 0;
         padding: 0;
         @include avariable('line-height', 'steps-item-line-height', $steps-item-line-height);
@@ -159,9 +159,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         position: relative;
         flex-grow: 1;
         flex-basis: 1em;
-        flex-shrink: 0;
-        // flex-basis: auto;
-
         // Override marker color per step
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
@@ -173,8 +170,8 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                     background-size: 200% 100%;
                     background-position: right bottom;
                 }
-                &.o-step-item-active {
-                    .o-step-marker {
+                &.o-steps__nav-item-active {
+                    .o-steps-marker {
                         @include avariable('background-color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('border-color', ('variant-' + #{$name}), $color);
                         @include avariable('color', ('variant-' + #{$name}), $color);
@@ -184,8 +181,8 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         background-position: left bottom;
                     }
                 }
-                &.o-step-item-previous {
-                    .o-step-marker {
+                &.o-steps__nav-item-previous {
+                    .o-steps-marker {
                         @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
                         @include avariable('background-color', ('variant-' + #{$name}), $color);
                     }
@@ -303,7 +300,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         z-index: 1;
     }
 
-    &__item-active {
+    &__nav-item-active {
         .o-steps__link {
             cursor: default;
         }
@@ -318,7 +315,8 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             background-position: left bottom;
         }
     }
-    &__item-previous {
+
+    &__nav-item-previous {
         .o-steps__marker {
             @include avariable('color', 'steps-maker-default-color', $steps-maker-default-color);
             @include avariable('background-color', 'steps-previous-color', $steps-previous-color);
@@ -344,10 +342,16 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             }
         }
     }
+
     &__label-left {
         .o-steps__link {
             flex-direction: row-reverse;
         }
+    }
+
+    &__item {
+        flex-shrink: 0;
+        flex-basis: auto;
     }
 
     &__wrapper-vertical {

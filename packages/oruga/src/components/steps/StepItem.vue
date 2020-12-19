@@ -31,10 +31,10 @@ export default {
         itemClasses() {
             return [
                 this.headerClass,
-                this.computedClass('itemClass', 'o-steps__item'),
-                { [this.computedClass('variantClass', 'o-steps__item--', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
-                { [this.computedClass('itemActiveClass', 'o-steps__item-active')]: this.isActive },
-                { [this.computedClass('itemPreviousClass', 'o-steps__item-previous')]: this.parent.activeItem.index > this.index }
+                this.computedClass('itemClass', 'o-steps__nav-item'),
+                { [this.computedClass('variantClass', 'o-steps__nav-item--', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
+                { [this.computedClass('itemActiveClass', 'o-steps__nav-item-active')]: this.isActive },
+                { [this.computedClass('itemPreviousClass', 'o-steps__nav-item-previous')]: this.parent.activeItem.index > this.index }
             ]
         }
     }
