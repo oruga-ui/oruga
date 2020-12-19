@@ -128,6 +128,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         flex-grow: 1;
         flex-basis: 1em;
         // Override marker color per step
+        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -155,6 +156,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                 }
             }
         }
+        /* ---- */
     }
 
     &__divider {
@@ -218,6 +220,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &__details {
+        @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
         text-align: center;
         z-index: 1;
     }
@@ -260,7 +263,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             flex-direction: row;
         }
         .o-steps__details {
-            @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
             @include avariable('padding', 'steps-details-padding', $steps-details-padding);
         }
     }
@@ -310,6 +312,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             justify-content: center;
             @include avariable('padding', 'steps-vertical-padding', $steps-vertical-padding);
             // Override marker connector color per step
+            /* REMOVE ON LITE */
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &--#{$name} {
@@ -320,6 +323,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                     }
                 }
             }
+            /* --- */
         }
 
         &.o-steps--label-right {
