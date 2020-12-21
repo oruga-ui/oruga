@@ -261,11 +261,19 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &--label-right, &--label-left {
+
+        @media screen and (max-width: $steps-mobile-max-width - 1px) {
+            .o-steps__title {
+                display: none;
+            }
+        }
         .o-steps__link {
             flex-direction: row;
         }
         .o-steps__details {
-            @include avariable('padding', 'steps-details-padding', $steps-details-padding);
+            @media screen and (min-width: $steps-mobile-max-width - 1px) {
+                @include avariable('padding', 'steps-details-padding', $steps-details-padding);
+            }
         }
     }
 
