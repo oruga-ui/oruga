@@ -140,7 +140,7 @@ export default {
         variantClass: String,
         animatedClass: String,
         labelPositionClass: String,
-        roundedClass: String,
+        stepMarkerRoundedClass: String,
         stepDividerClass: String,
         stepMarkerClass: String,
         stepContentClass: String,
@@ -165,8 +165,7 @@ export default {
                 this.computedClass('stepsClass', 'o-steps'),
                 { [this.computedClass('variantClass', 'o-steps-', this.variant)]: this.variant },
                 { [this.computedClass('labelPositionClass', 'o-steps--label-', this.labelPosition)]: this.labelPosition },
-                { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated },
-                { [this.computedClass('roundedClass', 'o-steps--rounded')]: this.rounded }
+                { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
         },
         stepDividerClasses() {
@@ -176,7 +175,8 @@ export default {
         },
         stepMarkerClasses() {
             return [
-                this.computedClass('stepMarkerClass', 'o-steps__marker')
+                this.computedClass('stepMarkerClass', 'o-steps__marker'),
+                { [this.computedClass('stepMarkerRoundedClass', 'o-steps__marker--rounded')]: this.rounded }
             ]
         },
         stepContentClasses() {

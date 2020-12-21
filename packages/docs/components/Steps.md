@@ -277,7 +277,7 @@ title: Steps
 | variantClass                  |             | string | -      |         |
 | animatedClass                 |             | string | -      |         |
 | labelPositionClass            |             | string | -      |         |
-| roundedClass                  |             | string | -      |         |
+| stepMarkerRoundedClass        |             | string | -      |         |
 | stepDividerClass              |             | string | -      |         |
 | stepMarkerClass               |             | string | -      |         |
 | stepContentClass              |             | string | -      |         |

@@ -112,12 +112,14 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     margin: 0;
     padding: 0;
 
+    /* REMOVE ON LITE */
     @include steps-size($base-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include steps-size($value, $name);
         }
     }
+    /* ---- */
 
     &__nav-item {
         margin: 0;
@@ -184,11 +186,13 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &--animated {
+        /* REMOVE ON LITE */
         .o-steps__divider {
             transition-property: background;
             @include avariable('transition-duration', 'transition-duration', $speed-slow);
             @include avariable('transition-timing-function', 'transition-timing', $easing);
         }
+        /* --- */
     }
 
     &__link {
@@ -217,6 +221,10 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @include avariable('border', 'steps-marker-default-border', $steps-marker-default-border);
         z-index: 1;
         overflow: hidden;
+
+        &--rounded {
+            @include avariable('border-radius', 'steps-marker-rounded-border-radius', $steps-marker-rounded-border-radius);
+        }
     }
 
     &__details {
@@ -252,12 +260,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-    &--rounded {
-        .o-steps__marker {
-            @include avariable('border-radius', 'steps-marker-rounded-border-radius', $steps-marker-rounded-border-radius);
-        }
-    }
-
     &--label-right, &--label-left {
         .o-steps__link {
             flex-direction: row;
@@ -290,9 +292,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
 
         .o-steps__divider {
-            background: linear-gradient(to top, $steps-default-color 50%, $steps-active-color 50%);
-            background-size: 100% 200%;
-            background-position: 0 100%;
             height: 100%;
             @include avariable('width', 'steps-divider-height', $steps-divider-height);
             top: -50%;

@@ -2,23 +2,23 @@
 
 exports[`OSteps render correctly 1`] = `
 <div class="o-steps__wrapper">
-    <nav class="o-steps o-steps--label-bottom o-steps--animated o-steps--rounded">
+    <nav class="o-steps o-steps--label-bottom o-steps--animated">
         <div class="o-steps__nav-item o-steps__nav-item-active">
             <!----> <a class="o-steps__link">
-                <div class="o-steps__marker">
+                <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
                 <div class="o-steps__details"><span class="o-steps__title"></span></div>
             </a>
         </div>
         <div class="o-steps__nav-item" style="display: none;"><span class="o-steps__divider"></span> <a class="o-steps__link">
-                <div class="o-steps__marker">
+                <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
                 <div class="o-steps__details"><span class="o-steps__title"></span></div>
             </a></div>
         <div class="o-steps__nav-item"><span class="o-steps__divider"></span> <a class="o-steps__link">
-                <div class="o-steps__marker">
+                <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
                 <div class="o-steps__details"><span class="o-steps__title"></span></div>
