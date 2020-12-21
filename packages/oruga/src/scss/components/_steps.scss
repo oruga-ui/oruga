@@ -350,6 +350,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
 
         .o-steps__content {
             flex-grow: 1;
+            flex-basis: 70%;
         }
 
         .o-steps__navigation {
