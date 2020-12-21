@@ -37,7 +37,6 @@
 
 <script>
 import Icon from '../icon/Icon'
-import config from '../../utils/config'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
@@ -67,7 +66,7 @@ export default {
         tag: {
             type: String,
             default: 'a',
-            validator: (value) => {
+            validator: () => {
                 return true // !!!!
             }
         },
@@ -100,7 +99,7 @@ export default {
         }
     },
     methods: {
-        onClick(event) {
+        onClick() {
             if (this.disabled) return
             const menu = this.getMenu()
             this.reset(this.$parent, menu)
@@ -116,7 +115,7 @@ export default {
             items.forEach((item) => {
                 if (item !== this) {
                     this.reset(item, menu)
-                    if (!parent.$data._isMenu || (parent.$data._isMenu && parent.accordion)) {
+                    if (!parent.$data.isMenu || (parent.$data.isMenu && parent.accordion)) {
                         item.newExpanded = false
                         item.$emit('update:expanded', item.newActive)
                     }
@@ -129,7 +128,7 @@ export default {
         },
         getMenu() {
             let parent = this.$parent
-            while (parent && !parent.$data._isMenu) {
+            while (parent && !parent.$data.isMenu) {
                 parent = parent.$parent
             }
             return parent

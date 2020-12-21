@@ -30,7 +30,7 @@ export default {
     },
     data() {
         return {
-            _isMenu: true // Used by MenuItem
+            isMenu: true // Used by MenuItem
         }
     }
 }
