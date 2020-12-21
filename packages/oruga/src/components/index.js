@@ -8,6 +8,7 @@ import Field from './field'
 import Icon from './icon'
 import Input from './input'
 import Loading from './loading'
+import Menu from './menu'
 import Modal from './modal'
 import Pagination from './pagination'
 import Radio from './radio'
@@ -33,6 +34,7 @@ export {
     Icon,
     Input,
     Loading,
+    Menu,
     Modal,
     Pagination,
     Radio,
