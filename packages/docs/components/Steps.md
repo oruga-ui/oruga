@@ -65,13 +65,6 @@ title: Steps
             <option value="left">Left</option>
           </o-select>
         </o-field>
-        <o-field label="Mobile mode">
-          <o-select v-model="mobileMode">
-            <option :value="null">-</option>
-            <option value="minimalist">Minimalist</option>
-            <option value="compact">Compact</option>
-          </o-select>
-        </o-field>
       </o-field>
     </p>
     <o-steps
@@ -82,7 +75,6 @@ title: Steps
       :icon-prev="prevIcon"
       :icon-next="nextIcon"
       :label-position="labelPosition"
-      :mobile-mode="mobileMode"
     >
       <o-step-item step="1" label="Account" :clickable="isStepsClickable">
         <h1 class="title has-text-centered">Account</h1>
@@ -133,8 +125,7 @@ title: Steps
 
         prevIcon: 'chevron-left',
         nextIcon: 'chevron-right',
-        labelPosition: 'bottom',
-        mobileMode: 'minimalist'
+        labelPosition: 'bottom'
       }
     }
   }
@@ -150,18 +141,21 @@ title: Steps
 ```html
 <template>
   <section>
+    <h4>Warning</h4>
     <o-steps variant="warning">
       <o-step-item label="Account" icon="user-lock"></o-step-item>
       <o-step-item label="Profile" icon="user"></o-step-item>
       <o-step-item label="Social" icon="user-plus"></o-step-item>
     </o-steps>
 
+    <h4>Info</h4>
     <o-steps variant="info">
       <o-step-item label="Account" icon="user-lock"></o-step-item>
       <o-step-item label="Profile" icon="user"></o-step-item>
       <o-step-item label="Social" icon="user-plus"></o-step-item>
     </o-steps>
 
+    <h4>Success</h4>
     <o-steps variant="success">
       <o-step-item label="Account" icon="user-lock"></o-step-item>
       <o-step-item label="Profile" icon="user"></o-step-item>
