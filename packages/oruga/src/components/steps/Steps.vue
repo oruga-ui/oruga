@@ -163,7 +163,7 @@ export default {
         mainClasses() {
             return [
                 this.computedClass('stepsClass', 'o-steps'),
-                { [this.computedClass('variantClass', 'o-steps-', this.variant)]: this.variant },
+                { [this.computedClass('variantClass', 'o-steps--', this.variant)]: this.variant },
                 { [this.computedClass('labelPositionClass', 'o-steps--label-', this.labelPosition)]: this.labelPosition },
                 { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
