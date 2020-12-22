@@ -285,7 +285,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         .o-steps {
             height: 100%;
             flex-direction: column;
-            border-bottom-color: transparent;
         }
 
         .o-steps__divider {
