@@ -95,8 +95,7 @@ export default {
         rootClass: String,
         disabledClass: String,
         checkClass: String,
-        checkClassChecked: String,
-        checkClassUnchecked: String,
+        checkCheckedClass: String,
         checkSwitchClass: String,
         roundedClass: String,
         labelClass: String,
@@ -125,8 +124,7 @@ export default {
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-switch__check'),
-                { [this.computedClass('checkClassChecked', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
-                { [this.computedClass('checkClassUnchecked', 'o-switch__check--unchecked')]: (this.newValue === this.falseValue)},
+                { [this.computedClass('checkCheckedClass', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
                 { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
             ]
         },
