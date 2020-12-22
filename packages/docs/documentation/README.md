@@ -250,7 +250,7 @@ Vue.use(Config, {
 
 #### Deal with specificity
 
-Oruga CSS comes with the lowest specifity possible, that's why you can easily override existing classes by defining new ones adding them to the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the Steps component the vertical attribute disposes the steps vertically changing the height of the steps divider.
+Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones adding them to the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the vertical attribute disposes the steps vertically changing the `height` of the `steps divider`.
 
 ```scss
 .o-steps {
@@ -271,7 +271,7 @@ Oruga CSS comes with the lowest specifity possible, that's why you can easily ov
 }
 ```
 
-If you want to set height to 50% keeping the other attributes unchanged you can't just define a new class (unless you want to use !important), because of a higher specificity. In that case, we suggest to define your new class like this
+If you want to set height to 50% keeping the other attributes unchanged you can't just define a new class (unless you want to use `!important`), because of a higher specificity. In that case, we suggest to define your new class in this way
 
 ```vue
 <style>
