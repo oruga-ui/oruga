@@ -459,3 +459,15 @@ Take a look at each component docs to know all customizable fields/props by conf
 | \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
 | \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
 | \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
+
+## Examples
+
+### Tailwind CSS
+
+<p>
+Source code <a href="https://github.com/oruga-ui/oruga/tree/master/packages/oruga-tailwindcss">here</a>
+</p>
+
+<iframe width="100%" height="100%" frameborder="0" style="width: 100%; height: 100vh;"
+    src="https://oruga-tailwindcss.netlify.app">
+</iframe>
