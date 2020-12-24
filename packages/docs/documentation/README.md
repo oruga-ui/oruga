@@ -202,7 +202,7 @@ For example, look at the [Button style section](components/Button.html#style): h
 With Oruga you can easily append one or more classes to already existing classes or override them with classes you define.
 
 ::: tip
-Remember that a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
+Remember that for a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
 :::
 
 #### Adding classes
@@ -248,6 +248,51 @@ Vue.use(Config, {
 })
 ```
 
+#### Deal with specificity
+
+Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones adding them to the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the vertical attribute disposes the steps vertically changing the `height` of the `steps divider`.
+
+```scss
+.o-steps {
+    &__wrapper-vertical {
+        display: flex;
+        flex-direction: row;
+
+        .o-steps__divider {
+            height: 100%;
+            @include avariable('width', 'steps-divider-height', $steps-divider-height);
+            top: -50%;
+            left: calc(50% - #{$steps-divider-height / 2});
+        }
+
+        ...
+    }
+    ...
+}
+```
+
+If you want to set height to 50% keeping the other attributes unchanged you can't just define a new class (unless you want to use `!important`), because of a higher specificity. In that case, we suggest to define your new class in this way
+
+```vue
+<style>
+.steps-vertical .step-divider {
+  height: 50%;
+}
+</style>
+```
+
+and in your configurtion
+
+```js
+Vue.use(Oruga, {
+    steps: {
+      verticalClass: 'steps-vertical',
+      stepDividerClass: 'step-divider'
+    }
+});
+```
+
+In Oruga documentation you'll find a special note for classes with a higher specificity. 
 
 ### Overriding classes
 
@@ -302,7 +347,7 @@ Vue.use(Config, {
 ```
 #### Usage of _oruga-lite_ stylesheet
 
-Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other base attributes.
+Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
 
 ```js
 import '@oruga-ui/oruga/dist/oruga-lite.css'
@@ -414,3 +459,15 @@ Take a look at each component docs to know all customizable fields/props by conf
 | \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
 | \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
 | \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
+
+## Examples
+
+### Tailwind CSS
+
+<p>
+Source code <a href="https://github.com/oruga-ui/oruga/tree/master/packages/oruga-tailwindcss">here</a>
+</p>
+
+<iframe width="100%" height="100%" frameborder="0" style="width: 100%; height: 100vh;"
+    src="https://oruga-tailwindcss.netlify.app">
+</iframe>

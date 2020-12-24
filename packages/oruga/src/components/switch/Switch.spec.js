@@ -49,7 +49,7 @@ describe('OSwitch', () => {
         wrapper.setProps({ passiveVariant, value })
         await wrapper.vm.$nextTick()
         const switchCheckElement = wrapper.find('.o-switch__check')
-        expect(switchCheckElement.classes()).toContain('o-switch__check--unchecked')
+        expect(switchCheckElement.classes()).not.toContain('o-switch__check--checked')
         const switchElement = wrapper.find('.o-switch')
         expect(switchElement.classes()).toContain('o-switch--danger-passive')
     })

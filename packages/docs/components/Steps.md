@@ -270,7 +270,6 @@ title: Steps
 | stepsClass                    |             | string | -      |         |
 | variantClass                  |             | string | -      |         |
 | animatedClass                 |             | string | -      |         |
-| labelPositionClass            |             | string | -      |         |
 | stepMarkerRoundedClass        |             | string | -      |         |
 | stepDividerClass              |             | string | -      |         |
 | stepMarkerClass               |             | string | -      |         |
@@ -281,6 +280,7 @@ title: Steps
 | stepTitleClass                |             | string | -      |         |
 | stepLinkClass                 |             | string | -      |         |
 | stepLinkClickableClass        |             | string | -      |         |
+| stepLinkLabelPositionClass    |             | string | -      |         |
 
 ### Events
 

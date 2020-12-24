@@ -183,22 +183,20 @@ title: Switch
 
 ## Props
 
-| Prop name           | Description                                        | Type                    | Values                                                                          | Default |
-| ------------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
-| v-model             |                                                    | string\|number\|boolean | -                                                                               |         |
-| nativeValue         | Same as native value                               | string\|number\|boolean | -                                                                               |         |
-| disabled            |                                                    | boolean                 | -                                                                               |         |
-| variant             | Color of the switch, optional                      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| passiveVariant      | Color of the switch when is passive, optional      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| name                | Name attribute on native checkbox                  | string                  | -                                                                               |         |
-| required            |                                                    | boolean                 | -                                                                               |         |
-| size                | Vertical size of switch, optional                  | string                  | `small`, `medium`, `large`                                                      |         |
-| trueValue           | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
-| falseValue          | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
-| rounded             | Rounded style                                      | boolean                 | -                                                                               | true    |
-| leftLabel           | Show label on left                                 | boolean                 | -                                                                               | false   |
-| checkClassChecked   |                                                    | string                  | -                                                                               |         |
-| checkClassUnchecked |                                                    | string                  | -                                                                               |         |
+| Prop name      | Description                                        | Type                    | Values                                                                          | Default |
+| -------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| v-model        |                                                    | string\|number\|boolean | -                                                                               |         |
+| nativeValue    | Same as native value                               | string\|number\|boolean | -                                                                               |         |
+| disabled       |                                                    | boolean                 | -                                                                               |         |
+| variant        | Color of the switch, optional                      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| passiveVariant | Color of the switch when is passive, optional      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| name           | Name attribute on native checkbox                  | string                  | -                                                                               |         |
+| required       |                                                    | boolean                 | -                                                                               |         |
+| size           | Vertical size of switch, optional                  | string                  | `small`, `medium`, `large`                                                      |         |
+| trueValue      | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
+| falseValue     | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
+| rounded        | Rounded style                                      | boolean                 | -                                                                               | true    |
+| leftLabel      | Show label on left                                 | boolean                 | -                                                                               | false   |
 
 ## Class props
 
@@ -207,6 +205,7 @@ title: Switch
 | rootClass            |             | string | -      |         |
 | disabledClass        |             | string | -      |         |
 | checkClass           |             | string | -      |         |
+| checkCheckedClass    |             | string | -      |         |
 | checkSwitchClass     |             | string | -      |         |
 | roundedClass         |             | string | -      |         |
 | labelClass           |             | string | -      |         |

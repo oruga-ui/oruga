@@ -73,7 +73,6 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Documentation', link: '/documentation/' },
-      { text: 'Examples', link: '/examples/' },
       { text: 'Discord', link: 'https://discord.gg/RuKuBYN' },
       { text: 'Twitter', link: 'https://twitter.com/oruga_ui' },
     ],

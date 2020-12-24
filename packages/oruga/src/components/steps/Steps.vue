@@ -139,7 +139,6 @@ export default {
         stepsClass: String,
         variantClass: String,
         animatedClass: String,
-        labelPositionClass: String,
         stepMarkerRoundedClass: String,
         stepDividerClass: String,
         stepMarkerClass: String,
@@ -149,7 +148,8 @@ export default {
         stepDetailsClass: String,
         stepTitleClass: String,
         stepLinkClass: String,
-        stepLinkClickableClass: String
+        stepLinkClickableClass: String,
+        stepLinkLabelPositionClass: String,
     },
     computed: {
         wrapperClasses() {
@@ -164,7 +164,6 @@ export default {
             return [
                 this.computedClass('stepsClass', 'o-steps'),
                 { [this.computedClass('variantClass', 'o-steps--', this.variant)]: this.variant },
-                { [this.computedClass('labelPositionClass', 'o-steps--label-', this.labelPosition)]: this.labelPosition },
                 { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
         },
@@ -268,6 +267,7 @@ export default {
         stepLinkClasses(childItem) {
             return [
                 this.computedClass('stepLinkClass', 'o-steps__link'),
+                { [this.computedClass('stepLinkLabelPositionClass', 'o-steps__link-label-', this.labelPosition)]: this.labelPosition },
                 { [this.computedClass('stepLinkClickableClass', 'o-steps__link-clickable')]: this.isItemClickable(childItem) }
             ]
         },

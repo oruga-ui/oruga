@@ -36,7 +36,7 @@ $switch-width: $switch-width-number * 1em !default;
             }
         }
         &--#{$name}-passive {
-            .o-switch__check--unchecked {
+            .o-switch__check:not(.o-switch__check--checked) {
                 @include avariable('background', ('variant-' + #{$name}), $color);
             }
         }

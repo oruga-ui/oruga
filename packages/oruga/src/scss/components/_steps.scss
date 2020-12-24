@@ -203,6 +203,15 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @include avariable('color', 'steps-link-color', $steps-link-color);
         cursor: pointer;
         text-decoration: none;
+
+        &-label-right {
+            flex-direction: row;
+        }
+
+        &-label-left {
+            flex-direction: row-reverse;
+        }
+
         &:hover {
             text-decoration: none;
         }
@@ -231,6 +240,9 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
         text-align: center;
         z-index: 1;
+        @media screen and (min-width: $steps-mobile-max-width - 1px) {
+            @include avariable('padding', 'steps-details-padding', $steps-details-padding);
+        }
     }
 
     &__nav-item-active {
@@ -260,24 +272,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-    &--label-right, &--label-left {
-
-        .o-steps__link {
-            flex-direction: row;
-        }
-        .o-steps__details {
-            @media screen and (min-width: $steps-mobile-max-width - 1px) {
-                @include avariable('padding', 'steps-details-padding', $steps-details-padding);
-            }
-        }
-    }
-
-    &--label-left {
-        .o-steps__link {
-            flex-direction: row-reverse;
-        }
-    }
-
     &__item {
         flex-shrink: 0;
         flex-basis: auto;
@@ -291,7 +285,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         .o-steps {
             height: 100%;
             flex-direction: column;
-            border-bottom-color: transparent;
         }
 
         .o-steps__divider {
@@ -326,17 +319,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                 }
             }
             /* --- */
-        }
-
-        &.o-steps--label-right {
-            .o-steps__nav-item {
-                justify-content: flex-start;
-            }
-        }
-        &.o-steps--label-left {
-            .o-steps__nav-item {
-                justify-content: flex-end;
-            }
         }
 
         .o-steps__details {
