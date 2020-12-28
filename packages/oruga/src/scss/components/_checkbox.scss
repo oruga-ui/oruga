@@ -58,6 +58,7 @@ $checkbox-line-height: 1.5 !default;
 
     &__check {
         flex-shrink: 0;
+        cursor: pointer;
         background-repeat: no-repeat;
         @include avariable('background', 'checkbox-background-color', $checkbox-background-color);
         @include avariable('border-radius', 'checkbox-border-radius', $checkbox-border-radius);
