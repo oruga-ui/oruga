@@ -13,8 +13,8 @@ $checkbox-disabled-opacity: $base-disabled-opacity !default;
 $checkbox-focus-sibiling-box-shadow: $checkbox-checked-box-shadow-length rgba($grey, $checkbox-checked-box-shadow-opacity) !default;
 $checkbox-label-padding: 0 0 0 .5em !default;
 $checkbox-margin-sibiling: 0.5em !default;
-$checkbox-size: 1.25em !default;
-$checkbox-line-height: 1.25 !default;
+$checkbox-size: 1.5em !default;
+$checkbox-line-height: 1.5 !default;
 /* @docs */
 
 @function svg_checkmark($color) {
@@ -42,18 +42,22 @@ $checkbox-line-height: 1.25 !default;
     @include avariable('margin-right', 'checkbox-margin-sibiling', $checkbox-margin-sibiling);
 
     input[type=checkbox] {
-        position: absolute;
-        left: 0;
-        opacity: 0;
-        outline: none;
-        z-index: -1;
+        @include avariable('width', 'checkbox-size', $checkbox-size);
+        @include avariable('height', 'checkbox-size', $checkbox-size);
+        vertical-align: top;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
     }
 
     &__check {
         flex-shrink: 0;
         background-repeat: no-repeat;
-        @include avariable('width', 'checkbox-size', $checkbox-size);
-        @include avariable('height', 'checkbox-size', $checkbox-size);
         @include avariable('background', 'checkbox-background-color', $checkbox-background-color);
         @include avariable('border-radius', 'checkbox-border-radius', $checkbox-border-radius);
         @include avariable('border-width', 'checkbox-border-width', $checkbox-border-width);
