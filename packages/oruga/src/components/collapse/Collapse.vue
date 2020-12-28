@@ -7,6 +7,7 @@ import { getValueByPath } from '../../utils/helpers'
  * An easy way to toggle what you want
  * @displayName Collapse
  * @example ./examples/Collapse.md
+ * @style _collapse.scss
  */
 export default {
     name: 'OCollapse',
