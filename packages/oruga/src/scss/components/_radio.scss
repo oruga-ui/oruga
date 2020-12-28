@@ -41,6 +41,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     input[type=radio] {
         @include avariable('width', 'radio-size', $radio-size);
         @include avariable('height', 'radio-size', $radio-size);
+        margin: 0;
         vertical-align: top;
         background-repeat: no-repeat;
         background-position: center;
