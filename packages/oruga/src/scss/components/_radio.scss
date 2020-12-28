@@ -39,11 +39,19 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     @include avariable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
 
     input[type=radio] {
-        position: absolute;
-        left: 0;
-        opacity: 0;
-        outline: none;
-        z-index: -1;
+        @include avariable('width', 'radio-size', $radio-size);
+        @include avariable('height', 'radio-size', $radio-size);
+        margin: 0;
+        vertical-align: top;
+        outline:none;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
     }
 
     &__check {
@@ -53,8 +61,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         transition-property: background;
         @include avariable('transition-duration', 'transition-duration', $speed-slow);
         @include avariable('transition-timing-function', 'transition-timing', $easing);
-        @include avariable('width', 'radio-size', $radio-size);
-        @include avariable('height', 'radio-size', $radio-size);
+
         @include avariable('background-image', 'radio-active-background-color', url(svg_radio_empty($radio-active-background-color)));
         &--checked {
             @include avariable('background-image', 'radio-active-background-color', url(svg_radio_fill($radio-active-background-color)));

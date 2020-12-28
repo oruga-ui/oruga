@@ -345,6 +345,22 @@ Vue.use(Config, {
     }
 })
 ```
+
+For a better customization experience this function accepts the `context` of the component containing its `props` as second parameter. For example using Bootstrap you may want to apply variants to buttons only when the element is not outlined
+
+```js
+Vue.use(Config, {
+    button: {
+        variantClass: (variant, context) => {
+            if (!context.props.outlined) {
+                return `btn-${variant}`
+            }
+        }
+    },
+    ...
+}
+```
+
 #### Usage of _oruga-lite_ stylesheet
 
 Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
@@ -462,12 +478,12 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ## Examples
 
-### Tailwind CSS
+### Tailwind, Bootstrap 5 and Bulma demo
 
 <p>
-Source code <a href="https://github.com/oruga-ui/oruga/tree/master/packages/oruga-tailwindcss">here</a>
+Source code <a href="https://github.com/oruga-ui/demo-multiframework">here</a>
 </p>
 
-<iframe width="100%" height="100%" frameborder="0" style="width: 100%; height: 100vh;"
-    src="https://oruga-tailwindcss.netlify.app">
+<iframe frameborder="0" style="width: 100%; height: 105vh;"
+    src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>

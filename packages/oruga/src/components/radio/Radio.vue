@@ -10,11 +10,11 @@
             type="radio"
             ref="input"
             @click.stop
+            :class="checkClasses"
             :disabled="disabled"
             :required="required"
             :name="name"
             :value="nativeValue">
-        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>

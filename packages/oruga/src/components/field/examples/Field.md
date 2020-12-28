@@ -37,6 +37,15 @@
                 <option value="2">Option 2</option>
             </o-select>
         </o-field>
+
+        <o-field label="Wrong subject"
+            variant="danger"
+            message="Selected subject is wrong">
+            <o-select placeholder="Select a subject">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+            </o-select>
+        </o-field>
     </section>
 </template>
 
@@ -53,7 +62,7 @@
 ```html
 <template>
     <section>
-        <o-field>
+        <o-field variant="danger">
             <o-input placeholder="Search..."
                 type="search"
                 icon="search">
@@ -152,7 +161,7 @@
 <template>
     <section>
 
-        <o-field grouped message="What do you want to search?">
+        <o-field grouped variant="danger" message="What do you want to search?">
             <o-input placeholder="Search..."></o-input>
             <o-button variant="primary">Search</o-button>
         </o-field>

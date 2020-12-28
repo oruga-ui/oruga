@@ -11,13 +11,13 @@
             type="checkbox"
             ref="input"
             @click.stop
+            :class="checkClasses"
             :disabled="disabled"
             :required="required"
             :name="name"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
