@@ -468,6 +468,6 @@ Take a look at each component docs to know all customizable fields/props by conf
 Source code <a href="https://github.com/oruga-ui/demo-multiframework">here</a>
 </p>
 
-<iframe width="100%" height="100%" frameborder="0" style="width: 100%; height: 100vh;"
+<iframe frameborder="0" style="width: 100%; height: 105vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>
