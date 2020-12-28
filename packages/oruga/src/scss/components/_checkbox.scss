@@ -44,6 +44,7 @@ $checkbox-line-height: 1.5 !default;
     input[type=checkbox] {
         @include avariable('width', 'checkbox-size', $checkbox-size);
         @include avariable('height', 'checkbox-size', $checkbox-size);
+        outline:none;
         margin: 0;
         vertical-align: top;
         background-repeat: no-repeat;
