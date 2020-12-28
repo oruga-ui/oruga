@@ -20,13 +20,13 @@
                 <template v-else>{{ label }}</template>
             </label>
         </template>
-        <o-field-body
-            v-if="horizontal">
+        <o-field-body v-if="horizontal">
             <slot/>
         </o-field-body>
         <div v-else-if="hasInnerField" :class="bodyClasses">
             <o-field
                 :addons="false"
+                :variant="newVariant"
                 :class="innerFieldClasses">
                 <slot/>
             </o-field>
