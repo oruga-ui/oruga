@@ -157,3 +157,9 @@ title: Collapse
 | ------- | ----------- | -------- |
 | trigger |             |          |
 | default |             |          |
+
+## Style
+
+| CSS Variable | SASS Variable | Default |
+| ------------ | ------------- | ------- |
+
