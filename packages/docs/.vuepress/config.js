@@ -38,9 +38,9 @@ module.exports = {
       'demo-block',
       {
         settings: {
-            jsLib: ['https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.js'],
+            jsLib: ['https://oruga-documentation-preview.netlify.app/cdn/oruga.min.js'],
             cssLib: [
-                'https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.css',
+                'https://oruga-documentation-preview.netlify.app/cdn/oruga.min.css',
                 'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
             ],
             vue: 'https://cdn.jsdelivr.net/npm/vue',
