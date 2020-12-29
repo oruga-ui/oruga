@@ -41,13 +41,12 @@ $checkbox-line-height: 1.5 !default;
     @include avariable('line-height', 'checkbox-line-height', $checkbox-line-height);
     @include avariable('margin-right', 'checkbox-margin-sibiling', $checkbox-margin-sibiling);
 
-    input[type=checkbox] {
+    &__check {
         @include avariable('width', 'checkbox-size', $checkbox-size);
         @include avariable('height', 'checkbox-size', $checkbox-size);
         outline:none;
         margin: 0;
         vertical-align: top;
-        background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
         -webkit-appearance: none;
@@ -55,9 +54,6 @@ $checkbox-line-height: 1.5 !default;
         appearance: none;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-    }
-
-    &__check {
         flex-shrink: 0;
         cursor: pointer;
         background-repeat: no-repeat;
