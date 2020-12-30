@@ -21,8 +21,17 @@ yarn add @oruga-ui/oruga
 #### CDN
 
 ```html
-<link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.css" />
-<script src="//unpkg.com/oruga/dist/oruga.js"></script>
+<link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
+<script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
+```
+
+You can use other stylesheets, see ["customization" section](#customization).
+
+#### Build from "develop" branch
+
+```html
+<link rel="stylesheet" href="https://preview.oruga.io/cdn/oruga.min.css" />
+<script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
 
 You can use other stylesheets, see ["customization" section](#customization).

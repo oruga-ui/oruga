@@ -1,7 +1,3 @@
-
-// import Oruga from '@oruga-ui/oruga';
-// import '@oruga-ui/oruga/dist/oruga-vars.css';
-
 import Oruga from './cdn/oruga'
 import './cdn/oruga-vars.css';
 
