@@ -38,13 +38,13 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     @include avariable('line-height', 'radio-line-height', $radio-line-height);
     @include avariable('margin-right', 'radio-margin-sibiling', $radio-margin-sibiling);
 
-    input[type=radio] {
+
+    &__check {
         @include avariable('width', 'radio-size', $radio-size);
         @include avariable('height', 'radio-size', $radio-size);
         margin: 0;
         vertical-align: top;
-        outline:none;
-        background-repeat: no-repeat;
+        outline: none;
         background-position: center;
         background-size: contain;
         -webkit-appearance: none;
@@ -52,9 +52,6 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         appearance: none;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-    }
-
-    &__check {
         border-radius: 50%;
         cursor: pointer;
         background-repeat: no-repeat;

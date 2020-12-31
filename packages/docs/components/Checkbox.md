@@ -197,5 +197,5 @@ title: Checkbox
 | --oruga-checkbox-focus-sibiling-box-shadow  | \$checkbox-focus-sibiling-box-shadow  | $checkbox-checked-box-shadow-length rgba($grey, \$checkbox-checked-box-shadow-opacity) |
 | --oruga-checkbox-label-padding              | \$checkbox-label-padding              | 0 0 0 .5em                                                                             |
 | --oruga-checkbox-margin-sibiling            | \$checkbox-margin-sibiling            | 0.5em                                                                                  |
-| --oruga-checkbox-size                       | \$checkbox-size                       | 1.25em                                                                                 |
-| --oruga-checkbox-line-height                | \$checkbox-line-height                | 1.25                                                                                   |
+| --oruga-checkbox-size                       | \$checkbox-size                       | 1.5em                                                                                  |
+| --oruga-checkbox-line-height                | \$checkbox-line-height                | 1.5                                                                                    |
