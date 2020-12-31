@@ -49,7 +49,6 @@ $dropdown-mobile-zindex: 50 !default;
         left: 0;
         top: 100%;
         display: block;
-        width: 100%;
         @include avariable('min-width', 'dropdown-menu-width', $dropdown-menu-width);
         @include avariable('z-index', 'dropdown-menu-zindex', $dropdown-menu-zindex);
         @include avariable('background-color', 'dropdown-menu-background', $dropdown-menu-background);
@@ -116,6 +115,9 @@ $dropdown-mobile-zindex: 50 !default;
     }
     &--expanded {
         width: 100%;
+        .o-drop__menu {
+            width: 100%;
+        }
     }
     &--disabled {
         @include avariable('opacity', 'dropdown-disabled-opacity', $dropdown-disabled-opacity);
