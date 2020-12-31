@@ -2,6 +2,7 @@ import Autocomplete from './autocomplete'
 import Button from './button'
 import Checkbox from './checkbox'
 import Collapse from './collapse'
+import Datepicker from './datepicker'
 import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
@@ -26,6 +27,7 @@ export {
     Button,
     Checkbox,
     Collapse,
+    Datepicker,
     Dropdown,
     Field,
     Icon,
