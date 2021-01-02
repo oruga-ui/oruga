@@ -56,7 +56,7 @@ $dropdown-mobile-zindex: 50 !default;
         @include avariable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
         @include avariable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
         @include avariable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
-        &---inline {
+        &--inline {
             position: static;
             display: inline-block;
         }
