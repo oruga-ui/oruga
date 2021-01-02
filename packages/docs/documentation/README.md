@@ -259,7 +259,78 @@ Vue.use(Config, {
 
 #### Deal with specificity
 
-Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones adding them to the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the vertical attribute disposes the steps vertically changing the `height` of the `steps divider`.
+Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones in the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the `nav item` contains a `marker` and a `divider` which colors change whether the nav item is active or not.
+
+```scss
+.o-steps {
+    ...
+    &__nav-item-active {
+        .o-steps__link {
+            cursor: default;
+        }
+
+        .o-steps__marker {
+            @include avariable('background-color', 'steps-maker-default-color', $steps-maker-default-color);
+            @include avariable('border-color', 'steps-active-color', $steps-active-color);
+            @include avariable('color', 'steps-active-color', $steps-active-color);
+        }
+
+        .o-steps__divider {
+            background-position: left bottom;
+        }
+    }
+
+    &__nav-item-previous {
+        .o-steps__marker {
+            @include avariable('color', 'steps-maker-default-color', $steps-maker-default-color);
+            @include avariable('background-color', 'steps-previous-color', $steps-previous-color);
+        }
+
+        .o-steps__divider {
+            background-position: left bottom;
+        }
+    }
+    ...
+}
+```
+
+If you want to change the color you can use `!important` or change variables values. Otherwise you can easily increase the specificity in your stylesheet
+
+```css
+.steps-nav-item-active .step-marker {
+  color: blue;
+  border-color: blue;
+}
+
+.steps-nav-item-active .step-divider {
+  background-color: blue;
+}
+
+.steps-nav-item-previous .step-marker {
+  background-color: blue;
+}
+
+.steps-nav-item-previous .step-divider {
+  background-color: blue;
+}
+```
+
+and then configure Oruga to use your custom classes
+
+```js
+Vue.use(Oruga, {
+  steps: {
+    itemActiveClass: 'steps-nav-item-active',
+    itemPreviousClass: 'steps-nav-item-previous',
+    stepMarkerClass: 'step-marker',
+    stepDividerClass: 'step-divider',
+  }
+});
+```
+
+You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
+
+Sometimes components change how elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
 
 ```scss
 .o-steps {
@@ -282,12 +353,10 @@ Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_sp
 
 If you want to set height to 50% keeping the other attributes unchanged you can't just define a new class (unless you want to use `!important`), because of a higher specificity. In that case, we suggest to define your new class in this way
 
-```vue
-<style>
+```css
 .steps-vertical .step-divider {
   height: 50%;
 }
-</style>
 ```
 
 and in your configurtion

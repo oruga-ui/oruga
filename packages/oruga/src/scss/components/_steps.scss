@@ -162,7 +162,9 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &__divider {
+        /* REMOVE ON LITE */
         background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
+        /* ---- */
         background-size: 200% 100%;
         background-position: right bottom;
         // This will contain the divider
