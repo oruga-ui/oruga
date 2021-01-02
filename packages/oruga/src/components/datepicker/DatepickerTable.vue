@@ -8,7 +8,7 @@
                 <span>{{ day }}</span>
             </div>
         </header>
-        <div class="o-dpck__table__body">
+        <div class="o-dpck__table__body" :class="{'o-dpck__table__body--events': hasEvents}">
             <o-datepicker-table-row
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"

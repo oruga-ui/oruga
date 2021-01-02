@@ -131,6 +131,11 @@ $datepicker-btn-padding: .5em .5em !default;
         }
         &__body {
             display: table-row-group;
+            &--events {
+                .o-dpck__table__cell {
+                    padding: .3rem .75rem .75rem;
+                }
+            }
         }
         &__row {
             display: table-row;
@@ -147,6 +152,7 @@ $datepicker-btn-padding: .5em .5em !default;
             padding: 0.5rem 0.75rem;
             &-events {
                 padding: 0.3rem 0.75rem 0.75rem;
+                position: relative;
             }
             &--unselectable {
                 color: $datepicker-item-disabled-color;
@@ -211,6 +217,7 @@ $datepicker-btn-padding: .5em .5em !default;
             width: 100%;
         }
         &__event {
+            background-color: $grey-light;
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &--#{$name} {
@@ -229,35 +236,6 @@ $datepicker-btn-padding: .5em .5em !default;
             }
         }
     }
-
-
-
-
-         /*
-        &.has-events {
-            .datepicker-cell {
-
-
-                &.has-event {
-                    position: relative;
-
-
-                }
-
-                &.is-selected {
-                    overflow: hidden;
-                    .events .event {
-                        // Currently datepicker only uses primary coloring
-                        // Ensure indicator is visible when selected
-                        &.is-primary {
-                            background-color: lighten($primary, 15);
-                        }
-                    }
-                }
-
-            }
-        }
-        */
 
     /* REMOVE ON LITE */
     @each $name, $value in $sizes {

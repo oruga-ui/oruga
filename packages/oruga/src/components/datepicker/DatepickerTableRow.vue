@@ -24,7 +24,7 @@
                 <div class="o-dpck__table__events" v-if="eventsDateMatch(weekDay)">
                     <div
                         class="o-dpck__table__event"
-                        :class="[event.type, 'o-dpck__table__event--' + indicators]"
+                        :class="[event.type ? 'o-dpck__table__event--' + event.type : '', 'o-dpck__table__event--' + indicators]"
                         v-for="(event, index) in eventsDateMatch(weekDay)"
                         :key="index"/>
                 </div>
