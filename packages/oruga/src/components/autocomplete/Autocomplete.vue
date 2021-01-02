@@ -358,7 +358,7 @@ export default {
         },
 
         /**
-         * Select first option if "keep-first
+         * Select first option if "keep-first"
          */
         data(value) {
             // Keep first option always pre-selected
