@@ -113,9 +113,6 @@ export default {
                 if (!event.hasOwnProperty('date')) {
                     event = { date: event }
                 }
-                if (!event.hasOwnProperty('type')) {
-                    event.type = 'is-primary'
-                }
                 if (
                     event.date.getMonth() === this.focused.month &&
                     event.date.getFullYear() === this.focused.year

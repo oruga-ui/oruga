@@ -33,9 +33,12 @@ export default {
          */
         disabled: Boolean,
         /**
-         * Item is not a clickable item
+         * Item is clickable and emit an event
          */
-        custom: Boolean,
+        clickable: {
+            type: Boolean,
+            default: true
+        },
         tabindex: {
             type: [Number, String],
             default: 0
@@ -63,7 +66,7 @@ export default {
             return this.ariaRole === 'menuitem' || this.ariaRole === 'listitem' ? this.ariaRole : null
         },
         isClickable() {
-            return !this.parent.disabled && !this.disabled && !this.custom
+            return !this.parent.disabled && !this.disabled && this.clickable
         },
         isActive() {
             if (this.parent.selected === null) return false

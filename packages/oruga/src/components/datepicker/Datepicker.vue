@@ -39,144 +39,118 @@
                         @focus="handleOnFocus" />
                 </slot>
             </template>
-            <div class="o-dpck__box">
-                <o-dropdown-item
-                    :disabled="disabled"
-                    :hoverable="false"
-                    custom>
-                    <div>
-                        <header class="o-dpck__header">
-                            <template v-if="$slots.header !== undefined && $slots.header.length">
-                                <slot name="header" />
-                            </template>
-                            <div
-                                v-else
-                                class="o-dpck__header__buttons"
-                                :class="size">
-                                <a
-                                    v-show="!showPrev && !disabled"
-                                    class="o-dpck__header__previous"
-                                    role="button"
-                                    href="#"
-                                    :disabled="disabled"
-                                    :aria-label="ariaPreviousLabel"
-                                    @click.prevent="prev"
-                                    @keydown.enter.prevent="prev"
-                                    @keydown.space.prevent="prev">
+            <o-dropdown-item
+                override
+                :disabled="disabled"
+                :clickable="false">
+                <div class="o-dpck__box">
+                    <header class="o-dpck__header">
+                        <template v-if="$slots.header !== undefined && $slots.header.length">
+                            <slot name="header" />
+                        </template>
+                        <div
+                            v-else
+                            class="o-dpck__header__buttons"
+                            :class="size">
+                            <a
+                                v-show="!showPrev && !disabled"
+                                class="o-dpck__header__previous"
+                                role="button"
+                                href="#"
+                                :disabled="disabled"
+                                :aria-label="ariaPreviousLabel"
+                                @click.prevent="prev"
+                                @keydown.enter.prevent="prev"
+                                @keydown.space.prevent="prev">
 
-                                    <o-icon
-                                        :icon="iconPrev"
-                                        :pack="iconPack"
-                                        both
-                                        clickable />
-                                </a>
-                                <a
-                                    v-show="!showNext && !disabled"
-                                    class="o-dpck__header__next"
-                                    role="button"
-                                    href="#"
-                                    :disabled="disabled"
-                                    :aria-label="ariaNextLabel"
-                                    @click.prevent="next"
-                                    @keydown.enter.prevent="next"
-                                    @keydown.space.prevent="next">
+                                <o-icon
+                                    :icon="iconPrev"
+                                    :pack="iconPack"
+                                    both
+                                    clickable />
+                            </a>
+                            <a
+                                v-show="!showNext && !disabled"
+                                class="o-dpck__header__next"
+                                role="button"
+                                href="#"
+                                :disabled="disabled"
+                                :aria-label="ariaNextLabel"
+                                @click.prevent="next"
+                                @keydown.enter.prevent="next"
+                                @keydown.space.prevent="next">
 
-                                    <o-icon
-                                        :icon="iconNext"
-                                        :pack="iconPack"
-                                        both
-                                        clickable />
-                                </a>
-                                <div class="o-dpck__header__list">
-                                    <o-field>
-                                        <o-select
-                                            v-if="!isTypeMonth"
-                                            v-model="focusedDateData.month"
-                                            :disabled="disabled"
-                                            :size="size">
-                                            <option
-                                                v-for="month in listOfMonths"
-                                                :value="month.index"
-                                                :key="month.name"
-                                                :disabled="month.disabled">
-                                                {{ month.name }}
-                                            </option>
-                                        </o-select>
-                                        <o-select
-                                            v-model="focusedDateData.year"
-                                            :disabled="disabled"
-                                            :size="size">
-                                            <option
-                                                v-for="year in listOfYears"
-                                                :value="year"
-                                                :key="year">
-                                                {{ year }}
-                                            </option>
-                                        </o-select>
-                                    </o-field>
-                                </div>
+                                <o-icon
+                                    :icon="iconNext"
+                                    :pack="iconPack"
+                                    both
+                                    clickable />
+                            </a>
+                            <div class="o-dpck__header__list">
+                                <o-field>
+                                    <o-select
+                                        v-if="!isTypeMonth"
+                                        v-model="focusedDateData.month"
+                                        :disabled="disabled"
+                                        :size="size">
+                                        <option
+                                            v-for="month in listOfMonths"
+                                            :value="month.index"
+                                            :key="month.name"
+                                            :disabled="month.disabled">
+                                            {{ month.name }}
+                                        </option>
+                                    </o-select>
+                                    <o-select
+                                        v-model="focusedDateData.year"
+                                        :disabled="disabled"
+                                        :size="size">
+                                        <option
+                                            v-for="year in listOfYears"
+                                            :value="year"
+                                            :key="year">
+                                            {{ year }}
+                                        </option>
+                                    </o-select>
+                                </o-field>
                             </div>
-                        </header>
-                        <div v-if="!isTypeMonth">
-                            <o-datepicker-table
-                                v-model="computedValue"
-                                :day-names="newDayNames"
-                                :month-names="newMonthNames"
-                                :first-day-of-week="firstDayOfWeek"
-                                :rules-for-first-week="rulesForFirstWeek"
-                                :min-date="minDate"
-                                :max-date="maxDate"
-                                :focused="focusedDateData"
-                                :disabled="disabled"
-                                :unselectable-dates="unselectableDates"
-                                :unselectable-days-of-week="unselectableDaysOfWeek"
-                                :selectable-dates="selectableDates"
-                                :events="events"
-                                :indicators="indicators"
-                                :date-creator="dateCreator"
-                                :type-month="isTypeMonth"
-                                :nearby-month-days="nearbyMonthDays"
-                                :nearby-selectable-month-days="nearbySelectableMonthDays"
-                                :show-week-number="showWeekNumber"
-                                :week-number-clickable="weekNumberClickable"
-                                :range="range"
-                                :multiple="multiple"
-                                @range-start="date => $emit('range-start', date)"
-                                @range-end="date => $emit('range-end', date)"
-                                @close="togglePicker(false)"
-                                @update:focused="focusedDateData = $event" />
                         </div>
-                        <div v-else>
-                            <o-datepicker-month
-                                v-model="computedValue"
-                                :month-names="newMonthNames"
-                                :min-date="minDate"
-                                :max-date="maxDate"
-                                :focused="focusedDateData"
-                                :disabled="disabled"
-                                :unselectable-dates="unselectableDates"
-                                :unselectable-days-of-week="unselectableDaysOfWeek"
-                                :selectable-dates="selectableDates"
-                                :events="events"
-                                :indicators="indicators"
-                                :date-creator="dateCreator"
-                                :range="range"
-                                :multiple="multiple"
-                                @range-start="date => $emit('range-start', date)"
-                                @range-end="date => $emit('range-end', date)"
-                                @close="togglePicker(false)"
-                                @change-focus="changeFocus"
-                                @update:focused="focusedDateData = $event" />
-                        </div>
-                    </div>
+                    </header>
+                    <o-datepicker-table
+                        v-model="computedValue"
+                        :day-names="newDayNames"
+                        :month-names="newMonthNames"
+                        :first-day-of-week="firstDayOfWeek"
+                        :rules-for-first-week="rulesForFirstWeek"
+                        :min-date="minDate"
+                        :max-date="maxDate"
+                        :focused="focusedDateData"
+                        :disabled="disabled"
+                        :unselectable-dates="unselectableDates"
+                        :unselectable-days-of-week="unselectableDaysOfWeek"
+                        :selectable-dates="selectableDates"
+                        :events="events"
+                        :indicators="indicators"
+                        :date-creator="dateCreator"
+                        :type-month="isTypeMonth"
+                        :nearby-month-days="nearbyMonthDays"
+                        :nearby-selectable-month-days="nearbySelectableMonthDays"
+                        :show-week-number="showWeekNumber"
+                        :week-number-clickable="weekNumberClickable"
+                        :range="range"
+                        :multiple="multiple"
+                        @range-start="date => $emit('range-start', date)"
+                        @range-end="date => $emit('range-end', date)"
+                        @close="togglePicker(false)"
+                        @update:focused="focusedDateData = $event" />
+                </div>
 
-                    <footer
-                        v-if="$slots.default !== undefined && $slots.default.length"
-                        class="o-dpck__footer">
-                        <slot/>
-                    </footer>
-                </o-dropdown-item>
-            </div>
+                <footer
+                    v-if="$slots.default !== undefined && $slots.default.length"
+                    class="o-dpck__footer">
+                    <slot/>
+                </footer>
+            </o-dropdown-item>
         </o-dropdown>
 
         <o-input
@@ -217,7 +191,6 @@ import Select from '../select/Select'
 import Icon from '../icon/Icon'
 
 import DatepickerTable from './DatepickerTable'
-import DatepickerMonth from './DatepickerMonth'
 
 const defaultDateFormatter = (date, vm) => {
     const targetDates = Array.isArray(date) ? date : [date]
@@ -275,7 +248,6 @@ export default {
     name: 'ODatepicker',
     components: {
         [DatepickerTable.name]: DatepickerTable,
-        [DatepickerMonth.name]: DatepickerMonth,
         [Input.name]: Input,
         [Field.name]: Field,
         [Select.name]: Select,
