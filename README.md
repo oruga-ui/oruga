@@ -37,9 +37,9 @@
 
 ## Documentation
 
-The documentation is in the docs directory, it serves as the demo as well.
-
 Browse [online documentation here](https://oruga.io/).
+
+The documentation is in the docs directory, it serves as the demo as well.
 
 ## Quick start
 
@@ -63,17 +63,18 @@ npm install @oruga-ui/oruga-next
 
 #### Vue 2
 
-Bundle
-```javascript
+Import the full bundle
+
+```js
 import Vue from 'vue';
 import Oruga from '@oruga-ui/oruga';
 import '@oruga-ui/oruga/dist/oruga.css';
 
 Vue.use(Oruga);
 ```
-or Individual Components (tree shaking)
-```javascript
+or individual components (tree shaking)
 
+```js
 import Vue from 'vue';
 import { Field, Input } from '@oruga-ui/oruga';
 import '@oruga-ui/oruga/dist/oruga.css';
@@ -84,17 +85,18 @@ Vue.use(Input);
 
 #### Vue 3
 
- Bundle
-```javascript
+Import the full bundle
+
+```js
 import { createApp } from 'vue'
 import Oruga from '@oruga-ui/oruga-next';
 import '@oruga-ui/oruga-next/dist/oruga.css';
 
 createApp(...).use(Oruga);
 ```
-or Individual Components (tree shaking)
-```javascript
+or individual components (tree shaking)
 
+```js
 import Vue from 'vue'
 import { Field, Input } from '@oruga-ui/oruga'
 import '@oruga-ui/oruga/dist/oruga.css'
@@ -106,19 +108,74 @@ createApp(...)
 
 ### 3 Customization
 
-Browse [customization section on the documentation](https://oruga.io/documentation).
+Please [read carefully the "customization" section](https://oruga.io/documentation) in Oruga documentation.
+
+If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
+
+### Using Oruga with Nuxt
+
+Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
+
+Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file.
+
+```js
+module.exports = {
+  modules: ['@oruga-ui/oruga/nuxt']
+}
+```
+
+You can also extend and/or override classes in this section (see how to [add new classes](#adding-new-classes) or [override existing classes](#overriding-classes) in Oruga)
+
+```js
+module.exports = {
+  modules: [
+    [
+      '@oruga-ui/oruga/nuxt',
+      {
+        button: {
+          override: true
+        }
+      }
+    ]
+  ]
+}
+```
+
+Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
+
+```js
+import Vue from 'vue'
+import Oruga from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
+
+Vue.use(Oruga)
+```
+
+To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
+
+```js
+plugins: [{ src: '~plugins/oruga.js' }]
+```
+
+To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
+
+Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui/demo-nuxtjs).
 
 ## Browser support
 
-Recent versions of Firefox, Chrome, Edge, Opera, Safari and IE11.
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Contributing
 
-Please see the [contributing guidelines](./.github/CONTRIBUTING.md)
+Please see the [contributing guidelines](./.github/CONTRIBUTING.md).
 
 ## Versioning
 
-While it's still in beta, version will follow **v0.Y.Z**, where:
+Oruga uses [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) for package versions.
+
+While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
 
 * **Y**: Major (breaking changes)
 * **Z**: Minor or patch

@@ -358,7 +358,7 @@ export default {
         },
 
         /**
-         * Select first option if "keep-first
+         * Select first option if "keep-first"
          */
         data(value) {
             // Keep first option always pre-selected
@@ -446,7 +446,13 @@ export default {
          * Close dropdown if clicked outside.
          */
         clickedOutside(event) {
-            if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) this.isActive = false
+            if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) {
+                if (this.keepFirst && this.hovered) {
+                    this.setSelected(this.hovered, true)
+                } else {
+                    this.isActive = false
+                }
+            }
         },
 
         /**
