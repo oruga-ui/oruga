@@ -173,22 +173,6 @@ title: Button
 | disabled   | Button will be disabled                  | boolean        | -                                                                               |                                                 |
 | iconBoth   |                                          | boolean        | -                                                                               |                                                 |
 
-## Class props
-
-| Prop name      | Description | Type   | Values | Default |
-| -------------- | ----------- | ------ | ------ | ------- |
-| rootClass      |             | string | -      |         |
-| outlinedClass  |             | string | -      |         |
-| invertedClass  |             | string | -      |         |
-| expandedClass  |             | string | -      |         |
-| roundedClass   |             | string | -      |         |
-| disabledClass  |             | string | -      |         |
-| iconClass      |             | string | -      |         |
-| iconLeftClass  |             | string | -      |         |
-| iconRightClass |             | string | -      |         |
-| sizeClass      |             | string | -      |         |
-| variantClass   |             | string | -      |         |
-
 ## Slots
 
 | Name    | Description | Bindings |

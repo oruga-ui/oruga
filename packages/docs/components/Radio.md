@@ -113,17 +113,6 @@ title: Radio
 | name        | Same as native name            | string                         | -                                                                               |         |
 | size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
 
-## Class props
-
-| Prop name     | Description | Type   | Values | Default |
-| ------------- | ----------- | ------ | ------ | ------- |
-| rootClass     |             | string | -      |         |
-| disabledClass |             | string | -      |         |
-| checkClass    |             | string | -      |         |
-| labelClass    |             | string | -      |         |
-| sizeClass     |             | string | -      |         |
-| variantClass  |             | string | -      |         |
-
 ## Events
 
 | Event name | Type      | Description |

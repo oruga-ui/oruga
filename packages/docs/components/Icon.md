@@ -256,17 +256,6 @@ Vue.use(Oruga, {
 | rotation   | Rotation 0-360                     | number\|string | -                                                                                                                                  |         |
 | both       |                                    | boolean        | -                                                                                                                                  |         |
 
-## Class props
-
-| Prop name      | Description                                                                                                          | Type   | Values | Default |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------ | ------ | ------- |
-| customClass    | Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes | string | -      |         |
-| rootClass      |                                                                                                                      | string | -      |         |
-| clickableClass |                                                                                                                      | string | -      |         |
-| spinClass      |                                                                                                                      | string | -      |         |
-| sizeClass      |                                                                                                                      | string | -      |         |
-| variantClass   |                                                                                                                      | string | -      |         |
-
 ## Style
 
 | CSS Variable               | SASS Variable        | Default |

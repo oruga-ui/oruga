@@ -259,29 +259,6 @@ title: Steps
 | ariaNextLabel     |                                                                                                                               | string         | -                                                                               |                                                           |
 | ariaPreviousLabel |                                                                                                                               | string         | -                                                                               |                                                           |
 
-## Class props
-
-| Prop name                     | Description | Type   | Values | Default |
-| ----------------------------- | ----------- | ------ | ------ | ------- |
-| rootClass                     |             | string | -      |         |
-| sizeClass                     |             | string | -      |         |
-| verticalClass                 |             | string | -      |         |
-| positionClass                 |             | string | -      |         |
-| stepsClass                    |             | string | -      |         |
-| variantClass                  |             | string | -      |         |
-| animatedClass                 |             | string | -      |         |
-| stepMarkerRoundedClass        |             | string | -      |         |
-| stepDividerClass              |             | string | -      |         |
-| stepMarkerClass               |             | string | -      |         |
-| stepContentClass              |             | string | -      |         |
-| stepContentTransitioningClass |             | string | -      |         |
-| stepNavigationClass           |             | string | -      |         |
-| stepDetailsClass              |             | string | -      |         |
-| stepTitleClass                |             | string | -      |         |
-| stepLinkClass                 |             | string | -      |         |
-| stepLinkClickableClass        |             | string | -      |         |
-| stepLinkLabelPositionClass    |             | string | -      |         |
-
 ### Events
 
 | Event name | Type      | Description |
@@ -311,16 +288,6 @@ title: Steps
 | step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
 | variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
 | clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
-
-## Class props
-
-| Prop name         | Description              | Type                  | Values | Default |
-| ----------------- | ------------------------ | --------------------- | ------ | ------- |
-| headerClass       | Header class of the item | string\|array\|object | -      |         |
-| itemClass         |                          | string                | -      |         |
-| variantClass      |                          | string                | -      |         |
-| itemActiveClass   |                          | string                | -      |         |
-| itemPreviousClass |                          | string                | -      |         |
 
 ### Slots
 

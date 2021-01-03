@@ -1416,44 +1416,6 @@ title: Table
 | stickyCheckbox        | Make the checkbox column sticky when checkable                                                                                          | boolean        | -                          | false                                                        |
 | paginationRounded     | Rounded pagination if paginated                                                                                                         | boolean        | -                          |                                                              |
 
-## Class props
-
-| Prop name           | Description                            | Type   | Values | Default  |
-| ------------------- | -------------------------------------- | ------ | ------ | -------- |
-| rowClass            | Add a class to row based on the return | func   | -      | () => '' |
-| rootClass           |                                        | string | -      |          |
-| tableClass          |                                        | string | -      |          |
-| wrapperClass        |                                        | string | -      |          |
-| footerClass         |                                        | string | -      |          |
-| emptyClass          |                                        | string | -      |          |
-| detailedClass       |                                        | string | -      |          |
-| borderedClass       |                                        | string | -      |          |
-| stripedClass        |                                        | string | -      |          |
-| narrowClass         |                                        | string | -      |          |
-| hoverableClass      |                                        | string | -      |          |
-| thClass             |                                        | string | -      |          |
-| tdClass             |                                        | string | -      |          |
-| thPositionClass     |                                        | string | -      |          |
-| thStickyClass       |                                        | string | -      |          |
-| thCheckboxClass     |                                        | string | -      |          |
-| thCurrentSortClass  |                                        | string | -      |          |
-| thSortableClass     |                                        | string | -      |          |
-| thUnselectableClass |                                        | string | -      |          |
-| thSortIconClass     |                                        | string | -      |          |
-| thDetailedClass     |                                        | string | -      |          |
-| tdPositionClass     |                                        | string | -      |          |
-| tdStickyClass       |                                        | string | -      |          |
-| tdCheckboxCellClass |                                        | string | -      |          |
-| tdChevronClass      |                                        | string | -      |          |
-| tdSelectedClass     |                                        | string | -      |          |
-| subheadingClass     |                                        | string | -      |          |
-| stickyHeaderClass   |                                        | string | -      |          |
-| mobileCardsClass    |                                        | string | -      |          |
-| cardsClass          |                                        | string | -      |          |
-| scrollableClass     |                                        | string | -      |          |
-| mobileSortClass     |                                        | string | -      |          |
-| paginationClass     |                                        | string | -      |          |
-
 ## Events
 
 | Event name            | Type      | Description |

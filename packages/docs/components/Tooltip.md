@@ -185,19 +185,6 @@ title: Tooltip
 | appendToBody | Append tooltip content to body                                                                                            | boolean        | -                                                                               |                                                       |
 | variant      | Color of the tooltip                                                                                                      | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                       |
 
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| rootClass       |             | string | -      |         |
-| contentClass    |             | string | -      |         |
-| triggerClass    |             | string | -      |         |
-| multilineClass  |             | string | -      |         |
-| alwaysClass     |             | string | -      |         |
-| variantClass    |             | string | -      |         |
-| arrowClass      |             | string | -      |         |
-| arrowOrderClass |             | string | -      |         |
-
 ## Slots
 
 | Name    | Description | Bindings                             |

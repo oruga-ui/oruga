@@ -198,23 +198,6 @@ title: Switch
 | rounded        | Rounded style                                      | boolean                 | -                                                                               | true    |
 | leftLabel      | Show label on left                                 | boolean                 | -                                                                               | false   |
 
-## Class props
-
-| Prop name            | Description | Type   | Values | Default |
-| -------------------- | ----------- | ------ | ------ | ------- |
-| rootClass            |             | string | -      |         |
-| disabledClass        |             | string | -      |         |
-| checkClass           |             | string | -      |         |
-| checkCheckedClass    |             | string | -      |         |
-| checkSwitchClass     |             | string | -      |         |
-| roundedClass         |             | string | -      |         |
-| labelClass           |             | string | -      |         |
-| sizeClass            |             | string | -      |         |
-| variantClass         |             | string | -      |         |
-| elementsWrapperClass |             | string | -      |         |
-| passiveVariantClass  |             | string | -      |         |
-| leftLabelClass       |             | string | -      |         |
-
 ## Events
 
 | Event name | Type      | Description |

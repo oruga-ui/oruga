@@ -160,15 +160,6 @@ title: Loading
 | iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
 | iconSize     |                                                                                                                         | string                    | -      | 'medium'                                            |
 
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| backgroundClass   |             | string | -      |         |
-| iconClass         |             | string | -      |         |
-| fullPageIconClass |             | string | -      |         |
-
 ## Events
 
 | Event name       | Type      | Description |

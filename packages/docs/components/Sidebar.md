@@ -144,27 +144,6 @@ title: Sidebar
 | onCancel           | Callback on cancel                                                                                                                              | func           | -                                                                               | () => {}                                               |
 | scroll             |                                                                                                                                                 | string         | -                                                                               | Config -> <code> 'sidebar.scroll': 'clip'</code>       |
 
-## Class props
-
-| Prop name               | Description | Type   | Values | Default |
-| ----------------------- | ----------- | ------ | ------ | ------- |
-| rootClass               |             | string | -      |         |
-| backgroundClass         |             | string | -      |         |
-| contentClass            |             | string | -      |         |
-| fixedClass              |             | string | -      |         |
-| staticClass             |             | string | -      |         |
-| absoluteClass           |             | string | -      |         |
-| fullheightClass         |             | string | -      |         |
-| fullwidthClass          |             | string | -      |         |
-| rightClass              |             | string | -      |         |
-| reduceClass             |             | string | -      |         |
-| expandOnHoverClass      |             | string | -      |         |
-| expandOnHoverFixedClass |             | string | -      |         |
-| mobileReduceClass       |             | string | -      |         |
-| mobileHideClass         |             | string | -      |         |
-| mobileFullwidthClass    |             | string | -      |         |
-| variantClass            |             | string | -      |         |
-
 ## Events
 
 | Event name  | Type      | Description |

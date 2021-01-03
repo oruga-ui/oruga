@@ -143,23 +143,6 @@ title: Select
 | multiple           |                                                             | boolean                                | -                                                 |                                                          |
 | nativeSize         | Same as native size                                         | string\|number                         | -                                                 |                                                          |
 
-## Class props
-
-| Prop name        | Description | Type   | Values | Default |
-| ---------------- | ----------- | ------ | ------ | ------- |
-| rootClass        |             | string | -      |         |
-| iconsLeftClass   |             | string | -      |         |
-| iconsRightClass  |             | string | -      |         |
-| roundedClass     |             | string | -      |         |
-| multipleClass    |             | string | -      |         |
-| emptyClass       |             | string | -      |         |
-| expandedClass    |             | string | -      |         |
-| iconLeftClass    |             | string | -      |         |
-| iconRightClass   |             | string | -      |         |
-| sizeClass        |             | string | -      |         |
-| variantClass     |             | string | -      |         |
-| placeholderClass |             | string | -      |         |
-
 ## Events
 
 | Event name | Type      | Description |

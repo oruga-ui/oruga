@@ -282,23 +282,6 @@ title: Field
 | addons         | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
 | labelSize      | Vertical size of input, optional                                                                                 | string         | `small`, `medium`, `large`                                                      |         |
 
-## Class props
-
-| Prop name            | Description | Type   | Values | Default |
-| -------------------- | ----------- | ------ | ------ | ------- |
-| rootClass            |             | string | -      |         |
-| horizontalClass      |             | string | -      |         |
-| groupedClass         |             | string | -      |         |
-| groupMultilineClass  |             | string | -      |         |
-| labelClass           |             | string | -      |         |
-| labelSizeClass       |             | string | -      |         |
-| labelHorizontalClass |             | string | -      |         |
-| bodyClass            |             | string | -      |         |
-| bodyHorizontalClass  |             | string | -      |         |
-| addonsClass          |             | string | -      |         |
-| messageClass         |             | string | -      |         |
-| variantClass         |             | string | -      |         |
-
 ## Slots
 
 | Name    | Description | Bindings |

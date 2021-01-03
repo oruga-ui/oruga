@@ -149,22 +149,6 @@ title: Input
 | iconRightClickable | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
 | iconRightType      | Variant of right icon                                       | string         | -                                                 |                                                    |
 
-## Class props
-
-| Prop name            | Description | Type   | Values | Default |
-| -------------------- | ----------- | ------ | ------ | ------- |
-| rootClass            |             | string | -      |         |
-| controlExpandedClass |             | string | -      |         |
-| iconsLeftClass       |             | string | -      |         |
-| iconsRightClass      |             | string | -      |         |
-| inputClass           |             | string | -      |         |
-| roundedClass         |             | string | -      |         |
-| iconLeftClass        |             | string | -      |         |
-| iconRightClass       |             | string | -      |         |
-| counterClass         |             | string | -      |         |
-| sizeClass            |             | string | -      |         |
-| variantClass         |             | string | -      |         |
-
 ## Events
 
 | Event name | Type      | Description |

@@ -64,17 +64,6 @@ title: Skeleton
 | position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | ''      |
 | size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
 
-## Class props
-
-| Prop name        | Description | Type   | Values | Default |
-| ---------------- | ----------- | ------ | ------ | ------- |
-| rootClass        |             | string | -      |         |
-| animationClass   |             | string | -      |         |
-| positionClass    |             | string | -      |         |
-| itemClass        |             | string | -      |         |
-| itemRoundedClass |             | string | -      |         |
-| sizeClass        |             | string | -      |         |
-
 ## Style
 
 | CSS Variable                   | SASS Variable            | Default                                                                                     |

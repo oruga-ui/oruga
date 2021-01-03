@@ -190,21 +190,6 @@ title: Slider
 | locale            |                                                  | string\|array | -                                                                               | Config -> <code> 'locale':undefined</code>          |
 | tooltipAlways     | Tooltip displays always                          | boolean       | -                                                                               | false                                               |
 
-## Class props
-
-| Prop name              | Description | Type   | Values | Default |
-| ---------------------- | ----------- | ------ | ------ | ------- |
-| rootClass              |             | string | -      |         |
-| trackClass             |             | string | -      |         |
-| fillClass              |             | string | -      |         |
-| roundedClass           |             | string | -      |         |
-| draggingClass          |             | string | -      |         |
-| disabledClass          |             | string | -      |         |
-| biggerSliderFocusClass |             | string | -      |         |
-| thumbWrapperClass      |             | string | -      |         |
-| thumbClass             |             | string | -      |         |
-| thumbDraggingClass     |             | string | -      |         |
-
 ### Events
 
 | Event name | Type | Description |
@@ -227,14 +212,6 @@ title: Slider
 | Prop name | Description          | Type   | Values | Default |
 | --------- | -------------------- | ------ | ------ | ------- |
 | value     | Value of single tick | number | -      | 0       |
-
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| tickClass       |             | string | -      |         |
-| tickHiddenClass |             | string | -      |         |
-| tickLabelClass  |             | string | -      |         |
 
 ### Slots
 

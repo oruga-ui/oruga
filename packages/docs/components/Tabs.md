@@ -262,28 +262,6 @@ title: Tabs
 | expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
 | multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
 
-## Class props
-
-| Prop name                  | Description | Type   | Values | Default |
-| -------------------------- | ----------- | ------ | ------ | ------- |
-| rootClass                  |             | string | -      |         |
-| positionWrapperClass       |             | string | -      |         |
-| expandedWrapperClass       |             | string | -      |         |
-| verticalWrapperClass       |             | string | -      |         |
-| multilineWrapperClass      |             | string | -      |         |
-| tabsClass                  |             | string | -      |         |
-| sizeClass                  |             | string | -      |         |
-| positionClass              |             | string | -      |         |
-| contentClass               |             | string | -      |         |
-| transitioningClass         |             | string | -      |         |
-| tabItemHeaderClass         |             | string | -      |         |
-| tabItemHeaderTypeClass     |             | string | -      |         |
-| tabItemHeaderIconClass     |             | string | -      |         |
-| tabItemHeaderTextClass     |             | string | -      |         |
-| tabItemHeaderActiveClass   |             | string | -      |         |
-| tabItemHeaderDisabledClass |             | string | -      |         |
-| tabItemWrapperClass        |             | string | -      |         |
-
 ### Events
 
 | Event name | Type      | Description |
@@ -310,17 +288,6 @@ title: Tabs
 | visible   | Show/hide item                                               | boolean        | -      | true    |
 | value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |         |
 | disabled  | Item will be disabled                                        | boolean        | -      |         |
-
-## Class props
-
-| Prop name               | Description              | Type                  | Values | Default |
-| ----------------------- | ------------------------ | --------------------- | ------ | ------- |
-| headerClass             | Header class of the item | string\|array\|object | -      |         |
-| itemClass               |                          | string                | -      |         |
-| itemHeaderClass         |                          | string                | -      |         |
-| itemHeaderActiveClass   |                          | string                | -      |         |
-| itemHeaderDisabledClass |                          | string                | -      |         |
-| itemHeaderTypeClass     |                          | string                | -      |         |
 
 ### Slots
 

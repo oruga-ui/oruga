@@ -360,18 +360,6 @@ title: Autocomplete
 | confirmKeys         | Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) | array          | -                                                 | ['Tab', 'Enter']                                         |
 | inputClasses        | Classes to apply on internal input (@see o-input style docs)                                                                                           | object         | -                                                 |                                                          |
 
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| menuClass         |             | string | -      |         |
-| expandedClass     |             | string | -      |         |
-| menuPositionClass |             | string | -      |         |
-| itemClass         |             | string | -      |         |
-| itemHoverClass    |             | string | -      |         |
-| itemDisabledClass |             | string | -      |         |
-
 ## Events
 
 | Event name       | Type      | Description |

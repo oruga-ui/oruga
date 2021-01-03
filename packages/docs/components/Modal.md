@@ -242,16 +242,6 @@ title: Modal
 | closeIcon          | Icon name                                                                                                                                                              | string         | -                                  | Config -> <code> 'close.icon': 'times'</code>         |
 | closeIconSize      |                                                                                                                                                                        | string         | -                                  | 'medium'                                              |
 
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| rootClass       |             | string | -      |         |
-| backgroundClass |             | string | -      |         |
-| contentClass    |             | string | -      |         |
-| closeClass      |             | string | -      |         |
-| fullScreenClass |             | string | -      |         |
-
 ## Events
 
 | Event name    | Type      | Description |

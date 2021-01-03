@@ -116,17 +116,6 @@ title: Upload
 | variant            | Color of the control, optional                                        | string              | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                    |
 | native             | Replace last chosen files every time (like native file input element) | boolean             | -                                                                               | false                                              |
 
-## Class props
-
-| Prop name      | Description | Type   | Values | Default |
-| -------------- | ----------- | ------ | ------ | ------- |
-| rootClass      |             | string | -      |         |
-| draggableClass |             | string | -      |         |
-| variantClass   |             | string | -      |         |
-| expandedClass  |             | string | -      |         |
-| disabledClass  |             | string | -      |         |
-| hoveredClass   |             | string | -      |         |
-
 ## Events
 
 | Event name | Type      | Description |

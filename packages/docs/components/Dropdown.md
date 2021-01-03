@@ -228,20 +228,6 @@ title: Dropdown
 | appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                      |
 | appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                      |
 
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| rootClass       |             | string | -      |         |
-| triggerClass    |             | string | -      |         |
-| backgroundClass |             | string | -      |         |
-| menuClass       |             | string | -      |         |
-| disabledClass   |             | string | -      |         |
-| activeClass     |             | string | -      |         |
-| inlineClass     |             | string | -      |         |
-| mobileClass     |             | string | -      |         |
-| expandedClass   |             | string | -      |         |
-
 ### Events
 
 | Event name    | Type      | Description |
@@ -270,14 +256,6 @@ title: Dropdown
 | custom    | Item is not a clickable item                          | boolean                                | -      |         |
 | tabindex  |                                                       | number\|string                         | -      | 0       |
 | ariaRole  |                                                       | string                                 | -      | ''      |
-
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| itemClass         |             | string | -      |         |
-| itemActiveClass   |             | string | -      |         |
-| itemDisabledClass |             | string | -      |         |
 
 ### Events
 

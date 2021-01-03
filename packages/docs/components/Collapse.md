@@ -137,14 +137,6 @@ title: Collapse
 | ariaId    |                                                                                                                        | string  | -               | ''                                                   |
 | position  | Trigger position                                                                                                       | string  | `top`, `bottom` | 'top'                                                |
 
-## Class props
-
-| Prop name    | Description | Type   | Values | Default |
-| ------------ | ----------- | ------ | ------ | ------- |
-| rootClass    |             | string | -      |         |
-| triggerClass |             | string | -      |         |
-| contentClass |             | string | -      |         |
-
 ## Events
 
 | Event name  | Type      | Description |

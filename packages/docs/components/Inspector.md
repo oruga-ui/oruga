@@ -1,0 +1,7 @@
+---
+title: Inspector
+---
+
+# Inspector
+
+---

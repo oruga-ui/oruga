@@ -44,6 +44,7 @@ ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 ${docsBlocks ? '---\n' + docsBlocks.join('\n---\n') : ''}
 ${renderedUsage.props}
+${tmplClassProps(config, displayName)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
@@ -57,15 +58,25 @@ ${style ? renderStyleDocs(config, style[0].description) : ''}
 | Prop name     | Description | Type      | Values      | Default     |
 | ------------- |-------------| --------- | ----------- | ----------- |
 ${tmplProps(props)}
-
-## Class props
-| Prop name     | Description | Type      | Values      | Default     |
-| ------------- |-------------| --------- | ----------- | ----------- |
-${tmplProps(props, true)}
 `
     }
   }
 };
+
+function tmplClassProps(config, name) {
+    try {
+        const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
+        return `
+## Class props
+<br />
+${fs.readFileSync(inspectorVueFile, 'utf8')}
+<br />
+<br />
+`
+    } catch (err) {
+        return ''
+    }
+}
 
 function tmplProps(props, parseClasses=false) {
   let ret = ''

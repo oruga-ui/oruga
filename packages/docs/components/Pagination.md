@@ -235,24 +235,6 @@ title: Pagination
 | ariaPageLabel     |                                                                                                               | string         | -                                                 |                                                                |
 | ariaCurrentLabel  |                                                                                                               | string         | -                                                 |                                                                |
 
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| prevBtnClass      |             | string | -      |         |
-| nextBtnClass      |             | string | -      |         |
-| listClass         |             | string | -      |         |
-| linkClass         |             | string | -      |         |
-| linkCurrentClass  |             | string | -      |         |
-| ellipsisClass     |             | string | -      |         |
-| infoClass         |             | string | -      |         |
-| orderClass        |             | string | -      |         |
-| simpleClass       |             | string | -      |         |
-| roundedClass      |             | string | -      |         |
-| linkDisabledClass |             | string | -      |         |
-| sizeClass         |             | string | -      |         |
-
 ## Events
 
 | Event name     | Type      | Description |
