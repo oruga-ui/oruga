@@ -5,12 +5,11 @@
             <th>Description</th>
             <th>Inspect</th>
         </tr>
-        <tr v-for="data of inspectData" :key="data.class">
+        <tr v-for="(data, index) of inspectData" :key="data.class" :class="{ inspector__highlight: index === selectedElementIndex }">
             <td>{{data.class}}</td>
             <td>{{data.description}}</td>
             <td>
-              <input type="radio" value="Inspect" name="inspector" @click="inspectClass(data.class, data.action)">
-              <label for="inspector">Inspect</label>
+              <button class="inspector__btn" type="button" @click="inspectClass(index, data)">Inspect</button>
             </td>
         </tr>
     </table>
@@ -18,31 +17,33 @@
 
 <script>
 export default {
-  props: {
-    inspectData: Array,
-  },
-  methods: {
-    inspectClass(className, action) {
-      this.$root.$emit('inspect-class', className, action)
+    data () {
+        return {
+            selectedElementIndex: Number
+        }
+    },
+    props: {
+        inspectData: Array,
+    },
+    methods: {
+        inspectClass(index, selectedData) {
+            this.selectedElementIndex = index
+            this.$root.$emit('inspect-class', selectedData.class, selectedData.action)
+        }
     }
-  }
 }
 </script>
 
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+<style scoped>
+.inspector__btn {
+    cursor: pointer;
+    background: red!important;
+    color: white!important;
+    font-weight: bold!important;
 }
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
+.inspector__highlight {
+    background: red!important;
+    color: white!important;
+    font-weight: bold!important;
 }
 </style>

@@ -173,13 +173,13 @@ export default {
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        rootClass: String | Function,
-        menuClass: String | Function,
-        expandedClass: String | Function,
-        menuPositionClass: String | Function,
-        itemClass: String | Function,
-        itemHoverClass: String | Function,
-        itemGroupTitleClass: String | Function,
+        rootClass: [String, Function],
+        menuClass: [String, Function],
+        expandedClass: [String, Function],
+        menuPositionClass: [String, Function],
+        itemClass: [String, Function],
+        itemHoverClass: [String, Function],
+        itemGroupTitleClass: [String, Function],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },

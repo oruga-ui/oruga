@@ -124,15 +124,15 @@ export default {
         disabled: Boolean,
         /**  @ignore */
         iconBoth: Boolean, // This is used internally
-        rootClass: String | Function,
-        outlinedClass: String | Function,
-        invertedClass: String | Function,
-        expandedClass: String | Function,
-        roundedClass: String | Function,
-        disabledClass: String | Function,
-        iconClass: String | Function,
-        sizeClass: String | Function,
-        variantClass: String | Function
+        rootClass: [String, Function],
+        outlinedClass: [String, Function],
+        invertedClass: [String, Function],
+        expandedClass: [String, Function],
+        roundedClass: [String, Function],
+        disabledClass: [String, Function],
+        iconClass: [String, Function],
+        sizeClass: [String, Function],
+        variantClass: [String, Function]
     },
     computed: {
         rootClasses() {

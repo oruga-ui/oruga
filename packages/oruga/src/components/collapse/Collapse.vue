@@ -48,9 +48,9 @@ export default {
                 ].indexOf(value) > -1
             }
         },
-        rootClass: String,
-        triggerClass: String,
-        contentClass: String
+        rootClass: [String, Function],
+        triggerClass: [String, Function],
+        contentClass: [String, Function]
     },
     data() {
         return {
