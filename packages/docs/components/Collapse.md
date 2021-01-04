@@ -53,7 +53,7 @@ title: Collapse
           {{ collapse.title }}
         </p>
         <a class="card-header-icon">
-          <o-icon :icon="props.open ? 'caret-down' : 'caret-up'"> </o-icon>
+          <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
         </a>
       </div>
       <div class="card-content">
@@ -150,7 +150,7 @@ title: Collapse
               Collapse Title
             </p>
             <a class="card-header-icon">
-              <o-icon :icon="props.open ? 'caret-down' : 'caret-up'"> </o-icon>
+              <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
             </a>
           </div>
           <div class="card-content">
