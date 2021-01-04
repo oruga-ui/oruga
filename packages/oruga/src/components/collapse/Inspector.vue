@@ -6,6 +6,7 @@
           animation="slide"
           v-bind="s"
           :open="true"
+          style="border: 1px solid #dfe2e5"
         >
           <div
             slot="trigger"
@@ -17,7 +18,7 @@
               Collapse Title
             </p>
             <a class="card-header-icon">
-              <o-icon :icon="props.open ? 'caret-down' : 'caret-up'"> </o-icon>
+              <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
             </a>
           </div>
           <div class="card-content">

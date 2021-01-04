@@ -139,6 +139,7 @@ title: Collapse
           animation="slide"
           v-bind="s"
           :open="true"
+          style="border: 1px solid #dfe2e5"
         >
           <div
             slot="trigger"
