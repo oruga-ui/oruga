@@ -173,13 +173,13 @@ export default {
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        rootClass: String,
-        menuClass: String,
-        expandedClass: String,
-        menuPositionClass: String,
-        itemClass: String,
-        itemHoverClass: String,
-        itemDisabledClass: String,
+        rootClass: String | Function,
+        menuClass: String | Function,
+        expandedClass: String | Function,
+        menuPositionClass: String | Function,
+        itemClass: String | Function,
+        itemHoverClass: String | Function,
+        itemGroupTitleClass: String | Function,
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },
@@ -216,7 +216,7 @@ export default {
         itemEmptyClasses() {
             return [
                 ...this.itemClasses,
-                this.computedClass('itemDisabledClass', 'o-acp__item--disabled')
+                this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')
             ]
         },
         inputBind() {

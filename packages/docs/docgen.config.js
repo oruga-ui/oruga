@@ -43,8 +43,8 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 ${docsBlocks ? '---\n' + docsBlocks.join('\n---\n') : ''}
-${renderedUsage.props}
 ${tmplClassProps(config, displayName.toLowerCase())}
+${renderedUsage.props}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
