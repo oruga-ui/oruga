@@ -35,6 +35,6 @@ export default {
 
 <style>
 .odocs-underline-element {
-    border: 1px solid red!important;
+    border: 2px solid red!important;
 }
 </style>
