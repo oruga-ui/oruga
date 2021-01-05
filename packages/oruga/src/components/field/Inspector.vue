@@ -39,7 +39,7 @@ export default {
                     class: "groupMultilineClass",
                     description: "",
                     action: (cmp) => {
-                        cmp.data.grouped = true;
+                        cmp.data.groupMultiline = true;
                     }
                 },
                 {
@@ -48,7 +48,10 @@ export default {
                 },
                 {
                     class: "labelSizeClass",
-                    description: ""
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.labelSize = "large";
+                    }
                 },
                 {
                     class: "labelHorizontalClass",

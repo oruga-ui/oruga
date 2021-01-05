@@ -243,28 +243,28 @@ export default {
                 {
                     class: "rootClass",
                     description: "",
-                    action: (cmp) => {
+                    action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "backgroundClass",
                     description: "",
-                    action: (cmp) => {
+                    action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "contentClass",
                     description: "",
-                    action: (cmp) => {
+                    action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "closeClass",
                     description: "",
-                    action: (cmp) => {
+                    action: () => {
                         this.isImageModalActive = true;
                     }
                 },
@@ -273,6 +273,7 @@ export default {
                     description: "",
                     action: (cmp) => {
                         this.isImageModalActive = true;
+                        cmp.data.fullScreen = true;
                     }
                 }
             ],
