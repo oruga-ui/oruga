@@ -71,10 +71,10 @@ export default {
             type: String,
             default: 'medium'
         },
-        rootClass: String,
-        backgroundClass: String,
-        iconClass: String,
-        fullPageIconClass: String,
+        rootClass: [String, Function],
+        backgroundClass: [String, Function],
+        iconClass: [String, Function],
+        fullPageIconClass: [String, Function],
     },
     data() {
         return {
