@@ -3,7 +3,7 @@
         <tr>
             <th>Class</th>
             <th>Description</th>
-            <th>Inspect</th>
+            <th></th>
         </tr>
         <tr v-for="(data, index) of inspectData" :key="data.class" :class="{ inspector__highlight: index === selectedElementIndex }">
             <td>{{data.class}}</td>
@@ -40,10 +40,13 @@ export default {
     background: red!important;
     color: white!important;
     font-weight: bold!important;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0.3rem;
+    padding: 0.4rem;
 }
 .inspector__highlight {
     background: red!important;
     color: white!important;
-    font-weight: bold!important;
 }
 </style>
