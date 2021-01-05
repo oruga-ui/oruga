@@ -214,7 +214,7 @@ title: Dropdown
     <doc-wrapper>
         <template v-slot:default="s">
             <o-dropdown v-bind="s" aria-role="list">
-                <o-button variant="primary" slot="trigger" slot-scope="{ active }">
+                <o-button variant="primary" slot="trigger" slot-scope="{ active }" ref="dropdownbtn">
                     <span>Click me!</span>
                     <o-icon :icon="active ? 'caret-up' : 'caret-down'"></o-icon>
                 </o-button>
@@ -243,31 +243,63 @@ export default {
                 },
                 {
                     class: "mobileBackgroundClass",
-                    description: ""
+                    description: "",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
                 },
                 {
                     class: "menuClass",
-                    description: ""
+                    description: "",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
                 },
                 {
                     class: "disabledClass",
-                    description: ""
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.disabled = true;
+                    }
                 },
                 {
                     class: "activeClass",
-                    description: ""
+                    description: "",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
                 },
                 {
                     class: "inlineClass",
-                    description: ""
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.inline = true;
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
                 },
                 {
                     class: "mobileClass",
-                    description: ""
+                    description: "",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
                 },
                 {
                     class: "expandedClass",
-                    description: ""
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    }
                 }
             ],
         };
