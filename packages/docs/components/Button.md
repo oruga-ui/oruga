@@ -248,20 +248,20 @@ export default {
 
 | Prop name  | Description                              | Type           | Values                                                                          | Default                                         |
 | ---------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------- |
-| variant    | Color of the control, optional           | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                 |
-| size       | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                                                 |
-| label      | Button label, optional when default slot | string         | -                                                                               |                                                 |
-| iconPack   | Icon pack to use                         | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                 |
-| iconLeft   | Icon name to show on the left            | string         | -                                                                               |                                                 |
-| iconRight  | Icon name to show on the right           | string         | -                                                                               |                                                 |
-| rounded    | Rounded style                            | boolean        | -                                                                               | Config -> <code> 'button.rounded': false</code> |
-| outlined   | Outlined style                           | boolean        | -                                                                               |                                                 |
-| expanded   | Button will be expanded (full-width)     | boolean        | -                                                                               |                                                 |
-| inverted   |                                          | boolean        | -                                                                               |                                                 |
-| nativeType | Button type, like native                 | string         | -                                                                               | 'button'                                        |
-| tag        | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                        |
 | disabled   | Button will be disabled                  | boolean        | -                                                                               |                                                 |
+| expanded   | Button will be expanded (full-width)     | boolean        | -                                                                               |                                                 |
 | iconBoth   |                                          | boolean        | -                                                                               |                                                 |
+| iconLeft   | Icon name to show on the left            | string         | -                                                                               |                                                 |
+| iconPack   | Icon pack to use                         | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                 |
+| iconRight  | Icon name to show on the right           | string         | -                                                                               |                                                 |
+| inverted   |                                          | boolean        | -                                                                               |                                                 |
+| label      | Button label, optional when default slot | string         | -                                                                               |                                                 |
+| nativeType | Button type, like native                 | string         | -                                                                               | 'button'                                        |
+| outlined   | Outlined style                           | boolean        | -                                                                               |                                                 |
+| rounded    | Rounded style                            | boolean        | -                                                                               | Config -> <code> 'button.rounded': false</code> |
+| size       | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                                                 |
+| tag        | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                        |
+| variant    | Color of the control, optional           | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                 |
 
 ## Slots
 

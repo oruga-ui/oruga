@@ -5,7 +5,7 @@
             <th>Description</th>
             <th></th>
         </tr>
-        <tr v-for="(data, index) of inspectData" :key="data.class" :class="{ inspector__highlight: index === selectedElementIndex }">
+        <tr v-for="(data, index) of classesToInspect" :key="data.class" :class="{ inspector__highlight: index === selectedElementIndex }">
             <td>{{data.class}}</td>
             <td>{{data.description}}</td>
             <td>
@@ -20,6 +20,14 @@ export default {
     data () {
         return {
             selectedElementIndex: Number
+        }
+    },
+    computed: {
+        classesToInspect() {
+            this.inspectData.sort(function(propa, propb) {
+                return (propa.class < propb.class) ? -1 : (propa.class > propb.class) ? 1 : 0;
+            });
+            return this.inspectData
         }
     },
     props: {

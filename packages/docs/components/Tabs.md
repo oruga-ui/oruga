@@ -251,16 +251,16 @@ title: Tabs
 
 | Prop name     | Description                                     | Type           | Values                                                                          | Default                                       |
 | ------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------- |
-| v-model       |                                                 | string\|number | -                                                                               |                                               |
-| variant       | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
-| size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
 | animated      | Tab will have an animation                      | boolean        | -                                                                               | Config -> <code> 'tabs.animated': true</code> |
-| vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | false                                         |
-| position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
 | destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | false                                         |
-| type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | 'default'                                     |
 | expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
 | multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
+| position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
+| size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
+| type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | 'default'                                     |
+| v-model       |                                                 | string\|number | -                                                                               |                                               |
+| variant       | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                               |
+| vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | false                                         |
 
 ### Events
 
@@ -282,12 +282,12 @@ title: Tabs
 
 | Prop name | Description                                                  | Type           | Values | Default |
 | --------- | ------------------------------------------------------------ | -------------- | ------ | ------- |
-| label     | Item label                                                   | string         | -      |         |
+| disabled  | Item will be disabled                                        | boolean        | -      |         |
 | icon      | Icon on the left                                             | string         | -      |         |
 | iconPack  | Icon pack                                                    | string         | -      |         |
-| visible   | Show/hide item                                               | boolean        | -      | true    |
+| label     | Item label                                                   | string         | -      |         |
 | value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |         |
-| disabled  | Item will be disabled                                        | boolean        | -      |         |
+| visible   | Show/hide item                                               | boolean        | -      | true    |
 
 ### Slots
 

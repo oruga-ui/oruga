@@ -379,15 +379,15 @@ export default {
 
 | Prop name      | Description                                                                                                      | Type           | Values                                                                          | Default |
 | -------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------- |
-| variant        | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| addons         | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
+| groupMultiline | Allow controls to fill up multiple lines, making it responsive                                                   | boolean        | -                                                                               |         |
+| grouped        | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean        | -                                                                               |         |
+| horizontal     | Group label and control on the same line for horizontal forms                                                    | boolean        | -                                                                               |         |
 | label          | Field label                                                                                                      | string         | -                                                                               |         |
 | labelFor       | Same as native for set on the label                                                                              | string         | -                                                                               |         |
-| message        | Help message text                                                                                                | string         | -                                                                               |         |
-| grouped        | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean        | -                                                                               |         |
-| groupMultiline | Allow controls to fill up multiple lines, making it responsive                                                   | boolean        | -                                                                               |         |
-| horizontal     | Group label and control on the same line for horizontal forms                                                    | boolean        | -                                                                               |         |
-| addons         | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
 | labelSize      | Vertical size of input, optional                                                                                 | string         | `small`, `medium`, `large`                                                      |         |
+| message        | Help message text                                                                                                | string         | -                                                                               |         |
+| variant        | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Slots
 

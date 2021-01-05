@@ -83,10 +83,14 @@ ${fs.readFileSync(inspectorVueFile, 'utf8')}
 function tmplProps(props) {
   let ret = ''
 
+  props.sort(function(propa, propb) {
+    return (propa.name < propb.name) ? -1 : (propa.name > propb.name) ? 1 : 0;
+  });
+
   props.forEach(pr => {
     const p = pr.name
     if (p.endsWith("Class") && !(IGNORE_CLASSES.indexOf(p) >= 0)) {
-        return;
+      return;
     }
     const n = pr.type && pr.type.name ? pr.type.name : ''
     let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''

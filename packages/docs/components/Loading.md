@@ -219,15 +219,15 @@ export default {
 | Prop name    | Description                                                                                                             | Type                      | Values | Default                                             |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | --------------------------------------------------- |
 | active       | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                     |
-| programmatic |                                                                                                                         | boolean                   | -      |                                                     |
-| container    |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
-| fullPage     | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
 | animation    |                                                                                                                         | string                    | -      | Config -> <code> 'loading.animation': 'fade'</code> |
 | canCancel    | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                               |
-| onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
+| container    |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
+| fullPage     | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
 | icon         | Icon name                                                                                                               | string                    | -      | Config -> <code> 'loading.icon': 'spin'</code>      |
-| iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
 | iconSize     |                                                                                                                         | string                    | -      | 'medium'                                            |
+| iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
+| onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
+| programmatic |                                                                                                                         | boolean                   | -      |                                                     |
 
 ## Events
 

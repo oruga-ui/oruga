@@ -196,9 +196,9 @@ export default {
 
 | Prop name | Description                                                                                                            | Type    | Values          | Default                                              |
 | --------- | ---------------------------------------------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------- |
-| open      | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                 |
 | animation | Custom animation (transition name)                                                                                     | string  | -               | Config -> <code> 'collapse.animation': 'fade'</code> |
 | ariaId    |                                                                                                                        | string  | -               | ''                                                   |
+| open      | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                 |
 | position  | Trigger position                                                                                                       | string  | `top`, `bottom` | 'top'                                                |
 
 ## Events

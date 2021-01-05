@@ -56,13 +56,13 @@ title: Skeleton
 | --------- | -------------------------------------------- | -------------- | --------------------------- | ------- |
 | active    | Show or hide loader                          | boolean        | -                           | true    |
 | animated  | Show a loading animation                     | boolean        | -                           | true    |
-| width     | Custom width                                 | number\|string | -                           |         |
-| height    | Custom height                                | number\|string | -                           |         |
 | circle    | Show a circle shape                          | boolean        | -                           |         |
-| rounded   | Rounded style                                | boolean        | -                           | true    |
 | count     | Number of shapes to display                  | number         | -                           | 1       |
+| height    | Custom height                                | number\|string | -                           |         |
 | position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | ''      |
+| rounded   | Rounded style                                | boolean        | -                           | true    |
 | size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
+| width     | Custom width                                 | number\|string | -                           |         |
 
 ## Style
 
