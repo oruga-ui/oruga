@@ -21,7 +21,7 @@
             <div
                 v-if="isMobileModal"
                 v-show="isActive"
-                :class="backgroundClasses"
+                :class="mobileBackgroundClasses"
                 :aria-hidden="!isActive"
             />
         </transition>
@@ -187,15 +187,15 @@ export default {
          */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: String,
-        triggerClass: String,
-        backgroundClass: String,
-        menuClass: String,
-        disabledClass: String,
-        activeClass: String,
-        inlineClass: String,
-        mobileClass: String,
-        expandedClass: String
+        rootClass: [String, Function],
+        triggerClass: [String, Function],
+        mobileBackgroundClass: [String, Function],
+        menuClass: [String, Function],
+        disabledClass: [String, Function],
+        activeClass: [String, Function],
+        inlineClass: [String, Function],
+        mobileClass: [String, Function],
+        expandedClass: [String, Function]
     },
     data() {
         return {
@@ -218,9 +218,9 @@ export default {
                 this.computedClass('triggerClass', 'o-drop__trigger')
             ]
         },
-        backgroundClasses() {
+        mobileBackgroundClasses() {
             return [
-                this.computedClass('backgroundClass', 'o-drop__background')
+                this.computedClass('mobileBackgroundClass', 'o-drop__background')
             ]
         },
         menuClasses() {
