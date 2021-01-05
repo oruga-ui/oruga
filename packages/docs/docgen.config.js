@@ -9,6 +9,8 @@ const IGNORE = [
   'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue'
 ];
 
+const IGNORE_CLASSES = ['customClass']
+
 module.exports = {
   componentsRoot: `${src}/components`,
   components: '**/[A-Z]*.vue',
@@ -78,15 +80,12 @@ ${fs.readFileSync(inspectorVueFile, 'utf8')}
     }
 }
 
-function tmplProps(props, parseClasses=false) {
+function tmplProps(props) {
   let ret = ''
 
   props.forEach(pr => {
     const p = pr.name
-    if (parseClasses && !p.endsWith("Class")) {
-      return;
-    }
-    if (!parseClasses && p.endsWith("Class")) {
+    if (p.endsWith("Class") && !(IGNORE_CLASSES.indexOf(p) >= 0)) {
         return;
     }
     const n = pr.type && pr.type.name ? pr.type.name : ''
