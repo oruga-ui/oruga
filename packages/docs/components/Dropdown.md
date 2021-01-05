@@ -280,9 +280,6 @@ export default {
                     description: "",
                     action: (cmp) => {
                         cmp.data.inline = true;
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
                     }
                 },
                 {
