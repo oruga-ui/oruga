@@ -59,6 +59,7 @@ export default {
                 {
                     class: "menuActiveClass",
                     description: "Class of dropdown menu when active",
+                    properties: ['inline'],
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
