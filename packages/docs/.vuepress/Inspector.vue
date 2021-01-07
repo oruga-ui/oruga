@@ -58,6 +58,7 @@ export default {
         inspectClass(index, selectedData) {
             this.selectedElementIndex = index
             this.$root.$emit('inspect-class', selectedData.class, selectedData.action)
+            document.getElementById("class-props").scrollIntoView();
         }
     }
 }

@@ -22,7 +22,13 @@ export default {
         }
     },
     render (createElement) {
-        let el = createElement('span', [
+        let el = createElement('span',
+        {
+            attrs: {
+                id: 'docs__element__to__inspect'
+            }
+        },
+        [
             this.$scopedSlots.default({
                 ...this.classes,
                 ...this.data,
