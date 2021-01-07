@@ -184,16 +184,16 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: String,
-        trackClass: String,
-        fillClass: String,
-        roundedClass: String,
-        draggingClass: String,
-        disabledClass: String,
-        biggerSliderFocusClass: String,
-        thumbWrapperClass: String,
-        thumbClass: String,
-        thumbDraggingClass: String
+        rootClass: [String, Function],
+        trackClass: [String, Function],
+        fillClass: [String, Function],
+        roundedClass: [String, Function],
+        draggingClass: [String, Function],
+        disabledClass: [String, Function],
+        biggerSliderFocusClass: [String, Function],
+        thumbWrapperClass: [String, Function],
+        thumbClass: [String, Function],
+        variantClass: [String, Function]
     },
     data() {
         return {
