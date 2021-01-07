@@ -359,7 +359,7 @@ export default {
 
 | CSS Variable                             | SASS Variable                      | Default                             |
 | ---------------------------------------- | ---------------------------------- | ----------------------------------- |
-| --oruga-sidebar-background               | \$sidebar-background               | hsla(0,0%,4%,.86)                   |
+| --oruga-sidebar-overlay                  | \$sidebar-overlay                  | hsla(0,0%,4%,.86)                   |
 | --oruga-sidebar-box-shadow               | \$sidebar-box-shadow               | 5px 0px 13px 3px rgba(\$black, 0.1) |
 | --oruga-sidebar-content-background-color | \$sidebar-content-background-color | \$grey-lighter                      |
 | --oruga-sidebar-mobile-breakpoint        | \$sidebar-mobile-breakpoint        | 1024px                              |
