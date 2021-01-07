@@ -162,7 +162,7 @@ export default {
                 {
                     class: "rootClass",
                     description: "",
-                    action: (cmp) => {
+                    action: () => {
                         this.selectedOptions = null;
                     }
                 },
