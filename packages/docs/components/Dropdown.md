@@ -235,15 +235,15 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: ""
+                    description: "Class of the root element"
                 },
                 {
                     class: "triggerClass",
-                    description: ""
+                    description: "Class of the trigger element"
                 },
                 {
-                    class: "mobileBackgroundClass",
-                    description: "",
+                    class: "mobileMenuOverlayClass",
+                    description: "Class of the overlay when on mobile",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -252,7 +252,7 @@ export default {
                 },
                 {
                     class: "menuClass",
-                    description: "",
+                    description: "Class of the dropdown menu",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -261,14 +261,15 @@ export default {
                 },
                 {
                     class: "disabledClass",
-                    description: "",
+                    description: "Class of dropdown when disabled",
+                    properties: ['disabled'],
                     action: (cmp) => {
                         cmp.data.disabled = true;
                     }
                 },
                 {
-                    class: "activeClass",
-                    description: "",
+                    class: "menuActiveClass",
+                    description: "Class of dropdown menu when active",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -276,15 +277,28 @@ export default {
                     }
                 },
                 {
-                    class: "inlineClass",
-                    description: "",
+                    class: "menuInlineClass",
+                    description: "Class of dropdown menu when inline",
+                    properties: ['inline'],
                     action: (cmp) => {
                         cmp.data.inline = true;
                     }
                 },
                 {
-                    class: "mobileClass",
-                    description: "",
+                    class: "menuPositionClass",
+                    description: "Class of dropdown menu position",
+                    properties: ['position'],
+                    suffixes: ['top-right', 'top-left', 'bottom-left'],
+                    action: (cmp) => {
+                        cmp.data.position = 'top-right';
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "menuMobileClass",
+                    description: "Class of dropdown menu when on mobile",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -293,7 +307,8 @@ export default {
                 },
                 {
                     class: "expandedClass",
-                    description: "",
+                    description: "Class of dropdown when expanded",
+                    properties: ['expanded'],
                     action: (cmp) => {
                         cmp.data.expanded = true;
                     }

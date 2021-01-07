@@ -175,11 +175,13 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                 },
                 {
                     class: "outlinedClass",
-                    description: "",
+                    description: "Class of the button outlined",
+                    properties: ["outlined"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = 'primary';
                         cmp.data.outlined = true;
@@ -187,7 +189,9 @@ export default {
                 },
                 {
                     class: "invertedClass",
-                    description: "",
+                    description: "Class of the button when inverted",
+                    properties: ["inverted"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = 'primary';
                         cmp.data.inverted = true;
@@ -195,42 +199,50 @@ export default {
                 },
                 {
                     class: "expandedClass",
-                    description: "",
+                    description: "Class of the button when expanded",
+                    properties: ["expanded"],
                     action: (cmp) => {
                         cmp.data.expanded = true;
                     },
                 },
                 {
                     class: "roundedClass",
-                    description: "",
+                    description: "Class of the button when rounded",
+                    properties: ["rounded"],
                     action: (cmp) => {
                         cmp.data.rounded = true;
                     },
                 },
                 {
                     class: "disabledClass",
-                    description: "",
+                    description: "Class of the button when disabled",
+                    properties: ["disabled"],
                     action: (cmp) => {
                         cmp.data.disabled = true;
                     },
                 },
                 {
                     class: "iconClass",
-                    description: "",
+                    description: "Class of the button icon",
+                    properties: ["iconLeft", "iconRight"],
                     action: (cmp) => {
                         cmp.data['icon-left'] = "plus"
                     },
                 },
                 {
                     class: "sizeClass",
-                    description: "",
+                    description: "Class of the button size",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
                     action: (cmp) => {
                         cmp.data.size = 'large';
                     },
                 },
                 {
                     class: "variantClass",
-                    description: "",
+                    description: "Class of the button variant",
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = 'warning';
                     },

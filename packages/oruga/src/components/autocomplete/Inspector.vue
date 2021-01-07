@@ -24,11 +24,11 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                 },
                 {
                     class: "menuClass",
-                    description: "",
+                    description: "Class of the autocomplete menu",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -37,14 +37,17 @@ export default {
                 },
                 {
                     class: "expandedClass",
-                    description: "",
+                    description: "Class of the autocomplete menu expanded",
+                    properties: ['expanded'],
                     action: (cmp) => {
                         cmp.data.expanded = true;
                     },
                 },
                 {
                     class: "menuPositionClass",
-                    description: "",
+                    description: "Class of the autocomplete menu position",
+                    properties: ["menuPosition"],
+                    suffixes: ["auto", "top", "bottom"],
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -53,7 +56,7 @@ export default {
                 },
                 {
                     class: "itemClass",
-                    description: "",
+                    description: "Class of the menu items.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -62,7 +65,7 @@ export default {
                 },
                 {
                     class: "itemHoverClass",
-                    description: "",
+                    description: "Class of the menu items on hover.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -75,7 +78,7 @@ export default {
                 },
                 {
                     class: "itemGroupTitleClass",
-                    description: "",
+                    description: "Class of the menu items group title.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));

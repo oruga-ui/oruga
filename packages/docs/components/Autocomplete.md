@@ -353,11 +353,11 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                 },
                 {
                     class: "menuClass",
-                    description: "",
+                    description: "Class of the autocomplete menu",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -366,14 +366,17 @@ export default {
                 },
                 {
                     class: "expandedClass",
-                    description: "",
+                    description: "Class of the autocomplete menu expanded",
+                    properties: ['expanded'],
                     action: (cmp) => {
                         cmp.data.expanded = true;
                     },
                 },
                 {
                     class: "menuPositionClass",
-                    description: "",
+                    description: "Class of the autocomplete menu position",
+                    properties: ["menuPosition"],
+                    suffixes: ["auto", "top", "bottom"],
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -382,7 +385,7 @@ export default {
                 },
                 {
                     class: "itemClass",
-                    description: "",
+                    description: "Class of the menu items.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -391,7 +394,7 @@ export default {
                 },
                 {
                     class: "itemHoverClass",
-                    description: "",
+                    description: "Class of the menu items on hover.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -404,7 +407,7 @@ export default {
                 },
                 {
                     class: "itemGroupTitleClass",
-                    description: "",
+                    description: "Class of the menu items group title.",
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
@@ -434,7 +437,6 @@ export default {
 | customFormatter     | Function to format an option to a string for display in the input as alternative to field prop)                                                        | func           | -                                                 |                                                          |
 | data                | Options / suggestions                                                                                                                                  | array          | -                                                 | []                                                       |
 | debounceTyping      | Number of milliseconds to delay before to emit typing event                                                                                            | number         | -                                                 |                                                          |
-| dropdownPosition    | Position of dropdown                                                                                                                                   | string         | `auto`, `top`, `bottom`                           | 'auto'                                                   |
 | expanded            | Makes input full width when inside a grouped or addon field                                                                                            | boolean        | -                                                 |                                                          |
 | field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option                                      | string         | -                                                 | 'value'                                                  |
 | groupField          | Property of the object (if <code>data</code> is array of objects) to use as display text of group                                                      | string         | -                                                 |                                                          |
@@ -448,6 +450,7 @@ export default {
 | keepOpen            | Keep open dropdown list after select                                                                                                                   | boolean        | -                                                 |                                                          |
 | maxHeight           | Max height of dropdown content                                                                                                                         | string\|number | -                                                 |                                                          |
 | maxlength           | Same as native maxlength, plus character counter                                                                                                       | number\|string | -                                                 |                                                          |
+| menuPosition        | Position of dropdown                                                                                                                                   | string         | `auto`, `top`, `bottom`                           | 'auto'                                                   |
 | openOnFocus         | Open dropdown list on focus                                                                                                                            | boolean        | -                                                 |                                                          |
 | rounded             | Makes the element rounded                                                                                                                              | boolean        | -                                                 |                                                          |
 | size                | Vertical size of input, optional                                                                                                                       | string         | `small`, `medium`, `large`                        |                                                          |

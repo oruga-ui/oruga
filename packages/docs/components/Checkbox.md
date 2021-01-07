@@ -162,15 +162,15 @@ export default {
       inspectData: [
         {
           class: 'rootClass',
-          description : ''
+          description : 'Class of the root element'
         },
         {
           class: 'labelClass',
-          description : ''
+          description : 'Class of the label'
         },
         {
           class: 'checkClass',
-          description : ''
+          description : 'Class of the checkbox'
         },
         {
           class: 'checkCheckedClass',
@@ -181,28 +181,34 @@ export default {
         },
         {
           class: 'checkIndeterminateClass',
-          description : '',
+          description : 'Class when checkbox is indeterminate',
+          properties: ["indeterminate"],
           action: (cmp) => {
             cmp.data.indeterminate = true;
           }
         },
         {
           class: 'sizeClass',
-          description : '',
+          description : 'Class of the checkbox size',
+          properties: ["size"],
+          suffixes: ['small', 'medium', 'large'],
           action: (cmp) => {
             cmp.data.size = 'large';
           }
         },
         {
           class: 'disabledClass',
-          description : '',
+          description : 'Class when checkbox is disabled',
+          properties: ["disabled"],
           action: (cmp) => {
             cmp.data.disabled = true;
           }
         },
         {
           class: 'variantClass',
-          description : '',
+          description : 'Class of the checkbox variant',
+          properties: ["variant"],
+          suffixes: ['primary', 'info', 'warning', 'danger'],
           action: (cmp) => {
             cmp.data.variant = 'warning';
           }

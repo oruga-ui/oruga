@@ -21,7 +21,7 @@
             <div
                 v-if="isMobileModal"
                 v-show="isActive"
-                :class="mobileBackgroundClasses"
+                :class="menuMobileOverlayClasses"
                 :aria-hidden="!isActive"
             />
         </transition>
@@ -189,12 +189,13 @@ export default {
         appendToBodyCopyParent: Boolean,
         rootClass: [String, Function],
         triggerClass: [String, Function],
-        mobileBackgroundClass: [String, Function],
+        menuMobileOverlayClass: [String, Function],
         menuClass: [String, Function],
+        menuPositionClass: [String, Function],
+        menuActiveClass: [String, Function],
+        menuInlineClass: [String, Function],
+        menuMobileClass: [String, Function],
         disabledClass: [String, Function],
-        activeClass: [String, Function],
-        inlineClass: [String, Function],
-        mobileClass: [String, Function],
         expandedClass: [String, Function]
     },
     data() {
@@ -218,18 +219,18 @@ export default {
                 this.computedClass('triggerClass', 'o-drop__trigger')
             ]
         },
-        mobileBackgroundClasses() {
+        menuMobileOverlayClasses() {
             return [
-                this.computedClass('mobileBackgroundClass', 'o-drop__background')
+                this.computedClass('menuMobileOverlayClass', 'o-drop__overlay')
             ]
         },
         menuClasses() {
             return [
                 this.computedClass('menuClass', 'o-drop__menu'),
-                { [this.computedClass('positionClass', 'o-drop__menu--', this.position)]: this.position },
-                { [this.computedClass('activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('inlineClass', 'o-drop__menu--inline')]: this.inline },
-                { [this.computedClass('mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
+                { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
+                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
+                { [this.computedClass('menuInlineClass', 'o-drop__menu--inline')]: this.inline },
+                { [this.computedClass('menuMobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },
         isMobileModal() {

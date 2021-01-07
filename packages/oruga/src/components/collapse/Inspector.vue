@@ -40,15 +40,15 @@ export default {
       inspectData: [
         {
             class: "rootClass",
-            description: ""
+            description: "Class of the root element"
         },
         {
             class: "triggerClass",
-            description: ""
+            description: "Class of the trigger element"
         },
         {
             class: "contentClass",
-            description: ""
+            description: "Class of the content"
         }
       ],
     };
