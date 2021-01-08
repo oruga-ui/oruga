@@ -11,7 +11,7 @@
             <td>{{data.class}}</td>
             <td>
                 <span>{{data.description | addDotToTheEnd}}</span>
-                <span v-if="data.warning"><br>🔍 {{data.warning}}</span>
+                <span v-if="data.warning"><br>👉 <span v-html="data.warning"></span></span>
             </td>
             <td>
                 <span v-if="data.properties"><code v-html="setByProperties(data.properties)"></code></span>

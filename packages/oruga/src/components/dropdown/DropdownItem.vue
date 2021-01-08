@@ -44,9 +44,9 @@ export default {
             type: String,
             default: ''
         },
-        itemClass: String,
-        itemActiveClass: String,
-        itemDisabledClass: String,
+        itemClass: [String, Function],
+        itemActiveClass: [String, Function],
+        itemDisabledClass: [String, Function],
     },
     computed: {
         parent() {
