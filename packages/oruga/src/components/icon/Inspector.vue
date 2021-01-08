@@ -16,32 +16,38 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: ""
+                    description: "Class of the root element"
                 },
                 {
                     class: "clickableClass",
-                    description: "",
+                    description: "Class of the icon when clickable",
+                    properties: ['clickable'],
                     action: (cmp) => {
                         cmp.data.clickable = true;
                     }
                 },
                 {
                     class: "spinClass",
-                    description: "",
+                    description: "Class of the element when spin",
+                    properties: ['spin'],
                     action: (cmp) => {
                         cmp.data.spin = true;
                     }
                 },
                 {
                     class: "sizeClass",
-                    description: "",
+                    description : 'Class of the icon size',
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
                     action: (cmp) => {
                         cmp.data.size = "large";
                     }
                 },
                 {
                     class: "variantClass",
-                    description: "",
+                    description : 'Class of the icon variant',
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = "warning";
                     }
