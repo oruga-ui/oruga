@@ -8,7 +8,7 @@
                 <span>{{ day }}</span>
             </div>
         </header>
-        <div class="o-dpck__table__body" :class="{'o-dpck__table__body--events': hasEvents}">
+        <div class="o-dpck__table__body">
             <o-datepicker-table-row
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"
@@ -93,10 +93,6 @@ export default {
             }
             if (this.showWeekNumber) visibleDayNames.unshift('')
             return visibleDayNames
-        },
-
-        hasEvents() {
-            return this.events && this.events.length
         },
 
         /*

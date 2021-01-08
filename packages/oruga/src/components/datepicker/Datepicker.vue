@@ -6,6 +6,7 @@
         <o-dropdown
             v-if="!isMobile || inline"
             ref="dropdown"
+            root-class="o-dpck__drop"
             :position="position"
             :disabled="disabled"
             :inline="inline"
@@ -16,7 +17,9 @@
             :append-to-body="appendToBody"
             append-to-body-copy-parent
             @active-change="onActiveChange">
-            <template #trigger v-if="!inline">
+            <template
+                #trigger
+                v-if="!inline">
                 <slot name="trigger">
                     <o-input
                         ref="input"

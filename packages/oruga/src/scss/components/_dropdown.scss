@@ -44,6 +44,9 @@ $dropdown-mobile-zindex: 50 !default;
             display: none;
         }
     }
+    &__trigger {
+        width: 100%;
+    }
     &__menu {
         position: absolute;
         left: 0;

@@ -12,7 +12,7 @@
                 :ref="`day-${weekDay.getMonth()}-${weekDay.getDate()}`"
                 v-if="selectableDate(weekDay) && !disabled"
                 :key="index"
-                :class="[classObject(weekDay), {'o-dpck__table__cell-events': eventsDateMatch(weekDay)}]"
+                :class="classObject(weekDay)"
                 role="button"
                 href="#"
                 :disabled="disabled"
@@ -78,6 +78,11 @@ export default {
         multiple: Boolean,
         rulesForFirstWeek: Number,
         firstDayOfWeek: Number
+    },
+    computed: {
+        hasEvents() {
+            return this.events && this.events.length
+        }
     },
     watch: {
         day(day) {
@@ -282,7 +287,8 @@ export default {
                 'o-dpck__table__cell--selectable': this.selectableDate(day) && !this.disabled,
                 'o-dpck__table__cell--unselectable': !this.selectableDate(day) || this.disabled,
                 'o-dpck__table__cell--invisible': !this.nearbyMonthDays && day.getMonth() !== this.month,
-                'o-dpck__table__cell--nearby': this.nearbySelectableMonthDays && day.getMonth() !== this.month
+                'o-dpck__table__cell--nearby': this.nearbySelectableMonthDays && day.getMonth() !== this.month,
+                'o-dpck__table__cell--events': this.hasEvents
             }
         },
         setRangeHoverEndDate(day) {
