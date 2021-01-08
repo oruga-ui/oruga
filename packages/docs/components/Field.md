@@ -292,75 +292,86 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: ""
+                    description: "Class of the root element"
                 },
                 {
                     class: "horizontalClass",
-                    description: "",
+                    description: "Class to align label and control in horizontal forms",
+                    properties: ['horizontal'],
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
                 },
                 {
                     class: "groupedClass",
-                    description: "",
+                    description: "Class when fields are grouped together",
+                    properties: ['grouped'],
                     action: (cmp) => {
                         cmp.data.grouped = true;
                     }
                 },
                 {
                     class: "groupMultilineClass",
-                    description: "",
+                    description: "Class when fields fill up multiple lines",
+                    properties: ['groupMultiline'],
                     action: (cmp) => {
                         cmp.data.groupMultiline = true;
                     }
                 },
                 {
                     class: "labelClass",
-                    description: ""
+                    description: "Class for field label"
                 },
                 {
                     class: "labelSizeClass",
-                    description: "",
+                    description: "Class for field label size",
+                    properties: ['labelSize'],
+                    suffixes: ['small', 'medium', 'large'],
                     action: (cmp) => {
                         cmp.data.labelSize = "large";
                     }
                 },
                 {
                     class: "labelHorizontalClass",
-                    description: "",
+                    description: "Class for field label when horizontal",
+                    properties: ['horizontal'],
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
                 },
                 {
                     class: "bodyClass",
-                    description: ""
+                    description: "Class for field body"
                 },
                 {
                     class: "bodyHorizontalClass",
-                    description: "",
+                    description: "Class for field body when horizontal",
+                    properties: ['horizontal'],
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
                 },
                 {
                     class: "addonsClass",
-                    description: "",
+                    description: "Class for components automatically attached together when inside a field",
+                    warning: "Use the <code>expanded</code> prop on the control to fill up the remaining space",
                     action: (cmp) => {
                         cmp.data.expanded = true;
                     }
                 },
                 {
                     class: "messageClass",
-                    description: "",
+                    description: "Class for the field message",
+                    properties: ["message"],
                     action: (cmp) => {
                         cmp.data.message = 'This is a message for the field';
                     }
                 },
                 {
                     class: "variantClass",
-                    description: "",
+                    description: "Class of the field variant",
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = "info";
                         cmp.data.message = 'This is a message for the field';
