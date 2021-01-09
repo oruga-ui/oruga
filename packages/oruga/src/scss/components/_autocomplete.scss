@@ -48,7 +48,7 @@ $autocomplete-menu-zindex : 20 !default;
         @include avariable('font-size', 'autocomplete-item-font-size', $autocomplete-item-font-size);
         @include avariable('line-height', 'autocomplete-item-line-height', $autocomplete-item-line-height);
         @include avariable('padding', 'autocomplete-item-padding', $autocomplete-item-padding);
-        &--disabled {
+        &-group-title {
             pointer-events: none;
             @include avariable('opacity', 'autocomplete-item-disabled-opacity', $autocomplete-item-disabled-opacity);
         }

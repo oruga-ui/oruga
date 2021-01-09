@@ -145,29 +145,89 @@ title: Loading
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <p style="position: relative">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+                    <o-loading v-bind="s" icon="sync-alt" :active.sync="loading" :iconSpin="true">
+                    </o-loading>
+                </p>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            loading: false,
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.canCancel = true;
+                        cmp.data.fullPage = false;
+                        this.loading = true;
+                    }
+                },
+                {
+                    class: "backgroundClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.canCancel = true;
+                        cmp.data.fullPage = false;
+                        this.loading = true;
+                    }
+                },
+                {
+                    class: "iconClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.canCancel = true;
+                        cmp.data.fullPage = false;
+                        this.loading = true;
+                    }
+                },
+                {
+                    class: "fullPageIconClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.fullPage = true;
+                        cmp.data.canCancel = true;
+                        this.loading = true;
+                    }
+                }
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name    | Description                                                                                                             | Type                      | Values | Default                                             |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | --------------------------------------------------- |
 | active       | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                     |
-| programmatic |                                                                                                                         | boolean                   | -      |                                                     |
-| container    |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
-| fullPage     | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
 | animation    |                                                                                                                         | string                    | -      | Config -> <code> 'loading.animation': 'fade'</code> |
 | canCancel    | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                               |
-| onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
+| container    |                                                                                                                         | object\|func\|HTMLElement | -      |                                                     |
+| fullPage     | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                |
 | icon         | Icon name                                                                                                               | string                    | -      | Config -> <code> 'loading.icon': 'spin'</code>      |
-| iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
 | iconSize     |                                                                                                                         | string                    | -      | 'medium'                                            |
-
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| backgroundClass   |             | string | -      |         |
-| iconClass         |             | string | -      |         |
-| fullPageIconClass |             | string | -      |         |
+| iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                |
+| onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | () => {}                                            |
+| programmatic |                                                                                                                         | boolean                   | -      |                                                     |
 
 ## Events
 

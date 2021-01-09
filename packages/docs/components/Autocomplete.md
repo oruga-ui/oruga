@@ -324,53 +324,140 @@ title: Autocomplete
 
 :::
 
+## Class props
+
+<br />
+<template>
+  <div class="field">
+    <doc-wrapper>
+      <template v-slot:default="s">
+      <o-autocomplete v-bind="s" group-field="type" group-options="items" placeholder="e.g. Vue.js" :data="filtered" icon="search" clearable @select="option => selected = option">
+        <template slot="empty">No results found</template>
+      </o-autocomplete>
+      </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            filtered: [
+                {
+                    type: 'Frameworks',
+                    items: ['Vue.js']
+                }
+            ],
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element",
+                },
+                {
+                    class: "menuClass",
+                    description: "Class of the autocomplete menu",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
+                    },
+                },
+                {
+                    class: "expandedClass",
+                    description: "Class of the autocomplete menu expanded",
+                    properties: ['expanded'],
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    },
+                },
+                {
+                    class: "menuPositionClass",
+                    description: "Class of the autocomplete menu position",
+                    properties: ["menuPosition"],
+                    suffixes: ["auto", "top", "bottom"],
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
+                    },
+                },
+                {
+                    class: "itemClass",
+                    description: "Class of the menu items.",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
+                    },
+                },
+                {
+                    class: "itemHoverClass",
+                    description: "Class of the menu items on hover.",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, keyCode : 40,  charCode : 40, ctrlKey : false, altKey: false, shiftKey: false, metaKey: false}));
+                        setTimeout(() => {
+                            el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, keyCode : 40,  charCode : 40, ctrlKey : false, altKey: false, shiftKey: false, metaKey: false}));
+                            el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, keyCode : 40,  charCode : 40, ctrlKey : false, altKey: false, shiftKey: false, metaKey: false}));
+                        }, 500);
+                    },
+                },
+                {
+                    class: "itemGroupTitleClass",
+                    description: "Class of the menu items group title.",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
+                    },
+                },
+            ],
+        };
+    }
+}
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name           | Description                                                                                                                                            | Type           | Values                                            | Default                                                  |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- | ------------------------------------------------- | -------------------------------------------------------- |
-| expanded            | Makes input full width when inside a grouped or addon field                                                                                            | boolean        | -                                                 |                                                          |
-| rounded             | Makes the element rounded                                                                                                                              | boolean        | -                                                 |                                                          |
-| icon                | Icon name to be added                                                                                                                                  | string         | -                                                 |                                                          |
-| iconPack            | Icon pack to use                                                                                                                                       | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
-| autocomplete        | Native options to use in HTML5 validation                                                                                                              | string         | -                                                 |                                                          |
-| maxlength           | Same as native maxlength, plus character counter                                                                                                       | number\|string | -                                                 |                                                          |
-| useHtml5Validation  | Enable html 5 native validation                                                                                                                        | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
-| statusIcon          | Show status icon using field and variant prop                                                                                                          | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>               |
-| validationMessage   | The message which is shown when a validation error occurs                                                                                              | string         | -                                                 |                                                          |
-| v-model             |                                                                                                                                                        | number\|string | -                                                 |                                                          |
-| data                | Options / suggestions                                                                                                                                  | array          | -                                                 | []                                                       |
-| size                | Vertical size of input, optional                                                                                                                       | string         | `small`, `medium`, `large`                        |                                                          |
-| field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option                                      | string         | -                                                 | 'value'                                                  |
-| keepFirst           | The first option will always be pre-selected (easier to just hit enter or tab)                                                                         | boolean        | -                                                 |                                                          |
-| clearOnSelect       | Clear input text on select                                                                                                                             | boolean        | -                                                 |                                                          |
-| openOnFocus         | Open dropdown list on focus                                                                                                                            | boolean        | -                                                 |                                                          |
-| customFormatter     | Function to format an option to a string for display in the input as alternative to field prop)                                                        | func           | -                                                 |                                                          |
-| checkInfiniteScroll | Makes the component check if list reached scroll end and emit infinite-scroll event.                                                                   | boolean        | -                                                 |                                                          |
-| keepOpen            | Keep open dropdown list after select                                                                                                                   | boolean        | -                                                 |                                                          |
-| clearable           | Add a button/icon to clear the inputed text                                                                                                            | boolean        | -                                                 |                                                          |
-| maxHeight           | Max height of dropdown content                                                                                                                         | string\|number | -                                                 |                                                          |
-| dropdownPosition    | Position of dropdown                                                                                                                                   | string         | `auto`, `top`, `bottom`                           | 'auto'                                                   |
 | animation           | Transition name to apply on dropdown list                                                                                                              | string         | -                                                 | Config -> <code> 'autocomplete.animation': 'fade'</code> |
+| appendToBody        | Append autocomplete content to body                                                                                                                    | boolean        | -                                                 |                                                          |
+| autocomplete        | Native options to use in HTML5 validation                                                                                                              | string         | -                                                 |                                                          |
+| checkInfiniteScroll | Makes the component check if list reached scroll end and emit infinite-scroll event.                                                                   | boolean        | -                                                 |                                                          |
+| clearOnSelect       | Clear input text on select                                                                                                                             | boolean        | -                                                 |                                                          |
+| clearable           | Add a button/icon to clear the inputed text                                                                                                            | boolean        | -                                                 |                                                          |
+| confirmKeys         | Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) | array          | -                                                 | ['Tab', 'Enter']                                         |
+| customFormatter     | Function to format an option to a string for display in the input as alternative to field prop)                                                        | func           | -                                                 |                                                          |
+| data                | Options / suggestions                                                                                                                                  | array          | -                                                 | []                                                       |
+| debounceTyping      | Number of milliseconds to delay before to emit typing event                                                                                            | number         | -                                                 |                                                          |
+| expanded            | Makes input full width when inside a grouped or addon field                                                                                            | boolean        | -                                                 |                                                          |
+| field               | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option                                      | string         | -                                                 | 'value'                                                  |
 | groupField          | Property of the object (if <code>data</code> is array of objects) to use as display text of group                                                      | string         | -                                                 |                                                          |
 | groupOptions        | Property of the object (if <code>data</code> is array of objects) to use as key to get items array of each group, optional                             | string         | -                                                 |                                                          |
-| debounceTyping      | Number of milliseconds to delay before to emit typing event                                                                                            | number         | -                                                 |                                                          |
+| icon                | Icon name to be added                                                                                                                                  | string         | -                                                 |                                                          |
+| iconPack            | Icon pack to use                                                                                                                                       | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
 | iconRight           | Icon name to be added on the right side                                                                                                                | string         | -                                                 |                                                          |
 | iconRightClickable  | Clickable icon right if exists                                                                                                                         | boolean        | -                                                 |                                                          |
-| appendToBody        | Append autocomplete content to body                                                                                                                    | boolean        | -                                                 |                                                          |
-| confirmKeys         | Array of keys (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) which will add a tag when typing (default tab and enter) | array          | -                                                 | ['Tab', 'Enter']                                         |
 | inputClasses        | Classes to apply on internal input (@see o-input style docs)                                                                                           | object         | -                                                 |                                                          |
-
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| menuClass         |             | string | -      |         |
-| expandedClass     |             | string | -      |         |
-| menuPositionClass |             | string | -      |         |
-| itemClass         |             | string | -      |         |
-| itemHoverClass    |             | string | -      |         |
-| itemDisabledClass |             | string | -      |         |
+| keepFirst           | The first option will always be pre-selected (easier to just hit enter or tab)                                                                         | boolean        | -                                                 |                                                          |
+| keepOpen            | Keep open dropdown list after select                                                                                                                   | boolean        | -                                                 |                                                          |
+| maxHeight           | Max height of dropdown content                                                                                                                         | string\|number | -                                                 |                                                          |
+| maxlength           | Same as native maxlength, plus character counter                                                                                                       | number\|string | -                                                 |                                                          |
+| menuPosition        | Position of dropdown                                                                                                                                   | string         | `auto`, `top`, `bottom`                           | 'auto'                                                   |
+| openOnFocus         | Open dropdown list on focus                                                                                                                            | boolean        | -                                                 |                                                          |
+| rounded             | Makes the element rounded                                                                                                                              | boolean        | -                                                 |                                                          |
+| size                | Vertical size of input, optional                                                                                                                       | string         | `small`, `medium`, `large`                        |                                                          |
+| statusIcon          | Show status icon using field and variant prop                                                                                                          | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>               |
+| useHtml5Validation  | Enable html 5 native validation                                                                                                                        | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
+| v-model             |                                                                                                                                                        | number\|string | -                                                 |                                                          |
+| validationMessage   | The message which is shown when a validation error occurs                                                                                              | string         | -                                                 |                                                          |
 
 ## Events
 

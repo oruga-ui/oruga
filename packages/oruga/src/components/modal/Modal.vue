@@ -151,11 +151,11 @@ export default {
                 return getValueByPath(config, 'modal.autoFocus', true)
             }
         },
-        rootClass: String,
-        backgroundClass: String,
-        contentClass: String,
-        closeClass: String,
-        fullScreenClass: String,
+        rootClass: [String, Function],
+        backgroundClass: [String, Function],
+        contentClass: [String, Function],
+        closeClass: [String, Function],
+        fullScreenClass: [String, Function],
 
         /** Icon name */
         closeIcon: {

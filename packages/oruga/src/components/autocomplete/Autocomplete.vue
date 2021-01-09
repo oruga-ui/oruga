@@ -145,7 +145,7 @@ export default {
          * Position of dropdown
          * @values auto, top, bottom
          */
-        dropdownPosition: {
+        menuPosition: {
             type: String,
             default: 'auto'
         },
@@ -173,13 +173,13 @@ export default {
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        rootClass: String,
-        menuClass: String,
-        expandedClass: String,
-        menuPositionClass: String,
-        itemClass: String,
-        itemHoverClass: String,
-        itemDisabledClass: String,
+        rootClass: [String, Function],
+        menuClass: [String, Function],
+        expandedClass: [String, Function],
+        menuPositionClass: [String, Function],
+        itemClass: [String, Function],
+        itemHoverClass: [String, Function],
+        itemGroupTitleClass: [String, Function],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },
@@ -216,7 +216,7 @@ export default {
         itemEmptyClasses() {
             return [
                 ...this.itemClasses,
-                this.computedClass('itemDisabledClass', 'o-acp__item--disabled')
+                this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')
             ]
         },
         inputBind() {
@@ -284,7 +284,7 @@ export default {
         },
 
         newDropdownPosition() {
-            if (this.dropdownPosition === 'top' || (this.dropdownPosition === 'auto' && !this.isListInViewportVertically)) {
+            if (this.menuPosition === 'top' || (this.menuPosition === 'auto' && !this.isListInViewportVertically)) {
               return 'top'
             }
             return 'bottom'
@@ -325,7 +325,7 @@ export default {
          * to open upwards.
          */
         isActive(active) {
-            if (this.dropdownPosition === 'auto') {
+            if (this.menuPosition === 'auto') {
                 if (active) {
                     this.calcDropdownInViewportVertical()
                 } else {
@@ -637,7 +637,7 @@ export default {
     created() {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
-            if (this.dropdownPosition === 'auto') window.addEventListener('resize', this.calcDropdownInViewportVertical)
+            if (this.menuPosition === 'auto') window.addEventListener('resize', this.calcDropdownInViewportVertical)
         }
     },
     mounted() {
@@ -653,7 +653,7 @@ export default {
     beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
-            if (this.dropdownPosition === 'auto') window.removeEventListener('resize', this.calcDropdownInViewportVertical)
+            if (this.menuPosition === 'auto') window.removeEventListener('resize', this.calcDropdownInViewportVertical)
         }
         if (this.checkInfiniteScroll && this.$refs.dropdown) {
             const list = this.$refs.dropdown

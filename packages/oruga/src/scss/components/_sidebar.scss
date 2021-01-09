@@ -1,6 +1,6 @@
 
 /* @docs */
-$sidebar-background: hsla(0,0%,4%,.86) !default;
+$sidebar-overlay: hsla(0,0%,4%,.86) !default;
 $sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
 $sidebar-content-background-color: $grey-lighter !default;
 $sidebar-mobile-breakpoint: 1024px !default;
@@ -90,13 +90,13 @@ $sidebar-zindex: 38 !default;
             }
         }
     }
-    &__background {
+    &__overlay {
         bottom: 0;
         left: 0;
         right: 0;
         top: 0;
         position: fixed;
-        @include avariable('background', 'sidebar-background', $sidebar-background);
+        @include avariable('background', 'sidebar-overlay', $sidebar-overlay);
         @include avariable('z-index', 'sidebar-zindex', $sidebar-zindex);
     }
 }

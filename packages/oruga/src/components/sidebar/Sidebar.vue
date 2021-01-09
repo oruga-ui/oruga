@@ -1,7 +1,7 @@
 <template>
     <div :class="rootClasses">
         <div
-            :class="backgroundClasses"
+            :class="overlayClasses"
             v-if="overlay && isOpen"
         />
         <transition
@@ -66,7 +66,7 @@ export default {
         right: Boolean,
         /**
          * Custom layout on mobile
-         * @values fullwidth, reduce, hidden
+         * @values fullwidth, reduced, hidden
          */
         mobile: {
             type: String,
@@ -74,7 +74,7 @@ export default {
                 return [
                     '',
                     'fullwidth',
-                    'reduce',
+                    'reduced',
                     'hidden'
                 ].indexOf(value) >= 0
             }
@@ -112,22 +112,22 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
-        rootClass: String,
-        backgroundClass: String,
-        contentClass: String,
-        fixedClass: String,
-        staticClass: String,
-        absoluteClass: String,
-        fullheightClass: String,
-        fullwidthClass: String,
-        rightClass: String,
-        reduceClass: String,
-        expandOnHoverClass: String,
-        expandOnHoverFixedClass: String,
-        mobileReduceClass: String,
-        mobileHideClass: String,
-        mobileFullwidthClass: String,
-        variantClass: String
+        rootClass: [String, Function],
+        overlayClass: [String, Function],
+        contentClass: [String, Function],
+        fixedClass: [String, Function],
+        staticClass: [String, Function],
+        absoluteClass: [String, Function],
+        fullheightClass: [String, Function],
+        fullwidthClass: [String, Function],
+        rightClass: [String, Function],
+        reduceClass: [String, Function],
+        expandOnHoverClass: [String, Function],
+        expandOnHoverFixedClass: [String, Function],
+        mobileReduceClass: [String, Function],
+        mobileHideClass: [String, Function],
+        mobileFullwidthClass: [String, Function],
+        variantClass: [String, Function]
     },
     data() {
         return {
@@ -143,9 +143,9 @@ export default {
                 this.computedClass('rootClass', 'o-side')
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('backgroundClass', 'o-side__background')
+                this.computedClass('overlayClass', 'o-side__overlay')
             ]
         },
         contentClasses() {
@@ -161,8 +161,8 @@ export default {
                 { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce },
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
                 { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
-                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduce' },
-                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hide' },
+                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduced' },
+                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hidden' },
                 { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' }
             ]
         },

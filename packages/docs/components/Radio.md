@@ -101,28 +101,86 @@ title: Radio
 
 :::
 
+## Class props
+
+<br />
+<template>
+  <div class="field">
+    <doc-wrapper>
+      <template v-slot:default="s">
+        <o-radio v-model="s.checkbox" native-value="default" v-bind="s">Radio</o-radio>
+      </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      inspectData: [
+        {
+          class: 'rootClass',
+          description : ''
+        },
+        {
+          class: 'labelClass',
+          description : ''
+        },
+        {
+          class: 'checkClass',
+          description : ''
+        },
+        {
+          class: 'checkCheckedClass',
+          description : '',
+          action: (cmp) => {
+            cmp.data.checkbox = 'default';
+          }
+        },
+        {
+          class: 'sizeClass',
+          description : '',
+          action: (cmp) => {
+            cmp.data.size = 'large';
+          }
+        },
+        {
+          class: 'disabledClass',
+          description : '',
+          action: (cmp) => {
+            cmp.data.disabled = true;
+          }
+        },
+        {
+          class: 'variantClass',
+          description : '',
+          action: (cmp) => {
+            cmp.data.variant = 'warning';
+          }
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name   | Description                    | Type                           | Values                                                                          | Default |
 | ----------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
-| v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |
-| nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
-| variant     | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 | disabled    | Same as native disabled        | boolean                        | -                                                                               |         |
-| required    |                                | boolean                        | -                                                                               |         |
 | name        | Same as native name            | string                         | -                                                                               |         |
+| nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
+| required    |                                | boolean                        | -                                                                               |         |
 | size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
-
-## Class props
-
-| Prop name     | Description | Type   | Values | Default |
-| ------------- | ----------- | ------ | ------ | ------- |
-| rootClass     |             | string | -      |         |
-| disabledClass |             | string | -      |         |
-| checkClass    |             | string | -      |         |
-| labelClass    |             | string | -      |         |
-| sizeClass     |             | string | -      |         |
-| variantClass  |             | string | -      |         |
+| v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |
+| variant     | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Events
 

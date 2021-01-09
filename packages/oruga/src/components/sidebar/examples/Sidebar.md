@@ -92,8 +92,8 @@ export default {
                 <o-field label="Mobile Layout">
                     <o-select v-model="mobile">
                         <option :value="null"></option>
-                        <option value="reduce">Reduced</option>
-                        <option value="hide">Hidden</option>
+                        <option value="reduced">Reduced</option>
+                        <option value="hidden">Hidden</option>
                         <option value="fullwidth">Fullwidth</option>
                     </o-select>
                 </o-field>
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       expandOnHover: false,
-      mobile: "reduce",
+      mobile: "reduced",
       reduce: false
     }
   }

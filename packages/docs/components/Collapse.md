@@ -53,7 +53,7 @@ title: Collapse
           {{ collapse.title }}
         </p>
         <a class="card-header-icon">
-          <o-icon :icon="props.open ? 'caret-down' : 'caret-up'"> </o-icon>
+          <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
         </a>
       </div>
       <div class="card-content">
@@ -128,22 +128,78 @@ title: Collapse
 
 :::
 
+## Class props
+
+<br />
+<template>
+  <div>
+    <doc-wrapper>
+      <template v-slot:default="s">
+        <o-collapse
+          animation="slide"
+          v-bind="s"
+          :open="true"
+          style="border: 1px solid #dfe2e5"
+        >
+          <div
+            slot="trigger"
+            slot-scope="props"
+            class="card-header"
+            role="button"
+          >
+            <p class="card-header-title">
+              Collapse Title
+            </p>
+            <a class="card-header-icon">
+              <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="content">
+              Collapse Content
+            </div>
+          </div>
+        </o-collapse>
+      </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      inspectData: [
+        {
+            class: "rootClass",
+            description: "Class of the root element"
+        },
+        {
+            class: "triggerClass",
+            description: "Class of the trigger element"
+        },
+        {
+            class: "contentClass",
+            description: "Class of the content"
+        }
+      ],
+    };
+  },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name | Description                                                                                                            | Type    | Values          | Default                                              |
 | --------- | ---------------------------------------------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------- |
-| open      | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                 |
 | animation | Custom animation (transition name)                                                                                     | string  | -               | Config -> <code> 'collapse.animation': 'fade'</code> |
 | ariaId    |                                                                                                                        | string  | -               | ''                                                   |
+| open      | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                 |
 | position  | Trigger position                                                                                                       | string  | `top`, `bottom` | 'top'                                                |
-
-## Class props
-
-| Prop name    | Description | Type   | Values | Default |
-| ------------ | ----------- | ------ | ------ | ------- |
-| rootClass    |             | string | -      |         |
-| triggerClass |             | string | -      |         |
-| contentClass |             | string | -      |         |
 
 ## Events
 

@@ -154,40 +154,126 @@ title: Button
 
 :::
 
+## Class props
+
+<br />
+<template>
+  <div>
+    <doc-wrapper>
+      <template v-slot:default="s">
+      <o-button v-bind="s">Button</o-button>
+      </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element",
+                },
+                {
+                    class: "outlinedClass",
+                    description: "Class of the button outlined",
+                    properties: ["outlined"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = 'primary';
+                        cmp.data.outlined = true;
+                    },
+                },
+                {
+                    class: "invertedClass",
+                    description: "Class of the button when inverted",
+                    properties: ["inverted"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = 'primary';
+                        cmp.data.inverted = true;
+                    },
+                },
+                {
+                    class: "expandedClass",
+                    description: "Class of the button when expanded",
+                    properties: ["expanded"],
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    },
+                },
+                {
+                    class: "roundedClass",
+                    description: "Class of the button when rounded",
+                    properties: ["rounded"],
+                    action: (cmp) => {
+                        cmp.data.rounded = true;
+                    },
+                },
+                {
+                    class: "disabledClass",
+                    description: "Class of the button when disabled",
+                    properties: ["disabled"],
+                    action: (cmp) => {
+                        cmp.data.disabled = true;
+                    },
+                },
+                {
+                    class: "iconClass",
+                    description: "Class of the button icon",
+                    properties: ["iconLeft", "iconRight"],
+                    action: (cmp) => {
+                        cmp.data['icon-left'] = "plus"
+                    },
+                },
+                {
+                    class: "sizeClass",
+                    description: "Class of the button size",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                    },
+                },
+                {
+                    class: "variantClass",
+                    description: "Class of the button variant",
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = 'warning';
+                    },
+                },
+            ],
+        };
+    }
+}
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name  | Description                              | Type           | Values                                                                          | Default                                         |
 | ---------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------- |
-| variant    | Color of the control, optional           | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                 |
-| size       | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                                                 |
-| label      | Button label, optional when default slot | string         | -                                                                               |                                                 |
-| iconPack   | Icon pack to use                         | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                 |
-| iconLeft   | Icon name to show on the left            | string         | -                                                                               |                                                 |
-| iconRight  | Icon name to show on the right           | string         | -                                                                               |                                                 |
-| rounded    | Rounded style                            | boolean        | -                                                                               | Config -> <code> 'button.rounded': false</code> |
-| outlined   | Outlined style                           | boolean        | -                                                                               |                                                 |
-| expanded   | Button will be expanded (full-width)     | boolean        | -                                                                               |                                                 |
-| inverted   |                                          | boolean        | -                                                                               |                                                 |
-| nativeType | Button type, like native                 | string         | -                                                                               | 'button'                                        |
-| tag        | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                        |
 | disabled   | Button will be disabled                  | boolean        | -                                                                               |                                                 |
+| expanded   | Button will be expanded (full-width)     | boolean        | -                                                                               |                                                 |
 | iconBoth   |                                          | boolean        | -                                                                               |                                                 |
-
-## Class props
-
-| Prop name      | Description | Type   | Values | Default |
-| -------------- | ----------- | ------ | ------ | ------- |
-| rootClass      |             | string | -      |         |
-| outlinedClass  |             | string | -      |         |
-| invertedClass  |             | string | -      |         |
-| expandedClass  |             | string | -      |         |
-| roundedClass   |             | string | -      |         |
-| disabledClass  |             | string | -      |         |
-| iconClass      |             | string | -      |         |
-| iconLeftClass  |             | string | -      |         |
-| iconRightClass |             | string | -      |         |
-| sizeClass      |             | string | -      |         |
-| variantClass   |             | string | -      |         |
+| iconLeft   | Icon name to show on the left            | string         | -                                                                               |                                                 |
+| iconPack   | Icon pack to use                         | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                 |
+| iconRight  | Icon name to show on the right           | string         | -                                                                               |                                                 |
+| inverted   |                                          | boolean        | -                                                                               |                                                 |
+| label      | Button label, optional when default slot | string         | -                                                                               |                                                 |
+| nativeType | Button type, like native                 | string         | -                                                                               | 'button'                                        |
+| outlined   | Outlined style                           | boolean        | -                                                                               |                                                 |
+| rounded    | Rounded style                            | boolean        | -                                                                               | Config -> <code> 'button.rounded': false</code> |
+| size       | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                                                 |
+| tag        | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                        |
+| variant    | Color of the control, optional           | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                 |
 
 ## Slots
 

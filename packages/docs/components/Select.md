@@ -123,42 +123,157 @@ title: Select
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-field :variant="s.fieldvariant" :message="s.fieldmessage">
+                    <o-select placeholder="Select a character" v-bind="s" v-model="selectedOptions">
+                        <optgroup label="Black Sails">
+                            <option value="flint">Flint</option>
+                            <option value="silver">Silver</option>
+                            <option value="vane">Vane</option>
+                            <option value="billy">Billy</option>
+                            <option value="jack">Jack</option>
+                        </optgroup>
+                        <optgroup label="Breaking Bad">
+                            <option value="heisenberg">Heisenberg</option>
+                            <option value="jesse">Jesse</option>
+                            <option value="saul">Saul</option>
+                            <option value="mike">Mike</option>
+                        </optgroup>
+                    </o-select>
+                </o-field>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            selectedOptions: null,
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "",
+                    action: () => {
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "iconsLeftClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.icon = "envelope";
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "iconsRightClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.iconRight = "times-circle";
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "roundedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.rounded = true;
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "multipleClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.multiple = true;
+                        this.selectedOptions = [];
+                    }
+                },
+                {
+                    class: "expandedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "iconLeftClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.icon = "envelope";
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "iconRightClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.iconRight = "times-circle";
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "sizeClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "variantClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.fieldvariant = 'info';
+                        cmp.data.fieldmessage = "Info for this field"
+                        this.selectedOptions = null;
+                    }
+                },
+                {
+                    class: "placeholderClass",
+                    description: "",
+                    action: () => {
+                        this.selectedOptions = null;
+                    }
+                }
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name          | Description                                                 | Type                                   | Values                                            | Default                                                  |
 | ------------------ | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| autocomplete       | Native options to use in HTML5 validation                   | string                                 | -                                                 |                                                          |
 | expanded           | Makes input full width when inside a grouped or addon field | boolean                                | -                                                 |                                                          |
-| rounded            | Makes the element rounded                                   | boolean                                | -                                                 |                                                          |
 | icon               | Icon name to be added                                       | string                                 | -                                                 |                                                          |
 | iconPack           | Icon pack to use                                            | string                                 | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
-| autocomplete       | Native options to use in HTML5 validation                   | string                                 | -                                                 |                                                          |
-| maxlength          | Same as native maxlength, plus character counter            | number\|string                         | -                                                 |                                                          |
-| useHtml5Validation | Enable html 5 native validation                             | boolean                                | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
-| statusIcon         | Show status icon using field and variant prop               | boolean                                | -                                                 | Config -> <code> "statusIcon": true</code>               |
-| validationMessage  | The message which is shown when a validation error occurs   | string                                 | -                                                 |                                                          |
-| v-model            |                                                             | string\|number\|boolean\|object\|array | -                                                 | null                                                     |
-| size               | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                        |                                                          |
 | iconRight          | Icon name to be added on the right side                     | string                                 | -                                                 | Config -> <code> 'select.iconRight': 'caret-down'</code> |
-| placeholder        | Text when nothing is selected                               | string                                 | -                                                 |                                                          |
+| maxlength          | Same as native maxlength, plus character counter            | number\|string                         | -                                                 |                                                          |
 | multiple           |                                                             | boolean                                | -                                                 |                                                          |
 | nativeSize         | Same as native size                                         | string\|number                         | -                                                 |                                                          |
-
-## Class props
-
-| Prop name        | Description | Type   | Values | Default |
-| ---------------- | ----------- | ------ | ------ | ------- |
-| rootClass        |             | string | -      |         |
-| iconsLeftClass   |             | string | -      |         |
-| iconsRightClass  |             | string | -      |         |
-| roundedClass     |             | string | -      |         |
-| multipleClass    |             | string | -      |         |
-| emptyClass       |             | string | -      |         |
-| expandedClass    |             | string | -      |         |
-| iconLeftClass    |             | string | -      |         |
-| iconRightClass   |             | string | -      |         |
-| sizeClass        |             | string | -      |         |
-| variantClass     |             | string | -      |         |
-| placeholderClass |             | string | -      |         |
+| placeholder        | Text when nothing is selected                               | string                                 | -                                                 |                                                          |
+| rounded            | Makes the element rounded                                   | boolean                                | -                                                 |                                                          |
+| size               | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                        |                                                          |
+| statusIcon         | Show status icon using field and variant prop               | boolean                                | -                                                 | Config -> <code> "statusIcon": true</code>               |
+| useHtml5Validation | Enable html 5 native validation                             | boolean                                | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
+| v-model            |                                                             | string\|number\|boolean\|object\|array | -                                                 | null                                                     |
+| validationMessage  | The message which is shown when a validation error occurs   | string                                 | -                                                 |                                                          |
 
 ## Events
 

@@ -6,8 +6,10 @@ const src = '../oruga/src';
 const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
   'TableColumn.vue', 'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue',
-  'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue'
+  'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue'
 ];
+
+const IGNORE_CLASSES = ['customClass']
 
 module.exports = {
   componentsRoot: `${src}/components`,
@@ -43,6 +45,7 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 ${docsBlocks ? '---\n' + docsBlocks.join('\n---\n') : ''}
+${tmplClassProps(config, displayName.toLowerCase())}
 ${renderedUsage.props}
 ${renderedUsage.methods}
 ${renderedUsage.events}
@@ -57,26 +60,37 @@ ${style ? renderStyleDocs(config, style[0].description) : ''}
 | Prop name     | Description | Type      | Values      | Default     |
 | ------------- |-------------| --------- | ----------- | ----------- |
 ${tmplProps(props)}
-
-## Class props
-| Prop name     | Description | Type      | Values      | Default     |
-| ------------- |-------------| --------- | ----------- | ----------- |
-${tmplProps(props, true)}
 `
     }
   }
 };
 
-function tmplProps(props, parseClasses=false) {
+function tmplClassProps(config, name) {
+    try {
+        const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
+        return `
+## Class props
+<br />
+${fs.readFileSync(inspectorVueFile, 'utf8')}
+<br />
+<br />
+`
+    } catch (err) {
+        return ''
+    }
+}
+
+function tmplProps(props) {
   let ret = ''
+
+  props.sort(function(propa, propb) {
+    return (propa.name < propb.name) ? -1 : (propa.name > propb.name) ? 1 : 0;
+  });
 
   props.forEach(pr => {
     const p = pr.name
-    if (parseClasses && !p.endsWith("Class")) {
+    if (p.endsWith("Class") && !(IGNORE_CLASSES.indexOf(p) >= 0)) {
       return;
-    }
-    if (!parseClasses && p.endsWith("Class")) {
-        return;
     }
     const n = pr.type && pr.type.name ? pr.type.name : ''
     let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : ''

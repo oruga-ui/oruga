@@ -166,44 +166,121 @@ title: Slider
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-slider v-bind="s" :value="30"> </o-slider>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "",
+                },
+                {
+                    class: "trackClass",
+                    description: "",
+                    action: () => {
+                    }
+                },
+                {
+                    class: "fillClass",
+                    description: "",
+                    action: () => {
+                    }
+                },
+                {
+                    class: "roundedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.rounded = true
+                    }
+                },
+                {
+                    class: "draggingClass",
+                    description: "",
+                    action: () => {
+                    }
+                },
+                {
+                    class: "disabledClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.disabled = true;
+                    }
+                },
+                {
+                    class: "biggerSliderFocusClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.biggerSliderFocus = true;
+                    }
+                },
+                {
+                    class: "thumbWrapperClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.fullScreen = true;
+                    }
+                },
+                {
+                    class: "thumbClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.fullScreen = true;
+                    }
+                },
+                {
+                    class: "variantClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.variant = 'warning';
+                    }
+                },
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name         | Description                                      | Type          | Values                                                                          | Default                                             |
 | ----------------- | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
-| v-model           |                                                  | number\|array | -                                                                               | 0                                                   |
-| min               | Minimum value                                    | number        | -                                                                               | 0                                                   |
-| max               | Maximum value                                    | number        | -                                                                               | 100                                                 |
-| step              | Step interval of ticks                           | number        | -                                                                               | 1                                                   |
-| variant           | Color of the slider                              | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | Config -> <code> 'slider.variant': 'primary'</code> |
-| size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                     |
-| ticks             | Show tick marks                                  | boolean       | -                                                                               | false                                               |
-| tooltip           | Show tooltip when thumb is being dragged         | boolean       | -                                                                               | true                                                |
-| tooltipVariant    | Color of the tooltip                             | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                     |
-| rounded           | Rounded thumb                                    | boolean       | -                                                                               | Config -> <code> 'slider.rounded': false</code>     |
-| disabled          |                                                  | boolean       | -                                                                               | false                                               |
-| lazy              | Update v-model only when dragging is finished    | boolean       | -                                                                               | false                                               |
-| customFormatter   | Function to format the tooltip label for display | func          | -                                                                               |                                                     |
 | ariaLabel         |                                                  | string\|array | -                                                                               |                                                     |
 | biggerSliderFocus | Increases slider size on focus                   | boolean       | -                                                                               | false                                               |
-| indicator         |                                                  | boolean       | -                                                                               | false                                               |
+| customFormatter   | Function to format the tooltip label for display | func          | -                                                                               |                                                     |
+| disabled          |                                                  | boolean       | -                                                                               | false                                               |
 | format            |                                                  | string        | -                                                                               | 'raw'                                               |
+| indicator         |                                                  | boolean       | -                                                                               | false                                               |
+| lazy              | Update v-model only when dragging is finished    | boolean       | -                                                                               | false                                               |
 | locale            |                                                  | string\|array | -                                                                               | Config -> <code> 'locale':undefined</code>          |
+| max               | Maximum value                                    | number        | -                                                                               | 100                                                 |
+| min               | Minimum value                                    | number        | -                                                                               | 0                                                   |
+| rounded           | Rounded thumb                                    | boolean       | -                                                                               | Config -> <code> 'slider.rounded': false</code>     |
+| size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                     |
+| step              | Step interval of ticks                           | number        | -                                                                               | 1                                                   |
+| ticks             | Show tick marks                                  | boolean       | -                                                                               | false                                               |
+| tooltip           | Show tooltip when thumb is being dragged         | boolean       | -                                                                               | true                                                |
 | tooltipAlways     | Tooltip displays always                          | boolean       | -                                                                               | false                                               |
-
-## Class props
-
-| Prop name              | Description | Type   | Values | Default |
-| ---------------------- | ----------- | ------ | ------ | ------- |
-| rootClass              |             | string | -      |         |
-| trackClass             |             | string | -      |         |
-| fillClass              |             | string | -      |         |
-| roundedClass           |             | string | -      |         |
-| draggingClass          |             | string | -      |         |
-| disabledClass          |             | string | -      |         |
-| biggerSliderFocusClass |             | string | -      |         |
-| thumbWrapperClass      |             | string | -      |         |
-| thumbClass             |             | string | -      |         |
-| thumbDraggingClass     |             | string | -      |         |
+| tooltipVariant    | Color of the tooltip                             | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                     |
+| v-model           |                                                  | number\|array | -                                                                               | 0                                                   |
+| variant           | Color of the slider                              | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | Config -> <code> 'slider.variant': 'primary'</code> |
 
 ### Events
 
@@ -227,14 +304,6 @@ title: Slider
 | Prop name | Description          | Type   | Values | Default |
 | --------- | -------------------- | ------ | ------ | ------- |
 | value     | Value of single tick | number | -      | 0       |
-
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| tickClass       |             | string | -      |         |
-| tickHiddenClass |             | string | -      |         |
-| tickLabelClass  |             | string | -      |         |
 
 ### Slots
 

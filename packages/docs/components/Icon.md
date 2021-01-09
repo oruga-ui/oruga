@@ -241,31 +241,87 @@ Vue.use(Oruga, {
 })
 ```
 
-## Props
-
-| Prop name  | Description                        | Type           | Values                                                                                                                             | Default |
-| ---------- | ---------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| variant    | Color of the icon, optional        | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                    |         |
-| component  | Icon component name                | string         | -                                                                                                                                  |         |
-| pack       | Icon pack to use                   | string         | `mdi`, `fa`, `fas and any other custom icon pack`                                                                                  |         |
-| icon       | Icon name                          | string         | -                                                                                                                                  |         |
-| size       | Icon size, optional                | string         | `small`, `medium`, `large`                                                                                                         |         |
-| customSize | Overrides icon font size, optional | string         | `Depends on library: null (smallest)`, `fa-lg`, `fa-2x`, `fa-3x`, `fa-4x`, `fa-5x`, `mdi-18px`, `mdi-24px`, `mdi-36px`, `mdi-48px` |         |
-| clickable  | When true makes icon clickable     | boolean        | -                                                                                                                                  |         |
-| spin       | Enable spin effect on icon         | boolean        | -                                                                                                                                  |         |
-| rotation   | Rotation 0-360                     | number\|string | -                                                                                                                                  |         |
-| both       |                                    | boolean        | -                                                                                                                                  |         |
-
 ## Class props
 
-| Prop name      | Description                                                                                                          | Type   | Values | Default |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------ | ------ | ------- |
-| customClass    | Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes | string | -      |         |
-| rootClass      |                                                                                                                      | string | -      |         |
-| clickableClass |                                                                                                                      | string | -      |         |
-| spinClass      |                                                                                                                      | string | -      |         |
-| sizeClass      |                                                                                                                      | string | -      |         |
-| variantClass   |                                                                                                                      | string | -      |         |
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-icon v-bind="s" pack="fas" icon="home"></o-icon>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element"
+                },
+                {
+                    class: "clickableClass",
+                    description: "Class of the icon when clickable",
+                    properties: ['clickable'],
+                    action: (cmp) => {
+                        cmp.data.clickable = true;
+                    }
+                },
+                {
+                    class: "spinClass",
+                    description: "Class of the element when spin",
+                    properties: ['spin'],
+                    action: (cmp) => {
+                        cmp.data.spin = true;
+                    }
+                },
+                {
+                    class: "sizeClass",
+                    description : 'Class of the icon size',
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = "large";
+                    }
+                },
+                {
+                    class: "variantClass",
+                    description : 'Class of the icon variant',
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = "warning";
+                    }
+                },
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
+## Props
+
+| Prop name   | Description                                                                                                          | Type           | Values                                                                                                                             | Default |
+| ----------- | -------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| both        |                                                                                                                      | boolean        | -                                                                                                                                  |         |
+| clickable   | When true makes icon clickable                                                                                       | boolean        | -                                                                                                                                  |         |
+| component   | Icon component name                                                                                                  | string         | -                                                                                                                                  |         |
+| customClass | Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes | string         | -                                                                                                                                  |         |
+| customSize  | Overrides icon font size, optional                                                                                   | string         | `Depends on library: null (smallest)`, `fa-lg`, `fa-2x`, `fa-3x`, `fa-4x`, `fa-5x`, `mdi-18px`, `mdi-24px`, `mdi-36px`, `mdi-48px` |         |
+| icon        | Icon name                                                                                                            | string         | -                                                                                                                                  |         |
+| pack        | Icon pack to use                                                                                                     | string         | `mdi`, `fa`, `fas and any other custom icon pack`                                                                                  |         |
+| rotation    | Rotation 0-360                                                                                                       | number\|string | -                                                                                                                                  |         |
+| size        | Icon size, optional                                                                                                  | string         | `small`, `medium`, `large`                                                                                                         |         |
+| spin        | Enable spin effect on icon                                                                                           | boolean        | -                                                                                                                                  |         |
+| variant     | Color of the icon, optional                                                                                          | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                    |         |
 
 ## Style
 
