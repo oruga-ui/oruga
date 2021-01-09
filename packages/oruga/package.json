@@ -27,7 +27,7 @@
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "lint:staged": "lint-staged",
-    "unit": "jest --u",
+    "unit": "cross-env NODE_ICU_DATA=node_modules/full-icu jest --u",
     "test": "npm run lint && npm run unit",
     "test:watch": "npm run unit -- --watchAll",
     "build:vue": "rollup -c && rollup -c --environment MINIFY",
@@ -75,8 +75,10 @@
     "codecov": "3.7.2",
     "concurrently": "5.2.0",
     "core-js": "3.6.5",
+    "cross-env": "7.0.3",
     "eslint": "6.7.2",
     "eslint-plugin-vue": "6.2.2",
+    "full-icu": "1.3.1",
     "jest-serializer-vue": "0.3.0",
     "rollup": "2.12.0",
     "rollup-copy-plugin": "0.1.0",
@@ -89,5 +91,6 @@
     "vue-class-component": "7.2.3",
     "vue-property-decorator": "8.4.1",
     "vue-template-compiler": "2.6.11"
-  }
+  },
+  "dependencies": {}
 }

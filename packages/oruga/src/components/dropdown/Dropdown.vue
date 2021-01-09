@@ -189,11 +189,11 @@ export default {
         appendToBodyCopyParent: Boolean,
         rootClass: [String, Function],
         triggerClass: [String, Function],
+        inlineClass: [String, Function],
         menuMobileOverlayClass: [String, Function],
         menuClass: [String, Function],
         menuPositionClass: [String, Function],
         menuActiveClass: [String, Function],
-        menuInlineClass: [String, Function],
         menuMobileClass: [String, Function],
         disabledClass: [String, Function],
         expandedClass: [String, Function]
@@ -211,7 +211,8 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-drop'),
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
-                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded }
+                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
+                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline }
             ]
         },
         triggerClasses() {
@@ -229,7 +230,6 @@ export default {
                 this.computedClass('menuClass', 'o-drop__menu'),
                 { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
                 { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('menuInlineClass', 'o-drop__menu--inline')]: this.inline },
                 { [this.computedClass('menuMobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },

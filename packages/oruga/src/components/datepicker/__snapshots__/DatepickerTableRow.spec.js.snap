@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ODatepickerTableRow render correctly 1`] = `
+<div class="o-dpck__table__row">
+    <!----> <a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>31</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>1</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>2</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>3</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>4</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>5</span>
+        <!---->
+    </a><a role="button" href="#" tabindex="-1" class="o-dpck__table__cell o-dpck__table__cell--selectable o-dpck__table__cell--invisible"><span>6</span>
+        <!---->
+    </a>
+</div>
+`;
