@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OSelect render correctly 1`] = `
-<div class="o-ctrl-sel"><select class="o-sel o-sel-icons-right o-sel--placeholder">
+<div class="o-ctrl-sel"><select class="o-sel o-sel-iconspace-right o-sel--placeholder">
         <!---->
     </select>
     <!---->

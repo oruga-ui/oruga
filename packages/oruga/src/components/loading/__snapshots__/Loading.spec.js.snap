@@ -3,7 +3,7 @@
 exports[`OLoading active render correctly 1`] = `
 <transition-stub name="fade">
     <div class="o-load o-load--fullpage">
-        <div class="o-load__background"></div>
+        <div class="o-load__overlay"></div>
         <o-icon-stub icon="spin" size="medium" spin="true" class="o-load__icon o-load__icon--fullpage"></o-icon-stub>
     </div>
 </transition-stub>
