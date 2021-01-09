@@ -266,7 +266,8 @@ export default {
                 },
                 {
                     class: "clickableClass",
-                    description: "",
+                    description: "Class of the icon when clickable",
+                    properties: ['clickable'],
                     action: (cmp) => {
                         cmp.data.clickable = true;
                     }
