@@ -17,40 +17,45 @@ export default {
       inspectData: [
         {
           class: 'rootClass',
-          description : ''
+          description : 'Class of the root element'
         },
         {
           class: 'labelClass',
-          description : ''
+          description : 'Class of the radio label'
         },
         {
           class: 'checkClass',
-          description : ''
+          description : 'Class of the native radio element'
         },
         {
           class: 'checkCheckedClass',
-          description : '',
+          description : 'Class of the native radio element when checked',
           action: (cmp) => {
             cmp.data.checkbox = 'default';
           }
         },
         {
           class: 'sizeClass',
-          description : '',
+          description : 'Class of the radio size',
+          properties: ["size"],
+          suffixes: ['small', 'medium', 'large'],
           action: (cmp) => {
             cmp.data.size = 'large';
           }
         },
         {
           class: 'disabledClass',
-          description : '',
+          description : 'Class when radio is disabled',
+          properties: ["disabled"],
           action: (cmp) => {
             cmp.data.disabled = true;
           }
         },
         {
           class: 'variantClass',
-          description : '',
+          description : 'Class of the radio variant',
+          properties: ["variant"],
+          suffixes: ['primary', 'info', 'warning', 'danger'],
           action: (cmp) => {
             cmp.data.variant = 'warning';
           }
