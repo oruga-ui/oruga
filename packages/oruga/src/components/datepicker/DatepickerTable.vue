@@ -94,27 +94,27 @@ export default {
         rulesForFirstWeek: Number,
         range: Boolean,
         multiple: Boolean,
-        tableClass: String,
-        tableHeadClass: String,
-        tableHeadCellClass: String,
-        tableBodyClass: String,
-        tableRowClass: String,
-        tableCellClass: String,
-        tableCellSelectedClass: String,
-        tableCellFirstSelectedClass: String,
-        tableCellWithinSelectedClass: String,
-        tableCellLastSelectedClass: String,
-        tableCellFirstHoveredClass: String,
-        tableCellWithinHoveredClass: String,
-        tableCellLastHoveredClass: String,
-        tableCellTodayClass: String,
-        tableCellSelecableClass: String,
-        tableCellUnselectableClass: String,
-        tableCellNearbyClass: String,
-        tableCellEventsClass: String,
-        tableEventsClass: String,
-        tableEventVariantClass: String,
-        tableEventIndicatorClass: String
+        tableClass: [String, Function],
+        tableHeadClass: [String, Function],
+        tableHeadCellClass: [String, Function],
+        tableBodyClass: [String, Function],
+        tableRowClass: [String, Function],
+        tableCellClass: [String, Function],
+        tableCellSelectedClass: [String, Function],
+        tableCellFirstSelectedClass: [String, Function],
+        tableCellWithinSelectedClass: [String, Function],
+        tableCellLastSelectedClass: [String, Function],
+        tableCellFirstHoveredClass: [String, Function],
+        tableCellWithinHoveredClass: [String, Function],
+        tableCellLastHoveredClass: [String, Function],
+        tableCellTodayClass: [String, Function],
+        tableCellSelecableClass: [String, Function],
+        tableCellUnselectableClass: [String, Function],
+        tableCellNearbyClass: [String, Function],
+        tableCellEventsClass: [String, Function],
+        tableEventsClass: [String, Function],
+        tableEventVariantClass: [String, Function],
+        tableEventIndicatorClass: [String, Function]
     },
     data() {
         return {
@@ -174,7 +174,7 @@ export default {
             for (let i = 0; i < this.events.length; i++) {
                 let event = this.events[i]
 
-                if (!event.hasOwnProperty('date')) {
+                if (!Object.prototype.hasOwnProperty.call(event, 'date')) {
                     event = { date: event }
                 }
                 if (

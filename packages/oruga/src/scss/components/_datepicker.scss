@@ -227,6 +227,9 @@ $datepicker-btn-padding: .5em .5em !default;
             &--nearby:not(&--selected) {
                 @include avariable('color', 'datepicker-item-nearby-color', $datepicker-item-nearby-color);
             }
+            &--invisible {
+                visibility: hidden;
+            }
             &--events {
                 @include avariable('padding', 'datepicker-events-item-padding', $datepicker-events-item-padding);
                 position: relative;

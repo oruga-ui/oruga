@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import BDatepickerTableRow from '@components/datepicker/DatepickerTableRow'
+import ODatepickerTableRow from '@components/datepicker/DatepickerTableRow'
 
 const newDate = (y, m, d) => {
     const date = new Date(Date.UTC(y, m, d))
@@ -23,13 +23,13 @@ const propsData = {
 
 let wrapper
 
-describe('BDatepickerTableRow', () => {
+describe('ODatepickerTableRow', () => {
     beforeEach(() => {
-        wrapper = shallowMount(BDatepickerTableRow, { propsData })
+        wrapper = shallowMount(ODatepickerTableRow, { propsData })
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BDatepickerTableRow')
+        expect(wrapper.name()).toBe('ODatepickerTableRow')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
@@ -38,7 +38,7 @@ describe('BDatepickerTableRow', () => {
     })
 
     describe('classObject', function () {
-        beforeEach(() => {
+        beforeEach(async() => {
             wrapper.setProps({
                 selectedDate: [propsData.week[1], propsData.week[5]],
                 nearbySelectableMonthDays: true
@@ -46,59 +46,48 @@ describe('BDatepickerTableRow', () => {
         })
 
         it('should have is-selected class for all range of dates selected', function () {
-            expect(wrapper.findAll('.is-selected').length).toBe(5)
+            expect(wrapper.findAll('.o-dpck__table__cell--selected').length).toBe(5)
         })
 
         it('should have is-first-selected class for the first date selected within the range', function () {
-            const {wrappers: [firstSelectedCell]} = wrapper.findAll('.is-selected')
-            expect(firstSelectedCell.classes()).toContain('is-first-selected')
+            const {wrappers: [firstSelectedCell]} = wrapper.findAll('.o-dpck__table__cell--selected')
+            expect(firstSelectedCell.classes()).toContain('o-dpck__table__cell--first-selected')
         })
 
         it('should have is-within-selected class for the dates selected within the range', function () {
-            const withinSelectedRangeCells = wrapper.findAll('.is-selected.is-within-selected')
+            const withinSelectedRangeCells = wrapper.findAll('.o-dpck__table__cell--selected.o-dpck__table__cell--within-selected')
             expect(withinSelectedRangeCells.length).toBe(3)
         })
 
         it('should have is-last-selected class for the last date selected within the range', function () {
             // wrappers should return 5 elements. Destructure to get the last one
-            const {wrappers: [, , , , lastSelectedCell]} = wrapper.findAll('.is-selected')
-            expect(lastSelectedCell.classes()).toContain('is-last-selected')
+            const {wrappers: [, , , , lastSelectedCell]} = wrapper.findAll('.o-dpck__table__cell--selected')
+            expect(lastSelectedCell.classes()).toContain('o-dpck__table__cell--last-selected')
         })
 
         it('should has is-selected class for all range of dates selected', function () {
-            expect(wrapper.findAll('.is-selected').length).toBe(5)
+            expect(wrapper.findAll('.o-dpck__table__cell--selected').length).toBe(5)
         })
 
-        describe('hovered', function () {
-            beforeEach(() => {
-                wrapper.setProps({
-                    hoveredDateRange: [propsData.week[1], propsData.week[5]]
-                })
-            })
+    })
 
-            it('should have is-within-hovered-range class for all range of dates hovered', function () {
-                expect(wrapper.findAll('.is-selected').length).toBe(5)
+    describe('hovered', function () {
+        beforeEach(() => {
+            wrapper.setProps({
+                hoveredDateRange: [propsData.week[1], propsData.week[5]]
             })
+        })
 
-            it('should have is-first-hovered class for the first date hovered within the range', function () {
-                const {wrappers: [firstHoveredCell]} = wrapper.findAll('.is-within-hovered-range')
-                expect(firstHoveredCell.classes()).toContain('is-first-hovered')
-            })
+        it('should have is-first-hovered class for the first date hovered within the range', function () {
+            expect(wrapper.findAll('.o-dpck__table__cell--first-hovered').length).toBe(1)
+        })
 
-            it('should have is-within-hovered class for the dates hovered within the range', function () {
-                const withinHoveredRangeCells = wrapper.findAll('.is-within-hovered-range.is-within-hovered')
-                expect(withinHoveredRangeCells.length).toBe(3)
-            })
+        it('should have is-last-hovered class for the last date hovered within the range', function () {
+            expect(wrapper.findAll('.o-dpck__table__cell--last-hovered').length).toBe(1)
+        })
 
-            it('should have is-last-hovered class for the last date hovered within the range', function () {
-                // wrappers should return 5 elements. Destructure to get the last one
-                const {wrappers: [, , , , lastHoveredCell]} = wrapper.findAll('.is-within-hovered-range')
-                expect(lastHoveredCell.classes()).toContain('is-last-hovered')
-            })
-
-            it('should has is-within-hovered-range class for all range of dates hovered', function () {
-                expect(wrapper.findAll('.is-within-hovered-range').length).toBe(5)
-            })
+        it('should has is-within-hovered-range class for all range of dates hovered', function () {
+            expect(wrapper.findAll('.o-dpck__table__cell--within-hovered').length).toBe(3)
         })
     })
 
@@ -111,23 +100,23 @@ describe('BDatepickerTableRow', () => {
         })
 
         it('should have is-selected class for all dates selected', function () {
-            expect(wrapper.findAll('.is-selected').length).toBe(3)
+            expect(wrapper.findAll('.o-dpck__table__cell--selected').length).toBe(3)
         })
 
         it('should not have is-first-selected class for the first date selected within the range', function () {
-            const {wrappers: [firstSelectedCell]} = wrapper.findAll('.is-selected')
-            expect(firstSelectedCell.classes()).not.toContain('is-first-selected')
+            const {wrappers: [firstSelectedCell]} = wrapper.findAll('.o-dpck__table__cell--selected')
+            expect(firstSelectedCell.classes()).not.toContain('o-dpck__table__cell--first-selected')
         })
 
         it('should not have is-within-selected class for the dates selected within the range', function () {
-            const withinSelectedRangeCells = wrapper.findAll('.is-selected.is-within-selected')
+            const withinSelectedRangeCells = wrapper.findAll('.o-dpck__table__cell--selected.o-dpck__table__cell--within-selected')
             expect(withinSelectedRangeCells.length).toBe(0)
         })
 
         it('should not have is-last-selected class for the last date selected within the range', function () {
             // wrappers should return 3 elements. Destructure to get the last one
-            const {wrappers: [, , lastSelectedCell]} = wrapper.findAll('.is-selected')
-            expect(lastSelectedCell.classes()).not.toContain('is-last-selected')
+            const {wrappers: [, , lastSelectedCell]} = wrapper.findAll('.o-dpck__table__cell--selected')
+            expect(lastSelectedCell.classes()).not.toContain('o-dpck__table__cell--last-selected')
         })
     })
 
@@ -188,12 +177,12 @@ describe('BDatepickerTableRow', () => {
         const day = newDate(2019, thisMonth, 6)
         const todayEvent = {
             date: day,
-            type: 'is-warning'
+            type: 'o-dpck__table__cell--warning'
         }
         const events = [
             {
                 date: newDate(2019, thisMonth, 2),
-                type: 'is-warning'
+                type: 'o-dpck__table__cell--warning'
             },
             todayEvent
         ]

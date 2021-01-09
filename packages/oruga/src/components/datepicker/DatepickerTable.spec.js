@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import BDatepickerTable from '@components/datepicker/DatepickerTable'
+import ODatepickerTable from '@components/datepicker/DatepickerTable'
 import config, {setOptions} from '@utils/config'
 
 let defaultProps
@@ -12,7 +12,7 @@ const newDate = (y, m, d) => {
     return date
 }
 
-describe('BDatepickerTable', () => {
+describe('ODatepickerTable', () => {
     beforeEach(() => {
         setOptions(Object.assign(config, {
             defaultFirstDayOfWeek: 0,
@@ -40,18 +40,18 @@ describe('BDatepickerTable', () => {
     })
 
     it('is called', () => {
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             stubs: ['b-datepicker-table-row'],
             propsData: {
                 ...defaultProps()
             }
         })
-        expect(wrapper.name()).toBe('BDatepickerTable')
+        expect(wrapper.name()).toBe('ODatepickerTable')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
     it('render correctly', () => {
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             stub: ['b-datepicker-table-row'],
             propsData: {
                 ...defaultProps()
@@ -64,7 +64,7 @@ describe('BDatepickerTable', () => {
     })
 
     it('assign events to weeks even if the event has a time', () => {
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             propsData: {
                 dayNames: config.defaultDayNames,
                 monthNames: config.defaultMonthNames,
@@ -88,7 +88,7 @@ describe('BDatepickerTable', () => {
             newDate(2020, 3, 3),
             monthEvent
         ]
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             propsData: {
                 ...defaultProps(),
                 events
@@ -98,7 +98,7 @@ describe('BDatepickerTable', () => {
     })
 
     it('emit input event with selected date as payload when updateSelectedDate is called', () => {
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             propsData: {
                 ...defaultProps()
             }
@@ -111,7 +111,7 @@ describe('BDatepickerTable', () => {
 
     it('manage selectable dates as expected', () => {
         const day = newDate(2019, 7, 7)
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             propsData: {
                 ...defaultProps()
             }
@@ -162,7 +162,7 @@ describe('BDatepickerTable', () => {
     })
 
     it('emit focused date', () => {
-        const wrapper = shallowMount(BDatepickerTable, {
+        const wrapper = shallowMount(ODatepickerTable, {
             propsData: {
                 ...defaultProps()
             }
@@ -187,7 +187,7 @@ describe('BDatepickerTable', () => {
         const threeDaysBeforeBeginDate = new Date(2019, 3, 7)
 
         it('should return an empty array when props range is false', () => {
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: false
@@ -197,7 +197,7 @@ describe('BDatepickerTable', () => {
         })
 
         it('should return an empty array when selectedEndDate exists', () => {
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: true
@@ -211,7 +211,7 @@ describe('BDatepickerTable', () => {
         })
 
         it('should return an array of two dates', () => {
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: true
@@ -228,7 +228,7 @@ describe('BDatepickerTable', () => {
         })
 
         it('should return the earlier date as the first element', () => {
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: true
@@ -245,7 +245,7 @@ describe('BDatepickerTable', () => {
         })
 
         it('should filter only defined values', () => {
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: true
@@ -263,7 +263,7 @@ describe('BDatepickerTable', () => {
         it('should mange date range update as expected', () => {
             let begin = newDate(2020, 3, 10)
             let end = newDate(2020, 3, 15)
-            const wrapper = shallowMount(BDatepickerTable, {
+            const wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     range: true
@@ -295,7 +295,7 @@ describe('BDatepickerTable', () => {
     describe('Multiple dates', () => {
         let wrapper
         beforeEach(() => {
-            wrapper = shallowMount(BDatepickerTable, {
+            wrapper = shallowMount(ODatepickerTable, {
                 propsData: {
                     ...defaultProps(),
                     multiple: true,

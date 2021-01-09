@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BDatepicker render correctly 1`] = `
-<div class="datepicker control">
-    <b-dropdown-stub maxheight="200" triggers="click" mobilemodal="true" ariarole="dialog" animation="fade" trapfocus="true" closeonclick="true" canclose="true" appendtobodycopyparent="true" aria-modal="true">
-        <b-dropdown-item-stub custom="true" focusable="true" ariarole="" class="">
-            <div>
-                <header class="datepicker-header">
-                    <div class="pagination field is-centered"><a role="button" href="#" class="pagination-previous">
-                            <b-icon-stub type="is-primary is-clickable" icon="chevron-left" both="true"></b-icon-stub>
-                        </a> <a role="button" href="#" class="pagination-next">
-                            <b-icon-stub type="is-primary is-clickable" icon="chevron-right" both="true"></b-icon-stub>
+exports[`ODatepicker render correctly 1`] = `
+<div class="o-dpck">
+    <o-dropdown-stub maxheight="200" mobilemodal="true" ariarole="dialog" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" appendtobodycopyparent="true" aria-modal="true">
+        <o-dropdown-item-stub override="true" tabindex="0" ariarole="">
+            <div class="o-dpck__box">
+                <header class="o-dpck__header">
+                    <div class="o-dpck__header__buttons"><a role="button" href="#" class="o-dpck__header__previous">
+                            <o-icon-stub icon="chevron-left" clickable="true" both="true"></o-icon-stub>
+                        </a> <a role="button" href="#" class="o-dpck__header__next">
+                            <o-icon-stub icon="chevron-right" clickable="true" both="true"></o-icon-stub>
                         </a>
-                        <div class="pagination-list">
-                            <b-field-stub addons="true">
-                                <b-select-stub usehtml5validation="true" statusicon="true" value="7">
+                        <div class="o-dpck__header__list">
+                            <o-field-stub addons="true">
+                                <o-select-stub usehtml5validation="true" statusicon="true" value="7" iconright="caret-down">
                                     <option value="0">
                                         January
                                     </option>
@@ -50,8 +50,8 @@ exports[`BDatepicker render correctly 1`] = `
                                     <option value="11">
                                         December
                                     </option>
-                                </b-select-stub>
-                                <b-select-stub usehtml5validation="true" statusicon="true" value="2018">
+                                </o-select-stub>
+                                <o-select-stub usehtml5validation="true" statusicon="true" value="2018" iconright="caret-down">
                                     <option value="2028">
                                         2028
                                     </option>
@@ -385,17 +385,36 @@ exports[`BDatepicker render correctly 1`] = `
                                     <option value="1918">
                                         1918
                                     </option>
-                                </b-select-stub>
-                            </b-field-stub>
+                                </o-select-stub>
+                            </o-field-stub>
                         </div>
                     </div>
                 </header>
-                <div class="datepicker-content">
-                    <b-datepicker-table-stub daynames="Su,M,Tu,W,Th,F,S" monthnames="January,February,March,April,May,June,July,August,September,October,November,December" firstdayofweek="0" indicators="dots" focused="[object Object]" datecreator="function dateCreator() {}" nearbymonthdays="true" rulesforfirstweek="4"></b-datepicker-table-stub>
-                </div>
+                <o-datepicker-table-stub daynames="Su,M,Tu,W,Th,F,S" monthnames="January,February,March,April,May,June,July,August,September,October,November,December" firstdayofweek="0" indicators="dots" focused="[object Object]" datecreator="() => {
+          /* istanbul ignore next */
+          cov_2ixbwayxy.f[13]++;
+          const dateCreator =
+          /* istanbul ignore next */
+          (cov_2ixbwayxy.s[56]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
+
+          /* istanbul ignore next */
+          cov_2ixbwayxy.s[57]++;
+
+          if (typeof dateCreator === 'function') {
+            /* istanbul ignore next */
+            cov_2ixbwayxy.b[22][0]++;
+            cov_2ixbwayxy.s[58]++;
+            return dateCreator();
+          } else {
+            /* istanbul ignore next */
+            cov_2ixbwayxy.b[22][1]++;
+            cov_2ixbwayxy.s[59]++;
+            return new Date();
+          }
+        }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>
             </div>
             <!---->
-        </b-dropdown-item-stub>
-    </b-dropdown-stub>
+        </o-dropdown-item-stub>
+    </o-dropdown-stub>
 </div>
 `;

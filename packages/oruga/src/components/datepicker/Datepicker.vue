@@ -448,37 +448,37 @@ export default {
         appendToBody: Boolean,
         ariaNextLabel: String,
         ariaPreviousLabel: String,
-        rootClass: String,
-        sizeClass: String,
-        boxClass: String,
-        headerClass: String,
-        headerButtonsClass: String,
-        headerButtonsSizeClass: String,
-        prevBtnClass: String,
-        nextBtnClass: String,
-        listsClass: String,
-        footerClass: String,
-        tableClass: String,
-        tableHeadClass: String,
-        tableHeadCellClass: String,
-        tableBodyClass: String,
-        tableRowClass: String,
-        tableCellClass: String,
-        tableCellSelectedClass: String,
-        tableCellFirstSelectedClass: String,
-        tableCellWithinSelectedClass: String,
-        tableCellLastSelectedClass: String,
-        tableCellFirstHoveredClass: String,
-        tableCellWithinHoveredClass: String,
-        tableCellLastHoveredClass: String,
-        tableCellTodayClass: String,
-        tableCellSelecableClass: String,
-        tableCellUnselectableClass: String,
-        tableCellNearbyClass: String,
-        tableCellEventsClass: String,
-        tableEventsClass: String,
-        tableEventVariantClass: String,
-        tableEventIndicatorClass: String
+        rootClass: [String, Function],
+        sizeClass: [String, Function],
+        boxClass: [String, Function],
+        headerClass: [String, Function],
+        headerButtonsClass: [String, Function],
+        headerButtonsSizeClass: [String, Function],
+        prevBtnClass: [String, Function],
+        nextBtnClass: [String, Function],
+        listsClass: [String, Function],
+        footerClass: [String, Function],
+        tableClass: [String, Function],
+        tableHeadClass: [String, Function],
+        tableHeadCellClass: [String, Function],
+        tableBodyClass: [String, Function],
+        tableRowClass: [String, Function],
+        tableCellClass: [String, Function],
+        tableCellSelectedClass: [String, Function],
+        tableCellFirstSelectedClass: [String, Function],
+        tableCellWithinSelectedClass: [String, Function],
+        tableCellLastSelectedClass: [String, Function],
+        tableCellFirstHoveredClass: [String, Function],
+        tableCellWithinHoveredClass: [String, Function],
+        tableCellLastHoveredClass: [String, Function],
+        tableCellTodayClass: [String, Function],
+        tableCellSelecableClass: [String, Function],
+        tableCellUnselectableClass: [String, Function],
+        tableCellNearbyClass: [String, Function],
+        tableCellEventsClass: [String, Function],
+        tableEventsClass: [String, Function],
+        tableEventVariantClass: [String, Function],
+        tableEventIndicatorClass: [String, Function]
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -495,8 +495,7 @@ export default {
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
             },
-            _elementRef: 'input',
-            _isDatepicker: true
+            $elementRef: 'input'
         }
     },
     computed: {
@@ -658,9 +657,7 @@ export default {
         },
 
         ariaRole() {
-            if (!this.inline) {
-                return 'dialog'
-            }
+            return !this.inline ? 'dialog' : undefined
         }
     },
     watch: {

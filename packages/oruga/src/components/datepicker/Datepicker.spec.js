@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import BDatepicker from '@components/datepicker/Datepicker'
+import ODatepicker from '@components/datepicker/Datepicker'
 
 import config, {setOptions} from '@utils/config'
 
@@ -19,7 +19,7 @@ const defaultMonthNames = [
 const defaultDayNames = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'S']
 const defaultFirstDayOfWeek = 0
 
-describe('BDatepicker', () => {
+describe('ODatepicker', () => {
     describe('with invalid value from config config', () => {
         beforeEach(() => {
             setOptions(Object.assign(config, {
@@ -29,7 +29,7 @@ describe('BDatepicker', () => {
                 focusedDate: newDate(2018, 7, 1)
             }))
 
-            wrapper = shallowMount(BDatepicker, {
+            wrapper = shallowMount(ODatepicker, {
                 stubs: {
                     transition: false
                 }
@@ -53,19 +53,21 @@ describe('BDatepicker', () => {
 
     beforeEach(() => {
         setOptions(Object.assign(config, {
-            defaultMonthNames,
-            defaultDayNames,
-            defaultFirstDayOfWeek,
-            focusedDate: newDate(2018, 7, 15)
+            datepicker: {
+                monthNames: defaultMonthNames,
+                dayNames: defaultDayNames,
+                firstDayOfWeek: defaultFirstDayOfWeek
+            }
+
         }))
 
         defaultProps = {
-            dayNames: config.defaultDayNames,
-            monthNames: config.defaultMonthNames,
-            focusedDate: config.focusedDate
+            dayNames: defaultDayNames,
+            monthNames: defaultMonthNames,
+            focusedDate: newDate(2018, 7, 15)
         }
 
-        wrapper = shallowMount(BDatepicker, {
+        wrapper = shallowMount(ODatepicker, {
             propsData: {
                 ...defaultProps
             },
@@ -79,7 +81,7 @@ describe('BDatepicker', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BDatepicker')
+        expect(wrapper.name()).toBe('ODatepicker')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
@@ -117,20 +119,22 @@ describe('BDatepicker', () => {
         expect(wrapper.emitted()['input']).toEqual([[null]])
     })
 
-    it('react accordingly when changing v-model', () => {
+    it('react accordingly when changing v-model', async () => {
         const date = new Date()
         wrapper.setProps({
             value: date
         })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.updateInternalState).toHaveBeenCalledWith(date)
         expect(wrapper.vm.togglePicker).toHaveBeenCalled()
     })
 
-    it('set focusedDateData when changing focused date', () => {
+    it('set focusedDateData when changing focused date', async () => {
         const date = newDate(2019, 8, 26)
         wrapper.setProps({
             focusedDate: date
         })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.focusedDateData).toEqual({
             day: date.getDate(),
             month: date.getMonth(),
@@ -145,11 +149,12 @@ describe('BDatepicker', () => {
         expect(wrapper.vm.dateParser).toHaveBeenCalled()
     })
 
-    it('react accordingly when calling prev', () => {
+    it('react accordingly when calling prev', async () => {
         let date = newDate(2019, 8, 26)
         wrapper.setProps({
             focusedDate: date
         })
+        await wrapper.vm.$nextTick()
         wrapper.vm.prev()
         expect(wrapper.vm.focusedDateData.month).toBe(7)
 
@@ -157,33 +162,18 @@ describe('BDatepicker', () => {
         wrapper.setProps({
             focusedDate: date
         })
+        await wrapper.vm.$nextTick()
         wrapper.vm.prev()
         expect(wrapper.vm.focusedDateData.year).toBe(2018)
         expect(wrapper.vm.focusedDateData.month).toBe(11)
-
-        date = newDate(2021, 1, 1)
-        wrapper.setProps({
-            focusedDate: date,
-            type: 'month'
-        })
-        wrapper.vm.prev()
-        expect(wrapper.vm.focusedDateData.year).toBe(2020)
-
-        date = newDate(2021, 1, 1)
-        wrapper.setProps({
-            focusedDate: date,
-            type: 'month',
-            disabled: true
-        })
-        wrapper.vm.prev()
-        expect(wrapper.vm.focusedDateData.year).toBe(2021)
     })
 
-    it('react accordingly when calling next', () => {
+    it('react accordingly when calling next', async () => {
         let date = newDate(2019, 8, 26)
         wrapper.setProps({
             focusedDate: date
         })
+        await wrapper.vm.$nextTick()
         wrapper.vm.next()
         expect(wrapper.vm.focusedDateData.month).toBe(9)
 
@@ -191,34 +181,19 @@ describe('BDatepicker', () => {
         wrapper.setProps({
             focusedDate: date
         })
+        await wrapper.vm.$nextTick()
         wrapper.vm.next()
         expect(wrapper.vm.focusedDateData.year).toBe(2020)
         expect(wrapper.vm.focusedDateData.month).toBe(0)
-
-        date = newDate(2021, 1, 1)
-        wrapper.setProps({
-            focusedDate: date,
-            type: 'month'
-        })
-        wrapper.vm.next()
-        expect(wrapper.vm.focusedDateData.year).toBe(2022)
-
-        date = newDate(2021, 1, 1)
-        wrapper.setProps({
-            focusedDate: date,
-            type: 'month',
-            disabled: true
-        })
-        wrapper.vm.next()
-        expect(wrapper.vm.focusedDateData.year).toBe(2021)
     })
 
-    it('handles accordingly the list of months', () => {
+    it('handles accordingly the list of months', async () => {
         wrapper.setProps({
             focusedDate: newDate(2021, 10, 16),
             minDate: newDate(2021, 10, 15),
             maxDate: null
         })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.listOfMonths.filter((month) => !month.disabled).map((month) => month.name)).toEqual(['November', 'December'])
 
         wrapper.setProps({
@@ -226,6 +201,7 @@ describe('BDatepicker', () => {
             minDate: null,
             maxDate: newDate(2021, 2, 15)
         })
+        await wrapper.vm.$nextTick()
         expect(wrapper.vm.listOfMonths.filter((month) => !month.disabled).map((month) => month.name)).toEqual(['January', 'February', 'March'])
     })
 
@@ -316,11 +292,12 @@ describe('BDatepicker', () => {
                 expect(wrapper.emitted()['input']).toBeTruthy()
             })
 
-            it('react accordingly when changing v-model', () => {
+            it('react accordingly when changing v-model', async () => {
                 const date = new Date()
                 wrapper.setProps({
                     value: date
                 })
+                await wrapper.vm.$nextTick()
                 expect(wrapper.vm.updateInternalState).toHaveBeenCalledWith(date)
                 expect(wrapper.vm.togglePicker).toHaveBeenCalledTimes(0)
             })
@@ -346,7 +323,7 @@ describe('BDatepicker', () => {
             })
             wrapper.vm.formatValue(undefined)
             expect(mockDateFormatter.mock.calls.length).toEqual(0)
-            wrapper.vm.formatValue('buefy')
+            wrapper.vm.formatValue('oruga')
             expect(mockDateFormatter.mock.calls.length).toEqual(0)
         })
 
@@ -357,39 +334,9 @@ describe('BDatepicker', () => {
             })
             wrapper.vm.formatValue([new Date(), undefined])
             expect(mockDateFormatter.mock.calls.length).toEqual(0)
-            wrapper.vm.formatValue([new Date(), 'buefy'])
+            wrapper.vm.formatValue([new Date(), 'oruga'])
             expect(mockDateFormatter.mock.calls.length).toEqual(0)
         })
     })
 
-    describe('when horizontalTimePicker is true', () => {
-        beforeEach(() => {
-            wrapper = shallowMount(BDatepicker, {
-                stubs: {
-                    transition: false
-                },
-                slots: {
-                    default: ['<div>Custom footer</div>']
-                },
-                propsData: {
-                    horizontalTimePicker: true
-                }
-            })
-        })
-
-        it('renders a component with .dropdown-horizonal-timepicker class', () => {
-            const subject = wrapper.find('.dropdown-horizonal-timepicker')
-            expect(subject.exists()).toBeTruthy()
-        })
-
-        it('renders a component with .content-horizonal-timepicker class', () => {
-            const subject = wrapper.find('.content-horizonal-timepicker')
-            expect(subject.exists()).toBeTruthy()
-        })
-
-        it('renders a component with .footer-horizontal-timepicker class', () => {
-            const subject = wrapper.find('.footer-horizontal-timepicker')
-            expect(subject.exists()).toBeTruthy()
-        })
-    })
 })
