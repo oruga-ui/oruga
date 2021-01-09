@@ -1,8 +1,6 @@
 
 /* @docs */
 $slider-background: transparent !default;
-$slider-focus-margin: -20px 0 -20px 0 !default;
-$slider-focus-padding: 20px 0 20px 0 !default;
 $slider-margin: 1em 0 !default;
 $slider-mark-size: 0.75rem !default;
 $slider-radius: $base-border-radius !default;
@@ -124,11 +122,6 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         /* --- */
     }
 
-    &--focus{
-        @include avariable('padding', 'slider-focus-padding', $slider-focus-padding);
-        @include avariable('margin', 'slider-focus-margin', $slider-focus-margin);
-        cursor: pointer;
-    }
     /* REMOVE ON LITE */
     @include slider-size($base-font-size);
     @each $name, $value in $sizes {

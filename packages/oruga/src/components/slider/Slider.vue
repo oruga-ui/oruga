@@ -190,7 +190,6 @@ export default {
         thumbRoundedClass: [String, Function],
         thumbDraggingClass: [String, Function],
         disabledClass: [String, Function],
-        biggerSliderFocusClass: [String, Function],
         thumbWrapperClass: [String, Function],
         thumbClass: [String, Function],
         variantClass: [String, Function]
@@ -209,7 +208,6 @@ export default {
                 this.computedClass('rootClass', 'o-slide'),
                 { [this.computedClass('sizeClass', 'o-slide--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-slide--disabled')]: this.disabled },
-                { [this.computedClass('biggerSliderFocusClass', 'o-slide--focus')]: this.biggerSliderFocus }
             ]
         },
         trackClasses() {

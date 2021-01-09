@@ -59,13 +59,6 @@ export default {
                     }
                 },
                 {
-                    class: "biggerSliderFocusClass",
-                    description: "",
-                    action: (cmp) => {
-                        cmp.data.biggerSliderFocus = true;
-                    }
-                },
-                {
                     class: "thumbWrapperClass",
                     description: "Class of the thumb wrapper",
                     action: (cmp) => {
@@ -92,25 +85,19 @@ export default {
                 {
                     class: "tickClass",
                     description: "Class of slider tick",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
+                    properties: ["ticks"]
                 },
                 {
                     class: "tickHiddenClass",
                     description: "Class when slider tick is hidden",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
+                    properties: ["ticks"]
                 },
                 {
                     class: "tickLabelClass",
                     description: "Class of tick label",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
-                },
-            ],
+                    properties: ["ticks"]
+                }
+            ]
         };
     },
 };

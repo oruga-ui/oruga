@@ -230,13 +230,6 @@ export default {
                     }
                 },
                 {
-                    class: "biggerSliderFocusClass",
-                    description: "",
-                    action: (cmp) => {
-                        cmp.data.biggerSliderFocus = true;
-                    }
-                },
-                {
                     class: "thumbWrapperClass",
                     description: "Class of the thumb wrapper",
                     action: (cmp) => {
@@ -263,25 +256,19 @@ export default {
                 {
                     class: "tickClass",
                     description: "Class of slider tick",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
+                    properties: ["ticks"]
                 },
                 {
                     class: "tickHiddenClass",
                     description: "Class when slider tick is hidden",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
+                    properties: ["ticks"]
                 },
                 {
                     class: "tickLabelClass",
                     description: "Class of tick label",
-                    properties: ["ticks"],
-                    action: (cmp) => {
-                    }
-                },
-            ],
+                    properties: ["ticks"]
+                }
+            ]
         };
     },
 };
@@ -350,8 +337,6 @@ export default {
 | CSS Variable                            | SASS Variable                     | Default                      |
 | --------------------------------------- | --------------------------------- | ---------------------------- |
 | --oruga-slider-background               | \$slider-background               | transparent                  |
-| --oruga-slider-focus-margin             | \$slider-focus-margin             | -20px 0 -20px 0              |
-| --oruga-slider-focus-padding            | \$slider-focus-padding            | 20px 0 20px 0                |
 | --oruga-slider-margin                   | \$slider-margin                   | 1em 0                        |
 | --oruga-slider-mark-size                | \$slider-mark-size                | 0.75rem                      |
 | --oruga-slider-radius                   | \$slider-radius                   | \$base-border-radius         |
