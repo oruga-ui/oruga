@@ -1,8 +1,8 @@
 <template>
-    <div class="o-dpck__table__row">
+    <div :class="tableRowClasses">
         <a
-            class="o-dpck__table__cell o-dpck__table__cell-week-number"
-            :class="{'is-clickable': weekNumberClickable }"
+            :class="tableCellClasses"
+            :style="{'cursor: pointer': weekNumberClickable }"
             v-if="showWeekNumber"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
@@ -12,7 +12,7 @@
                 :ref="`day-${weekDay.getMonth()}-${weekDay.getDate()}`"
                 v-if="selectableDate(weekDay) && !disabled"
                 :key="index"
-                :class="classObject(weekDay)"
+                :class="cellClasses(weekDay)"
                 role="button"
                 href="#"
                 :disabled="disabled"
@@ -21,10 +21,11 @@
                 @keydown.prevent="manageKeydown($event, weekDay)"
                 :tabindex="day === weekDay.getDate() ? null : -1">
                 <span>{{ weekDay.getDate() }}</span>
-                <div class="o-dpck__table__events" v-if="eventsDateMatch(weekDay)">
+                <div
+                    :class="tableEventsClasses"
+                    v-if="eventsDateMatch(weekDay)">
                     <div
-                        class="o-dpck__table__event"
-                        :class="[event.type ? 'o-dpck__table__event--' + event.type : '', 'o-dpck__table__event--' + indicators]"
+                        :class="eventClasses(event)"
                         v-for="(event, index) in eventsDateMatch(weekDay)"
                         :key="index"/>
                 </div>
@@ -32,7 +33,7 @@
             <div
                 v-else
                 :key="index"
-                :class="classObject(weekDay)">
+                :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>
         </template>
@@ -40,8 +41,12 @@
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 export default {
     name: 'ODatepickerTableRow',
+    mixins: [BaseComponentMixin],
+    configField: 'datepicker',
     inject: {
         $datepicker: { name: '$datepicker', default: false }
     },
@@ -61,6 +66,7 @@ export default {
             type: Number,
             required: true
         },
+        showWeekNumber: Boolean,
         minDate: Date,
         maxDate: Date,
         disabled: Boolean,
@@ -72,14 +78,45 @@ export default {
         dateCreator: Function,
         nearbyMonthDays: Boolean,
         nearbySelectableMonthDays: Boolean,
-        showWeekNumber: Boolean,
         weekNumberClickable: Boolean,
         range: Boolean,
         multiple: Boolean,
         rulesForFirstWeek: Number,
-        firstDayOfWeek: Number
+        firstDayOfWeek: Number,
+        tableRowClass: String,
+        tableCellClass: String,
+        tableCellSelectedClass: String,
+        tableCellFirstSelectedClass: String,
+        tableCellWithinSelectedClass: String,
+        tableCellLastSelectedClass: String,
+        tableCellFirstHoveredClass: String,
+        tableCellWithinHoveredClass: String,
+        tableCellLastHoveredClass: String,
+        tableCellTodayClass: String,
+        tableCellSelecableClass: String,
+        tableCellUnselectableClass: String,
+        tableCellNearbyClass: String,
+        tableCellEventsClass: String,
+        tableEventsClass: String,
+        tableEventVariantClass: String,
+        tableEventIndicatorClass: String
     },
     computed: {
+        tableRowClasses() {
+            return [
+                this.computedClass('tableRowClass', 'o-dpck__table__row'),
+            ]
+        },
+        tableCellClasses() {
+            return [
+                this.computedClass('tableCellClass', 'o-dpck__table__cell'),
+            ]
+        },
+        tableEventsClasses() {
+            return [
+                this.computedClass('tableEventsClass', 'o-dpck__table__events'),
+            ]
+        },
         hasEvents() {
             return this.events && this.events.length
         }
@@ -228,9 +265,9 @@ export default {
         },
 
         /*
-        * Build classObject for cell using validations
+        * Build cellClasses for cell using validations
         */
-        classObject(day) {
+        cellClasses(day) {
             function dateMatch(dateOne, dateTwo, multiple) {
                 // if either date is null or undefined, return false
                 // if using multiple flag, return false
@@ -256,41 +293,89 @@ export default {
                 return dateOne > dates[0] && dateOne < dates[1]
             }
 
-            return {
-                'o-dpck__table__cell': true,
-                'o-dpck__table__cell--selected': dateMatch(day, this.selectedDate) || dateWithin(day, this.selectedDate, this.multiple),
-                'o-dpck__table__cell--first-selected':
-                    dateMatch(
-                        day,
-                        Array.isArray(this.selectedDate) && this.selectedDate[0],
-                        this.multiple
-                    ),
-                'o-dpck__table__cell--within-selected':
-                    dateWithin(day, this.selectedDate, this.multiple),
-                'o-dpck__table__cell--last-selected':
-                    dateMatch(
-                        day,
-                        Array.isArray(this.selectedDate) && this.selectedDate[1],
-                        this.multiple
-                    ),
-                'o-dpck__table__cell--first-hovered': dateMatch(
-                    day,
-                    Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
-                ),
-                'o-dpck__table__cell--within-hovered':
-                    dateWithin(day, this.hoveredDateRange),
-                'o-dpck__table__cell--last-hovered': dateMatch(
-                    day,
-                    Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
-                ),
-                'o-dpck__table__cell--today': dateMatch(day, this.dateCreator()),
-                'o-dpck__table__cell--selectable': this.selectableDate(day) && !this.disabled,
-                'o-dpck__table__cell--unselectable': !this.selectableDate(day) || this.disabled,
-                'o-dpck__table__cell--invisible': !this.nearbyMonthDays && day.getMonth() !== this.month,
-                'o-dpck__table__cell--nearby': this.nearbySelectableMonthDays && day.getMonth() !== this.month,
-                'o-dpck__table__cell--events': this.hasEvents
-            }
+            return [
+                ...this.tableCellClasses,
+                {
+                    [this.computedClass('tableCellSelectedClass', 'o-dpck__table__cell--selected')] :
+                        dateMatch(day, this.selectedDate) || dateWithin(day, this.selectedDate, this.multiple)
+                },
+                {
+                    [this.computedClass('tableCellFirstSelectedClass', 'o-dpck__table__cell--first-selected')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.selectedDate) && this.selectedDate[0],
+                            this.multiple
+                        ),
+                },
+                {
+                    [this.computedClass('tableCellWithinSelectedClass', 'o-dpck__table__cell--within-selected')] :
+                        dateWithin(day, this.selectedDate, this.multiple)
+                },
+                {
+                    [this.computedClass('tableCellLastSelectedClass', 'o-dpck__table__cell--last-selected')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.selectedDate) && this.selectedDate[1],
+                            this.multiple
+                        ),
+                },
+                {
+                    [this.computedClass('tableCellFirstHoveredClass', 'o-dpck__table__cell--first-hovered')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
+                        ),
+                },
+                {
+                    [this.computedClass('tableCellWithinHoveredClass', 'o-dpck__table__cell--within-hovered')] :
+                        dateWithin(day, this.hoveredDateRange)
+                },
+                {
+                    [this.computedClass('tableCellLastHoveredClass', 'o-dpck__table__cell--last-hovered')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
+                        )
+                },
+                {
+                    [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
+                        dateMatch(day, this.dateCreator())
+                },
+                {
+                    [this.computedClass('tableCellSelectableClass', 'o-dpck__table__cell--selectable')] :
+                        this.selectableDate(day) && !this.disabled
+                },
+                {
+                    [this.computedClass('tableCellUnselectableClass', 'o-dpck__table__cell--unselectable')] :
+                        !this.selectableDate(day) || this.disabled
+                },
+                {
+                    [this.computedClass('tableCellInvisibleClass', 'o-dpck__table__cell--invisible')] :
+                        !this.nearbyMonthDays && day.getMonth() !== this.month
+                },
+                {
+                    [this.computedClass('tableCellNearbyClass', 'o-dpck__table__cell--nearby')] :
+                       this.nearbySelectableMonthDays && day.getMonth() !== this.month
+                },
+                {
+                    [this.computedClass('tableCellEventsClass', 'o-dpck__table__cell--events')] :
+                        this.hasEvents
+                },
+                {
+                    [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
+                        dateMatch(day, this.dateCreator())
+                }
+            ]
         },
+
+        eventClasses(event) {
+            return [
+                this.computedClass('tableEventClass', 'o-dpck__table__event'),
+                { [this.computedClass('tableEventVariantClass', 'o-dpck__table__event--', event.type)]: event.type },
+                { [this.computedClass('tableEventIndicatorsClass', 'o-dpck__table__event--', this.indicators)]: this.indicators }
+            ]
+        },
+
         setRangeHoverEndDate(day) {
             if (this.range) {
                 this.$emit('rangeHoverEndDate', day)

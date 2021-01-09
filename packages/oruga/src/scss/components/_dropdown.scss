@@ -31,6 +31,14 @@ $dropdown-mobile-zindex: 50 !default;
     display: inline-flex;
     position: relative;
     vertical-align: top;
+    &--inline {
+        display: inline;
+        .o-drop__menu {
+            position: static;
+            display: inline-block;
+            padding: 0;
+        }
+    }
     &__background {
         position: fixed;
         bottom: 0;
@@ -59,10 +67,7 @@ $dropdown-mobile-zindex: 50 !default;
         @include avariable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
         @include avariable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
         @include avariable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
-        &--inline {
-            position: static;
-            display: inline-block;
-        }
+
         &--top-left {
             top: auto;
             bottom: 100%;

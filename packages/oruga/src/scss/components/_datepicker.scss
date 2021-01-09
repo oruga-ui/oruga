@@ -55,9 +55,6 @@ $datepicker-btn-padding: .5em .5em !default;
             @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);
         }
     }
-    &__drop {
-        width: 100%;
-    }
     &__box {
         display: block;
         position: relative;
@@ -74,12 +71,17 @@ $datepicker-btn-padding: .5em .5em !default;
             display: flex;
             justify-content: center;
             text-align: center;
+            /* REMOVE ON LITE */
+            @each $name, $value in $sizes {
+                &--#{$name} {
+                    @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);
+                }
+            }
         }
         &__previous, &__next {
             justify-content: center;
             text-align: center;
             text-decoration: none;
-            @include avariable('margin', 'datepicker-btn-margin', $datepicker-btn-margin);
             cursor: pointer;
             -moz-appearance: none;
             -webkit-appearance: none;
@@ -97,6 +99,7 @@ $datepicker-btn-padding: .5em .5em !default;
             @include avariable('min-width', 'datepicker-btn-min-width', $datepicker-btn-min-width);
             @include avariable('height', 'datepicker-btn-height', $datepicker-btn-height);
             @include avariable('padding', 'datepicker-btn-padding', $datepicker-btn-padding);
+            @include avariable('margin', 'datepicker-btn-margin', $datepicker-btn-margin);
             &:hover {
                 text-decoration: none;
                 @include avariable('border-color', 'datepicker-btn-hover-border-color', $datepicker-btn-hover-border-color);
@@ -257,5 +260,8 @@ $datepicker-btn-padding: .5em .5em !default;
                 width: 100%;
             }
         }
+    }
+    .o-drop {
+        width: 100%;
     }
 }

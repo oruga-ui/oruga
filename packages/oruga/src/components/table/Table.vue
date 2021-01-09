@@ -980,6 +980,11 @@ export default {
                     : (this.defaultSortDirection.toLowerCase() !== 'desc')
             }
             if (!this.firstTimeSort) {
+                /**
+                 * @property {string} field column field
+                 * @property {boolean} direction 'asc' or 'desc'
+                 * @property {Event} event native event
+                */
                 this.$emit('sort', column.field, this.isAsc ? 'asc' : 'desc', event)
             }
             if (!this.backendSorting) {
@@ -1040,7 +1045,9 @@ export default {
                     }
                 }
             })
-
+            /**
+             * @property {Array<Object>} newCheckedRows checked rows
+             */
             this.$emit('check', this.newCheckedRows)
             this.$emit('check-all', this.newCheckedRows)
 
@@ -1096,12 +1103,20 @@ export default {
         * Emit all necessary events.
         */
         selectRow(row, index) {
+            /**
+             * @property {Object} row clicked row
+             * @property {number} index index of clicked row
+             */
             this.$emit('click', row, index)
 
             if (this.selected === row) return
             if (!this.isRowSelectable(row)) return
 
             // Emit new and old row
+            /**
+             * @property {Object} row selected row
+             * @property {Array<Object>} selected selected rows
+             */
             this.$emit('select', row, this.selected)
 
             // Emit new row to update user variable

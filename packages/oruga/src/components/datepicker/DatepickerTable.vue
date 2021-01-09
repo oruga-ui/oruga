@@ -1,14 +1,14 @@
 <template>
-    <section class="o-dpck__table">
-        <header class="o-dpck__table__head">
+    <section :class="tableClasses">
+        <header :class="tableHeadClasses">
             <div
                 v-for="(day, index) in visibleDayNames"
                 :key="index"
-                class="o-dpck__table__cell o-dpck__table__head-cell">
+                :class="tableHeadCellClasses">
                 <span>{{ day }}</span>
             </div>
         </header>
-        <div class="o-dpck__table__body">
+        <div :class="tableBodyClasses">
             <o-datepicker-table-row
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"
@@ -33,9 +33,26 @@
                 :rules-for-first-week="rulesForFirstWeek"
                 :range="range"
                 :hovered-date-range="hoveredDateRange"
+                :multiple="multiple"
+                :table-row-class="tableRowClass"
+                :table-cell-class="tableCellClass"
+                :table-cell-selected-class="tableCellSelectedClass"
+                :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                :table-cell-within-selected-class="tableCellWithinSelectedClass"
+                :table-cell-last-selected-class="tableCellLastSelectedClass"
+                :table-cell-first-hovered-class="tableCellFirstHoveredClass"
+                :table-cell-within-hovered-class="tableCellWithinHoveredClass"
+                :table-cell-last-hovered-class="tableCellLastHoveredClass"
+                :table-cell-today-class="tableCellTodayClass"
+                :table-cell-selecable-class="tableCellSelecableClass"
+                :table-cell-unselectable-class="tableCellUnselectableClass"
+                :table-cell-nearby-class="tableCellNearbyClass"
+                :table-cell-events-class="tableCellEventsClass"
+                :table-events-class="tableEventsClass"
+                :table-event-variant-class="tableEventVariantClass"
+                :table-event-indicator-class="tableEventIndicatorClass"
                 @select="updateSelectedDate"
                 @rangeHoverEndDate="setRangeHoverEndDate"
-                :multiple="multiple"
                 @change-focus="changeFocus"/>
         </div>
     </section>
@@ -44,8 +61,12 @@
 <script>
 import DatepickerTableRow from './DatepickerTableRow'
 
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 export default {
     name: 'ODatepickerTable',
+    mixins: [BaseComponentMixin],
+    configField: 'datepicker',
     components: {
         [DatepickerTableRow.name]: DatepickerTableRow
     },
@@ -72,7 +93,28 @@ export default {
         weekNumberClickable: Boolean,
         rulesForFirstWeek: Number,
         range: Boolean,
-        multiple: Boolean
+        multiple: Boolean,
+        tableClass: String,
+        tableHeadClass: String,
+        tableHeadCellClass: String,
+        tableBodyClass: String,
+        tableRowClass: String,
+        tableCellClass: String,
+        tableCellSelectedClass: String,
+        tableCellFirstSelectedClass: String,
+        tableCellWithinSelectedClass: String,
+        tableCellLastSelectedClass: String,
+        tableCellFirstHoveredClass: String,
+        tableCellWithinHoveredClass: String,
+        tableCellLastHoveredClass: String,
+        tableCellTodayClass: String,
+        tableCellSelecableClass: String,
+        tableCellUnselectableClass: String,
+        tableCellNearbyClass: String,
+        tableCellEventsClass: String,
+        tableEventsClass: String,
+        tableEventVariantClass: String,
+        tableEventIndicatorClass: String
     },
     data() {
         return {
@@ -83,6 +125,32 @@ export default {
         }
     },
     computed: {
+        tableClasses() {
+            return [
+                this.computedClass('tableClass', 'o-dpck__table')
+            ]
+        },
+        tableHeadClasses() {
+            return [
+                this.computedClass('tableHeadClass', 'o-dpck__table__head')
+            ]
+        },
+        tableHeadCellClasses() {
+            return [
+                this.computedClass('tableHeadCellClass', 'o-dpck__table__head-cell'),
+                ...this.tableCellClasses
+            ]
+        },
+        tableBodyClasses() {
+            return [
+                this.computedClass('tableBodyClass', 'o-dpck__table__body')
+            ]
+        },
+        tableCellClasses() {
+            return [
+                this.computedClass('tableCellClass', 'o-dpck__table__cell'),
+            ]
+        },
         visibleDayNames() {
             const visibleDayNames = []
             let index = this.firstDayOfWeek

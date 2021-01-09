@@ -1,12 +1,8 @@
 <template>
-    <div
-        class="o-dpck"
-        :class="[size]"
-    >
+    <div :class="rootClasses">
         <o-dropdown
             v-if="!isMobile || inline"
             ref="dropdown"
-            root-class="o-dpck__drop"
             :position="position"
             :disabled="disabled"
             :inline="inline"
@@ -46,18 +42,17 @@
                 override
                 :disabled="disabled"
                 :clickable="false">
-                <div class="o-dpck__box">
-                    <header class="o-dpck__header">
+                <div :class="boxClasses">
+                    <header :class="headerClasses">
                         <template v-if="$slots.header !== undefined && $slots.header.length">
                             <slot name="header" />
                         </template>
                         <div
                             v-else
-                            class="o-dpck__header__buttons"
-                            :class="size">
+                            :class="headerButtonsClasses">
                             <a
                                 v-show="!showPrev && !disabled"
-                                class="o-dpck__header__previous"
+                                :class="prevBtnClasses"
                                 role="button"
                                 href="#"
                                 :disabled="disabled"
@@ -74,7 +69,7 @@
                             </a>
                             <a
                                 v-show="!showNext && !disabled"
-                                class="o-dpck__header__next"
+                                :class="nextBtnClasses"
                                 role="button"
                                 href="#"
                                 :disabled="disabled"
@@ -89,7 +84,7 @@
                                     both
                                     clickable />
                             </a>
-                            <div class="o-dpck__header__list">
+                            <div :class="listsClasses">
                                 <o-field>
                                     <o-select
                                         v-if="!isTypeMonth"
@@ -142,6 +137,27 @@
                         :week-number-clickable="weekNumberClickable"
                         :range="range"
                         :multiple="multiple"
+                        :table-class="tableClass"
+                        :table-head-class="tableHeadClass"
+                        :table-head-cell-class="tableHeadCellClass"
+                        :table-body-class="tableBodyClass"
+                        :table-row-class="tableRowClass"
+                        :table-cell-class="tableCellClass"
+                        :table-cell-selected-class="tableCellSelectedClass"
+                        :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                        :table-cell-within-selected-class="tableCellWithinSelectedClass"
+                        :table-cell-last-selected-class="tableCellLastSelectedClass"
+                        :table-cell-first-hovered-class="tableCellFirstHoveredClass"
+                        :table-cell-within-hovered-class="tableCellWithinHoveredClass"
+                        :table-cell-last-hovered-class="tableCellLastHoveredClass"
+                        :table-cell-today-class="tableCellTodayClass"
+                        :table-cell-selecable-class="tableCellSelecableClass"
+                        :table-cell-unselectable-class="tableCellUnselectableClass"
+                        :table-cell-nearby-class="tableCellNearbyClass"
+                        :table-cell-events-class="tableCellEventsClass"
+                        :table-events-class="tableEventsClass"
+                        :table-event-variant-class="tableEventVariantClass"
+                        :table-event-indicator-class="tableEventIndicatorClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
@@ -150,7 +166,7 @@
 
                 <footer
                     v-if="$slots.default !== undefined && $slots.default.length"
-                    class="o-dpck__footer">
+                    :class="footerClasses">
                     <slot/>
                 </footer>
             </o-dropdown-item>
@@ -258,6 +274,7 @@ export default {
         [Dropdown.name]: Dropdown,
         [DropdownItem.name]: DropdownItem
     },
+    configField: 'datepicker',
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
     provide() {
@@ -430,7 +447,38 @@ export default {
         },
         appendToBody: Boolean,
         ariaNextLabel: String,
-        ariaPreviousLabel: String
+        ariaPreviousLabel: String,
+        rootClass: String,
+        sizeClass: String,
+        boxClass: String,
+        headerClass: String,
+        headerButtonsClass: String,
+        headerButtonsSizeClass: String,
+        prevBtnClass: String,
+        nextBtnClass: String,
+        listsClass: String,
+        footerClass: String,
+        tableClass: String,
+        tableHeadClass: String,
+        tableHeadCellClass: String,
+        tableBodyClass: String,
+        tableRowClass: String,
+        tableCellClass: String,
+        tableCellSelectedClass: String,
+        tableCellFirstSelectedClass: String,
+        tableCellWithinSelectedClass: String,
+        tableCellLastSelectedClass: String,
+        tableCellFirstHoveredClass: String,
+        tableCellWithinHoveredClass: String,
+        tableCellLastHoveredClass: String,
+        tableCellTodayClass: String,
+        tableCellSelecableClass: String,
+        tableCellUnselectableClass: String,
+        tableCellNearbyClass: String,
+        tableCellEventsClass: String,
+        tableEventsClass: String,
+        tableEventVariantClass: String,
+        tableEventIndicatorClass: String
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -452,6 +500,49 @@ export default {
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('rootClass', 'o-dpck'),
+                { [this.computedClass('sizeClass', 'o-dpck--', this.size)]: this.size },
+            ]
+        },
+        boxClasses() {
+            return [
+                this.computedClass('boxClass', 'o-dpck__box')
+            ]
+        },
+        headerClasses() {
+            return [
+                this.computedClass('headerClass', 'o-dpck__header')
+            ]
+        },
+        headerButtonsClasses() {
+            return [
+                this.computedClass('headerButtonsClass', 'o-dpck__header__buttons'),
+                { [this.computedClass('headerButtonsSizeClass', 'o-dpck__header__buttons--', this.size)]: this.size },
+            ]
+        },
+        prevBtnClasses() {
+            return [
+                this.computedClass('prevBtnClass', 'o-dpck__header__previous')
+            ]
+        },
+        nextBtnClasses() {
+            return [
+                this.computedClass('nextBtnClass', 'o-dpck__header__next')
+            ]
+        },
+        listsClasses() {
+            return [
+                this.computedClass('listsClass', 'o-dpck__header__list')
+            ]
+        },
+        footerClasses() {
+            return [
+                this.computedClass('footerClass', 'o-dpck__footer')
+            ]
+        },
+
         computedValue: {
             get() {
                 return this.dateSelected

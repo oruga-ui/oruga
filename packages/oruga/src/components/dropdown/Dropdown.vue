@@ -210,7 +210,8 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-drop'),
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
-                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded }
+                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
+                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
             ]
         },
         triggerClasses() {
@@ -228,7 +229,6 @@ export default {
                 this.computedClass('menuClass', 'o-drop__menu'),
                 { [this.computedClass('positionClass', 'o-drop__menu--', this.position)]: this.position },
                 { [this.computedClass('activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('inlineClass', 'o-drop__menu--inline')]: this.inline },
                 { [this.computedClass('mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },
