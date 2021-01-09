@@ -53,10 +53,10 @@ $input-width: 100% !default;
     @include avariable('line-height', 'input-line-height', $input-line-height);
     @include avariable('padding', 'input-padding', $input-padding);
     @include avariable('margin', 'input-margin', $input-margin);
-    &-icons-left {
+    &-iconspace-left {
         @include avariable('padding-left', 'input-height', $input-height);
     }
-    &-icons-right {
+    &-iconspace-right {
         @include avariable('padding-right', 'input-height', $input-height);
     }
     &--rounded {

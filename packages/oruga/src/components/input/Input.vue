@@ -121,9 +121,9 @@ export default {
         /** Variant of right icon */
         iconRightType: [String, Function],
         rootClass: [String, Function],
-        controlExpandedClass: [String, Function],
-        iconsLeftClass: [String, Function],
-        iconsRightClass: [String, Function],
+        expandedClass: [String, Function],
+        iconLeftSpaceClass: [String, Function],
+        iconRightSpaceClass: [String, Function],
         inputClass: [String, Function],
         roundedClass: [String, Function],
         iconLeftClass: [String, Function],
@@ -144,7 +144,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-ctrl-input'),
-                { [this.computedClass('controlExpandedClass', 'o-ctrl-input--expanded')]: this.expanded }
+                { [this.computedClass('expandedClass', 'o-ctrl-input--expanded')]: this.expanded }
             ]
         },
         inputClasses() {
@@ -154,8 +154,8 @@ export default {
                 { [this.computedClass('sizeClass', 'o-input--', this.size)]: this.size },
                 { [this.computedClass('variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
                 { [this.computedClass('textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
-                { [this.computedClass('iconsLeftClass', 'o-input-icons-left')]: this.icon },
-                { [this.computedClass('iconsRightClass', 'o-input-icons-right')]: this.hasIconRight }
+                { [this.computedClass('iconLeftSpaceClass', 'o-input-iconspace-left')]: this.icon },
+                { [this.computedClass('iconRightSpaceClass', 'o-input-iconspace-right')]: this.hasIconRight }
             ]
         },
         iconLeftClasses() {
