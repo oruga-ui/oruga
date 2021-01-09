@@ -2,10 +2,15 @@
      <div>
         <doc-wrapper>
             <template v-slot:default="s">
-                <o-slider v-bind="s" :value="30"> </o-slider>
+                <o-slider v-bind="s" :min="1" :max="10" :value="4">
+                    <template v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+                        <o-slider-tick v-bind="s" :value="val" :key="val">{{ val }}</o-slider-tick>
+                    </template>
+                </o-slider>
             </template>
         </doc-wrapper>
         <inspector :inspectData="inspectData"></inspector>
+         <br/>
     </div>
 </template>
 
@@ -83,7 +88,28 @@ export default {
                         this.position = 'static';
                         cmp.data.variant = 'warning';
                     }
-                }
+                },
+                {
+                    class: "tickClass",
+                    description: "Class of slider tick",
+                    properties: ["ticks"],
+                    action: (cmp) => {
+                    }
+                },
+                {
+                    class: "tickHiddenClass",
+                    description: "Class when slider tick is hidden",
+                    properties: ["ticks"],
+                    action: (cmp) => {
+                    }
+                },
+                {
+                    class: "tickLabelClass",
+                    description: "Class of tick label",
+                    properties: ["ticks"],
+                    action: (cmp) => {
+                    }
+                },
             ],
         };
     },
