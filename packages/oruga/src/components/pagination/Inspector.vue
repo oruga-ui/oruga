@@ -35,70 +35,77 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                 },
                 {
                     class: "prevBtnClass",
-                    description: "",
+                    description: "Class of the prev. button",
                 },
                 {
                     class: "nextBtnClass",
-                    description: "",
+                    description: "Class of the next button",
                 },
                 {
                     class: "listClass",
-                    description: "",
+                    description: "Class of the pagination list",
                 },
                 {
                     class: "linkClass",
-                    description: "",
+                    description: "Class of the link button",
                 },
                 {
                     class: "linkCurrentClass",
-                    description: "",
+                    description: "Class of the current link",
                 },
                 {
                     class: "ellipsisClass",
-                    description: "",
+                    description: "Class of the pagination ellipsis ",
                 },
                 {
                     class: "infoClass",
-                    description: "",
+                    description: "Class of the info in `simple` mode",
+                    properties: ['simple'],
                     action: (cmp) => {
                         cmp.data.simple = true;
                     }
                 },
                 {
                     class: "orderClass",
-                    description: "",
+                    description: "Class of the pagination order",
+                    properties: ['order'],
+                    suffixes: ['centered', 'right', 'left'],
                     action: (cmp) => {
                         cmp.data.order = 'centered';
                     }
                 },
                 {
                     class: "simpleClass",
-                    description: "",
+                    description: "Class of the pagination in `simple` mode",
+                    properties: ['simple'],
                     action: (cmp) => {
                         cmp.data.simple = true;
                     }
                 },
                 {
                     class: "roundedClass",
-                    description: "",
+                    description: "Class of the pagination when rounded",
+                    properties: ['rounded'],
                     action: (cmp) => {
                         cmp.data.rounded = true;
                     }
                 },
                 {
                     class: "linkDisabledClass",
-                    description: "",
+                    description: "Class of the disabled link",
                     action: () => {
                         this.current = 20;
                     }
                 },
                 {
                     class: "sizeClass",
-                    description: "",
+                    description: "Class for the pagination size",
+                    properties: ['size'],
+                    suffixes: ['small', 'medium', 'large'],
                     action: (cmp) => {
                         cmp.data.size = 'small';
                     }
