@@ -54,10 +54,10 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     @include avariable('line-height', 'select-line-height', $select-line-height);
     @include avariable('padding', 'select-padding', $select-padding);
     @include avariable('height', 'select-height', $select-height);
-    &-icons-left {
+    &-iconspace-left {
         @include avariable('padding-left', 'select-height', $select-height);
     }
-    &-icons-right {
+    &-iconspace-right {
         @include avariable('padding-right', 'select-height', $select-height);
     }
     /* REMOVE ON LITE */

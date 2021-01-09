@@ -96,8 +96,8 @@ export default {
         /** Same as native size */
         nativeSize: [String, Number],
         rootClass: [String, Function],
-        iconsLeftClass: [String, Function],
-        iconsRightClass: [String, Function],
+        iconLeftSpaceClass: [String, Function],
+        iconRightSpaceClass: [String, Function],
         roundedClass: [String, Function],
         multipleClass: [String, Function],
         expandedClass: [String, Function],
@@ -126,8 +126,8 @@ export default {
                 { [this.computedClass('multipleClass', 'o-sel--multiple')]: this.multiple },
                 { [this.computedClass('sizeClass', 'o-sel--', this.size)]: this.size },
                 { [this.computedClass('variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
-                { [this.computedClass('iconsLeftClass', 'o-sel-icons-left')]: this.icon },
-                { [this.computedClass('iconsRightClass', 'o-sel-icons-right')]: this.iconRight },
+                { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
+                { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
                 { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }
             ]
         },
