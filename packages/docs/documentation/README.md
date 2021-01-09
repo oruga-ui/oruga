@@ -374,7 +374,7 @@ In Oruga documentation you'll find a special note for classes with a higher spec
 
 ### Overriding classes
 
-In case you want to override Oruga existing classes, you can act as above and set the field `override` to true.
+In case you want to override Oruga existing classes completely, you can act as above and set the field `override` to true.
 
 ```js
 import Vue from 'vue';
@@ -389,6 +389,14 @@ Vue.use(Oruga, {
         ...
     }
 });
+```
+
+or directly in your component 
+
+```html
+<o-autocomplete
+    override
+    rootClass="myautocomplete-root">
 ```
 
 You can also specify the override beahviour for each class

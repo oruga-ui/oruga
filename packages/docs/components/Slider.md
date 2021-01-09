@@ -272,6 +272,7 @@ export default {
 | locale            |                                                  | string\|array | -                                                                               | Config -> <code> 'locale':undefined</code>          |
 | max               | Maximum value                                    | number        | -                                                                               | 100                                                 |
 | min               | Minimum value                                    | number        | -                                                                               | 0                                                   |
+| override          |                                                  | boolean       | -                                                                               |                                                     |
 | rounded           | Rounded thumb                                    | boolean       | -                                                                               | Config -> <code> 'slider.rounded': false</code>     |
 | size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                     |
 | step              | Step interval of ticks                           | number        | -                                                                               | 1                                                   |
@@ -301,9 +302,10 @@ export default {
 
 ## Props
 
-| Prop name | Description          | Type   | Values | Default |
-| --------- | -------------------- | ------ | ------ | ------- |
-| value     | Value of single tick | number | -      | 0       |
+| Prop name | Description          | Type    | Values | Default |
+| --------- | -------------------- | ------- | ------ | ------- |
+| override  |                      | boolean | -      |         |
+| value     | Value of single tick | number  | -      | 0       |
 
 ### Slots
 

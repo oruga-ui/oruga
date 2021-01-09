@@ -376,6 +376,7 @@ export default {
 | maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
 | mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
 | multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                      |
+| override               |                                                                                                                                                        | boolean                                | -                                        |                                                      |
 | position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                      |
 | scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                      |
 | trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
@@ -406,8 +407,9 @@ export default {
 | Prop name | Description                                           | Type                                   | Values | Default |
 | --------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
 | ariaRole  |                                                       | string                                 | -      | ''      |
-| custom    | Item is not a clickable item                          | boolean                                | -      |         |
+| clickable | Item is clickable and emit an event                   | boolean                                | -      | true    |
 | disabled  | Item is disabled                                      | boolean                                | -      |         |
+| override  |                                                       | boolean                                | -      |         |
 | tabindex  |                                                       | number\|string                         | -      | 0       |
 | value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
 

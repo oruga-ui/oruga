@@ -255,6 +255,7 @@ title: Tabs
 | destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | false                                         |
 | expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                               |
 | multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                               |
+| override      |                                                 | boolean        | -                                                                               |                                               |
 | position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                               |
 | size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                               |
 | type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | 'default'                                     |
@@ -286,6 +287,7 @@ title: Tabs
 | icon      | Icon on the left                                             | string         | -      |         |
 | iconPack  | Icon pack                                                    | string         | -      |         |
 | label     | Item label                                                   | string         | -      |         |
+| override  |                                                              | boolean        | -      |         |
 | value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |         |
 | visible   | Show/hide item                                               | boolean        | -      | true    |
 
