@@ -146,7 +146,7 @@ title: Sidebar
                         </o-sidebar>
                     </section>
                     <section class="sidebar-layout" v-if="position !== 'static'">
-                        <o-sidebar v-bind="s" :position="position" :open.sync="open" variant="primary">
+                        <o-sidebar v-bind="s" :position="position" :open.sync="open" variant="primary" style="--oruga-sidebar-zindex: 50">
                             <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" alt="Lightweight UI components for Vue.js" />
                             <section style="padding: 1em">
                             <h5>Example 1</h5>
@@ -173,14 +173,14 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                     action: () => {
                         this.position = 'static';
                     }
                 },
                 {
                     class: "overlayClass",
-                    description: "",
+                    description: "Class of the sidebar overlay",
                     action: (cmp) => {
                         this.position = 'fixed';
                         setTimeout(() => {
@@ -192,14 +192,15 @@ export default {
                 },
                 {
                     class: "contentClass",
-                    description: "",
+                    description: "Class of the sidebar content",
                     action: () => {
                         this.position = 'static';
                     }
                 },
                 {
                     class: "fixedClass",
-                    description: "",
+                    description: "Class of the sidebar when its position is fixed",
+                    properties: ['position'],
                     action: (cmp) => {
                         this.position = 'fixed';
                         setTimeout(() => {
@@ -211,14 +212,16 @@ export default {
                 },
                 {
                     class: "staticClass",
-                    description: "",
+                    description: "Class of the sidebar when its position is static",
+                    properties: ['position'],
                     action: () => {
                         this.position = 'static';
                     }
                 },
                 {
                     class: "absoluteClass",
-                    description: "",
+                    description: "Class of the sidebar when its position is absolute",
+                    properties: ['position'],
                     action: (cmp) => {
                         this.position = 'absolute';
                         setTimeout(() => {
@@ -229,7 +232,8 @@ export default {
                 },
                 {
                     class: "fullheightClass",
-                    description: "",
+                    description: "Class of the sidebar when is fullheight",
+                    properties: ['fullheight'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.fullheight = true;
@@ -237,7 +241,8 @@ export default {
                 },
                 {
                     class: "fullwidthClass",
-                    description: "",
+                    description: "Class of the sidebar when is fullwidth",
+                    properties: ['fullwidth'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.fullwidth = true;
@@ -245,7 +250,8 @@ export default {
                 },
                 {
                     class: "rightClass",
-                    description: "",
+                    description: "Class of the sidebar when is positioned on the right",
+                    properties: ['right'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.right = true;
@@ -253,7 +259,8 @@ export default {
                 },
                 {
                     class: "reduceClass",
-                    description: "",
+                    description: "Class of the sidebar when reduced",
+                    properties: ['reduce'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.reduce = true;
@@ -261,7 +268,8 @@ export default {
                 },
                 {
                     class: "expandOnHoverClass",
-                    description: "",
+                    description: "Class of the sidebar when expanded on hover",
+                    properties: ['expandOnHover'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.expandOnHover = true;
@@ -269,7 +277,8 @@ export default {
                 },
                 {
                     class: "expandOnHoverFixedClass",
-                    description: "",
+                    description: "Class of the sidebar when expanded on hover and its position is fixed",
+                    properties: ['expandOnHover', 'expandOnHoverFixed'],
                     action: (cmp) => {
                         this.position = 'fixed';
                         setTimeout(() => {
@@ -281,34 +290,39 @@ export default {
                 },
                 {
                     class: "mobileReduceClass",
-                    description: "",
+                    description: "Class when mobile mode is `reduce`",
+                    warning: "Switch to mobile view to see it in action!",
+                    properties: ['mobile'],
                     action: (cmp) => {
                         cmp.data.mobile = 'reduce'
                         this.position = 'static';
-                        cmp.data.variant = 'primary';
                     }
                 },
                 {
                     class: "mobileHideClass",
-                    description: "",
+                    description: "Class when mobile mode is `hidden`",
+                    warning: "Switch to mobile view to see it in action!",
+                    properties: ['mobile'],
                     action: (cmp) => {
                         cmp.data.mobile = 'hidden'
                         this.position = 'static';
-                        cmp.data.variant = 'primary';
                     }
                 },
                 {
                     class: "mobileFullwidthClass",
-                    description: "",
+                    description: "Class when mobile mode is `fullwidth`",
+                    warning: "Switch to mobile view to see it in action!",
+                    properties: ['mobile'],
                     action: (cmp) => {
                         cmp.data.mobile = 'fullwidth'
                         this.position = 'static';
-                        cmp.data.variant = 'primary';
                     }
                 },
                 {
                     class: "variantClass",
-                    description: "",
+                    description : 'Class of the sidebar variant',
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         this.position = 'static';
                         cmp.data.variant = 'warning';
