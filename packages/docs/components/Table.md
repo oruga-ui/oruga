@@ -1493,13 +1493,9 @@ title: Table
 | --oruga-table-sticky-header-height            | \$table-sticky-header-height            | 300px                                                    |
 | --oruga-table-sticky-zindex                   | \$table-sticky-zindex                   | 1                                                        |
 | --oruga-table-striped-background-color        | \$table-striped-background-color        | #fafafa                                                  |
-| --oruga-table-td-border-color                 | \$table-td-border-color                 | #dbdbdb                                                  |
-| --oruga-table-td-border-style                 | \$table-td-border-style                 | solid                                                    |
-| --oruga-table-td-border-width                 | \$table-td-border-width                 | 0 0 1px                                                  |
+| --oruga-table-td-border                       | \$table-td-border                       | 1px solid #dbdbdb                                        |
 | --oruga-table-td-padding                      | \$table-td-padding                      | .5em .75em                                               |
-| --oruga-table-th-border-color                 | \$table-th-border-color                 | #dbdbdb                                                  |
-| --oruga-table-th-border-style                 | \$table-th-border-style                 | solid                                                    |
-| --oruga-table-th-border-width                 | \$table-th-border-width                 | 0 0 2px 0                                                |
+| --oruga-table-th-border                       | \$table-th-border                       | 2px solid #dbdbdb                                        |
 | --oruga-table-th-checkbox-width               | \$table-th-checkbox-width               | 40px                                                     |
 | --oruga-table-th-color                        | \$table-th-color                        | #363636                                                  |
 | --oruga-table-th-detail-width                 | \$table-th-detail-width                 | 14px                                                     |
