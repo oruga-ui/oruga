@@ -45,10 +45,10 @@ export default {
          */
         position: {
             type: String,
-            default: '',
+            default: 'left',
             validator(value) {
                 return [
-                    '',
+                    'left',
                     'centered',
                     'right'
                 ].indexOf(value) > -1
@@ -59,12 +59,12 @@ export default {
          * @values small, medium, large
          */
         size: String,
-        rootClass: String,
-        animationClass: String,
-        positionClass: String,
-        itemClass: String,
-        itemRoundedClass: String,
-        sizeClass: String
+        rootClass: [String, Function],
+        animationClass: [String, Function],
+        positionClass: [String, Function],
+        itemClass: [String, Function],
+        itemRoundedClass: [String, Function],
+        sizeClass: [String, Function]
     },
     render(h) {
         if (!this.active) return

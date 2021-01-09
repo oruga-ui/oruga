@@ -214,44 +214,143 @@ title: Pagination
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-pagination
+                    v-bind='s'
+                    :total="total"
+                    :current.sync="current"
+                    :range-before="rangeBefore"
+                    :range-after="rangeAfter"
+                    :per-page="perPage"
+                    aria-next-label="Next page"
+                    aria-previous-label="Previous page"
+                    aria-page-label="Page"
+                    aria-current-label="Current page"
+                    icon-prev='chevron-left'
+                    icon-next='chevron-right'
+                    >
+                </o-pagination>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            total: 200,
+            current: 10,
+            perPage: 10,
+            rangeBefore: 3,
+            rangeAfter: 1,
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "",
+                },
+                {
+                    class: "prevBtnClass",
+                    description: "",
+                },
+                {
+                    class: "nextBtnClass",
+                    description: "",
+                },
+                {
+                    class: "listClass",
+                    description: "",
+                },
+                {
+                    class: "linkClass",
+                    description: "",
+                },
+                {
+                    class: "linkCurrentClass",
+                    description: "",
+                },
+                {
+                    class: "ellipsisClass",
+                    description: "",
+                },
+                {
+                    class: "infoClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.simple = true;
+                    }
+                },
+                {
+                    class: "orderClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.order = 'centered';
+                    }
+                },
+                {
+                    class: "simpleClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.simple = true;
+                    }
+                },
+                {
+                    class: "roundedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.rounded = true;
+                    }
+                },
+                {
+                    class: "linkDisabledClass",
+                    description: "",
+                    action: () => {
+                        this.current = 20;
+                    }
+                },
+                {
+                    class: "sizeClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.size = 'small';
+                    }
+                }
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name         | Description                                                                                                   | Type           | Values                                            | Default                                                        |
 | ----------------- | ------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------------------- |
-| total             | Total count of items                                                                                          | number\|string | -                                                 |                                                                |
-| perPage           | Items count for each page                                                                                     | number\|string | -                                                 | Config -> <code> 'pagination.perPage': 20</code>               |
+| ariaCurrentLabel  |                                                                                                               | string         | -                                                 |                                                                |
+| ariaNextLabel     |                                                                                                               | string         | -                                                 |                                                                |
+| ariaPageLabel     |                                                                                                               | string         | -                                                 |                                                                |
+| ariaPreviousLabel |                                                                                                               | string         | -                                                 |                                                                |
 | current           | Current page number, use the .sync modifier (Vue 2.x) or v-model:current (Vue 3.x) to make it two-way binding | number\|string | -                                                 | 1                                                              |
-| rangeBefore       | Number of pagination items to show before current page                                                        | number\|string | -                                                 | 1                                                              |
-| rangeAfter        | Number of pagination items to show after current page                                                         | number\|string | -                                                 | 1                                                              |
-| size              | Pagination size, optional                                                                                     | string         | `small`, `medium`, `large`                        |                                                                |
-| simple            | Simple style                                                                                                  | boolean        | -                                                 |                                                                |
-| rounded           | Rounded button styles                                                                                         | boolean        | -                                                 |                                                                |
-| order             | Buttons order, optional                                                                                       | string         | `centered`, `right`, `left`                       |                                                                |
+| iconNext          | Icon to use for next button                                                                                   | string         | -                                                 | Config -> <code> 'pagination.iconNext': 'chevron-right'</code> |
 | iconPack          | Icon pack to use                                                                                              | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                |
 | iconPrev          | Icon to use for previous button                                                                               | string         | -                                                 | Config -> <code> 'pagination.iconPrev': 'chevron-left'</code>  |
-| iconNext          | Icon to use for next button                                                                                   | string         | -                                                 | Config -> <code> 'pagination.iconNext': 'chevron-right'</code> |
-| ariaNextLabel     |                                                                                                               | string         | -                                                 |                                                                |
-| ariaPreviousLabel |                                                                                                               | string         | -                                                 |                                                                |
-| ariaPageLabel     |                                                                                                               | string         | -                                                 |                                                                |
-| ariaCurrentLabel  |                                                                                                               | string         | -                                                 |                                                                |
-
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| rootClass         |             | string | -      |         |
-| prevBtnClass      |             | string | -      |         |
-| nextBtnClass      |             | string | -      |         |
-| listClass         |             | string | -      |         |
-| linkClass         |             | string | -      |         |
-| linkCurrentClass  |             | string | -      |         |
-| ellipsisClass     |             | string | -      |         |
-| infoClass         |             | string | -      |         |
-| orderClass        |             | string | -      |         |
-| simpleClass       |             | string | -      |         |
-| roundedClass      |             | string | -      |         |
-| linkDisabledClass |             | string | -      |         |
-| sizeClass         |             | string | -      |         |
+| order             | Buttons order, optional                                                                                       | string         | `centered`, `right`, `left`                       |                                                                |
+| perPage           | Items count for each page                                                                                     | number\|string | -                                                 | Config -> <code> 'pagination.perPage': 20</code>               |
+| rangeAfter        | Number of pagination items to show after current page                                                         | number\|string | -                                                 | 1                                                              |
+| rangeBefore       | Number of pagination items to show before current page                                                        | number\|string | -                                                 | 1                                                              |
+| rounded           | Rounded button styles                                                                                         | boolean        | -                                                 |                                                                |
+| simple            | Simple style                                                                                                  | boolean        | -                                                 |                                                                |
+| size              | Pagination size, optional                                                                                     | string         | `small`, `medium`, `large`                        |                                                                |
+| total             | Total count of items                                                                                          | number\|string | -                                                 |                                                                |
 
 ## Events
 

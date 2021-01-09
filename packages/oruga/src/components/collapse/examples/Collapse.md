@@ -56,7 +56,7 @@
                 </p>
                 <a class="card-header-icon">
                     <o-icon
-                        :icon="props.open ? 'caret-down' : 'caret-up'">
+                        :icon="props.open ? 'caret-up' : 'caret-down'">
                     </o-icon>
                 </a>
             </div>

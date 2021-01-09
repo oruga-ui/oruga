@@ -216,41 +216,100 @@ title: Modal
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-modal v-bind="s" :active.sync="isImageModalActive">
+                    <p style="text-align: center">
+                        <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
+                    </p>
+                </o-modal>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            isImageModalActive: false,
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "",
+                    action: () => {
+                        this.isImageModalActive = true;
+                    }
+                },
+                {
+                    class: "backgroundClass",
+                    description: "",
+                    action: () => {
+                        this.isImageModalActive = true;
+                    }
+                },
+                {
+                    class: "contentClass",
+                    description: "",
+                    action: () => {
+                        this.isImageModalActive = true;
+                    }
+                },
+                {
+                    class: "closeClass",
+                    description: "",
+                    action: () => {
+                        this.isImageModalActive = true;
+                    }
+                },
+                {
+                    class: "fullScreenClass",
+                    description: "",
+                    action: (cmp) => {
+                        this.isImageModalActive = true;
+                        cmp.data.fullScreen = true;
+                    }
+                }
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name          | Description                                                                                                                                                            | Type           | Values                             | Default                                               |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------- | ----------------------------------------------------- |
 | active             | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding                                                | boolean        | -                                  |                                                       |
-| component          | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                                                       |
-| content            | Text content                                                                                                                                                           | string         | -                                  |                                                       |
-| closeButtonContent | Close button text content                                                                                                                                              | string         | -                                  | '✕'                                                   |
-| programmatic       |                                                                                                                                                                        | boolean        | -                                  |                                                       |
-| props              | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                                                       |
-| events             | Events to be binded to the injected component                                                                                                                          | object         | -                                  |                                                       |
-| width              | Width of the Modal                                                                                                                                                     | string\|number | -                                  | Config -> <code> 'modal.width': 960</code>            |
-| custom             | Enable custom style on modal content                                                                                                                                   | boolean        | -                                  |                                                       |
 | animation          | Custom animation (transition name)                                                                                                                                     | string         | -                                  | Config -> <code> 'modal.animation': 'zoom-out'</code> |
-| canCancel          | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean | `escape`, `x`, `outside`, `button` | Config -> <code> 'modal.canCancel': ['escape'</code>  |
-| onCancel           | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | () => {}                                              |
-| scroll             | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | Config -> <code> 'modal.scroll': 'keep'</code>        |
-| fullScreen         | Display modal as full screen                                                                                                                                           | boolean        | -                                  |                                                       |
-| trapFocus          | Trap focus inside the modal.                                                                                                                                           | boolean        | -                                  | Config -> <code> 'modal.trapFocus': true</code>       |
-| ariaRole           |                                                                                                                                                                        | string         | -                                  |                                                       |
 | ariaModal          |                                                                                                                                                                        | boolean        | -                                  |                                                       |
-| destroyOnHide      | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | Config -> <code> 'modal.destroyOnHide': true</code>   |
+| ariaRole           |                                                                                                                                                                        | string         | -                                  |                                                       |
 | autoFocus          | Automatically focus modal when active                                                                                                                                  | boolean        | -                                  | Config -> <code> 'modal.autoFocus': true</code>       |
+| canCancel          | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean | `escape`, `x`, `outside`, `button` | Config -> <code> 'modal.canCancel': ['escape'</code>  |
+| closeButtonContent | Close button text content                                                                                                                                              | string         | -                                  | '✕'                                                   |
 | closeIcon          | Icon name                                                                                                                                                              | string         | -                                  | Config -> <code> 'close.icon': 'times'</code>         |
 | closeIconSize      |                                                                                                                                                                        | string         | -                                  | 'medium'                                              |
-
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| rootClass       |             | string | -      |         |
-| backgroundClass |             | string | -      |         |
-| contentClass    |             | string | -      |         |
-| closeClass      |             | string | -      |         |
-| fullScreenClass |             | string | -      |         |
+| component          | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                                                       |
+| content            | Text content                                                                                                                                                           | string         | -                                  |                                                       |
+| custom             | Enable custom style on modal content                                                                                                                                   | boolean        | -                                  |                                                       |
+| destroyOnHide      | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | Config -> <code> 'modal.destroyOnHide': true</code>   |
+| events             | Events to be binded to the injected component                                                                                                                          | object         | -                                  |                                                       |
+| fullScreen         | Display modal as full screen                                                                                                                                           | boolean        | -                                  |                                                       |
+| onCancel           | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | () => {}                                              |
+| programmatic       |                                                                                                                                                                        | boolean        | -                                  |                                                       |
+| props              | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                                                       |
+| scroll             | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | Config -> <code> 'modal.scroll': 'keep'</code>        |
+| trapFocus          | Trap focus inside the modal.                                                                                                                                           | boolean        | -                                  | Config -> <code> 'modal.trapFocus': true</code>       |
+| width              | Width of the Modal                                                                                                                                                     | string\|number | -                                  | Config -> <code> 'modal.width': 960</code>            |
 
 ## Events
 

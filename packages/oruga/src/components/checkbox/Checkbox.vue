@@ -55,14 +55,14 @@ export default {
             type: [String, Number, Boolean],
             default: false
         },
-        rootClass: String,
-        disabledClass: String,
-        checkClass: String,
-        checkCheckedClass: String,
-        checkIndeterminateClass: String,
-        labelClass: String,
-        sizeClass: String,
-        variantClass: String
+        rootClass: [String, Function],
+        disabledClass: [String, Function],
+        checkClass: [String, Function],
+        checkCheckedClass: [String, Function],
+        checkIndeterminateClass: [String, Function],
+        labelClass: [String, Function],
+        sizeClass: [String, Function],
+        variantClass: [String, Function]
     },
     computed: {
         rootClasses() {

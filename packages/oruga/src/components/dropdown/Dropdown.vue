@@ -21,7 +21,7 @@
             <div
                 v-if="isMobileModal"
                 v-show="isActive"
-                :class="backgroundClasses"
+                :class="menuMobileOverlayClasses"
                 :aria-hidden="!isActive"
             />
         </transition>
@@ -187,15 +187,16 @@ export default {
          */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: String,
-        triggerClass: String,
-        backgroundClass: String,
-        menuClass: String,
-        disabledClass: String,
-        activeClass: String,
-        inlineClass: String,
-        mobileClass: String,
-        expandedClass: String
+        rootClass: [String, Function],
+        triggerClass: [String, Function],
+        menuMobileOverlayClass: [String, Function],
+        menuClass: [String, Function],
+        menuPositionClass: [String, Function],
+        menuActiveClass: [String, Function],
+        menuInlineClass: [String, Function],
+        menuMobileClass: [String, Function],
+        disabledClass: [String, Function],
+        expandedClass: [String, Function]
     },
     data() {
         return {
@@ -210,8 +211,7 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-drop'),
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
-                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
-                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
+                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded }
             ]
         },
         triggerClasses() {
@@ -219,17 +219,18 @@ export default {
                 this.computedClass('triggerClass', 'o-drop__trigger')
             ]
         },
-        backgroundClasses() {
+        menuMobileOverlayClasses() {
             return [
-                this.computedClass('backgroundClass', 'o-drop__background')
+                this.computedClass('menuMobileOverlayClass', 'o-drop__overlay')
             ]
         },
         menuClasses() {
             return [
                 this.computedClass('menuClass', 'o-drop__menu'),
-                { [this.computedClass('positionClass', 'o-drop__menu--', this.position)]: this.position },
-                { [this.computedClass('activeClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('mobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
+                { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
+                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
+                { [this.computedClass('menuInlineClass', 'o-drop__menu--inline')]: this.inline },
+                { [this.computedClass('menuMobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
             ]
         },
         isMobileModal() {

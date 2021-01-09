@@ -126,44 +126,132 @@ title: Input
 
 :::
 
+## Class props
+
+<br />
+<template>
+     <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-field :variant="s.fieldvariant">
+                    <o-input v-bind="s" placeholder="Input"></o-input>
+                </o-field>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: ""
+                },
+                {
+                    class: "controlExpandedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    }
+                },
+                {
+                    class: "iconsLeftClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.icon = "envelope";
+                    }
+                },
+                {
+                    class: "iconsRightClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.iconRight = "times-circle";
+                    }
+                },
+                {
+                    class: "inputClass",
+                    description: ""
+                },
+                {
+                    class: "roundedClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.rounded = true;
+                    }
+                },
+                {
+                    class: "iconLeftClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.icon = "envelope";
+                    }
+                },
+                {
+                    class: "iconRightClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.iconRight = "times-circle";
+                    }
+                },
+                {
+                    class: "counterClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.hasCounter = true;
+                        cmp.data.maxlength = 10;
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                    }
+                },
+                {
+                    class: "sizeClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                    }
+                },
+                {
+                    class: "variantClass",
+                    description: "",
+                    action: (cmp) => {
+                        cmp.data.fieldvariant = "info";
+                    }
+                }
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name          | Description                                                 | Type           | Values                                            | Default                                            |
 | ------------------ | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------- |
-| expanded           | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                    |
-| rounded            | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
-| icon               | Icon name to be added                                       | string         | -                                                 |                                                    |
-| iconPack           | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
 | autocomplete       | Native options to use in HTML5 validation                   | string         | -                                                 |                                                    |
-| maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
-| useHtml5Validation | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
-| statusIcon         | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
-| validationMessage  | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
-| v-model            |                                                             | number\|string | -                                                 |                                                    |
-| type               | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
-| size               | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
-| passwordReveal     | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
-| iconClickable      | Makes the icon clickable                                    | boolean        | -                                                 |                                                    |
+| expanded           | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                    |
 | hasCounter         | Show character counter when maxlength prop is passed        | boolean        | -                                                 | Config -> <code> 'input.counter': false</code>     |
+| icon               | Icon name to be added                                       | string         | -                                                 |                                                    |
+| iconClickable      | Makes the icon clickable                                    | boolean        | -                                                 |                                                    |
+| iconPack           | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
 | iconRight          | Icon name to be added on the right side                     | string         | -                                                 |                                                    |
 | iconRightClickable | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
-| iconRightType      | Variant of right icon                                       | string         | -                                                 |                                                    |
-
-## Class props
-
-| Prop name            | Description | Type   | Values | Default |
-| -------------------- | ----------- | ------ | ------ | ------- |
-| rootClass            |             | string | -      |         |
-| controlExpandedClass |             | string | -      |         |
-| iconsLeftClass       |             | string | -      |         |
-| iconsRightClass      |             | string | -      |         |
-| inputClass           |             | string | -      |         |
-| roundedClass         |             | string | -      |         |
-| iconLeftClass        |             | string | -      |         |
-| iconRightClass       |             | string | -      |         |
-| counterClass         |             | string | -      |         |
-| sizeClass            |             | string | -      |         |
-| variantClass         |             | string | -      |         |
+| iconRightType      | Variant of right icon                                       | string\|func   | -                                                 |                                                    |
+| maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
+| passwordReveal     | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
+| rounded            | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
+| size               | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
+| statusIcon         | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
+| type               | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
+| useHtml5Validation | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
+| v-model            |                                                             | number\|string | -                                                 |                                                    |
+| validationMessage  | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
 
 ## Events
 

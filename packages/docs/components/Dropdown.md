@@ -206,41 +206,181 @@ title: Dropdown
 
 :::
 
+## Class props
+
+<br />
+<template>
+  <div>
+    <doc-wrapper>
+        <template v-slot:default="s">
+            <o-dropdown v-model="currentMenu" v-bind="s" aria-role="list">
+                <o-button variant="primary" slot="trigger" slot-scope="{ active }" ref="dropdownbtn">
+                    <span>Click me!</span>
+                    <o-icon :icon="active ? 'caret-up' : 'caret-down'"></o-icon>
+                </o-button>
+                <o-dropdown-item v-bind="s" value="ac1" aria-role="listitem">Action</o-dropdown-item>
+                <o-dropdown-item v-bind="s" value="ac2" aria-role="listitem">Another action</o-dropdown-item>
+                <o-dropdown-item v-bind="s" value="ac3" disabled aria-role="listitem">Something else</o-dropdown-item>
+            </o-dropdown>
+        </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            currentMenu: '',
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element"
+                },
+                {
+                    class: "triggerClass",
+                    description: "Class of the trigger element"
+                },
+                {
+                    class: "menuMobileOverlayClass",
+                    description: "Class of the overlay when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "menuClass",
+                    description: "Class of the dropdown menu",
+                    warning: "Switch to mobile view to see it in action!",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "disabledClass",
+                    description: "Class of dropdown when disabled",
+                    properties: ['disabled'],
+                    action: (cmp) => {
+                        cmp.data.disabled = true;
+                    }
+                },
+                {
+                    class: "menuActiveClass",
+                    description: "Class of dropdown menu when active",
+                    warning: "Switch to mobile view to see it in action!",
+
+                    properties: ['inline'],
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "menuInlineClass",
+                    description: "Class of dropdown menu when inline",
+                    warning: "Switch to mobile view to see it in action!",
+                    properties: ['inline'],
+                    action: (cmp) => {
+                        cmp.data.inline = true;
+                    }
+                },
+                {
+                    class: "menuPositionClass",
+                    description: "Class of dropdown menu position",
+                    warning: "Switch to mobile view to see it in action!",
+                    properties: ['position'],
+                    suffixes: ['top-right', 'top-left', 'bottom-left'],
+                    action: (cmp) => {
+                        cmp.data.position = 'top-right';
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "menuMobileClass",
+                    description: "Class of dropdown menu when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "expandedClass",
+                    description: "Class of dropdown when expanded",
+                    properties: ['expanded'],
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    }
+                },
+                {
+                    class: "itemClass",
+                    description: "Class of the dropdown item",
+                    properties: ['disabled'],
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "itemActiveClass",
+                    description: "Class of the dropdown item when active",
+                    action: () => {
+                        setTimeout(() => {
+                            this.currentMenu = 'ac1'
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+                {
+                    class: "itemDisabledClass",
+                    description: "Class of the dropdown item when disabled",
+                    action: () => {
+                        setTimeout(() => {
+                            this.$refs.dropdownbtn.$el.click()
+                        }, 300);
+                    }
+                },
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name              | Description                                                                                                                                            | Type                                   | Values                                   | Default                                              |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
-| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                 |
-| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                      |
-| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                      |
-| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                      |
-| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
-| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                      |
-| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
-| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                 |
 | animation              | Custom animation (transition name)                                                                                                                     | string                                 | -                                        | Config -> <code> 'dropdown.animation': 'fade'</code> |
-| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                      |
-| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
-| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                 |
-| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                 |
-| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                      |
-| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
 | appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                      |
 | appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                      |
-
-## Class props
-
-| Prop name       | Description | Type   | Values | Default |
-| --------------- | ----------- | ------ | ------ | ------- |
-| rootClass       |             | string | -      |         |
-| triggerClass    |             | string | -      |         |
-| backgroundClass |             | string | -      |         |
-| menuClass       |             | string | -      |         |
-| disabledClass   |             | string | -      |         |
-| activeClass     |             | string | -      |         |
-| inlineClass     |             | string | -      |         |
-| mobileClass     |             | string | -      |         |
-| expandedClass   |             | string | -      |         |
+| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                 |
+| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                 |
+| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                 |
+| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                      |
+| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                      |
+| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                      |
+| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
+| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
+| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                      |
+| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                      |
+| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                      |
+| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
+| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
+| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                 |
 
 ### Events
 
@@ -265,19 +405,11 @@ title: Dropdown
 
 | Prop name | Description                                           | Type                                   | Values | Default |
 | --------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
-| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
-| disabled  | Item is disabled                                      | boolean                                | -      |         |
-| custom    | Item is not a clickable item                          | boolean                                | -      |         |
-| tabindex  |                                                       | number\|string                         | -      | 0       |
 | ariaRole  |                                                       | string                                 | -      | ''      |
-
-## Class props
-
-| Prop name         | Description | Type   | Values | Default |
-| ----------------- | ----------- | ------ | ------ | ------- |
-| itemClass         |             | string | -      |         |
-| itemActiveClass   |             | string | -      |         |
-| itemDisabledClass |             | string | -      |         |
+| custom    | Item is not a clickable item                          | boolean                                | -      |         |
+| disabled  | Item is disabled                                      | boolean                                | -      |         |
+| tabindex  |                                                       | number\|string                         | -      | 0       |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
 
 ### Events
 

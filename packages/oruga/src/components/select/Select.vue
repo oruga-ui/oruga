@@ -95,18 +95,17 @@ export default {
         multiple: Boolean,
         /** Same as native size */
         nativeSize: [String, Number],
-        rootClass: String,
-        iconsLeftClass: String,
-        iconsRightClass: String,
-        roundedClass: String,
-        multipleClass: String,
-        emptyClass: String,
-        expandedClass: String,
-        iconLeftClass: String,
-        iconRightClass: String,
-        sizeClass: String,
-        variantClass: String,
-        placeholderClass: String
+        rootClass: [String, Function],
+        iconsLeftClass: [String, Function],
+        iconsRightClass: [String, Function],
+        roundedClass: [String, Function],
+        multipleClass: [String, Function],
+        expandedClass: [String, Function],
+        iconLeftClass: [String, Function],
+        iconRightClass: [String, Function],
+        sizeClass: [String, Function],
+        variantClass: [String, Function],
+        placeholderClass: [String, Function]
     },
     data() {
         return {

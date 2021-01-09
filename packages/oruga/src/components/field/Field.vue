@@ -112,18 +112,18 @@ export default {
          * @values small, medium, large
          */
         labelSize: String,
-        rootClass: String,
-        horizontalClass: String,
-        groupedClass: String,
-        groupMultilineClass: String,
-        labelClass: String,
-        labelSizeClass: String,
-        labelHorizontalClass: String,
-        bodyClass: String,
-        bodyHorizontalClass: String,
-        addonsClass: String,
-        messageClass: String,
-        variantClass: String
+        rootClass: [String, Function],
+        horizontalClass: [String, Function],
+        groupedClass: [String, Function],
+        groupMultilineClass: [String, Function],
+        labelClass: [String, Function],
+        labelSizeClass: [String, Function],
+        labelHorizontalClass: [String, Function],
+        bodyClass: [String, Function],
+        bodyHorizontalClass: [String, Function],
+        addonsClass: [String, Function],
+        messageClass: [String, Function],
+        variantClass: [String, Function]
     },
     data() {
         return {
