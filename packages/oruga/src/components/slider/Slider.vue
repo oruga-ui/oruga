@@ -187,8 +187,8 @@ export default {
         rootClass: [String, Function],
         trackClass: [String, Function],
         fillClass: [String, Function],
-        roundedClass: [String, Function],
-        draggingClass: [String, Function],
+        thumbRoundedClass: [String, Function],
+        thumbDraggingClass: [String, Function],
         disabledClass: [String, Function],
         biggerSliderFocusClass: [String, Function],
         thumbWrapperClass: [String, Function],
@@ -226,8 +226,8 @@ export default {
         thumbClasses() {
             return [
                 this.computedClass('thumbClass', 'o-slide__thumb'),
-                { [this.computedClass('draggingClass', 'o-slide__thumb--dragging')]: this.dragging },
-                { [this.computedClass('roundedClass', 'o-slide__thumb--rounded')]: this.rounded },
+                { [this.computedClass('thumbDraggingClass', 'o-slide__thumb--dragging')]: this.dragging },
+                { [this.computedClass('thumbRoundedClass', 'o-slide__thumb--rounded')]: this.rounded },
 
             ]
         },

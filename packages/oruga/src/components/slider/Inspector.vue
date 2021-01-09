@@ -16,36 +16,39 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Root class of the element",
                 },
                 {
                     class: "trackClass",
-                    description: "",
+                    description: "Class of the slider track",
                     action: () => {
                     }
                 },
                 {
                     class: "fillClass",
-                    description: "",
+                    description: "Class of the filled part of the slider",
                     action: () => {
                     }
                 },
                 {
-                    class: "roundedClass",
-                    description: "",
+                    class: "thumbRoundedClass",
+                    description: "Class when the slider is rounded",
+                    properties: ["rounded"],
                     action: (cmp) => {
                         cmp.data.rounded = true
                     }
                 },
                 {
-                    class: "draggingClass",
-                    description: "",
+                    class: "thumbDraggingClass",
+                    description: "Class when the thumb gets dragged",
+                    warning: "Drag the thumb to see it in action!",
                     action: () => {
                     }
                 },
                 {
                     class: "disabledClass",
-                    description: "",
+                    description: "Class when slider is disabled",
+                    properties: ["disabled"],
                     action: (cmp) => {
                         cmp.data.disabled = true;
                     }
@@ -59,25 +62,28 @@ export default {
                 },
                 {
                     class: "thumbWrapperClass",
-                    description: "",
+                    description: "Class of the thumb wrapper",
                     action: (cmp) => {
                         cmp.data.fullScreen = true;
                     }
                 },
                 {
                     class: "thumbClass",
-                    description: "",
+                    description: "Class of the thumb",
                     action: (cmp) => {
                         cmp.data.fullScreen = true;
                     }
                 },
                 {
                     class: "variantClass",
-                    description: "",
+                    description : 'Class of the slider variant',
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
+                        this.position = 'static';
                         cmp.data.variant = 'warning';
                     }
-                },
+                }
             ],
         };
     },
