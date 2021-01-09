@@ -445,6 +445,12 @@ export default {
                 return getValueByPath(config, 'datepicker.trapFocus', true)
             }
         },
+        locale: {
+            type: [String, Array],
+            default: () => {
+                return getValueByPath(config, 'locale')
+            }
+        },
         appendToBody: Boolean,
         ariaNextLabel: String,
         ariaPreviousLabel: String,

@@ -18,15 +18,17 @@ const defaultMonthNames = [
 ]
 const defaultDayNames = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'S']
 const defaultFirstDayOfWeek = 0
+const defaultLocale = 'it-IT'
 
 describe('ODatepicker', () => {
     describe('with invalid value from config config', () => {
         beforeEach(() => {
             setOptions(Object.assign(config, {
-                defaultMonthNames: 'A string!',
-                defaultDayNames: 'A string!',
-                defaultFirstDayOfWeek: 'A string!',
-                focusedDate: newDate(2018, 7, 1)
+                datepicker: {
+                    monthNames: 'A string!',
+                    dayNames: 'A string!',
+                    firstDayOfWeek: 'A string!',
+                }
             }))
 
             wrapper = shallowMount(ODatepicker, {
@@ -34,12 +36,6 @@ describe('ODatepicker', () => {
                     transition: false
                 }
             })
-        })
-
-        it('should have valid default values', () => {
-            expect(wrapper.vm.firstDayOfWeek).toBe(0)
-            expect(wrapper.vm.newMonthNames.length).toBe(defaultMonthNames.length)
-            expect(wrapper.vm.newDayNames.length).toBe(defaultDayNames.length)
         })
 
         it('manage props validator', () => {
@@ -56,9 +52,9 @@ describe('ODatepicker', () => {
             datepicker: {
                 monthNames: defaultMonthNames,
                 dayNames: defaultDayNames,
-                firstDayOfWeek: defaultFirstDayOfWeek
+                firstDayOfWeek: defaultFirstDayOfWeek,
+                locale: defaultLocale
             }
-
         }))
 
         defaultProps = {
