@@ -31,13 +31,9 @@ $table-row-active-color: $primary-invert !default;
 $table-sticky-header-height: 300px !default;
 $table-sticky-zindex: 1 !default;
 $table-striped-background-color: #fafafa !default;
-$table-td-border-color: #dbdbdb !default;
-$table-td-border-style: solid !default;
-$table-td-border-width: 0 0 1px !default;
+$table-td-border: 1px solid #dbdbdb !default;
 $table-td-padding: .5em .75em !default;
-$table-th-border-color: #dbdbdb !default;
-$table-th-border-style: solid !default;
-$table-th-border-width: 0 0 2px 0 !default;
+$table-th-border: 2px solid #dbdbdb !default;
 $table-th-checkbox-width: 40px !default;
 $table-th-color: #363636 !default;
 $table-th-detail-width: 14px !default;
@@ -158,10 +154,8 @@ $table-th-padding: 0.5em 0.75em !default;
         text-align: left;
         position: relative;
         @include avariable('font-weight', 'table-th-font-weight', $table-th-font-weight);
-        @include avariable('border-width', 'table-th-border-width', $table-th-border-width);
         @include avariable('color', 'table-th-color', $table-th-color);
-        @include avariable('border-color', 'table-th-border-color', $table-th-border-color);
-        @include avariable('border-style', 'table-th-border-style', $table-th-border-style);
+        @include avariable('border-bottom', 'table-th-border', $table-th-border);
         @include avariable('padding', 'table-th-padding', $table-th-padding);
         &--centered {
             text-align: center;
@@ -209,9 +203,7 @@ $table-th-padding: 0.5em 0.75em !default;
     &__td {
         vertical-align: top;
         text-align: left;
-        @include avariable('border-color', 'table-td-border-color', $table-td-border-color);
-        @include avariable('border-style', 'table-td-border-style', $table-td-border-style);
-        @include avariable('border-width', 'table-td-border-width', $table-td-border-width);
+        @include avariable('border-bottom', 'table-td-border', $table-td-border);
         @include avariable('padding', 'table-td-padding', $table-td-padding);
         &--sticky {
             position: -webkit-sticky;
