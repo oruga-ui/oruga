@@ -92,18 +92,18 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: String,
-        disabledClass: String,
-        checkClass: String,
-        checkCheckedClass: String,
-        checkSwitchClass: String,
-        roundedClass: String,
-        labelClass: String,
-        sizeClass: String,
-        variantClass: String,
-        elementsWrapperClass: String,
-        passiveVariantClass: String,
-        leftLabelClass: String
+        rootClass: [String, Function],
+        disabledClass: [String, Function],
+        checkClass: [String, Function],
+        checkCheckedClass: [String, Function],
+        checkSwitchClass: [String, Function],
+        roundedClass: [String, Function],
+        labelClass: [String, Function],
+        sizeClass: [String, Function],
+        variantClass: [String, Function],
+        elementsWrapperClass: [String, Function],
+        passiveVariantClass: [String, Function],
+        leftLabelClass: [String, Function]
     },
     data() {
         return {
