@@ -21,7 +21,7 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -29,8 +29,8 @@ export default {
                     }
                 },
                 {
-                    class: "backgroundClass",
-                    description: "",
+                    class: "overlayClass",
+                    description: "Class of the loading overlay",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -39,7 +39,7 @@ export default {
                 },
                 {
                     class: "iconClass",
-                    description: "",
+                    description: "Class for the loading icon",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -48,7 +48,8 @@ export default {
                 },
                 {
                     class: "fullPageIconClass",
-                    description: "",
+                    description: "Class for the loading icon when fullpage",
+                    properties: ['fullPage'],
                     action: (cmp) => {
                         cmp.data.fullPage = true;
                         cmp.data.canCancel = true;

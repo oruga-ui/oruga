@@ -21,35 +21,36 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
-                    class: "backgroundClass",
-                    description: "",
+                    class: "overlayClass",
+                    description: "Class of the modal overlay",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "contentClass",
-                    description: "",
+                    description: "Class of the modal content",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "closeClass",
-                    description: "",
+                    description: "Class of the close button",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "fullScreenClass",
-                    description: "",
+                    description: "Class of the modal when fullscreen",
+                    properties: ['fullScreen'],
                     action: (cmp) => {
                         this.isImageModalActive = true;
                         cmp.data.fullScreen = true;

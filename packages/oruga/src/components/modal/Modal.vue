@@ -13,7 +13,7 @@
             tabindex="-1"
             :role="ariaRole"
             :aria-modal="ariaModal">
-            <div :class="backgroundClasses" @click="cancel('outside')"/>
+            <div :class="overlayClasses" @click="cancel('outside')"/>
             <div
                 :class="contentClasses"
                 :style="customStyle">
@@ -152,7 +152,7 @@ export default {
             }
         },
         rootClass: [String, Function],
-        backgroundClass: [String, Function],
+        overlayClass: [String, Function],
         contentClass: [String, Function],
         closeClass: [String, Function],
         fullScreenClass: [String, Function],
@@ -182,9 +182,9 @@ export default {
                 this.computedClass('rootClass', 'o-modal'),
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('backgroundClass', 'o-modal__background')
+                this.computedClass('overlayClass', 'o-modal__overlay')
             ]
         },
         contentClasses() {

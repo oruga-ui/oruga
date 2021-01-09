@@ -1,7 +1,7 @@
 
 /* @docs */
-$loading-background-legacy: #7f7f7f !default;
-$loading-background: rgba(255,255,255,0.5) !default;
+$loading-overlay-legacy: #7f7f7f !default;
+$loading-overlay: rgba(255,255,255,0.5) !default;
 $loading-zindex: 999 !default;
 /* @docs */
 
@@ -23,13 +23,13 @@ $loading-zindex: 999 !default;
         &--fullpage {
         }
     }
-    &__background {
+    &__overlay {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         top: 0;
-        @include avariable('background', 'loading-background-legacy', $loading-background-legacy);
-        @include avariable('background', 'loading-background', $loading-background);
+        @include avariable('background', 'loading-overlay-legacy', $loading-overlay-legacy);
+        @include avariable('background', 'loading-overlay', $loading-overlay);
     }
 }

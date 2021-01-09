@@ -171,7 +171,7 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -179,8 +179,8 @@ export default {
                     }
                 },
                 {
-                    class: "backgroundClass",
-                    description: "",
+                    class: "overlayClass",
+                    description: "Class of the loading overlay",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -189,7 +189,7 @@ export default {
                 },
                 {
                     class: "iconClass",
-                    description: "",
+                    description: "Class for the loading icon",
                     action: (cmp) => {
                         cmp.data.canCancel = true;
                         cmp.data.fullPage = false;
@@ -198,7 +198,8 @@ export default {
                 },
                 {
                     class: "fullPageIconClass",
-                    description: "",
+                    description: "Class for the loading icon when fullpage",
+                    properties: ['fullPage'],
                     action: (cmp) => {
                         cmp.data.fullPage = true;
                         cmp.data.canCancel = true;
@@ -246,8 +247,8 @@ export default {
 
 ## Style
 
-| CSS Variable                      | SASS Variable               | Default               |
-| --------------------------------- | --------------------------- | --------------------- |
-| --oruga-loading-background-legacy | \$loading-background-legacy | #7f7f7f               |
-| --oruga-loading-background        | \$loading-background        | rgba(255,255,255,0.5) |
-| --oruga-loading-zindex            | \$loading-zindex            | 999                   |
+| CSS Variable                   | SASS Variable            | Default               |
+| ------------------------------ | ------------------------ | --------------------- |
+| --oruga-loading-overlay-legacy | \$loading-overlay-legacy | #7f7f7f               |
+| --oruga-loading-overlay        | \$loading-overlay        | rgba(255,255,255,0.5) |
+| --oruga-loading-zindex         | \$loading-zindex         | 999                   |

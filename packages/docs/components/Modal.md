@@ -242,35 +242,36 @@ export default {
             inspectData: [
                 {
                     class: "rootClass",
-                    description: "",
+                    description: "Class of the root element",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
-                    class: "backgroundClass",
-                    description: "",
+                    class: "overlayClass",
+                    description: "Class of the modal overlay",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "contentClass",
-                    description: "",
+                    description: "Class of the modal content",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "closeClass",
-                    description: "",
+                    description: "Class of the close button",
                     action: () => {
                         this.isImageModalActive = true;
                     }
                 },
                 {
                     class: "fullScreenClass",
-                    description: "",
+                    description: "Class of the modal when fullscreen",
+                    properties: ['fullScreen'],
                     action: (cmp) => {
                         this.isImageModalActive = true;
                         cmp.data.fullScreen = true;
@@ -326,7 +327,7 @@ export default {
 | --oruga-modal-content-background-color            | \$modal-content-background-color            | \$white                      |
 | --oruga-modal-content-padding                     | \$modal-content-padding                     | 10px                         |
 | --oruga-modal-content-border-radius               | \$modal-content-border-radius               | \$base-border-radius         |
-| --oruga-modal-background-background-color         | \$modal-background-background-color         | hsla(0,0%,4%,.86)            |
+| --oruga-modal-overlay-color                       | \$modal-overlay-color                       | hsla(0,0%,4%,.86)            |
 | --oruga-modal-close-border-radius                 | \$modal-close-border-radius                 | \$base-rounded-border-radius |
 | --oruga-modal-close-height                        | \$modal-close-height                        | 32px                         |
 | --oruga-modal-close-right                         | \$modal-close-right                         | 20px                         |

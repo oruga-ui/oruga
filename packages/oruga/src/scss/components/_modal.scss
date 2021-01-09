@@ -3,7 +3,7 @@
 $modal-content-background-color: $white !default;
 $modal-content-padding: 10px !default;
 $modal-content-border-radius: $base-border-radius !default;
-$modal-background-background-color: hsla(0,0%,4%,.86) !default;
+$modal-overlay-color: hsla(0,0%,4%,.86) !default;
 $modal-close-border-radius: $base-rounded-border-radius !default;
 $modal-close-height: 32px !default;
 $modal-close-right: 20px !default;
@@ -29,13 +29,13 @@ $modal-zindex: 40 !default;
     right: 0;
     top: 0;
     @include avariable('z-index', 'modal-zindex', $modal-zindex);
-    &__background {
+    &__overlay {
         bottom: 0;
         left: 0;
         position: absolute;
         right: 0;
         top: 0;
-        @include avariable('background-color', 'modal-background-background-color', $modal-background-background-color);
+        @include avariable('background-color', 'modal-overlay-color', $modal-overlay-color);
     }
     &__content {
         position: relative;

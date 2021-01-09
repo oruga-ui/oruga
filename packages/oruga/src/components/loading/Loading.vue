@@ -3,7 +3,7 @@
         <div
             :class="rootClasses"
             v-if="isActive">
-            <div :class="backgroundClasses" @click="cancel"/>
+            <div :class="overlayClasses" @click="cancel"/>
             <slot>
                 <o-icon :icon="icon" :spin="iconSpin" :size="iconSize" :class="iconClasses"/>
             </slot>
@@ -72,7 +72,7 @@ export default {
             default: 'medium'
         },
         rootClass: [String, Function],
-        backgroundClass: [String, Function],
+        overlayClass: [String, Function],
         iconClass: [String, Function],
         fullPageIconClass: [String, Function],
     },
@@ -97,9 +97,9 @@ export default {
                 { [this.computedClass('fullPageClass', 'o-load--fullpage')]: this.displayInFullPage }
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('backgroundClass', 'o-load__background')
+                this.computedClass('overlayClass', 'o-load__overlay')
             ]
         },
         iconClasses() {
