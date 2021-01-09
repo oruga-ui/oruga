@@ -270,6 +270,7 @@ export default {
 | label      | Button label, optional when default slot | string         | -                                                                               |                                                 |
 | nativeType | Button type, like native                 | string         | -                                                                               | 'button'                                        |
 | outlined   | Outlined style                           | boolean        | -                                                                               |                                                 |
+| override   |                                          | boolean        | -                                                                               |                                                 |
 | rounded    | Rounded style                            | boolean        | -                                                                               | Config -> <code> 'button.rounded': false</code> |
 | size       | Size of button, optional                 | string         | `small`, `medium`, `large`                                                      |                                                 |
 | tag        | Button tag name                          | string         | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                        |

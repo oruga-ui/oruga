@@ -398,6 +398,7 @@ export default {
 | labelFor       | Same as native for set on the label                                                                              | string         | -                                                                               |         |
 | labelSize      | Vertical size of input, optional                                                                                 | string         | `small`, `medium`, `large`                                                      |         |
 | message        | Help message text                                                                                                | string         | -                                                                               |         |
+| override       |                                                                                                                  | boolean        | -                                                                               |         |
 | variant        | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Slots

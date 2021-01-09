@@ -244,6 +244,7 @@ export default {
 | iconRightClickable | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
 | iconRightType      | Variant of right icon                                       | string\|func   | -                                                 |                                                    |
 | maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
+| override           |                                                             | boolean        | -                                                 |                                                    |
 | passwordReveal     | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
 | rounded            | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
 | size               | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |

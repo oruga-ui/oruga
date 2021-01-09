@@ -231,6 +231,7 @@ export default {
 | indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               |         |
 | name          | Same as native name                                | string                         | -                                                                               |         |
 | nativeValue   | Same as native value                               | string\|number\|boolean\|array | -                                                                               |         |
+| override      |                                                    | boolean                        | -                                                                               |         |
 | required      |                                                    | boolean                        | -                                                                               |         |
 | size          | Size of the control, optional                      | string                         | `small`, `medium`, `large`                                                      |         |
 | trueValue     | Overrides the returned value when it's checked     | string\|number\|boolean        | -                                                                               | true    |
