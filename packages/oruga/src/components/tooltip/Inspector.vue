@@ -37,20 +37,20 @@ export default {
                 },
                 {
                     class: "multilineClass",
-                    description: "Class of the tooltip trigger",
+                    description: "Class of the tooltip content when is multiline",
                     action: (cmp) => {
                         cmp.data.multiline = true
                     }
                 },
                 {
                     class: "arrowClass",
-                    description: "Class of the tooltip trigger",
+                    description: "Class of the tooltip arrow",
                     action: () => {
                     }
                 },
                 {
                     class: "arrowOrderClass",
-                    description: "Class of the tooltip trigger",
+                    description: "Class of the tooltip arrow when its position changes",
                     properties: ['position'],
                     suffixes: ['top', 'bottom', 'left', 'right'],
                     action: (cmp) => {
@@ -59,7 +59,7 @@ export default {
                 },
                 {
                     class: "orderClass",
-                    description: "Class of the tooltip trigger",
+                    description: "Class of the tooltip trigger when its position changes",
                     properties: ['position'],
                     suffixes: ['top', 'bottom', 'left', 'right'],
                     action: (cmp) => {
@@ -68,7 +68,7 @@ export default {
                 },
                 {
                     class: "alwaysClass",
-                    description: "Class of the tooltip trigger",
+                    description: "Class of the tooltip trigger when is always visible",
                     action: () => {
                     }
                 },
