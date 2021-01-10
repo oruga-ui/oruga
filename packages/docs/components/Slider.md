@@ -181,7 +181,7 @@ title: Slider
             </template>
         </doc-wrapper>
         <inspector :inspectData="inspectData"></inspector>
-         <br/>
+        <br/>
     </div>
 </template>
 

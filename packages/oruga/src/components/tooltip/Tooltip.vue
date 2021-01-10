@@ -106,15 +106,16 @@ export default {
         * Color of the tooltip
         * @values primary, info, success, warning, danger, and any other custom color
         */
-        variant: String,
-        rootClass: String,
-        contentClass: String,
-        triggerClass: String,
-        multilineClass: String,
-        alwaysClass: String,
-        variantClass: String,
-        arrowClass: String,
-        arrowOrderClass: String
+        variant: [String, Function],
+        rootClass: [String, Function],
+        contentClass: [String, Function],
+        orderClass: [String, Function],
+        triggerClass: [String, Function],
+        multilineClass: [String, Function],
+        alwaysClass: [String, Function],
+        variantClass: [String, Function],
+        arrowClass: [String, Function],
+        arrowOrderClass: [String, Function]
     },
     data() {
         return {
