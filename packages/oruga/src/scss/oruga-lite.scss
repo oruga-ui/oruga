@@ -5,13 +5,17 @@ $sass-vars: false;
 @import "utilities/_variables";
 @import "utilities/_helpers";
 
-$whitelist: add_to_whitelist(
-    // button
+// button
+$whitelist: add-to-whitelist(
     'button-background-color', 'button-color', 'button-disabled-opacity',
-    // dropdown
+);
+
+// dropdown
+$whitelist: add-to-whitelist(
     'dropdown-menu-background', 'dropdown-mobile-overlay-color', 'dropdown-disabled-opacity',
     'dropdown-menu-zindex', 'dropdown-mobile-overlay-zindex', 'dropdown-mobile-zindex',
     'dropdown-item-active-background-color', 'dropdown-item-active-color', 'dropdown-item-disabled-opacity'
 );
+
 
 @import "oruga.scss";
