@@ -70,7 +70,7 @@ $sidebar-zindex: 38 !default;
             flex-direction: column;
             align-content: stretch;
         }
-        @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
+        @media screen and (max-width: $sidebar-mobile-breakpoint - 1px) {
             &--mini-mobile {
                 @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
             }

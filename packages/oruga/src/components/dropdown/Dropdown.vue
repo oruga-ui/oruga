@@ -119,6 +119,15 @@ export default {
             }
         },
         /**
+         * Dropdown mobile breakpoint
+         */
+        mobileBreakpoint: {
+            type: String,
+            default: () => {
+                return getValueByPath(config, 'dropdown.mobileBreakpoint', '1023px')
+            }
+        },
+        /**
          * Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus
          * @values list, menu, dialog
          */
@@ -194,7 +203,7 @@ export default {
         menuClass: [String, Function],
         menuPositionClass: [String, Function],
         menuActiveClass: [String, Function],
-        menuMobileClass: [String, Function],
+        mobileClass: [String, Function],
         disabledClass: [String, Function],
         expandedClass: [String, Function]
     },
@@ -203,6 +212,8 @@ export default {
             selected: this.value,
             isActive: false,
             isHoverable: false,
+            matchMedia: false,
+            matchMediaRef: undefined,
             bodyEl: undefined // Used to append to body
         }
     },
@@ -212,7 +223,8 @@ export default {
                 this.computedClass('rootClass', 'o-drop'),
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
                 { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
-                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline }
+                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
+                { [this.computedClass('menuMobileClass', 'o-drop--mobile')]: this.isMobileModal && this.matchMedia },
             ]
         },
         triggerClasses() {
@@ -229,8 +241,7 @@ export default {
             return [
                 this.computedClass('menuClass', 'o-drop__menu'),
                 { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
-                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('menuMobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
+                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) }
             ]
         },
         isMobileModal() {
@@ -431,6 +442,10 @@ export default {
                 dropdownMenu.style.left = `${left}px`
                 dropdownMenu.style.zIndex = '9999'
             }
+        },
+
+        checkMatchMedia(event) {
+            this.matchMedia = event.matches
         }
     },
     mounted() {
@@ -443,12 +458,16 @@ export default {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
             document.addEventListener('keyup', this.keyPress)
+            this.matchMediaRef = window.matchMedia(`(max-width: ${mobileBreakpoint})`)
+            this.matchMedia = this.matchMediaRef.matches
+            this.matchMediaRef.addListener(this.checkMatchMedia, false)
         }
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
             document.removeEventListener('keyup', this.keyPress)
+            this.matchMediaRef.removeListener(this.checkMatchMedia)
         }
         if (this.appendToBody) {
             removeElement(this.$data.bodyEl)
