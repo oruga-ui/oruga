@@ -67,7 +67,7 @@ export default {
 <style scoped>
 .inspector__btn {
     cursor: pointer;
-    background: red!important;
+    background: #bd1313 !important;
     color: white!important;
     font-weight: bold!important;
     border: 0;
@@ -76,7 +76,7 @@ export default {
     padding: 0.4rem;
 }
 .inspector__highlight, .inspector__highlight code {
-    background: red!important;
+    background: #bd1313 !important;
     color: white!important;
 }
 </style>
