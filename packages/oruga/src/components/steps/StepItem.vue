@@ -17,10 +17,10 @@ export default {
             type: Boolean,
             default: undefined
         },
-        itemClass: String,
-        variantClass: String,
-        itemActiveClass: String,
-        itemPreviousClass: String
+        itemClass: [String, Function],
+        variantClass: [String, Function],
+        itemActiveClass: [String, Function],
+        itemPreviousClass: [String, Function]
     },
     computed: {
         elementClasses() {

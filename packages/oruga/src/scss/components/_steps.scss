@@ -52,6 +52,12 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     .o-steps__title {
+        @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
+        text-align: center;
+        z-index: 1;
+        @media screen and (min-width: $steps-mobile-max-width - 1px) {
+            @include avariable('padding', 'steps-details-padding', $steps-details-padding);
+        }
         @include evariable(
             'font-size', $MULTIPLY_EXPRESSION,
             eparam('$param', variable(if($name != null, ('size-' + #{$name}), 'steps-size'), $size)),
