@@ -262,16 +262,16 @@ title: Steps
 
 ### Events
 
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| input      | undefined |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| input      |            |
 
 ### Slots
 
-| Name       | Description | Bindings                                                                  |
-| ---------- | ----------- | ------------------------------------------------------------------------- |
-| default    |             |                                                                           |
-| navigation |             | [<br> {<br> "name": "previous"<br> },<br> {<br> "name": "next"<br> }<br>] |
+| Name       | Description | Bindings |
+| ---------- | ----------- | -------- |
+| default    |             |          |
+| navigation |             | <br>     |
 
 ---
 

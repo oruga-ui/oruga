@@ -133,7 +133,8 @@ export default {
                 },
                 {
                     class: "draggableClass",
-                    description: "Root class of the element",
+                    description: "Upload class when draggable",
+                    properties: ['dragDrop'],
                     action: (cmp) => {
                         cmp.data.dragDrop = true;
                     }
@@ -205,11 +206,11 @@ export default {
 
 ## Events
 
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| blur       | undefined |
-| focus      | undefined |
-| input      | undefined |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| blur       |            |
+| focus      |            |
+| input      |            |
 
 ## Slots
 

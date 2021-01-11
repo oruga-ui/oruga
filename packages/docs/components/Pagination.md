@@ -362,18 +362,19 @@ export default {
 
 ## Events
 
-| Event name     | Type      | Description |
-| -------------- | --------- | ----------- |
-| change         | undefined |
-| update:current | undefined |
+| Event name     | Properties | Description |
+| -------------- | ---------- | ----------- |
+| update:active  |            |
+| change         |            |
+| update:current |            |
 
 ## Slots
 
-| Name     | Description | Bindings                                                                                                               |
-| -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
-| previous |             | [<br> {<br> "name": "linkClass"<br> },<br> {<br> "name": "linkCurrentClass"<br> },<br> {<br> "name": "page"<br> }<br>] |
-| next     |             | [<br> {<br> "name": "linkClass"<br> },<br> {<br> "name": "linkCurrentClass"<br> },<br> {<br> "name": "page"<br> }<br>] |
-| default  |             | [<br> {<br> "name": "page"<br> },<br> {<br> "name": "linkClass"<br> },<br> {<br> "name": "linkCurrentClass"<br> }<br>] |
+| Name     | Description | Bindings |
+| -------- | ----------- | -------- |
+| previous |             | <br><br> |
+| next     |             | <br><br> |
+| default  |             | <br><br> |
 
 ## Style
 
