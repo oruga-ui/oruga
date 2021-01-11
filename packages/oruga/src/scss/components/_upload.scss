@@ -9,6 +9,10 @@ $upload-draggable-padding: 0.25em !default;
 .o-upl {
     position: relative;
     display: inline-flex;
+    &--disabled {
+        @include avariable('opacity', 'upload-draggable-disabled-opacity', $upload-draggable-disabled-opacity);
+        cursor: not-allowed;
+    }
     &--expanded {
         width: 100%;
     }
@@ -28,10 +32,6 @@ $upload-draggable-padding: 0.25em !default;
                 }
             }
             /* ---- */
-        }
-        &--disabled {
-            @include avariable('opacity', 'upload-draggable-disabled-opacity', $upload-draggable-disabled-opacity);
-            cursor: not-allowed;
         }
     }
     input[type=file] {
