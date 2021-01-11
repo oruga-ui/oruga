@@ -67,6 +67,13 @@
     @return list.index($whitelist, $variable) != null;
 }
 
+/// Checks if $whitelist is empty
+///
+/// @return {boolean} true if $whitelist is empty, else false.
+@function is-empty-whitelist() {
+    @return list.length($whitelist) == 0;
+}
+
 /// Returns a variable.
 ///
 /// @param {string} $name
@@ -78,11 +85,13 @@
 /// @return {string} the variable or null if not in whitelist when $css-vars == false.
 @function variable($name, $value, $forceval: false) {
     @if $css-vars == true {
-        @return var(#{$variable-prefix}#{$name}, #{$value});
+        @if is-empty-whitelist() or is-in-whitelist($name) {
+            @return var(#{$variable-prefix}#{$name}, #{$value});
+        }
     } @else if $sass-vars == true {
-        @return #{$value};
-    } @else if is-in-whitelist($name) {
-        @return #{$value};
+        @if is-empty-whitelist() or is-in-whitelist($name) {
+            @return #{$value};
+        }
     } @else if $forceval == true {
         @return #{$value};
     }
