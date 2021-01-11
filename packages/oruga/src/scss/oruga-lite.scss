@@ -2,7 +2,10 @@
 $css-vars: true;
 $sass-vars: false;
 
-$whitelist: (
+@import "utilities/_variables";
+@import "utilities/_helpers";
+
+$whitelist: add_to_whitelist(
     // button
     'button-background-color', 'button-color', 'button-disabled-opacity',
     // dropdown
