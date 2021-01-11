@@ -1419,44 +1419,44 @@ title: Table
 
 ## Events
 
-| Event name            | Type      | Description |
-| --------------------- | --------- | ----------- |
-| page-change           |           |
-| dblclick              |           |
-| mouseenter            |           |
-| mouseleave            |           |
-| contextmenu           |           |
-| cell-click            |           |
-| update:currentPage    | undefined |
-| filters-change        | undefined |
-| sort                  | undefined |
-| check                 | undefined |
-| check-all             | undefined |
-| update:checkedRows    | undefined |
-| click                 | undefined |
-| select                | undefined |
-| update:selected       | undefined |
-| details-close         | undefined |
-| details-open          | undefined |
-| update:openedDetailed | undefined |
-| dragstart             | undefined |
-| dragend               | undefined |
-| drop                  | undefined |
-| dragover              | undefined |
-| dragleave             | undefined |
+| Event name            | Properties                                                                                                         | Description |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| page-change           |                                                                                                                    |
+| dblclick              |                                                                                                                    |
+| mouseenter            |                                                                                                                    |
+| mouseleave            |                                                                                                                    |
+| contextmenu           |                                                                                                                    |
+| cell-click            |                                                                                                                    |
+| update:currentPage    |                                                                                                                    |
+| filters-change        |                                                                                                                    |
+| sort                  | **field** `string` - column field<br>**direction** `boolean` - 'asc' or 'desc'<br>**event** `Event` - native event |
+| check                 | **newCheckedRows** `Array<Object>` - checked rows                                                                  |
+| check-all             |                                                                                                                    |
+| update:checkedRows    |                                                                                                                    |
+| click                 | **row** `Object` - clicked row<br>**index** `number` - index of clicked row                                        |
+| select                | **row** `Object` - selected row<br>**selected** `Array<Object>` - selected rows                                    |
+| update:selected       |                                                                                                                    |
+| details-close         |                                                                                                                    |
+| details-open          |                                                                                                                    |
+| update:openedDetailed |                                                                                                                    |
+| dragstart             |                                                                                                                    |
+| dragend               |                                                                                                                    |
+| drop                  |                                                                                                                    |
+| dragover              |                                                                                                                    |
+| dragleave             |                                                                                                                    |
 
 ## Slots
 
-| Name        | Description | Bindings                                                              |
-| ----------- | ----------- | --------------------------------------------------------------------- |
-| default     |             |                                                                       |
-| pagination  |             |                                                                       |
-| top-left    |             |                                                                       |
-| detail      |             | [<br> {<br> "name": "row"<br> },<br> {<br> "name": "index"<br> }<br>] |
-| empty       |             |                                                                       |
-| footer      |             |                                                                       |
-| loading     |             |                                                                       |
-| bottom-left |             |                                                                       |
+| Name        | Description | Bindings |
+| ----------- | ----------- | -------- |
+| default     |             |          |
+| pagination  |             |          |
+| top-left    |             |          |
+| detail      |             | <br>     |
+| empty       |             |          |
+| footer      |             |          |
+| loading     |             |          |
+| bottom-left |             |          |
 
 ## Style
 

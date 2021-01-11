@@ -385,18 +385,18 @@ export default {
 
 ### Events
 
-| Event name    | Type      | Description |
-| ------------- | --------- | ----------- |
-| active-change | undefined |
-| change        | undefined |
-| input         | undefined |
+| Event name    | Properties | Description |
+| ------------- | ---------- | ----------- |
+| active-change |            |
+| change        |            |
+| input         |            |
 
 ### Slots
 
-| Name    | Description | Bindings                                |
-| ------- | ----------- | --------------------------------------- |
-| trigger |             | [<br> {<br> "name": "active"<br> }<br>] |
-| default |             |                                         |
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| trigger |             |          |
+| default |             |          |
 
 ---
 
@@ -415,9 +415,9 @@ export default {
 
 ### Events
 
-| Event name | Type | Description |
-| ---------- | ---- | ----------- |
-| click      |      |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| click      |            |
 
 ### Slots
 
