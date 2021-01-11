@@ -1,5 +1,14 @@
 
-$css-vars: false;
+$css-vars: true;
 $sass-vars: false;
+
+$whitelist: (
+    // button
+    'button-background-color', 'button-color', 'button-disabled-opacity',
+    // dropdown
+    'dropdown-menu-background', 'dropdown-mobile-overlay-color', 'dropdown-disabled-opacity',
+    'dropdown-menu-zindex', 'dropdown-mobile-overlay-zindex', 'dropdown-mobile-zindex',
+    'dropdown-item-active-background-color', 'dropdown-item-active-color', 'dropdown-item-disabled-opacity'
+);
 
 @import "oruga.scss";

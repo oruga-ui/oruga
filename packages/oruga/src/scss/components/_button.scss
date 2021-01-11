@@ -43,14 +43,12 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     @include avariable('line-height', 'button-line-height', $button-line-height);
     @include avariable('margin', 'button-margin', $button-margin);
     @include avariable('height', 'button-height', $button-height);
-
     &__wrapper {
         @include side-flex-gap($button-margin-icon-to-text);
         display: inline-flex;
         align-items: center;
         position: relative;
     }
-
     &--expanded {
         width: 100%;
     }
@@ -61,17 +59,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
     }
-    &__icon {
-        // @include avariable('height', 'button-icon-width', $button-icon-width);
-        // @include avariable('width', 'button-icon-width', $button-icon-width);
-        // &:first-child:not(:last-child) {
-        //     @include avariable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-        // }
-        // &:last-child:not(:first-child) {
-        //     @include avariable('margin-right', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-        // }
-    }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('button-font-size-' + #{$name}), $value);
@@ -91,7 +78,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             }
         }
     }
-    /* ----- */
     &--outlined {
         background-color: transparent;
         @include avariable('border-color', 'button-background-color', $button-background-color);
@@ -101,7 +87,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             @include avariable('background-color', 'button-background-color', $button-background-color);
             @include avariable('color', 'button-color', $button-color);
         }
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -116,7 +101,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
                 }
             }
         }
-        /* ---- */
     }
     &--inverted {
         @include avariable('background-color', 'button-color', $button-color);
@@ -127,7 +111,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             // IE 11 needs polyfill
             filter: brightness(95%);
         }
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -142,6 +125,5 @@ $button-disabled-opacity: $base-disabled-opacity !default;
                 }
             }
         }
-        /* --- */
     }
 }

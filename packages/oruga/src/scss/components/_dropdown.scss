@@ -1,8 +1,8 @@
 
 /* @docs */
 $dropdown-disabled-opacity: $base-disabled-opacity !default;
-$dropdown-item-background-active: $primary !default;
-$dropdown-item-color-active: $primary-invert !default;
+$dropdown-item-active-background-color: $primary !default;
+$dropdown-item-active-color: $primary-invert !default;
 $dropdown-item-color: #000000 !default;
 $dropdown-item-disabled-opacity: $base-disabled-opacity !default;
 $dropdown-item-font-size: $base-font-size !default;
@@ -67,7 +67,6 @@ $dropdown-mobile-zindex: 50 !default;
         @include avariable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
         @include avariable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
         @include avariable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
-
         &--top-left {
             top: auto;
             bottom: 100%;
@@ -113,8 +112,8 @@ $dropdown-mobile-zindex: 50 !default;
             pointer-events: none;
         }
         &--active {
-            @include avariable('background-color', 'dropdown-item-background-active', $dropdown-item-background-active);
-            @include avariable('color', 'dropdown-item-color-active', $dropdown-item-color-active);
+            @include avariable('background-color', 'dropdown-item-active-background-color', $dropdown-item-active-background-color);
+            @include avariable('color', 'dropdown-item-active-color', $dropdown-item-active-color);
         }
         &:hover:not(&--active) {
             @include avariable('background-color', 'dropdown-item-hover-background-color', $dropdown-item-hover-background-color);

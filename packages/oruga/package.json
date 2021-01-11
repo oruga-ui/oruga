@@ -36,7 +36,7 @@
     "build:scss-vars": "sass src/scss/oruga-vars.scss | node ./build/banner.js > dist/oruga-vars.css && cleancss -o dist/oruga-vars.min.css dist/oruga-vars.css",
     "build:scss-lite": "sass src/scss/oruga-lite.scss | node ./build/banner.js > dist/oruga-lite.css && cleancss -o dist/oruga-lite.min.css dist/oruga-lite.css",
     "build:scss": "sass src/scss/oruga-static.scss | node ./build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
-    "build:style:watch": "sass src/scss/oruga-vars.scss dist/oruga-vars.css --watch",
+    "build:style:watch": "sass src/scss/oruga-lite.scss dist/oruga-lite.css --watch",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
   },
