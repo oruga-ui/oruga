@@ -224,7 +224,7 @@ export default {
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
                 { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
                 { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
-                { [this.computedClass('menuMobileClass', 'o-drop--mobile')]: this.isMobileModal && this.matchMedia },
+                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.matchMedia },
             ]
         },
         triggerClasses() {
