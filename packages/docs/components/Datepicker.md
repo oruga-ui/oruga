@@ -420,20 +420,20 @@ title: Datepicker
 
 ## Events
 
-| Event name   | Properties | Description |
-| ------------ | ---------- | ----------- |
-| range-start  |            |
-| range-end    |            |
-| blur         |            |
-| focus        |            |
-| input        |            |
-| change-month |            |
-| change-year  |            |
+| Event name   | Type      | Description |
+| ------------ | --------- | ----------- |
+| range-start  |           |
+| range-end    |           |
+| blur         | undefined |
+| focus        | undefined |
+| input        | undefined |
+| change-month | undefined |
+| change-year  | undefined |
 
 ## Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
-| trigger |             |          |
 | header  |             |          |
 | default |             |          |
+| trigger |             |          |

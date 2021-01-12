@@ -283,10 +283,10 @@ export default {
 
 ## Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| content |             |          |
-| default |             |          |
+| Name    | Description | Bindings                             |
+| ------- | ----------- | ------------------------------------ |
+| content |             |                                      |
+| default |             | [<br> {<br> "name": "ref"<br> }<br>] |
 
 ## Style
 

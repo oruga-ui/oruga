@@ -204,9 +204,9 @@ export default {
 
 ## Events
 
-| Event name  | Properties | Description |
-| ----------- | ---------- | ----------- |
-| update:open |            |
+| Event name  | Type      | Description |
+| ----------- | --------- | ----------- |
+| update:open | undefined |
 
 ## Slots
 

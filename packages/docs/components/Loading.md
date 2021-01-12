@@ -233,11 +233,11 @@ export default {
 
 ## Events
 
-| Event name       | Properties | Description |
-| ---------------- | ---------- | ----------- |
-| close            |            |
-| update:active    |            |
-| update:full-page |            |
+| Event name       | Type      | Description |
+| ---------------- | --------- | ----------- |
+| close            |           |
+| update:active    | undefined |
+| update:full-page | undefined |
 
 ## Slots
 

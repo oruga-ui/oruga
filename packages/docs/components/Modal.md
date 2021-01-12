@@ -315,16 +315,10 @@ export default {
 
 ## Events
 
-| Event name    | Properties | Description |
-| ------------- | ---------- | ----------- |
-| close         |            |
-| update:active |            |
-
-## Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Event name    | Type      | Description |
+| ------------- | --------- | ----------- |
+| close         |           |
+| update:active | undefined |
 
 ## Style
 

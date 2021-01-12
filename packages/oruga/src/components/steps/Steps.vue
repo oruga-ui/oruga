@@ -155,7 +155,6 @@ export default {
         stepLinkClass: [String, Function],
         stepLinkClickableClass: [String, Function],
         stepLinkLabelClass: [String, Function],
-        // stepLinkLabelWrapperClass: [String, Function],
         stepLinkLabelPositionClass: [String, Function],
     },
     computed: {

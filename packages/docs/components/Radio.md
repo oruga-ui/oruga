@@ -190,9 +190,9 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| input      | undefined |
 
 ## Slots
 

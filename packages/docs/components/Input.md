@@ -267,11 +267,11 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| blur       |            |
-| focus      |            |
-| input      |            |
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| blur       | undefined |
+| focus      | undefined |
+| input      | undefined |
 
 ## Style
 

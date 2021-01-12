@@ -359,10 +359,10 @@ export default {
 
 ## Events
 
-| Event name  | Properties | Description |
-| ----------- | ---------- | ----------- |
-| close       |            |
-| update:open |            |
+| Event name  | Type      | Description |
+| ----------- | --------- | ----------- |
+| close       |           |
+| update:open | undefined |
 
 ## Slots
 

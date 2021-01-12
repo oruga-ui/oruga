@@ -246,16 +246,16 @@ title: Steps
      <div>
         <doc-wrapper>
             <template v-slot:default="s">
-                <o-steps v-bind="s">
-                    <o-step-item label="Account" icon="user-lock">
+                <o-steps v-bind="s" v-model="activeStep">
+                    <o-step-item v-bind="s" label="Account" icon="user-lock" step="1">
                         <h1 class="title has-text-centered">Account</h1>
                         Lorem ipsum dolor sit amet.
                     </o-step-item>
-                    <o-step-item label="Profile" icon="user" clickable>
+                    <o-step-item v-bind="s" label="Profile" icon="user" clickable step="2">
                         <h1 class="title has-text-centered">Profile</h1>
                         Lorem ipsum dolor sit amet.
                     </o-step-item>
-                    <o-step-item label="Social" icon="user-plus">
+                    <o-step-item v-bind="s" label="Social" icon="user-plus" step="3">
                         <h1 class="title has-text-centered">Social</h1>
                         Lorem ipsum dolor sit amet.
                     </o-step-item>
@@ -271,6 +271,7 @@ title: Steps
 export default {
     data() {
         return {
+            activeStep: 1,
             inspectData: [
                 {
                     class: "rootClass",
@@ -301,6 +302,25 @@ export default {
                     }
                 },
                 {
+                    class: "itemClass",
+                    description: "Class of the content item"
+                },
+                {
+                    class: "itemHeaderClass",
+                    description: "Class of the nav item"
+                },
+                {
+                    class: "itemHeaderActiveClass",
+                    description: "Class of the nav item when active",
+                },
+                {
+                    class: "itemHeaderPreviousClass",
+                    description: "Class of the nav item behind the active one",
+                    action: () => {
+                        this.activeStep = 2;
+                    }
+                },
+                {
                     class: "stepsClass",
                     description: "Class of the steps container",
                     action: () => {
@@ -309,6 +329,7 @@ export default {
                 {
                     class: "animatedClass",
                     description: "Class of Steps component when animation gets triggered",
+                    properties: ['animated'],
                     action: (cmp) => {
                         cmp.data.animated = true
                     }
@@ -353,14 +374,8 @@ export default {
                     }
                 },
                 {
-                    class: "stepLinkLabelClasses",
+                    class: "stepLinkLabelClass",
                     description: "Class of the Step component link label",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepTitleClass",
-                    description: "-",
                     action: () => {
                     }
                 },
@@ -427,16 +442,16 @@ export default {
 
 ### Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| input      | undefined |
 
 ### Slots
 
-| Name       | Description | Bindings |
-| ---------- | ----------- | -------- |
-| default    |             |          |
-| navigation |             | <br>     |
+| Name       | Description | Bindings                                                                  |
+| ---------- | ----------- | ------------------------------------------------------------------------- |
+| default    |             |                                                                           |
+| navigation |             | [<br> {<br> "name": "previous"<br> },<br> {<br> "name": "next"<br> }<br>] |
 
 ---
 

@@ -304,10 +304,10 @@ export default {
 
 ### Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| dragstart  |            |
-| dragend    |            |
+| Event name | Type | Description |
+| ---------- | ---- | ----------- |
+| dragstart  |      |
+| dragend    |      |
 
 ### Slots
 

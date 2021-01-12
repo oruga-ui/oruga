@@ -289,12 +289,10 @@ export default {
 
 ## Events
 
-| Event name        | Properties | Description |
-| ----------------- | ---------- | ----------- |
-| blur              |            |
-| focus             |            |
-| update:modelValue |            |
-| input             |            |
+| Event name | Type      | Description |
+| ---------- | --------- | ----------- |
+| blur       | undefined |
+| focus      | undefined |
 
 ## Slots
 
