@@ -35,8 +35,11 @@ export default {
                 },
                 {
                     class: "sizeClass",
-                    description: "-",
-                    action: () => {
+                    description: "Size of the steps",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
                     }
                 },
                 {
