@@ -18,7 +18,6 @@ $dropdown-menu-margin: 0 !default;
 $dropdown-menu-padding: .5rem 0 .5rem 0 !default;
 $dropdown-menu-width: 12rem !default;
 $dropdown-menu-zindex: 20 !default;
-$dropdown-mobile-breakpoint: 1024px !default;
 $dropdown-mobile-max-height: calc(100vh - 120px) !default;
 $dropdown-mobile-max-width: 460px !default;
 $dropdown-mobile-overlay-color: rgba(#000000, 0.86) !default;
@@ -46,11 +45,9 @@ $dropdown-mobile-zindex: 50 !default;
         right: 0;
         top: 0;
         cursor: pointer;
+        display: none;
         @include avariable('background-color', 'dropdown-mobile-overlay-color', $dropdown-mobile-overlay-color);
         @include avariable('z-index', 'dropdown-mobile-overlay-zindex', $dropdown-mobile-overlay-zindex);
-        @media screen and (min-width: $dropdown-mobile-breakpoint) {
-            display: none;
-        }
     }
     &__trigger {
         width: 100%;
@@ -67,7 +64,6 @@ $dropdown-mobile-zindex: 50 !default;
         @include avariable('box-shadow', 'dropdown-menu-box-shadow', $dropdown-menu-box-shadow);
         @include avariable('padding', 'dropdown-menu-padding', $dropdown-menu-padding);
         @include avariable('margin', 'dropdown-menu-margin', $dropdown-menu-margin);
-
         &--top-left {
             top: auto;
             bottom: 100%;
@@ -81,21 +77,6 @@ $dropdown-mobile-zindex: 50 !default;
         &--top-right {
             top: auto;
             bottom: 100%;
-        }
-        @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
-            &--mobile {
-                position: fixed;
-                top: 25%;
-                left: 50%;
-                bottom: auto;
-                right: auto;
-                transform: translate3d(-50%, -25%, 0);
-                overflow-y: auto;
-                @include avariable('width', 'dropdown-mobile-width', $dropdown-mobile-width);
-                @include avariable('max-width', 'dropdown-mobile-max-width', $dropdown-mobile-max-width);
-                @include avariable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height);
-                @include avariable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
-            }
         }
     }
     &__item {
@@ -130,5 +111,23 @@ $dropdown-mobile-zindex: 50 !default;
     &--disabled {
         @include avariable('opacity', 'dropdown-disabled-opacity', $dropdown-disabled-opacity);
         pointer-events: none;
+    }
+    &--mobile {
+        .o-drop__menu {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            bottom: auto;
+            right: auto;
+            transform: translate3d(-50%, -25%, 0);
+            overflow-y: auto;
+            @include avariable('width', 'dropdown-mobile-width', $dropdown-mobile-width);
+            @include avariable('max-width', 'dropdown-mobile-max-width', $dropdown-mobile-max-width);
+            @include avariable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height);
+            @include avariable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
+        }
+        .o-drop__overlay {
+            display: block;
+        }
     }
 }
