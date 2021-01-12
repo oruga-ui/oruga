@@ -305,8 +305,8 @@ export default {
                     }
                 },
                 {
-                    class: "menuMobileClass",
-                    description: "Class of dropdown menu when on mobile",
+                    class: "mobileClass",
+                    description: "Class of dropdown when on mobile",
                     warning: "Switch to mobile view to see it in action!",
                     action: () => {
                         setTimeout(() => {
