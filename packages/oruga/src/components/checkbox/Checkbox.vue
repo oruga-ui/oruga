@@ -40,7 +40,10 @@ export default {
         /**
          * Same as native indeterminate
          */
-        indeterminate: Boolean,
+        indeterminate: {
+            type: Boolean,
+            default: false
+        },
         /**
          * Overrides the returned value when it's checked
          */
@@ -64,7 +67,19 @@ export default {
         sizeClass: [String, Function],
         variantClass: [String, Function]
     },
+    watch: {
+        indeterminate: {
+            handler(val, oldVal) {
+                this.isIndeterminate = val;
+            },
+            deep: true,
+            immediate: true,
+        },
+    },
     computed: {
+        isChecked () {
+            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.includes(this.nativeValue)
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-chk'),
@@ -76,8 +91,8 @@ export default {
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-chk__check'),
-                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.includes(this.nativeValue) },
-                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.$refs.input ? this.$refs.input.indeterminate : this.indeterminate },
+                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.isChecked },
+                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.isIndeterminate },
             ]
         },
         labelClasses() {

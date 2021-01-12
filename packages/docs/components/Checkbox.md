@@ -228,7 +228,7 @@ export default {
 | ------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
 | disabled      | Same as native disabled                            | boolean                        | -                                                                               |         |
 | falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean        | -                                                                               | false   |
-| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               |         |
+| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               | false   |
 | name          | Same as native name                                | string                         | -                                                                               |         |
 | nativeValue   | Same as native value                               | string\|number\|boolean\|array | -                                                                               |         |
 | override      |                                                    | boolean                        | -                                                                               |         |

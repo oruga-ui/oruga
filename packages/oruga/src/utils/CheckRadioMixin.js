@@ -28,7 +28,8 @@ export default {
 	},
 	data() {
 		return {
-			newValue: this.value
+            newValue: this.value,
+            isIndeterminate : this.indeterminate
 		}
 	},
 	computed: {
@@ -37,7 +38,8 @@ export default {
 				return this.newValue
 			},
 			set(value) {
-				this.newValue = value
+                this.newValue = value
+                this.isIndeterminate = false
 				this.$emit('input', this.newValue)
 			}
 		}
@@ -47,7 +49,7 @@ export default {
 		 * When v-model change, set internal value.
 		 */
 		value(value) {
-			this.newValue = value
+            this.newValue = value
 		}
 	},
 	methods: {
