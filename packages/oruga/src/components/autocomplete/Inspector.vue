@@ -46,7 +46,7 @@ export default {
                 {
                     class: "menuPositionClass",
                     description: "Class of the autocomplete menu position",
-                    properties: ["menuPosition"],
+                    properties: ["menu-position"],
                     suffixes: ["auto", "top", "bottom"],
                     action: (cmp) => {
                         let el = cmp.$el.querySelector('input')
