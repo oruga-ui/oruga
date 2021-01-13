@@ -72,13 +72,12 @@ export default {
             handler(val, oldVal) {
                 this.isIndeterminate = val;
             },
-            deep: true,
             immediate: true,
         },
     },
     computed: {
         isChecked () {
-            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.includes(this.nativeValue)
+            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
         },
         rootClasses() {
             return [
