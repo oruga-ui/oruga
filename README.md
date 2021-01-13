@@ -35,13 +35,13 @@
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
 * **Lightweight**: no other internal dependency and import only components that you need
 
-Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, Material or TailwindCSS) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your style, Oruga is the library for you!
+Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your custom style, Oruga is the library for you!
 
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
 
-💅 For more info about components customization, go to the ["Customization section"](#customization) in the documentation.
+💅 For more info about components customization, go to the `Customization section` in the documentation.
 
-🕹 To see Oruga in action, go to the ["Example section"](#examples) in the documentation.
+🕹 To see Oruga in action, go to the `Example section` in the documentation.
 
 ## Documentation
 
