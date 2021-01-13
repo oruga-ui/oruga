@@ -229,7 +229,7 @@ export default {
                     properties: ["variant"],
                     suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
-                        cmp.data.variant = "warning";
+                        cmp.data.fieldvariant = "warning";
                     }
                 },
             ],

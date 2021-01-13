@@ -44,7 +44,6 @@ export default {
                 {
                     class: "menuClass",
                     description: "Class of the dropdown menu",
-                    warning: "Switch to mobile view to see it in action!",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -62,8 +61,6 @@ export default {
                 {
                     class: "menuActiveClass",
                     description: "Class of dropdown menu when active",
-                    warning: "Switch to mobile view to see it in action!",
-
                     properties: ['inline'],
                     action: () => {
                         setTimeout(() => {
@@ -74,7 +71,6 @@ export default {
                 {
                     class: "menuInlineClass",
                     description: "Class of dropdown menu when inline",
-                    warning: "Switch to mobile view to see it in action!",
                     properties: ['inline'],
                     action: (cmp) => {
                         cmp.data.inline = true;
@@ -83,7 +79,6 @@ export default {
                 {
                     class: "menuPositionClass",
                     description: "Class of dropdown menu position",
-                    warning: "Switch to mobile view to see it in action!",
                     properties: ['position'],
                     suffixes: ['top-right', 'top-left', 'bottom-left'],
                     action: (cmp) => {
@@ -114,7 +109,6 @@ export default {
                 {
                     class: "itemClass",
                     description: "Class of the dropdown item",
-                    properties: ['disabled'],
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -134,6 +128,7 @@ export default {
                 {
                     class: "itemDisabledClass",
                     description: "Class of the dropdown item when disabled",
+                    properties: ['disabled'],
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()

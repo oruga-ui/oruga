@@ -59,9 +59,9 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         @include avariable('transition-duration', 'transition-duration', $speed-slow);
         @include avariable('transition-timing-function', 'transition-timing', $easing);
 
-        @include avariable('background-image', 'radio-active-background-color', url(svg_radio_empty($radio-active-background-color)));
+        background-image: url(svg_radio_empty(variable('radio-active-background-color', $radio-active-background-color)));
         &--checked {
-            @include avariable('background-image', 'radio-active-background-color', url(svg_radio_fill($radio-active-background-color)));
+            background-image: url(svg_radio_fill(variable('radio-active-background-color', $radio-active-background-color)));
         }
     }
     &__label {
@@ -83,10 +83,13 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
         $color-invert: nth($pair, 2);
         &--#{$name} {
             .o-radio__check {
-                @include avariable('background-image', ('variant-' + #{$name}), url(svg_radio_empty($color)));
+                background-image: url(svg_radio_empty(variable(('variant-' + #{$name}), $color)));
             }
             .o-radio__check--checked {
-                @include avariable('background-image', ('variant-' + #{$name}), url(svg_radio_fill($color, $color-invert)));
+                background-image: url(svg_radio_fill(
+                    variable(('variant-' + #{$name}), $color),
+                    variable(('variant-invert-' + #{$name}), $color-invert)
+                ));
             }
         }
     }

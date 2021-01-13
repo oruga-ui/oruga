@@ -92,6 +92,7 @@ export default {
                     class: "absoluteClass",
                     description: "Class of the sidebar when its position is absolute",
                     properties: ['position'],
+                    warning: "Scroll to the top of this page to see the sidebar",
                     action: (cmp) => {
                         this.position = 'absolute';
                         setTimeout(() => {

@@ -69,12 +69,12 @@ $checkbox-line-height: 1.5 !default;
         &--checked {
             @include avariable('background-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
-            background-image: url(svg_checkmark($checkbox-checkmark-color));
+            background-image: url(svg_checkmark(variable('checkbox-checkmark-color', $checkbox-checkmark-color)));
         }
         &--indeterminate {
             @include avariable('background-color', 'checkbox-active-background-color', $checkbox-active-background-color);
             @include avariable('border-color', 'checkbox-active-background-color', $checkbox-active-background-color);
-            background-image: url(svg_indeterminate($checkbox-checkmark-color));
+            background-image: url(svg_indeterminate(variable('checkbox-checkmark-color', $checkbox-checkmark-color)));
         }
     }
     &__label {
@@ -98,10 +98,10 @@ $checkbox-line-height: 1.5 !default;
                 @include avariable('background-color', ('variant-' + #{$name}), $color);
             }
             .o-chk__check--checked {
-                background-image: url(svg_checkmark($color-invert));
+                background-image: url(svg_checkmark(variable(('variant-invert-' + #{$name}), $color-invert)));
             }
             .o-chk__check--indeterminate {
-                background-image: url(svg_indeterminate($color-invert));
+                background-image: url(svg_indeterminate(variable(('variant-invert-' + #{$name}), $color-invert)));
             }
         }
     }
