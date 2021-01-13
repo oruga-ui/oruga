@@ -37,19 +37,19 @@
 
 Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your custom style, Oruga is the library for you!
 
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
+## Documentation
+
+Browse [online documentation here](https://oruga.io/).
 
 💅 For more info about components customization, go to the `Customization section` in the documentation.
 
 🕹 To see Oruga in action, go to the `Example section` in the documentation.
 
-## Documentation
-
-Browse [online documentation here](https://oruga.io/).
-
-The documentation source code is in the `docs` directory, it serves as the demo as well.
+Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
 
 ## Browser support
+
+🌎 Oruga has been tested in all major browsers
 
 ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
 --- | --- | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** 
 
 ### 1 Install via npm
 
