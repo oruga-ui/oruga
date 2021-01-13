@@ -13,7 +13,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
- * @displayName DropdownItem
+ * @displayName Dropdown Item
  */
 export default {
     name: 'ODropdownItem',

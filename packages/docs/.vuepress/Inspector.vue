@@ -8,7 +8,8 @@
             <th></th>
         </tr>
         <tr v-for="(data, index) of classesToInspect" :key="data.class" :class="{ inspector__highlight: index === selectedElementIndex }">
-            <td>{{data.class}}</td>
+            <td v-if="!data.subitem">{{data.class}}</td>
+            <td v-if="data.subitem"><a :href="`#${subitem}`">{{data.class}}</a></td>
             <td>
                 <span>{{data.description | addDotToTheEnd}}</span>
                 <span v-if="data.warning"><br>👉 <span v-html="data.warning"></span></span>
@@ -50,6 +51,7 @@ export default {
     },
     props: {
         inspectData: Array,
+        subitem: String
     },
     methods: {
         setByProperties(props) {
@@ -75,7 +77,7 @@ export default {
     border-radius: 0.3rem;
     padding: 0.4rem;
 }
-.inspector__highlight, .inspector__highlight code {
+.inspector__highlight, .inspector__highlight code, .inspector__highlight a {
     background: #bd1313 !important;
     color: white!important;
 }

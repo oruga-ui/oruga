@@ -180,7 +180,7 @@ title: Slider
                 </o-slider>
             </template>
         </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
+        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
         <br/>
     </div>
 </template>
@@ -189,6 +189,7 @@ title: Slider
 export default {
     data() {
         return {
+            subitem: "slider-tick",
             inspectData: [
                 {
                     class: "rootClass",
@@ -256,17 +257,20 @@ export default {
                 {
                     class: "tickClass",
                     description: "Class of slider tick",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 },
                 {
                     class: "tickHiddenClass",
                     description: "Class when slider tick is hidden",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 },
                 {
                     class: "tickLabelClass",
                     description: "Class of tick label",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 }
             ]
         };
@@ -317,7 +321,7 @@ export default {
 
 ---
 
-# SliderTick
+# Slider Tick
 
 ## Props
 

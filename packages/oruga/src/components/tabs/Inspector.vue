@@ -20,7 +20,7 @@
                 </o-tabs>
             </template>
         </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
+        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
         <br/>
     </div>
 </template>
@@ -30,6 +30,7 @@ export default {
     data() {
         return {
             activeTab: 1,
+            subitem: "tab-item",
             inspectData: [
                 {
                     class: "rootClass",
@@ -84,19 +85,23 @@ export default {
                 },
                 {
                     class: "itemClass",
-                    description: "Class of the tab item"
+                    description: "Class of the tab item",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderClass",
-                    description: "Class of the tab item header"
+                    description: "Class of the tab item header",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderActiveClass",
                     description: "Class of the tab item header when active",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderDisabledClass",
                     description: "Class of the tab item header when disabled",
+                    subitem: true,
                     action: (cmp) => {
                         cmp.data.disabled = true;
                     }
@@ -104,18 +109,21 @@ export default {
                 {
                     class: "itemHeaderTypeClass",
                     description: "Class of the tab item header type",
+                    subitem: true,
                     action: () => {
                     }
                 },
                 {
                     class: "itemHeaderIconClass",
                     description: "Class of the tab item header icon",
+                    subitem: true,
                     action: () => {
                     }
                 },
                 {
                     class: "itemHeaderTextClass",
                     description: "Class of the tab item header text",
+                    subitem: true,
                     action: () => {
                     }
                 },

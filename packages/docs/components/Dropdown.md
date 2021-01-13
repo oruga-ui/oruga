@@ -224,7 +224,7 @@ title: Dropdown
             </o-dropdown>
         </template>
     </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
+    <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
   </div>
 </template>
 
@@ -233,6 +233,7 @@ export default {
     data() {
         return {
             currentMenu: '',
+            subitem: 'dropdown-item',
             inspectData: [
                 {
                     class: "rootClass",
@@ -272,8 +273,6 @@ export default {
                 {
                     class: "menuActiveClass",
                     description: "Class of dropdown menu when active",
-                    warning: "Switch to mobile view to see it in action!",
-
                     properties: ['inline'],
                     action: () => {
                         setTimeout(() => {
@@ -292,7 +291,6 @@ export default {
                 {
                     class: "menuPositionClass",
                     description: "Class of dropdown menu position",
-                    warning: "Switch to mobile view to see it in action!",
                     properties: ['position'],
                     suffixes: ['top-right', 'top-left', 'bottom-left'],
                     action: (cmp) => {
@@ -323,6 +321,7 @@ export default {
                 {
                     class: "itemClass",
                     description: "Class of the dropdown item",
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -332,6 +331,7 @@ export default {
                 {
                     class: "itemActiveClass",
                     description: "Class of the dropdown item when active",
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.currentMenu = 'ac1'
@@ -341,6 +341,7 @@ export default {
                 },
                 {
                     class: "itemDisabledClass",
+                    subitem: true,
                     description: "Class of the dropdown item when disabled",
                     properties: ['disabled'],
                     action: () => {
@@ -399,7 +400,7 @@ export default {
 
 ---
 
-# DropdownItem
+# Dropdown Item
 
 ## Props
 

@@ -12,7 +12,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
- * @displayName SliderTick
+ * @displayName Slider Tick
  */
 export default {
     name: 'OSliderTick',

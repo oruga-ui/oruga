@@ -3,6 +3,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
 import { getStyleValue } from '../../utils/helpers'
 
+/**
+ * @displayName Step Item
+ */
 export default {
     name: 'OStepItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('step')],

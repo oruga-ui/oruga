@@ -18,7 +18,7 @@
                 </o-steps>
             </template>
         </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
+        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
         <br/>
     </div>
 </template>
@@ -28,6 +28,7 @@ export default {
     data() {
         return {
             activeStep: 1,
+            subitem: 'step-item',
             inspectData: [
                 {
                     class: "rootClass",
@@ -62,19 +63,23 @@ export default {
                 },
                 {
                     class: "itemClass",
-                    description: "Class of the content item"
+                    description: "Class of the content item",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderClass",
-                    description: "Class of the nav item"
+                    description: "Class of the nav item",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderActiveClass",
                     description: "Class of the nav item when active",
+                    subitem: true
                 },
                 {
                     class: "itemHeaderPreviousClass",
                     description: "Class of the nav item behind the active one",
+                    subitem: true,
                     action: () => {
                         this.activeStep = 2;
                     }
@@ -122,7 +127,7 @@ export default {
                 {
                     class: "stepContentTransitioningClass",
                     description: "Class of the Steps component content when transition is happening",
-                    warning: "Click on the 'Profile' marker to see it in action",
+                    warning: "Click on a marker to see it in action",
                     action: () => {
                     }
                 },

@@ -13,7 +13,7 @@
             </o-dropdown>
         </template>
     </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
+    <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             currentMenu: '',
+            subitem: 'dropdown-item',
             inspectData: [
                 {
                     class: "rootClass",
@@ -109,6 +110,7 @@ export default {
                 {
                     class: "itemClass",
                     description: "Class of the dropdown item",
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -118,6 +120,7 @@ export default {
                 {
                     class: "itemActiveClass",
                     description: "Class of the dropdown item when active",
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.currentMenu = 'ac1'
@@ -127,6 +130,7 @@ export default {
                 },
                 {
                     class: "itemDisabledClass",
+                    subitem: true,
                     description: "Class of the dropdown item when disabled",
                     properties: ['disabled'],
                     action: () => {

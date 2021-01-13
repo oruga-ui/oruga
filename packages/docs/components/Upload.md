@@ -167,10 +167,12 @@ export default {
                 {
                     class: "variantClass",
                     description : 'Class of the upload variant',
-                    properties: ["variant"],
+                    properties: ["variant", "dragDrop"],
                     suffixes: ['primary', 'info', 'warning', 'danger'],
+                    warning: 'Drag & drop a file to see it in action!',
                     action: (cmp) => {
                         cmp.data.variant = 'warning';
+                        cmp.data.dragDrop = true;
                     }
                 }
             ]
