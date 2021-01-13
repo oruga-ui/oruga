@@ -35,11 +35,25 @@
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
 * **Lightweight**: no other internal dependency and import only components that you need
 
+Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, Material or TailwindCSS) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your style, Oruga is the library for you!
+
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
+
+💅 For more info about components customization, go to the ["Customization section"](#customization) in the documentation.
+
+🕹 To see Oruga in action, go to the ["Example section"](#examples) in the documentation.
+
 ## Documentation
 
 Browse [online documentation here](https://oruga.io/).
 
-The documentation is in the docs directory, it serves as the demo as well.
+The documentation source code is in the `docs` directory, it serves as the demo as well.
+
+## Browser support
+
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Quick start
 
@@ -160,12 +174,6 @@ plugins: [{ src: '~plugins/oruga.js' }]
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
 
 Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui/demo-nuxtjs).
-
-## Browser support
-
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
---- | --- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Contributing
 

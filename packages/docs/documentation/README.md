@@ -1,8 +1,19 @@
-Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency.
+## Introduction
+
+Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency. 
+Most of the components aren't a simple wrapper of native elements but they add new and custom features. Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, Material or TailwindCSS) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your style, Oruga is the library for you!
+
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
+
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
+
+💅 For more info about components customization, go to the ["Customization section"](#customization).
+
+🕹 To see Oruga in action, go to the ["Example section"](#examples).
 
 ## Installation
-
-To install Oruga you need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
 
 ### Using Vue 2
 
@@ -564,7 +575,7 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ## Examples
 
-### Tailwind, Bootstrap 5 and Bulma demo
+### TailwindCSS, Bootstrap 5 and Bulma demo
 
 <p>
 Source code <a href="https://github.com/oruga-ui/demo-multiframework">here</a>
@@ -573,3 +584,17 @@ Source code <a href="https://github.com/oruga-ui/demo-multiframework">here</a>
 <iframe frameborder="0" style="width: 100%; height: 105vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>
+
+### TailwindCSS 2 Recipe Demo
+
+This simple demo shows a simple recipe website. Oruga components like Input, Radio, Loading, Switch, Collapse etc are customized using [TailwindCSS 2](https://tailwindcss.com/)!
+
+- [Online demo](https://oruga-tailwindcss-demo.netlify.app)
+- [Source code](https://github.com/oruga-ui/demo-tailwindcss)
+
+### NuxtJS Demo
+
+WIP
+
+- [Online demo](https://oruga-nuxtjs-demo.netlify.app)
+- [Source code](https://github.com/oruga-ui/demo-nuxtjs)
