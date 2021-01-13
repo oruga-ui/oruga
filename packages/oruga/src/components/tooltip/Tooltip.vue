@@ -190,7 +190,7 @@ export default {
                 wrapper.style.position = 'absolute'
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
-                wrapper.style.zIndex = this.isActive || this.always ? '9999' : '-1'
+                wrapper.style.zIndex = this.isActive || this.always ? '99' : '-1'
                 this.triggerStyle = { zIndex: this.isActive || this.always ? '100' : undefined }
             }
         },
