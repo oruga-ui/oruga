@@ -23,7 +23,7 @@
                     </h4>
                     <div>
                         This column contains the name of the Class prop you want to inspect.<br>
-                        If you find a name with a link (<span>▷ <a>classPropName</a></span>) this refers to a subitem (e.g. Dropdown Item in Dropdown).
+                        If you find a name with a link (<span>▷ <a>classPropName</a></span>) this refers to a subitem (e.g. <i>Dropdown Item</i> in <i>Dropdown</i>).
                     </div>
                 </p>
                 <p class="inspector__summary-class">
@@ -33,7 +33,7 @@
                     <div>
                         This column contains the description of the Class prop you want to inspect.<br>
                         👉 This icon indicates some warning, e.g. <i>this Class prop is visible only on mobile.</i><br>
-                        🔍 This icon indicates that you should pay attention to CSS specificity. See <a href="/documentation/#deal-with-specificity">"Deal with specificity"</a> section in the documentation
+                        🔍 This icon indicates that you should pay attention to CSS specificity. See <a href="/documentation/#deal-with-specificity">"Deal with specificity"</a> section in the documentation.
                     </div>
                 </p>
                 <p class="inspector__summary-class">
