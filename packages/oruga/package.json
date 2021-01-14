@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga",
-  "version": "0.2.2",
+  "version": "0.3.0-dev",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
