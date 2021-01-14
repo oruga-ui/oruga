@@ -171,7 +171,7 @@ export default {
         },
         {
           class: 'labelClass',
-          description : 'Class of the label'
+          description : 'Class of the checkbox label'
         },
         {
           class: 'checkClass',
@@ -179,7 +179,7 @@ export default {
         },
         {
           class: 'checkCheckedClass',
-          description : '',
+          description : 'Class of the checkbox when checked',
           action: (cmp) => {
             cmp.data.checkbox = true;
           }
