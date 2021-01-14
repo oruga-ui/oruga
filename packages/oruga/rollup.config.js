@@ -9,7 +9,9 @@ import path from 'path'
 
 import pack from './package.json'
 
-const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
+const bannerText = require('./build/bannertext')
+
+const bannerTxt = bannerText.generate(pack.version)
 
 const baseFolder = './src/components/'
 
