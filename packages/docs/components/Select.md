@@ -289,10 +289,11 @@ export default {
 
 ## Events
 
-| Event name | Type      | Description |
-| ---------- | --------- | ----------- |
-| blur       | undefined |
-| focus      | undefined |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| blur       |            |
+| focus      |            |
+| input      |            |
 
 ## Slots
 

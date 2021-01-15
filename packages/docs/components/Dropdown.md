@@ -361,42 +361,42 @@ export default {
 
 ## Props
 
-| Prop name              | Description                                                                                                                                            | Type                                   | Values                                   | Default                                                       |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ---------------------------------------- | ------------------------------------------------------------- |
-| animation              | Custom animation (transition name)                                                                                                                     | string                                 | -                                        | Config -> <code> 'dropdown.animation': 'fade'</code>          |
-| appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                               |
-| appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                               |
-| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                          |
-| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                          |
-| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                          |
-| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                               |
-| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                               |
-| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                               |
-| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>             |
-| mobileBreakpoint       | Dropdown mobile breakpoint                                                                                                                             | string                                 | -                                        | Config -> <code> 'dropdown.mobileBreakpoint': '1023px'</code> |
-| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | Config -> <code> 'dropdown.mobileModal': true</code>          |
-| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                               |
-| override               |                                                                                                                                                        | boolean                                | -                                        |                                                               |
-| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                               |
-| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                               |
-| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>            |
-| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                                     |
-| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                          |
+| Prop name              | Description                                                                                                                                            | Type                                   | Values                                   | Default                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| animation              | Custom animation (transition name)                                                                                                                     | string                                 | -                                        | Config -> <code> 'dropdown.animation': 'fade'</code> |
+| appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                      |
+| appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                      |
+| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                 |
+| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                 |
+| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                 |
+| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                      |
+| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                      |
+| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                      |
+| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | Config -> <code> 'dropdown.maxHeight': 200</code>    |
+| mobileBreakpoint       | Mobile breakpoint as max-width value                                                                                                                   | string                                 | -                                        |                                                      |
+| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | Config -> <code> 'dropdown.mobileModal': true</code> |
+| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                      |
+| override               |                                                                                                                                                        | boolean                                | -                                        |                                                      |
+| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                      |
+| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                      |
+| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | Config -> <code> 'dropdown.trapFocus': true</code>   |
+| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                            |
+| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                 |
 
 ### Events
 
-| Event name    | Type      | Description |
-| ------------- | --------- | ----------- |
-| active-change | undefined |
-| change        | undefined |
-| input         | undefined |
+| Event name    | Properties | Description |
+| ------------- | ---------- | ----------- |
+| active-change |            |
+| change        |            |
+| input         |            |
 
 ### Slots
 
-| Name    | Description | Bindings                                |
-| ------- | ----------- | --------------------------------------- |
-| trigger |             | [<br> {<br> "name": "active"<br> }<br>] |
-| default |             |                                         |
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| trigger |             |          |
+| default |             |          |
 
 ---
 
@@ -415,9 +415,9 @@ export default {
 
 ### Events
 
-| Event name | Type | Description |
-| ---------- | ---- | ----------- |
-| click      |      |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| click      |            |
 
 ### Slots
 

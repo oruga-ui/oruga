@@ -44,6 +44,8 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
@@ -61,7 +63,7 @@ export default {
         trapFocus
     },
     configField: 'dropdown',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $dropdown: this
@@ -116,15 +118,6 @@ export default {
             type: Boolean,
             default: () => {
                 return getValueByPath(config, 'dropdown.mobileModal', true)
-            }
-        },
-        /**
-         * Dropdown mobile breakpoint
-         */
-        mobileBreakpoint: {
-            type: String,
-            default: () => {
-                return getValueByPath(config, 'dropdown.mobileBreakpoint', '1023px')
             }
         },
         /**
@@ -212,8 +205,6 @@ export default {
             selected: this.value,
             isActive: false,
             isHoverable: false,
-            matchMedia: false,
-            matchMediaRef: undefined,
             bodyEl: undefined // Used to append to body
         }
     },
@@ -224,7 +215,7 @@ export default {
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
                 { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
                 { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
-                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.matchMedia },
+                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.isMatchMedia },
             ]
         },
         triggerClasses() {
@@ -442,10 +433,6 @@ export default {
                 dropdownMenu.style.left = `${left}px`
                 dropdownMenu.style.zIndex = '9999'
             }
-        },
-
-        checkMatchMedia(event) {
-            this.matchMedia = event.matches
         }
     },
     mounted() {
@@ -458,16 +445,12 @@ export default {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
             document.addEventListener('keyup', this.keyPress)
-            this.matchMediaRef = window.matchMedia(`(max-width: ${this.mobileBreakpoint})`)
-            this.matchMedia = this.matchMediaRef.matches
-            this.matchMediaRef.addListener(this.checkMatchMedia, false)
         }
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
             document.removeEventListener('keyup', this.keyPress)
-            this.matchMediaRef.removeListener(this.checkMatchMedia)
         }
         if (this.appendToBody) {
             removeElement(this.$data.bodyEl)

@@ -308,10 +308,10 @@ export default {
 
 ### Events
 
-| Event name | Type | Description |
-| ---------- | ---- | ----------- |
-| dragstart  |      |
-| dragend    |      |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| dragstart  |            |
+| dragend    |            |
 
 ### Slots
 

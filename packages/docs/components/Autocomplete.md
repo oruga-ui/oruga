@@ -462,26 +462,26 @@ export default {
 
 ## Events
 
-| Event name       | Type      | Description |
-| ---------------- | --------- | ----------- |
-| icon-click       |           |
-| blur             | undefined |
-| focus            | undefined |
-| input            | undefined |
-| select           | undefined |
-| infinite-scroll  |           |
-| typing           | undefined |
-| icon-right-click | undefined |
+| Event name       | Properties                                                                  | Description |
+| ---------------- | --------------------------------------------------------------------------- | ----------- |
+| icon-click       |                                                                             |
+| blur             |                                                                             |
+| focus            |                                                                             |
+| input            |                                                                             |
+| select           | **selected** `Object` - selected option<br>**event** `Event` - native event |
+| infinite-scroll  |                                                                             |
+| typing           |                                                                             |
+| icon-right-click |                                                                             |
 
 ## Slots
 
-| Name    | Description | Bindings                                                                 |
-| ------- | ----------- | ------------------------------------------------------------------------ |
-| header  |             |                                                                          |
-| group   |             | [<br> {<br> "name": "group"<br> },<br> {<br> "name": "index"<br> }<br>]  |
-| default |             | [<br> {<br> "name": "option"<br> },<br> {<br> "name": "index"<br> }<br>] |
-| empty   |             |                                                                          |
-| footer  |             |                                                                          |
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| header  |             |          |
+| group   |             | <br>     |
+| default |             | <br>     |
+| empty   |             |          |
+| footer  |             |          |
 
 ## Style
 
