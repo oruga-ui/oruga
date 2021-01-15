@@ -2,8 +2,11 @@
     <div>
         <doc-wrapper>
             <template v-slot:default="s">
-                <o-table v-bind="s" :data="s.isEmpty ? [] : data" :columns="columns"  :selected.sync="selected" >
+                <o-table v-bind="s" :data="s.isEmpty ? [] : data" :columns="columns" :selected.sync="selected" detailed>
                     <template slot="footer"> This is the footer </template>
+                    <template slot="detail">
+                        DETAILS
+                    </template>
                 </o-table>
             </template>
         </doc-wrapper>
@@ -22,7 +25,7 @@ export default {
             first_name: 'Jesse',
             last_name: 'Simmons',
             date: '2016-10-15 13:43:27',
-            gender: 'Male'
+            gender: 'Male',
           },
           {
             id: 2,
@@ -172,12 +175,12 @@ export default {
         inspectData: [
             {
                 class: "tableClass",
-                description: "Class of the root element"
+                description: "Class of the Table"
             },
             {
                 class: "borderedClass",
                 properties: ["bordered"],
-                description: "Class of the trigger element",
+                description: "Class of the Table when bordered",
                 action: (cmp) => {
                     cmp.data.bordered = true;
                 }
@@ -185,7 +188,7 @@ export default {
             {
                 class: "stripedClass",
                 properties: ["striped"],
-                description: "Class of the trigger element",
+                description: "Class of the Table when striped",
                 action: (cmp) => {
                     cmp.data.striped = true;
                 }
@@ -193,7 +196,7 @@ export default {
             {
                 class: "narrowedClass",
                 properties: ["narrowed"],
-                description: "Class of the trigger element",
+                description: "Class of the Table when narrowed",
                 action: (cmp) => {
                     cmp.data.narrowed = true;
                 }
@@ -201,36 +204,34 @@ export default {
             {
                 class: "hoverableClass",
                 properties: ["hoverable or focusable"],
-                description: "Class of the trigger element",
+                description: "Class of the Table when hoverable",
                 action: (cmp) => {
                     cmp.data.hoverable = true;
                 }
             },
             {
                 class: "emptyClass",
-                description: "Class of the trigger element",
+                description: "Class of the Table when empty",
                 action: (cmp) => {
                     cmp.data.isEmpty = true
                 }
             },
-            // WRAPPER
             {
                 class: "wrapperClass",
-                properties: [""],
-                description: "Class of the trigger element"
+                description: "Class of the Table wrapper"
             },
             {
                 class: "mobileCardsClass",
-                properties: ["mobileCards"],
-                description: "Class of the trigger element",
+                properties: ["mobile-cards"],
+                description: "-",
                 action: (cmp) => {
                     cmp.data.mobileCards = true;
                 }
             },
             {
                 class: "stickyHeaderClass",
-                properties: ["stickyHeader"],
-                description: "Class of the trigger element",
+                properties: ["sticky-header"],
+                description: "Class of the Table wrapper when header is sticky",
                 action: (cmp) => {
                     cmp.data.stickyHeader = true;
                 }
@@ -238,29 +239,29 @@ export default {
             {
                 class: "scrollableClass",
                 properties: ["scrollable"],
-                description: "Class of the trigger element",
+                description: "Class of the Table wrapper when is scrollable",
                 action: (cmp) => {
                     cmp.data.scrollable = true;
                 }
             },
             {
                 class: "footerClass",
-                description: "Footer class",
+                description: "Class of the Table footer",
                 action: (cmp) => {
                     cmp.data.tableClass = 'inspector_table'
                 }
             },
             {
                 class: "thClass",
-                description: "Class of the trigger element"
+                description: "Class of the Table th element"
             },
             {
                 class: "tdClass",
-                description: "Class of the trigger element"
+                description: "Class of the Table td element"
             },
             {
                 class: "thCheckboxClass",
-                description: "Class of the trigger element",
+                description: "Class of the Table th element when checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -268,11 +269,15 @@ export default {
             },
             {
                 class: "thDetailedClass",
-                description: "-"
+                description: "Class of the Table th element of the detail trigger column",
+                properties: ["detailed"],
+                action: (cmp) => {
+                    cmp.data.detailed = true;
+                }
             },
             {
-                class: "tdCheckboxCellClass",
-                description: "Class of the trigger element",
+                class: "tdCheckboxClass",
+                description: "Class of the Table td element when checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -280,60 +285,73 @@ export default {
             },
             {
                 class: "detailedClass",
-                description: "-"
+                description: "Class of the Table detail",
+                properties: ["detailed"],
+                warning: "Expand details to see it in action!",
+                action: (cmp) => {
+                    cmp.data.tableClass = 'inspector_table'
+                    cmp.data.mobileCards = true;
+                }
             },
             {
-                class: "tdChevronClass",
-                description: "-"
+                class: "tdDetailedChevronClass",
+                properties: ["detailed"],
+                description: "Class of the Table td element that contains the chevron to trigger details",
+                action: (cmp) => {
+                    cmp.data.mobileCards = true;
+                }
             },
             // ----
             {
                 class: "thCurrentSortClass",
-                description: "OKOKOK"
+                description: "Class of the Table th element currently sorted",
+                warning: "Click on 'First Name' header to sort elements and see it in action!",
             },
             {
                 class: "thSortableClass",
-                description: "OKOKOK"
+                description: "Class of the sortable Table th element"
             },
             {
                 class: "thUnselectableClass",
-                description: "OKOKOK"
+                description: "Class of the Table th element that is unsortable"
             },
             {
                 class: "thPositionClass",
-                description: "OKOKOK"
+                description: "Class of the Table th element when positioned"
             },
             {
                 class: "thStickyClass",
-                description: "OK OK OK"
+                description: "Class of the Table th element when sticky"
             },
             {
                 class: "trSelectedClass",
-                description: "Class of the trigger element",
+                description: "Class of the Table tr element when selected",
+                warning: "Select a row of the table to see it in action!",
                 action: (cmp) => {
                     cmp.data.tableClass = 'inspector_table'
                 }
             },
             {
                 class: "thSortIconClass",
-                description: "OKOKOKOK"
+                description: "Class of the Table sort icon in the header",
+                warning: "Click on 'First Name' header to sort elements and see it in action!",
             },
             {
                 class: "tdPositionClass",
-                description: "OKOKOK"
+                description: "Class of the Table td element when positioned"
             },
             {
                 class: "tdStickyClass",
-                description: "OK OK OK"
+                description: "Class of the Table td element when sticky"
             },
             // ----
             {
                 class: "mobileSortClass",
-                description: "Class of the trigger element"
+                description: "-"
             },
             {
                 class: "paginationWrapperClass",
-                description: "Class of the trigger element",
+                description: "Class of the Table pagination wrapper",
                 properties: ["paginated"],
                 action: (cmp) => {
                     cmp.data.paginated = true

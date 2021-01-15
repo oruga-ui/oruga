@@ -168,7 +168,7 @@
 
                         <td
                             v-if="showDetailRowIcon"
-                            :class="tdChevronClasses"
+                            :class="tdDetailedChevronClasses"
                         >
 
                             <o-icon
@@ -183,7 +183,7 @@
                         </td>
 
                         <td
-                            :class="tdCheckboxCellClasses"
+                            :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'left'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
@@ -212,7 +212,7 @@
                         </template>
 
                         <td
-                            :class="tdCheckboxCellClasses"
+                            :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'right'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
@@ -312,6 +312,7 @@ import { VueInstance } from '../../utils/config'
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
+ * @requires ./TableColumn.vue
  * @example ./examples/Table.md
  * @style _table.scss
  */
@@ -559,8 +560,8 @@ export default {
         thDetailedClass: [String, Function],
         tdPositionClass: [String, Function],
         tdStickyClass: [String, Function],
-        tdCheckboxCellClass: [String, Function],
-        tdChevronClass: [String, Function],
+        tdCheckboxClass: [String, Function],
+        tdDetailedChevronClass: [String, Function],
         trSelectedClass: [String, Function],
         stickyHeaderClass: [String, Function],
         mobileCardsClass: [String, Function],
@@ -632,10 +633,10 @@ export default {
                 this.computedClass('thDetailedClass', 'o-table__th--detailed')
             ]
         },
-        tdCheckboxCellClasses() {
+        tdCheckboxClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdCheckboxCellClass', 'o-table__td-checkbox'),
+                this.computedClass('tdCheckboxClass', 'o-table__td-checkbox'),
                 ...this.thStickyClasses({ sticky: this.stickyCheckbox })
             ]
         },
@@ -644,10 +645,10 @@ export default {
                 this.computedClass('detailedClass', 'o-table__detail')
             ]
         },
-        tdChevronClasses() {
+        tdDetailedChevronClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdChevronClass', 'o-table__td-chevron')
+                this.computedClass('tdDetailedChevronClass', 'o-table__td-chevron')
             ]
         },
         mobileSortClasses() {
