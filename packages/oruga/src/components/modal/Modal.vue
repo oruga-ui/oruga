@@ -39,8 +39,10 @@
 </template>
 
 <script>
-import trapFocus from '../../directives/trapFocus'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
+import trapFocus from '../../directives/trapFocus'
 import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
 
@@ -62,7 +64,7 @@ export default {
     directives: {
         trapFocus
     },
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     props: {
         /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
@@ -151,21 +153,23 @@ export default {
                 return getValueByPath(config, 'modal.autoFocus', true)
             }
         },
+        /** Icon name */
+        closeIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(config, 'modal.closeIcon', 'times')
+            }
+        },
+        closeIconSize: {
+            type: String,
+            default: 'medium'
+        },
         rootClass: [String, Function],
         overlayClass: [String, Function],
         contentClass: [String, Function],
         closeClass: [String, Function],
         fullScreenClass: [String, Function],
-
-        /** Icon name */
-        closeIcon: {
-            type: String,
-            default: () => { return getValueByPath(config, 'close.icon', 'times') }
-        },
-        closeIconSize: {
-            type: String,
-            default: 'medium'
-        }
+        mobileClass: [String, Function],
     },
     data() {
         return {
@@ -180,6 +184,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-modal'),
+                { [this.computedClass('mobileClass', 'o-modal--mobile')]: this.isMatchMedia },
             ]
         },
         overlayClasses() {

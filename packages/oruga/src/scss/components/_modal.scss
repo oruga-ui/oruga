@@ -13,7 +13,6 @@ $modal-close-color: $white !default;
 $modal-content-fullscreen-background-color: #f5f5f5 !default;
 $modal-content-max-height: calc(100vh - 160px) !default;
 $modal-content-margin: 0 auto !default;
-$modal-mobile-breakpoint: 1024px !default;
 $modal-zindex: 40 !default;
 /* @docs */
 
@@ -46,9 +45,6 @@ $modal-zindex: 40 !default;
         @include avariable('background-color', 'modal-content-background-color', $modal-content-background-color);
         @include avariable('padding', 'modal-content-padding', $modal-content-padding);
         @include avariable('border-radius', 'modal-content-border-radius', $modal-content-border-radius);
-        @media screen and (max-width: $modal-mobile-breakpoint - 1px) {
-            width: 100%;
-        }
         &--full-screen {
             width: 100%;
             height: 100%;
@@ -70,6 +66,10 @@ $modal-zindex: 40 !default;
         @include avariable('height', 'modal-close-height', $modal-close-height);
         @include avariable('width', 'modal-close-width', $modal-close-width);
         @include avariable('color', 'modal-close-color', $modal-close-color);
-
+    }
+    &--mobile {
+        .o-modal__content {
+            width: 100%;
+        }
     }
 }
