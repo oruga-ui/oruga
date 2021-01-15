@@ -69,7 +69,6 @@ export default {
             $elementRef: 'select'
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur'],
     props: {
         /** @model */
         value: {

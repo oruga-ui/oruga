@@ -69,7 +69,7 @@ export default {
     },
     watch: {
         indeterminate: {
-            handler(val, oldVal) {
+            handler(val) {
                 this.isIndeterminate = val;
             },
             immediate: true,

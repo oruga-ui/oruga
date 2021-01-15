@@ -1,7 +1,6 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
-import { getStyleValue } from '../../utils/helpers'
 
 /**
  * @displayName Step Item

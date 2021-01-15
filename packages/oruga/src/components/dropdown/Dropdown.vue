@@ -458,7 +458,7 @@ export default {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
             document.addEventListener('keyup', this.keyPress)
-            this.matchMediaRef = window.matchMedia(`(max-width: ${mobileBreakpoint})`)
+            this.matchMediaRef = window.matchMedia(`(max-width: ${this.mobileBreakpoint})`)
             this.matchMedia = this.matchMediaRef.matches
             this.matchMediaRef.addListener(this.checkMatchMedia, false)
         }
