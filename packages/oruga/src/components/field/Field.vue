@@ -48,6 +48,7 @@
 import FieldBody from './FieldBody'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -61,7 +62,7 @@ export default {
         [FieldBody.name]: FieldBody
     },
     configField: 'field',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $field: this
@@ -123,7 +124,8 @@ export default {
         bodyHorizontalClass: [String, Function],
         addonsClass: [String, Function],
         messageClass: [String, Function],
-        variantClass: [String, Function]
+        variantClass: [String, Function],
+        mobileClass: [String, Function],
     },
     data() {
         return {
@@ -135,7 +137,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-field'),
-                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal }
+                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal },
+                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia }
             ]
         },
         messageClasses() {
