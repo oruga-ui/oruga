@@ -111,7 +111,6 @@ $table-th-padding: 0.5em 0.75em !default;
 }
 
 .o-table {
-
     display: table;
     width: 100%;
     @include avariable('border', 'table-boder', $table-boder);
@@ -247,7 +246,7 @@ $table-th-padding: 0.5em 0.75em !default;
         }
     }
 
-    &--narrow {
+    &--narrowed {
         td, th {
             @include avariable('padding', 'table-narrow-padding', $table-narrow-padding);
         }
