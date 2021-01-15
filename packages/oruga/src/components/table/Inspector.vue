@@ -301,7 +301,6 @@ export default {
                     cmp.data.mobileCards = true;
                 }
             },
-            // ----
             {
                 class: "thCurrentSortClass",
                 description: "Class of the Table th element currently sorted",
@@ -309,19 +308,24 @@ export default {
             },
             {
                 class: "thSortableClass",
-                description: "Class of the sortable Table th element"
+                description: "Class of the sortable Table th element",
+                properties: ['sortable']
             },
             {
                 class: "thUnselectableClass",
-                description: "Class of the Table th element that is unsortable"
+                description: "Class of the Table th element that is unsortable",
+                properties: ["!headerSelectable and sortable"]
             },
             {
                 class: "thPositionClass",
-                description: "Class of the Table th element when positioned"
+                description: "Class of the Table th element when positioned",
+                suffixes: ['left', 'centered', 'right'],
+                properties: ["position"]
             },
             {
                 class: "thStickyClass",
-                description: "Class of the Table th element when sticky"
+                description: "Class of the Table th element when sticky",
+                properties: ['sticky']
             },
             {
                 class: "trSelectedClass",
@@ -338,13 +342,15 @@ export default {
             },
             {
                 class: "tdPositionClass",
-                description: "Class of the Table td element when positioned"
+                description: "Class of the Table td element when positioned",
+                suffixes: ['left', 'centered', 'right'],
+                properties: ["position"]
             },
             {
                 class: "tdStickyClass",
-                description: "Class of the Table td element when sticky"
+                description: "Class of the Table td element when sticky",
+                properties: ['sticky']
             },
-            // ----
             {
                 class: "mobileSortClass",
                 description: "-"
