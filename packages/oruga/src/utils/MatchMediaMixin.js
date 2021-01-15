@@ -33,7 +33,7 @@ export default {
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
-            this.matchMediaRef.removeListener(this.checkMatchMedia)
+            this.$matchMediaRef.removeListener(this.checkMatchMedia)
         }
     }
 }
