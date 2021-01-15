@@ -63,6 +63,8 @@ import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -80,7 +82,7 @@ export default {
         [Icon.name]: Icon
     },
     configField: 'steps',
-    mixins: [BaseComponentMixin, TabbedMixin('step')],
+    mixins: [BaseComponentMixin, MatchMediaMixin, TabbedMixin('step')],
     props: {
         /**
          * Icon pack to use for the navigation
@@ -156,6 +158,7 @@ export default {
         stepLinkClickableClass: [String, Function],
         stepLinkLabelClass: [String, Function],
         stepLinkLabelPositionClass: [String, Function],
+        mobileClass: [String, Function],
     },
     computed: {
         wrapperClasses() {
@@ -164,6 +167,7 @@ export default {
                 { [this.computedClass('sizeClass', 'o-steps--', this.size)]: this.size },
                 { [this.computedClass('verticalClass', 'o-steps__wrapper-vertical')]: this.vertical },
                 { [this.computedClass('positionClass', 'o-steps__wrapper-position-', this.position)]: this.position && this.vertical },
+                { [this.computedClass('mobileClass', 'o-steps--mobile')]: this.isMatchMedia },
             ]
         },
         mainClasses() {
