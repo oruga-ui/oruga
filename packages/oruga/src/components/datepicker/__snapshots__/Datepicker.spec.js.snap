@@ -2,7 +2,7 @@
 
 exports[`ODatepicker render correctly 1`] = `
 <div class="o-dpck">
-    <o-dropdown-stub maxheight="200" mobilemodal="true" ariarole="dialog" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" appendtobodycopyparent="true" aria-modal="true">
+    <o-dropdown-stub maxheight="200" mobilemodal="true" mobilebreakpoint="1023px" ariarole="dialog" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" appendtobodycopyparent="true" aria-modal="true">
         <o-dropdown-item-stub override="true" tabindex="0" ariarole="">
             <div class="o-dpck__box">
                 <header class="o-dpck__header">
@@ -392,23 +392,23 @@ exports[`ODatepicker render correctly 1`] = `
                 </header>
                 <o-datepicker-table-stub daynames="Su,M,Tu,W,Th,F,S" monthnames="January,February,March,April,May,June,July,August,September,October,November,December" firstdayofweek="0" indicators="dots" focused="[object Object]" datecreator="() => {
           /* istanbul ignore next */
-          cov_10fx0riw4s.f[13]++;
+          cov_2ixbwayxy.f[13]++;
           const dateCreator =
           /* istanbul ignore next */
-          (cov_10fx0riw4s.s[56]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
+          (cov_2ixbwayxy.s[56]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
 
           /* istanbul ignore next */
-          cov_10fx0riw4s.s[57]++;
+          cov_2ixbwayxy.s[57]++;
 
           if (typeof dateCreator === 'function') {
             /* istanbul ignore next */
-            cov_10fx0riw4s.b[22][0]++;
-            cov_10fx0riw4s.s[58]++;
+            cov_2ixbwayxy.b[22][0]++;
+            cov_2ixbwayxy.s[58]++;
             return dateCreator();
           } else {
             /* istanbul ignore next */
-            cov_10fx0riw4s.b[22][1]++;
-            cov_10fx0riw4s.s[59]++;
+            cov_2ixbwayxy.b[22][1]++;
+            cov_2ixbwayxy.s[59]++;
             return new Date();
           }
         }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>

@@ -22,6 +22,9 @@ module.exports = {
   snapshotSerializers: [
       '<rootDir>/node_modules/jest-serializer-vue'
   ],
+  setupFiles: [
+      '<rootDir>/__mocks__/matchMediaMock.js'
+  ],
   coverageDirectory: './coverage/',
   collectCoverage: true,
   testURL: 'http://localhost/'
