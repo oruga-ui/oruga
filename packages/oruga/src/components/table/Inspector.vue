@@ -2,7 +2,7 @@
     <div>
         <doc-wrapper>
             <template v-slot:default="s">
-                <o-table v-bind="s" :data="s.isEmpty ? [] : data" :columns="columns" :debounce-search="1000">
+                <o-table v-bind="s" :data="s.isEmpty ? [] : data" :columns="columns"  :selected.sync="selected" >
                     <template slot="footer"> This is the footer </template>
                 </o-table>
             </template>
@@ -15,6 +15,7 @@
 export default {
   data() {
     return {
+        selected: null,
         data: [
           {
             id: 1,
@@ -63,21 +64,21 @@ export default {
             first_name: 'Mark',
             last_name: 'Knopfler',
             date: '2018-12-06 14:38:38',
-            gender: 'Female'
+            gender: 'Male'
           },
           {
             id: 8,
             first_name: 'Craig',
             last_name: 'David',
             date: '2019-12-06 14:38:38',
-            gender: 'Female'
+            gender: 'Male'
           },
           {
             id: 9,
             first_name: 'Dave',
             last_name: 'Copperfield',
             date: '2020-12-06 14:38:38',
-            gender: 'Female'
+            gender: 'Male'
           },
           {
             id: 10,
@@ -96,20 +97,76 @@ export default {
           },
           {
             field: 'first_name',
-            label: 'First Name'
+            label: 'First Name',
+            searchable: true,
+            sortable: true
           },
           {
             field: 'last_name',
-            label: 'Last Name'
+            label: 'Last Name',
+            searchable: true
           },
           {
             field: 'date',
             label: 'Date',
+            sticky: true,
             position: 'centered'
           },
           {
             field: 'gender',
             label: 'Gender'
+          },
+          {
+            field: 'id',
+            label: 'Column A'
+          },
+          {
+            field: 'id',
+            label: 'Column B'
+          },
+          {
+            field: 'id',
+            label: 'Column C'
+          },
+          {
+            field: 'id',
+            label: 'Column D'
+          },
+          {
+            field: 'id',
+            label: 'Column E'
+          },
+          {
+            field: 'id',
+            label: 'Column F'
+          },
+          {
+            field: 'id',
+            label: 'Column G'
+          },
+          {
+            field: 'id',
+            label: 'Column H'
+          },
+          {
+            field: 'id',
+            label: 'Column I'
+          },
+          {
+            field: 'id',
+            label: 'Column L'
+          },
+          {
+            field: 'id',
+            label: 'Column M'
+          },
+          {
+            field: 'id',
+            label: 'Column N'
+          },
+          {
+            field: 'id',
+            label: 'Column O'
           }
         ],
         inspectData: [
@@ -229,10 +286,47 @@ export default {
                 class: "tdChevronClass",
                 description: "-"
             },
+            // ----
             {
-                class: "subheadingClass",
-                description: "-"
+                class: "thCurrentSortClass",
+                description: "OKOKOK"
             },
+            {
+                class: "thSortableClass",
+                description: "OKOKOK"
+            },
+            {
+                class: "thUnselectableClass",
+                description: "OKOKOK"
+            },
+            {
+                class: "thPositionClass",
+                description: "OKOKOK"
+            },
+            {
+                class: "thStickyClass",
+                description: "OK OK OK"
+            },
+            {
+                class: "trSelectedClass",
+                description: "Class of the trigger element",
+                action: (cmp) => {
+                    cmp.data.tableClass = 'inspector_table'
+                }
+            },
+            {
+                class: "thSortIconClass",
+                description: "OKOKOKOK"
+            },
+            {
+                class: "tdPositionClass",
+                description: "OKOKOK"
+            },
+            {
+                class: "tdStickyClass",
+                description: "OK OK OK"
+            },
+            // ----
             {
                 class: "mobileSortClass",
                 description: "Class of the trigger element"

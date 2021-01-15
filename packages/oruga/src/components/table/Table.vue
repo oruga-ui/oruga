@@ -101,7 +101,7 @@
                         </template>
                     </th>
                 </tr>
-                <tr v-if="hasCustomSubheadings" :class="subheadingClasses">
+                <tr v-if="hasCustomSubheadings">
                     <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                     <th v-if="checkable && checkboxPosition === 'left'" />
                     <th
@@ -561,8 +561,7 @@ export default {
         tdStickyClass: [String, Function],
         tdCheckboxCellClass: [String, Function],
         tdChevronClass: [String, Function],
-        tdSelectedClass: [String, Function],
-        subheadingClass: [String, Function],
+        trSelectedClass: [String, Function],
         stickyHeaderClass: [String, Function],
         mobileCardsClass: [String, Function],
         cardsClass: [String, Function],
@@ -649,11 +648,6 @@ export default {
             return [
                 ...this.tdBaseClasses,
                 this.computedClass('tdChevronClass', 'o-table__td-chevron')
-            ]
-        },
-        subheadingClasses() {
-            return [
-                this.computedClass('subheadingClass', 'o-table__subheading')
             ]
         },
         mobileSortClasses() {
@@ -890,7 +884,7 @@ export default {
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('tdSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
+                { [this.computedClass('trSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
             ]
         },
         thSortIconClasses() {

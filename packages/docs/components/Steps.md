@@ -440,6 +440,7 @@ export default {
 | iconPack          | Icon pack to use for the navigation                                                                                           | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                           |
 | iconPrev          | Icon to use for navigation button                                                                                             | string         | -                                                                               | Config -> <code> 'steps.iconPrev': 'chevron-left'</code>  |
 | labelPosition     | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | 'bottom'                                                  |
+| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string         | -                                                                               |                                                           |
 | override          |                                                                                                                               | boolean        | -                                                                               |                                                           |
 | position          | Position of the tab, optional                                                                                                 | string         | `centered`, `right`                                                             |                                                           |
 | rounded           | Rounded step markers                                                                                                          | boolean        | -                                                                               | true                                                      |
@@ -501,7 +502,6 @@ export default {
 | --oruga-steps-active-color                 | \$steps-active-color                 | \$primary                    |
 | --oruga-steps-divider-height               | \$steps-divider-height               | .2em                         |
 | --oruga-steps-vertical-padding             | \$steps-vertical-padding             | 1em 0                        |
-| --oruga-steps-mobile-max-width             | \$steps-mobile-max-width             | 769px                        |
 | --oruga-steps-item-line-height             | \$steps-item-line-height             | \$base-line-height           |
 | --oruga-steps-link-color                   | \$steps-link-color                   | hsl(0, 0%, 29%)              |
 | --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
