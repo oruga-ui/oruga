@@ -60,7 +60,7 @@ export default {
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.icon', 'spin') }
+            default: () => { return getValueByPath(config, 'loading.icon', 'sync-alt') }
         },
         /** Enable spin effect on icon */
         iconSpin: {
