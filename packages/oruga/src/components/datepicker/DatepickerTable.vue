@@ -44,7 +44,7 @@
                 :table-cell-within-hovered-class="tableCellWithinHoveredClass"
                 :table-cell-last-hovered-class="tableCellLastHoveredClass"
                 :table-cell-today-class="tableCellTodayClass"
-                :table-cell-selecable-class="tableCellSelecableClass"
+                :table-cell-selectable-class="tableCellSelectableClass"
                 :table-cell-unselectable-class="tableCellUnselectableClass"
                 :table-cell-nearby-class="tableCellNearbyClass"
                 :table-cell-events-class="tableCellEventsClass"
@@ -108,7 +108,7 @@ export default {
         tableCellWithinHoveredClass: [String, Function],
         tableCellLastHoveredClass: [String, Function],
         tableCellTodayClass: [String, Function],
-        tableCellSelecableClass: [String, Function],
+        tableCellSelectableClass: [String, Function],
         tableCellUnselectableClass: [String, Function],
         tableCellNearbyClass: [String, Function],
         tableCellEventsClass: [String, Function],

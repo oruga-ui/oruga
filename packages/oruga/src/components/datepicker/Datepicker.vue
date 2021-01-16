@@ -151,7 +151,7 @@
                         :table-cell-within-hovered-class="tableCellWithinHoveredClass"
                         :table-cell-last-hovered-class="tableCellLastHoveredClass"
                         :table-cell-today-class="tableCellTodayClass"
-                        :table-cell-selecable-class="tableCellSelecableClass"
+                        :table-cell-selectable-class="tableCellSelectableClass"
                         :table-cell-unselectable-class="tableCellUnselectableClass"
                         :table-cell-nearby-class="tableCellNearbyClass"
                         :table-cell-events-class="tableCellEventsClass"
@@ -306,6 +306,11 @@ export default {
                 return getValueByPath(config, 'datepicker.firstDayOfWeek', 0)
             }
         },
+        /**
+         * Size of button, optional
+         * @values small, medium, large
+         */
+        size: String,
         inline: Boolean,
         minDate: Date,
         maxDate: Date,
@@ -480,7 +485,7 @@ export default {
         tableCellWithinHoveredClass: [String, Function],
         tableCellLastHoveredClass: [String, Function],
         tableCellTodayClass: [String, Function],
-        tableCellSelecableClass: [String, Function],
+        tableCellSelectableClass: [String, Function],
         tableCellUnselectableClass: [String, Function],
         tableCellNearbyClass: [String, Function],
         tableCellEventsClass: [String, Function],
@@ -512,7 +517,7 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-dpck'),
                 { [this.computedClass('sizeClass', 'o-dpck--', this.size)]: this.size },
-                 { [this.computedClass('sizeClass', 'o-dpck--mobile')]: this.isMatchMedia },
+                 { [this.computedClass('mobileClass', 'o-dpck--mobile')]: this.isMatchMedia },
             ]
         },
         boxClasses() {

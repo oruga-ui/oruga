@@ -93,7 +93,7 @@ export default {
         tableCellWithinHoveredClass: [String, Function],
         tableCellLastHoveredClass: [String, Function],
         tableCellTodayClass: [String, Function],
-        tableCellSelecableClass: [String, Function],
+        tableCellSelectableClass: [String, Function],
         tableCellUnselectableClass: [String, Function],
         tableCellNearbyClass: [String, Function],
         tableCellEventsClass: [String, Function],
