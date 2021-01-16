@@ -5,7 +5,7 @@ const src = '../oruga/src';
 
 const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
-  'TableColumn.vue', 'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue',
+  'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue',
   'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue',
   'DatepickerTable.vue', 'DatepickerTableRow.vue'
 ];

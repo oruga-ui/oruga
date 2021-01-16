@@ -67,7 +67,7 @@
                 <td v-if="data.subitem">▷ <a :href="`#${subitem}`">{{data.class}}</a></td>
                 <td>
                     <span>{{data.description | addDotToTheEnd}}</span>
-                    <span v-if="data.warning"><br>👉 <span v-html="data.warning"></span></span>
+                    <span v-if="data.warning"><br>👉 <i><span v-html="data.warning"></span></i></span>
                 </td>
                 <td>
                     <span v-if="data.properties"><code v-html="setByProperties(data.properties)"></code></span>

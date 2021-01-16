@@ -1,6 +1,9 @@
 <script>
 import { toCssDimension } from '../../utils/helpers'
 
+/**
+ * @displayName Table Column
+ */
 export default {
     name: 'OTableColumn',
     inject: ['$table'],
