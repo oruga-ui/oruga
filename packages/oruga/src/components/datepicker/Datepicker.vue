@@ -199,6 +199,8 @@
 <script>
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import { isMobile, getMonthNames, getWeekdayNames, matchWithGroups, getValueByPath } from '../../utils/helpers'
 import config from '../../utils/config'
 
@@ -275,7 +277,7 @@ export default {
         [DropdownItem.name]: DropdownItem
     },
     configField: 'datepicker',
-    mixins: [BaseComponentMixin, FormElementMixin],
+    mixins: [BaseComponentMixin, FormElementMixin, MatchMediaMixin],
     inheritAttrs: false,
     provide() {
         return {
@@ -484,7 +486,8 @@ export default {
         tableCellEventsClass: [String, Function],
         tableEventsClass: [String, Function],
         tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function]
+        tableEventIndicatorClass: [String, Function],
+        mobileClass: [String, Function]
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -509,6 +512,7 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-dpck'),
                 { [this.computedClass('sizeClass', 'o-dpck--', this.size)]: this.size },
+                 { [this.computedClass('sizeClass', 'o-dpck--mobile')]: this.isMatchMedia },
             ]
         },
         boxClasses() {
