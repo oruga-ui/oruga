@@ -38,7 +38,7 @@ yarn add @oruga-ui/oruga
 <script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
 ```
 
-You can use other stylesheets, see ["customization" section](#customization).
+You can use other stylesheets, as you can see in ["customization" section](#customization).
 
 #### Build from "develop" branch
 
@@ -47,7 +47,7 @@ You can use other stylesheets, see ["customization" section](#customization).
 <script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
 
-You can use other stylesheets, see ["customization" section](#customization).
+You can use other stylesheets, as you can see in ["customization" section](#customization).
 
 ### Using Vue 3
 
@@ -70,9 +70,9 @@ yarn add @oruga-ui/oruga-next
 <script src="//unpkg.com/oruga-next/dist/oruga.js"></script>
 ```
 
-You can use other stylesheets, see ["customization" section](#customization).
+You can use other stylesheets, as you can see in ["customization" section](#customization).
 
-## Usage
+## Setup
 
 ### With Vue 2
 
@@ -121,7 +121,7 @@ createApp(...)
   .use(Sidebar)
 ```
 
-### With Nuxt
+## Nuxt module
 
 Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
 
@@ -221,7 +221,7 @@ For example, look at the [Button style section](components/Button.html#style): h
 
 ### Adding new classes or override existing ones
 
-With Oruga you can easily append one or more classes to already existing classes or override them with classes you define.
+With Oruga you can easily override existing components style appending one or more classes.
 
 ::: tip
 Remember that for a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
@@ -268,6 +268,38 @@ Vue.use(Config, {
         ...
     }
 })
+```
+
+You can use a function to extend or override classes in a component. If a suffix is provided by the component it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (top, bottom), in this case you may define a function and append the suffix to the base class name
+
+```js
+Vue.use(Config, {
+    autocomplete: {
+        rootClass: 'myautocomplete-root',
+        menuClass: 'myautocomplete-menu',
+        menuPositionClass: {
+            class: (suffix) => {
+                return `myautocomplete-menu-${suffix}`
+            }
+        },
+        itemClass: 'myautocomplete-item',
+    }
+})
+```
+
+For a better customization experience this function accepts the `context` of the component containing its `props` as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
+
+```js
+Vue.use(Config, {
+    button: {
+        variantClass: (variant, context) => {
+            if (!context.props.outlined) {
+                return `btn-${variant}`
+            }
+        }
+    },
+    ...
+}
 ```
 
 #### Deal with specificity
@@ -428,38 +460,6 @@ Vue.use(Config, {
 })
 ```
 
-You can use a function to extend or override classes in a component. If a suffix is provided by the component it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (top, bottom), in this case you may define a function and append the suffix to the base class name
-
-```js
-Vue.use(Config, {
-    autocomplete: {
-        rootClass: 'myautocomplete-root',
-        menuClass: 'myautocomplete-menu',
-        menuPositionClass: {
-            class: (suffix) => {
-                return `myautocomplete-menu-${suffix}`
-            }
-        },
-        itemClass: 'myautocomplete-item',
-    }
-})
-```
-
-For a better customization experience this function accepts the `context` of the component containing its `props` as second parameter. For example using Bootstrap you may want to apply variants to buttons only when the element is not outlined
-
-```js
-Vue.use(Config, {
-    button: {
-        variantClass: (variant, context) => {
-            if (!context.props.outlined) {
-                return `btn-${variant}`
-            }
-        }
-    },
-    ...
-}
-```
-
 #### Usage of _oruga-lite_ stylesheet
 
 Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
@@ -487,7 +487,6 @@ For example here's how to style a dropdown using override mode without _oruga-li
 And here's how to style a dropdown using _oruga-lite_ stylesheet
 
 ```css
-.dropdown {}
 .dropdown-menu {
     min-width: 12em;
     @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
