@@ -174,9 +174,9 @@ Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui
 
 Oruga allows you to customize components in 3 different ways:
 
-- using CSS or SASS/SCSS variables
-- adding new classes
-- overriding existing classes
+- [Adding new classes](#adding-classes)
+- [Overriding existing classes](#overriding-classes)
+- [Using CSS or SASS/SCSS variables](#using-css-or-sass-scss-variables)
 
 You can mix them, for example adding new classes and using CSS variables!
 
@@ -186,39 +186,6 @@ Oruga provides 3 different stylesheets:
 - `oruga-lite.css`: a lightweight stylesheet containing only minimal CSS rules (position, , display, z-index ...). Include it if you want a complete customization. For more information [click here](#usage-of-oruga-lite-stylesheet).
 - `oruga-vars.css`: a stylesheet containing variables you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
 
-### Using CSS or SASS/SCSS variables
-
-You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
-
-::: warning
-In order to work with SASS/SCSS you might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
-:::
-
-To use CSS variables you have to import `oruga-vars.css` stylesheet
-
-```js
-import '@oruga-ui/oruga/dist/oruga-vars.css'
-```
-
-and redefine the variables you want to change. For example you can change variants globally
-
-```css
-:root {
-  --oruga-variant-primary: green;
-  --oruga-variant-danger: red;
-}
-```
-
-or a specific component variable, such as button icon width
-
-```css
-:root {
-  --oruga-button-icon-width: 2.5em;
-}
-```
-
-For example, look at the [Button style section](components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
-
 ### Adding new classes or override existing ones
 
 With Oruga you can easily override existing components style appending one or more classes.
@@ -227,7 +194,7 @@ With Oruga you can easily override existing components style appending one or mo
 Remember that for a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
 :::
 
-#### Adding classes
+### Adding classes
 
 You can add classes to a component using class properties (see [Autocomplete class props](/components/Autocomplete.html#class-props) for example)
 
@@ -460,7 +427,7 @@ Vue.use(Config, {
 })
 ```
 
-#### Usage of _oruga-lite_ stylesheet
+### Usage of _oruga-lite_ stylesheet
 
 Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
 
@@ -497,6 +464,39 @@ And here's how to style a dropdown using _oruga-lite_ stylesheet
 ```
 
 Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
+
+### Using CSS or SASS/SCSS variables
+
+You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
+
+::: warning
+In order to work with SASS/SCSS you might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
+:::
+
+To use CSS variables you have to import `oruga-vars.css` stylesheet
+
+```js
+import '@oruga-ui/oruga/dist/oruga-vars.css'
+```
+
+and redefine the variables you want to change. For example you can change variants globally
+
+```css
+:root {
+  --oruga-variant-primary: green;
+  --oruga-variant-danger: red;
+}
+```
+
+or a specific component variable, such as button icon width
+
+```css
+:root {
+  --oruga-button-icon-width: 2.5em;
+}
+```
+
+For example, look at the [Button style section](components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
 
 ## Configuration
 
@@ -576,26 +576,23 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ## Examples
 
-### TailwindCSS, Bootstrap 5 and Bulma demo
+### TailwindCSS, Bootstrap 5 and Bulma demo 🧶
 
-<p>
-Source code <a href="https://github.com/oruga-ui/demo-multiframework">here</a>
-</p>
-
-<iframe frameborder="0" style="width: 100%; height: 105vh;"
+<iframe frameborder="0" style="margin-top: 1rem; width: 100%; height: 105vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>
 
-### TailwindCSS 2 Recipe Demo
+- [Online demo](https://oruga-multiframework-demo.netlify.app)
+- [Source code](https://github.com/oruga-ui/demo-multiframework)
+
+### TailwindCSS 2 Recipe Demo 🍝🍔🍟
 
 This simple demo shows a simple recipe website. Oruga components like Input, Radio, Loading, Switch, Collapse etc are customized using [TailwindCSS 2](https://tailwindcss.com/)!
 
 - [Online demo](https://oruga-tailwindcss-demo.netlify.app)
 - [Source code](https://github.com/oruga-ui/demo-tailwindcss)
 
-### NuxtJS Demo
+### NuxtJS Demo 🏔
 
-WIP
+Currently WIP
 
-- [Online demo](https://oruga-nuxtjs-demo.netlify.app)
-- [Source code](https://github.com/oruga-ui/demo-nuxtjs)
