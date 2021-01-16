@@ -576,7 +576,7 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ## Examples
 
-### TailwindCSS, Bootstrap 5 and Bulma demo 🧶
+### TailwindCSS, Bootstrap 5, Bulma and Material demo 🧶
 
 <iframe frameborder="0" style="margin-top: 1rem; width: 100%; height: 105vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
