@@ -24,7 +24,6 @@ $table-detail-padding: 1rem !default;
 $table-focus-border-color: $primary !default;
 $table-focus-box-shadow: 0 0 0 0.125em rgba($primary, 0.25) !default;
 $table-hoverable-background-color: #fafafa !default;
-$table-mobile-breakpoint: 1024px !default;
 $table-narrow-padding: .25em .5em !default;
 $table-row-active-background-color: $primary !default;
 $table-row-active-color: $primary-invert !default;
@@ -41,113 +40,104 @@ $table-th-font-weight: 600 !default;
 $table-th-padding: 0.5em 0.75em !default;
 /* @docs */
 
-@mixin table-cards {
-    .table {
-        background-color: transparent;
-    }
-    thead {
-        tr {
-            box-shadow: none;
-            border-width: 0;
-            th {
-                display: none;
-            }
-            .o-table-th-checkbox {
-                display: block;
-                width: 100%;
-                text-align: right;
-                border: 0;
-            }
-        }
-    }
-    tfoot {
-        th {
-            border: 0;
-            display: inherit;
-        }
-    }
-    tr {
-        @include avariable('box-shadow', 'table-card-box-shadow', $table-card-box-shadow);
-        max-width: 100%;
-        position: relative;
-        display: block;
-        td {
-            border: 0;
-            display: inherit;
-            &:last-child {
-                border-bottom: 0;
-            }
-        }
-        &:not(:last-child) {
-            @include avariable('margin', 'table-card-margin', $table-card-margin);
-        }
-        &:not(.o-table__tr--selected) {
-            background: inherit;
-            background: $table-background-color;
-            &:hover {
-                background-color: inherit;
-                background-color: $table-background-color;
-            }
-        }
-        &.o-table--detailed {
-            @include avariable('margin', 'table-card-detail-margin', $table-card-detail-margin);
-        }
-    }
-    tr:not(.o-table--detailed):not(.o-table--empty):not(.o-table__footer) {
-        td {
-            display: flex;
-            width: auto;
-            justify-content: space-between;
-            text-align: right;
-            @include avariable('border-bottom', 'table-background', ($table-background 1px solid));
-            &:before {
-                content: attr(data-label);
-                @include avariable('font-weight', 'table-card-cell-font-weight', $table-card-cell-font-weight);
-                @include avariable('padding-right', 'table-card-cell-padding', $table-card-cell-padding);
-                @include avariable('text-align', 'table-card-cell-text-align', $table-card-cell-text-align);
-            }
-        }
-    }
-}
-
 .o-table {
     display: table;
     width: 100%;
-    @include avariable('border', 'table-boder', $table-boder);
-    @include avariable('border-radius', 'table-border-radius', $table-border-radius);
     border-collapse: separate;
     border-spacing: 0;
+    @include avariable('border', 'table-boder', $table-boder);
+    @include avariable('border-radius', 'table-border-radius', $table-border-radius);
     @include avariable('background-color', 'table-background-color', $table-background-color);
     @include avariable('color', 'table-color', $table-color);
-
     &__wrapper {
         transition: opacity $speed $easing;
         position: relative;
-        @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-            overflow-x: auto;
-        }
         &--sticky-header {
             @include avariable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
-        }
-        &--mobile-cards {
-            @media screen and (max-width: $table-mobile-breakpoint - 1px) {
-                @include table-cards
-            }
         }
         &--scrollable {
             -webkit-overflow-scrolling: touch;
             overflow-x: auto;
             max-width: 100%;
         }
-    }
-
-    &__mobile-sort {
-        @media screen and (min-width: $table-mobile-breakpoint) {
-            display: none;
+        &--mobile {
+            overflow-x: auto;
+            .o-table__mobile-sort {
+                display: block;
+            }
+            // cards
+            .o-table {
+                background-color: transparent;
+            }
+            thead {
+                tr {
+                    box-shadow: none;
+                    border-width: 0;
+                    th {
+                        display: none;
+                    }
+                    .o-table-th-checkbox {
+                        display: block;
+                        width: 100%;
+                        text-align: right;
+                        border: 0;
+                    }
+                }
+            }
+            tfoot {
+                th {
+                    border: 0;
+                    display: inherit;
+                }
+            }
+            tr {
+                @include avariable('box-shadow', 'table-card-box-shadow', $table-card-box-shadow);
+                max-width: 100%;
+                position: relative;
+                display: block;
+                td {
+                    border: 0;
+                    display: inherit;
+                    &:last-child {
+                        border-bottom: 0;
+                    }
+                }
+                &:not(:last-child) {
+                    @include avariable('margin', 'table-card-margin', $table-card-margin);
+                }
+                &:not(.o-table__tr--selected) {
+                    background: inherit;
+                    background: $table-background-color;
+                    &:hover {
+                        background-color: inherit;
+                        background-color: $table-background-color;
+                    }
+                }
+                &.o-table--detailed {
+                    @include avariable('margin', 'table-card-detail-margin', $table-card-detail-margin);
+                }
+            }
+            tr:not(.o-table--detailed):not(.o-table--empty):not(.o-table__footer) {
+                td {
+                    display: flex;
+                    width: auto;
+                    justify-content: space-between;
+                    text-align: right;
+                    @include avariable('border-bottom', 'table-background', ($table-background 1px solid));
+                    &:before {
+                        content: attr(data-label);
+                        @include avariable('font-weight', 'table-card-cell-font-weight', $table-card-cell-font-weight);
+                        @include avariable('padding-right', 'table-card-cell-padding', $table-card-cell-padding);
+                        @include avariable('text-align', 'table-card-cell-text-align', $table-card-cell-text-align);
+                    }
+                }
+            }
         }
     }
-
+    &__mobile-sort {
+        display: none;
+    }
     &__th {
         vertical-align: top;
         text-align: left;
@@ -282,9 +272,7 @@ $table-th-padding: 0.5em 0.75em !default;
     &__pagination {
         align-items: center;
         justify-content: space-between;
-        @media screen and (min-width: $table-mobile-breakpoint) {
-            display: flex;
-        }
+        display: flex;
         // left
         > div:first-child {
             align-items: center;

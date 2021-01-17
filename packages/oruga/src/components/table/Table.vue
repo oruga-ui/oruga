@@ -305,9 +305,12 @@ import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
+
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -330,7 +333,7 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     configField: 'table',
     inheritAttrs: false,
     provide() {
@@ -406,7 +409,9 @@ export default {
         /** Rows appears as cards on mobile (collapse rows) */
         mobileCards: {
             type: Boolean,
-            default: true
+            default: () => {
+                return getValueByPath(config, 'table.mobileCards', true)
+            }
         },
         /** Sets the default sort column and order — e.g. ['first_name', 'desc']	 */
         defaultSort: [String, Array],
@@ -564,11 +569,10 @@ export default {
         tdDetailedChevronClass: [String, Function],
         trSelectedClass: [String, Function],
         stickyHeaderClass: [String, Function],
-        mobileCardsClass: [String, Function],
-        cardsClass: [String, Function],
         scrollableClass: [String, Function],
         mobileSortClass: [String, Function],
-        paginationWrapperClass: [String, Function]
+        paginationWrapperClass: [String, Function],
+        mobileClass: [String, Function],
     },
     data() {
         return {
@@ -595,15 +599,15 @@ export default {
                 { [this.computedClass('stripedClass', 'o-table--striped')]: this.striped },
                 { [this.computedClass('narrowedClass', 'o-table--narrowed')]: this.narrowed },
                 { [this.computedClass('hoverableClass', 'o-table--hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) },
-                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length },
+                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length }
             ]
         },
         tableWrapperClasses() {
             return [
                 this.computedClass('wrapperClass', 'o-table__wrapper'),
-                { [this.computedClass('mobileCardsClass', 'o-table__wrapper--mobile-cards')]: this.mobileCards },
                 { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
-                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable }
+                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable },
+                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.mobileCards && this.isMatchMedia },
             ]
         },
         footerClasses() {
