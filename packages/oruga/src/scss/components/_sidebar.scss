@@ -3,7 +3,6 @@
 $sidebar-overlay: hsla(0,0%,4%,.86) !default;
 $sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
 $sidebar-content-background-color: $grey-lighter !default;
-$sidebar-mobile-breakpoint: 1024px !default;
 $sidebar-mobile-width: 80px !default;
 $sidebar-width: 260px !default;
 $sidebar-zindex: 38 !default;
@@ -70,24 +69,22 @@ $sidebar-zindex: 38 !default;
             flex-direction: column;
             align-content: stretch;
         }
-        @media screen and (max-width: $sidebar-mobile-breakpoint - 1px) {
-            &--mini-mobile {
-                @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
+        &--mini-mobile {
+            @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
+        }
+        &--mini-mobile-expand {
+            &:hover {
+                @include avariable('width', 'sidebar-width', $sidebar-width);
             }
-            &--mini-mobile-expand {
-                &:hover {
-                    @include avariable('width', 'sidebar-width', $sidebar-width);
-                }
-            }
-            &--hidden-mobile {
-                width: 0;
-                height: 0;
-                overflow: hidden;
-            }
-            &--fullwidth-mobile {
-                width: 100%;
-                max-width: 100%;
-            }
+        }
+        &--hidden-mobile {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        &--fullwidth-mobile {
+            width: 100%;
+            max-width: 100%;
         }
     }
     &__overlay {

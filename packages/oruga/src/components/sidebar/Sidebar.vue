@@ -19,8 +19,10 @@
 </template>
 
 <script>
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
+import config from '../../utils/config'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
@@ -31,7 +33,7 @@ import { removeElement, getValueByPath } from '../../utils/helpers'
  */
 export default {
     name: 'OSidebar',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     configField: 'sidebar',
     props: {
         /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
@@ -127,7 +129,8 @@ export default {
         mobileReduceClass: [String, Function],
         mobileHideClass: [String, Function],
         mobileFullwidthClass: [String, Function],
-        variantClass: [String, Function]
+        variantClass: [String, Function],
+        mobileClass: [String, Function],
     },
     data() {
         return {
@@ -140,7 +143,8 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-side')
+                this.computedClass('rootClass', 'o-side'),
+                { [this.computedClass('mobileClass', 'o-side--mobile')]: this.isMatchMedia },
             ]
         },
         overlayClasses() {
@@ -161,9 +165,9 @@ export default {
                 { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce },
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
                 { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
-                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduced' },
-                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hidden' },
-                { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' }
+                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduced' && this.isMatchMedia },
+                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hidden' && this.isMatchMedia },
+                { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' && this.isMatchMedia }
             ]
         },
         cancelOptions() {
