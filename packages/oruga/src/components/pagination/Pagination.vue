@@ -119,8 +119,11 @@ import PaginationButton from './PaginationButton'
 import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
@@ -134,7 +137,7 @@ export default {
         [PaginationButton.name]: PaginationButton
     },
     configField: 'pagination',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $pagination: this
@@ -209,7 +212,8 @@ export default {
         simpleClass: [String, Function],
         roundedClass: [String, Function],
         linkDisabledClass: [String, Function],
-        sizeClass: [String, Function]
+        sizeClass: [String, Function],
+        mobileClass: [String, Function]
     },
     computed: {
         rootClasses() {
@@ -218,6 +222,7 @@ export default {
                 { [this.computedClass('orderClass', 'o-pag--', this.order)]: this.order },
                 { [this.computedClass('sizeClass', 'o-pag--', this.size)]: this.size },
                 { [this.computedClass('simpleClass', 'o-pag--simple')]: this.simple },
+                { [this.computedClass('mobileClass', 'o-pag--mobile')]: this.isMatchMedia },
             ]
         },
         prevBtnClasses() {

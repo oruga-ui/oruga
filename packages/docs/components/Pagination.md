@@ -350,6 +350,7 @@ export default {
 | iconNext          | Icon to use for next button                                                                                   | string         | -                                                 | Config -> <code> 'pagination.iconNext': 'chevron-right'</code> |
 | iconPack          | Icon pack to use                                                                                              | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                |
 | iconPrev          | Icon to use for previous button                                                                               | string         | -                                                 | Config -> <code> 'pagination.iconPrev': 'chevron-left'</code>  |
+| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                          | string         | -                                                 |                                                                |
 | order             | Buttons order, optional                                                                                       | string         | `centered`, `right`, `left`                       |                                                                |
 | override          |                                                                                                               | boolean        | -                                                 |                                                                |
 | perPage           | Items count for each page                                                                                     | number\|string | -                                                 | Config -> <code> 'pagination.perPage': 20</code>               |
@@ -398,5 +399,4 @@ export default {
 | --oruga-pagination-link-min-width                | \$pagination-link-min-width                | 2.25em                       |
 | --oruga-pagination-link-padding                  | \$pagination-link-padding                  | .5em .5em                    |
 | --oruga-pagination-margin                        | \$pagination-margin                        | -.25rem                      |
-| --oruga-pagination-mobile-breakpoint             | \$pagination-mobile-breakpoint             | 768px                        |
 | --oruga-pagination-rounded-border-radius         | \$pagination-rounded-border-radius         | \$base-rounded-border-radius |
