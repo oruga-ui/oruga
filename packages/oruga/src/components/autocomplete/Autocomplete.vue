@@ -188,7 +188,7 @@ export default {
             selected: null,
             hovered: null,
             isActive: false,
-            newValue: this.model,
+            newValue: this.value,
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
