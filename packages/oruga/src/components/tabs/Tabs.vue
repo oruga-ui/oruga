@@ -17,7 +17,7 @@
                     <button v-else @click="childClick(childItem)" :class="childItem.headerClasses">
                         <o-icon
                             v-if="childItem.icon"
-                            :rootClass="childItem.headerIconClasses.join(' ')"
+                            :rootClass="childItem.headerIconClasses"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size"/>
