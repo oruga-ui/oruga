@@ -578,12 +578,12 @@ Take a look at each component docs to know all customizable fields/props by conf
 
 ### TailwindCSS, Bootstrap 5, Bulma and Material demo 🧶
 
+- [Online demo](https://oruga-multiframework-demo.netlify.app)
+- [Source code](https://github.com/oruga-ui/demo-multiframework)
+
 <iframe frameborder="0" style="margin-top: 1rem; width: 100%; height: 105vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>
-
-- [Online demo](https://oruga-multiframework-demo.netlify.app)
-- [Source code](https://github.com/oruga-ui/demo-multiframework)
 
 ### TailwindCSS 2 Recipe Demo 🍝🍔🍟
 
