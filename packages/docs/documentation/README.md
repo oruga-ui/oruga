@@ -188,7 +188,7 @@ Oruga provides 3 different stylesheets:
 
 ### Adding new classes or override existing ones
 
-With Oruga you can easily override existing components style appending one or more classes.
+With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects.
 
 ::: tip
 Remember that for a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
@@ -237,7 +237,7 @@ Vue.use(Config, {
 })
 ```
 
-You can use a function to extend or override classes in a component. If a suffix is provided by the component it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (top, bottom), in this case you may define a function and append the suffix to the base class name
+You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a suffix is provided by the component and it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (top, bottom), in this case you may define a function and append the suffix to the base class name
 
 ```js
 Vue.use(Config, {
@@ -254,7 +254,7 @@ Vue.use(Config, {
 })
 ```
 
-For a better customization experience this function accepts the `context` of the component containing its `props` as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
+For a better customization experience this function accepts the component `context` containing its `props` as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
 
 ```js
 Vue.use(Config, {
@@ -382,7 +382,7 @@ Vue.use(Oruga, {
 });
 ```
 
-In Oruga documentation you'll find a special note for classes with a higher specificity. 
+In Oruga documentation you'll find a special note (🔍) in the `Class prop inspector` for classes with a higher specificity. 
 
 ### Overriding classes
 
@@ -581,7 +581,7 @@ Take a look at each component docs to know all customizable fields/props by conf
 - [Online demo](https://oruga-multiframework-demo.netlify.app)
 - [Source code](https://github.com/oruga-ui/demo-multiframework)
 
-<iframe frameborder="0" style="margin-top: 1rem; width: 100%; height: 105vh;"
+<iframe frameborder="0" style="margin-top: 1rem; width: 100%; height: 80vh;"
     src="https://oruga-multiframework-demo.netlify.app/Tailwind">
 </iframe>
 
