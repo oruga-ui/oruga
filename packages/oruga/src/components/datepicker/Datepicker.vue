@@ -3,6 +3,7 @@
         <o-dropdown
             v-if="!isMobile || inline"
             ref="dropdown"
+            v-bind="dropdownBind"
             :position="position"
             :disabled="disabled"
             :inline="inline"
@@ -30,7 +31,7 @@
                         :loading="loading"
                         :disabled="disabled"
                         :readonly="!editable"
-                        v-bind="$attrs"
+                        v-bind="inputBind"
                         :use-html5-validation="false"
                         @click.native="onInputClick"
                         @keyup.native.enter="togglePicker(true)"
@@ -492,7 +493,11 @@ export default {
         tableCellEventsClass: [String, Function, Array],
         tableEventsClass: [String, Function, Array],
         tableEventVariantClass: [String, Function, Array],
-        mobileClass: [String, Function, Array]
+        mobileClass: [String, Function, Array],
+        /** Classes to apply on internal input (@see o-input style docs) */
+        inputClasses: Object,
+        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
+        dropdownClasses: Object
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -513,6 +518,17 @@ export default {
         }
     },
     computed: {
+        inputBind() {
+            return {
+                ...this.$attrs,
+                ...this.inputClasses
+            }
+        },
+        dropdownBind() {
+            return {
+                ...this.dropdownClasses
+            }
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-dpck'),
