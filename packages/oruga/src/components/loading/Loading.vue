@@ -71,10 +71,10 @@ export default {
             type: String,
             default: 'medium'
         },
-        rootClass: [String, Function],
-        overlayClass: [String, Function],
-        iconClass: [String, Function],
-        fullPageIconClass: [String, Function],
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        iconClass: [String, Function, Array],
+        fullPageIconClass: [String, Function, Array],
     },
     data() {
         return {

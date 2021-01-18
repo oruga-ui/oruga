@@ -189,16 +189,16 @@ export default {
          */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: [String, Function],
-        triggerClass: [String, Function],
-        inlineClass: [String, Function],
-        menuMobileOverlayClass: [String, Function],
-        menuClass: [String, Function],
-        menuPositionClass: [String, Function],
-        menuActiveClass: [String, Function],
-        mobileClass: [String, Function],
-        disabledClass: [String, Function],
-        expandedClass: [String, Function]
+        rootClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        inlineClass: [String, Function, Array],
+        menuMobileOverlayClass: [String, Function, Array],
+        menuClass: [String, Function, Array],
+        menuPositionClass: [String, Function, Array],
+        menuActiveClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        expandedClass: [String, Function, Array]
     },
     data() {
         return {

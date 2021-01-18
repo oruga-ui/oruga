@@ -19,10 +19,10 @@ export default {
             type: Boolean,
             default: undefined
         },
-        itemClass: [String, Function],
-        itemHeaderClass: [String, Function],
-        itemHeaderActiveClass: [String, Function],
-        itemHeaderPreviousClass: [String, Function]
+        itemClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemHeaderActiveClass: [String, Function, Array],
+        itemHeaderPreviousClass: [String, Function, Array]
     },
     computed: {
         elementClasses() {

@@ -92,18 +92,18 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: [String, Function],
-        disabledClass: [String, Function],
-        checkClass: [String, Function],
-        checkCheckedClass: [String, Function],
-        checkSwitchClass: [String, Function],
-        roundedClass: [String, Function],
-        labelClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function],
-        elementsWrapperClass: [String, Function],
-        passiveVariantClass: [String, Function],
-        leftLabelClass: [String, Function]
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkSwitchClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        elementsWrapperClass: [String, Function, Array],
+        passiveVariantClass: [String, Function, Array],
+        leftLabelClass: [String, Function, Array]
     },
     data() {
         return {

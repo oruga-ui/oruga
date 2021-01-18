@@ -164,12 +164,12 @@ export default {
             type: String,
             default: 'medium'
         },
-        rootClass: [String, Function],
-        overlayClass: [String, Function],
-        contentClass: [String, Function],
-        closeClass: [String, Function],
-        fullScreenClass: [String, Function],
-        mobileClass: [String, Function],
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        closeClass: [String, Function, Array],
+        fullScreenClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {

@@ -58,14 +58,14 @@ export default {
             type: [String, Number, Boolean],
             default: false
         },
-        rootClass: [String, Function],
-        disabledClass: [String, Function],
-        checkClass: [String, Function],
-        checkCheckedClass: [String, Function],
-        checkIndeterminateClass: [String, Function],
-        labelClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkIndeterminateClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     watch: {
         indeterminate: {

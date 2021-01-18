@@ -184,15 +184,15 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: [String, Function],
-        trackClass: [String, Function],
-        fillClass: [String, Function],
-        thumbRoundedClass: [String, Function],
-        thumbDraggingClass: [String, Function],
-        disabledClass: [String, Function],
-        thumbWrapperClass: [String, Function],
-        thumbClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        trackClass: [String, Function, Array],
+        fillClass: [String, Function, Array],
+        thumbRoundedClass: [String, Function, Array],
+        thumbDraggingClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        thumbWrapperClass: [String, Function, Array],
+        thumbClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     data() {
         return {
