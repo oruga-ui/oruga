@@ -145,6 +145,7 @@
                         :table-cell-class="tableCellClass"
                         :table-cell-selected-class="tableCellSelectedClass"
                         :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                        :table-cell-invisible-class="tableCellInvisibleClass"
                         :table-cell-within-selected-class="tableCellWithinSelectedClass"
                         :table-cell-last-selected-class="tableCellLastSelectedClass"
                         :table-cell-first-hovered-class="tableCellFirstHoveredClass"
@@ -157,7 +158,6 @@
                         :table-cell-events-class="tableCellEventsClass"
                         :table-events-class="tableEventsClass"
                         :table-event-variant-class="tableEventVariantClass"
-                        :table-event-indicator-class="tableEventIndicatorClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
@@ -409,7 +409,7 @@ export default {
         nearbySelectableMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.nearbyMonthDays', false)
+                return getValueByPath(config, 'datepicker.nearbySelectableMonthDays', false)
             }
         },
         showWeekNumber: {
@@ -479,6 +479,7 @@ export default {
         tableCellClass: [String, Function],
         tableCellSelectedClass: [String, Function],
         tableCellFirstSelectedClass: [String, Function],
+        tableCellInvisibleClass: [String, Function],
         tableCellWithinSelectedClass: [String, Function],
         tableCellLastSelectedClass: [String, Function],
         tableCellFirstHoveredClass: [String, Function],
@@ -491,7 +492,6 @@ export default {
         tableCellEventsClass: [String, Function],
         tableEventsClass: [String, Function],
         tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function],
         mobileClass: [String, Function]
     },
     data() {

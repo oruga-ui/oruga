@@ -90,6 +90,7 @@ export default {
         tableCellWithinSelectedClass: [String, Function],
         tableCellLastSelectedClass: [String, Function],
         tableCellFirstHoveredClass: [String, Function],
+        tableCellInvisibleClass: [String, Function],
         tableCellWithinHoveredClass: [String, Function],
         tableCellLastHoveredClass: [String, Function],
         tableCellTodayClass: [String, Function],
@@ -99,7 +100,6 @@ export default {
         tableCellEventsClass: [String, Function],
         tableEventsClass: [String, Function],
         tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function]
     },
     computed: {
         tableRowClasses() {

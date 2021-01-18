@@ -38,6 +38,7 @@
                 :table-cell-class="tableCellClass"
                 :table-cell-selected-class="tableCellSelectedClass"
                 :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                :table-cell-invisible-class="tableCellInvisibleClass"
                 :table-cell-within-selected-class="tableCellWithinSelectedClass"
                 :table-cell-last-selected-class="tableCellLastSelectedClass"
                 :table-cell-first-hovered-class="tableCellFirstHoveredClass"
@@ -50,7 +51,6 @@
                 :table-cell-events-class="tableCellEventsClass"
                 :table-events-class="tableEventsClass"
                 :table-event-variant-class="tableEventVariantClass"
-                :table-event-indicator-class="tableEventIndicatorClass"
                 @select="updateSelectedDate"
                 @rangeHoverEndDate="setRangeHoverEndDate"
                 @change-focus="changeFocus"/>
@@ -102,6 +102,7 @@ export default {
         tableCellClass: [String, Function],
         tableCellSelectedClass: [String, Function],
         tableCellFirstSelectedClass: [String, Function],
+        tableCellInvisibleClass: [String, Function],
         tableCellWithinSelectedClass: [String, Function],
         tableCellLastSelectedClass: [String, Function],
         tableCellFirstHoveredClass: [String, Function],
@@ -114,7 +115,6 @@ export default {
         tableCellEventsClass: [String, Function],
         tableEventsClass: [String, Function],
         tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function]
     },
     data() {
         return {
