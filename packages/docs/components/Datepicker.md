@@ -476,7 +476,7 @@ export default {
                 {
                     class: "tableClass",
                     description: "Table class",
-                    action: (cmp) => {
+                    action: () => {
                         this.openDatePicker();
                     }
                 },

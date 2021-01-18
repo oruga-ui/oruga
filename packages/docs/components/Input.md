@@ -243,27 +243,27 @@ export default {
 
 ## Props
 
-| Prop name          | Description                                                 | Type           | Values                                            | Default                                            |
-| ------------------ | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | -------------------------------------------------- |
-| autocomplete       | Native options to use in HTML5 validation                   | string         | -                                                 |                                                    |
-| expanded           | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                    |
-| hasCounter         | Show character counter when maxlength prop is passed        | boolean        | -                                                 | Config -> <code> 'input.counter': false</code>     |
-| icon               | Icon name to be added                                       | string         | -                                                 |                                                    |
-| iconClickable      | Makes the icon clickable                                    | boolean        | -                                                 |                                                    |
-| iconPack           | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
-| iconRight          | Icon name to be added on the right side                     | string         | -                                                 |                                                    |
-| iconRightClickable | Make the icon right clickable                               | boolean        | -                                                 |                                                    |
-| iconRightType      | Variant of right icon                                       | string\|func   | -                                                 |                                                    |
-| maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                    |
-| override           |                                                             | boolean        | -                                                 |                                                    |
-| passwordReveal     | Adds the reveal password functionality                      | boolean        | -                                                 |                                                    |
-| rounded            | Makes the element rounded                                   | boolean        | -                                                 |                                                    |
-| size               | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                        |                                                    |
-| statusIcon         | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>         |
-| type               | Input type, like native                                     | string         | `Any native input type`, `and textarea`           | 'text'                                             |
-| useHtml5Validation | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
-| v-model            |                                                             | number\|string | -                                                 |                                                    |
-| validationMessage  | The message which is shown when a validation error occurs   | string         | -                                                 |                                                    |
+| Prop name          | Description                                                 | Type                | Values                                            | Default                                            |
+| ------------------ | ----------------------------------------------------------- | ------------------- | ------------------------------------------------- | -------------------------------------------------- |
+| autocomplete       | Native options to use in HTML5 validation                   | string              | -                                                 |                                                    |
+| expanded           | Makes input full width when inside a grouped or addon field | boolean             | -                                                 |                                                    |
+| hasCounter         | Show character counter when maxlength prop is passed        | boolean             | -                                                 | Config -> <code> 'input.counter': false</code>     |
+| icon               | Icon name to be added                                       | string              | -                                                 |                                                    |
+| iconClickable      | Makes the icon clickable                                    | boolean             | -                                                 |                                                    |
+| iconPack           | Icon pack to use                                            | string              | `mdi`, `fa`, `fas and any other custom icon pack` |                                                    |
+| iconRight          | Icon name to be added on the right side                     | string              | -                                                 |                                                    |
+| iconRightClickable | Make the icon right clickable                               | boolean             | -                                                 |                                                    |
+| iconRightType      | Variant of right icon                                       | string\|func\|array | -                                                 |                                                    |
+| maxlength          | Same as native maxlength, plus character counter            | number\|string      | -                                                 |                                                    |
+| override           |                                                             | boolean             | -                                                 |                                                    |
+| passwordReveal     | Adds the reveal password functionality                      | boolean             | -                                                 |                                                    |
+| rounded            | Makes the element rounded                                   | boolean             | -                                                 |                                                    |
+| size               | Vertical size of input, optional                            | string              | `small`, `medium`, `large`                        |                                                    |
+| statusIcon         | Show status icon using field and variant prop               | boolean             | -                                                 | Config -> <code> "statusIcon": true</code>         |
+| type               | Input type, like native                                     | string              | `Any native input type`, `and textarea`           | 'text'                                             |
+| useHtml5Validation | Enable html 5 native validation                             | boolean             | -                                                 | Config -> <code> "useHtml5Validation": true</code> |
+| v-model            |                                                             | number\|string      | -                                                 |                                                    |
+| validationMessage  | The message which is shown when a validation error occurs   | string              | -                                                 |                                                    |
 
 ## Events
 
