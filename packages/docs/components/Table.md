@@ -1545,7 +1545,7 @@ export default {
             {
                 class: "borderedClass",
                 properties: ["bordered"],
-                description: "Class of the Table when bordered",
+                description: "Class of the Table when is bordered",
                 action: (cmp) => {
                     cmp.data.bordered = true;
                 }
@@ -1553,7 +1553,7 @@ export default {
             {
                 class: "stripedClass",
                 properties: ["striped"],
-                description: "Class of the Table when striped",
+                description: "Class of the Table when rows are striped",
                 action: (cmp) => {
                     cmp.data.striped = true;
                 }
@@ -1561,7 +1561,7 @@ export default {
             {
                 class: "narrowedClass",
                 properties: ["narrowed"],
-                description: "Class of the Table when narrowed",
+                description: "Class of the Table when rows are narrowed",
                 action: (cmp) => {
                     cmp.data.narrowed = true;
                 }
@@ -1569,14 +1569,14 @@ export default {
             {
                 class: "hoverableClass",
                 properties: ["hoverable or focusable"],
-                description: "Class of the Table when hoverable",
+                description: "Class of the Table when is hoverable",
                 action: (cmp) => {
                     cmp.data.hoverable = true;
                 }
             },
             {
                 class: "emptyClass",
-                description: "Class of the Table when empty",
+                description: "Class of the Table when is empty",
                 action: (cmp) => {
                     cmp.data.isEmpty = true
                 }
@@ -1584,14 +1584,6 @@ export default {
             {
                 class: "wrapperClass",
                 description: "Class of the Table wrapper"
-            },
-            {
-                class: "mobileCardsClass",
-                properties: ["mobile-cards"],
-                description: "-",
-                action: (cmp) => {
-                    cmp.data.mobileCards = true;
-                }
             },
             {
                 class: "stickyHeaderClass",
@@ -1604,7 +1596,7 @@ export default {
             {
                 class: "scrollableClass",
                 properties: ["scrollable"],
-                description: "Class of the Table wrapper when is scrollable",
+                description: "Class of the Table wrapper when its content is scrollable",
                 action: (cmp) => {
                     cmp.data.scrollable = true;
                 }
@@ -1618,15 +1610,15 @@ export default {
             },
             {
                 class: "thClass",
-                description: "Class of the Table th element"
+                description: "Class of the Table `th` element"
             },
             {
                 class: "tdClass",
-                description: "Class of the Table td element"
+                description: "Class of the Table `td` element"
             },
             {
                 class: "thCheckboxClass",
-                description: "Class of the Table th element when checkable",
+                description: "Class of the Table `th` element when is checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -1634,7 +1626,7 @@ export default {
             },
             {
                 class: "thDetailedClass",
-                description: "Class of the Table th element of the detail trigger column",
+                description: "Class of the Table `th` element of the detail column of triggers",
                 properties: ["detailed"],
                 action: (cmp) => {
                     cmp.data.detailed = true;
@@ -1642,7 +1634,7 @@ export default {
             },
             {
                 class: "tdCheckboxClass",
-                description: "Class of the Table td element when checkable",
+                description: "Class of the Table `td` element when is checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -1650,7 +1642,7 @@ export default {
             },
             {
                 class: "detailedClass",
-                description: "Class of the Table detail",
+                description: "Class of the Table row detail",
                 properties: ["detailed"],
                 warning: "Expand details to see it in action!",
                 action: (cmp) => {
@@ -1661,40 +1653,42 @@ export default {
             {
                 class: "tdDetailedChevronClass",
                 properties: ["detailed"],
-                description: "Class of the Table td element that contains the chevron to trigger details",
+                description: "Class of the Table `td` element that contains the chevron to trigger details",
                 action: (cmp) => {
                     cmp.data.mobileCards = true;
                 }
             },
             {
                 class: "thCurrentSortClass",
-                description: "Class of the Table th element currently sorted",
+                description: "Class of the Table `th` element currently sorted",
                 warning: "Click on 'First Name' header to sort elements and see it in action!",
             },
             {
                 class: "thSortableClass",
-                description: "Class of the sortable Table th element",
+                description: "Class of the sortable Table `th` element",
                 properties: ['sortable']
             },
             {
                 class: "thUnselectableClass",
-                description: "Class of the Table th element that is unsortable",
+                description: "Class of the Table `th` element that is unsortable",
                 properties: ["!headerSelectable and sortable"]
             },
             {
                 class: "thPositionClass",
-                description: "Class of the Table th element when positioned",
+                description: "Class of the Table `th` element when component is positioned",
                 suffixes: ['left', 'centered', 'right'],
                 properties: ["position"]
             },
             {
                 class: "thStickyClass",
-                description: "Class of the Table th element when sticky",
-                properties: ['sticky']
+                description: "Class of the Table `th` element when component is sticky",
+                properties: ['sticky'],
+                action: (cmp) => {
+                }
             },
             {
                 class: "trSelectedClass",
-                description: "Class of the Table tr element when selected",
+                description: "Class of the Table row when selected",
                 warning: "Select a row of the table to see it in action!",
                 action: (cmp) => {
                     cmp.data.tableClass = 'inspector_table'
@@ -1707,13 +1701,13 @@ export default {
             },
             {
                 class: "tdPositionClass",
-                description: "Class of the Table td element when positioned",
+                description: "Class of the Table `td` element when component is positioned",
                 suffixes: ['left', 'centered', 'right'],
                 properties: ["position"]
             },
             {
                 class: "tdStickyClass",
-                description: "Class of the Table td element when sticky",
+                description: "Class of the Table `td` element when component is sticky",
                 properties: ['sticky']
             },
             {
