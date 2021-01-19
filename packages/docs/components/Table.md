@@ -1682,9 +1682,7 @@ export default {
             {
                 class: "thStickyClass",
                 description: "Class of the Table `th` element when component is sticky",
-                properties: ['sticky'],
-                action: (cmp) => {
-                }
+                properties: ['sticky']
             },
             {
                 class: "trSelectedClass",
@@ -1713,6 +1711,13 @@ export default {
             {
                 class: "mobileSortClass",
                 description: "-"
+            },
+            {
+                class: "mobileClass",
+                description: "Class of the Table when on mobile",
+                warning: "Switch to mobile view to see it in action!",
+                action: (cmp) => {
+                }
             },
             {
                 class: "paginationWrapperClass",

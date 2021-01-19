@@ -345,7 +345,15 @@ export default {
             },
             {
                 class: "mobileSortClass",
-                description: "-"
+                description: "Class of the sortable form wrapper on mobile",
+                warning: "Switch to mobile view to see it in action!",
+            },
+            {
+                class: "mobileClass",
+                description: "Class of the Table when on mobile",
+                warning: "Switch to mobile view to see it in action!",
+                action: (cmp) => {
+                }
             },
             {
                 class: "paginationWrapperClass",
