@@ -351,9 +351,7 @@ export default {
             {
                 class: "mobileClass",
                 description: "Class of the Table when on mobile",
-                warning: "Switch to mobile view to see it in action!",
-                action: (cmp) => {
-                }
+                warning: "Switch to mobile view to see it in action!"
             },
             {
                 class: "paginationWrapperClass",
