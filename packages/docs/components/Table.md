@@ -1710,7 +1710,8 @@ export default {
             },
             {
                 class: "mobileSortClass",
-                description: "-"
+                description: "Class of the sortable form wrapper on mobile",
+                warning: "Switch to mobile view to see it in action!",
             },
             {
                 class: "mobileClass",
@@ -1850,10 +1851,12 @@ export default {
 
 | Prop name        | Description                          | Type                                         | Values              | Default |
 | ---------------- | ------------------------------------ | -------------------------------------------- | ------------------- | ------- |
+| cellClass        |                                      | string                                       | -                   |         |
 | customKey        |                                      | string\|number                               | -                   |         |
 | customSearch     |                                      | func                                         | -                   |         |
 | customSort       |                                      | func                                         | -                   |         |
 | field            |                                      | string                                       | -                   |         |
+| headerClass      |                                      | string                                       | -                   |         |
 | headerSelectable |                                      | boolean                                      | -                   |         |
 | label            |                                      | string                                       | -                   |         |
 | meta             |                                      | string\|number\|boolean\|func\|object\|array | -                   |         |
