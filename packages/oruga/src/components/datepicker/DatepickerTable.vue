@@ -51,6 +51,8 @@
                 :table-cell-events-class="tableCellEventsClass"
                 :table-events-class="tableEventsClass"
                 :table-event-variant-class="tableEventVariantClass"
+                :table-event-class="tableEventClass"
+                :table-event-indicators-class="tableEventIndicatorsClass"
                 @select="updateSelectedDate"
                 @rangeHoverEndDate="setRangeHoverEndDate"
                 @change-focus="changeFocus"/>
@@ -113,6 +115,8 @@ export default {
         tableCellUnselectableClass: [String, Function, Array],
         tableCellNearbyClass: [String, Function, Array],
         tableCellEventsClass: [String, Function, Array],
+        tableEventClass: [String, Function, Array],
+        tableEventIndicatorsClass: [String, Function, Array],
         tableEventsClass: [String, Function, Array],
         tableEventVariantClass: [String, Function, Array],
     },

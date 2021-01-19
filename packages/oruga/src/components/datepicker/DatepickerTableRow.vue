@@ -98,6 +98,8 @@ export default {
         tableCellUnselectableClass: [String, Function, Array],
         tableCellNearbyClass: [String, Function, Array],
         tableCellEventsClass: [String, Function, Array],
+        tableEventClass: [String, Function, Array],
+        tableEventIndicatorsClass: [String, Function, Array],
         tableEventsClass: [String, Function, Array],
         tableEventVariantClass: [String, Function, Array],
     },

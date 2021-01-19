@@ -159,6 +159,8 @@
                         :table-cell-events-class="tableCellEventsClass"
                         :table-events-class="tableEventsClass"
                         :table-event-variant-class="tableEventVariantClass"
+                        :table-event-class="tableEventClass"
+                        :table-event-indicators-class="tableEventIndicatorsClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
@@ -493,6 +495,8 @@ export default {
         tableCellEventsClass: [String, Function, Array],
         tableEventsClass: [String, Function, Array],
         tableEventVariantClass: [String, Function, Array],
+        tableEventClass: [String, Function, Array],
+        tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object,
