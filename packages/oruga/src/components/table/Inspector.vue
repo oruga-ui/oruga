@@ -317,9 +317,7 @@ export default {
             {
                 class: "thStickyClass",
                 description: "Class of the Table `th` element when component is sticky",
-                properties: ['sticky'],
-                action: (cmp) => {
-                }
+                properties: ['sticky']
             },
             {
                 class: "trSelectedClass",
