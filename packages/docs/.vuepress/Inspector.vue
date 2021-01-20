@@ -70,10 +70,10 @@
                     <span v-if="data.warning"><br>👉 <i><span v-html="data.warning"></span></i></span>
                 </td>
                 <td>
-                    <span v-if="data.properties"><code v-html="setByProperties(data.properties)"></code></span>
+                    <span v-if="data.properties"><code style='white-space: nowrap; padding: 0;' v-html="setByProperties(data.properties)"></code></span>
                 </td>
                 <td>
-                    <span v-if="data.suffixes"><code v-html="setByProperties(data.suffixes)"></code></span>
+                    <span v-if="data.suffixes"><code style='white-space: nowrap; padding: 0;' v-html="setByProperties(data.suffixes)"></code></span>
                 </td>
                 <td>
                     <button class="inspector__btn" type="button" @click="inspectClass(index, data)">Inspect</button>
