@@ -104,7 +104,7 @@ function tmplProps(props, config, name) {
     if (d.indexOf('getValueByPath') >= 0) {
       const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
       const configParts = params[1].split('.')
-      const value = `${configParts[1].replace(/'/g, '')} : ${params[2]}`
+      const value = `${configParts[1].replace(/'/g, '')}: ${params[2]}`
       d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g, '')} {<br>&nbsp;&nbsp;${value}<br>}</code>`
     }
 
