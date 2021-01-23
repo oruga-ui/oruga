@@ -28,6 +28,13 @@ export default {
           description : 'Class of the checkbox'
         },
         {
+          class: 'checkedClass',
+          description : 'Class of the root element when checked',
+          action: (cmp) => {
+            cmp.data.checkbox = true;
+          }
+        },
+        {
           class: 'checkCheckedClass',
           description : 'Class of the checkbox when checked',
           action: (cmp) => {

@@ -36,6 +36,7 @@ export default {
     props: {
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
+        checkedClass: [String, Function, Array],
         checkCheckedClass: [String, Function, Array],
         checkClass: [String, Function, Array],
         labelClass: [String, Function, Array],
@@ -47,6 +48,7 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-radio'),
                 { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
+                { [this.computedClass('checkedClass', 'o-radio--checked')] : this.value === this.nativeValue },
                 { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }
 

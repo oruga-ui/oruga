@@ -134,6 +134,13 @@ export default {
           description : 'Class of the native radio element'
         },
         {
+          class: 'checkedClass',
+          description : 'Class of the root element when checked',
+          action: (cmp) => {
+            cmp.data.checkbox = 'default';
+          }
+        },
+        {
           class: 'checkCheckedClass',
           description : 'Class of the native radio element when checked',
           action: (cmp) => {
