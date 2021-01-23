@@ -1,7 +1,7 @@
-import { App } from 'vue'
+import { App } from "vue"
 import { merge } from "./helpers"
 
-let config: Object = {
+let config = {
     iconPack: 'mdi',
     useHtml5Validation: true,
     statusIcon: true
@@ -9,25 +9,25 @@ let config: Object = {
 
 export { config as default }
 
-export const setOptions = (options: Object) => { config = options }
+export const setOptions = (options: any) => { config = options }
 
 export let VueInstance: App
 
-export const setVueInstance = (app: App) => { VueInstance = app }
+export const setVueInstance = (Vue: App) => { VueInstance = Vue }
 
 export const Programmatic = {
     getOptions() {
         return config
     },
-    setOptions(options: Object) {
+    setOptions(options: any) {
         setOptions(merge(config, options, true))
     }
 }
 
 export const Plugin = {
-    install(app: App, options = {}) {
-        setVueInstance(app)
+    install(Vue: App, options = {}) {
+        setVueInstance(Vue)
         // Options
         setOptions(merge(config, options, true))
     }
-} 
+}

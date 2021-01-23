@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OTabItem render correctly 1`] = `<div class="o-tab-item" style="display: none;"></div>`;

@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OSkeleton render correctly 1`] = `
-<div class="o-skeleton o-skeleton-animated">
-    <div class="o-skeleton-item o-skeleton-item-rounded"></div>
-</div>
-`;

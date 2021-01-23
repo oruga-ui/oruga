@@ -43,7 +43,7 @@
             @click.native="rightIconClick"/>
 
         <small
-            v-if="maxlength && hasCounter && type !== 'number'"
+            v-if="maxlength && hasCounter && isFocused && type !== 'number'"
             :class="counterClasses">
             {{ valueLength }} / {{ maxlength }}
         </small>
@@ -55,10 +55,12 @@ import { defineComponent } from 'vue'
 
 import Icon from '../icon/Icon.vue'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+
+import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
+
 
 /**
  * Get user Input. Use with Field to access all functionalities
@@ -72,6 +74,7 @@ export default defineComponent({
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'input',
     inheritAttrs: false,
     provide() {
         return {
@@ -80,10 +83,9 @@ export default defineComponent({
                 : 'input'
         }
     },
-    emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
-        modelValue: [Number, String],
+        value: [Number, String],
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -121,24 +123,24 @@ export default defineComponent({
          */
         iconRightClickable: Boolean,
         /** Variant of right icon */
-        iconRightVariant: String,
-        rootClass: String,
-        controlExpandedClass: String,
-        controlIconLeftClass: String,
-        controlIconRightClass: String,
-        inputClass: String,
-        roundedClass: String,
-        iconLeftClass: String,
-        iconRightClass: String,
-        counterClass: String,
-        counterInvisibleClass: String,
-        sizeClass: String,
-        variantClass: String
+        iconRightType: [String, Function],
+        rootClass: [String, Function],
+        expandedClass: [String, Function],
+        iconLeftSpaceClass: [String, Function],
+        iconRightSpaceClass: [String, Function],
+        inputClass: [String, Function],
+        roundedClass: [String, Function],
+        iconLeftClass: [String, Function],
+        iconRightClass: [String, Function],
+        counterClass: [String, Function],
+        sizeClass: [String, Function],
+        variantClass: [String, Function]
     },
     data() {
         return {
-            newValue: this.modelValue,
+            newValue: this.value,
             newType: this.type,
+            // from mixin (ts workaround)
             newAutocomplete: (this as any).autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
             isPasswordVisible: false
         }
@@ -146,43 +148,43 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('input', 'rootClass', 'o-control-input'),
-                { [this.computedClass('input', 'controlExpandedClass', 'o-control-input-expanded')]: this.expanded },
-                { [this.computedClass('input', 'controlIconLeftClass', 'o-control-input-icons-left')]: this.icon },
-                { [this.computedClass('input', 'controlIconRightClass', 'o-control-input-icons-right')]: this.hasIconRight }
+                this.computedClass('rootClass', 'o-ctrl-input'),
+                { [this.computedClass('expandedClass', 'o-ctrl-input--expanded')]: this.expanded }
             ]
         },
         inputClasses() {
             return [
-                this.computedClass('input', 'inputClass', 'o-input'),
-                { [this.computedClass('input', 'roundedClass', 'o-input-rounded')]: this.rounded },
-                { [`${this.computedClass('input', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('input', 'variantClass', 'o-color-', true)}${this.statusVariant}`]: this.statusVariant }
+                this.computedClass('inputClass', 'o-input'),
+                { [this.computedClass('roundedClass', 'o-input--rounded')]: this.rounded },
+                { [this.computedClass('sizeClass', 'o-input--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
+                { [this.computedClass('iconLeftSpaceClass', 'o-input-iconspace-left')]: this.icon },
+                { [this.computedClass('iconRightSpaceClass', 'o-input-iconspace-right')]: this.hasIconRight }
             ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('input', 'iconLeftClass', 'o-icon-left')
+                this.computedClass('iconLeftClass', 'o-input__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('input', 'iconRightClass', 'o-icon-right')
+                this.computedClass('iconRightClass', 'o-input__icon-right')
             ]
         },
         counterClasses() {
             return [
-                this.computedClass('input', 'counterClass', 'o-input-counter'),
-                { [this.computedClass('input', 'counterInvisibleClass', 'o-input-counter-invisible')]: !this.isFocused }
+                this.computedClass('counterClass', 'o-input__counter')
             ]
         },
         computedValue: {
             get() {
                 return this.newValue
             },
-            set(value: any) {
+            set(value) {
                 this.newValue = value
-                this.$emit('update:modelValue', value)
+                this.$emit('update:modelValue', this.newValue)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -247,7 +249,7 @@ export default defineComponent({
         * When v-model is changed:
         *   1. Set internal value.
         */
-        modelValue(value: any) {
+        value(value) {
             this.newValue = value
         }
     },
@@ -265,14 +267,14 @@ export default defineComponent({
             })
         },
 
-        iconClick(emit: string, event: any) {
+        iconClick(emit, event) {
             this.$emit(emit, event)
             this.$nextTick(() => {
                 this.focus()
             })
         },
 
-        rightIconClick(event: any) {
+        rightIconClick(event) {
             if (this.passwordReveal) {
                 this.togglePasswordVisibility()
             } else if (this.iconRightClickable) {

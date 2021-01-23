@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OPaginationButton render correctly 1`] = `<a role="button" href="#" disabled="disabled" class="o-pagination-link o-pagination-next">2</a>`;

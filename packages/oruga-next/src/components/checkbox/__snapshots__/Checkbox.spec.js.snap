@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OCheckbox render correctly 1`] = `<label class="o-checkbox"><input type="checkbox" true-value="true" value="false"> <span class="o-checkbox-check"></span> <span class="o-checkbox-label"></span></label>`;

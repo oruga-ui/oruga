@@ -31,7 +31,7 @@ describe('OIcon', () => {
             }
         })
 
-        expect(wrapper.classes()).toContain('o-color-primary')
+        expect(wrapper.classes()).toContain('o-icon--primary')
         expect(wrapper.vm.newVariant).toEqual('primary')
     })
 
