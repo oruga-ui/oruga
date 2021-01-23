@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTable render correctly 1`] = `
-<div class="o-table__wrapper o-table__wrapper--mobile-cards">
+<div class="o-table__wrapper">
     <div style="display: none;"></div>
     <!---->
     <!---->

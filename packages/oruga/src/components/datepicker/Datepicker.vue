@@ -3,6 +3,7 @@
         <o-dropdown
             v-if="!isMobile || inline"
             ref="dropdown"
+            v-bind="dropdownBind"
             :position="position"
             :disabled="disabled"
             :inline="inline"
@@ -30,7 +31,7 @@
                         :loading="loading"
                         :disabled="disabled"
                         :readonly="!editable"
-                        v-bind="$attrs"
+                        v-bind="inputBind"
                         :use-html5-validation="false"
                         @click.native="onInputClick"
                         @keyup.native.enter="togglePicker(true)"
@@ -145,6 +146,7 @@
                         :table-cell-class="tableCellClass"
                         :table-cell-selected-class="tableCellSelectedClass"
                         :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                        :table-cell-invisible-class="tableCellInvisibleClass"
                         :table-cell-within-selected-class="tableCellWithinSelectedClass"
                         :table-cell-last-selected-class="tableCellLastSelectedClass"
                         :table-cell-first-hovered-class="tableCellFirstHoveredClass"
@@ -157,7 +159,8 @@
                         :table-cell-events-class="tableCellEventsClass"
                         :table-events-class="tableEventsClass"
                         :table-event-variant-class="tableEventVariantClass"
-                        :table-event-indicator-class="tableEventIndicatorClass"
+                        :table-event-class="tableEventClass"
+                        :table-event-indicators-class="tableEventIndicatorsClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
@@ -409,7 +412,7 @@ export default {
         nearbySelectableMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.nearbyMonthDays', false)
+                return getValueByPath(config, 'datepicker.nearbySelectableMonthDays', false)
             }
         },
         showWeekNumber: {
@@ -461,38 +464,44 @@ export default {
         appendToBody: Boolean,
         ariaNextLabel: String,
         ariaPreviousLabel: String,
-        rootClass: [String, Function],
-        sizeClass: [String, Function],
-        boxClass: [String, Function],
-        headerClass: [String, Function],
-        headerButtonsClass: [String, Function],
-        headerButtonsSizeClass: [String, Function],
-        prevBtnClass: [String, Function],
-        nextBtnClass: [String, Function],
-        listsClass: [String, Function],
-        footerClass: [String, Function],
-        tableClass: [String, Function],
-        tableHeadClass: [String, Function],
-        tableHeadCellClass: [String, Function],
-        tableBodyClass: [String, Function],
-        tableRowClass: [String, Function],
-        tableCellClass: [String, Function],
-        tableCellSelectedClass: [String, Function],
-        tableCellFirstSelectedClass: [String, Function],
-        tableCellWithinSelectedClass: [String, Function],
-        tableCellLastSelectedClass: [String, Function],
-        tableCellFirstHoveredClass: [String, Function],
-        tableCellWithinHoveredClass: [String, Function],
-        tableCellLastHoveredClass: [String, Function],
-        tableCellTodayClass: [String, Function],
-        tableCellSelectableClass: [String, Function],
-        tableCellUnselectableClass: [String, Function],
-        tableCellNearbyClass: [String, Function],
-        tableCellEventsClass: [String, Function],
-        tableEventsClass: [String, Function],
-        tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function],
-        mobileClass: [String, Function]
+        rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        boxClass: [String, Function, Array],
+        headerClass: [String, Function, Array],
+        headerButtonsClass: [String, Function, Array],
+        headerButtonsSizeClass: [String, Function, Array],
+        prevBtnClass: [String, Function, Array],
+        nextBtnClass: [String, Function, Array],
+        listsClass: [String, Function, Array],
+        footerClass: [String, Function, Array],
+        tableClass: [String, Function, Array],
+        tableHeadClass: [String, Function, Array],
+        tableHeadCellClass: [String, Function, Array],
+        tableBodyClass: [String, Function, Array],
+        tableRowClass: [String, Function, Array],
+        tableCellClass: [String, Function, Array],
+        tableCellSelectedClass: [String, Function, Array],
+        tableCellFirstSelectedClass: [String, Function, Array],
+        tableCellInvisibleClass: [String, Function, Array],
+        tableCellWithinSelectedClass: [String, Function, Array],
+        tableCellLastSelectedClass: [String, Function, Array],
+        tableCellFirstHoveredClass: [String, Function, Array],
+        tableCellWithinHoveredClass: [String, Function, Array],
+        tableCellLastHoveredClass: [String, Function, Array],
+        tableCellTodayClass: [String, Function, Array],
+        tableCellSelectableClass: [String, Function, Array],
+        tableCellUnselectableClass: [String, Function, Array],
+        tableCellNearbyClass: [String, Function, Array],
+        tableCellEventsClass: [String, Function, Array],
+        tableEventsClass: [String, Function, Array],
+        tableEventVariantClass: [String, Function, Array],
+        tableEventClass: [String, Function, Array],
+        tableEventIndicatorsClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
+        /** Classes to apply on internal input (@see o-input style docs) */
+        inputClasses: Object,
+        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
+        dropdownClasses: Object
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -513,6 +522,17 @@ export default {
         }
     },
     computed: {
+        inputBind() {
+            return {
+                ...this.$attrs,
+                ...this.inputClasses
+            }
+        },
+        dropdownBind() {
+            return {
+                ...this.dropdownClasses
+            }
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-dpck'),

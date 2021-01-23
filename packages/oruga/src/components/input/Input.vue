@@ -119,18 +119,18 @@ export default {
          */
         iconRightClickable: Boolean,
         /** Variant of right icon */
-        iconRightType: [String, Function],
-        rootClass: [String, Function],
-        expandedClass: [String, Function],
-        iconLeftSpaceClass: [String, Function],
-        iconRightSpaceClass: [String, Function],
-        inputClass: [String, Function],
-        roundedClass: [String, Function],
-        iconLeftClass: [String, Function],
-        iconRightClass: [String, Function],
-        counterClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function]
+        iconRightType: [String, Function, Array],
+        rootClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        iconLeftSpaceClass: [String, Function, Array],
+        iconRightSpaceClass: [String, Function, Array],
+        inputClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        iconLeftClass: [String, Function, Array],
+        iconRightClass: [String, Function, Array],
+        counterClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     data() {
         return {

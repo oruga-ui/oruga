@@ -966,8 +966,8 @@ title: Table
             width: '40',
             numeric: true,
             sticky: true,
-            headerClass: 'is-sticky-column-one',
-            cellClass: 'is-sticky-column-one'
+            thAttrs: () => ({ class: 'is-sticky-column-one' }),
+            tdAttrs: () => ({ class: 'is-sticky-column-one' })
           },
           {
             field: 'user.first_name',
@@ -982,8 +982,8 @@ title: Table
             label: 'Date',
             position: 'centered',
             sticky: true,
-            headerClass: 'is-sticky-column-two',
-            cellClass: 'is-sticky-column-two'
+            thAttrs: () => ({ class: 'is-sticky-column-two' }),
+            tdAttrs: () => ({ class: 'is-sticky-column-two' })
           },
           {
             field: 'gender',
@@ -1545,7 +1545,7 @@ export default {
             {
                 class: "borderedClass",
                 properties: ["bordered"],
-                description: "Class of the Table when bordered",
+                description: "Class of the Table when is bordered",
                 action: (cmp) => {
                     cmp.data.bordered = true;
                 }
@@ -1553,7 +1553,7 @@ export default {
             {
                 class: "stripedClass",
                 properties: ["striped"],
-                description: "Class of the Table when striped",
+                description: "Class of the Table when rows are striped",
                 action: (cmp) => {
                     cmp.data.striped = true;
                 }
@@ -1561,7 +1561,7 @@ export default {
             {
                 class: "narrowedClass",
                 properties: ["narrowed"],
-                description: "Class of the Table when narrowed",
+                description: "Class of the Table when rows are narrowed",
                 action: (cmp) => {
                     cmp.data.narrowed = true;
                 }
@@ -1569,14 +1569,14 @@ export default {
             {
                 class: "hoverableClass",
                 properties: ["hoverable or focusable"],
-                description: "Class of the Table when hoverable",
+                description: "Class of the Table when is hoverable",
                 action: (cmp) => {
                     cmp.data.hoverable = true;
                 }
             },
             {
                 class: "emptyClass",
-                description: "Class of the Table when empty",
+                description: "Class of the Table when is empty",
                 action: (cmp) => {
                     cmp.data.isEmpty = true
                 }
@@ -1584,14 +1584,6 @@ export default {
             {
                 class: "wrapperClass",
                 description: "Class of the Table wrapper"
-            },
-            {
-                class: "mobileCardsClass",
-                properties: ["mobile-cards"],
-                description: "-",
-                action: (cmp) => {
-                    cmp.data.mobileCards = true;
-                }
             },
             {
                 class: "stickyHeaderClass",
@@ -1604,7 +1596,7 @@ export default {
             {
                 class: "scrollableClass",
                 properties: ["scrollable"],
-                description: "Class of the Table wrapper when is scrollable",
+                description: "Class of the Table wrapper when its content is scrollable",
                 action: (cmp) => {
                     cmp.data.scrollable = true;
                 }
@@ -1618,15 +1610,15 @@ export default {
             },
             {
                 class: "thClass",
-                description: "Class of the Table th element"
+                description: "Class of the Table `th` element"
             },
             {
                 class: "tdClass",
-                description: "Class of the Table td element"
+                description: "Class of the Table `td` element"
             },
             {
                 class: "thCheckboxClass",
-                description: "Class of the Table th element when checkable",
+                description: "Class of the Table `th` element when is checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -1634,7 +1626,7 @@ export default {
             },
             {
                 class: "thDetailedClass",
-                description: "Class of the Table th element of the detail trigger column",
+                description: "Class of the Table `th` element of the detail column of triggers",
                 properties: ["detailed"],
                 action: (cmp) => {
                     cmp.data.detailed = true;
@@ -1642,7 +1634,7 @@ export default {
             },
             {
                 class: "tdCheckboxClass",
-                description: "Class of the Table td element when checkable",
+                description: "Class of the Table `td` element when is checkable",
                 properties: ["checkable"],
                 action: (cmp) => {
                     cmp.data.checkable = true
@@ -1650,7 +1642,7 @@ export default {
             },
             {
                 class: "detailedClass",
-                description: "Class of the Table detail",
+                description: "Class of the Table row detail",
                 properties: ["detailed"],
                 warning: "Expand details to see it in action!",
                 action: (cmp) => {
@@ -1661,40 +1653,40 @@ export default {
             {
                 class: "tdDetailedChevronClass",
                 properties: ["detailed"],
-                description: "Class of the Table td element that contains the chevron to trigger details",
+                description: "Class of the Table `td` element that contains the chevron to trigger details",
                 action: (cmp) => {
                     cmp.data.mobileCards = true;
                 }
             },
             {
                 class: "thCurrentSortClass",
-                description: "Class of the Table th element currently sorted",
+                description: "Class of the Table `th` element currently sorted",
                 warning: "Click on 'First Name' header to sort elements and see it in action!",
             },
             {
                 class: "thSortableClass",
-                description: "Class of the sortable Table th element",
+                description: "Class of the sortable Table `th` element",
                 properties: ['sortable']
             },
             {
                 class: "thUnselectableClass",
-                description: "Class of the Table th element that is unsortable",
+                description: "Class of the Table `th` element that is unsortable",
                 properties: ["!headerSelectable and sortable"]
             },
             {
                 class: "thPositionClass",
-                description: "Class of the Table th element when positioned",
+                description: "Class of the Table `th` element when component is positioned",
                 suffixes: ['left', 'centered', 'right'],
                 properties: ["position"]
             },
             {
                 class: "thStickyClass",
-                description: "Class of the Table th element when sticky",
+                description: "Class of the Table `th` element when component is sticky",
                 properties: ['sticky']
             },
             {
                 class: "trSelectedClass",
-                description: "Class of the Table tr element when selected",
+                description: "Class of the Table row when selected",
                 warning: "Select a row of the table to see it in action!",
                 action: (cmp) => {
                     cmp.data.tableClass = 'inspector_table'
@@ -1707,18 +1699,24 @@ export default {
             },
             {
                 class: "tdPositionClass",
-                description: "Class of the Table td element when positioned",
+                description: "Class of the Table `td` element when component is positioned",
                 suffixes: ['left', 'centered', 'right'],
                 properties: ["position"]
             },
             {
                 class: "tdStickyClass",
-                description: "Class of the Table td element when sticky",
+                description: "Class of the Table `td` element when component is sticky",
                 properties: ['sticky']
             },
             {
                 class: "mobileSortClass",
-                description: "-"
+                description: "Class of the sortable form wrapper on mobile",
+                warning: "Switch to mobile view to see it in action!",
+            },
+            {
+                class: "mobileClass",
+                description: "Class of the Table when on mobile",
+                warning: "Switch to mobile view to see it in action!"
             },
             {
                 class: "paginationWrapperClass",
@@ -1746,61 +1744,61 @@ export default {
 
 ## Props
 
-| Prop name             | Description                                                                                                                             | Type           | Values                     | Default                                                      |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------ |
-| ariaCurrentLabel      |                                                                                                                                         | string         | -                          |                                                              |
-| ariaNextLabel         |                                                                                                                                         | string         | -                          |                                                              |
-| ariaPageLabel         |                                                                                                                                         | string         | -                          |                                                              |
-| ariaPreviousLabel     |                                                                                                                                         | string         | -                          |                                                              |
-| backendFiltering      | Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend                            | boolean        | -                          |                                                              |
-| backendPagination     | Rows won't be paginated with Javascript, use with page-change event to paginate in your backend                                         | boolean        | -                          |                                                              |
-| backendSorting        | Columns won't be sorted with Javascript, use with sort event to sort in your backend                                                    | boolean        | -                          |                                                              |
-| bordered              | Border to all cells                                                                                                                     | boolean        | -                          |                                                              |
-| checkable             | Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style                                         | boolean        | -                          |                                                              |
-| checkboxPosition      | Position of the checkbox (if checkable is true)                                                                                         | string         | `left`, `right`            | 'left'                                                       |
-| checkedRows           | Set which rows are checked, use the .sync modifier (Vue 2.x) or v-model:checkedRows (Vue 3.x) to make it two-way binding                | array          | -                          | []                                                           |
-| columns               | Table columns                                                                                                                           | array          | -                          | []                                                           |
-| currentPage           | Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding | number         | -                          | 1                                                            |
-| customDetailRow       | Custom style on details                                                                                                                 | boolean        | -                          | false                                                        |
-| customIsChecked       | Custom method to verify if row is checked, works when is checkable. Useful for backend pagination                                       | func           | -                          |                                                              |
-| customRowKey          | Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)                       | string         | -                          |                                                              |
-| data                  | Table data                                                                                                                              | array          | -                          | []                                                           |
-| debounceSearch        | Filtering debounce time (in milliseconds)                                                                                               | number         | -                          |                                                              |
-| defaultSort           | Sets the default sort column and order — e.g. ['first_name', 'desc']                                                                    | string\|array  | -                          |                                                              |
-| defaultSortDirection  | Sets the default sort column direction on the first click                                                                               | string         | `asc`, `desc`              | 'asc'                                                        |
-| detailKey             | Use a unique key of your data Object when use detailed or opened detailed. (id recommended)                                             | string         | -                          | ''                                                           |
-| detailed              | Allow row details                                                                                                                       | boolean        | -                          |                                                              |
-| draggable             | Allows rows to be draggable                                                                                                             | boolean        | -                          | false                                                        |
-| filtersEvent          | Add a native event to filter                                                                                                            | string         | -                          | ''                                                           |
-| focusable             | Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering               | boolean        | -                          |                                                              |
-| hasDetailedVisible    | Controls the visibility of the trigger that toggles the detailed rows.                                                                  | func           | -                          | () => true                                                   |
-| headerCheckable       | Show check/uncheck all checkbox in table header when checkable                                                                          | boolean        | -                          | true                                                         |
-| height                | Table fixed height                                                                                                                      | number\|string | -                          |                                                              |
-| hoverable             | Rows are highlighted when hovering                                                                                                      | boolean        | -                          |                                                              |
-| iconPack              | Icon pack to use                                                                                                                        | string         | -                          |                                                              |
-| isRowCheckable        | Custom method to verify if a row is checkable, works when is checkable                                                                  | func           | -                          | () => true                                                   |
-| isRowSelectable       | Custom method to verify if a row is selectable, works when is selected.                                                                 | func           | -                          | () => true                                                   |
-| loading               | Loading state                                                                                                                           | boolean        | -                          |                                                              |
-| mobileBreakpoint      | Mobile breakpoint as max-width value                                                                                                    | string         | -                          |                                                              |
-| mobileCards           | Rows appears as cards on mobile (collapse rows)                                                                                         | boolean        | -                          | Config -> <code> 'table.mobileCards': true</code>            |
-| mobileSortPlaceholder | Text when nothing is selected                                                                                                           | string         | -                          |                                                              |
-| narrowed              | Makes the cells narrower                                                                                                                | boolean        | -                          |                                                              |
-| openedDetailed        | Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop)               | array          | -                          | []                                                           |
-| override              |                                                                                                                                         | boolean        | -                          |                                                              |
-| paginated             | Adds pagination to the table                                                                                                            | boolean        | -                          |                                                              |
-| paginationPosition    | Pagination position (if paginated)                                                                                                      | string         | `bottom`, `top`, `bot`     | Config -> <code> 'table.paginationPosition': 'bottom'</code> |
-| paginationRounded     | Rounded pagination if paginated                                                                                                         | boolean        | -                          |                                                              |
-| perPage               | How many rows per page (if paginated)                                                                                                   | number\|string | -                          | Config -> <code> 'table.perPage': 20</code>                  |
-| scrollable            | Add a horizontal scrollbar when table is too wide                                                                                       | boolean        | -                          |                                                              |
-| selected              | Set which row is selected, use the .sync modifier (Vue 2.x) or v-model:selected (Vue 3.x) to make it two-way binding                    | object         | -                          |                                                              |
-| showDetailIcon        | Allow chevron icon and column to be visible                                                                                             | boolean        | -                          | true                                                         |
-| showHeader            | Show header                                                                                                                             | boolean        | -                          | Config -> <code> 'table.showHeader': true</code>             |
-| sortIcon              | Sets the header sorting icon                                                                                                            | string         | -                          | Config -> <code> 'table.sortIcon': 'arrow-up'</code>         |
-| sortIconSize          | Sets the size of the sorting icon                                                                                                       | string         | `small`, `medium`, `large` | Config -> <code> 'table.sortIconSize': 'small'</code>        |
-| stickyCheckbox        | Make the checkbox column sticky when checkable                                                                                          | boolean        | -                          | false                                                        |
-| stickyHeader          | Show a sticky table header                                                                                                              | boolean        | -                          |                                                              |
-| striped               | Whether table is striped                                                                                                                | boolean        | -                          |                                                              |
-| total                 | Total number of table data if backend-pagination is enabled                                                                             | number\|string | -                          | 0                                                            |
+| Prop name             | Description                                                                                                                             | Type           | Values                     | Default                                                                                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ariaCurrentLabel      |                                                                                                                                         | string         | -                          |                                                                                                                                                  |
+| ariaNextLabel         |                                                                                                                                         | string         | -                          |                                                                                                                                                  |
+| ariaPageLabel         |                                                                                                                                         | string         | -                          |                                                                                                                                                  |
+| ariaPreviousLabel     |                                                                                                                                         | string         | -                          |                                                                                                                                                  |
+| backendFiltering      | Columns won't be filtered with Javascript, use with searchable prop to the columns to filter in your backend                            | boolean        | -                          |                                                                                                                                                  |
+| backendPagination     | Rows won't be paginated with Javascript, use with page-change event to paginate in your backend                                         | boolean        | -                          |                                                                                                                                                  |
+| backendSorting        | Columns won't be sorted with Javascript, use with sort event to sort in your backend                                                    | boolean        | -                          |                                                                                                                                                  |
+| bordered              | Border to all cells                                                                                                                     | boolean        | -                          |                                                                                                                                                  |
+| checkable             | Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style                                         | boolean        | -                          |                                                                                                                                                  |
+| checkboxPosition      | Position of the checkbox (if checkable is true)                                                                                         | string         | `left`, `right`            | 'left'                                                                                                                                           |
+| checkedRows           | Set which rows are checked, use the .sync modifier (Vue 2.x) or v-model:checkedRows (Vue 3.x) to make it two-way binding                | array          | -                          | []                                                                                                                                               |
+| columns               | Table columns                                                                                                                           | array          | -                          | []                                                                                                                                               |
+| currentPage           | Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding | number         | -                          | 1                                                                                                                                                |
+| customDetailRow       | Custom style on details                                                                                                                 | boolean        | -                          | false                                                                                                                                            |
+| customIsChecked       | Custom method to verify if row is checked, works when is checkable. Useful for backend pagination                                       | func           | -                          |                                                                                                                                                  |
+| customRowKey          | Use a unique key of your data Object for each row. Useful if your data prop has dynamic indices. (id recommended)                       | string         | -                          |                                                                                                                                                  |
+| data                  | Table data                                                                                                                              | array          | -                          | []                                                                                                                                               |
+| debounceSearch        | Filtering debounce time (in milliseconds)                                                                                               | number         | -                          |                                                                                                                                                  |
+| defaultSort           | Sets the default sort column and order — e.g. ['first_name', 'desc']                                                                    | string\|array  | -                          |                                                                                                                                                  |
+| defaultSortDirection  | Sets the default sort column direction on the first click                                                                               | string         | `asc`, `desc`              | 'asc'                                                                                                                                            |
+| detailKey             | Use a unique key of your data Object when use detailed or opened detailed. (id recommended)                                             | string         | -                          | ''                                                                                                                                               |
+| detailed              | Allow row details                                                                                                                       | boolean        | -                          |                                                                                                                                                  |
+| draggable             | Allows rows to be draggable                                                                                                             | boolean        | -                          | false                                                                                                                                            |
+| filtersEvent          | Add a native event to filter                                                                                                            | string         | -                          | ''                                                                                                                                               |
+| focusable             | Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering               | boolean        | -                          |                                                                                                                                                  |
+| hasDetailedVisible    | Controls the visibility of the trigger that toggles the detailed rows.                                                                  | func           | -                          | () => true                                                                                                                                       |
+| headerCheckable       | Show check/uncheck all checkbox in table header when checkable                                                                          | boolean        | -                          | true                                                                                                                                             |
+| height                | Table fixed height                                                                                                                      | number\|string | -                          |                                                                                                                                                  |
+| hoverable             | Rows are highlighted when hovering                                                                                                      | boolean        | -                          |                                                                                                                                                  |
+| iconPack              | Icon pack to use                                                                                                                        | string         | -                          |                                                                                                                                                  |
+| isRowCheckable        | Custom method to verify if a row is checkable, works when is checkable                                                                  | func           | -                          | () => true                                                                                                                                       |
+| isRowSelectable       | Custom method to verify if a row is selectable, works when is selected.                                                                 | func           | -                          | () => true                                                                                                                                       |
+| loading               | Loading state                                                                                                                           | boolean        | -                          |                                                                                                                                                  |
+| mobileBreakpoint      | Mobile breakpoint as max-width value                                                                                                    | string         | -                          |                                                                                                                                                  |
+| mobileCards           | Rows appears as cards on mobile (collapse rows)                                                                                         | boolean        | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;mobileCards: true<br>}</code>            |
+| mobileSortPlaceholder | Text when nothing is selected                                                                                                           | string         | -                          |                                                                                                                                                  |
+| narrowed              | Makes the cells narrower                                                                                                                | boolean        | -                          |                                                                                                                                                  |
+| openedDetailed        | Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop)               | array          | -                          | []                                                                                                                                               |
+| override              |                                                                                                                                         | boolean        | -                          |                                                                                                                                                  |
+| paginated             | Adds pagination to the table                                                                                                            | boolean        | -                          |                                                                                                                                                  |
+| paginationPosition    | Pagination position (if paginated)                                                                                                      | string         | `bottom`, `top`, `bot`     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;paginationPosition: 'bottom'<br>}</code> |
+| paginationRounded     | Rounded pagination if paginated                                                                                                         | boolean        | -                          |                                                                                                                                                  |
+| perPage               | How many rows per page (if paginated)                                                                                                   | number\|string | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;perPage: 20<br>}</code>                  |
+| scrollable            | Add a horizontal scrollbar when table is too wide                                                                                       | boolean        | -                          |                                                                                                                                                  |
+| selected              | Set which row is selected, use the .sync modifier (Vue 2.x) or v-model:selected (Vue 3.x) to make it two-way binding                    | object         | -                          |                                                                                                                                                  |
+| showDetailIcon        | Allow chevron icon and column to be visible                                                                                             | boolean        | -                          | true                                                                                                                                             |
+| showHeader            | Show header                                                                                                                             | boolean        | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;showHeader: true<br>}</code>             |
+| sortIcon              | Sets the header sorting icon                                                                                                            | string         | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;sortIcon: 'arrow-up'<br>}</code>         |
+| sortIconSize          | Sets the size of the sorting icon                                                                                                       | string         | `small`, `medium`, `large` | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table {<br>&nbsp;&nbsp;sortIconSize: 'small'<br>}</code>        |
+| stickyCheckbox        | Make the checkbox column sticky when checkable                                                                                          | boolean        | -                          | false                                                                                                                                            |
+| stickyHeader          | Show a sticky table header                                                                                                              | boolean        | -                          |                                                                                                                                                  |
+| striped               | Whether table is striped                                                                                                                | boolean        | -                          |                                                                                                                                                  |
+| total                 | Total number of table data if backend-pagination is enabled                                                                             | number\|string | -                          | 0                                                                                                                                                |
 
 ### Events
 
@@ -1849,23 +1847,24 @@ export default {
 
 ## Props
 
-| Prop name        | Description                          | Type                                         | Values              | Default |
-| ---------------- | ------------------------------------ | -------------------------------------------- | ------------------- | ------- |
-| customKey        |                                      | string\|number                               | -                   |         |
-| customSearch     |                                      | func                                         | -                   |         |
-| customSort       |                                      | func                                         | -                   |         |
-| field            |                                      | string                                       | -                   |         |
-| headerSelectable |                                      | boolean                                      | -                   |         |
-| label            |                                      | string                                       | -                   |         |
-| meta             |                                      | string\|number\|boolean\|func\|object\|array | -                   |         |
-| numeric          |                                      | boolean                                      | -                   |         |
-| position         | Optional, position of column content | string                                       | `centered`, `right` |         |
-| searchable       |                                      | boolean                                      | -                   |         |
-| sortable         |                                      | boolean                                      | -                   |         |
-| sticky           |                                      | boolean                                      | -                   |         |
-| subheading       |                                      | string\|number                               | -                   |         |
-| visible          |                                      | boolean                                      | -                   | true    |
-| width            |                                      | number\|string                               | -                   |         |
+| Prop name        | Description                          | Type                                         | Values              | Default    |
+| ---------------- | ------------------------------------ | -------------------------------------------- | ------------------- | ---------- |
+| customKey        |                                      | string\|number                               | -                   |            |
+| customSearch     |                                      | func                                         | -                   |            |
+| customSort       |                                      | func                                         | -                   |            |
+| field            |                                      | string                                       | -                   |            |
+| headerSelectable |                                      | boolean                                      | -                   |            |
+| label            |                                      | string                                       | -                   |            |
+| meta             |                                      | string\|number\|boolean\|func\|object\|array | -                   |            |
+| numeric          |                                      | boolean                                      | -                   |            |
+| position         | Optional, position of column content | string                                       | `centered`, `right` |            |
+| searchable       |                                      | boolean                                      | -                   |            |
+| sortable         |                                      | boolean                                      | -                   |            |
+| sticky           |                                      | boolean                                      | -                   |            |
+| tdAttrs          | Native td attributes                 | func                                         | -                   | () => ({}) |
+| thAttrs          | Native th attributes                 | func                                         | -                   | () => ({}) |
+| visible          |                                      | boolean                                      | -                   | true       |
+| width            |                                      | number\|string                               | -                   |            |
 
 ## Style
 

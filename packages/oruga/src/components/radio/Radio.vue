@@ -34,13 +34,13 @@ export default {
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'radio',
     props: {
-        rootClass: [String, Function],
-        disabledClass: [String, Function],
-        checkCheckedClass: [String, Function],
-        checkClass: [String, Function],
-        labelClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {

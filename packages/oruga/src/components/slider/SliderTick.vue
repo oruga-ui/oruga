@@ -27,9 +27,9 @@ export default {
             variant: Number,
             default: 0
         },
-        tickClass: [String, Function],
-        tickHiddenClass: [String, Function],
-        tickLabelClass: [String, Function]
+        tickClass: [String, Function, Array],
+        tickHiddenClass: [String, Function, Array],
+        tickLabelClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {

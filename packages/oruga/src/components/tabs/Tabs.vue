@@ -17,7 +17,7 @@
                     <button v-else @click="childClick(childItem)" :class="childItem.headerClasses">
                         <o-icon
                             v-if="childItem.icon"
-                            :rootClass="childItem.headerIconClasses.join(' ')"
+                            :rootClass="childItem.headerIconClasses"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size"/>
@@ -70,17 +70,17 @@ export default {
         },
         /** Show tab items multiline when there is no space */
         multiline: Boolean,
-        rootClass: [String, Function],
-        positionClass: [String, Function],
-        expandedClass: [String, Function],
-        verticalClass: [String, Function],
-        multilineClass: [String, Function],
-        navTabsClass: [String, Function],
-        navSizeClass: [String, Function],
-        navPositionClass: [String, Function],
-        contentClass: [String, Function],
-        transitioningClass: [String, Function],
-        tabItemWrapperClass: [String, Function],
+        rootClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        verticalClass: [String, Function, Array],
+        multilineClass: [String, Function, Array],
+        navTabsClass: [String, Function, Array],
+        navSizeClass: [String, Function, Array],
+        navPositionClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        transitioningClass: [String, Function, Array],
+        tabItemWrapperClass: [String, Function, Array],
     },
     computed: {
         rootClasses() {

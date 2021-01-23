@@ -12,13 +12,13 @@ export default {
     props: {
         /** Item will be disabled */
         disabled: Boolean,
-        itemClass: [String, Function],
-        itemHeaderClass: [String, Function],
-        itemHeaderActiveClass: [String, Function],
-        itemHeaderDisabledClass: [String, Function],
-        itemHeaderTypeClass: [String, Function],
-        itemHeaderIconClass: [String, Function],
-        itemHeaderTextClass: [String, Function],
+        itemClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemHeaderActiveClass: [String, Function, Array],
+        itemHeaderDisabledClass: [String, Function, Array],
+        itemHeaderTypeClass: [String, Function, Array],
+        itemHeaderIconClass: [String, Function, Array],
+        itemHeaderTextClass: [String, Function, Array],
     },
     computed: {
         elementClasses() {

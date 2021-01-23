@@ -38,6 +38,7 @@
                 :table-cell-class="tableCellClass"
                 :table-cell-selected-class="tableCellSelectedClass"
                 :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                :table-cell-invisible-class="tableCellInvisibleClass"
                 :table-cell-within-selected-class="tableCellWithinSelectedClass"
                 :table-cell-last-selected-class="tableCellLastSelectedClass"
                 :table-cell-first-hovered-class="tableCellFirstHoveredClass"
@@ -50,7 +51,8 @@
                 :table-cell-events-class="tableCellEventsClass"
                 :table-events-class="tableEventsClass"
                 :table-event-variant-class="tableEventVariantClass"
-                :table-event-indicator-class="tableEventIndicatorClass"
+                :table-event-class="tableEventClass"
+                :table-event-indicators-class="tableEventIndicatorsClass"
                 @select="updateSelectedDate"
                 @rangeHoverEndDate="setRangeHoverEndDate"
                 @change-focus="changeFocus"/>
@@ -94,27 +96,29 @@ export default {
         rulesForFirstWeek: Number,
         range: Boolean,
         multiple: Boolean,
-        tableClass: [String, Function],
-        tableHeadClass: [String, Function],
-        tableHeadCellClass: [String, Function],
-        tableBodyClass: [String, Function],
-        tableRowClass: [String, Function],
-        tableCellClass: [String, Function],
-        tableCellSelectedClass: [String, Function],
-        tableCellFirstSelectedClass: [String, Function],
-        tableCellWithinSelectedClass: [String, Function],
-        tableCellLastSelectedClass: [String, Function],
-        tableCellFirstHoveredClass: [String, Function],
-        tableCellWithinHoveredClass: [String, Function],
-        tableCellLastHoveredClass: [String, Function],
-        tableCellTodayClass: [String, Function],
-        tableCellSelectableClass: [String, Function],
-        tableCellUnselectableClass: [String, Function],
-        tableCellNearbyClass: [String, Function],
-        tableCellEventsClass: [String, Function],
-        tableEventsClass: [String, Function],
-        tableEventVariantClass: [String, Function],
-        tableEventIndicatorClass: [String, Function]
+        tableClass: [String, Function, Array],
+        tableHeadClass: [String, Function, Array],
+        tableHeadCellClass: [String, Function, Array],
+        tableBodyClass: [String, Function, Array],
+        tableRowClass: [String, Function, Array],
+        tableCellClass: [String, Function, Array],
+        tableCellSelectedClass: [String, Function, Array],
+        tableCellFirstSelectedClass: [String, Function, Array],
+        tableCellInvisibleClass: [String, Function, Array],
+        tableCellWithinSelectedClass: [String, Function, Array],
+        tableCellLastSelectedClass: [String, Function, Array],
+        tableCellFirstHoveredClass: [String, Function, Array],
+        tableCellWithinHoveredClass: [String, Function, Array],
+        tableCellLastHoveredClass: [String, Function, Array],
+        tableCellTodayClass: [String, Function, Array],
+        tableCellSelectableClass: [String, Function, Array],
+        tableCellUnselectableClass: [String, Function, Array],
+        tableCellNearbyClass: [String, Function, Array],
+        tableCellEventsClass: [String, Function, Array],
+        tableEventClass: [String, Function, Array],
+        tableEventIndicatorsClass: [String, Function, Array],
+        tableEventsClass: [String, Function, Array],
+        tableEventVariantClass: [String, Function, Array],
     },
     data() {
         return {
