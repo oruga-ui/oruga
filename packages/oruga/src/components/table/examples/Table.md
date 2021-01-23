@@ -1013,8 +1013,8 @@
             width: "40",
             numeric: true,
             sticky: true,
-            headerClass: "is-sticky-column-one",
-            cellClass: "is-sticky-column-one",
+            thAttrs: () => ({ 'class': "is-sticky-column-one" }),
+            tdAttrs: () => ({ 'class': "is-sticky-column-one" }),
           },
           {
             field: "user.first_name",
@@ -1029,8 +1029,8 @@
             label: "Date",
             position: "centered",
             sticky: true,
-            headerClass: "is-sticky-column-two",
-            cellClass: "is-sticky-column-two",
+            thAttrs: () => ({ 'class': "is-sticky-column-two" }),
+            tdAttrs: () => ({ 'class': "is-sticky-column-two" }),
           },
           {
             field: "gender",

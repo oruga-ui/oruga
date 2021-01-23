@@ -63,6 +63,7 @@
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'header'"
+                        v-bind="column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style"
                         @click.stop="sort(column, null, $event)">
@@ -101,32 +102,13 @@
                         </template>
                     </th>
                 </tr>
-                <tr v-if="hasCustomSubheadings">
-                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                    <th v-if="checkable && checkboxPosition === 'left'" />
-                    <th
-                        v-for="(column, index) in visibleColumns"
-                        :key="column.newKey + ':' + index + 'subheading'"
-                        :style="column.style">
-                        <template v-if="column.hasSubheadingSlot">
-                            <o-slot-component
-                                :component="column"
-                                scoped
-                                name="subheading"
-                                tag="span"
-                                :props="{ column, index }"
-                            />
-                        </template>
-                        <template v-else>{{ column.subheading }}</template>
-                    </th>
-                    <th v-if="checkable && checkboxPosition === 'right'" />
-                </tr>
                 <tr v-if="hasSearchablenewColumns">
                     <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                     <th v-if="checkable && checkboxPosition === 'left'" />
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'searchable'"
+                        v-bind="column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style">
                         <template v-if="column.searchable">
@@ -197,15 +179,15 @@
                             <template v-if="column.hasDefaultSlot">
                                 <o-slot-component
                                     :key="column.newKey + index + ':' + colindex"
+                                    v-bind="column.tdAttrs(row, column)"
                                     :component="column"
                                     scoped
                                     name="default"
                                     tag="td"
-                                    :class="tdClasses(column)"
+                                    :class="tdClasses(row, column)"
                                     :data-label="column.label"
                                     :props="{ row, column, index, colindex, toggleDetails }"
-                                    @click.native="$emit('cell-click',row, column,
-                                                            index, colindex, $event)"
+                                    @click.native="$emit('cell-click', row, column, index, colindex, $event)"
                                 />
                             </template>
 
@@ -736,15 +718,6 @@ export default {
         },
 
         /**
-        * Check if has any column using subheading.
-        */
-        hasCustomSubheadings() {
-            return this.newColumns.some((column) => {
-                return column.subheading || column.hasSubheadingSlot
-            })
-        },
-
-        /**
         * Return total column count based if it's checkable or expanded
         */
         columnCount() {
@@ -872,13 +845,13 @@ export default {
     methods: {
         thClasses(column) {
             return [
-                column.headerClass,
                 ...this.thBaseClasses,
+                ...this.thStickyClasses(column),
+                getValueByPath(column.thAttrs(column), 'class'),
                 { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
                 { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
                 { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
                 { [this.computedClass('thPositionClass', 'o-table__th--', column.position)]: column.position },
-                ...this.thStickyClasses(column)
             ]
         },
         thStickyClasses(column) {
@@ -897,10 +870,10 @@ export default {
                 this.computedClass('thSortIconClass', 'o-table__th__sort-icon'),
             ]
         },
-        tdClasses(column) {
+        tdClasses(row, column) {
             return [
-                column.cellClass,
                 ...this.tdBaseClasses,
+                getValueByPath(column.tdAttrs(row, column), 'class'),
                 { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
                 { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]

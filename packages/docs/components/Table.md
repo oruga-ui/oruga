@@ -966,8 +966,8 @@ title: Table
             width: '40',
             numeric: true,
             sticky: true,
-            headerClass: 'is-sticky-column-one',
-            cellClass: 'is-sticky-column-one'
+            thAttrs: () => ({ class: 'is-sticky-column-one' }),
+            tdAttrs: () => ({ class: 'is-sticky-column-one' })
           },
           {
             field: 'user.first_name',
@@ -982,8 +982,8 @@ title: Table
             label: 'Date',
             position: 'centered',
             sticky: true,
-            headerClass: 'is-sticky-column-two',
-            cellClass: 'is-sticky-column-two'
+            thAttrs: () => ({ class: 'is-sticky-column-two' }),
+            tdAttrs: () => ({ class: 'is-sticky-column-two' })
           },
           {
             field: 'gender',
@@ -1847,25 +1847,24 @@ export default {
 
 ## Props
 
-| Prop name        | Description                          | Type                                         | Values              | Default |
-| ---------------- | ------------------------------------ | -------------------------------------------- | ------------------- | ------- |
-| cellClass        |                                      | string                                       | -                   |         |
-| customKey        |                                      | string\|number                               | -                   |         |
-| customSearch     |                                      | func                                         | -                   |         |
-| customSort       |                                      | func                                         | -                   |         |
-| field            |                                      | string                                       | -                   |         |
-| headerClass      |                                      | string                                       | -                   |         |
-| headerSelectable |                                      | boolean                                      | -                   |         |
-| label            |                                      | string                                       | -                   |         |
-| meta             |                                      | string\|number\|boolean\|func\|object\|array | -                   |         |
-| numeric          |                                      | boolean                                      | -                   |         |
-| position         | Optional, position of column content | string                                       | `centered`, `right` |         |
-| searchable       |                                      | boolean                                      | -                   |         |
-| sortable         |                                      | boolean                                      | -                   |         |
-| sticky           |                                      | boolean                                      | -                   |         |
-| subheading       |                                      | string\|number                               | -                   |         |
-| visible          |                                      | boolean                                      | -                   | true    |
-| width            |                                      | number\|string                               | -                   |         |
+| Prop name        | Description                          | Type                                         | Values              | Default    |
+| ---------------- | ------------------------------------ | -------------------------------------------- | ------------------- | ---------- |
+| customKey        |                                      | string\|number                               | -                   |            |
+| customSearch     |                                      | func                                         | -                   |            |
+| customSort       |                                      | func                                         | -                   |            |
+| field            |                                      | string                                       | -                   |            |
+| headerSelectable |                                      | boolean                                      | -                   |            |
+| label            |                                      | string                                       | -                   |            |
+| meta             |                                      | string\|number\|boolean\|func\|object\|array | -                   |            |
+| numeric          |                                      | boolean                                      | -                   |            |
+| position         | Optional, position of column content | string                                       | `centered`, `right` |            |
+| searchable       |                                      | boolean                                      | -                   |            |
+| sortable         |                                      | boolean                                      | -                   |            |
+| sticky           |                                      | boolean                                      | -                   |            |
+| tdAttrs          | Native td attributes                 | func                                         | -                   | () => ({}) |
+| thAttrs          | Native th attributes                 | func                                         | -                   | () => ({}) |
+| visible          |                                      | boolean                                      | -                   | true       |
+| width            |                                      | number\|string                               | -                   |            |
 
 ## Style
 
