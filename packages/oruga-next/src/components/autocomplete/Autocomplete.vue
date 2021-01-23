@@ -177,13 +177,13 @@ export default defineComponent({
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        rootClass: [String, Function],
-        menuClass: [String, Function],
-        expandedClass: [String, Function],
-        menuPositionClass: [String, Function],
-        itemClass: [String, Function],
-        itemHoverClass: [String, Function],
-        itemGroupTitleClass: [String, Function],
+        rootClass: [String, Function, Array],
+        menuClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        menuPositionClass: [String, Function, Array],
+        itemClass: [String, Function, Array],
+        itemHoverClass: [String, Function, Array],
+        itemGroupTitleClass: [String, Function, Array],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },
