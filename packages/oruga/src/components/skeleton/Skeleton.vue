@@ -59,12 +59,12 @@ export default {
          * @values small, medium, large
          */
         size: String,
-        rootClass: [String, Function],
-        animationClass: [String, Function],
-        positionClass: [String, Function],
-        itemClass: [String, Function],
-        itemRoundedClass: [String, Function],
-        sizeClass: [String, Function]
+        rootClass: [String, Function, Array],
+        animationClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        itemClass: [String, Function, Array],
+        itemRoundedClass: [String, Function, Array],
+        sizeClass: [String, Function, Array]
     },
     render(h) {
         if (!this.active) return

@@ -119,8 +119,11 @@ import PaginationButton from './PaginationButton'
 import Icon from '../icon/Icon'
 
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
@@ -134,7 +137,7 @@ export default {
         [PaginationButton.name]: PaginationButton
     },
     configField: 'pagination',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $pagination: this
@@ -197,19 +200,20 @@ export default {
         ariaPreviousLabel: String,
         ariaPageLabel: String,
         ariaCurrentLabel: String,
-        rootClass: [String, Function],
-        prevBtnClass: [String, Function],
-        nextBtnClass: [String, Function],
-        listClass: [String, Function],
-        linkClass: [String, Function],
-        linkCurrentClass: [String, Function],
-        ellipsisClass: [String, Function],
-        infoClass: [String, Function],
-        orderClass: [String, Function],
-        simpleClass: [String, Function],
-        roundedClass: [String, Function],
-        linkDisabledClass: [String, Function],
-        sizeClass: [String, Function]
+        rootClass: [String, Function, Array],
+        prevBtnClass: [String, Function, Array],
+        nextBtnClass: [String, Function, Array],
+        listClass: [String, Function, Array],
+        linkClass: [String, Function, Array],
+        linkCurrentClass: [String, Function, Array],
+        ellipsisClass: [String, Function, Array],
+        infoClass: [String, Function, Array],
+        orderClass: [String, Function, Array],
+        simpleClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        linkDisabledClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        mobileClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {
@@ -218,6 +222,7 @@ export default {
                 { [this.computedClass('orderClass', 'o-pag--', this.order)]: this.order },
                 { [this.computedClass('sizeClass', 'o-pag--', this.size)]: this.size },
                 { [this.computedClass('simpleClass', 'o-pag--simple')]: this.simple },
+                { [this.computedClass('mobileClass', 'o-pag--mobile')]: this.isMatchMedia },
             ]
         },
         prevBtnClasses() {

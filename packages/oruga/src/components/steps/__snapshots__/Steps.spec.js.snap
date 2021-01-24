@@ -8,20 +8,20 @@ exports[`OSteps render correctly 1`] = `
                 <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
-                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+                <div class="o-steps__title"></div>
             </a>
         </div>
         <div class="o-steps__nav-item" style="display: none;"><span class="o-steps__divider"></span> <a class="o-steps__link o-steps__link-label-bottom">
                 <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
-                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+                <div class="o-steps__title"></div>
             </a></div>
         <div class="o-steps__nav-item"><span class="o-steps__divider"></span> <a class="o-steps__link o-steps__link-label-bottom">
                 <div class="o-steps__marker o-steps__marker--rounded">
                     <!---->
                 </div>
-                <div class="o-steps__details"><span class="o-steps__title"></span></div>
+                <div class="o-steps__title"></div>
             </a></div>
     </nav>
     <section class="o-steps__content o-steps__content-transitioning">

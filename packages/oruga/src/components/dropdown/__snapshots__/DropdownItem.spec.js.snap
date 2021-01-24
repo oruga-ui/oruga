@@ -7,7 +7,7 @@ exports[`ODropdown render correctly 1`] = `
         <div aria-hidden="true" class="o-drop__overlay" style="display: none;"></div>
     </transition-stub>
     <transition-stub name="fade">
-        <div aria-hidden="true" class="o-drop__menu o-drop__menu--mobile" style="display: none;"></div>
+        <div aria-hidden="true" class="o-drop__menu" style="display: none;"></div>
     </transition-stub>
 </div>
 `;

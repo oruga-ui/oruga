@@ -74,11 +74,11 @@ export default {
         rotation: [Number, String],
         /** @ignore */
         both: Boolean, // This is used internally
-        rootClass: [String, Function],
-        clickableClass: [String, Function],
-        spinClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        clickableClass: [String, Function, Array],
+        spinClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {

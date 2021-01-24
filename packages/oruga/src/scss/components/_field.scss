@@ -7,7 +7,6 @@ $field-margin-bottom: .75rem !default;
 $field-message-font-size: .75rem !default;
 $field-message-margin-top: .25rem !default;
 $field-margin-right: .37rem !default;
-$field-horizontal-breakpoint: 768px !default;
 $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
 /* @docs */
 
@@ -83,26 +82,32 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
             @include avariable('margin-bottom', 'field-margin-bottom', -$field-margin-bottom);
         }
     }
-    @media screen and (min-width: $field-horizontal-breakpoint) {
-        &__horizontal-body {
-            display: flex;
-            flex-basis: 0;
-            flex-grow: 5;
-            flex-shrink: 1;
-            @include side-flex-gap($field-margin-right);
+    &__horizontal-body {
+        display: flex;
+        flex-basis: 0;
+        flex-grow: 5;
+        flex-shrink: 1;
+        @include side-flex-gap($field-margin-right);
+    }
+    &--horizontal {
+        display: flex;
+    }
+    &__horizontal-label {
+        flex-basis: 0;
+        flex-grow: 1;
+        flex-shrink: 0;
+        margin: $field-horizontal-label-margin;
+        text-align: right;
+    }
+    &--mobile {
+        .o-field__horizontal-body {
+            all: unset;
         }
-        &--horizontal {
-            display: flex;
-            .o-field {
-                flex-grow: 1;
-            }
+        &.o-field--horizontal {
+            all: unset;
         }
-        &__horizontal-label {
-            flex-basis: 0;
-            flex-grow: 1;
-            flex-shrink: 0;
-            margin: $field-horizontal-label-margin;
-            text-align: right;
+        .o-field__horizontal-label {
+            all: unset;
         }
     }
 }

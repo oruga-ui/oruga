@@ -268,33 +268,32 @@ export default {
 
 ## Props
 
-| Prop name          | Description                                                 | Type                                   | Values                                            | Default                                                  |
-| ------------------ | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | -------------------------------------------------------- |
-| autocomplete       | Native options to use in HTML5 validation                   | string                                 | -                                                 |                                                          |
-| expanded           | Makes input full width when inside a grouped or addon field | boolean                                | -                                                 |                                                          |
-| icon               | Icon name to be added                                       | string                                 | -                                                 |                                                          |
-| iconPack           | Icon pack to use                                            | string                                 | `mdi`, `fa`, `fas and any other custom icon pack` |                                                          |
-| iconRight          | Icon name to be added on the right side                     | string                                 | -                                                 | Config -> <code> 'select.iconRight': 'caret-down'</code> |
-| maxlength          | Same as native maxlength, plus character counter            | number\|string                         | -                                                 |                                                          |
-| multiple           |                                                             | boolean                                | -                                                 |                                                          |
-| nativeSize         | Same as native size                                         | string\|number                         | -                                                 |                                                          |
-| override           |                                                             | boolean                                | -                                                 |                                                          |
-| placeholder        | Text when nothing is selected                               | string                                 | -                                                 |                                                          |
-| rounded            | Makes the element rounded                                   | boolean                                | -                                                 |                                                          |
-| size               | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                        |                                                          |
-| statusIcon         | Show status icon using field and variant prop               | boolean                                | -                                                 | Config -> <code> "statusIcon": true</code>               |
-| useHtml5Validation | Enable html 5 native validation                             | boolean                                | -                                                 | Config -> <code> "useHtml5Validation": true</code>       |
-| v-model            |                                                             | string\|number\|boolean\|object\|array | -                                                 | null                                                     |
-| validationMessage  | The message which is shown when a validation error occurs   | string                                 | -                                                 |                                                          |
+| Prop name          | Description                                                 | Type                                   | Values                                            | Default                                                                                                                                      |
+| ------------------ | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| autocomplete       | Native options to use in HTML5 validation                   | string                                 | -                                                 |                                                                                                                                              |
+| expanded           | Makes input full width when inside a grouped or addon field | boolean                                | -                                                 |                                                                                                                                              |
+| icon               | Icon name to be added                                       | string                                 | -                                                 |                                                                                                                                              |
+| iconPack           | Icon pack to use                                            | string                                 | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                              |
+| iconRight          | Icon name to be added on the right side                     | string                                 | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> select {<br>&nbsp;&nbsp;iconRight: 'caret-down'<br>}</code> |
+| maxlength          | Same as native maxlength, plus character counter            | number\|string                         | -                                                 |                                                                                                                                              |
+| multiple           |                                                             | boolean                                | -                                                 |                                                                                                                                              |
+| nativeSize         | Same as native size                                         | string\|number                         | -                                                 |                                                                                                                                              |
+| override           |                                                             | boolean                                | -                                                 |                                                                                                                                              |
+| placeholder        | Text when nothing is selected                               | string                                 | -                                                 |                                                                                                                                              |
+| rounded            | Makes the element rounded                                   | boolean                                | -                                                 |                                                                                                                                              |
+| size               | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                        |                                                                                                                                              |
+| statusIcon         | Show status icon using field and variant prop               | boolean                                | -                                                 | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}                                                                          |
+| useHtml5Validation | Enable html 5 native validation                             | boolean                                | -                                                 | () => {<br> return getValueByPath(config, "useHtml5Validation", true);<br>}                                                                  |
+| v-model            |                                                             | string\|number\|boolean\|object\|array | -                                                 | null                                                                                                                                         |
+| validationMessage  | The message which is shown when a validation error occurs   | string                                 | -                                                 |                                                                                                                                              |
 
 ## Events
 
-| Event name        | Properties | Description |
-| ----------------- | ---------- | ----------- |
-| blur              |            |
-| focus             |            |
-| update:modelValue |            |
-| input             |            |
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| blur       |            |
+| focus      |            |
+| input      |            |
 
 ## Slots
 

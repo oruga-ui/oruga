@@ -70,6 +70,11 @@ title: Checkbox
       </o-checkbox>
     </div>
     <div class="field">
+      <o-checkbox :value="true" variant="primary">
+        Primary
+      </o-checkbox>
+    </div>
+    <div class="field">
       <o-checkbox :value="true" variant="info">
         Info
       </o-checkbox>
@@ -166,15 +171,22 @@ export default {
         },
         {
           class: 'labelClass',
-          description : 'Class of the label'
+          description : 'Class of the checkbox label'
         },
         {
           class: 'checkClass',
           description : 'Class of the checkbox'
         },
         {
+          class: 'checkedClass',
+          description : 'Class of the root element when checked',
+          action: (cmp) => {
+            cmp.data.checkbox = true;
+          }
+        },
+        {
           class: 'checkCheckedClass',
-          description : '',
+          description : 'Class of the checkbox when checked',
           action: (cmp) => {
             cmp.data.checkbox = true;
           }
@@ -228,7 +240,7 @@ export default {
 | ------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
 | disabled      | Same as native disabled                            | boolean                        | -                                                                               |         |
 | falseValue    | Overrides the returned value when it's not checked | string\|number\|boolean        | -                                                                               | false   |
-| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               |         |
+| indeterminate | Same as native indeterminate                       | boolean                        | -                                                                               | false   |
 | name          | Same as native name                                | string                         | -                                                                               |         |
 | nativeValue   | Same as native value                               | string\|number\|boolean\|array | -                                                                               |         |
 | override      |                                                    | boolean                        | -                                                                               |         |

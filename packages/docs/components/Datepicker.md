@@ -361,62 +361,409 @@ title: Datepicker
 
 :::
 
+## Class props
+
+<br />
+<template>
+    <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-field label="Select a date">
+                    <o-datepicker v-bind="s" :events="events" locale="en-GB" placeholder="Click to select a date..." icon="calendar" ref="datepicker">
+                        Footer
+                    </o-datepicker>
+                </o-field>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    methods: {
+        openDatePicker() {
+            setTimeout(() => {
+                this.$refs.datepicker.$el.getElementsByClassName('o-input-iconspace-left')[0].click()
+            }, 500)
+        }
+    },
+    data() {
+        return {
+            events: [
+                {
+                    date: new Date(),
+                    type: 'info'
+                },
+                {
+                    date: new Date(),
+                    type: 'warning'
+                }
+            ],
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element",
+                },
+                {
+                    class: "sizeClass",
+                    description: "Class of the Datepicker size",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                    },
+                },
+                {
+                    class: "boxClass",
+                    description: "Class of the Datepicker box where you choose the date",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "headerClass",
+                    description: "Class of the Datepicker header inside the box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "headerButtonsClass",
+                    description: "Class of the Datepicker buttons inside the box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "headerButtonsSizeClass",
+                    description: "Class of the Datepicker buttons inside the box when a size is choosen",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                        this.openDatePicker();
+                    },
+                },
+                {
+                    class: "prevBtnClass",
+                    description: "Class of the prev. button inside the Datepicker box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "nextBtnClass",
+                    description: "Class of the next button inside the Datepicker box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "listsClass",
+                    description: "Class of the month and year selects container inside the Datepicker box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "footerClass",
+                    description: "Class of the Datepicker footer",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableClass",
+                    description: "Class of the Datepicker table inside the box",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableHeadClass",
+                    description: "Class of Datepicker header with days of the week inside the table",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableHeadCellClass",
+                    description: "Class of the cell inside the table header",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableBodyClass",
+                    description: "Class of the table body inside the box",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableRowClass",
+                    description: "Class of the table row",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellClass",
+                    description: "Class of the table cell",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellInvisibleClass",
+                    description: "Class of the table cell when nearby month days are hidden",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        cmp.data.nearbyMonthDays = false
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellSelectedClass",
+                    description: "Class of table cell when it's selected",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellFirstSelectedClass",
+                    description: "Class of the first selected table cell when in range",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellWithinSelectedClass",
+                    description: "Class of the table cells within the range when the range is selected",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellLastSelectedClass",
+                    description: "Class of the last selected table cell during range selection",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellFirstHoveredClass",
+                    description: "Class of the first hovered table cell during range selection",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellWithinHoveredClass",
+                    description: "Class of the table cell when hovered during range selection",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellLastHoveredClass",
+                    description: "Class of the last table cell hovered during range selection",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellTodayClass",
+                    description: "Class of the table cell of the current day",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellSelectableClass",
+                    description: "Class of the table cell that is selectable",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellUnselectableClass",
+                    description: "Class of the table cell that is unselectable",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellNearbyClass",
+                    description: "Class of the table cell when nearby days (prev/next month) are selectable",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        cmp.data.nearbySelectableMonthDays = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableCellEventsClass",
+                    description: "Class of the cell of a row when at least one event is present",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableEventClass",
+                    description: "Class of the event",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableEventsClass",
+                    description: "Class of the events container",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableEventVariantClass",
+                    description: "Class of the event indicator when a `variant` is specified",
+                    properties: ["variant in event"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "tableEventIndicatorsClass",
+                    description: "Class of the event indicator",
+                    properties: ['indicator'],
+                    suffixes: ['bars', 'dots', '*'],
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        cmp.data.indicators = 'bars'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "mobileClass",
+                    description: "Class of the Datepicker when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                    action: (cmp) => {
+                        cmp.data.tableClass = 'datepicker__table'
+                        this.openDatePicker();
+                    }
+                }
+            ],
+        };
+    }
+}
+</script>
+<style>
+.datepicker__table {
+    border-collapse: collapse;
+}
+</style>
+
+<br />
+<br />
+
 ## Props
 
-| Prop name                 | Description                                                 | Type           | Values                                            | Default                                                                |
-| ------------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | ---------------------------------------------------------------------- |
-| appendToBody              |                                                             | boolean        | -                                                 |                                                                        |
-| ariaNextLabel             |                                                             | string         | -                                                 |                                                                        |
-| ariaPreviousLabel         |                                                             | string         | -                                                 |                                                                        |
-| autocomplete              | Native options to use in HTML5 validation                   | string         | -                                                 |                                                                        |
-| closeOnClick              |                                                             | boolean        | -                                                 | true                                                                   |
-| dateCreator               |                                                             | func           | -                                                 | Config -> <code>undefined:undefined</code>                             |
-| dateFormatter             |                                                             | func           | -                                                 | Config -> <code> vm:undefined</code>                                   |
-| dateParser                |                                                             | func           | -                                                 | Config -> <code> vm:undefined</code>                                   |
-| dayNames                  |                                                             | array          | -                                                 | Config -> <code> 'datepicker.dayNames': undefined</code>               |
-| disabled                  |                                                             | boolean        | -                                                 |                                                                        |
-| editable                  |                                                             | boolean        | -                                                 |                                                                        |
-| events                    |                                                             | array          | -                                                 |                                                                        |
-| expanded                  | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                        |
-| firstDayOfWeek            |                                                             | number         | -                                                 | Config -> <code> 'datepicker.firstDayOfWeek': 0</code>                 |
-| focusedDate               |                                                             | date           | -                                                 |                                                                        |
-| horizontalTimePicker      |                                                             | boolean        | -                                                 |                                                                        |
-| icon                      | Icon name to be added                                       | string         | -                                                 |                                                                        |
-| iconNext                  |                                                             | string         | -                                                 | Config -> <code> 'datepicker.iconNext': 'chevron-right'</code>         |
-| iconPack                  | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                        |
-| iconPrev                  |                                                             | string         | -                                                 | Config -> <code> 'datepicker.iconPrev': 'chevron-left'</code>          |
-| iconRight                 |                                                             | string         | -                                                 |                                                                        |
-| indicators                |                                                             | string         | -                                                 | 'dots'                                                                 |
-| inline                    |                                                             | boolean        | -                                                 |                                                                        |
-| locale                    |                                                             | string\|array  | -                                                 | Config -> <code> 'locale':undefined</code>                             |
-| maxDate                   |                                                             | date           | -                                                 |                                                                        |
-| maxlength                 | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                                        |
-| minDate                   |                                                             | date           | -                                                 |                                                                        |
-| mobileModal               |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.mobileModal': true</code>                 |
-| mobileNative              |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.mobileNative': true</code>                |
-| monthNames                |                                                             | array          | -                                                 | Config -> <code> 'datepicker.monthNames': undefined</code>             |
-| multiple                  |                                                             | boolean        | -                                                 | false                                                                  |
-| nearbyMonthDays           |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.nearbyMonthDays': true</code>             |
-| nearbySelectableMonthDays |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.nearbyMonthDays': false</code>            |
-| openOnFocus               |                                                             | boolean        | -                                                 |                                                                        |
-| override                  |                                                             | boolean        | -                                                 |                                                                        |
-| placeholder               |                                                             | string         | -                                                 |                                                                        |
-| position                  |                                                             | string         | -                                                 |                                                                        |
-| range                     |                                                             | boolean        | -                                                 | false                                                                  |
-| rounded                   | Makes the element rounded                                   | boolean        | -                                                 |                                                                        |
-| rulesForFirstWeek         |                                                             | number         | -                                                 | () => 4                                                                |
-| selectableDates           |                                                             | array          | -                                                 |                                                                        |
-| showWeekNumber            |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.showWeekNumber': false</code>             |
-| statusIcon                | Show status icon using field and variant prop               | boolean        | -                                                 | Config -> <code> "statusIcon": true</code>                             |
-| trapFocus                 |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.trapFocus': true</code>                   |
-| type                      |                                                             | string         | -                                                 |                                                                        |
-| unselectableDates         |                                                             | array          | -                                                 |                                                                        |
-| unselectableDaysOfWeek    |                                                             | array          | -                                                 | Config -> <code> 'datepicker.unselectableDaysOfWeek': undefined</code> |
-| useHtml5Validation        | Enable html 5 native validation                             | boolean        | -                                                 | Config -> <code> "useHtml5Validation": true</code>                     |
-| validationMessage         | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                        |
-| value                     |                                                             | date\|array    | -                                                 |                                                                        |
-| weekNumberClickable       |                                                             | boolean        | -                                                 | Config -> <code> 'datepicker.weekNumberClickable': false</code>        |
-| yearsRange                |                                                             | array          | -                                                 | Config -> <code> 'datepicker.yearsRange': [-100</code>                 |
+| Prop name                 | Description                                                        | Type           | Values                                            | Default                                                                                                                                                                                                                                                 |
+| ------------------------- | ------------------------------------------------------------------ | -------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| appendToBody              |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| ariaNextLabel             |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| ariaPreviousLabel         |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| autocomplete              | Native options to use in HTML5 validation                          | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| closeOnClick              |                                                                    | boolean        | -                                                 | true                                                                                                                                                                                                                                                    |
+| dateCreator               |                                                                    | func           | -                                                 | () => {<br> const dateCreator = getValueByPath(config, 'datepicker.dateCreator', undefined)<br> if (typeof dateCreator === 'function') {<br> return dateCreator()<br> } else {<br> return new Date()<br> }<br>}                                         |
+| dateFormatter             |                                                                    | func           | -                                                 | (date, vm) => {<br> const dateFormatter = getValueByPath(config, 'datepicker.dateFormatter', undefined)<br> if (typeof dateFormatter === 'function') {<br> return dateFormatter(date)<br> } else {<br> return defaultDateFormatter(date, vm)<br> }<br>} |
+| dateParser                |                                                                    | func           | -                                                 | (date, vm) => {<br> const dateParser = getValueByPath(config, 'datepicker.dateParser', undefined)<br> if (typeof dateParserr === 'function') {<br> return dateParser(date)<br> } else {<br> return defaultDateParser(date, vm)<br> }<br>}               |
+| dayNames                  |                                                                    | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;dayNames: undefined<br>}</code>                                                                                                            |
+| disabled                  |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| dropdownClasses           | Classes to apply on internal dropdown (@see o-dropdown style docs) | object         | -                                                 |                                                                                                                                                                                                                                                         |
+| editable                  |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| events                    |                                                                    | array          | -                                                 |                                                                                                                                                                                                                                                         |
+| expanded                  | Makes input full width when inside a grouped or addon field        | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| firstDayOfWeek            |                                                                    | number         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;firstDayOfWeek: 0<br>}</code>                                                                                                              |
+| focusedDate               |                                                                    | date           | -                                                 |                                                                                                                                                                                                                                                         |
+| horizontalTimePicker      |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| icon                      | Icon name to be added                                              | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| iconNext                  |                                                                    | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code>                                                                                                      |
+| iconPack                  | Icon pack to use                                                   | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                                                                                                                         |
+| iconPrev                  |                                                                    | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>                                                                                                       |
+| iconRight                 |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| indicators                |                                                                    | string         | -                                                 | 'dots'                                                                                                                                                                                                                                                  |
+| inline                    |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| inputClasses              | Classes to apply on internal input (@see o-input style docs)       | object         | -                                                 |                                                                                                                                                                                                                                                         |
+| locale                    |                                                                    | string\|array  | -                                                 | () => {<br> return getValueByPath(config, 'locale')<br>}                                                                                                                                                                                                |
+| maxDate                   |                                                                    | date           | -                                                 |                                                                                                                                                                                                                                                         |
+| maxlength                 | Same as native maxlength, plus character counter                   | number\|string | -                                                 |                                                                                                                                                                                                                                                         |
+| minDate                   |                                                                    | date           | -                                                 |                                                                                                                                                                                                                                                         |
+| mobileBreakpoint          | Mobile breakpoint as max-width value                               | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| mobileModal               |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;mobileModal: true<br>}</code>                                                                                                              |
+| mobileNative              |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;mobileNative: true<br>}</code>                                                                                                             |
+| monthNames                |                                                                    | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;monthNames: undefined<br>}</code>                                                                                                          |
+| multiple                  |                                                                    | boolean        | -                                                 | false                                                                                                                                                                                                                                                   |
+| nearbyMonthDays           |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;nearbyMonthDays: true<br>}</code>                                                                                                          |
+| nearbySelectableMonthDays |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;nearbySelectableMonthDays: false<br>}</code>                                                                                               |
+| openOnFocus               |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| override                  |                                                                    | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| placeholder               |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| position                  |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| range                     |                                                                    | boolean        | -                                                 | false                                                                                                                                                                                                                                                   |
+| rounded                   | Makes the element rounded                                          | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| rulesForFirstWeek         |                                                                    | number         | -                                                 | () => 4                                                                                                                                                                                                                                                 |
+| selectableDates           |                                                                    | array          | -                                                 |                                                                                                                                                                                                                                                         |
+| showWeekNumber            |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;showWeekNumber: false<br>}</code>                                                                                                          |
+| size                      | Size of button, optional                                           | string         | `small`, `medium`, `large`                        |                                                                                                                                                                                                                                                         |
+| statusIcon                | Show status icon using field and variant prop                      | boolean        | -                                                 | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}                                                                                                                                                                                     |
+| trapFocus                 |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                                                                                                                |
+| type                      |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| unselectableDates         |                                                                    | array          | -                                                 |                                                                                                                                                                                                                                                         |
+| unselectableDaysOfWeek    |                                                                    | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;unselectableDaysOfWeek: undefined<br>}</code>                                                                                              |
+| useHtml5Validation        | Enable html 5 native validation                                    | boolean        | -                                                 | () => {<br> return getValueByPath(config, "useHtml5Validation", true);<br>}                                                                                                                                                                             |
+| validationMessage         | The message which is shown when a validation error occurs          | string         | -                                                 |                                                                                                                                                                                                                                                         |
+| value                     |                                                                    | date\|array    | -                                                 |                                                                                                                                                                                                                                                         |
+| weekNumberClickable       |                                                                    | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;weekNumberClickable: false<br>}</code>                                                                                                     |
+| yearsRange                |                                                                    | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker {<br>&nbsp;&nbsp;yearsRange: [-100<br>}</code>                                                                                                              |
 
 ## Events
 

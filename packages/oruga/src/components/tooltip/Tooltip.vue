@@ -106,16 +106,16 @@ export default {
         * Color of the tooltip
         * @values primary, info, success, warning, danger, and any other custom color
         */
-        variant: [String, Function],
-        rootClass: [String, Function],
-        contentClass: [String, Function],
-        orderClass: [String, Function],
-        triggerClass: [String, Function],
-        multilineClass: [String, Function],
-        alwaysClass: [String, Function],
-        variantClass: [String, Function],
-        arrowClass: [String, Function],
-        arrowOrderClass: [String, Function]
+        variant: [String, Function, Array],
+        rootClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        orderClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        multilineClass: [String, Function, Array],
+        alwaysClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        arrowClass: [String, Function, Array],
+        arrowOrderClass: [String, Function, Array]
     },
     data() {
         return {
@@ -190,7 +190,7 @@ export default {
                 wrapper.style.position = 'absolute'
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
-                wrapper.style.zIndex = this.isActive || this.always ? '9999' : '-1'
+                wrapper.style.zIndex = this.isActive || this.always ? '99' : '-1'
                 this.triggerStyle = { zIndex: this.isActive || this.always ? '100' : undefined }
             }
         },

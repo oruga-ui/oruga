@@ -76,12 +76,12 @@ export default {
             type: Boolean,
             default: false
         },
-        rootClass: [String, Function],
-        draggableClass: [String, Function],
-        variantClass: [String, Function],
-        expandedClass: [String, Function],
-        disabledClass: [String, Function],
-        hoveredClass: [String, Function]
+        rootClass: [String, Function, Array],
+        draggableClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        hoveredClass: [String, Function, Array]
     },
     data() {
         return {

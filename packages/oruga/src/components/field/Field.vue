@@ -48,6 +48,7 @@
 import FieldBody from './FieldBody'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -61,7 +62,7 @@ export default {
         [FieldBody.name]: FieldBody
     },
     configField: 'field',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $field: this
@@ -112,18 +113,19 @@ export default {
          * @values small, medium, large
          */
         labelSize: String,
-        rootClass: [String, Function],
-        horizontalClass: [String, Function],
-        groupedClass: [String, Function],
-        groupMultilineClass: [String, Function],
-        labelClass: [String, Function],
-        labelSizeClass: [String, Function],
-        labelHorizontalClass: [String, Function],
-        bodyClass: [String, Function],
-        bodyHorizontalClass: [String, Function],
-        addonsClass: [String, Function],
-        messageClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        horizontalClass: [String, Function, Array],
+        groupedClass: [String, Function, Array],
+        groupMultilineClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        labelSizeClass: [String, Function, Array],
+        labelHorizontalClass: [String, Function, Array],
+        bodyClass: [String, Function, Array],
+        bodyHorizontalClass: [String, Function, Array],
+        addonsClass: [String, Function, Array],
+        messageClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {
@@ -135,7 +137,8 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-field'),
-                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal }
+                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal },
+                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia }
             ]
         },
         messageClasses() {

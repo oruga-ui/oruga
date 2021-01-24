@@ -58,6 +58,12 @@
         </div>
         <div class="field">
             <o-checkbox :value="true"
+            variant="primary">
+                Primary
+            </o-checkbox>
+        </div>
+        <div class="field">
+            <o-checkbox :value="true"
             variant="info">
                 Info
             </o-checkbox>

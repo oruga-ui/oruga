@@ -63,6 +63,7 @@
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'header'"
+                        v-bind="column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style"
                         @click.stop="sort(column, null, $event)">
@@ -101,32 +102,13 @@
                         </template>
                     </th>
                 </tr>
-                <tr v-if="hasCustomSubheadings" :class="subheadingClasses">
-                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                    <th v-if="checkable && checkboxPosition === 'left'" />
-                    <th
-                        v-for="(column, index) in visibleColumns"
-                        :key="column.newKey + ':' + index + 'subheading'"
-                        :style="column.style">
-                        <template v-if="column.hasSubheadingSlot">
-                            <o-slot-component
-                                :component="column"
-                                scoped
-                                name="subheading"
-                                tag="span"
-                                :props="{ column, index }"
-                            />
-                        </template>
-                        <template v-else>{{ column.subheading }}</template>
-                    </th>
-                    <th v-if="checkable && checkboxPosition === 'right'" />
-                </tr>
                 <tr v-if="hasSearchablenewColumns">
                     <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                     <th v-if="checkable && checkboxPosition === 'left'" />
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'searchable'"
+                        v-bind="column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style">
                         <template v-if="column.searchable">
@@ -168,7 +150,7 @@
 
                         <td
                             v-if="showDetailRowIcon"
-                            :class="tdChevronClasses"
+                            :class="tdDetailedChevronClasses"
                         >
 
                             <o-icon
@@ -183,7 +165,7 @@
                         </td>
 
                         <td
-                            :class="tdCheckboxCellClasses"
+                            :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'left'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
@@ -197,22 +179,22 @@
                             <template v-if="column.hasDefaultSlot">
                                 <o-slot-component
                                     :key="column.newKey + index + ':' + colindex"
+                                    v-bind="column.tdAttrs(row, column)"
                                     :component="column"
                                     scoped
                                     name="default"
                                     tag="td"
-                                    :class="tdClasses(column)"
+                                    :class="tdClasses(row, column)"
                                     :data-label="column.label"
                                     :props="{ row, column, index, colindex, toggleDetails }"
-                                    @click.native="$emit('cell-click',row, column,
-                                                            index, colindex, $event)"
+                                    @click.native="$emit('cell-click', row, column, index, colindex, $event)"
                                 />
                             </template>
 
                         </template>
 
                         <td
-                            :class="tdCheckboxCellClasses"
+                            :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'right'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
@@ -305,13 +287,17 @@ import TableColumn from './TableColumn'
 import TablePagination from './TablePagination'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
 import config from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
+
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
+ * @requires ./TableColumn.vue
  * @example ./examples/Table.md
  * @style _table.scss
  */
@@ -329,7 +315,7 @@ export default {
         [TableColumn.name]: TableColumn,
         [TablePagination.name]: TablePagination
     },
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     configField: 'table',
     inheritAttrs: false,
     provide() {
@@ -405,7 +391,9 @@ export default {
         /** Rows appears as cards on mobile (collapse rows) */
         mobileCards: {
             type: Boolean,
-            default: true
+            default: () => {
+                return getValueByPath(config, 'table.mobileCards', true)
+            }
         },
         /** Sets the default sort column and order — e.g. ['first_name', 'desc']	 */
         defaultSort: [String, Array],
@@ -538,38 +526,35 @@ export default {
         },
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
-        rootClass: String,
-        tableClass: String,
-        wrapperClass: String,
-        footerClass: String,
-        emptyClass: String,
-        detailedClass: String,
-        borderedClass: String,
-        stripedClass: String,
-        narrowClass: String,
-        hoverableClass: String,
-        thClass: String,
-        tdClass: String,
-        thPositionClass: String,
-        thStickyClass: String,
-        thCheckboxClass: String,
-        thCurrentSortClass: String,
-        thSortableClass: String,
-        thUnselectableClass: String,
-        thSortIconClass: String,
-        thDetailedClass: String,
-        tdPositionClass: String,
-        tdStickyClass: String,
-        tdCheckboxCellClass: String,
-        tdChevronClass: String,
-        tdSelectedClass: String,
-        subheadingClass: String,
-        stickyHeaderClass: String,
-        mobileCardsClass: String,
-        cardsClass: String,
-        scrollableClass: String,
-        mobileSortClass: String,
-        paginationClass: String
+        tableClass: [String, Function, Array],
+        wrapperClass: [String, Function, Array],
+        footerClass: [String, Function, Array],
+        emptyClass: [String, Function, Array],
+        detailedClass: [String, Function, Array],
+        borderedClass: [String, Function, Array],
+        stripedClass: [String, Function, Array],
+        narrowedClass: [String, Function, Array],
+        hoverableClass: [String, Function, Array],
+        thClass: [String, Function, Array],
+        tdClass: [String, Function, Array],
+        thPositionClass: [String, Function, Array],
+        thStickyClass: [String, Function, Array],
+        thCheckboxClass: [String, Function, Array],
+        thCurrentSortClass: [String, Function, Array],
+        thSortableClass: [String, Function, Array],
+        thUnselectableClass: [String, Function, Array],
+        thSortIconClass: [String, Function, Array],
+        thDetailedClass: [String, Function, Array],
+        tdPositionClass: [String, Function, Array],
+        tdStickyClass: [String, Function, Array],
+        tdCheckboxClass: [String, Function, Array],
+        tdDetailedChevronClass: [String, Function, Array],
+        trSelectedClass: [String, Function, Array],
+        stickyHeaderClass: [String, Function, Array],
+        scrollableClass: [String, Function, Array],
+        mobileSortClass: [String, Function, Array],
+        paginationWrapperClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {
@@ -594,17 +579,17 @@ export default {
                 this.computedClass('tableClass', 'o-table'),
                 { [this.computedClass('borderedClass', 'o-table--bordered')]: this.bordered },
                 { [this.computedClass('stripedClass', 'o-table--striped')]: this.striped },
-                { [this.computedClass('narrowClass', 'o-table--narrow')]: this.narrowed },
+                { [this.computedClass('narrowedClass', 'o-table--narrowed')]: this.narrowed },
                 { [this.computedClass('hoverableClass', 'o-table--hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) },
-                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length },
+                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length }
             ]
         },
         tableWrapperClasses() {
             return [
                 this.computedClass('wrapperClass', 'o-table__wrapper'),
-                { [this.computedClass('mobileCardsClass', 'o-table__wrapper--mobile-cards')]: this.mobileCards },
                 { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
-                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable }
+                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable },
+                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.mobileCards && this.isMatchMedia },
             ]
         },
         footerClasses() {
@@ -634,10 +619,10 @@ export default {
                 this.computedClass('thDetailedClass', 'o-table__th--detailed')
             ]
         },
-        tdCheckboxCellClasses() {
+        tdCheckboxClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdCheckboxCellClass', 'o-table__td-checkbox'),
+                this.computedClass('tdCheckboxClass', 'o-table__td-checkbox'),
                 ...this.thStickyClasses({ sticky: this.stickyCheckbox })
             ]
         },
@@ -646,15 +631,10 @@ export default {
                 this.computedClass('detailedClass', 'o-table__detail')
             ]
         },
-        tdChevronClasses() {
+        tdDetailedChevronClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdChevronClass', 'o-table__td-chevron')
-            ]
-        },
-        subheadingClasses() {
-            return [
-                this.computedClass('subheadingClass', 'o-table__subheading')
+                this.computedClass('tdDetailedChevronClass', 'o-table__td-chevron')
             ]
         },
         mobileSortClasses() {
@@ -664,7 +644,7 @@ export default {
         },
         paginationWrapperClasses() {
             return [
-                this.computedClass('paginationClass', 'o-table__pagination')
+                this.computedClass('paginationWrapperClass', 'o-table__pagination')
             ]
         },
         tableWrapperStyle() {
@@ -734,15 +714,6 @@ export default {
         hasSearchablenewColumns() {
             return this.newColumns.some((column) => {
                 return column.searchable
-            })
-        },
-
-        /**
-        * Check if has any column using subheading.
-        */
-        hasCustomSubheadings() {
-            return this.newColumns.some((column) => {
-                return column.subheading || column.hasSubheadingSlot
             })
         },
 
@@ -874,13 +845,13 @@ export default {
     methods: {
         thClasses(column) {
             return [
-                column.headerClass,
                 ...this.thBaseClasses,
+                ...this.thStickyClasses(column),
+                getValueByPath(column.thAttrs(column), 'class'),
                 { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
                 { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
                 { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
                 { [this.computedClass('thPositionClass', 'o-table__th--', column.position)]: column.position },
-                ...this.thStickyClasses(column)
             ]
         },
         thStickyClasses(column) {
@@ -891,7 +862,7 @@ export default {
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('tdSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
+                { [this.computedClass('trSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
             ]
         },
         thSortIconClasses() {
@@ -899,10 +870,10 @@ export default {
                 this.computedClass('thSortIconClass', 'o-table__th__sort-icon'),
             ]
         },
-        tdClasses(column) {
+        tdClasses(row, column) {
             return [
-                column.cellClass,
                 ...this.tdBaseClasses,
+                getValueByPath(column.tdAttrs(row, column), 'class'),
                 { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
                 { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]

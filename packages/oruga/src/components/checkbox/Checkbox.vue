@@ -40,7 +40,10 @@ export default {
         /**
          * Same as native indeterminate
          */
-        indeterminate: Boolean,
+        indeterminate: {
+            type: Boolean,
+            default: false
+        },
         /**
          * Overrides the returned value when it's checked
          */
@@ -55,19 +58,32 @@ export default {
             type: [String, Number, Boolean],
             default: false
         },
-        rootClass: [String, Function],
-        disabledClass: [String, Function],
-        checkClass: [String, Function],
-        checkCheckedClass: [String, Function],
-        checkIndeterminateClass: [String, Function],
-        labelClass: [String, Function],
-        sizeClass: [String, Function],
-        variantClass: [String, Function]
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        checkedClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkIndeterminateClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
+    },
+    watch: {
+        indeterminate: {
+            handler(val) {
+                this.isIndeterminate = val;
+            },
+            immediate: true,
+        },
     },
     computed: {
+        isChecked () {
+            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-chk'),
+                { [this.computedClass('checkedClass', 'o-chk--checked')] : this.isChecked },
                 { [this.computedClass('sizeClass', 'o-chk--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-chk--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-chk--', this.variant)]: this.variant }
@@ -76,8 +92,8 @@ export default {
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-chk__check'),
-                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.includes(this.nativeValue) },
-                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.$refs.input ? this.$refs.input.indeterminate : this.indeterminate },
+                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.isChecked },
+                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.isIndeterminate },
             ]
         },
         labelClasses() {

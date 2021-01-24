@@ -14,14 +14,14 @@
                         @click.native="childClick(childItem)"
                         :class="childItem.headerClasses"
                     />
-                    <button v-else @click="childClick(childItem)" :class="itemHeaderClasses(childItem)">
+                    <button v-else @click="childClick(childItem)" :class="childItem.headerClasses">
                         <o-icon
                             v-if="childItem.icon"
-                            :rootClass="itemHeaderIconClasses.join(' ')"
+                            :rootClass="childItem.headerIconClasses"
                             :icon="childItem.icon"
                             :pack="childItem.iconPack"
                             :size="size"/>
-                        <span :class="itemHeaderTextClasses">{{ childItem.label }}</span>
+                        <span :class="childItem.headerTextClasses">{{ childItem.label }}</span>
                     </button>
             </div>
         </nav>
@@ -70,41 +70,26 @@ export default {
         },
         /** Show tab items multiline when there is no space */
         multiline: Boolean,
-        rootClass: String,
-        positionWrapperClass: String,
-        expandedWrapperClass: String,
-        verticalWrapperClass: String,
-        multilineWrapperClass: String,
-        tabsClass: String,
-        sizeClass: String,
-        positionClass: String,
-        contentClass: String,
-        transitioningClass: String,
-        tabItemHeaderClass: String,
-        tabItemHeaderTypeClass: String,
-        tabItemHeaderIconClass: String,
-        tabItemHeaderTextClass: String,
-        tabItemHeaderActiveClass: String,
-        tabItemHeaderDisabledClass: String,
-        tabItemWrapperClass: String,
-    },
-    methods: {
-        itemHeaderClasses(childItem) {
-            return [
-                { [this.computedClass('tabItemHeaderActiveClass', 'o-tabs__nav-item-{*}--active', this.type)]: childItem.isActive },
-                { [this.computedClass('tabItemHeaderDisabledClass', 'o-tabs__nav-item-{*}--disabled', this.type)]: childItem.disabled },
-                { [this.computedClass('tabItemHeaderTypeClass', 'o-tabs__nav-item-', this.type)]: this.type },
-            ]
-        }
+        rootClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        verticalClass: [String, Function, Array],
+        multilineClass: [String, Function, Array],
+        navTabsClass: [String, Function, Array],
+        navSizeClass: [String, Function, Array],
+        navPositionClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        transitioningClass: [String, Function, Array],
+        tabItemWrapperClass: [String, Function, Array],
     },
     computed: {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-tabs'),
-                { [this.computedClass('positionWrapperClass', 'o-tabs--', this.position)]: this.position && this.vertical },
-                { [this.computedClass('expandedWrapperClass', 'o-tabs--fullwidth')]: this.expanded },
-                { [this.computedClass('verticalWrapperClass', 'o-tabs--vertical')]: this.vertical },
-                { [this.computedClass('multilineWrapperClass', 'o-tabs--multiline')]: this.multiline }
+                { [this.computedClass('positionClass', 'o-tabs--', this.position)]: this.position && this.vertical },
+                { [this.computedClass('expandedClass', 'o-tabs--fullwidth')]: this.expanded },
+                { [this.computedClass('verticalClass', 'o-tabs--vertical')]: this.vertical },
+                { [this.computedClass('multilineClass', 'o-tabs--multiline')]: this.multiline }
             ]
         },
         itemWrapperClasses() {
@@ -114,25 +99,15 @@ export default {
         },
         navClasses() {
             return [
-                this.computedClass('tabsClass', 'o-tabs__nav'),
-                { [this.computedClass('sizeClass', 'o-tabs__nav--', this.size)]: this.size },
-                { [this.computedClass('positionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
+                this.computedClass('navTabsClass', 'o-tabs__nav'),
+                { [this.computedClass('navSizeClass', 'o-tabs__nav--', this.size)]: this.size },
+                { [this.computedClass('navPositionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
             ]
         },
         contentClasses() {
             return [
                 this.computedClass('contentClass', 'o-tabs__content'),
                 { [this.computedClass('transitioningClass', 'o-tabs__content--transitioning')]: this.isTransitioning }
-            ]
-        },
-        itemHeaderIconClasses() {
-            return [
-                this.computedClass('tabItemHeaderIconClass', 'o-tabs__nav-item-icon')
-            ]
-        },
-        itemHeaderTextClasses() {
-            return [
-                this.computedClass('tabItemHeaderTextClass', 'o-tabs__nav-item-text')
             ]
         }
     }

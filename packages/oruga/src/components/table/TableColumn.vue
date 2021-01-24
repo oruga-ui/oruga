@@ -1,6 +1,9 @@
 <script>
 import { toCssDimension } from '../../utils/helpers'
 
+/**
+ * @displayName Table Column
+ */
 export default {
     name: 'OTableColumn',
     inject: ['$table'],
@@ -31,13 +34,20 @@ export default {
             type: Boolean,
             default: true
         },
-        subheading: [String, Number],
         customSort: Function,
         customSearch: Function,
         sticky: Boolean,
         headerSelectable: Boolean,
-        headerClass: String,
-        cellClass: String
+        /** Adds native attributes to th :th-attrs="(column)" => ({})" */
+        thAttrs: {
+            type: Function,
+            default: () => ({})
+        },
+        /** Adds native attributes to td :td-attrs="(row, column)" => ({})" */
+        tdAttrs: {
+            type: Function,
+            default: () => ({})
+        }
     },
     data() {
         return {
@@ -59,12 +69,6 @@ export default {
         hasHeaderSlot() {
             return this.$scopedSlots.header
         },
-        hasSubheadingSlot() {
-            return this.$scopedSlots.subheading
-        },
-        /**
-         * Return if column header is un-selectable
-         */
         isHeaderUnselectable() {
             return !this.headerSelectable && this.sortable
         }

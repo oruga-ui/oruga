@@ -22,7 +22,7 @@
     <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
-*Next*
+*Oruga Next version for Vue 3.x*
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
@@ -35,15 +35,29 @@
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
 * **Lightweight**: no other internal dependency and import only components that you need
 
+Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your custom style, Oruga is the library for you!
+
 ## Documentation
 
 Browse [online documentation here](https://oruga.io/).
 
-The documentation is in the docs directory, it serves as the demo as well.
+💅 For more info about components customization, go to the `Customization section` in the documentation.
+
+🕹 To see Oruga in action, go to the `Example section` in the documentation.
+
+Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
+
+## Browser support
+
+🌎 Oruga has been tested in all major browsers
+
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Quick start
 
-You need [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x**.
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** 
 
 ### 1 Install via npm
 
@@ -160,12 +174,6 @@ plugins: [{ src: '~plugins/oruga.js' }]
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
 
 Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui/demo-nuxtjs).
-
-## Browser support
-
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
---- | --- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Contributing
 

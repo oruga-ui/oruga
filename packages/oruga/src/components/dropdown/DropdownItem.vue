@@ -13,7 +13,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
- * @displayName DropdownItem
+ * @displayName Dropdown Item
  */
 export default {
     name: 'ODropdownItem',
@@ -47,9 +47,9 @@ export default {
             type: String,
             default: ''
         },
-        itemClass: [String, Function],
-        itemActiveClass: [String, Function],
-        itemDisabledClass: [String, Function],
+        itemClass: [String, Function, Array],
+        itemActiveClass: [String, Function, Array],
+        itemDisabledClass: [String, Function, Array],
     },
     computed: {
         parent() {

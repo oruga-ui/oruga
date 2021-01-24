@@ -18,7 +18,6 @@ $pagination-link-margin: .25rem !default;
 $pagination-link-min-width: 2.25em !default;
 $pagination-link-padding: .5em .5em !default;
 $pagination-margin: -.25rem !default;
-$pagination-mobile-breakpoint: 768px !default;
 $pagination-rounded-border-radius: $base-rounded-border-radius !default;
 /* @docs */
 
@@ -27,6 +26,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     display: flex;
     justify-content: center;
     text-align: center;
+    justify-content: space-between;
     @include avariable('font-size', 'pagination-font-size', $pagination-font-size);
     @include avariable('margin', 'pagination-margin', $pagination-margin);
     /* REMOVE ON LITE */
@@ -35,37 +35,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             @include avariable('font-size', ('pagination-font-size-' + #{$name}), $value);
         }
     }
-    /* --- */
-    @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
-        justify-content: space-between;
-    }
-    @media screen and (max-width: $pagination-mobile-breakpoint) {
-        flex-wrap: wrap;
-    }
-
     &__link {
-        justify-content: center;
-        text-align: center;
-        text-decoration: none;
-        @include avariable('margin', 'pagination-link-margin', $pagination-link-margin);
-
-        &--rounded {
-            @include avariable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
-        }
-
-        &--disabled {
-            pointer-events: none;
-            @include avariable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
-        }
-
-        cursor: pointer;
-        &--current {
-            pointer-events: none;
-            @include avariable('background-color', 'pagination-link-current-background-color', $pagination-link-current-background-color);
-            @include avariable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
-            @include avariable('color', 'pagination-link-current-color', $pagination-link-current-color);
-        }
-
         -moz-appearance: none;
         -webkit-appearance: none;
         align-items: center;
@@ -73,6 +43,10 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         display: inline-flex;
         position: relative;
         vertical-align: top;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
         @include unselectable;
         @include avariable('line-height', 'pagination-link-line-height', $pagination-link-line-height);
         @include avariable('border', 'pagination-link-border', $pagination-link-border);
@@ -82,15 +56,24 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         @include avariable('min-width', 'pagination-link-min-width', $pagination-link-min-width);
         @include avariable('height', 'pagination-link-height', $pagination-link-height);
         @include avariable('padding', 'pagination-link-padding', $pagination-link-padding);
+        @include avariable('margin', 'pagination-link-margin', $pagination-link-margin);
+        &--rounded {
+            @include avariable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
+        }
+        &--disabled {
+            pointer-events: none;
+            @include avariable('opacity', 'pagination-disabled-opacity', $pagination-disabled-opacity);
+        }
+        &--current {
+            pointer-events: none;
+            @include avariable('background-color', 'pagination-link-current-background-color', $pagination-link-current-background-color);
+            @include avariable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
+            @include avariable('color', 'pagination-link-current-color', $pagination-link-current-color);
+        }
         &:hover {
             text-decoration: none;
             @include avariable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
             @include avariable('color', 'pagination-link-hover-color', $pagination-link-hover-color);
-        }
-
-        @media screen and (max-width: $pagination-mobile-breakpoint) {
-            flex-grow: 1;
-            flex-shrink: 1;
         }
     }
 
@@ -100,10 +83,6 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         pointer-events: none;
         @include avariable('margin', 'pagination-link-margin', $pagination-link-margin);
         @include avariable('color', 'pagination-ellipsis-color', $pagination-ellipsis-color);
-        @media screen and (max-width: $pagination-mobile-breakpoint) {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
     }
 
     &--simple {
@@ -139,28 +118,12 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         }
         /* --- */
     }
-
-
     &__next {
-        @media screen and (max-width: $pagination-mobile-breakpoint) {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
-        @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
-            order: 3;
-        }
+        order: 3;
     }
-
     &__previous {
-        @media screen and (max-width: $pagination-mobile-breakpoint) {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
-        @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
-            order: 2;
-        }
+        order: 2;
     }
-
     &__list {
         align-items: center;
         display: flex;
@@ -170,13 +133,34 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         flex-wrap: wrap;
         margin: 0;
         padding: 0;
-
-        @media screen and (min-width: $pagination-mobile-breakpoint + 1) {
+        flex-grow: 1;
+        flex-shrink: 1;
+        justify-content: flex-start;
+        order: 1;
+    }
+    &--mobile {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        .o-pag__link {
             flex-grow: 1;
             flex-shrink: 1;
-            justify-content: flex-start;
-            order: 1;
+        }
+        .o-pag__previous {
+            flex-grow: 1;
+            flex-shrink: 1;
+            order: 0;
+        }
+        .o-pag__next {
+            flex-grow: 1;
+            flex-shrink: 1;
+            order: 0
+        }
+        .o-pag__ellipsis {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        .o-pag__list {
+            order: 0;
         }
     }
-
 }

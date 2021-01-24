@@ -395,20 +395,20 @@ exports[`ODatepicker render correctly 1`] = `
           cov_10fx0riw4s.f[13]++;
           const dateCreator =
           /* istanbul ignore next */
-          (cov_10fx0riw4s.s[56]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
+          (cov_10fx0riw4s.s[57]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
 
           /* istanbul ignore next */
-          cov_10fx0riw4s.s[57]++;
+          cov_10fx0riw4s.s[58]++;
 
           if (typeof dateCreator === 'function') {
             /* istanbul ignore next */
             cov_10fx0riw4s.b[22][0]++;
-            cov_10fx0riw4s.s[58]++;
+            cov_10fx0riw4s.s[59]++;
             return dateCreator();
           } else {
             /* istanbul ignore next */
             cov_10fx0riw4s.b[22][1]++;
-            cov_10fx0riw4s.s[59]++;
+            cov_10fx0riw4s.s[60]++;
             return new Date();
           }
         }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>

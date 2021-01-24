@@ -22,9 +22,7 @@
                             :size="size"/>
                         <span v-else-if="childItem.step">{{ childItem.step }}</span>
                     </div>
-                    <div :class="stepDetailsClasses">
-                        <span :class="stepTitleClasses">{{ childItem.label }}</span>
-                    </div>
+                    <div :class="stepLinkLabelClasses">{{ childItem.label }}</div>
                 </a>
             </div>
         </nav>
@@ -65,6 +63,8 @@ import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -82,7 +82,7 @@ export default {
         [Icon.name]: Icon
     },
     configField: 'steps',
-    mixins: [BaseComponentMixin, TabbedMixin('step')],
+    mixins: [BaseComponentMixin, MatchMediaMixin, TabbedMixin('step')],
     props: {
         /**
          * Icon pack to use for the navigation
@@ -111,6 +111,13 @@ export default {
             default: true
         },
         /**
+         * Step navigation is animated
+         */
+        animated: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * Position of the marker label, optional
          * @values bottom, right, left
          */
@@ -132,24 +139,26 @@ export default {
         },
         ariaNextLabel: String,
         ariaPreviousLabel: String,
-        rootClass: String,
-        sizeClass: String,
-        verticalClass: String,
-        positionClass: String,
-        stepsClass: String,
-        variantClass: String,
-        animatedClass: String,
-        stepMarkerRoundedClass: String,
-        stepDividerClass: String,
-        stepMarkerClass: String,
-        stepContentClass: String,
-        stepContentTransitioningClass: String,
-        stepNavigationClass: String,
-        stepDetailsClass: String,
-        stepTitleClass: String,
-        stepLinkClass: String,
-        stepLinkClickableClass: String,
-        stepLinkLabelPositionClass: String,
+        rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        verticalClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        stepsClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        animatedClass: [String, Function, Array],
+        stepMarkerRoundedClass: [String, Function, Array],
+        stepDividerClass: [String, Function, Array],
+        stepMarkerClass: [String, Function, Array],
+        stepContentClass: [String, Function, Array],
+        stepContentTransitioningClass: [String, Function, Array],
+        stepNavigationClass: [String, Function, Array],
+        stepDetailsClass: [String, Function, Array],
+        stepTitleClass: [String, Function, Array],
+        stepLinkClass: [String, Function, Array],
+        stepLinkClickableClass: [String, Function, Array],
+        stepLinkLabelClass: [String, Function, Array],
+        stepLinkLabelPositionClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     computed: {
         wrapperClasses() {
@@ -158,6 +167,7 @@ export default {
                 { [this.computedClass('sizeClass', 'o-steps--', this.size)]: this.size },
                 { [this.computedClass('verticalClass', 'o-steps__wrapper-vertical')]: this.vertical },
                 { [this.computedClass('positionClass', 'o-steps__wrapper-position-', this.position)]: this.position && this.vertical },
+                { [this.computedClass('mobileClass', 'o-steps--mobile')]: this.isMatchMedia },
             ]
         },
         mainClasses() {
@@ -189,14 +199,9 @@ export default {
                 this.computedClass('stepNavigationClass', 'o-steps__navigation')
             ]
         },
-        stepDetailsClasses() {
+        stepLinkLabelClasses() {
             return [
-                this.computedClass('stepDetailsClass', 'o-steps__details')
-            ]
-        },
-        stepTitleClasses() {
-            return [
-                this.computedClass('stepTitleClass', 'o-steps__title')
+                this.computedClass('stepLinkLabelClass', 'o-steps__title')
             ]
         },
 

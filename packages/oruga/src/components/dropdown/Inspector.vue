@@ -13,7 +13,7 @@
             </o-dropdown>
         </template>
     </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
+    <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             currentMenu: '',
+            subitem: 'dropdown-item',
             inspectData: [
                 {
                     class: "rootClass",
@@ -44,7 +45,6 @@ export default {
                 {
                     class: "menuClass",
                     description: "Class of the dropdown menu",
-                    warning: "Switch to mobile view to see it in action!",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -62,8 +62,6 @@ export default {
                 {
                     class: "menuActiveClass",
                     description: "Class of dropdown menu when active",
-                    warning: "Switch to mobile view to see it in action!",
-
                     properties: ['inline'],
                     action: () => {
                         setTimeout(() => {
@@ -74,7 +72,6 @@ export default {
                 {
                     class: "menuInlineClass",
                     description: "Class of dropdown menu when inline",
-                    warning: "Switch to mobile view to see it in action!",
                     properties: ['inline'],
                     action: (cmp) => {
                         cmp.data.inline = true;
@@ -83,7 +80,6 @@ export default {
                 {
                     class: "menuPositionClass",
                     description: "Class of dropdown menu position",
-                    warning: "Switch to mobile view to see it in action!",
                     properties: ['position'],
                     suffixes: ['top-right', 'top-left', 'bottom-left'],
                     action: (cmp) => {
@@ -94,8 +90,8 @@ export default {
                     }
                 },
                 {
-                    class: "menuMobileClass",
-                    description: "Class of dropdown menu when on mobile",
+                    class: "mobileClass",
+                    description: "Class of dropdown when on mobile",
                     warning: "Switch to mobile view to see it in action!",
                     action: () => {
                         setTimeout(() => {
@@ -114,7 +110,7 @@ export default {
                 {
                     class: "itemClass",
                     description: "Class of the dropdown item",
-                    properties: ['disabled'],
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -124,6 +120,7 @@ export default {
                 {
                     class: "itemActiveClass",
                     description: "Class of the dropdown item when active",
+                    subitem: true,
                     action: () => {
                         setTimeout(() => {
                             this.currentMenu = 'ac1'
@@ -133,7 +130,9 @@ export default {
                 },
                 {
                     class: "itemDisabledClass",
+                    subitem: true,
                     description: "Class of the dropdown item when disabled",
+                    properties: ['disabled'],
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()

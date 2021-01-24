@@ -26,7 +26,6 @@ $datepicker-item-hovered-color: $grey-lighter !default;
 $datepicker-item-hovered-background-color: #f5f5f5 !default;
 $datepicker-item-hovered-within-background-color: rgba($datepicker-item-hovered-background-color, 0.5) !default;
 $datepicker-item-nearby-color: $grey-light !default;
-$datepicker-mobile-breakpoint: 1024px !default;
 $datepicker-events-item-padding: .3rem .75rem .75rem !default;
 $datepicker-event-background-color: $grey-light !default;
 $datepicker-event-dots-size: .35em !default;
@@ -105,33 +104,15 @@ $datepicker-btn-padding: .5em .5em !default;
                 @include avariable('border-color', 'datepicker-btn-hover-border-color', $datepicker-btn-hover-border-color);
                 @include avariable('color', 'datepicker-btn-hover-color', $datepicker-btn-hover-color);
             }
-            @media screen and (max-width: $datepicker-mobile-breakpoint) {
-                flex-grow: 1;
-                flex-shrink: 1;
-            }
         }
         &__previous {
-            order: 1;
-            @media screen and (max-width: $datepicker-mobile-breakpoint) {
-                flex-grow: 1;
-                flex-shrink: 1;
-            }
-            @media screen and (min-width: $datepicker-mobile-breakpoint + 1) {
-                order: 2;
-            }
+            order: 2;
         }
         &__next {
             order: 3;
-            @media screen and (max-width: $datepicker-mobile-breakpoint) {
-                flex-grow: 1;
-                flex-shrink: 1;
-            }
-            @media screen and (min-width: $datepicker-mobile-breakpoint + 1) {
-                order: 3;
-            }
         }
         &__list {
-            order: 2;
+            order: 1;
             align-items: center;
             display: flex;
             justify-content: center;
@@ -140,12 +121,6 @@ $datepicker-btn-padding: .5em .5em !default;
             flex-wrap: wrap;
             margin: 0;
             padding: 0;
-            @media screen and (min-width: $datepicker-mobile-breakpoint + 1) {
-                flex-grow: 1;
-                flex-shrink: 1;
-                justify-content: flex-start;
-                order: 1;
-            }
         }
     }
     &__footer {
@@ -262,6 +237,27 @@ $datepicker-btn-padding: .5em .5em !default;
                 @include avariable('height', 'datepicker-event-bars-height', $datepicker-event-bars-height);
                 width: 100%;
             }
+        }
+    }
+    &--mobile {
+        .o-dpck__header__previous, .o-dpck__header__previous {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        .o-dpck__header__previous {
+            order: 1;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        .o-dpck__header__next {
+            order: 3;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        .o-dpck__header__list {
+            order: 2;
+            flex-grow: 1;
+            flex-shrink: 1;
         }
     }
     .o-drop {

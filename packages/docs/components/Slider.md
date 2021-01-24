@@ -180,7 +180,7 @@ title: Slider
                 </o-slider>
             </template>
         </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
+        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
         <br/>
     </div>
 </template>
@@ -189,6 +189,7 @@ title: Slider
 export default {
     data() {
         return {
+            subitem: "slider-tick",
             inspectData: [
                 {
                     class: "rootClass",
@@ -256,17 +257,20 @@ export default {
                 {
                     class: "tickClass",
                     description: "Class of slider tick",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 },
                 {
                     class: "tickHiddenClass",
                     description: "Class when slider tick is hidden",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 },
                 {
                     class: "tickLabelClass",
                     description: "Class of tick label",
-                    properties: ["ticks"]
+                    properties: ["ticks"],
+                    subitem: true,
                 }
             ]
         };
@@ -279,28 +283,28 @@ export default {
 
 ## Props
 
-| Prop name         | Description                                      | Type          | Values                                                                          | Default                                             |
-| ----------------- | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
-| ariaLabel         |                                                  | string\|array | -                                                                               |                                                     |
-| biggerSliderFocus | Increases slider size on focus                   | boolean       | -                                                                               | false                                               |
-| customFormatter   | Function to format the tooltip label for display | func          | -                                                                               |                                                     |
-| disabled          |                                                  | boolean       | -                                                                               | false                                               |
-| format            |                                                  | string        | -                                                                               | 'raw'                                               |
-| indicator         |                                                  | boolean       | -                                                                               | false                                               |
-| lazy              | Update v-model only when dragging is finished    | boolean       | -                                                                               | false                                               |
-| locale            |                                                  | string\|array | -                                                                               | Config -> <code> 'locale':undefined</code>          |
-| max               | Maximum value                                    | number        | -                                                                               | 100                                                 |
-| min               | Minimum value                                    | number        | -                                                                               | 0                                                   |
-| override          |                                                  | boolean       | -                                                                               |                                                     |
-| rounded           | Rounded thumb                                    | boolean       | -                                                                               | Config -> <code> 'slider.rounded': false</code>     |
-| size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                     |
-| step              | Step interval of ticks                           | number        | -                                                                               | 1                                                   |
-| ticks             | Show tick marks                                  | boolean       | -                                                                               | false                                               |
-| tooltip           | Show tooltip when thumb is being dragged         | boolean       | -                                                                               | true                                                |
-| tooltipAlways     | Tooltip displays always                          | boolean       | -                                                                               | false                                               |
-| tooltipVariant    | Color of the tooltip                             | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                     |
-| v-model           |                                                  | number\|array | -                                                                               | 0                                                   |
-| variant           | Color of the slider                              | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | Config -> <code> 'slider.variant': 'primary'</code> |
+| Prop name         | Description                                      | Type          | Values                                                                          | Default                                                                                                                                 |
+| ----------------- | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaLabel         |                                                  | string\|array | -                                                                               |                                                                                                                                         |
+| biggerSliderFocus | Increases slider size on focus                   | boolean       | -                                                                               | false                                                                                                                                   |
+| customFormatter   | Function to format the tooltip label for display | func          | -                                                                               |                                                                                                                                         |
+| disabled          |                                                  | boolean       | -                                                                               | false                                                                                                                                   |
+| format            |                                                  | string        | -                                                                               | 'raw'                                                                                                                                   |
+| indicator         |                                                  | boolean       | -                                                                               | false                                                                                                                                   |
+| lazy              | Update v-model only when dragging is finished    | boolean       | -                                                                               | false                                                                                                                                   |
+| locale            |                                                  | string\|array | -                                                                               | () => {<br> return getValueByPath(config, 'locale')<br>}                                                                                |
+| max               | Maximum value                                    | number        | -                                                                               | 100                                                                                                                                     |
+| min               | Minimum value                                    | number        | -                                                                               | 0                                                                                                                                       |
+| override          |                                                  | boolean       | -                                                                               |                                                                                                                                         |
+| rounded           | Rounded thumb                                    | boolean       | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> slider {<br>&nbsp;&nbsp;rounded: false<br>}</code>     |
+| size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                                                                                                         |
+| step              | Step interval of ticks                           | number        | -                                                                               | 1                                                                                                                                       |
+| ticks             | Show tick marks                                  | boolean       | -                                                                               | false                                                                                                                                   |
+| tooltip           | Show tooltip when thumb is being dragged         | boolean       | -                                                                               | true                                                                                                                                    |
+| tooltipAlways     | Tooltip displays always                          | boolean       | -                                                                               | false                                                                                                                                   |
+| tooltipVariant    | Color of the tooltip                             | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                         |
+| v-model           |                                                  | number\|array | -                                                                               | 0                                                                                                                                       |
+| variant           | Color of the slider                              | string        | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> slider {<br>&nbsp;&nbsp;variant: 'primary'<br>}</code> |
 
 ### Events
 
@@ -317,7 +321,7 @@ export default {
 
 ---
 
-# SliderTick
+# Slider Tick
 
 ## Props
 

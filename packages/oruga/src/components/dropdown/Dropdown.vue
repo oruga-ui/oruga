@@ -44,6 +44,8 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
@@ -61,7 +63,7 @@ export default {
         trapFocus
     },
     configField: 'dropdown',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $dropdown: this
@@ -187,16 +189,16 @@ export default {
          */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: [String, Function],
-        triggerClass: [String, Function],
-        inlineClass: [String, Function],
-        menuMobileOverlayClass: [String, Function],
-        menuClass: [String, Function],
-        menuPositionClass: [String, Function],
-        menuActiveClass: [String, Function],
-        menuMobileClass: [String, Function],
-        disabledClass: [String, Function],
-        expandedClass: [String, Function]
+        rootClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        inlineClass: [String, Function, Array],
+        menuMobileOverlayClass: [String, Function, Array],
+        menuClass: [String, Function, Array],
+        menuPositionClass: [String, Function, Array],
+        menuActiveClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        expandedClass: [String, Function, Array]
     },
     data() {
         return {
@@ -212,7 +214,8 @@ export default {
                 this.computedClass('rootClass', 'o-drop'),
                 { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
                 { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
-                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline }
+                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
+                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.isMatchMedia },
             ]
         },
         triggerClasses() {
@@ -229,8 +232,7 @@ export default {
             return [
                 this.computedClass('menuClass', 'o-drop__menu'),
                 { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
-                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) },
-                { [this.computedClass('menuMobileClass', 'o-drop__menu--mobile')]: this.isMobileModal },
+                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) }
             ]
         },
         isMobileModal() {

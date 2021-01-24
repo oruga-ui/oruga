@@ -1,8 +1,10 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
-import { getStyleValue } from '../../utils/helpers'
 
+/**
+ * @displayName Step Item
+ */
 export default {
     name: 'OStepItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('step')],
@@ -17,10 +19,10 @@ export default {
             type: Boolean,
             default: undefined
         },
-        itemClass: String,
-        variantClass: String,
-        itemActiveClass: String,
-        itemPreviousClass: String
+        itemClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemHeaderActiveClass: [String, Function, Array],
+        itemHeaderPreviousClass: [String, Function, Array]
     },
     computed: {
         elementClasses() {
@@ -31,10 +33,9 @@ export default {
         itemClasses() {
             return [
                 this.headerClass,
-                this.computedClass('itemClass', 'o-steps__nav-item'),
-                { [this.computedClass('variantClass', 'o-steps__nav-item--', getStyleValue(this.variant) || this.parent.$props.variant)]: getStyleValue(this.variant) || this.parent.$props.variant },
-                { [this.computedClass('itemActiveClass', 'o-steps__nav-item-active')]: this.isActive },
-                { [this.computedClass('itemPreviousClass', 'o-steps__nav-item-previous')]: this.parent.activeItem.index > this.index }
+                this.computedClass('itemHeaderClass', 'o-steps__nav-item'),
+                { [this.computedClass('itemHeaderActiveClass', 'o-steps__nav-item-active')]: this.isActive },
+                { [this.computedClass('itemHeaderPreviousClass', 'o-steps__nav-item-previous')]: this.parent.activeItem.index > this.index }
             ]
         }
     }

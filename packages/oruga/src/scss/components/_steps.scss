@@ -12,7 +12,6 @@ $steps-previous-color: $primary !default;
 $steps-active-color: $primary !default;
 $steps-divider-height: .2em !default;
 $steps-vertical-padding: 1em 0 !default;
-$steps-mobile-max-width: 769px !default;
 $steps-item-line-height: $base-line-height !default;
 $steps-link-color: hsl(0, 0%, 29%) !default;
 $steps-content-padding: 1rem !default;
@@ -33,9 +32,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     .o-steps__divider {
         @include avariable('height', 'steps-divider-height', $steps-divider-height);
         @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-        @media screen and (max-width: $steps-mobile-max-width - 1px) {
-            @include avariable('top', if($name != null, ('size-' + #{$name}), 'steps-size'), $size);
-        }
     }
 
     .o-steps__marker {
@@ -52,6 +48,10 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     .o-steps__title {
+        @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
+        text-align: center;
+        z-index: 1;
+        @include avariable('padding', 'steps-details-padding', $steps-details-padding);
         @include evariable(
             'font-size', $MULTIPLY_EXPRESSION,
             eparam('$param', variable(if($name != null, ('size-' + #{$name}), 'steps-size'), $size)),
@@ -242,9 +242,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
         text-align: center;
         z-index: 1;
-        @media screen and (min-width: $steps-mobile-max-width - 1px) {
-            @include avariable('padding', 'steps-details-padding', $steps-details-padding);
-        }
+        @include avariable('padding', 'steps-details-padding', $steps-details-padding);
     }
 
     &__nav-item-active {
@@ -341,10 +339,24 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
     }
 
-}
-
-@media screen and (max-width: $steps-mobile-max-width - 1px) {
-    .o-steps__title {
-        display: none;
+    &--mobile {
+        .o-steps__title {
+            display: none;
+            padding: 0;
+        }
+        .o-steps__divider {
+            @include avariable('height', 'steps-divider-height', $steps-divider-height);
+            @include avariable('top', 'steps-size', $base-font-size);
+            @each $name, $value in $sizes {
+                .o-steps--#{$name} {
+                    @include avariable('top', 'size-' + #{$name}, $value);
+                }
+            }
+        }
+        .o-steps__details {
+            padding: 0;
+        }
     }
 }
+
+
