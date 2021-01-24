@@ -61,6 +61,7 @@ export default {
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],
+        checkedClass: [String, Function, Array],
         checkCheckedClass: [String, Function, Array],
         checkIndeterminateClass: [String, Function, Array],
         labelClass: [String, Function, Array],
@@ -82,6 +83,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-chk'),
+                { [this.computedClass('checkedClass', 'o-chk--checked')] : this.isChecked },
                 { [this.computedClass('sizeClass', 'o-chk--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-chk--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-chk--', this.variant)]: this.variant }
