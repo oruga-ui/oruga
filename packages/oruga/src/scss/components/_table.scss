@@ -55,6 +55,13 @@ $table-th-padding: 0.5em 0.75em !default;
         &--sticky-header {
             @include avariable('height', 'table-sticky-header-height', $table-sticky-header-height);
             overflow-y: auto;
+            th {
+                position: -webkit-sticky;
+                position: sticky;
+                left: 0;
+                top: 0;
+                @include avariable('background', 'table-background-color', $table-background-color);
+            }
         }
         &--scrollable {
             -webkit-overflow-scrolling: touch;

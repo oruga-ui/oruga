@@ -856,7 +856,7 @@ export default {
         },
         thStickyClasses(column) {
             return [
-                { [this.computedClass('thStickyClass', 'o-table__th--sticky')]: column.sticky || this.stickyHeader }
+                { [this.computedClass('thStickyClass', 'o-table__th--sticky')]: column.sticky }
             ]
         },
         rowClasses(row, index) {
