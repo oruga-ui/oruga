@@ -1,8 +1,8 @@
 <script>
 import { defineComponent } from 'vue'
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
-import TabbedChildMixin from '../../utils/TabbedChildMixin.js'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import TabbedChildMixin from '../../utils/TabbedChildMixin'
 
 /**
  * @displayName Step Item

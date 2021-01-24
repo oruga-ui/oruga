@@ -1,18 +1,18 @@
 import { App, Plugin } from 'vue'
 
 import Tabs from './Tabs.vue'
-import TabsItem from './TabsItem.vue'
+import TabItem from './TabItem.vue'
 
 import { registerComponent } from '../../utils/plugins'
 
 export default {
     install(app: App) {
         registerComponent(app, Tabs)
-        registerComponent(app, TabsItem)
+        registerComponent(app, TabItem)
     }
 } as Plugin
 
 export {
     Tabs as OTabs,
-    TabsItem as OTabsItem
+    TabItem as OTabItem
 }
