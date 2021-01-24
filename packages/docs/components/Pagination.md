@@ -365,7 +365,6 @@ export default {
 
 | Event name     | Properties | Description |
 | -------------- | ---------- | ----------- |
-| update:active  |            |
 | change         |            |
 | update:current |            |
 
