@@ -85,7 +85,7 @@ export default defineComponent({
     emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
-        value: [Number, String],
+        modelValue: [Number, String],
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -138,7 +138,7 @@ export default defineComponent({
     },
     data() {
         return {
-            newValue: this.value,
+            newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
             newAutocomplete: (this as any).autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
@@ -249,7 +249,7 @@ export default defineComponent({
         * When v-model is changed:
         *   1. Set internal value.
         */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
         }
     },

@@ -49,7 +49,7 @@ export default {
             default: 0
         },
         variant: {
-            variant: String,
+            type: String,
             default: ''
         },
         tooltip: {

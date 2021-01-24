@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OSidebar open render correctly 1`] = `
+<div class="o-side">
+    <!---->
+    <transition-stub name="slide-next">
+        <div class="o-side__content o-side__content--fixed" style=""></div>
+    </transition-stub>
+</div>
+`;
+
+exports[`OSidebar render correctly 1`] = `
+<div class="o-side">
+    <!---->
+    <transition-stub name="slide-prev">
+        <div class="o-side__content o-side__content--fixed" style="display: none;"></div>
+    </transition-stub>
+</div>
+`;

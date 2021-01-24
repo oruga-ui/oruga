@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OSteps render correctly 1`] = `
+<div class="o-steps__wrapper">
+    <nav class="o-steps o-steps--animated">
+        <div class="o-steps__nav-item o-steps__nav-item-active">
+            <!----> <a class="o-steps__link o-steps__link-label-bottom">
+                <div class="o-steps__marker o-steps__marker--rounded">
+                    <!---->
+                </div>
+                <div class="o-steps__title"></div>
+            </a>
+        </div>
+        <div class="o-steps__nav-item" style="display: none;"><span class="o-steps__divider"></span> <a class="o-steps__link o-steps__link-label-bottom">
+                <div class="o-steps__marker o-steps__marker--rounded">
+                    <!---->
+                </div>
+                <div class="o-steps__title"></div>
+            </a></div>
+        <div class="o-steps__nav-item"><span class="o-steps__divider"></span> <a class="o-steps__link o-steps__link-label-bottom">
+                <div class="o-steps__marker o-steps__marker--rounded">
+                    <!---->
+                </div>
+                <div class="o-steps__title"></div>
+            </a></div>
+    </nav>
+    <section class="o-steps__content o-steps__content-transitioning">
+        <div class="o-steps__item v-enter v-enter-active" style=""></div>
+        <div class="o-steps__item" style="display: none;"></div>
+        <div class="o-steps__item" style="display: none;"></div>
+    </section>
+    <nav class="o-steps__navigation"><button type="button" role="button" class="o-btn o-btn--disabled"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon" style="transform: rotate(0deg);"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+            <!---->
+            <!----></span>
+        </button> <button type="button" role="button" class="o-btn"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon" style="transform: rotate(0deg);"><i class="mdi mdi-chevron-right mdi-24px"></i></span>
+            <!---->
+            <!----></span>
+        </button></nav>
+</div>
+`;

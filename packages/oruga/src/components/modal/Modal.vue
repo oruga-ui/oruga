@@ -176,7 +176,7 @@ export default {
             isActive: this.active || false,
             savedScrollTop: null,
             newWidth: toCssDimension(this.width),
-            animating: true,
+            animating: !this.active,
             destroyed: !this.active
         }
     },

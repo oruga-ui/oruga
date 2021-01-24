@@ -321,7 +321,7 @@ export default defineComponent({
          *   1. Update internal value.
          *   2. If it's invalid, validate again.
          */
-        value(value) {
+        modelValue(value) {
             this.newValue = value
         },
 
