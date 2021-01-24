@@ -35,20 +35,20 @@ describe('OTabs', () => {
             position: 'centered'
         })
         await wrapper.vm.$nextTick()
-        expect(wrapper.vm.rootClasses[2]['o-tabs-wrapper-fullwidth']).toBeFalsy()
-        expect(wrapper.vm.rootClasses[3]['o-tabs-wrapper-vertical']).toBeFalsy()
+        expect(wrapper.vm.rootClasses[2]['o-tabs--fullwidth']).toBeFalsy()
+        expect(wrapper.vm.rootClasses[3]['o-tabs--vertical']).toBeFalsy()
 
         wrapper.setProps({expanded: true})
         await wrapper.vm.$nextTick()
-        expect(wrapper.vm.rootClasses[2]['o-tabs-wrapper-fullwidth']).toBeTruthy()
+        expect(wrapper.vm.rootClasses[2]['o-tabs--fullwidth']).toBeTruthy()
 
         wrapper.setProps({vertical: true})
         await wrapper.vm.$nextTick()
-        expect(wrapper.vm.rootClasses[3]['o-tabs-wrapper-vertical']).toBeTruthy()
+        expect(wrapper.vm.rootClasses[3]['o-tabs--vertical']).toBeTruthy()
 
         wrapper.setProps({position: 'right'})
         await wrapper.vm.$nextTick()
-        expect(wrapper.vm.rootClasses[1]['o-tabs-wrapper-position-centered']).toBeFalsy()
+        expect(wrapper.vm.rootClasses[1]['o-tabs--centered']).toBeFalsy()
     })
 
     /*

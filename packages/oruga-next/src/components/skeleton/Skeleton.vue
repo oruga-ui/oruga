@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, VNode } from 'vue'
+import { defineComponent, h } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { toCssDimension } from '../../utils/helpers'
@@ -13,6 +13,7 @@ import { toCssDimension } from '../../utils/helpers'
 export default defineComponent({
     name: 'OSkeleton',
     mixins: [BaseComponentMixin],
+    configField: 'skeleton',
     props: {
         /** Show or hide loader	 */
         active: {
@@ -46,10 +47,10 @@ export default defineComponent({
          */
         position: {
             type: String,
-            default: '',
-            validator: (value: string) => {
+            default: 'left',
+            validator(value: string) {
                 return [
-                    '',
+                    'left',
                     'centered',
                     'right'
                 ].indexOf(value) > -1
@@ -60,25 +61,26 @@ export default defineComponent({
          * @values small, medium, large
          */
         size: String,
-        rootClass: String,
-        animationClass: String,
-        positionClass: String,
-        itemClass: String,
-        itemRoundedClass: String,
-        sizeClass: String
+        rootClass: [String, Function, Array],
+        animationClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        itemClass: [String, Function, Array],
+        itemRoundedClass: [String, Function, Array],
+        sizeClass: [String, Function, Array]
     },
     render() {
         if (!this.active) return
-        const items: VNode[] = []
+        const items = []
         const width = this.width
         const height = this.height
         for (let i = 0; i < this.count; i++) {
-            items.push(h(
-                'div', 
+            items.push(h('div',
                 {
                     class: [
-                        this.computedClass('skeleton', 'itemClass', 'o-skeleton-item'), 
-                        { [this.computedClass('skeleton', 'itemRoundedClass', 'o-skeleton-item-rounded')]: this.rounded }
+                      this.computedClass('itemClass', 'o-sklt__item'),
+                      { [this.computedClass('itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
+                      { [this.computedClass('animationClass', 'o-sklt__item--animated')]: this.animated },
+                      { [this.computedClass('sizeClass', 'o-sklt__item--', this.size)]: this.size },
                     ],
                     key: i,
                     style: {
@@ -89,14 +91,11 @@ export default defineComponent({
                 }
             ))
         }
-        return h(
-            'div',
+        return h('div',
             {
                 class: [
-                    this.computedClass('skeleton', 'rootClass', 'o-skeleton'),
-                    { [`${this.computedClass('skeleton', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                    { [`${this.computedClass('skeleton', 'positionClass', 'o-skeleton-', true)}${this.position}`]: this.position },
-                    { [this.computedClass('skeleton', 'animationClass', 'o-skeleton-animated')]: this.animated }
+                    this.computedClass('rootClass', 'o-sklt'),
+                    { [this.computedClass('positionClass', 'o-sklt--', this.position)]: this.position }
                 ]
             },
             items

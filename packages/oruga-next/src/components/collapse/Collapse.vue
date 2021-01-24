@@ -9,16 +9,21 @@ import { getValueByPath } from '../../utils/helpers'
  * An easy way to toggle what you want
  * @displayName Collapse
  * @example ./examples/Collapse.md
+ * @style _collapse.scss
  */
 export default defineComponent({
     name: 'OCollapse',
     mixins: [BaseComponentMixin],
+    configField: 'collapse',
     emits: ['update:open', 'open', 'close'],
     props: {
         /**
          * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
          */
-        open: Boolean,
+        open: {
+            type: Boolean,
+            default: true
+        },
         /**
          * Custom animation (transition name)
          */
@@ -46,9 +51,9 @@ export default defineComponent({
                 ].indexOf(value) > -1
             }
         },
-        rootClass: String,
-        triggerClass: String,
-        contentClass: String
+        rootClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        contentClass: [String, Function, Array]
     },
     data() {
         return {
@@ -72,21 +77,21 @@ export default defineComponent({
     },
     render() {
         const trigger = h('div', {
-            class: this.computedClass('collapse', 'triggerClass', 'o-collapse-trigger'),
+            class: this.computedClass('triggerClass', 'o-clps__trigger'),
             onClick: { click: this.toggle }
         }, this.$slots.trigger({ open: this.isOpen }) )
         const content = h(Transition, { name: this.animation }, [
             withDirectives(
                 h('div', {
-                    class: this.computedClass('collapse', 'contentClass', 'o-collapse-content'),
-                    'id': this.ariaId, 
+                    class: this.computedClass('contentClass', 'o-clps__content'),
+                    'id': this.ariaId,
                     'aria-expanded': this.isOpen
-                }, this.$slots.default()), 
+                }, this.$slots.default()),
                 [ [vShow, this.isOpen] ]
             )
         ])
         return h('div',
-            { staticClass: this.computedClass('collapse', 'rootClass', 'o-collapse') },
+            { class: this.computedClass('rootClass', 'o-clps') },
             this.position === 'top' ? [trigger, content] : [content, trigger])
     }
 })

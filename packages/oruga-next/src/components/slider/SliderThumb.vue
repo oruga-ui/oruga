@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="$slider.thumbWrapperClasses(dragging)"
+        :class="$slider.thumbWrapperClasses"
         :style="wrapperStyle">
         <o-tooltip
             :label="formattedValue"
@@ -8,9 +8,9 @@
             :always="dragging || isFocused || tooltipAlways"
             :active="!disabled && tooltip">
             <div
+                v-bind="$attrs"
                 :class="$slider.thumbClasses"
                 :tabindex="disabled ? false : 0"
-                v-bind="$attrs"
                 @mousedown="onButtonDown"
                 @touchstart="onButtonDown"
                 @focus="onFocus"
@@ -40,16 +40,17 @@ export default defineComponent({
     components: {
         [Tooltip.name]: Tooltip
     },
+    configField: 'slider',
     inheritAttrs: false,
     inject: ['$slider'],
     emits: ['update:modelValue', 'dragstart', 'dragend'],
     props: {
-        modelValue:  {
+        modelValue: {
             type: Number,
             default: 0
         },
         variant: {
-            variant: String,
+            type: String,
             default: ''
         },
         tooltip: {
@@ -109,7 +110,7 @@ export default defineComponent({
             return this.$parent.precision
         },
         currentPosition() {
-            return `${(this.getModel() - this.min) / (this.max - this.min) * 100}%`
+            return `${(this.value - this.min) / (this.max - this.min) * 100}%`
         },
         wrapperStyle() {
             return { left: this.currentPosition }
@@ -149,27 +150,27 @@ export default defineComponent({
             }
         },
         onLeftKeyDown() {
-            if (this.disabled || this.getModel() === this.min) return
+            if (this.disabled || this.value === this.min) return
             this.newPosition = parseFloat(this.currentPosition) -
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onRightKeyDown() {
-            if (this.disabled || this.getModel() === this.max) return
+            if (this.disabled || this.value === this.max) return
             this.newPosition = parseFloat(this.currentPosition) +
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onHomeKeyDown() {
-            if (this.disabled || this.getModel() === this.min) return
+            if (this.disabled || this.value === this.min) return
             this.newPosition = 0
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onEndKeyDown() {
-            if (this.disabled || this.getModel() === this.max) return
+            if (this.disabled || this.value === this.max) return
             this.newPosition = 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
@@ -197,7 +198,7 @@ export default defineComponent({
         onDragEnd() {
             this.dragging = false
             this.$emit('dragend')
-            if (this.getModel() !== this.oldValue) {
+            if (this.value !== this.oldValue) {
                 this.$parent.emitValue('change')
             }
             this.setPosition(this.newPosition)

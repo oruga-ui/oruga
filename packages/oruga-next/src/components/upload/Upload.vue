@@ -7,6 +7,8 @@
         <div
             v-else
             :class="draggableClasses"
+            @mouseenter="updateDragDropFocus(true)"
+            @mouseleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
@@ -25,7 +27,7 @@
     </label>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -41,6 +43,7 @@ import { File } from '../../utils/ssr'
 export default defineComponent({
     name: 'OUpload',
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'upload',
     inheritAttrs: false,
     provide() {
         return {
@@ -64,8 +67,7 @@ export default defineComponent({
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: {
-            type: String,
-            default: 'primary'
+            type: String
         },
         /** Replace last chosen files every time (like native file input element) */
         native: {
@@ -77,12 +79,12 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
-        rootClass: String,
-        draggableClass: String,
-        variantClass: String,
-        expandedClass: String,
-        disabledClass: String,
-        hoveredClass: String
+        rootClass: [String, Function, Array],
+        draggableClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        hoveredClass: [String, Function, Array]
     },
     data() {
         return {
@@ -93,17 +95,16 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('upload', 'rootClass', 'o-upload'),
-                { [this.computedClass('upload', 'expandedClass', 'o-upload-expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-upl'),
+                { [this.computedClass('expandedClass', 'o-upl--expanded')]: this.expanded },
+                { [this.computedClass('disabledClass', 'o-upl--disabled')]: this.disabled }
             ]
         },
         draggableClasses() {
             return [
-                this.computedClass('upload', 'draggableClass', 'o-upload-draggable'),
-                { [`${this.computedClass('upload', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('upload', 'expandedClass', 'o-upload-expanded')]: this.expanded },
-                { [this.computedClass('upload', 'hoveredClass', 'o-upload-hovered')]: this.dragDropFocus },
-                { [this.computedClass('upload', 'disabledClass', 'o-upload-disabled')]: this.disabled }
+                this.computedClass('draggableClass', 'o-upl__draggable'),
+                { [this.computedClass('hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
+                { [this.computedClass('variantClass', 'o-upl__draggable--hovered-', this.variant)]: this.variant && this.dragDropFocus },
             ]
         }
     },
@@ -111,7 +112,7 @@ export default defineComponent({
         /**
          *   When v-model is changed:
          *   1. Set internal value.
-         *   2. Reset internal input file value
+         *   2. Reset interna input file value
          *   3. If it's invalid, validate again.
          */
         modelValue(value) {
@@ -120,7 +121,7 @@ export default defineComponent({
                 this.$refs.input.value = null
             }
             !this.isValid && !this.dragDrop && this.checkHtml5Validity()
-        }
+        },
     },
     methods: {
         /**
@@ -167,7 +168,7 @@ export default defineComponent({
         * Listen drag-drop to update internal variable
         */
         updateDragDropFocus(focus) {
-            if (!this.disabled && !this.loading) {
+            if (!this.disabled) {
                 this.dragDropFocus = focus
             }
         },

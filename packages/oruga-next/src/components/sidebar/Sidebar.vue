@@ -1,7 +1,7 @@
 <template>
     <div :class="rootClasses">
         <div
-            :class="backgroundClasses"
+            :class="overlayClasses"
             v-if="overlay && isOpen"
         />
         <transition
@@ -19,11 +19,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { removeElement, getValueByPath } from '../../utils/helpers'
+import { defineComponent } from 'vue'
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -33,7 +34,8 @@ import { removeElement, getValueByPath } from '../../utils/helpers'
  */
 export default defineComponent({
     name: 'OSidebar',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
+    configField: 'sidebar',
     emits: ['update:open', 'close'],
     props: {
         /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
@@ -43,6 +45,7 @@ export default defineComponent({
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: [String, Object],
+        /** Show an overlay like modal */
         overlay: Boolean,
         /**
          * Skeleton position in relation to the window
@@ -67,7 +70,7 @@ export default defineComponent({
         right: Boolean,
         /**
          * Custom layout on mobile
-         * @values fullwidth, reduce, hidden
+         * @values fullwidth, reduced, hidden
          */
         mobile: {
             type: String,
@@ -75,7 +78,7 @@ export default defineComponent({
                 return [
                     '',
                     'fullwidth',
-                    'reduce',
+                    'reduced',
                     'hidden'
                 ].indexOf(value) >= 0
             }
@@ -113,22 +116,23 @@ export default defineComponent({
                 ].indexOf(value) >= 0
             }
         },
-        rootClass: String,
-        backgroundClass: String,
-        contentClass: String,
-        fixedClass: String,
-        staticClass: String,
-        absoluteClass: String,
-        fullheightClass: String,
-        fullwidthClass: String,
-        rightClass: String,
-        reduceClass: String,
-        expandOnHoverClass: String,
-        expandOnHoverFixedClass: String,
-        mobileReduceClass: String,
-        mobileHideClass: String,
-        mobileFullwidthClass: String,
-        variantClass: String
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        fixedClass: [String, Function, Array],
+        staticClass: [String, Function, Array],
+        absoluteClass: [String, Function, Array],
+        fullheightClass: [String, Function, Array],
+        fullwidthClass: [String, Function, Array],
+        rightClass: [String, Function, Array],
+        reduceClass: [String, Function, Array],
+        expandOnHoverClass: [String, Function, Array],
+        expandOnHoverFixedClass: [String, Function, Array],
+        mobileReduceClass: [String, Function, Array],
+        mobileHideClass: [String, Function, Array],
+        mobileFullwidthClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {
@@ -141,30 +145,31 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('sidebar', 'rootClass', 'o-sidebar')
+                this.computedClass('rootClass', 'o-side'),
+                { [this.computedClass('mobileClass', 'o-side--mobile')]: this.isMatchMedia },
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('sidebar', 'backgroundClass', 'o-sidebar-background')
+                this.computedClass('overlayClass', 'o-side__overlay')
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('sidebar', 'contentClass', 'o-sidebar-content'),
-                { [`${this.computedClass('sidebar', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [this.computedClass('sidebar', 'fixedClass', 'o-sidebar-fixed')]: this.isFixed },
-                { [this.computedClass('sidebar', 'staticClass', 'o-sidebar-static')]: this.isStatic },
-                { [this.computedClass('sidebar', 'absoluteClass', 'o-sidebar-absolute')]: this.isAbsolute },
-                { [this.computedClass('sidebar', 'fullheightClass', 'o-sidebar-fullheight')]: this.fullheight },
-                { [this.computedClass('sidebar', 'fullwidthClass', 'o-sidebar-fullwidth')]: this.fullwidth },
-                { [this.computedClass('sidebar', 'rightClass', 'o-sidebar-right')]: this.right },
-                { [this.computedClass('sidebar', 'reduceClass', 'o-sidebar-mini')]: this.reduce },
-                { [this.computedClass('sidebar', 'expandOnHoverClass', 'o-sidebar-mini-expand')]: this.expandOnHover },
-                { [this.computedClass('sidebar', 'expandOnHoverFixedClass', 'o-sidebar-expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed) },
-                { [this.computedClass('sidebar', 'mobileReduceClass', 'o-sidebar-mini-mobile')]: this.mobile === 'reduce' },
-                { [this.computedClass('sidebar', 'mobileHideClass', 'o-sidebar-hidden-mobile')]: this.mobile === 'hide' },
-                { [this.computedClass('sidebar', 'mobileFullwidthClass', 'o-sidebar-mini-fullwidth')]: this.mobile === 'fullwidth' }
+                this.computedClass('contentClass', 'o-side__content'),
+                { [this.computedClass('variantClass', 'o-side__content--', this.variant)]: this.variant },
+                { [this.computedClass('fixedClass', 'o-side__content--fixed')]: this.isFixed },
+                { [this.computedClass('staticClass', 'o-side__content--static')]: this.isStatic },
+                { [this.computedClass('absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },
+                { [this.computedClass('fullheightClass', 'o-side__content--fullheight')]: this.fullheight },
+                { [this.computedClass('fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth },
+                { [this.computedClass('rightClass', 'o-side__content--right')]: this.right },
+                { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce },
+                { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
+                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
+                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduced' && this.isMatchMedia },
+                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hidden' && this.isMatchMedia },
+                { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' && this.isMatchMedia }
             ]
         },
         cancelOptions() {
@@ -188,6 +193,9 @@ export default defineComponent({
         open: {
             handler(value) {
                 this.isOpen = value
+                if (this.overlay) {
+                    this.handleScroll()
+                }
                 const open = this.right ? !value : value
                 this.transitionName = !open ? 'slide-prev' : 'slide-next'
             },
@@ -211,7 +219,6 @@ export default defineComponent({
             }
             return whiteList
         },
-
         /**
         * Keypress event that is bound to the document.
         */

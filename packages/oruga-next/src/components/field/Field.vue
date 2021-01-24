@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClasses()">
+    <div :class="rootClasses">
         <div
             v-if="horizontal"
             :class="labelHorizontalClasses">
@@ -20,13 +20,13 @@
                 <template v-else>{{ label }}</template>
             </label>
         </template>
-        <o-field-body
-            v-if="horizontal">
+        <o-field-body v-if="horizontal">
             <slot/>
         </o-field-body>
-        <div v-else-if="hasInnerField" :class="contentHorizontalClasses">
+        <div v-else-if="hasInnerField" :class="bodyClasses">
             <o-field
                 :addons="false"
+                :variant="newVariant"
                 :class="innerFieldClasses">
                 <slot/>
             </o-field>
@@ -50,19 +50,21 @@ import { defineComponent } from 'vue'
 import FieldBody from './FieldBody.vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
  * @displayName Field
  * @example ./examples/Field.md
- * @style _field.scss 
+ * @style _field.scss
  */
 export default defineComponent({
     name: 'OField',
     components: {
         [FieldBody.name]: FieldBody
     },
-    mixins: [BaseComponentMixin],
+    configField: 'field',
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $field: this
@@ -95,7 +97,6 @@ export default defineComponent({
          * Allow controls to fill up multiple lines, making it responsive
          */
         groupMultiline: Boolean,
-        expanded: Boolean,
         /**
          * Group label and control on the same line for horizontal forms
          */
@@ -107,17 +108,24 @@ export default defineComponent({
             type: Boolean,
             default: true
         },
-        rootClass: String,
-        horizontalClass: String,
-        expandedClass: String,
-        groupedClass: String,
-        groupMultilineClass: String,
-        labelClass: String,
-        labelHorizontalClass: String,
-        contentHorizontalClass: String,
-        addonsClass: String,
-        messageClass: String,
-        variantClass: String
+         /**
+         * Vertical size of input, optional
+         * @values small, medium, large
+         */
+        labelSize: String,
+        rootClass: [String, Function, Array],
+        horizontalClass: [String, Function, Array],
+        groupedClass: [String, Function, Array],
+        groupMultilineClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        labelSizeClass: [String, Function, Array],
+        labelHorizontalClass: [String, Function, Array],
+        bodyClass: [String, Function, Array],
+        bodyHorizontalClass: [String, Function, Array],
+        addonsClass: [String, Function, Array],
+        messageClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {
@@ -126,31 +134,45 @@ export default defineComponent({
         }
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('rootClass', 'o-field'),
+                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal },
+                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia }
+            ]
+        },
         messageClasses() {
             return [
-                this.computedClass('field', 'messageClass', 'o-field-message'),
-                { [`${this.computedClass('field', 'variantClass', 'o-color-', true)}${this.newVariant}`]: this.newVariant }
+                this.computedClass('messageClass', 'o-field__message'),
+                { [this.computedClass('variantClass', 'o-field__message-', this.newVariant)]: this.newVariant }
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('field', 'labelClass', 'o-field-label')
+                this.computedClass('labelClass', 'o-field__label'),
+                { [this.computedClass('labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize }
             ]
         },
         labelHorizontalClasses() {
             return [
-                this.computedClass('field', 'labelHorizontalClass', 'o-field-horizontal-label')
+                this.computedClass('labelHorizontalClass', 'o-field__horizontal-label')
             ]
         },
-        contentHorizontalClasses() {
+        bodyClasses() {
             return [
-                this.computedClass('field', 'contentHorizontalClass', 'o-field-horizontal-content')
+                this.computedClass('bodyClass', 'o-field__body')
+            ]
+        },
+        bodyHorizontalClasses() {
+            return [
+                this.computedClass('bodyHorizontalClass', 'o-field__horizontal-body')
             ]
         },
         innerFieldClasses() {
             return [
-                { [this.computedClass('field', 'groupMultilineClass', 'o-field-grouped-multiline')]: this.groupMultiline },
-                this.fieldType()
+                { [this.computedClass('groupMultilineClass', 'o-field--grouped-multiline')]: this.groupMultiline },
+                { [this.computedClass('groupedClass', 'o-field--grouped')]: this.grouped },
+                { [this.computedClass('addonsClass', 'o-field--addons')]: !this.grouped && this.hasAddons() },
             ]
         },
         parent() {
@@ -163,7 +185,7 @@ export default defineComponent({
             return this.$slots.message
         },
         hasLabel() {
-            return this.label || this.$slots.label
+            return this.label || this.hasLabelSlot
         },
         hasMessage() {
             return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.hasMessageSlot
@@ -197,25 +219,10 @@ export default defineComponent({
         }
     },
     methods: {
-        rootClasses() {
-            return [
-                this.computedClass('field', 'rootClass', 'o-field')
-            ]
-        },
-        /**
-        * Field has addons if there are more than one slot
-        * (element / component) in the Field.
-        * Or is grouped when prop is set.
-        * Is a method to be called when component re-render.
-        */
-        fieldType() {
-            if (this.grouped) return this.computedClass('field', 'groupedClass', 'o-field-grouped')
-            if (this.hasAddons()) return this.computedClass('field', 'addonsClass', 'o-field-addons')
-        },
         hasAddons() {
             let renderedNode = 0
             if (this.$slots.default) {
-                renderedNode = this.$slots.default().reduce((i: number, node: any) => node.tag ? i + 1 : i, 0)
+                renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             return (
                 renderedNode > 1 &&

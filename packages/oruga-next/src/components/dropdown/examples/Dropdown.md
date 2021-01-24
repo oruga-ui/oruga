@@ -31,7 +31,7 @@
         </o-dropdown>
 
         <o-dropdown disabled aria-role="list">
-            <o-button class="o-button" slot="trigger">
+            <o-button slot="trigger">
                 <span>Disabled</span>
                 <o-icon icon="caret-down"></o-icon>
             </o-button>

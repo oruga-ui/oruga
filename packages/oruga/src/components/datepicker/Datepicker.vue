@@ -257,7 +257,7 @@ const defaultDateParser = (date, vm) => {
         const year = s[0].length === 4 ? s[0] : s[1]
         const month = s[0].length === 2 ? s[0] : s[1]
         if (year && month) {
-            return new Date(parseInt(year, 10), parseInt(month - 1, 10), 1, 0, 0, 0, 0)
+            return new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1, 0, 0, 0, 0)
         }
     }
     return null
@@ -345,7 +345,7 @@ export default {
             type: Function,
             default: (date, vm) => {
                 const dateParser = getValueByPath(config, 'datepicker.dateParser', undefined)
-                if (typeof dateParserr === 'function') {
+                if (typeof dateParser === 'function') {
                     return dateParser(date)
                 } else {
                     return defaultDateParser(date, vm)
@@ -602,13 +602,13 @@ export default {
             }).resolvedOptions()
         },
         dtf() {
-            return new Intl.DateTimeFormat(this.locale, { timezome: 'UTC' })
+            return new Intl.DateTimeFormat(this.locale, { timeZone: 'UTC' })
         },
         dtfMonth() {
             return new Intl.DateTimeFormat(this.locale, {
                 year: this.localeOptions.year || 'numeric',
                 month: this.localeOptions.month || '2-digit',
-                timezome: 'UTC'
+                timeZone: 'UTC'
             })
         },
         newMonthNames() {
@@ -803,7 +803,7 @@ export default {
          */
         formatYYYYMMDD(value) {
             const date = new Date(value)
-            if (value && !isNaN(date)) {
+            if (value && !isNaN(date.getTime())) {
                 const year = date.getFullYear()
                 const month = date.getMonth() + 1
                 const day = date.getDate()
@@ -819,7 +819,7 @@ export default {
          */
         formatYYYYMM(value) {
             const date = new Date(value)
-            if (value && !isNaN(date)) {
+            if (value && !isNaN(date.getTime())) {
                 const year = date.getFullYear()
                 const month = date.getMonth() + 1
                 return year + '-' +

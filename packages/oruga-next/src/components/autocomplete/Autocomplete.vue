@@ -42,7 +42,7 @@
                         :key="groupindex + 'group'"
                         :class="itemEmptyClasses">
                         <slot
-                            v-if="$slots.group"
+                            v-if="$scopedSlots.group"
                             name="group"
                             :group="element.group"
                             :index="groupindex" />
@@ -50,20 +50,20 @@
                             {{ element.group }}
                         </span>
                     </div>
-                    <a
+                    <div
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
                         @click="setSelected(option, undefined, $event)"
                     >
                         <slot
-                            v-if="$slots.default"
+                            v-if="$scopedSlots.default"
                             :option="option"
                             :index="index" />
                         <span v-else>
                             {{ getValue(option, true) }}
                         </span>
-                    </a>
+                    </div>
                 </template>
                 <div
                     v-if="isEmpty && $slots.empty"
@@ -85,9 +85,10 @@ import { defineComponent } from 'vue'
 
 import Input from '../input/Input.vue'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+
+import config from '../../utils/config'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
 
 /**
@@ -98,6 +99,7 @@ import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, d
  */
 export default defineComponent({
     name: 'OAutocomplete',
+    configField: 'autocomplete',
     components: {
         [Input.name]: Input
     },
@@ -143,11 +145,11 @@ export default defineComponent({
         clearable: Boolean,
         /** Max height of dropdown content */
         maxHeight: [String, Number],
-        /** 
+        /**
          * Position of dropdown
          * @values auto, top, bottom
          */
-        dropdownPosition: {
+        menuPosition: {
             type: String,
             default: 'auto'
         },
@@ -175,19 +177,13 @@ export default defineComponent({
             type: Array,
             default: () => ['Tab', 'Enter']
         },
-        /** Root class */
-        rootClass: String,
-        /** Options menu class */
-        menuClass: String,
-        /** Expanded options menu class */
-        expandedClass: String,
-        openedTopClass: String,
-        /** Option class */
-        itemClass: String,
-        /** Option hovered class */
-        itemHoveredClass: String,
-        /** Option disabled class */
-        itemDisabledClass: String,
+        rootClass: [String, Function, Array],
+        menuClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        menuPositionClass: [String, Function, Array],
+        itemClass: [String, Function, Array],
+        itemHoverClass: [String, Function, Array],
+        itemGroupTitleClass: [String, Function, Array],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },
@@ -197,6 +193,7 @@ export default defineComponent({
             hovered: null,
             isActive: false,
             newValue: this.modelValue,
+            // from mixin (ts workaround)
             newAutocomplete: (this as any).autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -206,25 +203,25 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('autocomplete', 'rootClass', 'o-autocomplete'),
-                { [this.computedClass('autocomplete', 'expandedClass', 'o-autocomplete-expanded')]: this.expanded },
-                { [this.computedClass('autocomplete', 'openedTopClass', 'o-autocomplete-opened-top')]: (this.isOpenedTop && !this.appendToBody)  }
+                this.computedClass('rootClass', 'o-acp'),
+                { [this.computedClass('expandedClass', 'o-acp--expanded')]: this.expanded }
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('autocomplete', 'menuClass', 'o-autocomplete-menu')
+                this.computedClass('menuClass', 'o-acp__menu'),
+                { [this.computedClass('menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)]: !this.appendToBody },
             ]
         },
         itemClasses() {
             return [
-                this.computedClass('autocomplete', 'itemClass', 'o-autocomplete-item')
+                this.computedClass('itemClass', 'o-acp__item')
             ]
         },
         itemEmptyClasses() {
             return [
                 ...this.itemClasses,
-                this.computedClass('autocomplete', 'itemDisabledClass', 'o-autocomplete-item-disabled')
+                this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')
             ]
         },
         inputBind() {
@@ -271,7 +268,7 @@ export default defineComponent({
             const whiteList = []
             whiteList.push(this.$refs.input.$el.querySelector('input'))
             whiteList.push(this.$refs.dropdown)
-            // Add all chidren from dropdown
+            // Add all children from dropdown
             if (this.$refs.dropdown !== undefined) {
                 const children = this.$refs.dropdown.querySelectorAll('*')
                 for (const child of children) {
@@ -291,11 +288,11 @@ export default defineComponent({
             return whiteList
         },
 
-        /**
-         * Apply dropdownPosition property
-         */
-        isOpenedTop() {
-            return this.dropdownPosition === 'top' || (this.dropdownPosition === 'auto' && !this.isListInViewportVertically)
+        newDropdownPosition() {
+            if (this.menuPosition === 'top' || (this.menuPosition === 'auto' && !this.isListInViewportVertically)) {
+              return 'top'
+            }
+            return 'bottom'
         },
 
         newIconRight() {
@@ -324,7 +321,7 @@ export default defineComponent({
          *   1. Update internal value.
          *   2. If it's invalid, validate again.
          */
-        onModelValue(value) {
+        modelValue(value) {
             this.newValue = value
         },
 
@@ -333,7 +330,7 @@ export default defineComponent({
          * to open upwards.
          */
         isActive(active) {
-            if (this.dropdownPosition === 'auto') {
+            if (this.menuPosition === 'auto') {
                 if (active) {
                     this.calcDropdownInViewportVertical()
                 } else {
@@ -366,7 +363,7 @@ export default defineComponent({
         },
 
         /**
-         * Select first option if "keep-first
+         * Select first option if "keep-first"
          */
         data(value) {
             // Keep first option always pre-selected
@@ -386,10 +383,10 @@ export default defineComponent({
         itemOptionClasses(option) {
             return [
                 ...this.itemClasses,
-                { [this.computedClass('autocomplete', 'itemHoveredClass', 'o-autocomplete-item-hovered')]: option === this.hovered }
+                { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: option === this.hovered }
             ]
         },
-        
+
         /**
          * Set which option is currently hovered.
          */
@@ -405,8 +402,11 @@ export default defineComponent({
          */
         setSelected(option, closeDropdown = true, event = undefined) {
             if (option === undefined) return
-
             this.selected = option
+            /**
+             * @property {Object} selected selected option
+             * @property {Event} event native event
+             */
             this.$emit('select', this.selected, event)
             if (this.selected !== null) {
                 this.newValue = this.clearOnSelect ? '' : this.getValue(this.selected)
@@ -454,7 +454,13 @@ export default defineComponent({
          * Close dropdown if clicked outside.
          */
         clickedOutside(event) {
-            if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) this.isActive = false
+            if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) {
+                if (this.keepFirst && this.hovered) {
+                    this.setSelected(this.hovered, true)
+                } else {
+                    this.isActive = false
+                }
+            }
         },
 
         /**
@@ -574,10 +580,11 @@ export default defineComponent({
         onInput() {
             const currentValue = this.getValue(this.selected)
             if (currentValue && currentValue === this.newValue) return
-            if (this.debounceTyping)
+            if (this.debounceTyping) {
                 this.debouncedEmitTyping()
-            else
+            } else {
                 this.emitTyping()
+            }
         },
         emitTyping() {
             this.$emit('typing', this.newValue)
@@ -621,7 +628,7 @@ export default defineComponent({
                 const rect = trigger.getBoundingClientRect()
                 let top = rect.top + window.scrollY
                 const left = rect.left + window.scrollX
-                if (!this.isOpenedTop) {
+                if (this.newDropdownPosition !== 'top') {
                     top += trigger.clientHeight
                 } else {
                     top -= dropdownMenu.clientHeight
@@ -638,7 +645,7 @@ export default defineComponent({
     created() {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
-            if (this.dropdownPosition === 'auto') window.addEventListener('resize', this.calcDropdownInViewportVertical)
+            if (this.menuPosition === 'auto') window.addEventListener('resize', this.calcDropdownInViewportVertical)
         }
     },
     mounted() {
@@ -654,7 +661,7 @@ export default defineComponent({
     beforeUnmount() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
-            if (this.dropdownPosition === 'auto') window.removeEventListener('resize', this.calcDropdownInViewportVertical)
+            if (this.menuPosition === 'auto') window.removeEventListener('resize', this.calcDropdownInViewportVertical)
         }
         if (this.checkInfiniteScroll && this.$refs.dropdown) {
             const list = this.$refs.dropdown

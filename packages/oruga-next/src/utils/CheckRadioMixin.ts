@@ -1,14 +1,14 @@
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 
 export default defineComponent({
-	emits: ['update:modelValue'],
+    emits: ['update:modelValue'],
 	props: {
 		/** @model */
-		modelValue: [String, Number, Boolean],
+		modelValue: [String, Number, Boolean, Array],
 		/**
 		 * Same as native value
 		 */
-		nativeValue: [String, Number, Boolean],
+		nativeValue: [String, Number, Boolean, Array],
 		/**
 		 * Color of the control, optional
 		 * @values primary, info, success, warning, danger, and any other custom color
@@ -31,17 +31,17 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			newValue: this.modelValue
+            newValue: this.modelValue
 		}
 	},
 	computed: {
 		computedValue: {
-			get(): string | number | boolean | undefined {
+			get() {
 				return this.newValue
 			},
-			set(value: string | number | boolean | undefined) {
-				this.newValue = value
-				this.$emit('update:modelValue', value)
+			set(value) {
+                this.newValue = value
+				this.$emit('input', this.newValue)
 			}
 		}
 	},
@@ -50,13 +50,13 @@ export default defineComponent({
 		 * When v-model change, set internal value.
 		 */
 		modelValue(value) {
-			this.newValue = value
-		},
+            this.newValue = value
+		}
 	},
 	methods: {
 		focus() {
 			// MacOS FireFox and Safari do not focus when clicked
-			(this.$refs.input as HTMLInputElement).focus()
+			this.$refs.input.focus()
 		}
 	}
 })

@@ -3,11 +3,9 @@
         <div
             :class="rootClasses"
             v-if="isActive">
-            <div :class="backgroundClasses" @click="cancel"/>
+            <div :class="overlayClasses" @click="cancel"/>
             <slot>
-                <div :class="iconClasses">
-                    <o-icon :icon="icon" :spin="iconSpin" both />
-                </div>
+                <o-icon :icon="icon" :spin="iconSpin" :size="iconSize" :class="iconClasses"/>
             </slot>
         </div>
     </transition>
@@ -18,8 +16,9 @@ import { defineComponent } from 'vue'
 
 import Icon from '../icon/Icon.vue'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
+import config from '../../utils/config'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
@@ -35,7 +34,8 @@ export default defineComponent({
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin],
-    emits: ['update:active', 'close', 'update:full-page'],
+    configField: 'loading',
+     emits: ['update:active', 'close', 'update:full-page'],
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
@@ -64,16 +64,21 @@ export default defineComponent({
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.icom', 'spin') }
+            default: () => { return getValueByPath(config, 'loading.icon', 'sync-alt') }
         },
         /** Enable spin effect on icon */
         iconSpin: {
             type: Boolean,
             default: true
         },
-        rootClass: String,
-        backgroundClass: String,
-        iconClass: String
+        iconSize: {
+            type: String,
+            default: 'medium'
+        },
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        iconClass: [String, Function, Array],
+        fullPageIconClass: [String, Function, Array],
     },
     data() {
         return {
@@ -92,18 +97,19 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('loading', 'rootClass', 'o-loading-overlay'),
-                { [this.computedClass('loading', 'fullPageClass', 'o-loading-fullpage')]: this.displayInFullPage }
+                this.computedClass('rootClass', 'o-load'),
+                { [this.computedClass('fullPageClass', 'o-load--fullpage')]: this.displayInFullPage }
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('loading', 'backgroundClass', 'o-loading-background')
+                this.computedClass('overlayClass', 'o-load__overlay')
             ]
         },
         iconClasses() {
             return [
-                this.computedClass('loading', 'iconClass', 'o-loading-icon')
+                this.computedClass('iconClass', 'o-load__icon'),
+                { [this.computedClass('fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
             ]
         }
     },
@@ -136,7 +142,7 @@ export default defineComponent({
         /**
         * Keypress event that is bound to the document.
         */
-        keyPress({ key }: { key: string}) {
+        keyPress({ key }) {
             if (key === 'Escape' || key === 'Esc') this.cancel()
         }
     },
@@ -161,7 +167,7 @@ export default defineComponent({
     mounted() {
         if (this.programmatic) this.isActive = true
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
         }

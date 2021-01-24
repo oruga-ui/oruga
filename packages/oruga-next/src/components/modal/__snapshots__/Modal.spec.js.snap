@@ -3,8 +3,10 @@
 exports[`OModal render correctly 1`] = `
 <transition-stub name="zoom-out">
     <div tabindex="-1" class="o-modal">
-        <div class="o-modal-background"></div>
-        <div class="o-modal-content" style="max-width: 960px;"> <button type="button" class="o-modal-close" style="display: none;"></button></div>
+        <div class="o-modal__overlay"></div>
+        <div class="o-modal__content" style="max-width: 960px;">
+            <o-icon-stub icon="times" size="medium" clickable="true" class="o-modal__close" style="display: none;"></o-icon-stub>
+        </div>
     </div>
 </transition-stub>
 `;

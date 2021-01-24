@@ -18,7 +18,7 @@ describe('OInput', () => {
 
     it('renders input element by default', () => {
         expect(wrapper.contains('input')).toBeTruthy()
-        expect(wrapper.classes()).toContain('o-control-input')
+        expect(wrapper.classes()).toContain('o-ctrl-input')
     })
 
     it('render textarea element when type is textarea', async () => {
@@ -60,7 +60,7 @@ describe('OInput', () => {
         expect(wrapper.vm.isPasswordVisible).toBeFalsy()
         expect(wrapper.find('input').attributes().type).toBe('password')
 
-        const visibilityIcon = wrapper.find('.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon--clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
 
         visibilityIcon.trigger('click')
@@ -85,7 +85,7 @@ describe('OInput', () => {
         wrapper.setProps({ expanded: true })
         await wrapper.vm.$nextTick()
 
-        expect(wrapper.classes()).toContain('o-control-input-expanded')
+        expect(wrapper.classes()).toContain('o-ctrl-input--expanded')
     })
 
     it('keep its value on blur', async () => {
@@ -117,7 +117,7 @@ describe('OInput', () => {
 
         expect(wrapper.find('input').exists()).toBeTruthy()
 
-        const visibilityIcon = wrapper.find('.o-icon-clickable')
+        const visibilityIcon = wrapper.find('.o-icon--clickable')
         expect(visibilityIcon.exists()).toBeTruthy()
 
         visibilityIcon.trigger('click')

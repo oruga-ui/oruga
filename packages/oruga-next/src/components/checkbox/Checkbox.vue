@@ -11,13 +11,13 @@
             type="checkbox"
             ref="input"
             @click.stop
+            :class="checkClasses"
             :disabled="disabled"
             :required="required"
             :name="name"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -32,16 +32,20 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
  * Select a single or grouped options
  * @displayName Checkbox
  * @example ./examples/Checkbox.md
- * @style _checkbox.scss 
+ * @style _checkbox.scss
  */
 export default defineComponent({
     name: 'OCheckbox',
     mixins: [BaseComponentMixin, CheckRadioMixin],
+    configField: 'checkbox',
     props: {
         /**
          * Same as native indeterminate
          */
-        indeterminate: Boolean,
+        indeterminate: {
+            type: Boolean,
+            default: false
+        },
         /**
          * Overrides the returned value when it's checked
          */
@@ -56,30 +60,45 @@ export default defineComponent({
             type: [String, Number, Boolean],
             default: false
         },
-        rootClass: String,
-        disabledClass: String,
-        checkClass: String,
-        labelClass: String,
-        sizeClass: String,
-        variantClass: String
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkIndeterminateClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
+    },
+    watch: {
+        indeterminate: {
+            handler(val) {
+                this.isIndeterminate = val;
+            },
+            immediate: true,
+        },
     },
     computed: {
+        isChecked () {
+            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
+        },
         rootClasses() {
             return [
-                this.computedClass('checkbox', 'rootClass', 'o-checkbox'),
-                { [`${this.computedClass('checkbox', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('checkbox', 'disabledClass', 'o-checkbox-disabled')]: this.disabled }
+                this.computedClass('rootClass', 'o-chk'),
+                { [this.computedClass('sizeClass', 'o-chk--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-chk--disabled')]: this.disabled },
+                { [this.computedClass('variantClass', 'o-chk--', this.variant)]: this.variant }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('checkbox', 'checkClass', 'o-checkbox-check'),
-                { [`${this.computedClass('checkbox', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant }
+                this.computedClass('checkClass', 'o-chk__check'),
+                { [this.computedClass('checkCheckedClass', 'o-chk__check--checked')] : this.isChecked },
+                { [this.computedClass('checkIndeterminateClass', 'o-chk__check--indeterminate')] : this.isIndeterminate },
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('checkbox', 'labelClass', 'o-checkbox-label')
+                this.computedClass('labelClass', 'o-chk__label')
             ]
         }
     }

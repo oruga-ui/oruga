@@ -68,7 +68,7 @@
           {
             field: "date",
             label: "Date",
-            centered: true,
+            position: 'centered',
           },
           {
             field: "gender",
@@ -125,7 +125,7 @@
         {{ props.row.last_name }}
       </o-table-column>
 
-      <o-table-column field="date" label="Date" centered v-slot="props">
+      <o-table-column field="date" label="Date" position="centered" v-slot="props">
         {{ new Date(props.row.date).toLocaleDateString() }}
       </o-table-column>
 
@@ -294,7 +294,7 @@
           {
             field: "date",
             label: "Date",
-            centered: true,
+            position: "centered",
           },
           {
             field: "gender",
@@ -401,7 +401,7 @@
         field="date"
         label="Date"
         sortable
-        centered
+        position="centered"
         v-slot="props"
       >
         {{ new Date(props.row.date).toLocaleDateString() }}
@@ -905,7 +905,7 @@
           {
             field: "date",
             label: "Date",
-            centered: true,
+            position: "centered",
           },
           {
             field: "gender",
@@ -1013,8 +1013,8 @@
             width: "40",
             numeric: true,
             sticky: true,
-            headerClass: "is-sticky-column-one",
-            cellClass: "is-sticky-column-one",
+            thAttrs: () => ({ 'class': "is-sticky-column-one" }),
+            tdAttrs: () => ({ 'class': "is-sticky-column-one" }),
           },
           {
             field: "user.first_name",
@@ -1027,10 +1027,10 @@
           {
             field: "date",
             label: "Date",
-            centered: true,
+            position: "centered",
             sticky: true,
-            headerClass: "is-sticky-column-two",
-            cellClass: "is-sticky-column-two",
+            thAttrs: () => ({ 'class': "is-sticky-column-two" }),
+            tdAttrs: () => ({ 'class': "is-sticky-column-two" }),
           },
           {
             field: "gender",
@@ -1160,7 +1160,7 @@
         :visible="columnsVisible['sold'].display"
         :label="columnsVisible['sold'].title"
         sortable
-        centered
+        position="centered"
         v-slot="props"
       >
         {{ props.row.sold }}
@@ -1171,7 +1171,7 @@
         :visible="columnsVisible['available'].display"
         :label="columnsVisible['available'].title"
         sortable
-        centered
+        position="centered"
         v-slot="props"
       >
         {{ props.row.available }}
@@ -1180,7 +1180,7 @@
       <o-table-column
         :visible="columnsVisible['cleared'].display"
         :label="columnsVisible['cleared'].title"
-        centered
+        position="centered"
         v-slot="props"
       >
         <span>
@@ -1427,7 +1427,7 @@
           {
             field: "date",
             label: "Date",
-            centered: true,
+            position: "centered",
           },
           {
             field: "gender",

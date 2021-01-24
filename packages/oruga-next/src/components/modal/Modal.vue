@@ -13,7 +13,7 @@
             tabindex="-1"
             :role="ariaRole"
             :aria-modal="ariaModal">
-            <div :class="backgroundClasses" @click="cancel('outside')"/>
+            <div :class="overlayClasses" @click="cancel('outside')"/>
             <div
                 :class="contentClasses"
                 :style="customStyle">
@@ -25,12 +25,14 @@
                     @close="close"/>
                 <div v-else-if="content"> {{ content }} </div>
                 <slot v-else/>
-                <button
-                    type="button"
+                <o-icon
                     v-if="showX"
                     v-show="!animating"
+                    clickable
                     :class="closeClasses"
-                    @click="cancel('x')"/>
+                    :icon="closeIcon"
+                    :size="closeIconSize"
+                    @click.native="cancel('x')"/>
             </div>
         </div>
     </transition>
@@ -39,10 +41,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import trapFocus from '../../directives/trapFocus'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
+import trapFocus from '../../directives/trapFocus'
 import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
 import config from '../../utils/config'
+
+import Icon from '../icon/Icon.vue'
 
 /**
  * Classic modal overlay to include any content you may need
@@ -52,10 +58,14 @@ import config from '../../utils/config'
  */
 export default defineComponent({
     name: 'OModal',
+    components: {
+        [Icon.name]: Icon
+    },
+    configField: 'modal',
     directives: {
         trapFocus
     },
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     emits: ['update:active', 'close'],
     props: {
         /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
@@ -64,6 +74,11 @@ export default defineComponent({
         component: [Object, Function],
         /** Text content */
         content: String,
+        /** Close button text content */
+        closeButtonContent: {
+            type: String,
+            default: '✕'
+        },
         programmatic: Boolean,
         /** Props to be binded to the injected component */
         props: Object,
@@ -140,41 +155,54 @@ export default defineComponent({
                 return getValueByPath(config, 'modal.autoFocus', true)
             }
         },
-        rootClass: String,
-        backgroundClass: String,
-        contentClass: String,
-        closeClass: String,
-        fullScreenClass: String
+        /** Icon name */
+        closeIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(config, 'modal.closeIcon', 'times')
+            }
+        },
+        closeIconSize: {
+            type: String,
+            default: 'medium'
+        },
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        closeClass: [String, Function, Array],
+        fullScreenClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     data() {
         return {
             isActive: this.active || false,
             savedScrollTop: null,
             newWidth: toCssDimension(this.width),
-            animating: true,
+            animating: !this.active,
             destroyed: !this.active
         }
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('modal', 'rootClass', 'o-modal'),
-                { [this.computedClass('modal', 'fullScreenClass', 'o-modal-fullscreen')]: this.fullScreen }
+                this.computedClass('rootClass', 'o-modal'),
+                { [this.computedClass('mobileClass', 'o-modal--mobile')]: this.isMatchMedia },
             ]
         },
-        backgroundClasses() {
+        overlayClasses() {
             return [
-                this.computedClass('modal', 'backgroundClass', 'o-modal-background')
+                this.computedClass('overlayClass', 'o-modal__overlay')
             ]
         },
         contentClasses() {
             return [
-                { [this.computedClass('modal', 'contentClass', 'o-modal-content')]: !this.custom }
+                { [this.computedClass('contentClass', 'o-modal__content')]: !this.custom },
+                { [this.computedClass('fullScreenClass', 'o-modal__content--fullscreen')]: this.fullScreen }
             ]
         },
         closeClasses() {
             return [
-                this.computedClass('modal', 'closeClass', 'o-modal-close')
+                this.computedClass('closeClass', 'o-modal__close')
             ]
         },
         cancelOptions() {
@@ -195,10 +223,10 @@ export default defineComponent({
         }
     },
     watch: {
-        active(value: boolean) {
+        active(value) {
             this.isActive = value
         },
-        isActive(value: boolean) {
+        isActive(value) {
             if (value) this.destroyed = false
             this.handleScroll()
             this.$nextTick(() => {
@@ -244,7 +272,7 @@ export default defineComponent({
         /**
         * Close the Modal if canCancel and call the onCancel prop (function).
         */
-        cancel(method: string) {
+        cancel(method) {
             if (this.cancelOptions.indexOf(method) < 0) return
 
             this.onCancel.apply(null, arguments)
@@ -272,7 +300,7 @@ export default defineComponent({
         /**
         * Keypress event that is bound to the document.
         */
-        keyPress({ key }: {key: string} ) {
+        keyPress({ key }) {
             if (this.isActive && (key === 'Escape' || key === 'Esc')) this.cancel('escape')
         },
 
@@ -313,7 +341,7 @@ export default defineComponent({
         if (this.programmatic) this.isActive = true
         else if (this.isActive) this.handleScroll()
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
             // reset scroll

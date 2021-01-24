@@ -7,7 +7,6 @@
 <template>
     <section>
         <o-sidebar
-            variant="primary"
             :fullheight="fullheight"
             :fullwidth="fullwidth"
             :overlay="overlay"
@@ -66,7 +65,6 @@ export default {
                 :mobile="mobile"
                 :expand-on-hover="expandOnHover"
                 :reduce="reduce"
-                variant="primary"
                 open
             >
                  <img
@@ -74,14 +72,16 @@ export default {
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
                     alt="Lightweight UI components for Vue.js"
                 />
-                <h5>Example 1</h5>
-                <h5>Example 2</h5>
-                <h5>Example 3</h5>
-                <h5>Example 4</h5>
-                <h5>Example 5</h5>
+                <section style="padding: 1em">
+                  <h5>Example 1</h5>
+                  <h5>Example 2</h5>
+                  <h5>Example 3</h5>
+                  <h5>Example 4</h5>
+                  <h5>Example 5</h5>
+                </section>
             </o-sidebar>
 
-            <div>
+            <div style="padding: 1em">
                 <o-field>
                     <o-switch v-model="reduce">Reduced</o-switch>
                 </o-field>
@@ -92,8 +92,8 @@ export default {
                 <o-field label="Mobile Layout">
                     <o-select v-model="mobile">
                         <option :value="null"></option>
-                        <option value="reduce">Reduced</option>
-                        <option value="hide">Hidden</option>
+                        <option value="reduced">Reduced</option>
+                        <option value="hidden">Hidden</option>
                         <option value="fullwidth">Fullwidth</option>
                     </o-select>
                 </o-field>
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       expandOnHover: false,
-      mobile: "reduce",
+      mobile: "reduced",
       reduce: false
     }
   }

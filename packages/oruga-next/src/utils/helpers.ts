@@ -1,7 +1,7 @@
 /**
  * +/- function to native math sign
  */
-function signPoly(value: number) {
+function signPoly(value: number): number {
     if (value < 0) return -1
     return value > 0 ? 1 : 0
 }
@@ -13,7 +13,7 @@ export const sign = Math.sign || signPoly
  * @param flag
  * @returns {boolean}
  */
-function hasFlag(val: number, flag: number) {
+function hasFlag(val: number, flag: number): boolean {
     return (val & flag) === flag
 }
 
@@ -23,7 +23,7 @@ function hasFlag(val: number, flag: number) {
  * @param mod
  * @returns {number}
  */
-function mod(n: number, mod: number) {
+function mod(n: number, mod: number): number {
     return ((n % mod) + mod) % mod
 }
 
@@ -34,7 +34,7 @@ function mod(n: number, mod: number) {
  * @param max
  * @returns {number}
  */
-function bound(val: number, min: number, max: number) {
+function bound(val: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, val))
 }
 
@@ -43,7 +43,7 @@ export { mod, bound, hasFlag }
 /**
  * Get value of an object property/path even if it's nested
  */
-export function getValueByPath(obj: any, path: string, defaultValue?: string | number | boolean | string[]) {
+export function getValueByPath(obj: any, path: string, defaultValue = undefined): any {
     const value = path.split('.').reduce((o, i) => typeof o !== 'undefined' ? o[i] : obj[i], obj)
     return typeof value !== 'undefined' ? value : defaultValue
 }
@@ -51,11 +51,9 @@ export function getValueByPath(obj: any, path: string, defaultValue?: string | n
 /**
  * Extension of indexOf method by equality function if specified
  */
-export function indexOf(array: any[], obj: any, fn?: (a: any, b: any) => boolean) {
-    if (!array)
-        return -1
-    if (!fn || typeof fn !== 'function')
-        return array.indexOf(obj)
+export function indexOf(array: any[], obj: any, fn: Function): number {
+    if (!array) return -1
+    if (!fn || typeof fn !== 'function') return array.indexOf(obj)
     for (let i = 0; i < array.length; i++) {
         if (fn(array[i], obj)) {
             return i
@@ -68,15 +66,14 @@ export function indexOf(array: any[], obj: any, fn?: (a: any, b: any) => boolean
  * Merge function to replace Object.assign with deep merging possibility
  */
 const isObject = (item: any) => typeof item === 'object' && !Array.isArray(item)
-
 const mergeFn = (target: any, source: any, deep = false) => {
     if (deep || !Object.assign) {
-        const isDeep = (prop: any) =>
+        const isDeep = (prop) =>
             isObject(source[prop]) &&
             target !== null &&
             Object.prototype.hasOwnProperty.call(target, prop) &&
             isObject(target[prop])
-        let replaced: any
+        let replaced
         if (source === null || typeof source === 'undefined') {
             replaced = false;
         } else {
@@ -142,7 +139,7 @@ export const isMobile = {
     }
 }
 
-export function removeElement(el: HTMLElement) {
+export function removeElement(el: Element) {
     if (typeof el.remove !== 'undefined') {
         el.remove()
     } else if (typeof el.parentNode !== 'undefined' && el.parentNode !== null) {
@@ -150,7 +147,7 @@ export function removeElement(el: HTMLElement) {
     }
 }
 
-export function createAbsoluteElement(el: HTMLElement) {
+export function createAbsoluteElement(el: Element) {
     const root = document.createElement('div')
     root.style.position = 'absolute'
     root.style.left = '0px'
@@ -172,22 +169,22 @@ export function escapeRegExpChars(value: string) {
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
 }
 
-export function multiColumnSort(inputArray: any, sortingPriority: any) {
+export function multiColumnSort(inputArray, sortingPriority) {
     // clone it to prevent the any watchers from triggering every sorting iteration
     const array = JSON.parse(JSON.stringify(inputArray))
-    const fieldSorter = (fields: any) => (a: any, b: any) => fields.map((o: any) => {
+    const fieldSorter = (fields) => (a, b) => fields.map((o) => {
         let dir = 1
         if (o[0] === '-') { dir = -1; o = o.substring(1) }
         const aValue = getValueByPath(a, o)
         const bValue = getValueByPath(b, o)
         return aValue > bValue ? dir : aValue < bValue ? -(dir) : 0
-    }).reduce((p: any, n: any) => p || n, 0)
+    }).reduce((p, n) => p || n, 0)
 
     return array.sort(fieldSorter(sortingPriority))
 }
 
-export function createNewEvent(eventName: string): Event {
-    let event: Event
+export function createNewEvent(eventName: string) {
+    let event: any
     if (typeof Event === 'function') {
         event = new Event(eventName)
     } else {
@@ -197,12 +194,16 @@ export function createNewEvent(eventName: string): Event {
     return event
 }
 
-export function toCssDimension(width: string | number): string | number | undefined {
-    return width === undefined ? undefined : (typeof width === 'number' && isNaN(width) ? width : width + 'px')
+export function toCssDimension(width: string | number) {
+    return width === undefined ? null : (isNaN(width as number) ? width : width + 'px')
 }
 
-export function blankIfUndefined(value: string): string {
+export function blankIfUndefined(value: string) {
     return typeof value !== 'undefined' && value !== null ? value : ''
+}
+
+export function defaultIfUndefined(value, defaultValue) {
+    return typeof value !== 'undefined' && value !== null ? value : defaultValue
 }
 
 /**
@@ -211,8 +212,8 @@ export function blankIfUndefined(value: string): string {
  * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
  * @return {Array<String>} An array of month names
  */
-export function getMonthNames(locale?: string, format: string = 'long'): string[] {
-    const dates: Date[] = []
+export function getMonthNames(locale: string = undefined, format: string = 'long'): string[] {
+    const dates = []
     for (let i = 0; i < 12; i++) {
         dates.push(new Date(2000, i, 15))
     }
@@ -230,8 +231,8 @@ export function getMonthNames(locale?: string, format: string = 'long'): string[
  * @param  {String} format long (ex. Thursday), short (ex. Thu) or narrow (T)
  * @return {Array<String>} An array of weekday names
  */
-export function getWeekdayNames(locale?: string, firstDayOfWeek: number = 0, format: string = 'narrow'): string[] {
-    const dates: Date[] = []
+export function getWeekdayNames(locale: string = undefined, firstDayOfWeek: number = 0, format: string = 'narrow'): string[] {
+    const dates = []
     for (let i = 1, j = 0; j < 7; i++) {
         const d = new Date(Date.UTC(2000, 0, i))
         const day = d.getUTCDay()
@@ -255,7 +256,7 @@ export function getWeekdayNames(locale?: string, firstDayOfWeek: number = 0, for
  * @param  {String} the string to run regex
  * @return {Object} an object with a property for each group having the group's match as the value
  */
-export function matchWithGroups(pattern: any, str: string): any {
+export function matchWithGroups(pattern: string, str: string): any {
     const matches = str.match(pattern)
     return pattern
         // get the pattern as a string
@@ -263,7 +264,7 @@ export function matchWithGroups(pattern: any, str: string): any {
         // suss out the groups
         .match(/<(.+?)>/g)
         // remove the braces
-        .map((group: any) => {
+        .map((group) => {
             const groupMatches = group.match(/<(.+)>/)
             if (!groupMatches || groupMatches.length <= 0) {
                 return null
@@ -271,7 +272,7 @@ export function matchWithGroups(pattern: any, str: string): any {
             return group.match(/<(.+)>/)[1]
         })
         // create an object with a property for each group having the group's match as the value
-        .reduce((acc: any, curr: any, index: number) => {
+        .reduce((acc, curr, index) => {
             if (matches && matches.length > index) {
                 acc[curr] = matches[index + 1]
             } else {
@@ -281,7 +282,7 @@ export function matchWithGroups(pattern: any, str: string): any {
         }, {})
 }
 
-export function getStyleValue(value: any) {
+export function getStyleValue(value: any): any {
     if (typeof value === 'object') {
         for (const key in value) {
             if (value[key]) return key

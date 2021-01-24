@@ -1,3 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OTooltip render correctly 1`] = `<span class="o-tooltip o-tooltip-top"><transition-stub name="fade"><div class="o-tooltip-content" style="display: none;"><!----></div></transition-stub> <div class="o-tooltip-trigger"></div></span>`;
+exports[`OTooltip render correctly 1`] = `
+<span class="o-tip"><transition-stub name="fade"><div class="o-tip__content o-tip__content--top" style="display: none;"><span class="o-tip__arrow o-tip__arrow--top"></span>
+<!---->
+</div>
+</transition-stub>
+<div class="o-tip__trigger"></div>
+</span>
+`;

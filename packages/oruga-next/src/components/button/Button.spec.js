@@ -23,7 +23,7 @@ describe('OButton', () => {
                 'click': click
             }
         })
-        wrapper.find('.o-button').trigger('click')
+        wrapper.find('.o-btn').trigger('click')
         expect(click).toHaveBeenCalledTimes(1)
     })
 
@@ -41,7 +41,7 @@ describe('OButton', () => {
             size: 'medium'
         })
         await wrapper.vm.$nextTick()
-        expect(wrapper.classes()).toContain('o-size-medium')
+        expect(wrapper.classes()).toContain('o-btn--medium')
     })
 
     it('should be small + icon', () => {
@@ -51,8 +51,8 @@ describe('OButton', () => {
                 iconLeft: 'plus'
             }
         })
-        expect(wrapper.classes()).toContain('o-size-small')
-        expect(wrapper.contains('.o-icon')).toBeTruthy()
+        expect(wrapper.classes()).toContain('o-btn--small')
+        expect(wrapper.contains('.o-btn__icon')).toBeTruthy()
     })
 
     it('should be large + icon', () => {
@@ -62,8 +62,8 @@ describe('OButton', () => {
                 iconLeft: 'plus'
             }
         })
-        expect(wrapper.classes()).toContain('o-size-large')
-        expect(wrapper.contains('.o-icon')).toBeTruthy()
+        expect(wrapper.classes()).toContain('o-btn--large')
+        expect(wrapper.contains('.o-btn__icon')).toBeTruthy()
     })
 
     it('should be rounded when prop is set to true', async () => {
@@ -71,7 +71,7 @@ describe('OButton', () => {
             rounded: true
         })
         await wrapper.vm.$nextTick()
-        expect(wrapper.classes()).toContain('o-button-rounded')
+        expect(wrapper.classes()).toContain('o-btn--rounded')
     })
 
     it('should set tag to "button" if disabled', () => {

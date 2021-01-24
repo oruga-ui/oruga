@@ -13,14 +13,3 @@ export default {
 export {
     Field as OField
 }
-
-export interface OField {
-    // props
-    variant?: string | {[key: string]: string},
-    message?: string
-    // data
-    newVariant?: string | {[key: string]: string},
-    newMessage?: string
-    // computed
-    hasMessageSlot: boolean
-}

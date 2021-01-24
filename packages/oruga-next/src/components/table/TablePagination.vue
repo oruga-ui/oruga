@@ -28,6 +28,7 @@ import { defineComponent } from "vue"
 
 export default defineComponent({
     name: 'OTablePagination',
+    emits: ['update:currentPage', 'page-change'],
     props: {
         paginated: Boolean,
         total: [Number, String],

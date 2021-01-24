@@ -11,6 +11,7 @@
             @click="onClick"
             @contextmenu.prevent="onContextMenu"
             @mouseenter="onHover"
+            @mouseleave="isHoverable = false"
             @focus.capture="onFocus"
             aria-haspopup="true">
             <slot name="trigger" :active="isActive"/>
@@ -20,7 +21,7 @@
             <div
                 v-if="isMobileModal"
                 v-show="isActive"
-                :class="backgroundClasses"
+                :class="menuMobileOverlayClasses"
                 :aria-hidden="!isActive"
             />
         </transition>
@@ -32,6 +33,8 @@
                 :aria-hidden="!isActive"
                 :role="ariaRole"
                 :style="menuStyle"
+                @mouseenter="onHover"
+                @mouseleave="isHoverable = false"
                 v-trap-focus="trapFocus">
                 <slot/>
             </div>
@@ -39,26 +42,30 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
+import { defineComponent } from 'vue'
+
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import trapFocus from '../../directives/trapFocus'
 import config from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
-import { defineComponent } from 'vue'
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
  * @displayName Dropdown
  * @requires ./DropdownItem.vue
  * @example ./examples/Dropdown.md
- * @style _dropdown.scss 
+ * @style _dropdown.scss
  */
 export default defineComponent({
     name: 'ODropdown',
     directives: {
         trapFocus
     },
-    mixins: [BaseComponentMixin],
+    configField: 'dropdown',
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $dropdown: this
@@ -98,7 +105,7 @@ export default defineComponent({
          */
         position: {
             type: String,
-            validator: (value: string) => {
+            validator(value) {
                 return [
                     'top-right',
                     'top-left',
@@ -122,7 +129,7 @@ export default defineComponent({
          */
         ariaRole: {
             type: String,
-            validator: (value: string) => {
+            validator(value) {
                 return [
                     'menu',
                     'list',
@@ -185,16 +192,16 @@ export default defineComponent({
          */
         appendToBody: Boolean,
         appendToBodyCopyParent: Boolean,
-        rootClass: String,
-        triggerClass: String,
-        backgroundClass: String,
-        menuClass: String,
-        disabledClass: String,
-        activeClass: String,
-        hoverableClass: String,
-        inlineClass: String,
-        mobileClass: String,
-        expandedClass: String
+        rootClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        inlineClass: [String, Function, Array],
+        menuMobileOverlayClass: [String, Function, Array],
+        menuClass: [String, Function, Array],
+        menuPositionClass: [String, Function, Array],
+        menuActiveClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        expandedClass: [String, Function, Array]
     },
     data() {
         return {
@@ -207,29 +214,28 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'rootClass', 'o-dropdown'),
-                { [this.computedClass('dropdown', 'disabledClass', 'o-dropdown-disabled')]: this.disabled },
-                { [`${this.computedClass('dropdown', 'positionClass', 'o-dropdown-')}${this.position}`]: this.position },
-                { [this.computedClass('dropdown', 'activeClass', 'o-dropdown-active')]: (this.isActive || this.inline) },
-                { [this.computedClass('dropdown', 'hoverableClass', 'o-dropdown-hoverable')]: this.hoverable },
-                { [this.computedClass('dropdown', 'inlineClass', 'o-dropdown-inline')]: this.inline },
-                { [this.computedClass('dropdown', 'expandedClass', 'o-dropdown-expanded')]: this.expanded },
-                { [this.computedClass('dropdown', 'mobileClass', 'o-dropdown-mobile')]: this.isMobileModal },
+                this.computedClass('rootClass', 'o-drop'),
+                { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
+                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
+                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
+                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.isMatchMedia },
             ]
         },
         triggerClasses() {
             return [
-                this.computedClass('dropdown', 'triggerClass', 'o-dropdown-trigger')
+                this.computedClass('triggerClass', 'o-drop__trigger')
             ]
         },
-        backgroundClasses() {
+        menuMobileOverlayClasses() {
             return [
-                this.computedClass('dropdown', 'backgroundClass', 'o-dropdown-background')
+                this.computedClass('menuMobileOverlayClass', 'o-drop__overlay')
             ]
         },
         menuClasses() {
             return [
-                this.computedClass('dropdown', 'menuClass', 'o-dropdown-menu o-dropdown-menu-animation')
+                this.computedClass('menuClass', 'o-drop__menu'),
+                { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
+                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) }
             ]
         },
         isMobileModal() {
@@ -256,13 +262,13 @@ export default defineComponent({
         /**
         * When v-model is changed set the new selected item.
         */
-        modelValue(value: any) {
+        modelValue(value) {
             this.selected = value
         },
         /**
         * Emit event when isActive value is changed.
         */
-        isActive(value: boolean) {
+        isActive(value) {
             this.$emit('active-change', value)
             if (this.appendToBody) {
                 this.$nextTick(() => {
@@ -310,7 +316,7 @@ export default defineComponent({
         /**
         * White-listed items to not close when clicked.
         */
-        isInWhiteList(el: any) {
+        isInWhiteList(el) {
             if (el === this.$refs.dropdownMenu) return true
             if (el === this.$refs.trigger) return true
             // All chidren from dropdown
@@ -337,7 +343,7 @@ export default defineComponent({
         /**
         * Close dropdown if clicked outside.
         */
-        clickedOutside(event: any) {
+        clickedOutside(event) {
             if (this.cancelOptions.indexOf('outside') < 0) return
             if (this.inline) return
 
@@ -347,7 +353,7 @@ export default defineComponent({
         /**
          * Keypress event that is bound to the document
          */
-        keyPress({ key }: { key: string }) {
+        keyPress({ key }) {
             if (this.isActive && (key === 'Escape' || key === 'Esc')) {
                 if (this.cancelOptions.indexOf('escape') < 0) return
                 this.isActive = false
@@ -397,8 +403,8 @@ export default defineComponent({
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const dropdown = this.$data.bodyEl.children[0]
-                dropdown.classList.forEach((item: any) => dropdown.classList.remove(item))
-                this.rootClasses.forEach((item: any) => {
+                dropdown.classList.forEach((item) => dropdown.classList.remove(item))
+                this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
                             Object.keys(item).filter(key => item[key]).forEach(
@@ -411,7 +417,7 @@ export default defineComponent({
                 if (this.appendToBodyCopyParent) {
                     const parentNode = this.$refs.dropdown.parentNode
                     const parent = this.$data.bodyEl
-                    parent.classList.forEach((item: any) => parent.classList.remove(item))
+                    parent.classList.forEach((item) => parent.classList.remove(item))
                     parentNode.classList.forEach((item) => parent.classList.add(item))
                 }
                 const rect = trigger.getBoundingClientRect()
@@ -444,7 +450,7 @@ export default defineComponent({
             document.addEventListener('keyup', this.keyPress)
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
             document.removeEventListener('keyup', this.keyPress)
