@@ -77,13 +77,29 @@
             </o-select>
         </o-field>
 
-        <o-field>
+        <o-field label="Size 'large'">
             <o-select
                 placeholder="Large"
-                size="large"
-                expanded>
+                size="large">
                 <option value="flint">Flint</option>
                 <option value="silver">Silver</option>
+            </o-select>
+        </o-field>
+
+        <o-field label="Multiple">
+            <o-select
+                multiple
+                native-size="8"
+                v-model="selectedOptions">
+                <option value="flint">Flint</option>
+                <option value="silver">Silver</option>
+                <option value="vane">Vane</option>
+                <option value="billy">Billy</option>
+                <option value="jack">Jack</option>
+                <option value="heisenberg">Heisenberg</option>
+                <option value="jesse">Jesse</option>
+                <option value="saul">Saul</option>
+                <option value="mike">Mike</option>
             </o-select>
         </o-field>
     </section>
@@ -91,6 +107,11 @@
 
 <script>
     export default {
+      data() {
+        return {
+          selectedOptions: []
+        }
+      }
     }
 </script>
 ```

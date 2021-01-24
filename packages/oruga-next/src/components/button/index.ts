@@ -1,4 +1,5 @@
 import { App, Plugin } from 'vue'
+
 import Button from './Button.vue'
 
 import { registerComponent } from '../../utils/plugins'

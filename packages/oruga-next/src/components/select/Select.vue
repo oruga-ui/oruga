@@ -1,19 +1,20 @@
 <template>
     <div :class="rootClasses">
         <select
-            :class="selectClasses"
+            v-bind="$attrs"
             v-model="computedValue"
+            :class="selectClasses"
             ref="select"
             :multiple="multiple"
             :size="nativeSize"
-            v-bind="$attrs"
             @blur="$emit('blur', $event) && checkHtml5Validity()"
             @focus="$emit('focus', $event)">
 
             <template v-if="placeholder">
                 <option
-                    v-if="computedValue == null"
+                    v-if="placeholderVisible"
                     :value="null"
+                    :class="placeholderClasses"
                     disabled
                     hidden>
                     {{ placeholder }}
@@ -32,7 +33,7 @@
             :size="size"/>
 
          <o-icon
-            v-if="iconRight"
+            v-if="iconRight && !multiple"
             :class="iconRightClasses"
             :icon="iconRight"
             :pack="iconPack"
@@ -42,13 +43,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import Icon from '../icon/Icon.vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
-import { defineComponent } from 'vue'
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -62,6 +64,7 @@ export default defineComponent({
         [Icon.name]: Icon
     },
     mixins: [BaseComponentMixin, FormElementMixin],
+    configField: 'select',
     inheritAttrs: false,
     provide() {
         return {
@@ -94,18 +97,17 @@ export default defineComponent({
         multiple: Boolean,
         /** Same as native size */
         nativeSize: [String, Number],
-        rootClass: String,
-        controlExpandedClass: String,
-        controlIconLeftClass: String,
-        controlIconRightClass: String,
-        roundedClass: String,
-        multipleClass: String,
-        emptyClass: String,
-        expandedClass: String,
-        iconLeftClass: String,
-        iconRightClass: String,
-        sizeClass: String,
-        variantClass: String
+        rootClass: [String, Function, Array],
+        iconLeftSpaceClass: [String, Function, Array],
+        iconRightSpaceClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        multipleClass: [String, Function, Array],
+        expandedClass: [String, Function, Array],
+        iconLeftClass: [String, Function, Array],
+        iconRightClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        placeholderClass: [String, Function, Array]
     },
     data() {
         return {
@@ -115,38 +117,40 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('select', 'rootClass', 'o-control-select'),
-                { [this.computedClass('select', 'controlExpandedClass', 'o-control-select-expanded')]: this.expanded },
-                { [this.computedClass('select', 'controlIconLeftClass', 'o-control-select-icons-left')]: this.icon },
-                { [this.computedClass('select', 'controlIconRightClass', 'o-control-select-icons-right')]: this.iconRight }
+                this.computedClass('rootClass', 'o-ctrl-sel'),
+                { [this.computedClass('expandedClass', 'o-ctrl-sel--expanded')]: this.expanded },
             ]
         },
         selectClasses() {
             return [
-                this.computedClass('select', 'selectClass', 'o-select'),
-                { [this.computedClass('select', 'roundedClass', 'o-select-rounded')]: this.rounded },
-                { [this.computedClass('select', 'emtpyClass', 'o-select-empty')]: this.selected === null },
-                { [this.computedClass('select', 'multipleClass', 'o-select-multiple')]: this.multiple },
-                { [this.computedClass('select', 'expandedClass', 'o-select-expanded')]: this.expanded },
-                { [`${this.computedClass('select', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('select', 'variantClass', 'o-color-', true)}${this.statusVariant}`]: this.statusVariant }
+                this.computedClass('selectClass', 'o-sel'),
+                { [this.computedClass('roundedClass', 'o-sel--rounded')]: this.rounded },
+                { [this.computedClass('multipleClass', 'o-sel--multiple')]: this.multiple },
+                { [this.computedClass('sizeClass', 'o-sel--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
+                { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
+                { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }
             ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('select', 'iconLeftClass', 'o-icon-left')
+                this.computedClass('iconLeftClass', 'o-sel__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('select', 'iconRightClass', 'o-icon-right')
+                this.computedClass('iconRightClass', 'o-sel__icon-right')
             ]
+        },
+        placeholderVisible() {
+            return this.computedValue === null
         },
         computedValue: {
             get() {
                 return this.selected
             },
-            set(value: any) {
+            set(value) {
                 this.selected = value
                 this.$emit('update:modelValue', value)
                 !this.isValid && this.checkHtml5Validity()
@@ -159,7 +163,7 @@ export default defineComponent({
         *   1. Set the selected option.
         *   2. If it's invalid, validate again.
         */
-        modelValue(value: any) {
+        modelValue(value) {
             this.selected = value
             !this.isValid && this.checkHtml5Validity()
         }

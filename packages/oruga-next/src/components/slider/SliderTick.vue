@@ -14,11 +14,12 @@ import { defineComponent } from 'vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
- * @displayName SliderTick
+ * @displayName Slider Tick
  */
 export default defineComponent({
     name: 'OSliderTick',
     mixins: [BaseComponentMixin],
+    configField: 'slider',
     inject: ['$slider'],
     props: {
         /** Value of single tick */
@@ -26,20 +27,20 @@ export default defineComponent({
             variant: Number,
             default: 0
         },
-        tickClass: String,
-        tickHiddenClass: String,
-        tickLabelClass: String
+        tickClass: [String, Function, Array],
+        tickHiddenClass: [String, Function, Array],
+        tickLabelClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('slider', 'tickClass', 'o-slider-tick'),
-                { [this.computedClass('slider', 'tickHiddenClass', 'o-slider-tick-hidden')]: this.hidden },
+                this.computedClass('tickClass', 'o-slide__tick'),
+                { [this.computedClass('tickHiddenClass', 'o-slide__tick--hidden')]: this.hidden },
             ]
         },
         tickLabelClasses() {
             return [
-                this.computedClass('slider', 'tickLabelClass', 'o-slider-tick-label')
+                this.computedClass('tickLabelClass', 'o-slide__tick-label')
             ]
         },
         position() {

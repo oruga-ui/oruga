@@ -72,6 +72,10 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 
 ### Custon icon pack
 
+<p>
+    Can also add it during Oruga import as default config
+</p>
+
 ::: demo
 
 ```html
@@ -120,6 +124,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 
 <script>
   const customIconConfig = {
+    iconComponent: undefined,
     customIconPacks: {
       ionicons: {
         sizes: {
@@ -148,8 +153,24 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     }
   }
   export default {
+    data() {
+      return {
+        docsIcon: undefined
+      }
+    },
     created() {
       this.$oruga.config.setOptions(customIconConfig)
+    },
+    beforeCreate() {
+      // only for docs purpose
+      const docsIcon = this.$oruga.config.getOptions().iconComponent
+      if (typeof window !== 'undefined') {
+        window.requestAnimationFrame(() => {
+          this.$oruga.config.setOptions({
+            iconComponent: docsIcon
+          })
+        })
+      }
     }
   }
 </script>

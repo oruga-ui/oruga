@@ -72,11 +72,10 @@
     "rollup-plugin-eslint": "7.0.0",
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-typescript2": "0.29.0",
-    "rollup-plugin-vue": "6.0.0-beta.11",
-    "sass": "1.18.0",
+    "rollup-plugin-vue": "6.0.0",
+    "sass": "1.27.0",
     "sinon": "9.0.3",
     "typescript": "3.8.3",
-    "vue": "3.0.0",
-    "vue-class-component": "8.0.0-alpha.6"
+    "vue": "3.0.0"
   }
 }

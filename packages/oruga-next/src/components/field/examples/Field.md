@@ -37,6 +37,15 @@
                 <option value="2">Option 2</option>
             </o-select>
         </o-field>
+
+        <o-field label="Wrong subject"
+            variant="danger"
+            message="Selected subject is wrong">
+            <o-select placeholder="Select a subject">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+            </o-select>
+        </o-field>
     </section>
 </template>
 
@@ -53,7 +62,7 @@
 ```html
 <template>
     <section>
-        <o-field>
+        <o-field variant="danger">
             <o-input placeholder="Search..."
                 type="search"
                 icon="search">
@@ -63,7 +72,7 @@
 
         <o-field>
             <o-input placeholder="This is expanded" expanded></o-input>
-            <span class="o-button">@gmail.com</span>
+            <o-button>@gmail.com</o-button>
         </o-field>
 
         <hr>
@@ -152,7 +161,7 @@
 <template>
     <section>
 
-        <o-field grouped message="What do you want to search?">
+        <o-field grouped variant="danger" message="What do you want to search?">
             <o-input placeholder="Search..."></o-input>
             <o-button variant="primary">Search</o-button>
         </o-field>
@@ -173,6 +182,50 @@
             <o-button>Seventh</o-button>
             <o-button>Eighth</o-button>
         </o-field>
+    </section>
+</template>
+
+<script>
+    export default {
+    }
+</script>
+```
+:::
+
+
+### Horizontal
+
+::: demo
+```html
+<template>
+    <section>
+        <o-field horizontal label="Subject" variant="danger" message="Please enter a subject">
+            <o-input name="subject" expanded></o-input>
+        </o-field>
+
+        <o-field horizontal label="From">
+            <o-input name="name" placeholder="Name" expanded></o-input>
+            <o-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></o-input>
+        </o-field>
+
+        <o-field horizontal label="Topic">
+            <o-select placeholder="Select a topic">
+                <option value="1">Oruga</option>
+                <option value="2">Vue.js</option>
+                <option value="3">UI</option>
+            </o-select>
+        </o-field>
+
+        <o-field horizontal label="Message">
+            <o-input type="textarea"></o-input>
+        </o-field>
+
+        <o-field horizontal><!-- Label left empty for spacing -->
+            <o-button variant="primary">
+              Send message
+            </o-button>
+        </o-field>
+
     </section>
 </template>
 

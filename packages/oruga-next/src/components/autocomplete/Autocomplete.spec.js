@@ -18,7 +18,7 @@ const DATA_LIST = [
     'RxJS',
     'Vue.js'
 ]
-const dropdownMenu = '.o-autocomplete-menu'
+const dropdownMenu = '.o-acp__menu'
 let wrapper, $input, $dropdown, stubs
 
 describe('OAutocomplete', () => {
@@ -36,10 +36,6 @@ describe('OAutocomplete', () => {
 
     it('render correctly', () => {
         expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    it('has an input type', () => {
-        expect(wrapper.contains('.o-control-input .o-input[type=text]')).toBeTruthy()
     })
 
     it('has a dropdown menu hidden by default', () => {

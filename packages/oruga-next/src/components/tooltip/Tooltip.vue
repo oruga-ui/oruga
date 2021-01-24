@@ -7,6 +7,7 @@
                 v-show="active && (isActive || always)"
                 ref="content"
                 :class="contentClasses">
+                <span :class="arrowClasses"></span>
                 <template v-if="label">{{ label }}</template>
                 <template v-else-if="$slots.default">
                     <slot name="content" />
@@ -29,11 +30,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
+import { defineComponent } from 'vue'
 
 /**
  * Display a brief helper text to your user
@@ -44,6 +44,7 @@ import { createAbsoluteElement, removeElement, getValueByPath } from '../../util
 export default defineComponent({
     name: 'OTooltip',
     mixins: [BaseComponentMixin],
+    configField: 'tooltip',
     props: {
         /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: {
@@ -61,7 +62,7 @@ export default defineComponent({
         position: {
             type: String,
             default: () => { return getValueByPath(config, 'tooltip.position', 'top') },
-            validator: (value: string) => {
+            validator(value: string) {
                 return [
                     'top',
                     'bottom',
@@ -106,13 +107,16 @@ export default defineComponent({
         * Color of the tooltip
         * @values primary, info, success, warning, danger, and any other custom color
         */
-        variant: String,
-        rootClass: String,
-        contentClass: String,
-        triggerClass: String,
-        multilineClass: String,
-        alwaysClass: String,
-        variantClass: String
+        variant: [String, Function, Array],
+        rootClass: [String, Function, Array],
+        contentClass: [String, Function, Array],
+        orderClass: [String, Function, Array],
+        triggerClass: [String, Function, Array],
+        multilineClass: [String, Function, Array],
+        alwaysClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        arrowClass: [String, Function, Array],
+        arrowOrderClass: [String, Function, Array]
     },
     data() {
         return {
@@ -124,21 +128,28 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('tooltip', 'rootClass', 'o-tooltip'),
-                { [`${this.computedClass('tooltip', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('tooltip', 'orderClass', 'o-tooltip-')}${this.position}`]: this.position },
-                { [this.computedClass('tooltip', 'multilineClass', 'o-tooltip-multiline')]: this.multiline },
-                { [this.computedClass('tooltip', 'alwaysClass', 'o-tooltip-always')]: this.always }
+                this.computedClass('rootClass', 'o-tip')
             ]
         },
         triggerClasses() {
             return [
-                this.computedClass('tooltip', 'triggerClass', 'o-tooltip-trigger')
+                this.computedClass('triggerClass', 'o-tip__trigger'),
+            ]
+        },
+        arrowClasses() {
+            return [
+                this.computedClass('arrowClass', 'o-tip__arrow'),
+                { [this.computedClass('arrowOrderClass', 'o-tip__arrow--', this.position)]: this.position },
+                { [this.computedClass('variantArrowClass', 'o-tip__arrow--', this.variant)]: this.variant },
             ]
         },
         contentClasses() {
             return [
-                this.computedClass('tooltip', 'contentClass', 'o-tooltip-content')
+                this.computedClass('contentClass', 'o-tip__content'),
+                { [this.computedClass('orderClass', 'o-tip__content--', this.position)]: this.position },
+                { [this.computedClass('variantClass', 'o-tip__content--', this.variant)]: this.variant },
+                { [this.computedClass('multilineClass', 'o-tip__content--multiline')]: this.multiline },
+                { [this.computedClass('alwaysClass', 'o-tip__content--always')]: this.always }
             ]
         },
         newAnimation() {
@@ -180,7 +191,7 @@ export default defineComponent({
                 wrapper.style.position = 'absolute'
                 wrapper.style.top = `${top}px`
                 wrapper.style.left = `${left}px`
-                wrapper.style.zIndex = this.isActive || this.always ? '9999' : '-1'
+                wrapper.style.zIndex = this.isActive || this.always ? '99' : '-1'
                 this.triggerStyle = { zIndex: this.isActive || this.always ? '100' : undefined }
             }
         },
@@ -274,7 +285,7 @@ export default defineComponent({
             document.addEventListener('keyup', this.keyPress)
         }
     },
-    beforeUnmount() {
+    beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('click', this.clickedOutside)
             document.removeEventListener('keyup', this.keyPress)

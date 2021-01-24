@@ -66,9 +66,7 @@ describe('OTable', () => {
         expect(headers.length).toBeGreaterThanOrEqual(4)
 
         const cols = headers.filter((th) => {
-            const div = th.find('div')
-
-            return div.classes('o-table-th-wrap')
+            return th.find('span')
         })
 
         expect(cols.length).toBe(4)
@@ -110,7 +108,7 @@ describe('OTable', () => {
         })
 
         it('displays filter input only on searchable columns', () => {
-            const filterCells = headRows.at(1).findAll('.o-table-th-wrap')
+            const filterCells = headRows.at(1).findAll('th')
 
             expect(filterCells.at(0).isEmpty()).toBe(true) // ID column is not searchable
             expect(filterCells.at(1).contains(OInput)).toBe(true) // Name column is searchable

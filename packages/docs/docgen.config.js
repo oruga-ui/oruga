@@ -5,14 +5,13 @@ const src = '../oruga/src';
 
 const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
-  'TableMobileSort.vue', 'TablePagination.vue', 'PaginationButton.vue',
+  'TableMobileSort.vue', 'TablePagination.vue', 'TableColumn.vue', 'PaginationButton.vue',
   'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue',
   'DatepickerTable.vue', 'DatepickerTableRow.vue'
 ];
 
 const IGNORE_CLASSES = {
-    'icon' : ['customClass'],
-    'table column' : ['headerClass', 'cellClass']
+    'icon' : ['customClass']
 }
 
 module.exports = {

@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OSwitch render correctly 1`] = `<label class="o-switch o-switch-rounded"><input type="checkbox" true-value="true" value="false"> <span class="o-switch-check"></span> <span class="o-switch-label"></span></label>`;
+exports[`OSwitch render correctly 1`] = `<label class="o-switch"><input type="checkbox" true-value="true" value="false"> <span class="o-switch__wrapper"><span class="o-switch__check o-switch--rounded"><span class="o-switch__check-switch o-switch--rounded"></span></span> <span class="o-switch__label"></span></span></label>`;

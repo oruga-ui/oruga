@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="custom ? 'div' : 'a'"
+        :is="'div'"
         :class="rootClasses"
         @click="selectItem"
         :role="ariaRoleItem"
@@ -9,35 +9,38 @@
     </component>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
- * @displayName DropdownItem
+ * @displayName Dropdown Item
  */
 export default defineComponent({
     name: 'ODropdownItem',
     mixins: [BaseComponentMixin],
-    inject: ['$dropdown'],
+    configField: 'dropdown',
+    inject: ["$dropdown"],
     emits: ['click'],
     props: {
         /**
          * The value that will be returned on events and v-model
          */
         value: {
-            type: [String, Number, Boolean, Object, Array],
-            default: null
+            type: [String, Number, Boolean, Object, Array]
         },
         /**
          * Item is disabled
          */
         disabled: Boolean,
         /**
-         * Item is not a clickable item
+         * Item is clickable and emit an event
          */
-        custom: Boolean,
+        clickable: {
+            type: Boolean,
+            default: true
+        },
         tabindex: {
             type: [Number, String],
             default: 0
@@ -46,9 +49,9 @@ export default defineComponent({
             type: String,
             default: ''
         },
-        itemClass: String,
-        itemActiveClass: String,
-        itemDisabledClass: String,
+        itemClass: [String, Function, Array],
+        itemActiveClass: [String, Function, Array],
+        itemDisabledClass: [String, Function, Array],
     },
     computed: {
         parent() {
@@ -56,16 +59,16 @@ export default defineComponent({
         },
         rootClasses() {
             return [
-                this.computedClass('dropdown', 'itemClass', 'o-dropdown-item'),
-                { [this.computedClass('dropdown', 'itemDisabledClass', 'o-dropdown-item-disabled')]: (this.parent.disabled || this.disabled) },
-                { [this.computedClass('dropdown', 'itemActiveClass', 'o-dropdown-item-active')]: this.isActive }
+                this.computedClass('itemClass', 'o-drop__item'),
+                { [this.computedClass('itemDisabledClass', 'o-drop__item--disabled')]: (this.parent.disabled || this.disabled) },
+                { [this.computedClass('itemActiveClass', 'o-drop__item--active')]: this.isActive }
             ]
         },
         ariaRoleItem() {
             return this.ariaRole === 'menuitem' || this.ariaRole === 'listitem' ? this.ariaRole : null
         },
         isClickable() {
-            return !this.parent.disabled && !this.disabled && !this.custom
+            return !this.parent.disabled && !this.disabled && this.clickable
         },
         isActive() {
             if (this.parent.selected === null) return false

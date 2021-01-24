@@ -2,28 +2,8 @@
     <div :class="$table.mobileSortClasses">
         <o-field>
             <o-select
-                v-model="sortMultipleSelect"
-                expanded
-                v-if="sortMultiple">
-                <option
-                    v-for="(column, index) in sortableColumns"
-                    :key="index"
-                    :value="column">
-                    {{ getLabel(column) }}
-                    <template v-if="getSortingObjectOfColumn(column)">
-                        <template v-if="columnIsDesc(column)">
-                            &#8595;
-                        </template>
-                        <template v-else>
-                            &#8593;
-                        </template>
-                    </template>
-                </option>
-            </o-select>
-            <o-select
                 v-model="mobileSort"
-                expanded
-                v-else>
+                expanded>
                 <template v-if="placeholder">
                     <option
                         v-show="showPlaceholder"
@@ -41,40 +21,15 @@
                     {{ column.label }}
                 </option>
             </o-select>
-            <template
-                v-if="sortMultiple && sortMultipleData.length > 0" >
-                <o-button
-                    variant="primary"
-                    @click="sort">
-                    <o-icon
-                        :class="{ [$table.iconSortDescClasses]: columnIsDesc(sortMultipleSelect) }"
-                        :icon="sortIcon"
-                        :pack="iconPack"
-                        :size="sortIconSize"
-                        both
-                    />
-                </o-button>
-                <o-button
-                    variant="primary"
-                    @click="removePriority">
-                    <o-icon
-                        icon="delete"
-                        :size="sortIconSize"
-                        both
-                    />
-                </o-button>
-            </template>
-            <o-button
-                v-else-if="!sortMultiple"
-                variant="primary"
-                @click="sort">
+            <o-button @click="sort">
+                <!--  :class="$table.iconSortClasses()" -->
                 <o-icon
                     v-show="currentSortColumn === mobileSort"
-                    :class="$table.iconSortClasses()"
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"
                     both
+                    :rotation="!isAsc ? 180 : 0"
                 />
             </o-button>
         </o-field>
@@ -82,11 +37,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import Button from '../button/Button.vue'
 import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
 import Field from '../field/Field.vue'
-import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'OTableMobileSort',
@@ -97,10 +53,9 @@ export default defineComponent({
         [Field.name]: Field
     },
     inject: ['$table'],
-    emits: ['sort', 'remove-priority'],
+    emits: ['sort'],
     props: {
         currentSortColumn: Object,
-        sortMultipleData: Array,
         columns: Array,
         placeholder: String,
         iconPack: String,
@@ -112,14 +67,10 @@ export default defineComponent({
             type: String,
             default: 'small'
         },
-        sortMultiple: {
-            type: Boolean,
-            default: false
-        }
+        isAsc: Boolean
     },
     data() {
         return {
-            sortMultipleSelect: '',
             mobileSort: this.currentSortColumn,
             defaultEvent: {
                 shiftKey: true,
@@ -139,16 +90,8 @@ export default defineComponent({
         }
     },
     watch: {
-        sortMultipleSelect(column) {
-            if (this.ignoreSort) {
-                this.ignoreSort = false
-            } else {
-                this.$emit('sort', column, this.defaultEvent)
-            }
-        },
         mobileSort(column) {
             if (this.currentSortColumn === column) return
-
             this.$emit('sort', column, this.defaultEvent)
         },
         currentSortColumn(column) {
@@ -156,38 +99,8 @@ export default defineComponent({
         }
     },
     methods: {
-        removePriority() {
-            this.$emit('remove-priority', this.sortMultipleSelect)
-            // ignore the watcher to sort when we just change whats displayed in the select
-            // otherwise the direction will be flipped
-            // The sort event is already triggered by the emit
-            this.ignoreSort = true
-            // Select one of the other options when we reset one
-            const remainingFields = this.sortMultipleData.filter((data) =>
-                data.field !== this.sortMultipleSelect.field)
-                .map((data) => data.field)
-            this.sortMultipleSelect = this.columns.filter((column) =>
-                remainingFields.includes(column.field))[0]
-        },
-        getSortingObjectOfColumn(column) {
-            return this.sortMultipleData.filter((i) => i.field === column.field)[0]
-        },
-        columnIsDesc(column) {
-            const sortingObject = this.getSortingObjectOfColumn(column)
-            if (sortingObject) {
-                return !!(sortingObject.order && sortingObject.order === 'desc')
-            }
-            return true
-        },
-        getLabel(column) {
-            const sortingObject = this.getSortingObjectOfColumn(column)
-            if (sortingObject) {
-                return column.label + '(' + (this.sortMultipleData.indexOf(sortingObject) + 1) + ')'
-            }
-            return column.label
-        },
         sort() {
-            this.$emit('sort', (this.sortMultiple ? this.sortMultipleSelect : this.mobileSort), this.defaultEvent)
+            this.$emit('sort', this.mobileSort, this.defaultEvent)
         }
     }
 })

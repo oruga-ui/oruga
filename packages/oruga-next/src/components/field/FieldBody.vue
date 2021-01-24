@@ -4,6 +4,7 @@ import { defineComponent, h } from "vue"
 export default defineComponent({
     name: 'OFieldBody',
     inject: ['$field'],
+    configField: 'field',
     computed: {
         parent() {
             return this.$field
@@ -12,8 +13,8 @@ export default defineComponent({
     render() {
         let first = true
         return h(
-            'div', 
-            { class: this.parent.contentHorizontalClasses }, 
+            'div',
+            { class: this.parent.bodyHorizontalClasses },
             this.$slots.default().map((element) => {
                 // skip returns and comments
                 if (!element.tag) {
@@ -24,8 +25,7 @@ export default defineComponent({
                     message = this.parent.newMessage
                     first = false
                 }
-                return h(
-                    this.parent.rootClass,
+                return h('o-field',
                     { variant: this.parent.newVariant, message }, [element])
             })
         )

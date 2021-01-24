@@ -59,14 +59,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
 import SliderThumb from './SliderThumb.vue'
 import SliderTick from './SliderTick.vue'
 
 import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+import { defineComponent } from 'vue'
 
 /**
  * A slider to select a value or range from a given range
@@ -81,6 +80,7 @@ export default defineComponent({
         [SliderThumb.name]: SliderThumb,
         [SliderTick.name]: SliderTick
     },
+    configField: 'slider',
     mixins: [BaseComponentMixin],
     provide() {
         return {
@@ -89,6 +89,11 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'change', 'dragging', 'dragstart', 'dragend'],
     props: {
+        /** @model */
+        modelValue: {
+            type: [Number, Array],
+            default: 0
+        },
         /** Minimum value */
         min: {
             type: Number,
@@ -135,7 +140,9 @@ export default defineComponent({
         /** Rounded thumb */
         rounded: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'slider.rounded', false) },
+            default: () => {
+                return getValueByPath(config, 'slider.rounded', false)
+            }
         },
         disabled: {
             type: Boolean,
@@ -177,18 +184,17 @@ export default defineComponent({
         /** Tooltip displays always */
         tooltipAlways: {
             type: Boolean,
-            default: false  
+            default: false
         },
-        rootClass: String,
-        trackClass: String,
-        fillClass: String,
-        roundedClass: String,
-        draggingClass: String,
-        disabledClass: String,
-        biggerSliderFocusClass: String,
-        thumbWrapperClass: String,
-        thumbClass: String,
-        thumbDraggingClass: String
+        rootClass: [String, Function, Array],
+        trackClass: [String, Function, Array],
+        fillClass: [String, Function, Array],
+        thumbRoundedClass: [String, Function, Array],
+        thumbDraggingClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        thumbWrapperClass: [String, Function, Array],
+        thumbClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     data() {
         return {
@@ -201,28 +207,33 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('slider', 'rootClass', 'o-slider'),
-                { [`${this.computedClass('slider', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('slider', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('slider', 'roundedClass', 'o-slider-rounded')]: this.rounded },
-                { [this.computedClass('slider', 'draggingClass', 'o-slider-dragging')]: this.dragging },
-                { [this.computedClass('slider', 'disabledClass', 'o-slider-disabled')]: this.disabled },
-                { [this.computedClass('slider', 'biggerSliderFocusClass', 'o-slider-focus')]: this.biggerSliderFocus }
+                this.computedClass('rootClass', 'o-slide'),
+                { [this.computedClass('sizeClass', 'o-slide--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-slide--disabled')]: this.disabled },
             ]
         },
         trackClasses() {
             return [
-                this.computedClass('slider', 'trackClass', 'o-slider-track'),
+                this.computedClass('trackClass', 'o-slide__track'),
             ]
         },
         fillClasses() {
             return [
-                this.computedClass('slider', 'fillClass', 'o-slider-fill'),
+                this.computedClass('fillClass', 'o-slide__fill'),
+                { [this.computedClass('variantClass', 'o-slide__fill--', this.variant)]: this.variant },
             ]
         },
         thumbClasses() {
             return [
-                this.computedClass('slider', 'thumbClass', 'o-slider-thumb'),
+                this.computedClass('thumbClass', 'o-slide__thumb'),
+                { [this.computedClass('thumbDraggingClass', 'o-slide__thumb--dragging')]: this.dragging },
+                { [this.computedClass('thumbRoundedClass', 'o-slide__thumb--rounded')]: this.rounded },
+
+            ]
+        },
+        thumbWrapperClasses() {
+             return [
+                this.computedClass('thumbWrapperClass', 'o-slide__thumb-wrapper'),
             ]
         },
         newTooltipVariant() {
@@ -267,12 +278,6 @@ export default defineComponent({
         }
     },
     watch: {
-        /**
-        * When v-model is changed set the new active step.
-        */
-        modelValue(value) {
-            this.setValues(value)
-        },
         value1() {
             this.onInternalValueUpdate()
         },
@@ -280,19 +285,19 @@ export default defineComponent({
             this.onInternalValueUpdate()
         },
         min() {
-            this.setValues(this.getModel())
+            this.setValues(this.value)
         },
         max() {
-            this.setValues(this.getModel())
+            this.setValues(this.value)
+        },
+        /**
+        * When v-model is changed set the new active step.
+        */
+        modelValue(value) {
+            this.setValues(value)
         }
     },
     methods: {
-        thumbWrapperClasses(dragging) {
-             return [
-                this.computedClass('slider', 'thumbWrapperClass', 'o-slider-thumb-wrapper'),
-                { [this.computedClass('slider', 'thumbDraggingClass', 'o-slider-thumb-dragging')]: dragging },
-            ]
-        },
         setValues(newValue) {
             if (this.min > this.max) {
                 return
@@ -363,7 +368,7 @@ export default defineComponent({
             this.dragging = false
             this.$emit('dragend')
             if (this.lazy) {
-                this.emitValue('update:modelValue')
+                this.emitValue('input')
             }
         },
         emitValue(event) {
@@ -376,7 +381,7 @@ export default defineComponent({
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.getModel())
+        this.setValues(this.value)
     }
 })
 </script>

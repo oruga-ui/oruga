@@ -1,8 +1,11 @@
 <script lang="ts">
-import { defineComponent, h } from 'vue'
+import { defineComponent } from 'vue'
 
 import { toCssDimension } from '../../utils/helpers'
 
+/**
+ * @displayName Table Column
+ */
 export default defineComponent({
     name: 'OTableColumn',
     inject: ['$table'],
@@ -13,24 +16,44 @@ export default defineComponent({
         meta: [String, Number, Boolean, Function, Object, Array],
         width: [Number, String],
         numeric: Boolean,
-        centered: Boolean,
+        /**
+         * Optional, position of column content
+         * @values centered, right
+         */
+        position: {
+            type: String,
+            validator(value: string) {
+                return [
+                    'left',
+                    'centered',
+                    'right'
+                ].indexOf(value) > -1
+            }
+        },
         searchable: Boolean,
         sortable: Boolean,
         visible: {
             type: Boolean,
             default: true
         },
-        subheading: [String, Number],
         customSort: Function,
         customSearch: Function,
         sticky: Boolean,
         headerSelectable: Boolean,
-        headerClass: String,
-        cellClass: String
+        /** Adds native attributes to th :th-attrs="(column)" => ({})" */
+        thAttrs: {
+            type: Function,
+            default: () => ({})
+        },
+        /** Adds native attributes to td :td-attrs="(row, column)" => ({})" */
+        tdAttrs: {
+            type: Function,
+            default: () => ({})
+        }
     },
     data() {
         return {
-            newKey: (this as any).$table._nextSequence()
+            newKey: undefined
         }
     },
     computed: {
@@ -40,20 +63,14 @@ export default defineComponent({
             }
         },
         hasDefaultSlot() {
-            return this.$slots.default
+            return this.$scopedSlots.default
         },
         hasSearchableSlot() {
-            return this.$slots.searchable
+            return this.$scopedSlots.searchable
         },
         hasHeaderSlot() {
-            return this.$slots.header
+            return this.$scopedSlots.header
         },
-        hasSubheadingSlot() {
-            return this.$slots.subheading
-        },
-        /**
-         * Return if column header is un-selectable
-         */
         isHeaderUnselectable() {
             return !this.headerSelectable && this.sortable
         }
@@ -62,6 +79,7 @@ export default defineComponent({
         if (!this.$table) {
             throw new Error('You should wrap oTableColumn on a oTable')
         }
+        this.newKey = (this.$table as any)._nextSequence()
         this.$table._addColumn(this)
     },
     beforeDestroy() {
@@ -69,7 +87,7 @@ export default defineComponent({
     },
     render() {
         // renderless
-        return h('span', { domProps: { 'data-id': this.newKey } }, this.label)
+        return this.$createElement('span', { domProps: { 'data-id': this.newKey } }, this.label)
     }
 })
 </script>

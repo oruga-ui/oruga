@@ -143,7 +143,6 @@ export default {
             $pagination: this
         }
     },
-    emits: ['update:active', 'change'],
     props: {
         /** Total count of items */
         total: [Number, String],

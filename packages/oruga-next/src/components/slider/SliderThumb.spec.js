@@ -33,5 +33,4 @@ describe('OSliderThumb', () => {
         wrapper.vm.onBlur()
         expect(wrapper.vm.isFocused).toBeFalsy()
     })
-
 })

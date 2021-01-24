@@ -44,14 +44,4 @@ describe('OSlider', () => {
         await wrapper.vm.$nextTick()
         expect(wrapper.vm.precision).toBe(1)
     })
-
-    describe('When biggerSliderFocus is set to true', () => {
-        it('renders a component with sliderFocus class', async () => {
-            wrapper.setProps({biggerSliderFocus: true})
-            await wrapper.vm.$nextTick()
-            const subject = wrapper.find('.o-slider-focus')
-            expect(subject.exists()).toBeTruthy()
-        })
-    })
-
 })

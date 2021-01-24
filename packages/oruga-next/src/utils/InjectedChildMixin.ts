@@ -1,5 +1,4 @@
 import { defineComponent, DefineComponent } from 'vue'
-
 import { hasFlag } from './helpers'
 
 const sorted = 1
@@ -8,7 +7,7 @@ const optional = 2
 export const Sorted = sorted
 export const Optional = optional
 
-export default (parentItemName: string, flags = 0) => {
+export default (parentItemName: string, flags: number = 0) => {
     const mixin: DefineComponent = defineComponent({
         inject: {
             parent: { from: 'o' + parentItemName }

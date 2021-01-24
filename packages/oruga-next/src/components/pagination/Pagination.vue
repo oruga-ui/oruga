@@ -6,7 +6,6 @@
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current - 1, {
-                disabled: !hasPrev,
                 class: prevBtnClasses,
                 'aria-label': ariaPreviousLabel
         })">
@@ -21,7 +20,6 @@
             :class="prevBtnClasses"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
-            :disabled="!hasPrev"
             :page="getPage(current - 1)">
             <o-icon
                 :icon="iconPrev"
@@ -35,7 +33,6 @@
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
             :page="getPage(current + 1, {
-                disabled: !hasNext,
                 class: nextBtnClasses,
                 'aria-label': ariaNextLabel,
         })">
@@ -50,7 +47,6 @@
             :class="nextBtnClasses"
             :linkClass="linkClasses"
             :linkCurrentClass="linkCurrentClasses"
-            :disabled="!hasNext"
             :page="getPage(current + 1)">
             <o-icon
                 :icon="iconNext"
@@ -125,8 +121,10 @@ import PaginationButton from './PaginationButton.vue'
 import Icon from '../icon/Icon.vue'
 
 import config from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 /**
  * A responsive and flexible pagination
@@ -140,13 +138,14 @@ export default defineComponent({
         [Icon.name]: Icon,
         [PaginationButton.name]: PaginationButton
     },
-    mixins: [BaseComponentMixin],
+    configField: 'pagination',
+    mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
             $pagination: this
         }
     },
-    emits: ['update:active', 'change'],
+    emits: ['update:active', 'change', 'update:current'],
     props: {
         /** Total count of items */
         total: [Number, String],
@@ -203,62 +202,67 @@ export default defineComponent({
         ariaPreviousLabel: String,
         ariaPageLabel: String,
         ariaCurrentLabel: String,
-        rootClass: String,
-        prevBtnClass: String,
-        nextBtnClass: String,
-        listClass: String,
-        linkClass: String,
-        linkCurrentClass: String,
-        ellipsisClass: String,
-        infoClass: String,
-        orderClass: String,
-        simpleClass: String,
-        roundedClass: String,
-        sizeClass: String
+        rootClass: [String, Function, Array],
+        prevBtnClass: [String, Function, Array],
+        nextBtnClass: [String, Function, Array],
+        listClass: [String, Function, Array],
+        linkClass: [String, Function, Array],
+        linkCurrentClass: [String, Function, Array],
+        ellipsisClass: [String, Function, Array],
+        infoClass: [String, Function, Array],
+        orderClass: [String, Function, Array],
+        simpleClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        linkDisabledClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        mobileClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('pagination', 'rootClass', 'o-pagination'),
-                { [`${this.computedClass('pagination', 'orderClass', 'o-pagination-', true)}${this.order}`]: this.order },
-                { [`${this.computedClass('pagination', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('pagination', 'simpleClass', 'o-pagination-simple')]: this.simple },
-                { [this.computedClass('pagination', 'roundedClass', 'o-pagination-rounded')]: this.rounded }
+                this.computedClass('rootClass', 'o-pag'),
+                { [this.computedClass('orderClass', 'o-pag--', this.order)]: this.order },
+                { [this.computedClass('sizeClass', 'o-pag--', this.size)]: this.size },
+                { [this.computedClass('simpleClass', 'o-pag--simple')]: this.simple },
+                { [this.computedClass('mobileClass', 'o-pag--mobile')]: this.isMatchMedia },
             ]
         },
         prevBtnClasses() {
             return [
-                this.computedClass('pagination', 'prevBtnClass', 'o-pagination-previous')
+                this.computedClass('prevBtnClass', 'o-pag__previous'),
+                { [this.computedClass('linkDisabledClass', 'o-pag__link--disabled')]: !this.hasPrev }
             ]
         },
         nextBtnClasses() {
             return [
-                this.computedClass('pagination', 'nextBtnClass', 'o-pagination-next')
+                this.computedClass('nextBtnClass', 'o-pag__next'),
+                { [this.computedClass('linkDisabledClass', 'o-pag__link--disabled')]: !this.hasNext }
             ]
         },
         infoClasses() {
             return [
-                this.computedClass('pagination', 'infoClass', 'o-pagination-info')
+                this.computedClass('infoClass', 'o-pag__info')
             ]
         },
         ellipsisClasses() {
             return [
-                this.computedClass('pagination', 'ellipsisClass', 'o-pagination-ellipsis')
+                this.computedClass('ellipsisClass', 'o-pag__ellipsis')
             ]
         },
         listClasses() {
             return [
-                this.computedClass('pagination', 'listClass', 'o-pagination-list')
+                this.computedClass('listClass', 'o-pag__list')
             ]
         },
         linkClasses() {
             return [
-                this.computedClass('pagination', 'linkClass', 'o-pagination-link')
+                this.computedClass('linkClass', 'o-pag__link'),
+                { [this.computedClass('roundedClass', 'o-pag__link--rounded')]: this.rounded }
             ]
         },
         linkCurrentClasses() {
             return [
-                this.computedClass('pagination', 'linkCurrentClass', 'o-pagination-link-current')
+                this.computedClass('linkCurrentClass', 'o-pag__link--current'),
             ]
         },
 
@@ -351,13 +355,13 @@ export default defineComponent({
         },
 
         hasDefaultSlot() {
-            return this.$slots.default
+            return this.$scopedSlots.default
         },
         hasPreviousSlot() {
-            return this.$slots.previous
+            return this.$scopedSlots.previous
         },
         hasNextSlot() {
-            return this.$slots.next
+            return this.$scopedSlots.next
         }
     },
     watch: {

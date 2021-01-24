@@ -1,41 +1,48 @@
 <template>
-    <span :class="rootClasses">
+    <span
+        :class="rootClasses"
+        :style="rootStyle">
         <i
             v-if="!useIconComponent"
             :class="[newPack, newIcon, newCustomSize, customClass]"/>
-
+        <!-- custom icon component -->
         <component
             v-else
             :is="useIconComponent"
             :icon="[newPack, newIcon]"
             :size="newCustomSize"
-            :class="[customClass]"/>
+            :class="[customClass]" />
     </span>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 import config from '../../utils/config'
 import getIcons from '../../utils/icons'
-import { getValueByPath } from '../../utils/helpers'
+import { defaultIfUndefined, getValueByPath } from '../../utils/helpers'
+
 
 /**
  * Icons take an important role of any application
  * @displayName Icon
  * @example ./examples/Icon.md
- * @style _icon.scss 
+ * @style _icon.scss
  */
 export default defineComponent({
     name: 'OIcon',
     mixins: [BaseComponentMixin],
+    configField: 'icon',
     props: {
         /**
          * 	Color of the icon, optional
          *  @values primary, info, success, warning, danger, and any other custom color
          */
         variant: [String, Object],
+        /**
+         * Icon component name
+         */
         component: String,
         /**
          * Icon pack to use
@@ -66,23 +73,30 @@ export default defineComponent({
         clickable: Boolean,
         /** Enable spin effect on icon */
         spin: Boolean,
+        /** Rotation 0-360 */
+        rotation: [Number, String],
         /** @ignore */
         both: Boolean, // This is used internally
-        rootClass: String,
-        clickableClass: String,
-        spinClass: String,
-        sizeClass: String,
-        variantClass: String
+        rootClass: [String, Function, Array],
+        clickableClass: [String, Function, Array],
+        spinClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('icon', 'rootClass', 'o-icon'),
-                { [this.computedClass('icon', 'clickableClass', 'o-icon-clickable')]: this.clickable },
-                { [this.computedClass('icon', 'spinClass', 'o-icon-spin')]: this.spin },
-                { [`${this.computedClass('icon', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [`${this.computedClass('icon', 'variantClass', 'o-color-', true)}${this.newVariant}`]: this.newVariant }
+                this.computedClass('rootClass', 'o-icon'),
+                { [this.computedClass('clickableClass', 'o-icon--clickable')]: this.clickable },
+                { [this.computedClass('spinClass', 'o-icon--spin')]: this.spin },
+                { [this.computedClass('sizeClass', 'o-icon--', this.size)]: this.size },
+                { [this.computedClass('variantClass', 'o-icon--', this.newVariant)]: this.newVariant }
             ]
+        },
+        rootStyle() {
+            return {
+                transform: `rotate(${defaultIfUndefined(this.rotation, 0)}deg)`
+            }
         },
         iconConfig() {
             return getIcons()[this.newPack]
@@ -138,7 +152,7 @@ export default defineComponent({
         /**
         * Equivalent icon name of the MDI.
         */
-        getEquivalentIconOf(value: string): string {
+        getEquivalentIconOf(value) {
             // Only transform the class if the both prop is set to true
             if (!this.both) {
                 return value

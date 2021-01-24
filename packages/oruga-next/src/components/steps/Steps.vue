@@ -1,30 +1,30 @@
 <template>
     <div :class="wrapperClasses">
         <nav :class="mainClasses">
-            <ul :class="stepItemsClasses">
-                <li
-                    v-for="childItem in items"
-                    :key="childItem.newValue"
-                    v-show="childItem.visible"
-                    :class="childItem.itemClasses"
-                >
-                    <a
-                        :class="stepLinkClasses(childItem)"
-                        @click="isItemClickable(childItem) && childClick(childItem)">
-                        <div :class="stepMarkerClasses">
-                            <o-icon
-                                v-if="childItem.icon"
-                                :icon="childItem.icon"
-                                :pack="childItem.iconPack"
-                                :size="size"/>
-                            <span v-else-if="childItem.step">{{ childItem.step }}</span>
-                        </div>
-                        <div :class="stepDetailsClasses">
-                            <span :class="stepTitleClasses">{{ childItem.label }}</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+            <div
+                v-for="(childItem, index) in items"
+                :key="childItem.newValue"
+                v-show="childItem.visible"
+                :class="childItem.itemClasses"
+            >
+                <span
+                    v-if="index > 0"
+                    :class="stepDividerClasses">
+                </span>
+                <a
+                    :class="stepLinkClasses(childItem)"
+                    @click="isItemClickable(childItem) && childClick(childItem)">
+                    <div :class="stepMarkerClasses">
+                        <o-icon
+                            v-if="childItem.icon"
+                            :icon="childItem.icon"
+                            :pack="childItem.iconPack"
+                            :size="size"/>
+                        <span v-else-if="childItem.step">{{ childItem.step }}</span>
+                    </div>
+                    <div :class="stepLinkLabelClasses">{{ childItem.label }}</div>
+                </a>
+            </div>
         </nav>
         <section :class="stepContentClasses">
             <slot/>
@@ -65,6 +65,8 @@ import Icon from '../icon/Icon.vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -81,7 +83,8 @@ export default defineComponent({
         [Button.name]: Button,
         [Icon.name]: Icon
     },
-    mixins: [BaseComponentMixin, TabbedMixin('step')],
+    configField: 'steps',
+    mixins: [BaseComponentMixin, MatchMediaMixin, TabbedMixin('step')],
     props: {
         /**
          * Icon pack to use for the navigation
@@ -110,12 +113,19 @@ export default defineComponent({
             default: true
         },
         /**
+         * Step navigation is animated
+         */
+        animated: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * Position of the marker label, optional
          * @values bottom, right, left
          */
         labelPosition: {
             type: String,
-            validator: (value: string) => {
+            validator(value: string) {
                 return [
                     'bottom',
                     'right',
@@ -129,90 +139,71 @@ export default defineComponent({
             type: Boolean,
             default: true
         },
-        /**
-         * How Steps will be displayed for mobile user
-         * @values minimalist, compact, null
-         */
-        mobileMode: {
-            type: String,
-            validator: (value: string) => {
-                return [
-                    'minimalist',
-                    'compact'
-                ].indexOf(value) > -1
-            },
-            default: 'minimalist'
-        },
         ariaNextLabel: String,
         ariaPreviousLabel: String,
-        rootClass: String,
-        sizeClass: String,
-        verticalClass: String,
-        positionClass: String,
-        stepsClass: String,
-        variantClass: String,
-        animatedClass: String,
-        labelPositionClass: String,
-        roundedClass: String,
-        mobileClass: String,
-        stepItemsClass: String,
-        stepMarkerClass: String,
-        stepContentClass: String,
-        stepContentTransitioningClass: String,
-        stepNavigationClass: String,
-        stepDetailsClass: String,
-        stepTitleClass: String,
-        stepLinkClass: String,
-        stepLinkClickableClass: String
+        rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        verticalClass: [String, Function, Array],
+        positionClass: [String, Function, Array],
+        stepsClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        animatedClass: [String, Function, Array],
+        stepMarkerRoundedClass: [String, Function, Array],
+        stepDividerClass: [String, Function, Array],
+        stepMarkerClass: [String, Function, Array],
+        stepContentClass: [String, Function, Array],
+        stepContentTransitioningClass: [String, Function, Array],
+        stepNavigationClass: [String, Function, Array],
+        stepDetailsClass: [String, Function, Array],
+        stepTitleClass: [String, Function, Array],
+        stepLinkClass: [String, Function, Array],
+        stepLinkClickableClass: [String, Function, Array],
+        stepLinkLabelClass: [String, Function, Array],
+        stepLinkLabelPositionClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
     },
     computed: {
         wrapperClasses() {
             return [
-                this.computedClass('steps', 'rootClass', 'o-steps-wrapper'),
-                { [`${this.computedClass('steps', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('steps', 'verticalClass', 'o-steps-wrapper-vertical')]: this.vertical },
-                { [`${this.computedClass('steps', 'positionClass', 'o-steps-wrapper-position-')}${this.position}`]: this.position && this.vertical },
+                this.computedClass('rootClass', 'o-steps__wrapper'),
+                { [this.computedClass('sizeClass', 'o-steps--', this.size)]: this.size },
+                { [this.computedClass('verticalClass', 'o-steps__wrapper-vertical')]: this.vertical },
+                { [this.computedClass('positionClass', 'o-steps__wrapper-position-', this.position)]: this.position && this.vertical },
+                { [this.computedClass('mobileClass', 'o-steps--mobile')]: this.isMatchMedia },
             ]
         },
         mainClasses() {
             return [
-                this.computedClass('steps', 'stepsClass', 'o-steps'),
-                { [`${this.computedClass('steps', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('steps', 'labelPositionClass', 'o-steps-label-')}${this.labelPosition}`]: this.labelPosition },
-                { [this.computedClass('steps', 'animatedClass', 'o-steps-animated')]: this.animated },
-                { [this.computedClass('steps', 'roundedClass', 'o-steps-rounded')]: this.rounded },
-                { [`${this.computedClass('steps', 'sizeClass', 'o-steps-mobile-')}${this.mobileMode}`]: this.mobileMode }
+                this.computedClass('stepsClass', 'o-steps'),
+                { [this.computedClass('variantClass', 'o-steps--', this.variant)]: this.variant },
+                { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
         },
-        stepItemsClasses() {
+        stepDividerClasses() {
             return [
-                this.computedClass('steps', 'stepItemsClass', 'o-step-items')
+                this.computedClass('stepDividerClass', 'o-steps__divider')
             ]
         },
         stepMarkerClasses() {
             return [
-                this.computedClass('steps', 'stepMarkerClass', 'o-step-marker')
+                this.computedClass('stepMarkerClass', 'o-steps__marker'),
+                { [this.computedClass('stepMarkerRoundedClass', 'o-steps__marker--rounded')]: this.rounded }
             ]
         },
         stepContentClasses() {
             return [
-                this.computedClass('steps', 'stepContentClass', 'o-step-content'),
-                { [this.computedClass('steps', 'stepContentTransitioningClass', 'o-step-content-transitioning')]: this.isTransitioning }
+                this.computedClass('stepContentClass', 'o-steps__content'),
+                { [this.computedClass('stepContentTransitioningClass', 'o-steps__content-transitioning')]: this.isTransitioning }
             ]
         },
         stepNavigationClasses() {
             return [
-                this.computedClass('steps', 'stepNavigationClass', 'o-step-navigation')
+                this.computedClass('stepNavigationClass', 'o-steps__navigation')
             ]
         },
-        stepDetailsClasses() {
+        stepLinkLabelClasses() {
             return [
-                this.computedClass('steps', 'stepDetailsClass', 'o-step-details')
-            ]
-        },
-        stepTitleClasses() {
-            return [
-                this.computedClass('steps', 'stepTitleClass', 'o-step-title')
+                this.computedClass('stepLinkLabelClass', 'o-steps__title')
             ]
         },
 
@@ -282,8 +273,9 @@ export default defineComponent({
     methods: {
         stepLinkClasses(childItem) {
             return [
-                this.computedClass('steps', 'stepLinkClass', 'o-step-link'),
-                { [this.computedClass('steps', 'stepLinkClickableClass', 'o-step-link-clickable')]: this.isItemClickable(childItem) }
+                this.computedClass('stepLinkClass', 'o-steps__link'),
+                { [this.computedClass('stepLinkLabelPositionClass', 'o-steps__link-label-', this.labelPosition)]: this.labelPosition },
+                { [this.computedClass('stepLinkClickableClass', 'o-steps__link-clickable')]: this.isItemClickable(childItem) }
             ]
         },
         /**

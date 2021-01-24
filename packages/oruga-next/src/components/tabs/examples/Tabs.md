@@ -14,11 +14,11 @@
             <o-switch v-model="multiline"> Multiline </o-switch>
         </p>
         <o-tabs v-model="activeTab" :multiline="multiline">
-            <o-tab-item label="Pictures">
+            <o-tab-item value="0" label="Pictures">
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
 
-            <o-tab-item label="Music">
+            <o-tab-item :value="1" label="Music">
                 Lorem <br>
                 ipsum <br>
                 dolor <br>
@@ -26,7 +26,7 @@
                 amet.
             </o-tab-item>
 
-            <o-tab-item :visible="showBooks" label="Books">
+            <o-tab-item value="2" :visible="showBooks" label="Books">
                 What light is light, if Silvia be not seen? <br>
                 What joy is joy, if Silvia be not by— <br>
                 Unless it be to think that she is by <br>
@@ -35,7 +35,7 @@
                 There is no music in the nightingale.
             </o-tab-item>
 
-            <o-tab-item label="Videos" icon="video" disabled>
+            <o-tab-item value="3" label="Videos" icon="video" disabled>
                 Nunc nec velit nec libero vestibulum eleifend.
                 Curabitur pulvinar congue luctus.
                 Nullam hendrerit iaculis augue vitae ornare.
@@ -49,7 +49,7 @@
     export default {
         data() {
             return {
-                activeTab: 0,
+                activeTab: "0",
                 showBooks: false,
                 multiline: false
             }
@@ -67,13 +67,13 @@
     <o-tabs type="boxed">
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="info-circle"></o-icon>
+                <o-icon icon="info-circle" rootClass="custom-icon"></o-icon>
                 <span> Issues 3 </span>
             </template>
         </o-tab-item>
         <o-tab-item>
             <template slot="header">
-                <o-icon icon="retweet"></o-icon>
+                <o-icon icon="retweet" rootClass="custom-icon"></o-icon>
                 <span> Pull Requests {{count}} </span>
             </template>
         </o-tab-item>
@@ -94,6 +94,12 @@ export default {
     }
 }
 </script>
+
+<style>
+.custom-icon {
+  margin-right: 5px;
+}
+</style>
 ```
 :::
 
@@ -120,7 +126,7 @@ export default {
             </o-field>
             <o-field label="Type">
                 <o-select v-model="type" placeholder="Type">
-                    <option :value="null">Default</option>
+                    <option value="default">Default</option>
                     <option value="boxed">Boxed</option>
                     <option value="toggle">Toggle</option>
                 </o-select>
@@ -167,7 +173,7 @@ export default {
                 expanded: false,
                 atRight: false,
                 size: null,
-                type: null
+                type: 'default'
             }
         }
     }

@@ -20,12 +20,16 @@
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
-        <span :class="checkClasses"/>
-        <span :class="labelClasses"><slot/></span>
+        <span :class="elementsWrapperClasses">
+            <span :class="checkClasses">
+                <span :class="checkSwitchClasses"></span>
+            </span>
+            <span :class="labelClasses"><slot/></span>
+        </span>
     </label>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -39,6 +43,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default defineComponent({
     name: 'OSwitch',
     mixins: [BaseComponentMixin],
+    configField: 'switch',
     emits: ['update:modelValue'],
     props: {
         /** @model */
@@ -85,27 +90,23 @@ export default defineComponent({
             type: Boolean,
             default: true
         },
-        /** Outlined style */
-        outlined: {
-            type: Boolean,
-            default: false
-        },
         /** Show label on left */
         leftLabel: {
             type: Boolean,
             default: false
         },
-        rootClass: String,
-        disabledClass: String,
-        checkClass: String,
-        roundedClass: String,
-        outlinedClass: String,
-        labelClass: String,
-        sizeClass: String,
-        variantClass: String,
-        passiveVariantClass: String,
-        animationClass: String,
-        leftLabelClass: String
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkSwitchClass: [String, Function, Array],
+        roundedClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array],
+        elementsWrapperClass: [String, Function, Array],
+        passiveVariantClass: [String, Function, Array],
+        leftLabelClass: [String, Function, Array]
     },
     data() {
         return {
@@ -116,25 +117,35 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('switch', 'rootClass', 'o-switch'),
-                { [`${this.computedClass('switch', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('switch', 'disabledClass', 'o-switch-disabled')]: this.disabled },
-                { [this.computedClass('switch', 'roundedClass', 'o-switch-rounded')]: this.rounded },
-                { [this.computedClass('switch', 'outlinedClass', 'o-switch-outlined')]: this.outlined },
-                { [this.computedClass('switch', 'leftLabelClass', 'o-switch-left')]: this.leftLabel }
+                this.computedClass('rootClass', 'o-switch'),
+                { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
+                { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
+                { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('switch', 'checkClass', 'o-switch-check'),
-                { [this.computedClass('switch', 'animationClass', 'o-switch-elastic')]: (this.isMouseDown && !this.disabled)},
-                { [`${this.computedClass('switch', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant },
-                { [`${this.computedClass('switch', 'passiveVariantClass', 'o-color-', true)}${this.passiveVariant}-passive`]: this.passiveVariant }
+                this.computedClass('checkClass', 'o-switch__check'),
+                { [this.computedClass('checkCheckedClass', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
+                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
+            ]
+        },
+        elementsWrapperClasses() {
+            return [
+                this.computedClass('elementsWrapperClass', 'o-switch__wrapper'),
+                { [this.computedClass('leftLabelClass', 'o-switch__wrapper--left')]: this.leftLabel },
+            ]
+        },
+        checkSwitchClasses() {
+            return [
+                this.computedClass('checkSwitchClass', 'o-switch__check-switch'),
+                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('switch', 'labelClass', 'o-switch-label')
+                this.computedClass('labelClass', 'o-switch__label')
             ]
         },
         computedValue: {

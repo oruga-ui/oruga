@@ -1,13 +1,16 @@
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedChildMixin from '../../utils/TabbedChildMixin'
-import { getStyleValue } from '../../utils/helpers'
 
+/**
+ * @displayName Step Item
+ */
 export default defineComponent({
     name: 'OStepItem',
     mixins: [BaseComponentMixin, TabbedChildMixin('step')],
+    configField: 'steps',
     props: {
         /** Step marker content (when there is no icon) */
         step: [String, Number],
@@ -18,24 +21,23 @@ export default defineComponent({
             type: Boolean,
             default: undefined
         },
-        itemClass: String,
-        variantClass: String,
-        itemActiveClass: String,
-        itemPreviousClass: String
+        itemClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemHeaderActiveClass: [String, Function, Array],
+        itemHeaderPreviousClass: [String, Function, Array]
     },
     computed: {
         elementClasses() {
             return [
-                this.computedClass('steps', 'itemClass', 'o-step-item')
+                this.computedClass('itemClass', 'o-steps__item')
             ]
         },
         itemClasses() {
             return [
                 this.headerClass,
-                this.computedClass('steps', 'itemClass', 'o-step-item'),
-                { [`${this.computedClass('steps', 'variantClass', 'o-color-', true)}${getStyleValue(this.variant) || this.parent.$props.variant}`]: getStyleValue(this.variant) || this.parent.$props.variant },
-                { [this.computedClass('steps', 'itemActiveClass', 'o-step-item-active')]: this.isActive },
-                { [this.computedClass('steps', 'itemPreviousClass', 'o-step-item-previous')]: this.parent.activeItem.index > this.index }
+                this.computedClass('itemHeaderClass', 'o-steps__nav-item'),
+                { [this.computedClass('itemHeaderActiveClass', 'o-steps__nav-item-active')]: this.isActive },
+                { [this.computedClass('itemHeaderPreviousClass', 'o-steps__nav-item-previous')]: this.parent.activeItem.index > this.index }
             ]
         }
     }

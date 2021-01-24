@@ -1,9 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OButton render correctly 1`] = `
-<button type="button" class="o-button">
-    <!---->
-    <!---->
-    <!---->
-</button>
-`;
+exports[`OButton render correctly 1`] = `<button type="button" class="o-btn"><span class="o-btn__wrapper"><!----> <!----> <!----></span></button>`;

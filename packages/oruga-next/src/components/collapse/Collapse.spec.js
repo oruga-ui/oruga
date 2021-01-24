@@ -39,38 +39,38 @@ describe('OCollapse', () => {
         })
 
         it('call toggle method', async () => {
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(false)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(false)
             wrapper.vm.toggle()
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.isOpen).toBe(true)
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(true)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(true)
         })
 
         it('emit a click event', async () => {
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(false)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(false)
             const updateOpen = jest.fn()
             wrapper.vm.$on('update:open', updateOpen)
-            wrapper.find('.o-collapse-trigger').trigger('click')
+            wrapper.find('.o-clps__trigger').trigger('click')
             await wrapper.vm.$nextTick()
             expect(updateOpen).toHaveBeenCalledTimes(1)
             expect(updateOpen).toHaveBeenCalledWith(true)
             expect(wrapper.vm.isOpen).toBe(true)
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(true)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(true)
         })
 
         it('should emit open event', () => {
             const open = jest.fn()
             wrapper.vm.$on('open', open)
-            wrapper.find('.o-collapse-trigger').trigger('click')
+            wrapper.find('.o-clps__trigger').trigger('click')
             expect(open).toHaveBeenCalledTimes(1)
         })
 
         it('update open prop', async () => {
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(false)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(false)
             wrapper.setProps({ open: true })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.isOpen).toBe(true)
-            expect(wrapper.find('.o-collapse-content').isVisible()).toBe(true)
+            expect(wrapper.find('.o-clps__content').isVisible()).toBe(true)
         })
     })
 
@@ -81,7 +81,7 @@ describe('OCollapse', () => {
                 trigger: triggerSlot
             }
         })
-        expect(wrapper.find('.o-collapse-trigger :first-child').html()).toBe(triggerSlot)
+        expect(wrapper.find('.o-clps__trigger :first-child').html()).toBe(triggerSlot)
     })
 
     it('should have scoped trigger slot', () => {
@@ -91,7 +91,7 @@ describe('OCollapse', () => {
                 trigger: triggerSlot
             }
         })
-        expect(wrapper.find('.o-collapse-trigger :first-child').html()).toBe(triggerSlot)
+        expect(wrapper.find('.o-clps__trigger :first-child').html()).toBe(triggerSlot)
     })
 
     it('should have default slot', () => {
@@ -101,7 +101,7 @@ describe('OCollapse', () => {
                 default: slotDefault
             }
         })
-        expect(wrapper.find('.o-collapse-content :first-child').html()).toBe(slotDefault)
+        expect(wrapper.find('.o-clps__content :first-child').html()).toBe(slotDefault)
     })
 
     it('should emit close event', () => {
@@ -112,7 +112,7 @@ describe('OCollapse', () => {
         })
         const close = jest.fn()
         wrapper.vm.$on('close', close)
-        wrapper.find('.o-collapse-trigger').trigger('click')
+        wrapper.find('.o-clps__trigger').trigger('click')
         expect(close).toHaveBeenCalledTimes(1)
     })
 })

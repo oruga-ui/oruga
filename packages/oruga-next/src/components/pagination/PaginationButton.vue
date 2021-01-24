@@ -13,15 +13,15 @@
     </component>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
-
 import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 export default defineComponent({
     name: 'OPaginationButton',
     inject: ['$pagination'],
+    configField: 'pagination',
     props: {
         page: {
             type: Object,

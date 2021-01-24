@@ -1,7 +1,4 @@
 import { defineComponent } from 'vue'
-
-import { OField } from '../components/field'
-
 import config from './config'
 import { getValueByPath } from './helpers'
 
@@ -34,14 +31,14 @@ export default defineComponent({
 		useHtml5Validation: {
 			type: Boolean,
 			default: () => {
-				return getValueByPath(config, 'useHtml5Validation', true);
+				return getValueByPath(config, "useHtml5Validation", true);
 			},
 		},
 		/** Show status icon using field and variant prop */
 		statusIcon: {
 			type: Boolean,
 			default: () => {
-				return getValueByPath(config, 'statusIcon', true);
+				return getValueByPath(config, "statusIcon", true);
 			},
 		},
 		/**
@@ -57,17 +54,17 @@ export default defineComponent({
 		};
 	},
 	computed: {
-		parentField(): OField {
-			return (this as any).$field as OField;
+		parentField() {
+			return this.$field;
 		},
 
 		/**
 		 * Get the type prop from parent if it's a Field.
 		 */
-		statusVariant(): string | undefined {
+		statusVariant() {
 			if (!this.parentField) return;
 			if (!this.parentField.newVariant) return;
-			if (typeof this.parentField.newVariant === 'string') {
+			if (typeof this.parentField.newVariant === "string") {
 				return this.parentField.newVariant;
 			} else {
 				for (const key in this.parentField.newVariant) {
@@ -81,10 +78,10 @@ export default defineComponent({
 		/**
 		 * Get the message prop from parent if it's a Field.
 		 */
-		statusMessage(): string | undefined {
+		statusMessage() {
 			if (!this.parentField) return;
 
-			return this.parentField.newMessage || (this.parentField.hasMessageSlot ? 'true' : undefined);
+			return this.parentField.newMessage || this.parentField.hasMessageSlot;
 		},
 	},
 	methods: {
@@ -100,19 +97,19 @@ export default defineComponent({
 			});
 		},
 
-		onBlur(event: Event) {
+		onBlur($event) {
 			this.isFocused = false;
-			this.$emit('blur', event);
+			this.$emit("blur", $event);
 			this.checkHtml5Validity();
 		},
 
-		onFocus(event: Event) {
+		onFocus($event) {
 			this.isFocused = true;
-			this.$emit('focus', event);
+			this.$emit("focus", $event);
 		},
 
-		getElement(): any {
-			let el = this.$refs[(this as any).$elementRef] as any;
+		getElement() {
+			let el = this.$refs[this.$elementRef];
 			while (el && el.$elementRef) {
 				el = el.$refs[el.$elementRef];
 			}
@@ -120,13 +117,12 @@ export default defineComponent({
 		},
 
 		setInvalid() {
-			const variant = 'danger';
-			const el = this.getElement()
-			const message = this.validationMessage || (el && el.validationMessage);
+			const variant = "danger";
+			const message = this.validationMessage || this.getElement().validationMessage;
 			this.setValidity(variant, message);
 		},
 
-		setValidity(variant?: string, message?: string) {
+		setValidity(variant, message) {
 			this.$nextTick(() => {
 				if (this.parentField) {
 					// Set type only if not defined
@@ -156,7 +152,7 @@ export default defineComponent({
 				this.setInvalid();
 				this.isValid = false;
 			} else {
-				this.setValidity();
+				this.setValidity(null, null);
 				this.isValid = true;
 			}
 

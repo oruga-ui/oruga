@@ -10,11 +10,11 @@
             type="radio"
             ref="input"
             @click.stop
+            :class="checkClasses"
             :disabled="disabled"
             :required="required"
             :name="name"
             :value="nativeValue">
-        <span :class="checkClasses" />
         <span :class="labelClasses"><slot/></span>
     </label>
 </template>
@@ -34,31 +34,35 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default defineComponent({
     name: 'ORadio',
     mixins: [BaseComponentMixin, CheckRadioMixin],
+    configField: 'radio',
     props: {
-        rootClass: String,
-        disabledClass: String,
-        checkClass: String,
-        labelClass: String,
-        sizeClass: String,
-        variantClass: String
+        rootClass: [String, Function, Array],
+        disabledClass: [String, Function, Array],
+        checkCheckedClass: [String, Function, Array],
+        checkClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        variantClass: [String, Function, Array]
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('radio', 'rootClass', 'o-radio'),
-                { [`${this.computedClass('radio', 'sizeClass', 'o-size-', true)}${this.size}`]: this.size },
-                { [this.computedClass('radio', 'disabledClass', 'o-radio-disabled')]: this.disabled }
+                this.computedClass('rootClass', 'o-radio'),
+                { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
+                { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
+                { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }
+
             ]
         },
         checkClasses() {
             return [
-                this.computedClass('radio', 'checkClass', 'o-radio-check'),
-                { [`${this.computedClass('radio', 'variantClass', 'o-color-', true)}${this.variant}`]: this.variant }
+                this.computedClass('checkClass', 'o-radio__check'),
+                { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.value === this.nativeValue },
             ]
         },
         labelClasses() {
             return [
-                this.computedClass('radio', 'labelClass', 'o-radio-label')
+                this.computedClass('labelClass', 'o-radio__label')
             ]
         }
     }
