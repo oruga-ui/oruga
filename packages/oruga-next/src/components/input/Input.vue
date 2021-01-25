@@ -29,7 +29,7 @@
             :icon="icon"
             :pack="iconPack"
             :size="size"
-            @click.native="iconClick('icon-click', $event)"/>
+            @click="iconClick('icon-click', $event)"/>
 
         <o-icon
             v-if="hasIconRight"
@@ -40,7 +40,7 @@
             :size="size"
             :variant="rightIconVariant"
             both
-            @click.native="rightIconClick"/>
+            @click="rightIconClick"/>
 
         <small
             v-if="maxlength && hasCounter && isFocused && type !== 'number'"
