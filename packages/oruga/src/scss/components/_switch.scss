@@ -4,7 +4,7 @@ $switch-active-background-color: $primary !default;
 $switch-active-box-shadow-color: #b5b5b5 !default;
 $switch-active-box-shadow-length: 0 0 0.5em !default;
 $switch-active-box-shadow-opacity: 0.6 !default;
-$swtich-action-background: #f5f5f5 !default;
+$switch-action-background: #f5f5f5 !default;
 $switch-background: #b5b5b5 !default;
 $switch-border-radius: $base-border-radius !default;
 $switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
@@ -73,7 +73,7 @@ $switch-width: $switch-width-number * 1em !default;
             eparam('$width', variable('switch-width', $switch-width)),
             eparam('$padding', variable('switch-padding', $switch-padding))
         );
-        @include avariable('background', 'swtich-action-background', $swtich-action-background);
+        @include avariable('background', 'switch-action-background', $switch-action-background);
         @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
         transition-property: transform;
         @include avariable('transition-duration', 'transition-duration', $speed-slow);
