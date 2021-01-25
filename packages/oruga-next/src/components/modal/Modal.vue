@@ -32,7 +32,7 @@
                     :class="closeClasses"
                     :icon="closeIcon"
                     :size="closeIconSize"
-                    @click.native="cancel('x')"/>
+                    @click="cancel('x')"/>
             </div>
         </div>
     </transition>

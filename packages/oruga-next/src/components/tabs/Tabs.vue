@@ -11,7 +11,7 @@
                         :component="childItem"
                         name="header"
                         tag="button"
-                        @click.native="childClick(childItem)"
+                        @click="childClick(childItem)"
                         :class="childItem.headerClasses"
                     />
                     <button v-else @click="childClick(childItem)" :class="childItem.headerClasses">

@@ -57,7 +57,7 @@
                             <o-checkbox
                                 :value="isAllChecked"
                                 :disabled="isAllUncheckable"
-                                @change.native="checkAll"/>
+                                @change="checkAll"/>
                         </template>
                     </th>
                     <th
@@ -98,7 +98,7 @@
                             <o-checkbox
                                 :value="isAllChecked"
                                 :disabled="isAllUncheckable"
-                                @change.native="checkAll"/>
+                                @change="checkAll"/>
                         </template>
                     </th>
                 </tr>
@@ -123,7 +123,7 @@
                             </template>
                             <o-input
                                 v-else
-                                @[filtersEvent].native="onFiltersEvent"
+                                @[filtersEvent]="onFiltersEvent"
                                 v-model="filters[column.field]"
                                 :type="column.numeric ? 'number' : 'text'" />
                         </template>
@@ -160,7 +160,7 @@
                                 :pack="iconPack"
                                 :rotation="isVisibleDetailRow(row) ? 90 : 0"
                                 role="button"
-                                @click.native.stop="toggleDetails(row)"
+                                @click.stop="toggleDetails(row)"
                                 clickable
                                 both />
                         </td>
@@ -171,7 +171,7 @@
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                                @click.prevent.stop="checkRow(row, index, $event)"
                             />
                         </td>
 
@@ -188,7 +188,7 @@
                                     :class="tdClasses(row, column)"
                                     :data-label="column.label"
                                     :props="{ row, column, index, colindex, toggleDetails }"
-                                    @click.native="$emit('cell-click', row, column, index, colindex, $event)"
+                                    @click="$emit('cell-click', row, column, index, colindex, $event)"
                                 />
                             </template>
 
@@ -200,7 +200,7 @@
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                                @click.prevent.stop="checkRow(row, index, $event)"
                             />
                         </td>
                     </tr>

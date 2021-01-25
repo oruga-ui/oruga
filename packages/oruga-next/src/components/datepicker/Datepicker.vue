@@ -33,9 +33,9 @@
                         :readonly="!editable"
                         v-bind="inputBind"
                         :use-html5-validation="false"
-                        @click.native="onInputClick"
-                        @keyup.native.enter="togglePicker(true)"
-                        @change.native="onChange($event.target.value)"
+                        @click="onInputClick"
+                        @keyup.enter="togglePicker(true)"
+                        @change="onChange($event.target.value)"
                         @focus="handleOnFocus" />
                 </slot>
             </template>
@@ -193,7 +193,7 @@
             :readonly="false"
             v-bind="$attrs"
             :use-html5-validation="false"
-            @change.native="onChangeNativePicker"
+            @change="onChangeNativePicker"
             @focus="onFocus"
             @blur="onBlur"/>
     </div>
