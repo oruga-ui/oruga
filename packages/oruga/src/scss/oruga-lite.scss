@@ -42,6 +42,11 @@ $whitelist: add-to-whitelist(
     'select-height'
 );
 
+// sidebar
+$whitelist: add-to-whitelist(
+    'sidebar-zindex', 'sidebar-overlay'
+);
+
 // slider
 $whitelist: add-to-whitelist(
     'slider-track-background', 'slider-tick-background', 'slider-thumb-size', 'slider-thumb-background', 'slider-thumb-border', 'slider-background', 'slider-tick-width', 'slider-track-height'
