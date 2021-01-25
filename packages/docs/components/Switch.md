@@ -332,7 +332,7 @@ export default {
 | --oruga-switch-active-box-shadow-color         | \$switch-active-box-shadow-color         | #b5b5b5                                                                                          |
 | --oruga-switch-active-box-shadow-length        | \$switch-active-box-shadow-length        | 0 0 0.5em                                                                                        |
 | --oruga-switch-active-box-shadow-opacity       | \$switch-active-box-shadow-opacity       | 0.6                                                                                              |
-| --oruga-swtich-action-background               | \$swtich-action-background               | #f5f5f5                                                                                          |
+| --oruga-switch-action-background               | \$switch-action-background               | #f5f5f5                                                                                          |
 | --oruga-switch-background                      | \$switch-background                      | #b5b5b5                                                                                          |
 | --oruga-switch-border-radius                   | \$switch-border-radius                   | \$base-border-radius                                                                             |
 | --oruga-switch-box-shadow                      | \$switch-box-shadow                      | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |

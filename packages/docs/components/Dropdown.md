@@ -427,29 +427,29 @@ export default {
 
 ## Style
 
-| CSS Variable                                 | SASS Variable                          | Default                                                              |
-| -------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
-| --oruga-dropdown-disabled-opacity            | \$dropdown-disabled-opacity            | \$base-disabled-opacity                                              |
-| --oruga-dropdown-item-background-active      | \$dropdown-item-background-active      | \$primary                                                            |
-| --oruga-dropdown-item-color-active           | \$dropdown-item-color-active           | \$primary-invert                                                     |
-| --oruga-dropdown-item-color                  | \$dropdown-item-color                  | #000000                                                              |
-| --oruga-dropdown-item-disabled-opacity       | \$dropdown-item-disabled-opacity       | \$base-disabled-opacity                                              |
-| --oruga-dropdown-item-font-size              | \$dropdown-item-font-size              | \$base-font-size                                                     |
-| --oruga-dropdown-item-hover-background-color | \$dropdown-item-hover-background-color | #f5f5f5                                                              |
-| --oruga-dropdown-item-hover-color            | \$dropdown-item-hover-color            | #000000                                                              |
-| --oruga-dropdown-item-line-height            | \$dropdown-item-line-height            | \$base-line-height                                                   |
-| --oruga-dropdown-item-padding                | \$dropdown-item-padding                | .375rem 1rem                                                         |
-| --oruga-dropdown-item-font-weight            | \$dropdown-item-font-weight            | 400                                                                  |
-| --oruga-dropdown-menu-background             | \$dropdown-menu-background             | #ffffff                                                              |
-| --oruga-dropdown-menu-border-radius          | \$dropdown-menu-border-radius          | \$base-border-radius                                                 |
-| --oruga-dropdown-menu-box-shadow             | \$dropdown-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
-| --oruga-dropdown-menu-margin                 | \$dropdown-menu-margin                 | 0                                                                    |
-| --oruga-dropdown-menu-padding                | \$dropdown-menu-padding                | .5rem 0 .5rem 0                                                      |
-| --oruga-dropdown-menu-width                  | \$dropdown-menu-width                  | 12rem                                                                |
-| --oruga-dropdown-menu-zindex                 | \$dropdown-menu-zindex                 | 20                                                                   |
-| --oruga-dropdown-mobile-max-height           | \$dropdown-mobile-max-height           | calc(100vh - 120px)                                                  |
-| --oruga-dropdown-mobile-max-width            | \$dropdown-mobile-max-width            | 460px                                                                |
-| --oruga-dropdown-mobile-overlay-color        | \$dropdown-mobile-overlay-color        | rgba(#000000, 0.86)                                                  |
-| --oruga-dropdown-mobile-overlay-zindex       | \$dropdown-mobile-overlay-zindex       | 40                                                                   |
-| --oruga-dropdown-mobile-width                | \$dropdown-mobile-width                | calc(100vw - 40px)                                                   |
-| --oruga-dropdown-mobile-zindex               | \$dropdown-mobile-zindex               | 50                                                                   |
+| CSS Variable                                  | SASS Variable                           | Default                                                              |
+| --------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------- |
+| --oruga-dropdown-disabled-opacity             | \$dropdown-disabled-opacity             | \$base-disabled-opacity                                              |
+| --oruga-dropdown-item-active-background-color | \$dropdown-item-active-background-color | \$primary                                                            |
+| --oruga-dropdown-item-active-color            | \$dropdown-item-active-color            | \$primary-invert                                                     |
+| --oruga-dropdown-item-color                   | \$dropdown-item-color                   | #000000                                                              |
+| --oruga-dropdown-item-disabled-opacity        | \$dropdown-item-disabled-opacity        | \$base-disabled-opacity                                              |
+| --oruga-dropdown-item-font-size               | \$dropdown-item-font-size               | \$base-font-size                                                     |
+| --oruga-dropdown-item-hover-background-color  | \$dropdown-item-hover-background-color  | #f5f5f5                                                              |
+| --oruga-dropdown-item-hover-color             | \$dropdown-item-hover-color             | #000000                                                              |
+| --oruga-dropdown-item-line-height             | \$dropdown-item-line-height             | \$base-line-height                                                   |
+| --oruga-dropdown-item-padding                 | \$dropdown-item-padding                 | .375rem 1rem                                                         |
+| --oruga-dropdown-item-font-weight             | \$dropdown-item-font-weight             | 400                                                                  |
+| --oruga-dropdown-menu-background              | \$dropdown-menu-background              | #ffffff                                                              |
+| --oruga-dropdown-menu-border-radius           | \$dropdown-menu-border-radius           | \$base-border-radius                                                 |
+| --oruga-dropdown-menu-box-shadow              | \$dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| --oruga-dropdown-menu-margin                  | \$dropdown-menu-margin                  | 0                                                                    |
+| --oruga-dropdown-menu-padding                 | \$dropdown-menu-padding                 | .5rem 0 .5rem 0                                                      |
+| --oruga-dropdown-menu-width                   | \$dropdown-menu-width                   | 12rem                                                                |
+| --oruga-dropdown-menu-zindex                  | \$dropdown-menu-zindex                  | 20                                                                   |
+| --oruga-dropdown-mobile-max-height            | \$dropdown-mobile-max-height            | calc(100vh - 120px)                                                  |
+| --oruga-dropdown-mobile-max-width             | \$dropdown-mobile-max-width             | 460px                                                                |
+| --oruga-dropdown-mobile-overlay-color         | \$dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                  |
+| --oruga-dropdown-mobile-overlay-zindex        | \$dropdown-mobile-overlay-zindex        | 40                                                                   |
+| --oruga-dropdown-mobile-width                 | \$dropdown-mobile-width                 | calc(100vw - 40px)                                                   |
+| --oruga-dropdown-mobile-zindex                | \$dropdown-mobile-zindex                | 50                                                                   |
