@@ -5,6 +5,11 @@ $sass-vars: false;
 @import "utilities/_variables";
 @import "utilities/_helpers";
 
+// globals
+$whitelist: add-to-whitelist(
+    'base-font-size'
+);
+
 // autocomplete
 $whitelist: add-to-whitelist(
     'autocomplete-menu-background', 'autocomplete-menu-zindex'
@@ -27,9 +32,15 @@ $whitelist: add-to-whitelist(
     'dropdown-item-active-background-color', 'dropdown-item-active-color', 'dropdown-item-disabled-opacity'
 );
 
+// icon
+$whitelist: add-to-whitelist(
+    'icon-spin-duration'
+);
+
+
 // input
 $whitelist: add-to-whitelist(
-    'input-height'
+    'input-height', 'input-width'
 );
 
 // radio
@@ -59,7 +70,7 @@ $whitelist: add-to-whitelist(
 
 // switch
 $whitelist: add-to-whitelist(
-    'switch-width', 'switch-padding', 'switch-background', 'switch-action-background', 'switch-disabled-opacity'
+    'switch-width', 'switch-padding', 'switch-background', 'switch-action-background', 'switch-disabled-opacity', 'switch-rounded-border-radius'
 );
 
 

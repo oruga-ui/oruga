@@ -9,7 +9,7 @@ $select-rounded-border-radius: $base-rounded-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
 $select-icon-zindex: 4 !default;
-$select-font-size: $base-font-size !default;
+
 $select-height: $control-height !default;
 $select-line-height: $base-line-height !default;
 $select-margin: 0 !default;
@@ -40,7 +40,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     justify-content: flex-start;
     align-items: center;
     outline: none;
-    @include avariable('font-size', 'select-font-size', $select-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     @include avariable('max-width', 'select-max-width', $select-max-width);
     @include avariable('width', 'select-width', $select-width);
     @include avariable('background-color', 'select-background-color', $select-background-color);
