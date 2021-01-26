@@ -576,7 +576,8 @@ export default defineComponent({
             isAsc: true,
             filters: {},
             defaultSlots: [],
-            firstTimeSort: true, // Used by first time initSort
+            // firstTimeSort: true, // Used by first time initSort
+            firstTimeSort: false, // TODO
             sequence: 1
         }
     },
@@ -1181,6 +1182,7 @@ export default defineComponent({
         * Call initSort only first time (For example async data).
         */
         checkSort() {
+            // TODO
             if (this.newColumns.length && this.firstTimeSort) {
                 this.initSort()
                 this.firstTimeSort = false
@@ -1338,9 +1340,6 @@ export default defineComponent({
         _nextSequence() {
             return this.sequence++
         }
-    },
-    mounted() {
-        this.checkSort()
     }
 })
 </script>
