@@ -9,7 +9,7 @@
         </div>
 
         <o-table-mobile-sort
-            v-if="mobileCards && hasSortablenewColumns"
+            v-if="isMobile && hasSortablenewColumns"
             :current-sort-column="currentSortColumn"
             :columns="newColumns"
             :placeholder="mobileSortPlaceholder"
@@ -175,24 +175,21 @@
                             />
                         </td>
 
-                        <template v-for="(column, colindex) in visibleColumns">
+                        <!-- :key="column.newKey + index + ':' + colindex" -->
 
-                            <template v-if="column.hasDefaultSlot">
-                                <o-slot-component
-                                    :key="column.newKey + index + ':' + colindex"
-                                    v-bind="column.tdAttrs && column.tdAttrs(row, column)"
-                                    :component="column"
-                                    scoped
-                                    name="default"
-                                    tag="td"
-                                    :class="tdClasses(row, column)"
-                                    :data-label="column.label"
-                                    :props="{ row, column, index, colindex, toggleDetails }"
-                                    @click="$emit('cell-click', row, column, index, colindex, $event)"
-                                />
-                            </template>
-
-                        </template>
+                        <o-slot-component
+                            v-for="(column, colindex) in visibleColumns"
+                            :key="column.newKey + index + ':' + colindex"
+                            v-bind="column.tdAttrs && column.tdAttrs(row, column)"
+                            :component="column"
+                            scoped
+                            name="default"
+                            tag="td"
+                            :class="tdClasses(row, column)"
+                            :data-label="column.label"
+                            :props="{ row, column, index, colindex, toggleDetails }"
+                            @click="$emit('cell-click', row, column, index, colindex, $event)"
+                        />
 
                         <td
                             :class="tdCheckboxClasses"
@@ -276,7 +273,7 @@
 </template>
 
 <script lang="ts">
-import { createVNode, defineComponent, h } from 'vue'
+import { createApp, createVNode, defineComponent, h } from 'vue'
 
 import Button from '../button/Button.vue'
 import Checkbox from '../checkbox/Checkbox.vue'
@@ -296,7 +293,6 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
 import config from '../../utils/config'
-import { VueInstance } from '../../utils/config'
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -600,7 +596,7 @@ export default defineComponent({
                 this.computedClass('wrapperClass', 'o-table__wrapper'),
                 { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
                 { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable },
-                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.mobileCards && this.isMatchMedia },
+                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.isMobile },
             ]
         },
         footerClasses() {
@@ -762,17 +758,19 @@ export default defineComponent({
             if (this.columns && this.columns.length) {
                 return this.columns.map((column) => {
                     const vnode = createVNode(TableColumn, column, (props) => {
-                        const vnode = h(
-                            'span',
-                            { innerHTML: getValueByPath(props.row, column.field) }
-                        )
+                        const vnode = h('span', {}, getValueByPath(props.row, column.field))
                         return [vnode]
                     })
-                    vnode.appContext = VueInstance._context
-                    return vnode
+                    return createApp(vnode)
+                        .provide('$table', this)
+                        .mount(document.createElement('div'))
                 })
             }
             return this.defaultSlots
+        },
+
+        isMobile() {
+            return this.mobileCards && this.isMatchMedia
         }
     },
     watch: {
