@@ -2,22 +2,22 @@
     <div :class="rootClasses">
         <input
             v-if="type !== 'textarea'"
+            v-bind="$attrs"
             ref="input"
             :class="inputClasses"
             :type="newType"
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
-            v-bind="$attrs"
             v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus">
 
         <textarea
             v-else
+            v-bind="$attrs"
             ref="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
-            v-bind="$attrs"
             v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"/>

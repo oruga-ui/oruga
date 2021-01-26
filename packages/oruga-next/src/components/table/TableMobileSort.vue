@@ -17,14 +17,13 @@
                 <option
                     v-for="(column, index) in sortableColumns"
                     :key="index"
-                    :value="column">
+                    :value="column.newKey">
                     {{ column.label }}
                 </option>
             </o-select>
             <o-button @click="sort">
-                <!--  :class="$table.iconSortClasses()" -->
                 <o-icon
-                    v-show="currentSortColumn === mobileSort"
+                    v-show="isCurrentSort"
                     :icon="sortIcon"
                     :pack="iconPack"
                     :size="sortIconSize"
@@ -43,6 +42,8 @@ import Button from '../button/Button.vue'
 import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
 import Field from '../field/Field.vue'
+
+import { getValueByPath } from '../../../../oruga/src/utils/helpers'
 
 export default defineComponent({
     name: 'OTableMobileSort',
@@ -71,7 +72,7 @@ export default defineComponent({
     },
     data() {
         return {
-            mobileSort: this.currentSortColumn,
+            mobileSort: getValueByPath(this.currentSortColumn, 'newKey'),
             defaultEvent: {
                 shiftKey: true,
                 altKey: true,
@@ -82,25 +83,36 @@ export default defineComponent({
     },
     computed: {
         showPlaceholder() {
-            return !this.columns || !this.columns.some((column) => column === this.mobileSort)
+            return !this.columns || !this.columns.some((column) =>
+                (getValueByPath(column, 'newKey') === this.mobileSort)
+            )
         },
         sortableColumns() {
             if (!this.columns) return []
             return this.columns.filter(c => c.sortable)
+        },
+        isCurrentSort() {
+            return getValueByPath(this.currentSortColumn, 'newKey') === this.mobileSort
         }
     },
     watch: {
-        mobileSort(column) {
-            if (this.currentSortColumn === column) return
+        mobileSort(value) {
+            if (this.currentSortColumn.newKey === value) return
+            const column = this.sortableColumns.filter(c =>
+                (getValueByPath(c, 'newKey') === value)
+            )[0]
             this.$emit('sort', column, this.defaultEvent)
         },
         currentSortColumn(column) {
-            this.mobileSort = column
+            this.mobileSort = getValueByPath(column, 'newKey')
         }
     },
     methods: {
         sort() {
-            this.$emit('sort', this.mobileSort, this.defaultEvent)
+            const column = this.sortableColumns.filter(c =>
+                (getValueByPath(c, 'newKey') === this.mobileSort)
+            )[0]
+            this.$emit('sort', column, this.defaultEvent)
         }
     }
 })

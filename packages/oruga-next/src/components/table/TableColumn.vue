@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
 
 import { toCssDimension } from '../../utils/helpers'
 
@@ -63,13 +63,13 @@ export default defineComponent({
             }
         },
         hasDefaultSlot() {
-            return this.$scopedSlots.default
+            return this.$slots.default
         },
         hasSearchableSlot() {
-            return this.$scopedSlots.searchable
+            return this.$slots.searchable
         },
         hasHeaderSlot() {
-            return this.$scopedSlots.header
+            return this.$slots.header
         },
         isHeaderUnselectable() {
             return !this.headerSelectable && this.sortable
@@ -82,12 +82,12 @@ export default defineComponent({
         this.newKey = (this.$table as any)._nextSequence()
         this.$table._addColumn(this)
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.$table._removeColumn(this)
     },
     render() {
         // renderless
-        return this.$createElement('span', { domProps: { 'data-id': this.newKey } }, this.label)
+        return h('span', { domProps: { 'data-id': this.newKey } }, this.label)
     }
 })
 </script>

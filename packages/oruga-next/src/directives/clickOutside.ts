@@ -74,7 +74,7 @@ function unbind(el: any) {
 const directive = {
     beforeMount: bind,
     beforeUpdate: update,
-    beforeDestroy: unbind,
+    beforeUnmount: unbind,
     instances
 }
 

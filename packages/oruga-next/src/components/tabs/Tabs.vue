@@ -7,7 +7,7 @@
                 v-show="childItem.visible"
                 :class="itemWrapperClasses">
                     <o-slot-component
-                        v-if="childItem.$scopedSlots.header"
+                        v-if="childItem.$slots.header"
                         :component="childItem"
                         name="header"
                         tag="button"

@@ -3,7 +3,10 @@ import config from './config'
 import { getValueByPath } from './helpers'
 
 export default defineComponent({
-	inject: ['$field', '$elementRef'],
+	inject: {
+        $field: { from: "$field", default: false },
+        $elementRef: { from: "$elementRef", default: false },
+    },
 	emits: ['blur', 'focus'],
 	props: {
 		/**

@@ -32,7 +32,7 @@ export default defineComponent({
             this.$matchMediaRef.addListener(this.onMatchMedia, false)
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (typeof window !== 'undefined') {
             this.$matchMediaRef.removeListener(this.checkMatchMedia)
         }
