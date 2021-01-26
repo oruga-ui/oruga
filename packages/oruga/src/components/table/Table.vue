@@ -569,7 +569,8 @@ export default {
             isAsc: true,
             filters: {},
             defaultSlots: [],
-            firstTimeSort: true, // Used by first time initSort
+            // firstTimeSort: true, // Used by first time initSort
+            firstTimeSort: false,
             sequence: 1
         }
     },
@@ -1334,9 +1335,6 @@ export default {
         _nextSequence() {
             return this.sequence++
         }
-    },
-    mounted() {
-        this.checkSort()
     }
 }
 </script>
