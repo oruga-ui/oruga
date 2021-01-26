@@ -70,7 +70,9 @@ export default defineComponent({
             $field: this
         }
     },
-    inject: ['$field'],
+    inject: {
+        $field: { from: '$field', default: false }
+    },
     props: {
         /**
          * 	Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete
@@ -221,8 +223,9 @@ export default defineComponent({
     methods: {
         hasAddons() {
             let renderedNode = 0
-            if (this.$slots.default) {
-                renderedNode = this.$slots.default().reduce((i, node) => node.tag ? i + 1 : i, 0)
+            const slot = this.$slots.default()
+            if (slot) {
+                renderedNode = slot.reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             return (
                 renderedNode > 1 &&
