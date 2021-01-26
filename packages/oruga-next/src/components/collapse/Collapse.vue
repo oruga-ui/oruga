@@ -92,7 +92,7 @@ export default defineComponent({
         ])
         return h('div',
             { class: this.computedClass('rootClass', 'o-clps') },
-            this.position === 'top' ? [trigger, content] : [content, trigger])
+            () => (this.position === 'top' ? [trigger, content] : [content, trigger]) )
     }
 })
 </script>

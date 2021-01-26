@@ -53,7 +53,7 @@ const unbind = (el: any) => {
 
 const directive = {
     beforeMount: bind,
-    beforeDestroy: unbind,
+    beforeUnmount: unbind,
 }
 
 export default directive

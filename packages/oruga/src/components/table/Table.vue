@@ -247,7 +247,7 @@
             </slot>
         </template>
 
-        <template v-if="(checkable && this.$slots['bottom-left']) ||
+        <template v-if="(checkable && $slots['bottom-left']) ||
             (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
             <slot name="pagination">
                 <o-table-pagination

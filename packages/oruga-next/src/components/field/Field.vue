@@ -222,7 +222,7 @@ export default defineComponent({
         hasAddons() {
             let renderedNode = 0
             if (this.$slots.default) {
-                renderedNode = this.$slots.default.reduce((i, node) => node.tag ? i + 1 : i, 0)
+                renderedNode = this.$slots.default().reduce((i, node) => node.tag ? i + 1 : i, 0)
             }
             return (
                 renderedNode > 1 &&

@@ -63,7 +63,7 @@
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'header'"
-                        v-bind="column.thAttrs(column)"
+                        v-bind="column.thAttrs && column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style"
                         @click.stop="sort(column, null, $event)">
@@ -108,7 +108,7 @@
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'searchable'"
-                        v-bind="column.thAttrs(column)"
+                        v-bind="column.thAttrs && column.thAttrs(column)"
                         :class="thClasses(column)"
                         :style="column.style">
                         <template v-if="column.searchable">
@@ -132,15 +132,15 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- :key="customRowKey ? row[customRowKey] : index" -->
                 <template
-                    v-for="(row, index) in visibleData"
-                    :key="customRowKey ? row[customRowKey] : index">
+                    v-for="(row, index) in visibleData">
                     <tr
                         :class="rowClasses(row, index)"
                         @click="selectRow(row)"
                         @dblclick="$emit('dblclick', row)"
-                        @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
-                        @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
+                        @mouseenter="$attrs.mouseenter ? $emit('mouseenter', row) : null"
+                        @mouseleave="$attrs.mouseleave ? $emit('mouseleave', row) : null"
                         @contextmenu="$emit('contextmenu', row, $event)"
                         :draggable="draggable"
                         @dragstart="handleDragStart($event, row, index)"
@@ -180,7 +180,7 @@
                             <template v-if="column.hasDefaultSlot">
                                 <o-slot-component
                                     :key="column.newKey + index + ':' + colindex"
-                                    v-bind="column.tdAttrs(row, column)"
+                                    v-bind="column.tdAttrs && column.tdAttrs(row, column)"
                                     :component="column"
                                     scoped
                                     name="default"
@@ -248,7 +248,7 @@
             </slot>
         </template>
 
-        <template v-if="(checkable && this.$slots['bottom-left']) ||
+        <template v-if="(checkable && $slots['bottom-left']) ||
             (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
             <slot name="pagination">
                 <o-table-pagination
@@ -853,7 +853,7 @@ export default defineComponent({
             return [
                 ...this.thBaseClasses,
                 ...this.thStickyClasses(column),
-                getValueByPath(column.thAttrs(column), 'class'),
+                column.thAttrs && getValueByPath(column.thAttrs(column), 'class'),
                 { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
                 { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
                 { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
@@ -879,7 +879,7 @@ export default defineComponent({
         tdClasses(row, column) {
             return [
                 ...this.tdBaseClasses,
-                getValueByPath(column.tdAttrs(row, column), 'class'),
+                column.tdAttrs && getValueByPath(column.tdAttrs(row, column), 'class'),
                 { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
                 { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]

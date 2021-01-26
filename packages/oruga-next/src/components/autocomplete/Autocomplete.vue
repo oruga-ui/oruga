@@ -1,6 +1,7 @@
 <template>
     <div :class="rootClasses">
         <o-input
+            v-bind="inputBind"
             v-model="newValue"
             ref="input"
             type="text"
@@ -13,7 +14,6 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
-            v-bind="inputBind"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -42,7 +42,7 @@
                         :key="groupindex + 'group'"
                         :class="itemEmptyClasses">
                         <slot
-                            v-if="$scopedSlots.group"
+                            v-if="$slots.group"
                             name="group"
                             :group="element.group"
                             :index="groupindex" />
@@ -57,7 +57,7 @@
                         @click="setSelected(option, undefined, $event)"
                     >
                         <slot
-                            v-if="$scopedSlots.default"
+                            v-if="$slots.default"
                             :option="option"
                             :index="index" />
                         <span v-else>

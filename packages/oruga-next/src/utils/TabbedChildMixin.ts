@@ -89,7 +89,7 @@ export default (parentCmp: string) => defineComponent({
                     'onBeforeEnter': () => { this.parent.isTransitioning = true },
                     'onAfterEnter': () => { this.parent.isTransitioning = false }
                 },
-                [vnode]
+                () => ([vnode])
             )
         }
         return vnode
