@@ -1,12 +1,9 @@
 
 /* @docs */
 $radio-active-background-color: $primary !default;
-$radio-border: 2px solid $grey !default;
-$radio-checked-box-shadow-color: $radio-active-background-color !default;
 $radio-checked-box-shadow-length: 0 0 0.5em !default;
 $radio-checked-box-shadow-opacity: 0.8 !default;
 $radio-disabled-opacity: $base-disabled-opacity !default;
-$radio-focus-sibiling-box-shadow: $radio-checked-box-shadow-length rgba($grey, $radio-checked-box-shadow-opacity) !default;
 $radio-label-padding: 0 0 0 .5em !default;
 $radio-margin-sibiling: 0.5em !default;
 $radio-size: 1.25em !default;

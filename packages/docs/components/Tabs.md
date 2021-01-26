@@ -465,8 +465,6 @@ export default {
 | --oruga-tabs-border-bottom-style                   | \$tabs-border-bottom-style                   | solid                   |
 | --oruga-tabs-border-bottom-width                   | \$tabs-border-bottom-width                   | 1px                     |
 | --oruga-tabs-link-color                            | \$tabs-link-color                            | hsl(0, 0%, 29%)         |
-| --oruga-tabs-link-hover-border-bottom-color        | \$tabs-link-hover-border-bottom-color        | hsl(0, 0%, 21%)         |
-| --oruga-tabs-link-hover-color                      | \$tabs-link-hover-color                      | hsl(0, 0%, 21%)         |
 | --oruga-tabs-link-active-border-bottom-color       | \$tabs-link-active-border-bottom-color       | \$primary               |
 | --oruga-tabs-link-active-color                     | \$tabs-link-active-color                     | \$primary               |
 | --oruga-tabs-link-line-height                      | \$tabs-link-line-height                      | \$base-line-height      |
