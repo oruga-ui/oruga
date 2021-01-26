@@ -181,19 +181,54 @@ Oruga allows you to customize components in 3 different ways:
 
 You can mix them, for example adding new classes and using CSS variables!
 
-Oruga provides 3 different stylesheets:
+Oruga provides `oruga.css`, a lightweight stylesheet containing only minimal CSS rules (position, , display, z-index ...). Include it if you want to perform a complete customization. 
 
-- `oruga.css`: a stylesheet containing the complete Oruga style.
-- `oruga-lite.css`: a lightweight stylesheet containing only minimal CSS rules (position, , display, z-index ...). Include it if you want a complete customization. For more information [click here](#usage-of-oruga-lite-stylesheet).
-- `oruga-vars.css`: a stylesheet containing variables you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
+### Usage of _oruga-lite_ stylesheet
+
+Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
+
+```js
+import '@oruga-ui/oruga/dist/oruga-lite.css'
+```
+
+For example here's how to style a dropdown using override mode without _oruga-lite_ stylesheet using [TailwindCSS](https://tailwindcss.com/)
+
+```css
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+And here's how to style a dropdown using _oruga-lite_ stylesheet
+
+```css
+.dropdown-menu {
+    min-width: 12em;
+    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
+
+Oruga provides other 2 different stylesheets:
+
+- `oruga-full.css`: a stylesheet containing the complete Oruga style.
+- `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
 
 ### Adding new classes or override existing ones
 
 With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects.
-
-::: tip
-Remember that for a complete customization you can import `@oruga-ui/oruga/dist/oruga-lite.css`. It's a light stylesheet that doesn't provide all attributes that you would customize by CSS or SASS/SCSS variables. [Click here](#usage-of-oruga-lite-stylesheet) for more information.
-:::
 
 ### Adding classes
 
@@ -427,44 +462,6 @@ Vue.use(Config, {
     }
 })
 ```
-
-### Usage of _oruga-lite_ stylesheet
-
-Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
-
-```js
-import '@oruga-ui/oruga/dist/oruga-lite.css'
-```
-
-For example here's how to style a dropdown using override mode without _oruga-lite_ stylesheet using [TailwindCSS](https://tailwindcss.com/)
-
-```css
-.dropdown {
-    @apply inline-flex relative;
-}
-.dropdown-menu {
-    top: 100%;
-    min-width: 12em;
-    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply relative block no-underline px-1 py-2 cursor-pointer;
-}
-```
-
-And here's how to style a dropdown using _oruga-lite_ stylesheet
-
-```css
-.dropdown-menu {
-    min-width: 12em;
-    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply no-underline px-1 py-2 cursor-pointer;
-}
-```
-
-Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
 
 ### Using CSS or SASS/SCSS variables
 
