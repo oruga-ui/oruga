@@ -332,13 +332,13 @@ export default defineComponent({
             document.addEventListener('keyup', this.keyPress)
         }
     },
-    beforeMount() {
+    mounted() {
         // Insert the Modal component in body tag
         // only if it's programmatic
-        this.programmatic && document.body.appendChild(this.$el)
-    },
-    mounted() {
-        if (this.programmatic) this.isActive = true
+        if (this.programmatic) {
+            document.body.appendChild(this.$el)
+            this.isActive = true
+        }
         else if (this.isActive) this.handleScroll()
     },
     beforeUnmount() {

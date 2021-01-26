@@ -151,7 +151,7 @@ export default defineComponent({
             document.addEventListener('keyup', this.keyPress)
         }
     },
-    beforeMount() {
+    mounted() {
         // Insert the Loading component in body tag
         // only if it's programmatic
         if (this.programmatic) {
@@ -162,10 +162,8 @@ export default defineComponent({
                 this.$emit('update:full-page', false)
                 this.container.appendChild(this.$el)
             }
+            this.isActive = true
         }
-    },
-    mounted() {
-        if (this.programmatic) this.isActive = true
     },
     beforeUnmount() {
         if (typeof window !== 'undefined') {
