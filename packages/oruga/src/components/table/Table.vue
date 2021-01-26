@@ -9,7 +9,7 @@
         </div>
 
         <o-table-mobile-sort
-            v-if="mobileCards && hasSortablenewColumns"
+            v-if="isMobile && hasSortablenewColumns"
             :current-sort-column="currentSortColumn"
             :columns="newColumns"
             :placeholder="mobileSortPlaceholder"
@@ -590,7 +590,7 @@ export default {
                 this.computedClass('wrapperClass', 'o-table__wrapper'),
                 { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
                 { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable },
-                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.mobileCards && this.isMatchMedia },
+                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.isMobile },
             ]
         },
         footerClasses() {
@@ -768,6 +768,10 @@ export default {
                 })
             }
             return this.defaultSlots
+        },
+
+        isMobile() {
+            return this.mobileCards && this.isMatchMedia
         }
     },
     watch: {
