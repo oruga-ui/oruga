@@ -3,6 +3,7 @@
 $slider-background: transparent !default;
 $slider-margin: 1em 0 !default;
 $slider-mark-size: 0.75rem !default;
+$slider-font-size: $base-font-size !default;
 $slider-rounded-borded-radius: $base-rounded-border-radius !default;
 $slider-thumb-background: $white !default;
 $slider-thumb-border: 1px solid $grey-light !default;
@@ -121,7 +122,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
     }
 
     /* REMOVE ON LITE */
-    @include slider-size($base-font-size);
+    @include slider-size($slider-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include slider-size($value, $name);

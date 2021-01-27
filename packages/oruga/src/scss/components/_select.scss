@@ -22,7 +22,6 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
 .o-ctrl-sel {
     display: inline-flex;
     position: relative;
-    @include avariable('font-size', 'base-font-size', $base-font-size);
     &--expanded {
         width: 100%;
         flex-grow: 1;

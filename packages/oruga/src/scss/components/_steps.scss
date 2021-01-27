@@ -15,6 +15,7 @@ $steps-vertical-padding: 1em 0 !default;
 $steps-item-line-height: $base-line-height !default;
 $steps-link-color: hsl(0, 0%, 29%) !default;
 $steps-content-padding: 1rem !default;
+$steps-font-size: $base-font-size !default;
 $steps-details-title-font-weight: 600 !default;
 /* @docs */
 
@@ -113,7 +114,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     padding: 0;
 
     /* REMOVE ON LITE */
-    @include steps-size($base-font-size);
+    @include steps-size($steps-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include steps-size($value, $name);
@@ -346,7 +347,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
         .o-steps__divider {
             @include avariable('height', 'steps-divider-height', $steps-divider-height);
-            @include avariable('top', 'steps-size', $base-font-size);
+            @include avariable('top', 'steps-divider-top', $steps-font-size);
             @each $name, $value in $sizes {
                 .o-steps--#{$name} {
                     @include avariable('top', 'size-' + #{$name}, $value);

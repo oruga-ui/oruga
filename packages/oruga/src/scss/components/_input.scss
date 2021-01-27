@@ -24,7 +24,6 @@ $input-width: 100% !default;
 
 .o-ctrl-input {
     position: relative;
-    @include avariable('font-size', 'base-font-size', $base-font-size);
     &--expanded {
         width: 100%;
         flex-grow: 1;

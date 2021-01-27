@@ -505,4 +505,5 @@ export default {
 | --oruga-steps-item-line-height             | \$steps-item-line-height             | \$base-line-height           |
 | --oruga-steps-link-color                   | \$steps-link-color                   | hsl(0, 0%, 29%)              |
 | --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
+| --oruga-steps-font-size                    | \$steps-font-size                    | \$base-font-size             |
 | --oruga-steps-details-title-font-weight    | \$steps-details-title-font-weight    | 600                          |

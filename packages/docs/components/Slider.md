@@ -343,6 +343,7 @@ export default {
 | --oruga-slider-background            | \$slider-background            | transparent                  |
 | --oruga-slider-margin                | \$slider-margin                | 1em 0                        |
 | --oruga-slider-mark-size             | \$slider-mark-size             | 0.75rem                      |
+| --oruga-slider-font-size             | \$slider-font-size             | \$base-font-size             |
 | --oruga-slider-rounded-borded-radius | \$slider-rounded-borded-radius | \$base-rounded-border-radius |
 | --oruga-slider-thumb-background      | \$slider-thumb-background      | \$white                      |
 | --oruga-slider-thumb-border          | \$slider-thumb-border          | 1px solid \$grey-light       |

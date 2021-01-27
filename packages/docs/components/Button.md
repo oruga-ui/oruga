@@ -291,7 +291,6 @@ export default {
 | --oruga-button-border-radius         | \$button-border-radius         | \$base-border-radius             |
 | --oruga-button-border                | \$button-border                | 1px solid \$button-color         |
 | --oruga-button-box-shadow            | \$button-box-shadow            | none                             |
-| --oruga-button-font-size             | \$button-font-size             | \$base-font-size                 |
 | --oruga-button-font-weight           | \$button-font-weight           | 400                              |
 | --oruga-button-line-height           | \$button-line-height           | \$base-line-height               |
 | --oruga-button-margin-icon-to-text   | \$button-margin-icon-to-text   | .1875em                          |
