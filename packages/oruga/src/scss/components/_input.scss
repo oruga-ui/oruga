@@ -23,6 +23,7 @@ $input-width: 100% !default;
 /* @docs */
 
 .o-ctrl-input {
+    display: inline-flex;
     position: relative;
     &--expanded {
         width: 100%;
