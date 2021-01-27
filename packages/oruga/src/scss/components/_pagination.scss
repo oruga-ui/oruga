@@ -2,7 +2,6 @@
 /* @docs */
 $pagination-disabled-opacity: $base-disabled-opacity !default;
 $pagination-ellipsis-color: #b5b5b5 !default;
-$pagination-font-size: 1rem !default;
 $pagination-link-border-color: #dbdbdb !default;
 $pagination-link-border-radius: $base-border-radius !default;
 $pagination-link-border: 1px solid transparent !default;
@@ -27,7 +26,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     justify-content: center;
     text-align: center;
     justify-content: space-between;
-    @include avariable('font-size', 'pagination-font-size', $pagination-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     @include avariable('margin', 'pagination-margin', $pagination-margin);
     /* REMOVE ON LITE */
     @each $name, $value in $sizes {

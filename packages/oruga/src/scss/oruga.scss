@@ -1,23 +1,22 @@
 
-$css-vars: true;
-$sass-vars: false;
+$css-vars: false;
+$sass-vars: true;
 
 @import "utilities/_variables";
 @import "utilities/_helpers";
 
-// globals
-$whitelist: add-to-whitelist(
-    'base-font-size'
-);
-
 // autocomplete
 $whitelist: add-to-whitelist(
-    'autocomplete-menu-background', 'autocomplete-menu-zindex'
+    'autocomplete-menu-background',
+    'autocomplete-menu-zindex'
 );
 
 // button
 $whitelist: add-to-whitelist(
-    'button-background-color', 'button-color', 'button-disabled-opacity',
+    'button-background-color',
+    'button-color',
+    'button-disabled-opacity',
+    'button-height'
 );
 
 // checkbox
@@ -27,9 +26,15 @@ $whitelist: add-to-whitelist(
 
 // dropdown
 $whitelist: add-to-whitelist(
-    'dropdown-menu-background', 'dropdown-mobile-overlay-color', 'dropdown-disabled-opacity',
-    'dropdown-menu-zindex', 'dropdown-mobile-overlay-zindex', 'dropdown-mobile-zindex',
-    'dropdown-item-active-background-color', 'dropdown-item-active-color', 'dropdown-item-disabled-opacity'
+    'dropdown-menu-background',
+    'dropdown-mobile-overlay-color',
+    'dropdown-disabled-opacity',
+    'dropdown-menu-zindex',
+    'dropdown-mobile-overlay-zindex',
+    'dropdown-mobile-zindex',
+    'dropdown-item-active-background-color',
+    'dropdown-item-active-color',
+    'dropdown-item-disabled-opacity'
 );
 
 // icon
@@ -37,10 +42,17 @@ $whitelist: add-to-whitelist(
     'icon-spin-duration'
 );
 
-
 // input
 $whitelist: add-to-whitelist(
-    'input-height', 'input-width'
+    'input-height'
+);
+
+// pagination
+$whitelist: add-to-whitelist(
+    'pagination-link-height',
+    'pagination-link-current-background-color',
+    'pagination-link-current-border-color',
+    'pagination-link-current-color'
 );
 
 // radio
@@ -55,30 +67,44 @@ $whitelist: add-to-whitelist(
 
 // sidebar
 $whitelist: add-to-whitelist(
-    'sidebar-zindex', 'sidebar-overlay'
+    'sidebar-zindex',
+    'sidebar-overlay'
 );
 
 // slider
 $whitelist: add-to-whitelist(
-    'slider-track-background', 'slider-tick-background', 'slider-thumb-size', 'slider-thumb-background', 'slider-thumb-border', 'slider-background', 'slider-tick-width', 'slider-track-height'
+    'slider-track-background',
+    'slider-tick-background',
+    'slider-thumb-size',
+    'slider-thumb-background',
+    'slider-thumb-border',
+    'slider-background',
+    'slider-tick-width',
+    'slider-track-height'
 );
 
 // skeleton
 $whitelist: add-to-whitelist(
-    'skeleton-background'
+    'skeleton-background',
+    'skeleton-duration'
 );
 
 // switch
 $whitelist: add-to-whitelist(
-    'switch-width', 'switch-padding', 'switch-background', 'switch-action-background', 'switch-disabled-opacity', 'switch-rounded-border-radius'
+    'switch-width',
+    'switch-padding',
+    'switch-background',
+    'switch-action-background',
+    'switch-disabled-opacity',
+    'switch-rounded-border-radius'
 );
-
 
 // tooltip
 $whitelist: add-to-whitelist(
-    'tooltip-arrow-size', 'tooltip-arrow-margin', 'tooltip-content-zindex', 'tooltip-background-color'
+    'tooltip-arrow-size',
+    'tooltip-arrow-margin',
+    'tooltip-content-zindex',
+    'tooltip-background-color'
 );
-
-
 
 @import "oruga-common.scss";
