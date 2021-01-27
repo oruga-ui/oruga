@@ -314,7 +314,6 @@ export default {
 | --oruga-select-box-shadow            | \$select-box-shadow            | none                                                  |
 | --oruga-select-color                 | \$select-color                 | #363636                                               |
 | --oruga-select-icon-zindex           | \$select-icon-zindex           | 4                                                     |
-| --oruga-select-font-size             | \$select-font-size             | \$base-font-size                                      |
 | --oruga-select-height                | \$select-height                | \$control-height                                      |
 | --oruga-select-line-height           | \$select-line-height           | \$base-line-height                                    |
 | --oruga-select-margin                | \$select-margin                | 0                                                     |
