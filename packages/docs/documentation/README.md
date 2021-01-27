@@ -50,7 +50,11 @@ You can use other stylesheets, as you can see in ["customization" section](#cust
 
 You can use other stylesheets, as you can see in ["customization" section](#customization).
 
-### Using Vue 3
+### Using Vue 3 (⚠️ Experimental!)
+
+::: warning
+Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
+:::
 
 #### Npm
 
@@ -98,7 +102,11 @@ Vue.use(Autocomplete)
 Vue.use(Sidebar)
 ```
 
-### With Vue 3
+### With Vue 3 (⚠️ Experimental!)
+
+::: warning
+Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
+:::
 
 #### Full bundle
 
