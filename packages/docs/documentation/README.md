@@ -169,8 +169,6 @@ plugins: [{ src: '~plugins/oruga.js' }]
 
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
 
-Take a look at the [official NuxtJS + Oruga example](https://github.com/oruga-ui/demo-nuxtjs).
-
 ## Customization
 
 Oruga allows you to customize components in 3 different ways:
@@ -595,8 +593,3 @@ This simple demo shows a simple recipe website. Oruga components like Input, Rad
 
 - [Online demo](https://oruga-tailwindcss-demo.netlify.app)
 - [Source code](https://github.com/oruga-ui/demo-tailwindcss)
-
-### NuxtJS Demo 🏔
-
-Currently WIP
-
