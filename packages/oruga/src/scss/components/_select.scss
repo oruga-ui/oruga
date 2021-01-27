@@ -86,7 +86,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
         position: absolute;
         top: 0;
         pointer-events: none;
-        @include avariable('height', 'select-height', $select-height);
+        height: 100%;
         @include avariable('width', 'select-height', $select-height);
         @include avariable('z-index', 'select-icon-zindex', $select-icon-zindex);
     }

@@ -96,7 +96,7 @@ $input-width: 100% !default;
     &__icon-left, &__icon-right {
         position: absolute;
         top: 0;
-        @include avariable('height', 'input-height', $input-height);
+        height: 100%;
         @include avariable('width', 'input-height', $input-height);
         @include avariable('z-index', 'input-icon-zindex', $input-icon-zindex);
     }
