@@ -36,7 +36,7 @@ $datepicker-btn-border-radius: $base-border-radius !default;
 $datepicker-btn-border: 1px solid transparent !default;
 $datepicker-btn-color: #363636 !default;
 $datepicker-btn-height: 2.25em !default;
-$datepicker-btn-hover-border-color: #b5b5b5 !default;
+$datepicker-btn-hover-border-color: $grey-light !default;
 $datepicker-btn-hover-color: #363636 !default;
 $datepicker-btn-line-height: $base-line-height !default;
 $datepicker-btn-margin: .25rem !default;

@@ -1,8 +1,8 @@
 
 /* @docs */
 $pagination-disabled-opacity: $base-disabled-opacity !default;
-$pagination-ellipsis-color: #b5b5b5 !default;
-$pagination-link-border-color: #dbdbdb !default;
+$pagination-ellipsis-color: $grey-light !default;
+$pagination-link-border-color: $grey-lighter !default;
 $pagination-link-border-radius: $base-border-radius !default;
 $pagination-link-border: 1px solid transparent !default;
 $pagination-link-color: #363636 !default;
@@ -10,7 +10,7 @@ $pagination-link-current-background-color: $primary !default;
 $pagination-link-current-border-color: $primary !default; // !!!
 $pagination-link-current-color: #fff !default;
 $pagination-link-height: 2.25em !default;
-$pagination-link-hover-border-color: #b5b5b5 !default;
+$pagination-link-hover-border-color: $grey-light !default;
 $pagination-link-hover-color: #363636 !default;
 $pagination-link-line-height: $base-line-height !default;
 $pagination-link-margin: .25rem !default;
