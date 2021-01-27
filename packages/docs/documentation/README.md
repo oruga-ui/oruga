@@ -14,7 +14,7 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 💅 For more info about components customization, go to the ["Customization section"](#customization).
 
-🕹 To see Oruga in action, go to the ["Examples section"](#examples).
+🕹 To see Oruga in action, go to the ["Examples" section](#examples).
 
 ## Installation
 
@@ -183,48 +183,12 @@ You can mix them, for example adding new classes and using CSS variables!
 
 Oruga provides `oruga.css`, a lightweight stylesheet containing only minimal CSS rules (position, , display, z-index ...). Include it if you want to perform a complete customization. 
 
-### Usage of _oruga-lite_ stylesheet
-
-Before using the override mode you should evaluate to use _oruga-lite_ stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes.
-
-```js
-import '@oruga-ui/oruga/dist/oruga-lite.css'
-```
-
-For example here's how to style a dropdown using override mode without _oruga-lite_ stylesheet using [TailwindCSS](https://tailwindcss.com/)
-
-```css
-.dropdown {
-    @apply inline-flex relative;
-}
-.dropdown-menu {
-    top: 100%;
-    min-width: 12em;
-    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply relative block no-underline px-1 py-2 cursor-pointer;
-}
-```
-
-And here's how to style a dropdown using _oruga-lite_ stylesheet
-
-```css
-.dropdown-menu {
-    min-width: 12em;
-    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply no-underline px-1 py-2 cursor-pointer;
-}
-```
-
-Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
-
 Oruga provides other 2 different stylesheets:
 
-- `oruga-full.css`: a stylesheet containing the complete Oruga style.
+- `oruga-full.css`: a stylesheet containing the complete Oruga style (the default style used for documentation).
 - `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
+
+For more info read ["Differences between standard and full css"](#differences-between-standard-and-full-css).
 
 ### Adding new classes or override existing ones
 
@@ -524,6 +488,48 @@ For example:
 }
 
 ```
+
+### Differences between standard and full css
+
+The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
+
+For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
+
+```js
+import '@oruga-ui/oruga/dist/oruga.css'
+```
+
+```css
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+And here's how to style a dropdown using _oruga-full_ stylesheet
+
+```js
+import '@oruga-ui/oruga/dist/oruga-full.css'
+```
+
+```css
+.dropdown-menu {
+    min-width: 12em;
+    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
 
 ### Global
 
