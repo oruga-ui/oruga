@@ -1,7 +1,7 @@
 
 /* @docs */
-$button-background-color: #ffffff !default;
-$button-color: #000000 !default;
+$button-background-color: $primary !default;
+$button-color: $primary-invert !default;
 $button-border-radius: $base-border-radius !default;
 $button-border: 1px solid $button-color !default;
 $button-box-shadow: none !default;

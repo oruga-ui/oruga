@@ -22,14 +22,17 @@ $whitelist: add-to-whitelist(
 // checkbox
 $whitelist: add-to-whitelist(
     'checkbox-size',
+    'checkbox-active-background-color',
+    'checkbox-checkmark-color',
+    'checkbox-border-color'
 );
 
 
 // datepicker
 $whitelist: add-to-whitelist(
     'datepicker-btn-height',
-    'pagination-btn-border-color',
-    'pagination-btn-color'
+    'datepicker-btn-border-color',
+    'datepicker-btn-color'
 );
 
 
@@ -76,7 +79,8 @@ $whitelist: add-to-whitelist(
 
 // radio
 $whitelist: add-to-whitelist(
-    'radio-size'
+    'radio-size',
+    'radio-active-background-color'
 );
 
 // select
@@ -95,6 +99,7 @@ $whitelist: add-to-whitelist(
 $whitelist: add-to-whitelist(
     'slider-track-background',
     'slider-tick-background',
+    'slider-fill-background',
     'slider-thumb-size',
     'slider-thumb-background',
     'slider-thumb-border',
@@ -115,6 +120,7 @@ $whitelist: add-to-whitelist(
     'switch-padding',
     'switch-background',
     'switch-action-background',
+    'switch-active-background-color',
     'switch-disabled-opacity',
     'switch-rounded-border-radius'
 );
