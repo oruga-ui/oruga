@@ -24,7 +24,8 @@ $whitelist: add-to-whitelist(
     'checkbox-size',
     'checkbox-active-background-color',
     'checkbox-checkmark-color',
-    'checkbox-border-color'
+    'checkbox-border-color',
+    'checkbox-disabled-opacity'
 );
 
 
@@ -80,7 +81,8 @@ $whitelist: add-to-whitelist(
 // radio
 $whitelist: add-to-whitelist(
     'radio-size',
-    'radio-active-background-color'
+    'radio-active-background-color',
+    'radio-disabled-opacity'
 );
 
 // select
