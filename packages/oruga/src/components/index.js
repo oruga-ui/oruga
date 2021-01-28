@@ -9,6 +9,9 @@ import Icon from './icon'
 import Input from './input'
 import Loading from './loading'
 import Modal from './modal'
+import Navbar from './navbar'
+import NavbarDropdown from './navbar'
+import NavbarItem from './navbar'
 import Pagination from './pagination'
 import Radio from './radio'
 import Select from './select'
@@ -34,6 +37,9 @@ export {
     Input,
     Loading,
     Modal,
+    Navbar,
+    NavbarItem,
+    NavbarDropdown,
     Pagination,
     Radio,
     Select,
