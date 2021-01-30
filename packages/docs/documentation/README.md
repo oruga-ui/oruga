@@ -16,9 +16,9 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 🕹 To see Oruga in action, go to the ["Examples" section](#examples).
 
-## Installation
+## Setup
 
-### Using Vue 2
+### Vue 2
 
 #### Npm
 
@@ -50,7 +50,28 @@ You can use other stylesheets, as you can see in ["customization" section](#cust
 
 You can use other stylesheets, as you can see in ["customization" section](#customization).
 
-### Using Vue 3 (⚠️ Experimental!)
+#### Full bundle
+
+```js
+import Vue from 'vue'
+import Oruga from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
+
+Vue.use(Oruga)
+```
+
+#### Individual components (tree shaking)
+
+```js
+import Vue from 'vue'
+import { Autocomplete, Sidebar } from '@oruga-ui/oruga'
+import '@oruga-ui/oruga/dist/oruga.css'
+
+Vue.use(Autocomplete)
+Vue.use(Sidebar)
+```
+
+### Vue 3 (⚠️ Experimental!)
 
 ::: warning
 Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
@@ -77,37 +98,6 @@ yarn add @oruga-ui/oruga-next
 
 You can use other stylesheets, as you can see in ["customization" section](#customization).
 
-## Setup
-
-### With Vue 2
-
-#### Full bundle
-
-```js
-import Vue from 'vue'
-import Oruga from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-
-Vue.use(Oruga)
-```
-
-#### Individual components (tree shaking)
-
-```js
-import Vue from 'vue'
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-
-Vue.use(Autocomplete)
-Vue.use(Sidebar)
-```
-
-### With Vue 3 (⚠️ Experimental!)
-
-::: warning
-Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
-:::
-
 #### Full bundle
 
 ```js
@@ -130,7 +120,7 @@ createApp(...)
   .use(Sidebar)
 ```
 
-## Nuxt module
+## Nuxt
 
 Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
 
