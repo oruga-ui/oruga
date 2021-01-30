@@ -120,7 +120,7 @@ createApp(...)
   .use(Sidebar)
 ```
 
-## Nuxt
+## Nuxt module
 
 Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
 
