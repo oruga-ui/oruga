@@ -17,14 +17,12 @@ $sidebar-zindex: 38 !default;
             'z-index', 'calc($z-index + 1)',
             eparam('$z-index', variable('sidebar-zindex', $sidebar-zindex))
         );
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
                 @include avariable('background-color', ('variant-' + #{$name}), $color);
             }
         }
-        /* ---- */
         &--fixed {
             position: fixed;
             left: 0;

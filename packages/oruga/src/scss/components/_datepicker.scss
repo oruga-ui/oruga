@@ -45,7 +45,6 @@ $datepicker-btn-padding: .5em .5em !default;
 
 .o-dpck {
     @include avariable('font-size', 'datepicker-font-size', $datepicker-font-size);
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);
@@ -67,7 +66,6 @@ $datepicker-btn-padding: .5em .5em !default;
             display: flex;
             justify-content: center;
             text-align: center;
-            /* REMOVE ON LITE */
             @each $name, $value in $sizes {
                 &--#{$name} {
                     @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);

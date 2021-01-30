@@ -112,24 +112,19 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
                 @include avariable('background', ('variant-' + #{$name}), $color);
             }
         }
-        /* --- */
     }
-
-    /* REMOVE ON LITE */
     @include slider-size($slider-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include slider-size($value, $name);
         }
     }
-    /* --- */
     &__tick {
         position: absolute;
         transform: translate(-50%, -50%);

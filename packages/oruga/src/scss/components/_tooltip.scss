@@ -163,7 +163,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         pointer-events: none;
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('color', 'tooltip-background-color', $tooltip-background-color);
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -171,7 +170,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 @include avariable('color', ('variant-' + #{$name}), $color);
             }
         }
-        /* --- */
     }
     &__content {
         position: absolute;
@@ -185,7 +183,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
         @include avariable('color', 'tooltip-background-color', $tooltip-color);
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -194,7 +191,6 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
             }
         }
-        /* --- */
         &--always {
             opacity: 1;
             visibility: visible;

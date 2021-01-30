@@ -64,17 +64,14 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     &__label {
         @include avariable('padding', 'radio-label-padding', $radio-label-padding);
     }
-
     &--disabled {
         @include avariable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
     }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
         }
     }
-
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         $color-invert: nth($pair, 2);
@@ -90,5 +87,4 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             }
         }
     }
-    /* --- */
 }

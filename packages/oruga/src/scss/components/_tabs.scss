@@ -113,16 +113,11 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         flex-shrink: 0;
         justify-content: flex-start;
         @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
-        // @include avariable('border-bottom-color', 'tabs-border-bottom-color', $tabs-border-bottom-color);
-        // @include avariable('border-bottom-style', 'tabs-border-bottom-style', $tabs-border-bottom-style);
-        // @include avariable('border-bottom-width', 'tabs-border-bottom-width', $tabs-border-bottom-width);
-        /* REMOVE ON LITE */
         @each $name, $value in $sizes {
             &--#{$name} {
                 @include avariable('font-size', ('tabs-font-size-' + #{$name}), $value);
             }
         }
-        /* ---- */
         &--centered {
             justify-content: center;
         }
@@ -145,12 +140,10 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                     cursor: not-allowed;
                     @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
                 }
-                /* REMOVE ON LITE */
                 &:hover:not(.o-tabs__nav-item-default--active){
                     @include avariable('background-color', 'tabs-link-hover-background-color', $tabs-boxed-link-hover-background-color);
                     @include avariable('border-bottom-color', 'tabs-link-hover-border-bottom-color', $tabs-boxed-link-hover-border-bottom-color);
                 }
-                /* ---- */
             }
             &-boxed {
                 @include item;
@@ -168,11 +161,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                     cursor: not-allowed;
                     @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
                 }
-                /* REMOVE ON LITE */
                 &:hover:not(.o-tabs__nav-item-boxed--active){
                     @include avariable('background-color', 'tabs-boxed-link-hover-background-color', $tabs-boxed-link-hover-background-color);
                 }
-                /* ---- */
             }
             &-toggle {
                 @include item;
@@ -191,12 +182,10 @@ $tabs-toggle-link-active-color: $primary-invert !default;
                     cursor: not-allowed;
                     @include avariable('opacity', 'tabs-disabled-opacity', $tabs-disabled-opacity);
                 }
-                /* REMOVE ON LITE */
                 &:hover:not(.o-tabs__nav-item-toggle--active){
                     @include avariable('background-color', 'tabs-toggle-link-hover-background-color', $tabs-toggle-link-hover-background-color);
                     @include avariable('border-color', 'tabs-toggle-link-hover-border-color', $tabs-toggle-link-hover-border-color);
                 }
-                /* ---- */
             }
         }
     }
@@ -208,14 +197,11 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         flex-direction: column;
         flex-grow: 1;
         @include avariable('padding', 'tabs-content-padding', $tabs-content-padding);
-
         &--transitioning {
             overflow: hidden;
         }
     }
-    /* REMOVE ON LITE */
     &:not(:last-child) {
         @include avariable('margin-bottom', 'tabs-margin-bottom', $tabs-margin-bottom);
     }
-    /* --- */
 }

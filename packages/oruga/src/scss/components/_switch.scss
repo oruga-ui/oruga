@@ -14,7 +14,6 @@ $switch-width: 2.75 * 1em !default;
 .o-switch {
     cursor: pointer;
     @include unselectable;
-    /* REMOVE ON LITE */
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
@@ -34,7 +33,6 @@ $switch-width: 2.75 * 1em !default;
             @include avariable('font-size', ('font-size-' + #{name}), $value);
         }
     }
-    /* --- */
 
     &__wrapper {
         @include side-flex-gap($switch-margin-separator);

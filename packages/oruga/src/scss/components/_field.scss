@@ -18,31 +18,26 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         @include avariable('color', 'field-label-color', $field-label-color);
         @include avariable('font-size', 'base-font-size', $base-font-size);
         @include avariable('font-weight', 'field-label-font-weight', $field-label-font-weight);
-        /* REMOVE ON LITE */
         @each $name, $value in $sizes {
             &-#{$name} {
                 @include avariable('font-size', ('field-font-size-' + #{$name}), $value);
             }
         }
-        /* --- */
     }
     &__message {
         display: block;
         @include avariable('font-size', 'field-message-font-size', $field-message-font-size);
         @include avariable('margin-top', 'field-message-margin-top', $field-message-margin-top);
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &-#{$name} {
                 @include avariable('color', ('variant-' + #{$name}), $color);
             }
         }
-        /* --- */
     }
     &--addons {
         display: flex;
         justify-content: flex-start;
-        /* REMOVE ON LITE */
         > *:first-child:not(:only-child) button,
         > button:first-child,
         > *:first-child:not(:only-child) input,
@@ -69,7 +64,6 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         > select:not(:first-child):not(:last-child) {
             border-radius: 0;
         }
-        /* -- */
     }
     &--grouped {
         display: flex;
