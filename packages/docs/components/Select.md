@@ -260,7 +260,7 @@ export default {
                 {
                     class: "arrowClass",
                     description: "Class of the select arrow",
-                    warning: "It applies the arrow icon using background-image and background-position on select element. An alternative to override it is iconRight",
+                    warning: "It applies the arrow icon using background-image and background-position on select element. An alternative to override it is iconRight prop (globally or not)",
                     action: () => {
                         this.selectedOptions = null;
                     }

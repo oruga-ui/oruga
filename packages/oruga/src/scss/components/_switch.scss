@@ -99,8 +99,6 @@ $switch-width: 2.75 * 1em !default;
         outline: none;
         z-index: -1;
     }
-    &__label {
-    }
     &--rounded {
         @include avariable('border-radius', 'switch-rounded-border-radius', $switch-rounded-border-radius);
     }
