@@ -23,8 +23,8 @@ $input-width: 100% !default;
 /* @docs */
 
 .o-ctrl-input {
+    display: inline-flex;
     position: relative;
-    @include avariable('font-size', 'base-font-size', $base-font-size);
     &--expanded {
         width: 100%;
         flex-grow: 1;
@@ -62,7 +62,6 @@ $input-width: 100% !default;
     &--rounded {
         @include avariable('border-radius', 'input-rounded-border-radius', $input-rounded-border-radius);
     }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('input-font-size-' + #{$name}), $value);
@@ -74,19 +73,16 @@ $input-width: 100% !default;
             @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
-    /* --- */
     &__textarea {
         display: block;
         max-width: 100%;
         min-width: 100%;
         resize: vertical;
         @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
-        /* REMOVE ON LITE */
         &:not([rows]) {
             @include avariable('max-height', 'input-textarea-max-height', $input-textarea-max-height);
             @include avariable('min-height', 'input-textarea-min-height', $input-textarea-min-height);
         }
-        /* --- */
     }
     &__counter {
         display: block;
@@ -97,7 +93,7 @@ $input-width: 100% !default;
     &__icon-left, &__icon-right {
         position: absolute;
         top: 0;
-        @include avariable('height', 'input-height', $input-height);
+        height: 100%;
         @include avariable('width', 'input-height', $input-height);
         @include avariable('z-index', 'input-icon-zindex', $input-icon-zindex);
     }

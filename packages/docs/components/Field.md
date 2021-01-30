@@ -298,6 +298,7 @@ export default {
                     class: "horizontalClass",
                     description: "Class to align label and control in horizontal forms",
                     properties: ['horizontal'],
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
@@ -335,6 +336,7 @@ export default {
                     class: "labelHorizontalClass",
                     description: "Class for field label when horizontal",
                     properties: ['horizontal'],
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
@@ -346,6 +348,7 @@ export default {
                 {
                     class: "bodyHorizontalClass",
                     description: "Class for field body when horizontal",
+                    specificity: "when <b>mobileClass</b> is applied",
                     properties: ['horizontal'],
                     action: (cmp) => {
                         cmp.data.horizontal = true;
@@ -412,13 +415,12 @@ export default {
 
 ## Style
 
-| CSS Variable                          | SASS Variable                   | Default          |
-| ------------------------------------- | ------------------------------- | ---------------- |
-| --oruga-field-label-color             | \$field-label-color             | #363636          |
-| --oruga-field-label-font-size         | \$field-label-font-size         | \$base-font-size |
-| --oruga-field-label-font-weight       | \$field-label-font-weight       | 600              |
-| --oruga-field-margin-bottom           | \$field-margin-bottom           | .75rem           |
-| --oruga-field-message-font-size       | \$field-message-font-size       | .75rem           |
-| --oruga-field-message-margin-top      | \$field-message-margin-top      | .25rem           |
-| --oruga-field-margin-right            | \$field-margin-right            | .37rem           |
-| --oruga-field-horizontal-label-margin | \$field-horizontal-label-margin | 0 1.5rem 0 0     |
+| CSS Variable                          | SASS Variable                   | Default      |
+| ------------------------------------- | ------------------------------- | ------------ |
+| --oruga-field-label-color             | \$field-label-color             | #363636      |
+| --oruga-field-label-font-weight       | \$field-label-font-weight       | 600          |
+| --oruga-field-margin-bottom           | \$field-margin-bottom           | .75rem       |
+| --oruga-field-message-font-size       | \$field-message-font-size       | .75rem       |
+| --oruga-field-message-margin-top      | \$field-message-margin-top      | .25rem       |
+| --oruga-field-margin-right            | \$field-margin-right            | .37rem       |
+| --oruga-field-horizontal-label-margin | \$field-horizontal-label-margin | 0 1.5rem 0 0 |

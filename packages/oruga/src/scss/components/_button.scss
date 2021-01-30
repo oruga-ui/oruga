@@ -1,16 +1,13 @@
 
 /* @docs */
-$button-background-color: #ffffff !default;
-$button-color: #000000 !default;
+$button-background-color: $primary !default;
+$button-color: $primary-invert !default;
 $button-border-radius: $base-border-radius !default;
 $button-border: 1px solid $button-color !default;
 $button-box-shadow: none !default;
-$button-font-size: $base-font-size !default;
 $button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
-$button-margin-border-to-icon: calc(-0.375em - #{$control-border-width}) !default;
 $button-margin-icon-to-text: .1875em !default;
-$button-icon-width: 1.5em !default;
 $button-margin: 0 !default;
 $button-height: $control-height !default;
 $button-padding: $control-padding-vertical .75em !default;
@@ -38,19 +35,17 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     @include avariable('border', 'button-border', $button-border);
     @include avariable('border-radius', 'button-border-radius', $button-border-radius);
     @include avariable('box-shadow', 'button-box-shadow', $button-box-shadow);
-    @include avariable('font-size', 'button-font-size', $button-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     @include avariable('font-weight', 'button-font-weight', $button-font-weight);
     @include avariable('line-height', 'button-line-height', $button-line-height);
     @include avariable('margin', 'button-margin', $button-margin);
     @include avariable('height', 'button-height', $button-height);
-
     &__wrapper {
         @include side-flex-gap($button-margin-icon-to-text);
         display: inline-flex;
         align-items: center;
         position: relative;
     }
-
     &--expanded {
         width: 100%;
     }
@@ -61,17 +56,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
     }
-    &__icon {
-        // @include avariable('height', 'button-icon-width', $button-icon-width);
-        // @include avariable('width', 'button-icon-width', $button-icon-width);
-        // &:first-child:not(:last-child) {
-        //     @include avariable('margin-left', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-        // }
-        // &:last-child:not(:first-child) {
-        //     @include avariable('margin-right', 'button-margin-border-to-icon', $button-margin-border-to-icon);
-        // }
-    }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('button-font-size-' + #{$name}), $value);
@@ -91,7 +75,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             }
         }
     }
-    /* ----- */
     &--outlined {
         background-color: transparent;
         @include avariable('border-color', 'button-background-color', $button-background-color);
@@ -101,7 +84,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             @include avariable('background-color', 'button-background-color', $button-background-color);
             @include avariable('color', 'button-color', $button-color);
         }
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -116,7 +98,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
                 }
             }
         }
-        /* ---- */
     }
     &--inverted {
         @include avariable('background-color', 'button-color', $button-color);
@@ -127,7 +108,6 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             // IE 11 needs polyfill
             filter: brightness(95%);
         }
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -142,6 +122,5 @@ $button-disabled-opacity: $base-disabled-opacity !default;
                 }
             }
         }
-        /* --- */
     }
 }

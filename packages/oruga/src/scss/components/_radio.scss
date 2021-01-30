@@ -1,15 +1,12 @@
 
 /* @docs */
 $radio-active-background-color: $primary !default;
-$radio-border: 2px solid $grey !default;
-$radio-checked-box-shadow-color: $radio-active-background-color !default;
 $radio-checked-box-shadow-length: 0 0 0.5em !default;
 $radio-checked-box-shadow-opacity: 0.8 !default;
 $radio-disabled-opacity: $base-disabled-opacity !default;
-$radio-focus-sibiling-box-shadow: $radio-checked-box-shadow-length rgba($grey, $radio-checked-box-shadow-opacity) !default;
 $radio-label-padding: 0 0 0 .5em !default;
 $radio-margin-sibiling: 0.5em !default;
-$radio-size: 1.25em !default;
+$radio-size: 1rem !default;
 $radio-line-height: 1.25 !default;
 /* @docs */
 
@@ -67,17 +64,14 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
     &__label {
         @include avariable('padding', 'radio-label-padding', $radio-label-padding);
     }
-
     &--disabled {
         @include avariable('opacity', 'radio-disabled-opacity', $radio-disabled-opacity);
     }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('radio-font-size-' + #{$name}), $value);
         }
     }
-
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         $color-invert: nth($pair, 2);
@@ -93,5 +87,4 @@ $HALF_MARGIN_EXPRESSION: "calc($margin / 2)";
             }
         }
     }
-    /* --- */
 }

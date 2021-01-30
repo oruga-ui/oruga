@@ -36,6 +36,7 @@ export default {
                 {
                     class: "contentClass",
                     description: "Class of the modal content",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         this.isImageModalActive = true;
                     }

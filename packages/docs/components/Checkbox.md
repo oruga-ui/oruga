@@ -264,20 +264,18 @@ export default {
 
 ## Style
 
-| CSS Variable                                | SASS Variable                         | Default                                                                                |
-| ------------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
-| --oruga-checkbox-active-background-color    | \$checkbox-active-background-color    | \$primary                                                                              |
-| --oruga-checkbox-background-color           | \$checkbox-background-color           | \$primary                                                                              |
-| --oruga-checkbox-border-color               | \$checkbox-border-color               | \$primary                                                                              |
-| --oruga-checkbox-border-radius              | \$checkbox-border-radius              | \$base-border-radius                                                                   |
-| --oruga-checkbox-border-width               | \$checkbox-border-width               | 2px                                                                                    |
-| --oruga-checkbox-checked-box-shadow-color   | \$checkbox-checked-box-shadow-color   | \$checkbox-active-background-color                                                     |
-| --oruga-checkbox-checked-box-shadow-length  | \$checkbox-checked-box-shadow-length  | 0 0 0.5em                                                                              |
-| --oruga-checkbox-checked-box-shadow-opacity | \$checkbox-checked-box-shadow-opacity | 0.8                                                                                    |
-| --oruga-checkbox-checkmark-color            | \$checkbox-checkmark-color            | \$primary-invert                                                                       |
-| --oruga-checkbox-disabled-opacity           | \$checkbox-disabled-opacity           | \$base-disabled-opacity                                                                |
-| --oruga-checkbox-focus-sibiling-box-shadow  | \$checkbox-focus-sibiling-box-shadow  | $checkbox-checked-box-shadow-length rgba($grey, \$checkbox-checked-box-shadow-opacity) |
-| --oruga-checkbox-label-padding              | \$checkbox-label-padding              | 0 0 0 .5em                                                                             |
-| --oruga-checkbox-margin-sibiling            | \$checkbox-margin-sibiling            | 0.5em                                                                                  |
-| --oruga-checkbox-size                       | \$checkbox-size                       | 1.5em                                                                                  |
-| --oruga-checkbox-line-height                | \$checkbox-line-height                | 1.5                                                                                    |
+| CSS Variable                                | SASS Variable                         | Default                 |
+| ------------------------------------------- | ------------------------------------- | ----------------------- |
+| --oruga-checkbox-active-background-color    | \$checkbox-active-background-color    | \$primary               |
+| --oruga-checkbox-background-color           | \$checkbox-background-color           | \$primary               |
+| --oruga-checkbox-border-color               | \$checkbox-border-color               | \$primary               |
+| --oruga-checkbox-border-radius              | \$checkbox-border-radius              | \$base-border-radius    |
+| --oruga-checkbox-border-width               | \$checkbox-border-width               | 2px                     |
+| --oruga-checkbox-checked-box-shadow-length  | \$checkbox-checked-box-shadow-length  | 0 0 0.5em               |
+| --oruga-checkbox-checked-box-shadow-opacity | \$checkbox-checked-box-shadow-opacity | 0.8                     |
+| --oruga-checkbox-checkmark-color            | \$checkbox-checkmark-color            | \$primary-invert        |
+| --oruga-checkbox-disabled-opacity           | \$checkbox-disabled-opacity           | \$base-disabled-opacity |
+| --oruga-checkbox-label-padding              | \$checkbox-label-padding              | 0 0 0 .5em              |
+| --oruga-checkbox-margin-sibiling            | \$checkbox-margin-sibiling            | 0.5em                   |
+| --oruga-checkbox-size                       | \$checkbox-size                       | 1rem                    |
+| --oruga-checkbox-line-height                | \$checkbox-line-height                | 1.5                     |

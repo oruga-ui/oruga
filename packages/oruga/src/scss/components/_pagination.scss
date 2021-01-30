@@ -1,9 +1,8 @@
 
 /* @docs */
 $pagination-disabled-opacity: $base-disabled-opacity !default;
-$pagination-ellipsis-color: #b5b5b5 !default;
-$pagination-font-size: 1rem !default;
-$pagination-link-border-color: #dbdbdb !default;
+$pagination-ellipsis-color: $grey-light !default;
+$pagination-link-border-color: $grey-lighter !default;
 $pagination-link-border-radius: $base-border-radius !default;
 $pagination-link-border: 1px solid transparent !default;
 $pagination-link-color: #363636 !default;
@@ -11,7 +10,7 @@ $pagination-link-current-background-color: $primary !default;
 $pagination-link-current-border-color: $primary !default; // !!!
 $pagination-link-current-color: #fff !default;
 $pagination-link-height: 2.25em !default;
-$pagination-link-hover-border-color: #b5b5b5 !default;
+$pagination-link-hover-border-color: $grey-light !default;
 $pagination-link-line-height: $base-line-height !default;
 $pagination-link-margin: .25rem !default;
 $pagination-link-min-width: 2.25em !default;
@@ -26,9 +25,8 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     justify-content: center;
     text-align: center;
     justify-content: space-between;
-    @include avariable('font-size', 'pagination-font-size', $pagination-font-size);
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     @include avariable('margin', 'pagination-margin', $pagination-margin);
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('pagination-font-size-' + #{$name}), $value);
@@ -74,7 +72,6 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             @include avariable('color', 'pagination-link-current-color', $pagination-link-current-color);
         }
     }
-
     &__ellipsis {
         justify-content: center;
         text-align: center;
@@ -88,7 +85,6 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
     }
     &--centered {
         justify-content: center;
-        /* REMOVE ON LITE */
         .o-pag__previous {
             order: 1;
         }
@@ -99,11 +95,9 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             justify-content: center;
             order: 2;
         }
-        /* ---- */
     }
     &--right {
         justify-content: flex-end;
-        /* REMOVE ON LITE */
         .o-pag__previous {
             order: 1;
         }
@@ -114,7 +108,6 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             justify-content: flex-end;
             order: 2;
         }
-        /* --- */
     }
     &__next {
         order: 3;

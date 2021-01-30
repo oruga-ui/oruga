@@ -325,27 +325,15 @@ export default {
 
 ## Style
 
-| CSS Variable                                   | SASS Variable                            | Default                                                                                          |
-| ---------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| --oruga-switch-active-background-color-opacity | \$switch-active-background-color-opacity | 0.9                                                                                              |
-| --oruga-switch-active-background-color         | \$switch-active-background-color         | \$primary                                                                                        |
-| --oruga-switch-active-box-shadow-color         | \$switch-active-box-shadow-color         | #b5b5b5                                                                                          |
-| --oruga-switch-active-box-shadow-length        | \$switch-active-box-shadow-length        | 0 0 0.5em                                                                                        |
-| --oruga-switch-active-box-shadow-opacity       | \$switch-active-box-shadow-opacity       | 0.6                                                                                              |
-| --oruga-swtich-action-background               | \$swtich-action-background               | #f5f5f5                                                                                          |
-| --oruga-switch-background                      | \$switch-background                      | #b5b5b5                                                                                          |
-| --oruga-switch-border-radius                   | \$switch-border-radius                   | \$base-border-radius                                                                             |
-| --oruga-switch-box-shadow                      | \$switch-box-shadow                      | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
-| --oruga-switch-checked-box-shadow-color        | \$switch-checked-box-shadow-color        | \$switch-active-background-color                                                                 |
-| --oruga-switch-checked-box-shadow-length       | \$switch-checked-box-shadow-length       | 0 0 0.5em                                                                                        |
-| --oruga-switch-checked-box-shadow-opacity      | \$switch-checked-box-shadow-opacity      | 0.8                                                                                              |
-| --oruga-switch-disabled-opacity                | \$switch-disabled-opacity                | \$base-disabled-opacity                                                                          |
-| --oruga-switch-hover-background-color          | \$switch-hover-background-color          | rgba(#b5b5b5, 0.9)                                                                               |
-| --oruga-switch-hover-border-color-opacity      | \$switch-hover-border-color-opacity      | 0.9                                                                                              |
-| --oruga-switch-hover-border-color              | \$switch-hover-border-color              | #b5b5b5                                                                                          |
-| --oruga-switch-margin-separator                | \$switch-margin-separator                | .25em                                                                                            |
-| --oruga-switch-margin-sibling                  | \$switch-margin-sibling                  | 0.5em                                                                                            |
-| --oruga-switch-padding                         | \$switch-padding                         | 0.2em                                                                                            |
-| --oruga-switch-rounded-border-radius           | \$switch-rounded-border-radius           | \$base-rounded-border-radius                                                                     |
-| --oruga-switch-width-number                    | \$switch-width-number                    | 2.75                                                                                             |
-| --oruga-switch-width                           | \$switch-width                           | \$switch-width-number \* 1em                                                                     |
+| CSS Variable                           | SASS Variable                    | Default                                                                                          |
+| -------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
+| --oruga-switch-active-background-color | \$switch-active-background-color | \$primary                                                                                        |
+| --oruga-switch-action-background       | \$switch-action-background       | #f5f5f5                                                                                          |
+| --oruga-switch-background              | \$switch-background              | \$grey-light                                                                                     |
+| --oruga-switch-border-radius           | \$switch-border-radius           | \$base-border-radius                                                                             |
+| --oruga-switch-box-shadow              | \$switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
+| --oruga-switch-disabled-opacity        | \$switch-disabled-opacity        | \$base-disabled-opacity                                                                          |
+| --oruga-switch-margin-separator        | \$switch-margin-separator        | .25em                                                                                            |
+| --oruga-switch-padding                 | \$switch-padding                 | 0.2em                                                                                            |
+| --oruga-switch-rounded-border-radius   | \$switch-rounded-border-radius   | \$base-rounded-border-radius                                                                     |
+| --oruga-switch-width                   | \$switch-width                   | 2.75 \* 1em                                                                                      |

@@ -10,6 +10,7 @@ const _defaultSuffixProcessor = (input, suffix) => {
 }
 
 export default {
+    isOruga: true,
     props: {
         override: Boolean
     },

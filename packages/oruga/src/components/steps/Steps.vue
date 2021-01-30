@@ -152,7 +152,6 @@ export default {
         stepContentClass: [String, Function, Array],
         stepContentTransitioningClass: [String, Function, Array],
         stepNavigationClass: [String, Function, Array],
-        stepDetailsClass: [String, Function, Array],
         stepTitleClass: [String, Function, Array],
         stepLinkClass: [String, Function, Array],
         stepLinkClickableClass: [String, Function, Array],

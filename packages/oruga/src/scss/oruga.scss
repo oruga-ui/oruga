@@ -1,31 +1,136 @@
 
-@import "utilities/_expressions";
+$css-vars: false;
+$sass-vars: true;
+
 @import "utilities/_variables";
-@import "utilities/_animations";
 @import "utilities/_helpers";
 
-@import "utilities/_base";
+$colors: ();
+$sizes: ();
 
-@import "components/_autocomplete";
-@import "components/_button";
-@import "components/_checkbox";
-@import "components/_collapse";
-@import "components/_datepicker";
-@import "components/_dropdown";
-@import "components/_field";
-@import "components/_icon";
-@import "components/_input";
-@import "components/_loading";
-@import "components/_modal";
-@import "components/_pagination";
-@import "components/_radio";
-@import "components/_select";
-@import "components/_skeleton";
-@import "components/_sidebar";
-@import "components/_slider";
-@import "components/_steps";
-@import "components/_switch";
-@import "components/_table";
-@import "components/_tabs";
-@import "components/_tooltip";
-@import "components/_upload";
+// autocomplete
+$whitelist: add-to-whitelist(
+    'autocomplete-menu-background',
+    'autocomplete-menu-zindex'
+);
+
+// button
+$whitelist: add-to-whitelist(
+    'button-background-color',
+    'button-color',
+    'button-disabled-opacity'
+);
+
+// checkbox
+$whitelist: add-to-whitelist(
+    'checkbox-size',
+    'checkbox-active-background-color',
+    'checkbox-checkmark-color',
+    'checkbox-border-color',
+    'checkbox-disabled-opacity'
+);
+
+
+// datepicker
+$whitelist: add-to-whitelist(
+    'datepicker-btn-border-color',
+    'datepicker-btn-color'
+);
+
+
+// dropdown
+$whitelist: add-to-whitelist(
+    'dropdown-menu-background',
+    'dropdown-mobile-overlay-color',
+    'dropdown-disabled-opacity',
+    'dropdown-menu-zindex',
+    'dropdown-mobile-overlay-zindex',
+    'dropdown-mobile-zindex',
+    'dropdown-item-active-background-color',
+    'dropdown-item-active-color',
+    'dropdown-item-disabled-opacity'
+);
+
+// icon
+$whitelist: add-to-whitelist(
+    'icon-spin-duration'
+);
+
+// input
+$whitelist: add-to-whitelist();
+
+// modal
+$whitelist: add-to-whitelist(
+    'modal-zindex',
+    'modal-content-background-color',
+    'modal-overlay-background-color',
+    'moda-close-size',
+    'modal-close-top',
+    'modal-close-right'
+);
+
+// pagination
+$whitelist: add-to-whitelist(
+    'pagination-link-current-background-color',
+    'pagination-link-current-border-color',
+    'pagination-link-current-color'
+);
+
+// radio
+$whitelist: add-to-whitelist(
+    'radio-size',
+    'radio-active-background-color',
+    'radio-disabled-opacity'
+);
+
+// select
+$whitelist: add-to-whitelist(
+    'select-arrow-size'
+);
+
+// sidebar
+$whitelist: add-to-whitelist(
+    'sidebar-zindex',
+    'sidebar-overlay',
+    'sidebar-content-background-color'
+);
+
+// slider
+$whitelist: add-to-whitelist(
+    'slider-track-background',
+    'slider-tick-background',
+    'slider-fill-background',
+    'slider-thumb-size',
+    'slider-thumb-background',
+    'slider-thumb-border',
+    'slider-background',
+    'slider-tick-width',
+    'slider-track-height'
+);
+
+// skeleton
+$whitelist: add-to-whitelist(
+    'skeleton-background',
+    'skeleton-duration'
+);
+
+// switch
+$whitelist: add-to-whitelist(
+    'switch-width',
+    'switch-padding',
+    'switch-background',
+    'switch-action-background',
+    'switch-active-background-color',
+    'switch-disabled-opacity',
+    'switch-rounded-border-radius'
+);
+
+// tooltip
+$whitelist: add-to-whitelist(
+    'tooltip-arrow-size',
+    'tooltip-arrow-margin',
+    'tooltip-content-zindex',
+    'tooltip-background-color'
+);
+
+@import "oruga-common.scss";

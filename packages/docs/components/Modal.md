@@ -257,6 +257,7 @@ export default {
                 {
                     class: "contentClass",
                     description: "Class of the modal content",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         this.isImageModalActive = true;
                     }
@@ -334,12 +335,11 @@ export default {
 | --oruga-modal-content-background-color            | \$modal-content-background-color            | \$white                      |
 | --oruga-modal-content-padding                     | \$modal-content-padding                     | 10px                         |
 | --oruga-modal-content-border-radius               | \$modal-content-border-radius               | \$base-border-radius         |
-| --oruga-modal-overlay-color                       | \$modal-overlay-color                       | hsla(0,0%,4%,.86)            |
+| --oruga-modal-overlay-background-color            | \$modal-overlay-background-color            | hsla(0,0%,4%,.86)            |
 | --oruga-modal-close-border-radius                 | \$modal-close-border-radius                 | \$base-rounded-border-radius |
-| --oruga-modal-close-height                        | \$modal-close-height                        | 32px                         |
 | --oruga-modal-close-right                         | \$modal-close-right                         | 20px                         |
 | --oruga-modal-close-top                           | \$modal-close-top                           | 20px                         |
-| --oruga-modal-close-width                         | \$modal-close-width                         | 32px                         |
+| --oruga-modal-close-size                          | \$modal-close-size                          | 32px                         |
 | --oruga-modal-close-color                         | \$modal-close-color                         | \$white                      |
 | --oruga-modal-content-fullscreen-background-color | \$modal-content-fullscreen-background-color | #f5f5f5                      |
 | --oruga-modal-content-max-height                  | \$modal-content-max-height                  | calc(100vh - 160px)          |

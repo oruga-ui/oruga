@@ -40,18 +40,22 @@ export default {
                 {
                     class: "prevBtnClass",
                     description: "Class of the prev. button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "nextBtnClass",
                     description: "Class of the next button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "listClass",
                     description: "Class of the pagination list",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "linkClass",
                     description: "Class of the link button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "linkCurrentClass",
@@ -60,6 +64,7 @@ export default {
                 {
                     class: "ellipsisClass",
                     description: "Class of the pagination ellipsis ",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "infoClass",

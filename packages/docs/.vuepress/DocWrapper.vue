@@ -18,6 +18,7 @@ export default {
                 this.$nextTick(() => {
                     this.interval = setInterval(() => {
                         let el = document.getElementsByClassName(UNDERLINE_CLASS)[0]
+                        console.log(this.classes)
                         if (el) {
                             clearInterval(this.interval)
                             this.classesApplied = el.className.replace(UNDERLINE_CLASS, '').replace(/\s/g, '&nbsp;&nbsp;&nbsp;')

@@ -114,8 +114,7 @@ export default defineComponent({
          * @values primary, info, success, warning, danger, and any other custom color
          */
         variant: {
-            type: String,
-            default: () => { return getValueByPath(config, 'slider.variant', 'primary') },
+            type: String
         },
         /**
          * Vertical size of slider, optional

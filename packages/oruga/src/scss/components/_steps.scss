@@ -15,6 +15,7 @@ $steps-vertical-padding: 1em 0 !default;
 $steps-item-line-height: $base-line-height !default;
 $steps-link-color: hsl(0, 0%, 29%) !default;
 $steps-content-padding: 1rem !default;
+$steps-font-size: $base-font-size !default;
 $steps-details-title-font-weight: 600 !default;
 /* @docs */
 
@@ -111,16 +112,12 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
-
-    /* REMOVE ON LITE */
-    @include steps-size($base-font-size);
+    @include steps-size($steps-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include steps-size($value, $name);
         }
     }
-    /* ---- */
-
     &__nav-item {
         margin: 0;
         padding: 0;
@@ -129,8 +126,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         position: relative;
         flex-grow: 1;
         flex-basis: 1em;
-        // Override marker color per step
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
@@ -158,13 +153,10 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                 }
             }
         }
-        /* ---- */
     }
 
     &__divider {
-        /* REMOVE ON LITE */
         background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
-        /* ---- */
         background-size: 200% 100%;
         background-position: right bottom;
         // This will contain the divider
@@ -188,13 +180,11 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &--animated {
-        /* REMOVE ON LITE */
         .o-steps__divider {
             transition-property: background;
             @include avariable('transition-duration', 'transition-duration', $speed-slow);
             @include avariable('transition-timing-function', 'transition-timing', $easing);
         }
-        /* --- */
     }
 
     &__link {
@@ -307,7 +297,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             justify-content: center;
             @include avariable('padding', 'steps-vertical-padding', $steps-vertical-padding);
             // Override marker connector color per step
-            /* REMOVE ON LITE */
             @each $name, $pair in $colors {
                 $color: nth($pair, 1);
                 &--#{$name} {
@@ -318,11 +307,6 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                     }
                 }
             }
-            /* --- */
-        }
-
-        .o-steps__details {
-            @include avariable('background-color', 'steps-details-background-color', $steps-details-background-color);
         }
 
         .o-steps__content {
@@ -346,15 +330,12 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
         .o-steps__divider {
             @include avariable('height', 'steps-divider-height', $steps-divider-height);
-            @include avariable('top', 'steps-size', $base-font-size);
+            @include avariable('top', 'steps-divider-top', $steps-font-size);
             @each $name, $value in $sizes {
                 .o-steps--#{$name} {
                     @include avariable('top', 'size-' + #{$name}, $value);
                 }
             }
-        }
-        .o-steps__details {
-            padding: 0;
         }
     }
 }

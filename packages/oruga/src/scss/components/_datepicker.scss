@@ -35,11 +35,8 @@ $datepicker-btn-border-color: $grey-lighter !default;
 $datepicker-btn-border-radius: $base-border-radius !default;
 $datepicker-btn-border: 1px solid transparent !default;
 $datepicker-btn-color: #363636 !default;
-$datepicker-btn-current-background-color: $primary !default;
-$datepicker-btn-current-border-color: $primary !default; // !!!
-$datepicker-btn-current-color: #fff !default;
 $datepicker-btn-height: 2.25em !default;
-$datepicker-btn-hover-border-color: #b5b5b5 !default;
+$datepicker-btn-hover-border-color: $grey-light !default;
 $datepicker-btn-hover-color: #363636 !default;
 $datepicker-btn-line-height: $base-line-height !default;
 $datepicker-btn-margin: .25rem !default;
@@ -48,7 +45,6 @@ $datepicker-btn-padding: .5em .5em !default;
 
 .o-dpck {
     @include avariable('font-size', 'datepicker-font-size', $datepicker-font-size);
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);
@@ -70,7 +66,6 @@ $datepicker-btn-padding: .5em .5em !default;
             display: flex;
             justify-content: center;
             text-align: center;
-            /* REMOVE ON LITE */
             @each $name, $value in $sizes {
                 &--#{$name} {
                     @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);

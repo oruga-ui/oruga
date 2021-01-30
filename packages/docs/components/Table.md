@@ -1875,7 +1875,6 @@ export default {
 | --oruga-table-boder                           | \$table-boder                           | 1px solid transparent                                    |
 | --oruga-table-border-radius                   | \$table-border-radius                   | \$base-border-radius                                     |
 | --oruga-table-bordered-border-width           | \$table-bordered-border-width           | 1px                                                      |
-| --oruga-table-bordered-bottom-color           | \$table-bordered-bottom-color           | \$grey                                                   |
 | --oruga-table-card-box-shadow                 | \$table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
 | --oruga-table-card-cell-font-weight           | \$table-card-cell-font-weight           | 600                                                      |
 | --oruga-table-card-cell-padding               | \$table-card-cell-padding               | 0 0.5em 0 0                                              |
@@ -1900,9 +1899,9 @@ export default {
 | --oruga-table-sticky-header-height            | \$table-sticky-header-height            | 300px                                                    |
 | --oruga-table-sticky-zindex                   | \$table-sticky-zindex                   | 1                                                        |
 | --oruga-table-striped-background-color        | \$table-striped-background-color        | #fafafa                                                  |
-| --oruga-table-td-border                       | \$table-td-border                       | 1px solid #dbdbdb                                        |
+| --oruga-table-td-border                       | \$table-td-border                       | 1px solid \$grey-lighter                                 |
 | --oruga-table-td-padding                      | \$table-td-padding                      | .5em .75em                                               |
-| --oruga-table-th-border                       | \$table-th-border                       | 2px solid #dbdbdb                                        |
+| --oruga-table-th-border                       | \$table-th-border                       | 2px solid \$grey-lighter                                 |
 | --oruga-table-th-checkbox-width               | \$table-th-checkbox-width               | 40px                                                     |
 | --oruga-table-th-color                        | \$table-th-color                        | #363636                                                  |
 | --oruga-table-th-detail-width                 | \$table-th-detail-width                 | 14px                                                     |

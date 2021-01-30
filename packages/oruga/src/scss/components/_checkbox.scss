@@ -5,15 +5,13 @@ $checkbox-background-color: $primary !default;
 $checkbox-border-color: $primary !default;
 $checkbox-border-radius: $base-border-radius !default;
 $checkbox-border-width: 2px !default;
-$checkbox-checked-box-shadow-color: $checkbox-active-background-color !default;
 $checkbox-checked-box-shadow-length: 0 0 0.5em !default;
 $checkbox-checked-box-shadow-opacity: 0.8 !default;
 $checkbox-checkmark-color: $primary-invert !default;
 $checkbox-disabled-opacity: $base-disabled-opacity !default;
-$checkbox-focus-sibiling-box-shadow: $checkbox-checked-box-shadow-length rgba($grey, $checkbox-checked-box-shadow-opacity) !default;
 $checkbox-label-padding: 0 0 0 .5em !default;
 $checkbox-margin-sibiling: 0.5em !default;
-$checkbox-size: 1.5em !default;
+$checkbox-size: 1rem !default;
 $checkbox-line-height: 1.5 !default;
 /* @docs */
 
@@ -83,7 +81,6 @@ $checkbox-line-height: 1.5 !default;
     &--disabled {
         @include avariable('opacity', 'checkbox-disabled-opacity', $checkbox-disabled-opacity);
     }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('checkbox-font-size-' + #{$name}), $value);
@@ -105,5 +102,4 @@ $checkbox-line-height: 1.5 !default;
             }
         }
     }
-    /* --- */
 }

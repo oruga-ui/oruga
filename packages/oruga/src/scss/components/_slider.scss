@@ -3,20 +3,20 @@
 $slider-background: transparent !default;
 $slider-margin: 1em 0 !default;
 $slider-mark-size: 0.75rem !default;
-$slider-radius: $base-border-radius !default;
+$slider-font-size: $base-font-size !default;
 $slider-rounded-borded-radius: $base-rounded-border-radius !default;
 $slider-thumb-background: $white !default;
 $slider-thumb-border: 1px solid $grey-light !default;
-$slider-thumb-disabled-transform: scale(1) !default;
 $slider-thumb-radius: $base-border-radius !default;
 $slider-thumb-shadow: none !default;
 $slider-thumb-to-track-ratio: 2 !default;
 $slider-thumb-transform: scale(1.25) !default;
-$slider-tick-background: $grey-light !default;
+$slider-tick-background: $primary !default;
 $slider-tick-radius: $base-border-radius !default;
 $slider-tick-to-track-ratio: 0.5 !default;
 $slider-tick-width: 3px !default;
 $slider-track-background: $grey-lighter !default;
+$slider-fill-background: $primary !default;
 $slider-track-border-radius: $base-border-radius !default;
 $slider-track-border: 0px solid $grey !default;
 $slider-track-disabled: 0.5 !default;
@@ -106,30 +106,25 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         position: absolute;
         height: 100%;
         @include avariable('box-shadow', 'slider-track-shadow', $slider-track-shadow);
-        @include avariable('background', 'slider-track-background', $slider-track-background);
+        @include avariable('background', 'slider-fill-background', $slider-fill-background);
         @include avariable('border-radius', 'slider-track-radius', $slider-track-radius);
         @include avariable('border', 'slider-track-border', $slider-track-border);
         // Fix alignment in IE 11. Cancel out for others
         top: 50%;
         transform: translateY(-50%);
-        /* REMOVE ON LITE */
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             &--#{$name} {
                 @include avariable('background', ('variant-' + #{$name}), $color);
             }
         }
-        /* --- */
     }
-
-    /* REMOVE ON LITE */
-    @include slider-size($base-font-size);
+    @include slider-size($slider-font-size);
     @each $name, $value in $sizes {
         &--#{$name} {
             @include slider-size($value, $name);
         }
     }
-    /* --- */
     &__tick {
         position: absolute;
         transform: translate(-50%, -50%);

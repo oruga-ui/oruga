@@ -3,12 +3,11 @@
 $modal-content-background-color: $white !default;
 $modal-content-padding: 10px !default;
 $modal-content-border-radius: $base-border-radius !default;
-$modal-overlay-color: hsla(0,0%,4%,.86) !default;
+$modal-overlay-background-color: hsla(0,0%,4%,.86) !default;
 $modal-close-border-radius: $base-rounded-border-radius !default;
-$modal-close-height: 32px !default;
 $modal-close-right: 20px !default;
 $modal-close-top: 20px !default;
-$modal-close-width: 32px !default;
+$modal-close-size: 32px !default;
 $modal-close-color: $white !default;
 $modal-content-fullscreen-background-color: #f5f5f5 !default;
 $modal-content-max-height: calc(100vh - 160px) !default;
@@ -34,7 +33,7 @@ $modal-zindex: 40 !default;
         position: absolute;
         right: 0;
         top: 0;
-        @include avariable('background-color', 'modal-overlay-color', $modal-overlay-color);
+        @include avariable('background-color', 'modal-overlay-background-color', $modal-overlay-background-color);
     }
     &__content {
         position: relative;
@@ -63,8 +62,8 @@ $modal-zindex: 40 !default;
         @include avariable('border-radius', 'modal-close-border-radius', $modal-close-border-radius);
         @include avariable('right', 'modal-close-right', $modal-close-right);
         @include avariable('top', 'modal-close-top', $modal-close-top);
-        @include avariable('height', 'modal-close-height', $modal-close-height);
-        @include avariable('width', 'modal-close-width', $modal-close-width);
+        @include avariable('height', 'modal-close-size', $modal-close-size);
+        @include avariable('width', 'modal-close-size', $modal-close-size);
         @include avariable('color', 'modal-close-color', $modal-close-color);
     }
     &--mobile {

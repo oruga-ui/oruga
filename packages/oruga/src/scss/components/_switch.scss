@@ -1,33 +1,19 @@
 /* @docs */
-$switch-active-background-color-opacity: 0.9 !default;
 $switch-active-background-color: $primary !default;
-$switch-active-box-shadow-color: #b5b5b5 !default;
-$switch-active-box-shadow-length: 0 0 0.5em !default;
-$switch-active-box-shadow-opacity: 0.6 !default;
-$swtich-action-background: #f5f5f5 !default;
-$switch-background: #b5b5b5 !default;
+$switch-action-background: #f5f5f5 !default;
+$switch-background: $grey-light !default;
 $switch-border-radius: $base-border-radius !default;
 $switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
-$switch-checked-box-shadow-color: $switch-active-background-color !default;
-$switch-checked-box-shadow-length: 0 0 0.5em !default;
-$switch-checked-box-shadow-opacity: 0.8 !default;
 $switch-disabled-opacity: $base-disabled-opacity !default;
-$switch-hover-background-color: rgba(#b5b5b5, 0.9) !default;
-$switch-hover-border-color-opacity: 0.9 !default;
-$switch-hover-border-color: #b5b5b5 !default;
 $switch-margin-separator: .25em !default;
-$switch-margin-sibling: 0.5em !default;
 $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
-$switch-width-number: 2.75 !default;
-$switch-width: $switch-width-number * 1em !default;
+$switch-width: 2.75 * 1em !default;
 /* @docs */
 
 .o-switch {
     cursor: pointer;
     @include unselectable;
-    //@include avariable('margin-right', 'switch-margin-sibling', $switch-margin-sibling);
-    /* REMOVE ON LITE */
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &--#{$name} {
@@ -47,7 +33,6 @@ $switch-width: $switch-width-number * 1em !default;
             @include avariable('font-size', ('font-size-' + #{name}), $value);
         }
     }
-    /* --- */
 
     &__wrapper {
         @include side-flex-gap($switch-margin-separator);
@@ -73,7 +58,7 @@ $switch-width: $switch-width-number * 1em !default;
             eparam('$width', variable('switch-width', $switch-width)),
             eparam('$padding', variable('switch-padding', $switch-padding))
         );
-        @include avariable('background', 'swtich-action-background', $swtich-action-background);
+        @include avariable('background', 'switch-action-background', $switch-action-background);
         @include avariable('box-shadow', 'switch-box-shadow', $switch-box-shadow);
         transition-property: transform;
         @include avariable('transition-duration', 'transition-duration', $speed-slow);

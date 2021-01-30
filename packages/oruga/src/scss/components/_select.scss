@@ -9,8 +9,8 @@ $select-rounded-border-radius: $base-rounded-border-radius !default;
 $select-box-shadow: none !default;
 $select-color: #363636 !default;
 $select-icon-zindex: 4 !default;
-$select-font-size: $base-font-size !default;
 $select-height: $control-height !default;
+$select-arrow-size: 1rem !default;
 $select-line-height: $base-line-height !default;
 $select-margin: 0 !default;
 $select-max-width: 100% !default;
@@ -19,10 +19,16 @@ $select-placeholder-opacity: $base-disabled-opacity !default;
 $select-padding: $control-padding-vertical $control-padding-horizontal !default;
 /* @docs */
 
+@function svg_arrow($color) {
+    $start: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:serif="http://www.serif.com/" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">';
+    $content: '<g transform="matrix(5.70052,0,0,5.70052,-1329.79,-547.054)"><path d="M233.451,101.749L235.617,99.422L242.013,105.565L248.463,99.422L250.642,101.749L242.013,110.052L233.451,101.749Z" style="fill:#{$color};stroke:white;stroke-width:0.18px;"/></g>';
+    $end: '</svg>';
+    @return svg-encode("#{$start}#{$content}#{$end}");
+}
+
 .o-ctrl-sel {
     display: inline-flex;
     position: relative;
-    @include avariable('font-size', 'base-font-size', $base-font-size);
     &--expanded {
         width: 100%;
         flex-grow: 1;
@@ -40,7 +46,8 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     justify-content: flex-start;
     align-items: center;
     outline: none;
-    @include avariable('font-size', 'select-font-size', $select-font-size);
+
+    @include avariable('font-size', 'base-font-size', $base-font-size);
     @include avariable('max-width', 'select-max-width', $select-max-width);
     @include avariable('width', 'select-width', $select-width);
     @include avariable('background-color', 'select-background-color', $select-background-color);
@@ -54,13 +61,25 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     @include avariable('line-height', 'select-line-height', $select-line-height);
     @include avariable('padding', 'select-padding', $select-padding);
     @include avariable('height', 'select-height', $select-height);
+    &-arrow {
+        background-image: url(svg_arrow(variable('select-arrow-color', $select-color)));
+        background-repeat: no-repeat;
+        @include avariable('background-size', 'select-arrow-size', $select-arrow-size);
+        @include evariable(
+            'background-position', 'calc(100% - $param / 2) center',
+            eparam('$param', variable('select-arrow-size', $select-arrow-size))
+        );
+        @include evariable(
+            'padding-right', 'calc($param * 2)',
+            eparam('$param', variable('select-arrow-size', $select-arrow-size))
+        );
+    }
     &-iconspace-left {
         @include avariable('padding-left', 'select-height', $select-height);
     }
     &-iconspace-right {
         @include avariable('padding-right', 'select-height', $select-height);
     }
-    /* REMOVE ON LITE */
     @each $name, $value in $sizes {
         &--#{$name} {
             @include avariable('font-size', ('select-font-size-' + #{$name}), $value);
@@ -72,7 +91,6 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
             @include avariable('border-color', ('variant-' + #{$name}), $color);
         }
     }
-    /* --- */
     &--rounded {
         @include avariable('border-radius', 'select-rounded-border-radius', $select-rounded-border-radius);
     }
@@ -86,8 +104,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
     &__icon-left, &__icon-right {
         position: absolute;
         top: 0;
-        pointer-events: none;
-        @include avariable('height', 'select-height', $select-height);
+        height: 100%;
         @include avariable('width', 'select-height', $select-height);
         @include avariable('z-index', 'select-icon-zindex', $select-icon-zindex);
     }
