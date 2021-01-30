@@ -69,6 +69,7 @@ export default {
                 {
                     class: "itemHeaderClass",
                     description: "Class of the nav item",
+                    specificity: "when <b>positionClass</b> is applied",
                     subitem: true
                 },
                 {
@@ -87,6 +88,7 @@ export default {
                 {
                     class: "stepsClass",
                     description: "Class of the steps container",
+                    specificity: "when <b>positionClass</b> is applied",
                     action: () => {
                     }
                 },
@@ -109,18 +111,21 @@ export default {
                 {
                     class: "stepDividerClass",
                     description: "Class of the Steps component dividers",
+                    specificity: "when <b>mobileClass</b> or <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> or <b>positionClass</b> is applied",
                     action: () => {
                     }
                 },
                 {
                     class: "stepMarkerClass",
                     description: "Class of the Steps component marker",
+                    specificity: "when <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> is applied",
                     action: () => {
                     }
                 },
                 {
                     class: "stepContentClass",
                     description: "Class of the Steps component content",
+                    specificity: "when <b>positionClass</b> is applied",
                     action: () => {
                     }
                 },
@@ -134,6 +139,7 @@ export default {
                 {
                     class: "stepNavigationClass",
                     description: "Class of the Steps component navigation element",
+                    specificity: "when <b>positionClass</b> is applied",
                     action: () => {
                     }
                 },
@@ -146,6 +152,7 @@ export default {
                 {
                     class: "stepLinkClass",
                     description: "Class of the Steps component link",
+                    specificity: "when <b>itemHeaderActiveClass</b> is applied",
                     action: () => {
                     }
                 },

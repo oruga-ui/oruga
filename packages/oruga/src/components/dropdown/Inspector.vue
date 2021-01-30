@@ -36,6 +36,7 @@ export default {
                     class: "menuMobileOverlayClass",
                     description: "Class of the overlay when on mobile",
                     warning: "Switch to mobile view to see it in action!",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -45,6 +46,7 @@ export default {
                 {
                     class: "menuClass",
                     description: "Class of the dropdown menu",
+                    specificity: "when <b>menuInlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()

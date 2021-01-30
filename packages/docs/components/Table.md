@@ -1899,9 +1899,9 @@ export default {
 | --oruga-table-sticky-header-height            | \$table-sticky-header-height            | 300px                                                    |
 | --oruga-table-sticky-zindex                   | \$table-sticky-zindex                   | 1                                                        |
 | --oruga-table-striped-background-color        | \$table-striped-background-color        | #fafafa                                                  |
-| --oruga-table-td-border                       | \$table-td-border                       | 1px solid #dbdbdb                                        |
+| --oruga-table-td-border                       | \$table-td-border                       | 1px solid \$grey-lighter                                 |
 | --oruga-table-td-padding                      | \$table-td-padding                      | .5em .75em                                               |
-| --oruga-table-th-border                       | \$table-th-border                       | 2px solid #dbdbdb                                        |
+| --oruga-table-th-border                       | \$table-th-border                       | 2px solid \$grey-lighter                                 |
 | --oruga-table-th-checkbox-width               | \$table-th-checkbox-width               | 40px                                                     |
 | --oruga-table-th-color                        | \$table-th-color                        | #363636                                                  |
 | --oruga-table-th-detail-width                 | \$table-th-detail-width                 | 14px                                                     |

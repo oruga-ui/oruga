@@ -286,8 +286,8 @@ export default {
 
 | CSS Variable                         | SASS Variable                  | Default                          |
 | ------------------------------------ | ------------------------------ | -------------------------------- |
-| --oruga-button-background-color      | \$button-background-color      | #ffffff                          |
-| --oruga-button-color                 | \$button-color                 | #000000                          |
+| --oruga-button-background-color      | \$button-background-color      | \$primary                        |
+| --oruga-button-color                 | \$button-color                 | \$primary-invert                 |
 | --oruga-button-border-radius         | \$button-border-radius         | \$base-border-radius             |
 | --oruga-button-border                | \$button-border                | 1px solid \$button-color         |
 | --oruga-button-box-shadow            | \$button-box-shadow            | none                             |

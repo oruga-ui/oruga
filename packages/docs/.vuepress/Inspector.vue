@@ -68,6 +68,7 @@
                 <td>
                     <span>{{data.description | addDotToTheEnd}}</span>
                     <span v-if="data.warning"><br>👉 <i><span v-html="data.warning"></span></i></span>
+                    <span v-if="data.specificity"><br>🔍 <i><span>Classes applied have a higher specificity than expected <span v-html="data.specificity"></span></span></i></span>
                 </td>
                 <td>
                     <span v-if="data.properties"><code style='white-space: nowrap; padding: 0;' v-html="setByProperties(data.properties)"></code></span>

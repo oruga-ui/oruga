@@ -461,7 +461,7 @@ export default {
 | --oruga-tabs-icon-margin                           | \$tabs-icon-margin                           | 0.5em                   |
 | --oruga-tabs-content-padding                       | \$tabs-content-padding                       | 1rem                    |
 | --oruga-tabs-margin-bottom                         | \$tabs-margin-bottom                         | 1.5rem                  |
-| --oruga-tabs-border-bottom-color                   | \$tabs-border-bottom-color                   | #dbdbdb                 |
+| --oruga-tabs-border-bottom-color                   | \$tabs-border-bottom-color                   | \$grey-lighter          |
 | --oruga-tabs-border-bottom-style                   | \$tabs-border-bottom-style                   | solid                   |
 | --oruga-tabs-border-bottom-width                   | \$tabs-border-bottom-width                   | 1px                     |
 | --oruga-tabs-link-color                            | \$tabs-link-color                            | hsl(0, 0%, 29%)         |

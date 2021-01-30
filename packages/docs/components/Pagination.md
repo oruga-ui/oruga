@@ -259,18 +259,22 @@ export default {
                 {
                     class: "prevBtnClass",
                     description: "Class of the prev. button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "nextBtnClass",
                     description: "Class of the next button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "listClass",
                     description: "Class of the pagination list",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "linkClass",
                     description: "Class of the link button",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "linkCurrentClass",
@@ -279,6 +283,7 @@ export default {
                 {
                     class: "ellipsisClass",
                     description: "Class of the pagination ellipsis ",
+                    specificity: "when <b>mobileClass</b> is applied",
                 },
                 {
                     class: "infoClass",
@@ -381,9 +386,8 @@ export default {
 | CSS Variable                                     | SASS Variable                              | Default                      |
 | ------------------------------------------------ | ------------------------------------------ | ---------------------------- |
 | --oruga-pagination-disabled-opacity              | \$pagination-disabled-opacity              | \$base-disabled-opacity      |
-| --oruga-pagination-ellipsis-color                | \$pagination-ellipsis-color                | #b5b5b5                      |
-| --oruga-pagination-font-size                     | \$pagination-font-size                     | 1rem                         |
-| --oruga-pagination-link-border-color             | \$pagination-link-border-color             | #dbdbdb                      |
+| --oruga-pagination-ellipsis-color                | \$pagination-ellipsis-color                | \$grey-light                 |
+| --oruga-pagination-link-border-color             | \$pagination-link-border-color             | \$grey-lighter               |
 | --oruga-pagination-link-border-radius            | \$pagination-link-border-radius            | \$base-border-radius         |
 | --oruga-pagination-link-border                   | \$pagination-link-border                   | 1px solid transparent        |
 | --oruga-pagination-link-color                    | \$pagination-link-color                    | #363636                      |
@@ -391,7 +395,7 @@ export default {
 | --oruga-pagination-link-current-border-color     | \$pagination-link-current-border-color     | \$primary // !!!             |
 | --oruga-pagination-link-current-color            | \$pagination-link-current-color            | #fff                         |
 | --oruga-pagination-link-height                   | \$pagination-link-height                   | 2.25em                       |
-| --oruga-pagination-link-hover-border-color       | \$pagination-link-hover-border-color       | #b5b5b5                      |
+| --oruga-pagination-link-hover-border-color       | \$pagination-link-hover-border-color       | \$grey-light                 |
 | --oruga-pagination-link-hover-color              | \$pagination-link-hover-color              | #363636                      |
 | --oruga-pagination-link-line-height              | \$pagination-link-line-height              | \$base-line-height           |
 | --oruga-pagination-link-margin                   | \$pagination-link-margin                   | .25rem                       |

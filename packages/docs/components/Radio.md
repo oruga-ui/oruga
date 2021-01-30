@@ -217,5 +217,5 @@ export default {
 | --oruga-radio-disabled-opacity           | \$radio-disabled-opacity           | \$base-disabled-opacity |
 | --oruga-radio-label-padding              | \$radio-label-padding              | 0 0 0 .5em              |
 | --oruga-radio-margin-sibiling            | \$radio-margin-sibiling            | 0.5em                   |
-| --oruga-radio-size                       | \$radio-size                       | 1.25em                  |
+| --oruga-radio-size                       | \$radio-size                       | 1rem                    |
 | --oruga-radio-line-height                | \$radio-line-height                | 1.25                    |

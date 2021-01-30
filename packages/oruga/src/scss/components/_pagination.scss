@@ -34,6 +34,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             @include avariable('font-size', ('pagination-font-size-' + #{$name}), $value);
         }
     }
+    /* */
     &__link {
         -moz-appearance: none;
         -webkit-appearance: none;

@@ -298,6 +298,7 @@ export default {
                     class: "horizontalClass",
                     description: "Class to align label and control in horizontal forms",
                     properties: ['horizontal'],
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
@@ -335,6 +336,7 @@ export default {
                     class: "labelHorizontalClass",
                     description: "Class for field label when horizontal",
                     properties: ['horizontal'],
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: (cmp) => {
                         cmp.data.horizontal = true;
                     }
@@ -346,6 +348,7 @@ export default {
                 {
                     class: "bodyHorizontalClass",
                     description: "Class for field body when horizontal",
+                    specificity: "when <b>mobileClass</b> is applied",
                     properties: ['horizontal'],
                     action: (cmp) => {
                         cmp.data.horizontal = true;
