@@ -5,6 +5,9 @@ $sass-vars: true;
 @import "utilities/_variables";
 @import "utilities/_helpers";
 
+$colors: ();
+$sizes: ();
+
 // autocomplete
 $whitelist: add-to-whitelist(
     'autocomplete-menu-background',
