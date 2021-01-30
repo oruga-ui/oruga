@@ -68,6 +68,9 @@ function tmplClassProps(config, name) {
         const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
         return `
 ## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_${name}.scss)
+
 <br />
 ${fs.readFileSync(inspectorVueFile, 'utf8')}
 <br />

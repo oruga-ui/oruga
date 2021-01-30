@@ -127,6 +127,8 @@ title: Sidebar
 
 ## Class props
 
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
+
 <br />
 <template>
      <div>
