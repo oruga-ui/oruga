@@ -11,7 +11,6 @@ $pagination-link-current-border-color: $primary !default; // !!!
 $pagination-link-current-color: #fff !default;
 $pagination-link-height: 2.25em !default;
 $pagination-link-hover-border-color: $grey-light !default;
-$pagination-link-hover-color: #363636 !default;
 $pagination-link-line-height: $base-line-height !default;
 $pagination-link-margin: .25rem !default;
 $pagination-link-min-width: 2.25em !default;
@@ -57,6 +56,10 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
         @include avariable('height', 'pagination-link-height', $pagination-link-height);
         @include avariable('padding', 'pagination-link-padding', $pagination-link-padding);
         @include avariable('margin', 'pagination-link-margin', $pagination-link-margin);
+        &:hover {
+            text-decoration: none;
+            @include avariable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
+        }
         &--rounded {
             @include avariable('border-radius', 'pagination-rounded-border-radius', $pagination-rounded-border-radius);
         }
@@ -70,13 +73,7 @@ $pagination-rounded-border-radius: $base-rounded-border-radius !default;
             @include avariable('border-color', 'pagination-link-current-border-color', $pagination-link-current-border-color);
             @include avariable('color', 'pagination-link-current-color', $pagination-link-current-color);
         }
-        &:hover {
-            text-decoration: none;
-            @include avariable('border-color', 'pagination-link-hover-border-color', $pagination-link-hover-border-color);
-            @include avariable('color', 'pagination-link-hover-color', $pagination-link-hover-color);
-        }
     }
-
     &__ellipsis {
         justify-content: center;
         text-align: center;
