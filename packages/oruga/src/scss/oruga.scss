@@ -15,8 +15,7 @@ $whitelist: add-to-whitelist(
 $whitelist: add-to-whitelist(
     'button-background-color',
     'button-color',
-    'button-disabled-opacity',
-    'button-height'
+    'button-disabled-opacity'
 );
 
 // checkbox
@@ -31,7 +30,6 @@ $whitelist: add-to-whitelist(
 
 // datepicker
 $whitelist: add-to-whitelist(
-    'datepicker-btn-height',
     'datepicker-btn-border-color',
     'datepicker-btn-color'
 );
@@ -56,9 +54,7 @@ $whitelist: add-to-whitelist(
 );
 
 // input
-$whitelist: add-to-whitelist(
-    'input-height'
-);
+$whitelist: add-to-whitelist();
 
 // modal
 $whitelist: add-to-whitelist(
@@ -72,7 +68,6 @@ $whitelist: add-to-whitelist(
 
 // pagination
 $whitelist: add-to-whitelist(
-    'pagination-link-height',
     'pagination-link-current-background-color',
     'pagination-link-current-border-color',
     'pagination-link-current-color'
@@ -87,7 +82,7 @@ $whitelist: add-to-whitelist(
 
 // select
 $whitelist: add-to-whitelist(
-    'select-height'
+    'select-arrow-size'
 );
 
 // sidebar

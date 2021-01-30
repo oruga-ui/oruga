@@ -30,15 +30,14 @@
             :class="iconLeftClasses"
             :icon="icon"
             :pack="iconPack"
-            :size="size"/>
+            :size="size" />
 
          <o-icon
-            v-if="iconRight && !multiple"
+            v-if="iconRight"
             :class="iconRightClasses"
             :icon="iconRight"
             :pack="iconPack"
-            :size="size"
-            both />
+            :size="size" />
     </div>
 </template>
 
@@ -47,8 +46,6 @@ import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import config from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -83,12 +80,7 @@ export default {
         /**
          * 	Icon name to be added on the right side
          */
-        iconRight: {
-            type: String,
-            default: () => {
-                return getValueByPath(config, 'select.iconRight', 'caret-down')
-            }
-        },
+        iconRight: String,
         /** Text when nothing is selected */
         placeholder: String,
         multiple: Boolean,
@@ -104,7 +96,8 @@ export default {
         iconRightClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         variantClass: [String, Function, Array],
-        placeholderClass: [String, Function, Array]
+        placeholderClass: [String, Function, Array],
+        arrowClass: [String, Function, Array]
     },
     data() {
         return {
@@ -127,7 +120,8 @@ export default {
                 { [this.computedClass('variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
                 { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
                 { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
-                { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible }
+                { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible },
+                { [this.computedClass('arrowC', 'o-sel-arrow')]: !this.iconRight && !this.multiple }
             ]
         },
         iconLeftClasses() {
@@ -138,6 +132,11 @@ export default {
         iconRightClasses() {
             return [
                 this.computedClass('iconRightClass', 'o-sel__icon-right')
+            ]
+        },
+        arrowClasses() {
+            return [
+                this.computedClass('arrowClass', 'o-sel__arrow')
             ]
         },
         placeholderVisible() {

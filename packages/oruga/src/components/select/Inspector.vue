@@ -128,6 +128,14 @@ export default {
                     action: () => {
                         this.selectedOptions = null;
                     }
+                },
+                {
+                    class: "arrowClass",
+                    description: "Class of the select arrow",
+                    warning: "It applies the arrow icon using background-image and background-position on select element",
+                    action: () => {
+                        this.selectedOptions = null;
+                    }
                 }
             ],
         };

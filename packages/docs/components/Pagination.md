@@ -396,7 +396,6 @@ export default {
 | --oruga-pagination-link-current-color            | \$pagination-link-current-color            | #fff                         |
 | --oruga-pagination-link-height                   | \$pagination-link-height                   | 2.25em                       |
 | --oruga-pagination-link-hover-border-color       | \$pagination-link-hover-border-color       | \$grey-light                 |
-| --oruga-pagination-link-hover-color              | \$pagination-link-hover-color              | #363636                      |
 | --oruga-pagination-link-line-height              | \$pagination-link-line-height              | \$base-line-height           |
 | --oruga-pagination-link-margin                   | \$pagination-link-margin                   | .25rem                       |
 | --oruga-pagination-link-min-width                | \$pagination-link-min-width                | 2.25em                       |
