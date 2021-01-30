@@ -1,5 +1,7 @@
 <template>
-    <div :class="rootClasses">
+    <div
+        :class="rootClasses"
+        v-show="!hideOnMobile">
         <div
             :class="overlayClasses"
             v-if="overlay && isOpen"
@@ -126,9 +128,6 @@ export default {
         reduceClass: [String, Function, Array],
         expandOnHoverClass: [String, Function, Array],
         expandOnHoverFixedClass: [String, Function, Array],
-        mobileReduceClass: [String, Function, Array],
-        mobileHideClass: [String, Function, Array],
-        mobileFullwidthClass: [String, Function, Array],
         variantClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
     },
@@ -160,14 +159,11 @@ export default {
                 { [this.computedClass('staticClass', 'o-side__content--static')]: this.isStatic },
                 { [this.computedClass('absoluteClass', 'o-side__content--absolute')]: this.isAbsolute },
                 { [this.computedClass('fullheightClass', 'o-side__content--fullheight')]: this.fullheight },
-                { [this.computedClass('fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth },
+                { [this.computedClass('fullwidthClass', 'o-side__content--fullwidth')]: this.fullwidth || (this.mobile === 'fullwidth' && this.isMatchMedia) },
                 { [this.computedClass('rightClass', 'o-side__content--right')]: this.right },
-                { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce },
+                { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce || (this.mobile === 'reduced' && this.isMatchMedia) },
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
-                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
-                { [this.computedClass('mobileReduceClass', 'o-side__content--mini-mobile')]: this.mobile === 'reduced' && this.isMatchMedia },
-                { [this.computedClass('mobileHideClass', 'o-side__content--hidden-mobile')]: this.mobile === 'hidden' && this.isMatchMedia },
-                { [this.computedClass('mobileFullwidthClass', 'o-side__content--fullwidth-mobile')]: this.mobile === 'fullwidth' && this.isMatchMedia }
+                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') }
             ]
         },
         cancelOptions() {
@@ -185,6 +181,9 @@ export default {
         },
         isAbsolute() {
             return this.position === 'absolute'
+        },
+        hideOnMobile() {
+            return this.mobile === 'hidden' && this.isMatchMedia
         }
     },
     watch: {

@@ -67,23 +67,6 @@ $sidebar-zindex: 38 !default;
             flex-direction: column;
             align-content: stretch;
         }
-        &--mini-mobile {
-            @include avariable('width', 'sidebar-mobile-width', $sidebar-mobile-width);
-        }
-        &--mini-mobile-expand {
-            &:hover {
-                @include avariable('width', 'sidebar-width', $sidebar-width);
-            }
-        }
-        &--hidden-mobile {
-            width: 0;
-            height: 0;
-            overflow: hidden;
-        }
-        &--fullwidth-mobile {
-            width: 100%;
-            max-width: 100%;
-        }
     }
     &__overlay {
         bottom: 0;
