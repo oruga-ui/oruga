@@ -121,7 +121,7 @@ export default {
                 { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
                 { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
                 { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible },
-                { [this.computedClass('arrowC', 'o-sel-arrow')]: !this.iconRight && !this.multiple }
+                { [this.computedClass('arrowClass', 'o-sel-arrow')]: !this.iconRight && !this.multiple }
             ]
         },
         iconLeftClasses() {
@@ -132,11 +132,6 @@ export default {
         iconRightClasses() {
             return [
                 this.computedClass('iconRightClass', 'o-sel__icon-right')
-            ]
-        },
-        arrowClasses() {
-            return [
-                this.computedClass('arrowClass', 'o-sel__arrow')
             ]
         },
         placeholderVisible() {

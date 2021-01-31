@@ -124,7 +124,7 @@ export default defineComponent({
                 { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
                 { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
                 { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible },
-                { [this.computedClass('arrowC', 'o-sel-arrow')]: !this.iconRight && !this.multiple }
+                { [this.computedClass('arrowClass', 'o-sel-arrow')]: !this.iconRight && !this.multiple }
             ]
         },
         iconLeftClasses() {
