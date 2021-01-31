@@ -96,7 +96,8 @@ export default {
     mixins: [FormElementMixin],
     inheritAttrs: false,
     props: {
-        value: Date,
+        /** @model */
+        modelValue: Date,
         inline: Boolean,
         minTime: Date,
         maxTime: Date,
@@ -179,7 +180,7 @@ export default {
     },
     data() {
         return {
-            dateSelected: this.value,
+            dateSelected: this.modelValue,
             hoursSelected: null,
             minutesSelected: null,
             secondsSelected: null,
@@ -198,7 +199,7 @@ export default {
             },
             set(value) {
                 this.dateSelected = value
-                this.$emit('input', this.dateSelected)
+                this.$emit('update:modelValue', this.dateSelected)
             }
         },
         localeOptions() {
@@ -359,7 +360,7 @@ export default {
          *   1. Update internal value.
          *   2. If it's invalid, validate again.
          */
-        value: {
+        modelValue: {
             handler(value) {
                 this.updateInternalState(value)
                 !this.isValid && this.$refs.input.checkHtml5Validity()

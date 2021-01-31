@@ -148,6 +148,7 @@ $datepicker-btn-padding: .5em .5em !default;
             text-align: center;
             vertical-align: middle;
             display: table-cell;
+            text-decoration: none;
             @include avariable('border-radius', 'datepicker-item-border-radius', $datepicker-item-border-radius);
             @include avariable('padding', 'datepicker-item-padding', $datepicker-item-padding);
             &--unselectable {

@@ -126,7 +126,7 @@ export default {
         * emit 'input' event and validate
         */
         onFileChange(event) {
-            if (this.disabled || this.loading) return
+            if (this.disabled) return
             if (this.dragDrop) this.updateDragDropFocus(false)
             const value = event.target.files || event.dataTransfer.files
             if (value.length === 0) {

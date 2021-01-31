@@ -74,6 +74,7 @@ export default defineComponent({
     components: {
         [DatepickerTableRow.name]: DatepickerTableRow
     },
+    emits: ['input', 'range-start', 'range-end', 'update:focused'],
     props: {
         value: {
             type: [Date, Array]
