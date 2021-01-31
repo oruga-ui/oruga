@@ -172,6 +172,106 @@ title: Timepicker
 
 :::
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_timepicker.scss)
+
+<br />
+<template>
+    <div>
+        <doc-wrapper>
+            <template v-slot:default="s">
+                <o-field label="Select time">
+                    <o-timepicker v-bind="s" placeholder="Click to select..." ref="timepicker">
+                        <div>This is the footer</div>
+                    </o-timepicker>
+                </o-field>
+            </template>
+        </doc-wrapper>
+        <inspector :inspectData="inspectData"></inspector>
+    </div>
+</template>
+
+<script>
+export default {
+    methods: {
+        openTimePicker() {
+            setTimeout(() => {
+                this.$refs.timepicker.$el.getElementsByClassName('o-drop__trigger')[0].click()
+            }, 500)
+        }
+    },
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element",
+                },
+                {
+                    class: "sizeClass",
+                    description: "Class of the Timepicker component size",
+                    properties: ["size"],
+                    suffixes: ['small', 'medium', 'large'],
+                    action: (cmp) => {
+                        cmp.data.size = 'large';
+                        this.openTimePicker();
+                    },
+                },
+                {
+                    class: "boxClass",
+                    description: "Class of the Timepicker component box where you choose the date",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
+                {
+                    class: "selectClass",
+                    description: "Class of the Timepicker select",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
+                {
+                    class: "selectPlaceholderClass",
+                    description: "Class of the Timepicker select placeholder",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
+                {
+                    class: "separatorClass",
+                    description: "Class of the Timepicker separator",
+                    action: (cmp) => {
+                        this.openTimePicker();
+                    },
+                },
+                {
+                    class: "footerClass",
+                    description: "Class of the Timepicker footer",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
+                {
+                    class: "mobileClass",
+                    description: "Class of the Table when on mobile",
+                    warning: "Switch to mobile view to see it in action!"
+                },
+            ],
+        };
+    }
+}
+</script>
+<style>
+.datepicker__table {
+    border-collapse: collapse;
+}
+</style>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name             | Description                                                        | Type           | Values                                            | Default                                                                                                                                                                                                                                                 |
@@ -205,6 +305,7 @@ title: Timepicker
 | position              |                                                                    | string         | -                                                 |                                                                                                                                                                                                                                                         |
 | resetOnMeridianChange |                                                                    | boolean        | -                                                 | false                                                                                                                                                                                                                                                   |
 | rounded               | Makes the element rounded                                          | boolean        | -                                                 |                                                                                                                                                                                                                                                         |
+| size                  | Size of button, optional                                           | string         | `small`, `medium`, `large`                        |                                                                                                                                                                                                                                                         |
 | statusIcon            | Show status icon using field and variant prop                      | boolean        | -                                                 | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}                                                                                                                                                                                     |
 | timeCreator           |                                                                    | func           | -                                                 | () => {<br> const timeCreator = getValueByPath(config, 'timepicker.timeCreator', undefined)<br> if (typeof timeCreator === 'function') {<br> return timeCreator()<br> } else {<br> return new Date()<br> }<br>}                                         |
 | timeFormatter         |                                                                    | func           | -                                                 | (date, vm) => {<br> const timeFormatter = getValueByPath(config, 'timepicker.timeFormatter', undefined)<br> if (typeof timeFormatter === 'function') {<br> return timeFormatter(date)<br> } else {<br> return defaultTimeFormatter(date, vm)<br> }<br>} |

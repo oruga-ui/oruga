@@ -179,6 +179,7 @@ export default {
         selectPlaceholderClass: [String, Function, Array],
         separatorClass: [String, Function, Array],
         footerClass: [String, Function, Array],
+        mobileClass: [String, Function, Array],
         /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object,
         /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
@@ -200,7 +201,7 @@ export default {
             return [
                 this.computedClass('rootClass', 'o-tpck'),
                 { [this.computedClass('sizeClass', 'o-tpck--', this.size)]: this.size },
-                 { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
+                { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
             ]
         },
         boxClasses() {
