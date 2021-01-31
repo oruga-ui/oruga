@@ -8,7 +8,6 @@
         :rounded="rounded"
         :open-on-focus="openOnFocus"
         :position="position"
-        :loading="loading"
         :inline="inline"
         :editable="editable"
         :expanded="expanded"
@@ -60,7 +59,6 @@
         :icon="icon"
         :icon-pack="iconPack"
         :rounded="rounded"
-        :loading="loading"
         :max="formatNative(maxDate)"
         :min="formatNative(minDate)"
         :disabled="disabled"
@@ -99,8 +97,9 @@ export default defineComponent({
     configField: 'datetimepicker',
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
+    emits: ['update:modelValue'],
     props: {
-        value: {
+        modelValue: {
             type: Date
         },
         editable: {
@@ -151,7 +150,7 @@ export default defineComponent({
     },
     data() {
         return {
-            newValue: this.value
+            newValue: this.modelValue
         }
     },
     computed: {
@@ -195,9 +194,9 @@ export default defineComponent({
                     }
                     this.newValue = new Date(val.getTime())
                 } else {
-                    this.newValue = this.value
+                    this.newValue = this.modelValue
                 }
-                this.$emit('input', this.newValue)
+                this.$emit('update:modelValue', this.newValue)
             }
         },
         localeOptions() {
@@ -270,8 +269,8 @@ export default defineComponent({
         }
     },
     watch: {
-        value() {
-            this.newValue = this.value
+        modelValue(value) {
+            this.newValue = value
         }
     },
     methods: {

@@ -53,6 +53,7 @@ export default defineComponent({
     inject: {
         $datepicker: { name: '$datepicker', default: false }
     },
+    emits: ['select', 'rangeHoverEndDate', 'change-focus'],
     props: {
         selectedDate: {
             type: [Date, Array]
