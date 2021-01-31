@@ -17,12 +17,14 @@ describe('Timepicker', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    /*
     it('returns "1" for nativeStep is enableSeconds is true', async () => {
         expect(wrapper.vm.nativeStep).toBeNull()
         wrapper.setProps({ 'enableSeconds': true })
         await wrapper.vm.$nextTick()
         expect(wrapper.vm.nativeStep).toBe('1')
     })
+    */
 
     it('disables hour if no selectable minutes available', async () => {
         wrapper.setProps({

@@ -80,7 +80,7 @@ describe('Datetimepicker', () => {
         })
         const datepicker = wrapper.find({ ref: 'datepicker' })
         await wrapper.vm.$nextTick()
-        expect(datepicker.vm.formattedValue).toEqual('10/1/2019 08:30')
+        expect(datepicker.vm.formattedValue).toEqual('1/10/2019, 08:30')
         wrapper.setProps({
             datetimeFormatter: (date) => `${date.getFullYear()}`
         })
@@ -101,7 +101,7 @@ describe('Datetimepicker', () => {
         })
         const datetimeToFormat = new Date(2019, 9, 1, 8, 30, 0, 0)
         const formattedDatetime = wrapper.vm.defaultDatetimeFormatter(datetimeToFormat)
-        expect(formattedDatetime).toEqual('10/1/2019 08:30:00')
+        expect(formattedDatetime).toEqual('1/10/2019, 08:30:00')
     })
 
     it('should format date time according init value', async () => {
@@ -117,7 +117,7 @@ describe('Datetimepicker', () => {
             sync: false
         })
         await wrapper.vm.$nextTick()
-        expect(wrapper.find('input').element.value).toEqual('10/1/2019 08:30')
+        expect(wrapper.find('input').element.value).toEqual('1/10/2019, 08:30')
     })
 
     it('should parse date time', async () => {

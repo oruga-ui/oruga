@@ -63,7 +63,7 @@ export default {
                 {
                     class: "separatorClass",
                     description: "Class of the Timepicker separator",
-                    action: (cmp) => {
+                    action: () => {
                         this.openTimePicker();
                     },
                 },
