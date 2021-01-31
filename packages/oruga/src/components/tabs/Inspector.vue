@@ -81,7 +81,8 @@ export default {
                 },
                 {
                     class: "tabItemWrapperClass",
-                    description: "Class of the tab item wrapper"
+                    description: "Class of the tab item wrapper",
+                    specificity: "when <b>expandedClass</b> is applied",
                 },
                 {
                     class: "itemClass",
@@ -91,6 +92,7 @@ export default {
                 {
                     class: "itemHeaderClass",
                     description: "Class of the tab item header",
+                    specificity: "when <b>verticalClass</b> or <b>expandedClass</b> or <b>positionClass</b> is applied",
                     subitem: true
                 },
                 {
@@ -129,7 +131,8 @@ export default {
                 },
                 {
                     class: "navTabsClass",
-                    description: "Class of the Tabs component nav tabs"
+                    description: "Class of the Tabs component nav tabs",
+                    specificity: "when <b>positionClass</b> is applied",
                 },
                 {
                     class: "navPositionClass",

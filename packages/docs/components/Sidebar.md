@@ -127,6 +127,8 @@ title: Sidebar
 
 ## Class props
 
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
+
 <br />
 <template>
      <div>
@@ -287,36 +289,6 @@ export default {
                             cmp.data.expandOnHoverFixed = true;
                             this.open = true;
                         }, 400)
-                    }
-                },
-                {
-                    class: "mobileReduceClass",
-                    description: "Class when mobile mode is `reduce`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'reduce'
-                        this.position = 'static';
-                    }
-                },
-                {
-                    class: "mobileHideClass",
-                    description: "Class when mobile mode is `hidden`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'hidden'
-                        this.position = 'static';
-                    }
-                },
-                {
-                    class: "mobileFullwidthClass",
-                    description: "Class when mobile mode is `fullwidth`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'fullwidth'
-                        this.position = 'static';
                     }
                 },
                 {

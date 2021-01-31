@@ -147,6 +147,8 @@ title: Loading
 
 ## Class props
 
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
+
 <br />
 <template>
      <div>

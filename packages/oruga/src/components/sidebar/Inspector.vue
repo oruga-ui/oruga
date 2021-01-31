@@ -160,36 +160,6 @@ export default {
                     }
                 },
                 {
-                    class: "mobileReduceClass",
-                    description: "Class when mobile mode is `reduce`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'reduce'
-                        this.position = 'static';
-                    }
-                },
-                {
-                    class: "mobileHideClass",
-                    description: "Class when mobile mode is `hidden`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'hidden'
-                        this.position = 'static';
-                    }
-                },
-                {
-                    class: "mobileFullwidthClass",
-                    description: "Class when mobile mode is `fullwidth`",
-                    warning: "Switch to mobile view to see it in action!",
-                    properties: ['mobile'],
-                    action: (cmp) => {
-                        cmp.data.mobile = 'fullwidth'
-                        this.position = 'static';
-                    }
-                },
-                {
                     class: "variantClass",
                     description : 'Class of the sidebar variant',
                     properties: ["variant"],

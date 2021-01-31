@@ -33,8 +33,16 @@ $whitelist: add-to-whitelist(
 
 // datepicker
 $whitelist: add-to-whitelist(
+    'datepicker-item-disabled-color',
+    'datepicker-item-selectable-color',
     'datepicker-btn-border-color',
-    'datepicker-btn-color'
+    'datepicker-btn-color',
+    'datepicker-item-hovered-background-color',
+    'datepicker-item-hovered-color',
+    'datepicker-item-selected-background-color',
+    'datepicker-item-selected-color',
+    'datepicker-item-selected-within-background-color',
+    'datepicker-event-background-color'
 );
 
 
