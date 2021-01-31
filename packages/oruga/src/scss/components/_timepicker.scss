@@ -1,4 +1,6 @@
+/* @docs */
 $timepicker-font-size: $base-font-size !default;
+/* @docs */
 
 .o-tcpk {
     @include avariable('font-size', 'timepicker-font-size', $timepicker-font-size);
