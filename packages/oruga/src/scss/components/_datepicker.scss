@@ -235,10 +235,6 @@ $datepicker-btn-padding: .5em .5em !default;
         }
     }
     &--mobile {
-        .o-dpck__header__previous, .o-dpck__header__previous {
-            flex-grow: 1;
-            flex-shrink: 1;
-        }
         .o-dpck__header__previous {
             order: 1;
             flex-grow: 1;

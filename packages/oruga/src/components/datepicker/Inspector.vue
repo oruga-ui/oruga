@@ -82,6 +82,7 @@ export default {
                 {
                     class: "prevBtnClass",
                     description: "Class of the prev. button inside the Datepicker box",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         this.openDatePicker();
                     }
@@ -89,6 +90,7 @@ export default {
                 {
                     class: "nextBtnClass",
                     description: "Class of the next button inside the Datepicker box",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         this.openDatePicker();
                     }
@@ -96,6 +98,7 @@ export default {
                 {
                     class: "listsClass",
                     description: "Class of the month and year selects container inside the Datepicker box",
+                    specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
                         this.openDatePicker();
                     }
