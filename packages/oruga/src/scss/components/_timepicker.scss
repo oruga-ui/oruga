@@ -1,0 +1,71 @@
+$timepicker-font-size: $base-font-size !default;
+
+.o-tcpk {
+    @include avariable('font-size', 'timepicker-font-size', $timepicker-font-size);
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('timepicker-font-size-' + #{$name}), $value);
+        }
+    }
+    .dropdown-menu {
+        min-width: 0;
+    }
+    .dropdown,
+    .dropdown-trigger {
+        width: 100%;
+        .input[readonly] {
+            cursor: pointer;
+            box-shadow: $input-shadow;
+            &:focus,
+            &.is-focused,
+            &:active,
+            &.is-active {
+                box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
+            }
+        }
+    }
+    // unset opacity when dropdow is disabled
+    .dropdown {
+        &.is-disabled {
+            opacity: 1;
+        }
+    }
+    .dropdown-item {
+        font-size: inherit;
+        padding: 0;
+    }
+    &__footer {
+        padding: 0 0.5rem 0 0.5rem;
+    }
+    .dropdown-content {
+        .control {
+            font-size: 1.25em;
+            margin-right: 0 !important;
+            .select {
+                margin: 0 0.125em;
+
+                select {
+                    font-weight: $weight-semibold;
+                    padding-right: $control-padding-horizontal;
+                    border: 0;
+                    option {
+                        &:disabled {
+                            color: rgba($grey, 0.7);
+                        }
+                    }
+                }
+                &:after {
+                    display: none;
+                }
+            }
+            &.is-colon {
+                font-size: 1.7em;
+                line-height: 1.7em;
+
+                &:last-child {
+                    padding-right: $control-padding-horizontal;
+                }
+            }
+        }
+    }
+}
