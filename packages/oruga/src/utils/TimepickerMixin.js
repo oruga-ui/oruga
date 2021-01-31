@@ -1,5 +1,5 @@
 import FormElementMixin from './FormElementMixin'
-import { isMobile, matchWithGroups } from './helpers'
+import { getValueByPath, isMobile, matchWithGroups } from './helpers'
 import config from './config'
 
 const AM = 'AM'

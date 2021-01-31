@@ -59,17 +59,5 @@ export default {
     }
 }
 </script>
-
-<script>
-    export default {
-        data() {
-            return {
-                selected: new Date(),
-                showWeekNumber: false,
-                locale: undefined // Browser locale
-            }
-        }
-    }
-</script>
 ```
 :::
