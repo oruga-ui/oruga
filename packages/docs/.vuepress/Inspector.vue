@@ -115,7 +115,6 @@ export default {
             return props ? props.join('<br>') : null
         },
         inspectClass(index, selectedData) {
-            console.log(selectedData)
             this.$root.$emit('inspect-class', selectedData.class, selectedData.action)
             document.getElementById("class-props").scrollIntoView();
         }

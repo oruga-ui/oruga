@@ -226,7 +226,6 @@ export default {
             ]
         },
         nativeStep() {
-            console.log(this.enableSeconds)
             if (this.enableSeconds) return '1'
             return null
         },
