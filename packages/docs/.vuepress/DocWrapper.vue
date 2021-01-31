@@ -2,7 +2,13 @@
 const UNDERLINE_CLASS = 'odocs-underline-element'
 
 export default {
+    beforeDestroy() {
+        clearInterval(this.interval)
+        this.interval = null
+        console.log(this.interval)
+    },
     mounted() {
+        this.interval = null
         this.$root.$on('inspect-class', (className, action) => {
             clearInterval(this.interval)
             this.classes = Object.assign({}, {})
@@ -33,7 +39,6 @@ export default {
             classes: {},
             data: {},
             classesApplied: null,
-            interval: null
         }
     },
     render (createElement) {
