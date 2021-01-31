@@ -144,7 +144,6 @@ import { defineComponent } from 'vue'
 import Dropdown from '../dropdown/Dropdown.vue'
 import DropdownItem from '../dropdown/DropdownItem.vue'
 import Input from '../input/Input.vue'
-import Field from '../field/Field.vue'
 import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
 
@@ -162,7 +161,6 @@ export default defineComponent({
     name: 'OTimepicker',
     components: {
         [Input.name]: Input,
-        [Field.name]: Field,
         [Select.name]: Select,
         [Icon.name]: Icon,
         [Dropdown.name]: Dropdown,

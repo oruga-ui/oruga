@@ -142,7 +142,6 @@
 import Dropdown from '../dropdown/Dropdown'
 import DropdownItem from '../dropdown/DropdownItem'
 import Input from '../input/Input'
-import Field from '../field/Field'
 import Select from '../select/Select'
 import Icon from '../icon/Icon'
 
@@ -160,7 +159,6 @@ export default {
     name: 'OTimepicker',
     components: {
         [Input.name]: Input,
-        [Field.name]: Field,
         [Select.name]: Select,
         [Icon.name]: Icon,
         [Dropdown.name]: Dropdown,

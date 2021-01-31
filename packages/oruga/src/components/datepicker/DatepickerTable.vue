@@ -164,6 +164,7 @@ export default {
                 index++
             }
             if (this.showWeekNumber) visibleDayNames.unshift('')
+            console.log(visibleDayNames)
             return visibleDayNames
         },
 

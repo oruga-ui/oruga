@@ -103,13 +103,13 @@ $datepicker-btn-padding: .5em .5em !default;
             }
         }
         &__previous {
-            order: 2;
+            order: 1;
         }
         &__next {
             order: 3;
         }
         &__list {
-            order: 1;
+            order: 2;
             align-items: center;
             display: flex;
             justify-content: center;
