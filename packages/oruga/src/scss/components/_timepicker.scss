@@ -37,7 +37,7 @@ $timepicker-separator-font-weight: 600 !default;
         align-items: center;
         outline: none;
         border: 0;
-        @include avariable('font-size', 'base-font-size', $base-font-size);
+        font-size: inherit;
         @include avariable('font-weight', 'timepicker-select-font-weight', $timepicker-select-font-weight);
         @include avariable('line-height', 'timepicker-select-line-height', $timepicker-select-line-height);
         @include avariable('padding', 'timepicker-select-padding', $timepicker-select-padding);
