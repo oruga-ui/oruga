@@ -219,7 +219,7 @@ export function getMonthNames(locale: string = undefined, format: string = 'long
     }
     const dtf = new Intl.DateTimeFormat(locale, {
         month: format,
-        timeZone: 'UTC'
+        // timeZone: 'UTC'
     })
     return dates.map((d) => dtf.format(d))
 }
@@ -234,16 +234,16 @@ export function getMonthNames(locale: string = undefined, format: string = 'long
 export function getWeekdayNames(locale: string = undefined, firstDayOfWeek: number = 0, format: string = 'narrow'): string[] {
     const dates = []
     for (let i = 1, j = 0; j < 7; i++) {
-        const d = new Date(Date.UTC(2000, 0, i))
-        const day = d.getUTCDay()
-        if (day === firstDayOfWeek + 1 || j > 0) {
+        const d = new Date(2000, 0, i)
+        const day = d.getDay()
+        if (day === firstDayOfWeek || j > 0) {
             dates.push(d)
             j++
         }
     }
     const dtf = new Intl.DateTimeFormat(locale, {
         weekday: format,
-        timeZone: 'UTC'
+        // timeZone: 'UTC'
     })
     return dates.map((d) => dtf.format(d))
 }
