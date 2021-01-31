@@ -9,3 +9,4 @@ packages/oruga/README.md
 *.json.lerna_backup
 .idea
 packages/demo-vue3/*
+packages/oruga-next/README.md
