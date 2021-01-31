@@ -104,6 +104,7 @@ export default {
 .buttons-footer {
     margin-top: 1rem;
 }
+</style>
 ```
 :::
 
