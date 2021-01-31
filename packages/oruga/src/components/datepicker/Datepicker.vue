@@ -21,6 +21,7 @@
                     <o-input
                         ref="input"
                         autocomplete="off"
+                        v-bind="inputBind"
                         :value="formattedValue"
                         :placeholder="placeholder"
                         :size="size"
@@ -31,7 +32,6 @@
                         :loading="loading"
                         :disabled="disabled"
                         :readonly="!editable"
-                        v-bind="inputBind"
                         :use-html5-validation="false"
                         @click.native="onInputClick"
                         @keyup.native.enter="togglePicker(true)"
@@ -178,6 +178,7 @@
         <o-input
             v-else
             ref="input"
+            v-bind="inputBind"
             :type="!isTypeMonth ? 'date' : 'month'"
             autocomplete="off"
             :value="formatNative(computedValue)"
@@ -191,7 +192,6 @@
             :min="formatNative(minDate)"
             :disabled="disabled"
             :readonly="false"
-            v-bind="$attrs"
             :use-html5-validation="false"
             @change.native="onChangeNativePicker"
             @focus="onFocus"
@@ -267,6 +267,7 @@ const defaultDateParser = (date, vm) => {
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
  * @displayName Datepicker
  * @example ./examples/Datepicker.md
+ * @style _datepicker.scss
  */
 export default {
     name: 'ODatepicker',
@@ -321,7 +322,6 @@ export default {
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
-        horizontalTimePicker: Boolean,
         unselectableDates: Array,
         unselectableDaysOfWeek: {
             type: Array,

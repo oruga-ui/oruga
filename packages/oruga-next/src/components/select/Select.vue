@@ -14,7 +14,6 @@
                 <option
                     v-if="placeholderVisible"
                     :value="null"
-                    :class="placeholderClasses"
                     disabled
                     hidden>
                     {{ placeholder }}

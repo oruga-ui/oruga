@@ -21,31 +21,6 @@ const defaultFirstDayOfWeek = 0
 const defaultLocale = 'it-IT'
 
 describe('ODatepicker', () => {
-    describe('with invalid value from config config', () => {
-        beforeEach(() => {
-            setOptions(Object.assign(config, {
-                datepicker: {
-                    monthNames: 'A string!',
-                    dayNames: 'A string!',
-                    firstDayOfWeek: 'A string!',
-                }
-            }))
-
-            wrapper = shallowMount(ODatepicker, {
-                stubs: {
-                    transition: false
-                }
-            })
-        })
-
-        it('manage props validator', () => {
-            const type = wrapper.vm.$options.props.type
-
-            expect(type.type).toBe(String)
-            expect(type.validator && type.validator('day')).toBeFalsy()
-            expect(type.validator && type.validator('month')).toBeTruthy()
-        })
-    })
 
     beforeEach(() => {
         setOptions(Object.assign(config, {

@@ -3,7 +3,7 @@
 exports[`OTableMobileSort render correctly 1`] = `
 <div class="o-table__wrapper">
     <div style="display: none;"></div>
-    <o-table-mobile-sort-stub currentsortcolumn="[object Object]" columns="[object Object]" sorticon="arrow-up" sorticonsize="small" isasc="true"></o-table-mobile-sort-stub>
+    <!---->
     <!---->
     <table class="o-table o-table--table__empty">
         <thead>
@@ -15,7 +15,6 @@ exports[`OTableMobileSort render correctly 1`] = `
                             <span class="o-table__th__sort-icon" style="display: none;"><o-icon-stub icon="arrow-up" size="small" rotation="0" both="true"></o-icon-stub></span></span></th>
                 <!---->
             </tr>
-            <!---->
             <!---->
         </thead>
         <tbody>

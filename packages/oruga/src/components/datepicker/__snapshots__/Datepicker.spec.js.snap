@@ -13,7 +13,7 @@ exports[`ODatepicker render correctly 1`] = `
                         </a>
                         <div class="o-dpck__header__list">
                             <o-field-stub addons="true">
-                                <o-select-stub usehtml5validation="true" statusicon="true" value="7" iconright="caret-down">
+                                <o-select-stub usehtml5validation="true" statusicon="true" value="7">
                                     <option value="0">
                                         January
                                     </option>
@@ -51,7 +51,7 @@ exports[`ODatepicker render correctly 1`] = `
                                         December
                                     </option>
                                 </o-select-stub>
-                                <o-select-stub usehtml5validation="true" statusicon="true" value="2018" iconright="caret-down">
+                                <o-select-stub usehtml5validation="true" statusicon="true" value="2018">
                                     <option value="2028">
                                         2028
                                     </option>
@@ -392,23 +392,23 @@ exports[`ODatepicker render correctly 1`] = `
                 </header>
                 <o-datepicker-table-stub daynames="Su,M,Tu,W,Th,F,S" monthnames="January,February,March,April,May,June,July,August,September,October,November,December" firstdayofweek="0" indicators="dots" focused="[object Object]" datecreator="() => {
           /* istanbul ignore next */
-          cov_10fx0riw4s.f[13]++;
+          cov_2ixbwayxy.f[13]++;
           const dateCreator =
           /* istanbul ignore next */
-          (cov_10fx0riw4s.s[57]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
+          (cov_2ixbwayxy.s[57]++, (0, _helpers.getValueByPath)(_config.default, 'datepicker.dateCreator', undefined));
 
           /* istanbul ignore next */
-          cov_10fx0riw4s.s[58]++;
+          cov_2ixbwayxy.s[58]++;
 
           if (typeof dateCreator === 'function') {
             /* istanbul ignore next */
-            cov_10fx0riw4s.b[22][0]++;
-            cov_10fx0riw4s.s[59]++;
+            cov_2ixbwayxy.b[22][0]++;
+            cov_2ixbwayxy.s[59]++;
             return dateCreator();
           } else {
             /* istanbul ignore next */
-            cov_10fx0riw4s.b[22][1]++;
-            cov_10fx0riw4s.s[60]++;
+            cov_2ixbwayxy.b[22][1]++;
+            cov_2ixbwayxy.s[60]++;
             return new Date();
           }
         }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>
