@@ -103,6 +103,11 @@ export default {
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
+        /**
+         * Size of button, optional
+         * @values small, medium, large
+         */
+        size: String,
         hourFormat: {
             type: String,
             validator: (value) => {
