@@ -1,11 +1,12 @@
+/* @docs */
 $datepicker-font-size: $base-font-size !default;
 $datepicker-box-line-height: $base-line-height !default;
 $datepicker-box-padding: .375rem 1rem !default;
 $datepicker-header-padding: 0 0 0.875rem 0 !default;
 $datepicker-header-margin: 0 0 0.875rem 0 !default;
 $datepicker-header-border-bottom: 1px solid $grey-lighter !default;
-$datepicker-footer-padding: 0.875rem 0 0 0 !default;
-$datepicker-footer-margin: 0.875rem 0 0 0 !default;
+$datepicker-footer-padding: 0.875rem .5rem 0 .5rem !default;
+$datepicker-footer-margin: 0.875rem 0 0.875rem 0 !default;
 $datepicker-footer-border-top: 1px solid $grey-lighter !default;
 $datepicker-table-head-padding: 0 0 0.875rem 0 !default;
 $datepicker-table-head-margin: 0 0 0.875rem 0 !default;
@@ -42,6 +43,7 @@ $datepicker-btn-line-height: $base-line-height !default;
 $datepicker-btn-margin: .25rem !default;
 $datepicker-btn-min-width: 2.25em !default;
 $datepicker-btn-padding: .5em .5em !default;
+/* @docs */
 
 .o-dpck {
     @include avariable('font-size', 'datepicker-font-size', $datepicker-font-size);

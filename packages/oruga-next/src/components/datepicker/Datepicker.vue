@@ -324,7 +324,6 @@ export default defineComponent({
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
-        horizontalTimePicker: Boolean,
         unselectableDates: Array,
         unselectableDaysOfWeek: {
             type: Array,

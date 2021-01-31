@@ -3,6 +3,7 @@ import Button from './button'
 import Checkbox from './checkbox'
 import Collapse from './collapse'
 import Datepicker from './datepicker'
+import Datetimepicker from './datetimepicker'
 import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
@@ -19,6 +20,7 @@ import Steps from './steps'
 import Switch from './switch'
 import Table from './table'
 import Tabs from './tabs'
+import Timepicker from './timepicker'
 import Tooltip from './tooltip'
 import Upload from './upload'
 
@@ -28,6 +30,7 @@ export {
     Checkbox,
     Collapse,
     Datepicker,
+    Datetimepicker,
     Dropdown,
     Field,
     Icon,
@@ -44,6 +47,7 @@ export {
     Switch,
     Table,
     Tabs,
+    Timepicker,
     Tooltip,
     Upload
 }

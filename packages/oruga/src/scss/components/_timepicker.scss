@@ -1,0 +1,56 @@
+/* @docs */
+$timepicker-font-size: $base-font-size !default;
+$timepicker-box-line-height: $base-line-height !default;
+$timepicker-box-padding: .375rem 1rem !default;
+$timepicker-footer-padding: 0 .5rem !default;
+$timepicker-footer-margin: 0.875rem 0 0 0 !default;
+$timepicker-select-line-height: $base-line-height !default;
+$timepicker-select-padding: $control-padding-vertical $control-padding-horizontal !default;
+$timepicker-select-color: #363636 !default;
+$timepicker-select-font-weight: 600 !default;
+$timepicker-select-placeholder-opacity: $base-disabled-opacity !default;
+$timepicker-separator-font-weight: 600 !default;
+/* @docs */
+
+.o-tpck {
+    @include avariable('font-size', 'timepicker-font-size', $timepicker-font-size);
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('timepicker-font-size-' + #{$name}), $value);
+        }
+    }
+    &__box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include avariable('line-height', 'timepicker-box-line-height', $timepicker-box-line-height);
+        @include avariable('padding', 'timepicker-box-padding', $timepicker-box-padding);
+    }
+    &__select {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        cursor: pointer;
+        justify-content: flex-start;
+        align-items: center;
+        outline: none;
+        border: 0;
+        @include avariable('font-size', 'base-font-size', $base-font-size);
+        @include avariable('font-weight', 'timepicker-select-font-weight', $timepicker-select-font-weight);
+        @include avariable('line-height', 'timepicker-select-line-height', $timepicker-select-line-height);
+        @include avariable('padding', 'timepicker-select-padding', $timepicker-select-padding);
+        @include avariable('color', 'timepicker-select-color', $timepicker-select-color);
+    }
+    &__select-placeholder {
+        @include avariable('opacity', 'timepicker-select-placeholder-opacity', $timepicker-select-placeholder-opacity);
+    }
+    &__separator {
+        @include avariable('font-weight', 'timepicker-separator-font-weight', $timepicker-separator-font-weight);
+    }
+    &__footer {
+        @include avariable('padding', 'timepicker-header-padding', $timepicker-footer-padding);
+        @include avariable('margin', 'timepicker-header-margin', $timepicker-footer-margin);
+    }
+}
