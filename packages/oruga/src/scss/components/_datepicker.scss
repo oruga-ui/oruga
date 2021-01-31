@@ -175,11 +175,11 @@ $datepicker-btn-padding: .5em .5em !default;
                 @include avariable('border-top-left-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
             }
             &--selected:not(&--first-hovered):not(&--within-hovered):not(&--last-hovered) {
-                @include avariable('background-color', 'datepicker-item-selected-background-colorr', $datepicker-item-selected-background-color);
+                @include avariable('background-color', 'datepicker-item-selected-background-color', $datepicker-item-selected-background-color);
                 @include avariable('color', 'datepicker-item-selected-color', $datepicker-item-selected-color);
             }
             &--first-selected:not(&--first-hovered):not(&--within-hovered):not(&--last-hovered) {
-                @include avariable('background-color', 'datepicker-item-selected-background-colorr', $datepicker-item-selected-background-color);
+                @include avariable('background-color', 'datepicker-item-selected-background-color', $datepicker-item-selected-background-color);
                 @include avariable('color', 'datepicker-item-selected-color', $datepicker-item-selected-color);
                 @include avariable('border-bottom-right-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
                 @include avariable('border-top-right-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
@@ -189,7 +189,7 @@ $datepicker-btn-padding: .5em .5em !default;
                 @include avariable('border-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
             }
             &--last-selected:not(&--first-hovered):not(&--within-hovered):not(&--last-hovered) {
-                @include avariable('background-color', 'datepicker-item-selected-background-colorr', $datepicker-item-selected-background-color);
+                @include avariable('background-color', 'datepicker-item-selected-background-color', $datepicker-item-selected-background-color);
                 @include avariable('color', 'datepicker-item-selected-color', $datepicker-item-selected-color);
                 @include avariable('border-bottom-left-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
                 @include avariable('border-top-left-radius', 'datepicker-item-selected-border-radius', $datepicker-item-selected-border-radius);
