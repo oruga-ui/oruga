@@ -38,6 +38,11 @@ export default {
                     description: "Class of the root element",
                 },
                 {
+                    class: "mobileClass",
+                    description: "Class of pagination component when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                },
+                {
                     class: "prevBtnClass",
                     description: "Class of the prev. button",
                     specificity: "when <b>mobileClass</b> is applied",

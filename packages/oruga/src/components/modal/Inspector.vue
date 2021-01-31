@@ -27,6 +27,11 @@ export default {
                     }
                 },
                 {
+                    class: "mobileClass",
+                    description: "Class of modal component when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                },
+                {
                     class: "overlayClass",
                     description: "Class of the modal overlay",
                     action: () => {

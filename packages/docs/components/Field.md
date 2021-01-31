@@ -297,6 +297,11 @@ export default {
                     description: "Class of the root element"
                 },
                 {
+                    class: "mobileClass",
+                    description: "Class of file component when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                },
+                {
                     class: "horizontalClass",
                     description: "Class to align label and control in horizontal forms",
                     properties: ['horizontal'],
