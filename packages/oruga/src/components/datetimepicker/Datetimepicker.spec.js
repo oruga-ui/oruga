@@ -13,7 +13,7 @@ describe('Datetimepicker', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BDatetimepicker')
+        expect(wrapper.name()).toBe('ODatetimepicker')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 

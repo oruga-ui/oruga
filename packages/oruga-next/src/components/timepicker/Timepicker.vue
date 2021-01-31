@@ -140,17 +140,18 @@
     </div>
 </template>
 
-<script>
-import Dropdown from '../dropdown/Dropdown'
-import DropdownItem from '../dropdown/DropdownItem'
-import Input from '../input/Input'
-import Field from '../field/Field'
-import Select from '../select/Select'
-import Icon from '../icon/Icon'
+<script lang="ts">
+import Dropdown from '../dropdown/Dropdown.vue'
+import DropdownItem from '../dropdown/DropdownItem.vue'
+import Input from '../input/Input.vue'
+import Field from '../field/Field.vue'
+import Select from '../select/Select.vue'
+import Icon from '../icon/Icon.vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
+import { defineComponent } from 'vue'
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
@@ -158,7 +159,7 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
  * @example ./examples/Timepicker.md
  * @style _timepicker.scss
  */
-export default {
+export default defineComponent({
     name: 'OTimepicker',
     components: {
         [Input.name]: Input,
@@ -230,8 +231,7 @@ export default {
         },
         nativeStep() {
             if (this.enableSeconds) return '1'
-            return ''
         }
     }
-}
+})
 </script>

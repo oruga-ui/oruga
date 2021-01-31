@@ -87,6 +87,7 @@ export default {
         /** Same as native size */
         nativeSize: [String, Number],
         rootClass: [String, Function, Array],
+        selectClass: [String, Function, Array],
         iconLeftSpaceClass: [String, Function, Array],
         iconRightSpaceClass: [String, Function, Array],
         roundedClass: [String, Function, Array],

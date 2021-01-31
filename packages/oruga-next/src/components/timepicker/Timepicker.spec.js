@@ -1,15 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import OTimepicker from '@components/timepicker/Timepicker'
+import BTimepicker from '@components/timepicker/Timepicker'
 
 let wrapper
 
-describe('OTimepicker', () => {
+describe('BTimepicker', () => {
     beforeEach(() => {
-        wrapper = shallowMount(OTimepicker)
+        wrapper = shallowMount(BTimepicker)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('OTimepicker')
+        expect(wrapper.name()).toBe('BTimepicker')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 

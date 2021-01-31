@@ -1,43 +1,118 @@
 ---
-title: BDatetimepicker
+title: Datetimepicker
 ---
 
-# BDatetimepicker
+# Datetimepicker
+
+> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
 
 ---
+
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/datetimepicker/examples/Datetimepicker.md" class="docgen-edit-link">edit on github</a>
+
+## Examples
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-field grouped group-multiline>
+      <div class="control">
+        <o-switch v-model="showWeekNumber">Show week number</o-switch>
+      </div>
+      <div class="control">
+        <o-switch v-model="enableSeconds">Enable seconds</o-switch>
+      </div>
+      <o-field label="Locale">
+        <o-select v-model="locale">
+          <option :value="undefined"></option>
+          <option value="de-DE">de-DE</option>
+          <option value="en-CA">en-CA</option>
+          <option value="en-GB">en-GB</option>
+          <option value="en-US">en-US</option>
+          <option value="es-ES">es-ES</option>
+          <option value="es-MX">es-MX</option>
+          <option value="fr-CA">fr-CA</option>
+          <option value="fr-FR">fr-FR</option>
+          <option value="it-IT">it-IT</option>
+          <option value="ja-JP">ja-JP</option>
+          <option value="pt-BR">pt-BR</option>
+          <option value="ru-RU">ru-RU</option>
+          <option value="zn-CN">zn-CN</option>
+        </o-select>
+      </o-field>
+      <o-field label="Hour format">
+        <o-select v-model="hourFormat">
+          <option :value="undefined"></option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+        </o-select>
+      </o-field>
+    </o-field>
+    <o-field label="Select datetime">
+      <o-datetimepicker
+        rounded
+        placeholder="Click to select..."
+        icon="calendar"
+        :locale="locale"
+        :datepicker="{ showWeekNumber }"
+        :timepicker="{ enableSeconds, hourFormat }"
+        horizontal-time-picker
+      >
+      </o-datetimepicker>
+    </o-field>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        showWeekNumber: false,
+        enableSeconds: false,
+        hourFormat: undefined, // Browser locale
+        locale: undefined // Browser locale
+      }
+    }
+  }
+</script>
+```
+
+:::
 
 ## Props
 
-| Prop name            | Description                                                 | Type           | Values                                            | Default                                                                                                                                                           |
-| -------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| appendToBody         |                                                             | boolean        | -                                                 |                                                                                                                                                                   |
-| autocomplete         | Native options to use in HTML5 validation                   | string         | -                                                 |                                                                                                                                                                   |
-| datepicker           |                                                             | object         | -                                                 |                                                                                                                                                                   |
-| datetimeCreator      |                                                             | func           | -                                                 | (date) => {<br> if (typeof config.defaultDatetimeCreator === 'function') {<br> return config.defaultDatetimeCreator(date)<br> } else {<br> return date<br> }<br>} |
-| datetimeFormatter    |                                                             | func           | -                                                 |                                                                                                                                                                   |
-| datetimeParser       |                                                             | func           | -                                                 |                                                                                                                                                                   |
-| disabled             |                                                             | boolean        | -                                                 |                                                                                                                                                                   |
-| editable             |                                                             | boolean        | -                                                 | false                                                                                                                                                             |
-| expanded             | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                                                                                                                   |
-| focusable            |                                                             | boolean        | -                                                 | true                                                                                                                                                              |
-| horizontalTimePicker |                                                             | boolean        | -                                                 |                                                                                                                                                                   |
-| icon                 | Icon name to be added                                       | string         | -                                                 |                                                                                                                                                                   |
-| iconPack             | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                                   |
-| inline               |                                                             | boolean        | -                                                 |                                                                                                                                                                   |
-| maxDatetime          |                                                             | date           | -                                                 |                                                                                                                                                                   |
-| maxlength            | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                                                                                                                                   |
-| minDatetime          |                                                             | date           | -                                                 |                                                                                                                                                                   |
-| mobileNative         |                                                             | boolean        | -                                                 | true                                                                                                                                                              |
-| openOnFocus          |                                                             | boolean        | -                                                 |                                                                                                                                                                   |
-| placeholder          |                                                             | string         | -                                                 |                                                                                                                                                                   |
-| position             |                                                             | string         | -                                                 |                                                                                                                                                                   |
-| rounded              | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                                                   |
-| statusIcon           | Show status icon using field and variant prop               | boolean        | -                                                 | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}                                                                                               |
-| timepicker           |                                                             | object         | -                                                 |                                                                                                                                                                   |
-| tzOffset             |                                                             | number         | -                                                 | 0                                                                                                                                                                 |
-| useHtml5Validation   | Enable html 5 native validation                             | boolean        | -                                                 | () => {<br> return getValueByPath(config, "useHtml5Validation", true);<br>}                                                                                       |
-| validationMessage    | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                                                   |
-| value                |                                                             | date           | -                                                 |                                                                                                                                                                   |
+| Prop name            | Description                                                 | Type           | Values                                            | Default                                                                                                                                                                                                                               |
+| -------------------- | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| appendToBody         |                                                             | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| autocomplete         | Native options to use in HTML5 validation                   | string         | -                                                 |                                                                                                                                                                                                                                       |
+| datepicker           |                                                             | object         | -                                                 |                                                                                                                                                                                                                                       |
+| datetimeCreator      |                                                             | func           | -                                                 | (date) => {<br> const datetimeCreator = getValueByPath(config, 'datetimepicker.datetimeCreator', undefined)<br> if (typeof datetimeCreator === 'function') {<br> return datetimeCreator(date)<br> } else {<br> return date<br> }<br>} |
+| datetimeFormatter    |                                                             | func           | -                                                 |                                                                                                                                                                                                                                       |
+| datetimeParser       |                                                             | func           | -                                                 |                                                                                                                                                                                                                                       |
+| disabled             |                                                             | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| editable             |                                                             | boolean        | -                                                 | false                                                                                                                                                                                                                                 |
+| expanded             | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| focusable            |                                                             | boolean        | -                                                 | true                                                                                                                                                                                                                                  |
+| horizontalTimePicker |                                                             | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| icon                 | Icon name to be added                                       | string         | -                                                 |                                                                                                                                                                                                                                       |
+| iconPack             | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                                                                                                       |
+| inline               |                                                             | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| maxDatetime          |                                                             | date           | -                                                 |                                                                                                                                                                                                                                       |
+| maxlength            | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                                                                                                                                                                                                       |
+| minDatetime          |                                                             | date           | -                                                 |                                                                                                                                                                                                                                       |
+| mobileNative         |                                                             | boolean        | -                                                 | true                                                                                                                                                                                                                                  |
+| openOnFocus          |                                                             | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| placeholder          |                                                             | string         | -                                                 |                                                                                                                                                                                                                                       |
+| position             |                                                             | string         | -                                                 |                                                                                                                                                                                                                                       |
+| rounded              | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                                                                                                                       |
+| statusIcon           | Show status icon using field and variant prop               | boolean        | -                                                 | () => {<br> return getValueByPath(config, "statusIcon", true);<br>}                                                                                                                                                                   |
+| timepicker           |                                                             | object         | -                                                 |                                                                                                                                                                                                                                       |
+| tzOffset             |                                                             | number         | -                                                 | 0                                                                                                                                                                                                                                     |
+| useHtml5Validation   | Enable html 5 native validation                             | boolean        | -                                                 | () => {<br> return getValueByPath(config, "useHtml5Validation", true);<br>}                                                                                                                                                           |
+| validationMessage    | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                                                                                                                       |
+| value                |                                                             | date           | -                                                 |                                                                                                                                                                                                                                       |
 
 ## Events
 

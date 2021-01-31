@@ -267,6 +267,7 @@ const defaultDateParser = (date, vm) => {
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
  * @displayName Datepicker
  * @example ./examples/Datepicker.md
+ * @style _datepicker.scss
  */
 export default {
     name: 'ODatepicker',

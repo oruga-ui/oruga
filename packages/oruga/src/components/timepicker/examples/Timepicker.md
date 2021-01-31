@@ -61,3 +61,120 @@ export default {
 </script>
 ```
 :::
+
+### Min/Max date
+
+::: demo
+```html
+<template>
+    <o-field label="Select time">
+        <o-timepicker
+            placeholder="Click to select..."
+            :min-time="minTime"
+            :max-time="maxTime">
+        </o-timepicker>
+    </o-field>
+</template>
+
+<script>
+    export default {
+        data() {
+            const min = new Date()
+            min.setHours(9)
+            min.setMinutes(0)
+            const max = new Date()
+            max.setHours(18)
+            max.setMinutes(0)
+            return {
+                minTime: min,
+                maxTime: max
+            }
+        }
+    }
+</script>
+```
+:::
+
+
+### Footer
+
+::: demo
+```html
+<template>
+    <o-field label="Select time">
+        <o-timepicker v-model="time"
+            placeholder="Click to select...">
+
+            <o-button
+                label="Now"
+                variant="primary"
+                icon-left="clock"
+                @click="time = new Date()" />
+            <o-button
+                label="Clear"
+                variant="danger"
+                icon-left="times"
+                outlined
+                @click="time = null" />
+        </o-timepicker>
+    </o-field>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                time: new Date()
+            }
+        }
+    }
+</script>
+```
+:::
+
+### Granularity
+
+::: demo
+```html
+<template>
+    <o-field label="Select timepicker">
+        <o-timepicker
+            placeholder="Click to select"
+            icon="clock"
+            :incrementMinutes="minutesGranularity"
+            :incrementHours="hoursGranularity">
+        </o-timepicker>
+    </o-field>
+</template>
+<script>
+export default {
+    data() {
+        return {
+            minutesGranularity: 15,
+            hoursGranularity: 2
+        }
+    }
+}
+</script>
+```
+:::
+
+### Inline
+
+::: demo
+```html
+<template>
+    <o-timepicker v-model="time" inline></o-timepicker>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                time: new Date()
+            }
+        }
+    }
+</script>
+```
+:::

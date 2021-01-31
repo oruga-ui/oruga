@@ -1,5 +1,5 @@
 <template>
-    <b-datepicker
+    <o-datepicker
         v-if="!isMobile || inline"
         ref="datepicker"
         v-model="computedValue"
@@ -38,7 +38,7 @@
                 <slot name="left" />
             </div>
             <div class="level-item has-text-centered">
-                <b-timepicker
+                <o-timepicker
                     ref="timepicker"
                     v-bind="timepicker"
                     v-model="computedValue"
@@ -59,8 +59,8 @@
                 <slot name="right" />
             </div>
         </nav>
-    </b-datepicker>
-    <b-input
+    </o-datepicker>
+    <o-input
         v-else
         ref="input"
         type="datetime-local"
@@ -85,7 +85,7 @@
 
 <script>
 import FormElementMixin from '../../utils/FormElementMixin'
-import { isMobile, matchWithGroups } from '../../utils/helpers'
+import { getValueByPath, isMobile, matchWithGroups } from '../../utils/helpers'
 import config from '../../utils/config'
 
 import Datepicker from '../datepicker/Datepicker'
@@ -93,8 +93,14 @@ import Timepicker from '../timepicker/Timepicker'
 
 const AM = 'AM'
 const PM = 'PM'
+
+/**
+ * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+ * @displayName Datetimepicker
+ * @example ./examples/Datetimepicker.md
+ */
 export default {
-    name: 'BDatetimepicker',
+    name: 'ODatetimepicker',
     components: {
         [Datepicker.name]: Datepicker,
         [Timepicker.name]: Timepicker
@@ -132,8 +138,9 @@ export default {
         datetimeCreator: {
             type: Function,
             default: (date) => {
-                if (typeof config.defaultDatetimeCreator === 'function') {
-                    return config.defaultDatetimeCreator(date)
+                const datetimeCreator = getValueByPath(config, 'datetimepicker.datetimeCreator', undefined)
+                if (typeof datetimeCreator === 'function') {
+                    return datetimeCreator(date)
                 } else {
                     return date
                 }
@@ -249,6 +256,7 @@ export default {
                 adjMinDatetime.getDate() === this.newValue.getDate()) {
                 return adjMinDatetime
             }
+            return null
         },
         maxTime() {
             if (!this.maxDatetime || (this.newValue === null || typeof this.newValue === 'undefined')) {
@@ -260,6 +268,7 @@ export default {
                 adjMaxDatetime.getDate() === this.newValue.getDate()) {
                 return adjMaxDatetime
             }
+            return null
         },
         datepickerSize() {
             return this.datepicker && this.datepicker.size
@@ -275,10 +284,10 @@ export default {
         }
     },
     watch: {
-        value(val) {
+        value() {
             this.newValue = this.adjustValue(this.value)
         },
-        tzOffset(val) {
+        tzOffset() {
             this.newValue = this.adjustValue(this.value)
         }
     },
@@ -304,10 +313,11 @@ export default {
             }
         },
         defaultDatetimeParser(date) {
+            const datetimeParser = getValueByPath(config, 'datetimepicker.datetimeParser', undefined)
             if (typeof this.datetimeParser === 'function') {
                 return this.datetimeParser(date)
-            } else if (typeof config.defaultDatetimeParser === 'function') {
-                return config.defaultDatetimeParser(date)
+            } else if (typeof datetimeParser === 'function') {
+                return datetimeParser(date)
             } else {
                 if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
                     let dayPeriods = [AM, PM, AM.toLowerCase(), PM.toLowerCase()]
@@ -360,10 +370,11 @@ export default {
             }
         },
         defaultDatetimeFormatter(date) {
+             const datetimeFormatter = getValueByPath(config, 'datetimepicker.datetimeFormatter', undefined)
             if (typeof this.datetimeFormatter === 'function') {
                 return this.datetimeFormatter(date)
-            } else if (typeof config.defaultDatetimeFormatter === 'function') {
-                return config.defaultDatetimeFormatter(date)
+            } else if (typeof datetimeFormatter === 'function') {
+                return datetimeFormatter(date)
             } else {
                 return this.dtf.format(date)
             }
