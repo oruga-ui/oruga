@@ -49,6 +49,11 @@ export default {
                     }
                 },
                 {
+                    class: "mobileClass",
+                    description: "Class of sidebar component when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                },
+                {
                     class: "overlayClass",
                     description: "Class of the sidebar overlay",
                     action: (cmp) => {

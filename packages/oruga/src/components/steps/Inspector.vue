@@ -35,6 +35,11 @@ export default {
                     description: "Root class of the element",
                 },
                 {
+                    class: "mobileClass",
+                    description: "Class of steps component when on mobile",
+                    warning: "Switch to mobile view to see it in action!",
+                },
+                {
                     class: "sizeClass",
                     description: "Size of the steps",
                     properties: ["size"],

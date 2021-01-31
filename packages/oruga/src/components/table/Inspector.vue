@@ -350,7 +350,7 @@ export default {
             },
             {
                 class: "mobileClass",
-                description: "Class of the Table when on mobile",
+                description: "Class of the Table component when on mobile",
                 warning: "Switch to mobile view to see it in action!"
             },
             {
