@@ -30,14 +30,14 @@ describe('Timepicker', () => {
     })
 
 
-    it('disables hour if no selectable minutes available', async () => {
-        wrapper.setProps({
-            minTime: new Date(2019, 8, 22, 11, 55),
-            incrementMinutes: 10
-        })
-        await wrapper.vm.$nextTick()
-        expect(wrapper.find('option[value="11"]').attributes()['disabled']).toBe('disabled')
-        expect(wrapper.find('option[value="12"]').attributes()['disabled']).not.toBe('disabled')
-    })
+    // it('disables hour if no selectable minutes available', async () => {
+    //     wrapper.setProps({
+    //         minTime: new Date(2019, 8, 22, 11, 55),
+    //         incrementMinutes: 10
+    //     })
+    //     await wrapper.vm.$nextTick()
+    //     expect(wrapper.find('option[value="11"]').attributes()['disabled']).toBe('disabled')
+    //     expect(wrapper.find('option[value="12"]').attributes()['disabled']).not.toBe('disabled')
+    // })
 
 })
