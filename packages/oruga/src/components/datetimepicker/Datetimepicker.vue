@@ -4,6 +4,7 @@
         ref="datepicker"
         v-model="computedValue"
         v-bind="datepicker"
+        :class="datepickerWrapperClasses"
         :rounded="rounded"
         :open-on-focus="openOnFocus"
         :position="position"
@@ -20,45 +21,33 @@
         :icon-pack="iconPack"
         :size="datepickerSize"
         :placeholder="placeholder"
-        :horizontal-time-picker="horizontalTimePicker"
         :range="false"
         :disabled="disabled"
         :mobile-native="isMobileNative"
         :locale="locale"
-        :focusable="focusable"
         :append-to-body="appendToBody"
         @focus="onFocus"
         @blur="onBlur"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)">
-        <nav class="level is-mobile">
-            <div
-                class="level-item has-text-centered"
-                v-if="$slots.left !== undefined">
-                <slot name="left" />
-            </div>
-            <div class="level-item has-text-centered">
-                <o-timepicker
-                    ref="timepicker"
-                    v-bind="timepicker"
-                    v-model="computedValue"
-                    inline
-                    :editable="editable"
-                    :min-time="minTime"
-                    :max-time="maxTime"
-                    :size="timepickerSize"
-                    :disabled="timepickerDisabled"
-                    :focusable="focusable"
-                    :mobile-native="isMobileNative"
-                    :locale="locale"
-                />
-            </div>
-            <div
-                class="level-item has-text-centered"
-                v-if="$slots.right !== undefined">
-                <slot name="right" />
-            </div>
-        </nav>
+        <div :class="timepickerWrapperClasses">
+            <o-timepicker
+                ref="timepicker"
+                v-bind="timepicker"
+                v-model="computedValue"
+                inline
+                :editable="editable"
+                :min-time="minTime"
+                :max-time="maxTime"
+                :size="timepickerSize"
+                :disabled="timepickerDisabled"
+                :mobile-native="isMobileNative"
+                :locale="locale"
+            />
+        </div>
+        <template v-if="$slots.default !== undefined && $slots.default.length">
+            <slot/>
+        </template>
     </o-datepicker>
     <o-input
         v-else
@@ -85,6 +74,7 @@
 
 <script>
 import FormElementMixin from '../../utils/FormElementMixin'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath, isMobile, matchWithGroups } from '../../utils/helpers'
 import config from '../../utils/config'
 
@@ -105,7 +95,8 @@ export default {
         [Datepicker.name]: Datepicker,
         [Timepicker.name]: Timepicker
     },
-    mixins: [FormElementMixin],
+    configField: 'datetimepicker',
+    mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     props: {
         value: {
@@ -116,7 +107,6 @@ export default {
             default: false
         },
         placeholder: String,
-        horizontalTimePicker: Boolean,
         disabled: Boolean,
         icon: String,
         iconPack: String,
@@ -148,22 +138,32 @@ export default {
         },
         datepicker: Object,
         timepicker: Object,
-        tzOffset: {
-            type: Number,
-            default: 0
+        locale: {
+            type: [String, Array],
+            default: () => {
+                return getValueByPath(config, 'locale')
+            }
         },
-        focusable: {
-            type: Boolean,
-            default: true
-        },
-        appendToBody: Boolean
+        appendToBody: Boolean,
+        datepickerWrapperClass: [String, Function, Array],
+        timepickerWrapperClass: [String, Function, Array],
     },
     data() {
         return {
-            newValue: this.adjustValue(this.value)
+            newValue: this.value
         }
     },
     computed: {
+        datepickerWrapperClasses() {
+            return [
+                this.computedClass('datepickerWrapperClass', 'o-dtpck__date')
+            ]
+        },
+        timepickerWrapperClasses() {
+            return [
+                this.computedClass('timepickerWrapperClass', 'o-dtpck__time')
+            ]
+        },
         computedValue: {
             get() {
                 return this.newValue
@@ -187,17 +187,16 @@ export default {
                         val = this.datetimeCreator(value)
                     }
                     // check min and max range
-                    if (this.minDatetime && val < this.adjustValue(this.minDatetime)) {
-                        val = this.adjustValue(this.minDatetime)
-                    } else if (this.maxDatetime && val > this.adjustValue(this.maxDatetime)) {
-                        val = this.adjustValue(this.maxDatetime)
+                    if (this.minDatetime && val < this.minDatetime) {
+                        val = this.minDatetime
+                    } else if (this.maxDatetime && val > this.maxDatetime) {
+                        val = this.maxDatetime
                     }
                     this.newValue = new Date(val.getTime())
                 } else {
-                    this.newValue = this.adjustValue(this.value)
+                    this.newValue = this.value
                 }
-                var adjustedValue = this.adjustValue(this.newValue, true) // reverse adjust
-                this.$emit('input', adjustedValue)
+                this.$emit('input', this.newValue)
             }
         },
         localeOptions() {
@@ -219,56 +218,42 @@ export default {
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds() ? this.localeOptions.second || 'numeric' : undefined,
                 hour12: !this.isHourFormat24(),
-                timeZone: 'UTC'
+                // timeZone: 'UTC'
             })
         },
         isMobileNative() {
-            return this.mobileNative && this.tzOffset === 0
+            return this.mobileNative
         },
         isMobile() {
             return this.isMobileNative && isMobile.any()
         },
         minDate() {
             if (!this.minDatetime) {
-                return this.datepicker ? this.adjustValue(this.datepicker.minDate) : null
+                return this.datepicker ? this.datepicker.minDate : null
             }
-            const adjMinDatetime = this.adjustValue(this.minDatetime)
-            return new Date(adjMinDatetime.getFullYear(),
-                adjMinDatetime.getMonth(),
-                adjMinDatetime.getDate(), 0, 0, 0, 0)
+            return new Date(this.minDatetime.getFullYear(),
+                this.minDatetime.getMonth(),
+                this.minDatetime.getDate(), 0, 0, 0, 0)
         },
         maxDate() {
             if (!this.maxDatetime) {
-                return this.datepicker ? this.adjustValue(this.datepicker.maxDate) : null
+                return this.datepicker ? this.datepicker.maxDate : null
             }
-            const adjMaxDatetime = this.adjustValue(this.maxDatetime)
-            return new Date(adjMaxDatetime.getFullYear(),
-                adjMaxDatetime.getMonth(),
-                adjMaxDatetime.getDate(), 0, 0, 0, 0)
+            return new Date(this.maxDatetime.getFullYear(),
+                this.maxDatetime.getMonth(),
+                this.maxDatetime.getDate(), 0, 0, 0, 0)
         },
         minTime() {
             if (!this.minDatetime || (this.newValue === null || typeof this.newValue === 'undefined')) {
-                return this.timepicker ? this.adjustValue(this.timepicker.minTime) : null
+                return this.timepicker ? this.timepicker.minTime : null
             }
-            const adjMinDatetime = this.adjustValue(this.minDatetime)
-            if (adjMinDatetime.getFullYear() === this.newValue.getFullYear() &&
-                adjMinDatetime.getMonth() === this.newValue.getMonth() &&
-                adjMinDatetime.getDate() === this.newValue.getDate()) {
-                return adjMinDatetime
-            }
-            return null
+            return this.minDatetime
         },
         maxTime() {
             if (!this.maxDatetime || (this.newValue === null || typeof this.newValue === 'undefined')) {
-                return this.timepicker ? this.adjustValue(this.timepicker.maxTime) : null
+                return this.timepicker ? this.timepicker.maxTime : null
             }
-            const adjMaxDatetime = this.adjustValue(this.maxDatetime)
-            if (adjMaxDatetime.getFullYear() === this.newValue.getFullYear() &&
-                adjMaxDatetime.getMonth() === this.newValue.getMonth() &&
-                adjMaxDatetime.getDate() === this.newValue.getDate()) {
-                return adjMaxDatetime
-            }
-            return null
+            return this.maxDatetime
         },
         datepickerSize() {
             return this.datepicker && this.datepicker.size
@@ -285,10 +270,7 @@ export default {
     },
     watch: {
         value() {
-            this.newValue = this.adjustValue(this.value)
-        },
-        tzOffset() {
-            this.newValue = this.adjustValue(this.value)
+            this.newValue = this.value
         }
     },
     methods: {
@@ -303,14 +285,6 @@ export default {
                 return this.$refs.timepicker.isHourFormat24
             }
             return !this.localeOptions.hour12
-        },
-        adjustValue(value, reverse = false) {
-            if (!value) return value
-            if (reverse) {
-                return new Date(value.getTime() - this.tzOffset * 60000)
-            } else {
-                return new Date(value.getTime() + this.tzOffset * 60000)
-            }
         },
         defaultDatetimeParser(date) {
             const datetimeParser = getValueByPath(config, 'datetimepicker.datetimeParser', undefined)

@@ -45,8 +45,7 @@
                 icon="calendar"
                 :locale="locale"
                 :datepicker="{ showWeekNumber }"
-                :timepicker="{ enableSeconds, hourFormat }"
-                horizontal-time-picker>
+                :timepicker="{ enableSeconds, hourFormat }">
             </o-datetimepicker>
         </o-field>
     </section>
@@ -63,6 +62,68 @@ export default {
         }
     }
 }
+</script>
+```
+:::
+
+### Footer slot
+
+::: demo
+```html
+<template>
+    <o-field label="Select datetime">
+        <o-datetimepicker v-model="datetime"
+            placeholder="Click to select...">
+            <div class="buttons-footer">
+                <o-button variant="primary"
+                    @click="datetime = new Date()">
+                    <o-icon icon="calendar"></o-icon>
+                    <span>Today</span>
+                </o-button>
+                <o-button variant="danger"
+                    @click="datetime = null">
+                    <o-icon icon="times"></o-icon>
+                    <span>Clear</span>
+                </o-button>
+            </div>
+        </o-datetimepicker>
+    </o-field>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                datetime: new Date()
+            }
+        }
+    }
+</script>
+
+<style>
+.buttons-footer {
+    margin-top: 1rem;
+}
+```
+:::
+
+### Inline
+
+
+::: demo
+```html
+<template>
+    <o-datetimepicker v-model="datetime" inline></o-datetimepicker>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                datetime: new Date()
+            }
+        }
+    }
 </script>
 ```
 :::

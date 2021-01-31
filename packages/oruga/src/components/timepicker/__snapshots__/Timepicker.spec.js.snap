@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OTimepicker render correctly 1`] = `
+exports[`Timepicker render correctly 1`] = `
 <div class="o-tpck">
     <o-dropdown-stub maxheight="200" mobilemodal="true" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" appendtobodycopyparent="true">
         <o-dropdown-item-stub override="true" tabindex="0" ariarole="">

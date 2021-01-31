@@ -166,14 +166,6 @@ export default {
         enableSeconds: Boolean,
         defaultMinutes: Number,
         defaultSeconds: Number,
-        focusable: {
-            type: Boolean,
-            default: true
-        },
-        tzOffset: {
-            type: Number,
-            default: 0
-        },
         appendToBody: Boolean,
         resetOnMeridianChange: {
             type: Boolean,
@@ -217,7 +209,7 @@ export default {
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds ? this.localeOptions.second || 'numeric' : undefined,
                 hour12: !this.isHourFormat24,
-                timeZone: 'UTC'
+                // timeZone: 'UTC'
             })
         },
         newHourFormat() {

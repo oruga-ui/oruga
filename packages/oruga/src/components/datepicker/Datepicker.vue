@@ -322,7 +322,6 @@ export default {
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
-        horizontalTimePicker: Boolean,
         unselectableDates: Array,
         unselectableDaysOfWeek: {
             type: Array,

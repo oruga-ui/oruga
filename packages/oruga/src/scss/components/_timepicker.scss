@@ -43,7 +43,7 @@ $timepicker-separator-font-weight: 600 !default;
         @include avariable('padding', 'timepicker-select-padding', $timepicker-select-padding);
         @include avariable('color', 'timepicker-select-color', $timepicker-select-color);
     }
-    &__select-placelholder {
+    &__select-placeholder {
         @include avariable('opacity', 'timepicker-select-placeholder-opacity', $timepicker-select-placeholder-opacity);
     }
     &__separator {

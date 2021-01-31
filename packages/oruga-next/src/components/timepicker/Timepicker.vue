@@ -26,8 +26,8 @@
                         :readonly="!editable"
                         :rounded="rounded"
                         :use-html5-validation="useHtml5Validation"
-                        @keyup.native.enter="toggle(true)"
-                        @change.native="onChange($event.target.value)"
+                        @keyup.enter="toggle(true)"
+                        @change="onChange($event.target.value)"
                         @focus="handleOnFocus"/>
                 </slot>
             </template>
@@ -42,7 +42,7 @@
                         :select-class="selectClasses"
                         :placeholder-class="selectPlaceholderClasses"
                         v-model="hoursSelected"
-                        @change.native="onHoursChange($event.target.value)"
+                        @change="onHoursChange($event.target.value)"
                         :disabled="disabled"
                         placeholder="00">
                         <option
@@ -59,7 +59,7 @@
                         :select-class="selectClasses"
                         :placeholder-class="selectPlaceholderClasses"
                         v-model="minutesSelected"
-                        @change.native="onMinutesChange($event.target.value)"
+                        @change="onMinutesChange($event.target.value)"
                         :disabled="disabled"
                         placeholder="00">
                         <option
@@ -77,7 +77,7 @@
                             :select-class="selectClasses"
                             :placeholder-class="selectPlaceholderClasses"
                             v-model="secondsSelected"
-                            @change.native="onSecondsChange($event.target.value)"
+                            @change="onSecondsChange($event.target.value)"
                             :disabled="disabled"
                             placeholder="00">
                             <option
@@ -95,7 +95,7 @@
                         :select-class="selectClasses"
                         :placeholder-class="selectPlaceholderClasses"
                         v-model="meridienSelected"
-                        @change.native="onMeridienChange($event.target.value)"
+                        @change="onMeridienChange($event.target.value)"
                         v-if="!isHourFormat24"
                         :disabled="disabled">
                         <option
@@ -134,13 +134,15 @@
             :disabled="disabled"
             :readonly="false"
             :use-html5-validation="useHtml5Validation"
-            @change.native="onChange($event.target.value)"
+            @change="onChange($event.target.value)"
             @focus="handleOnFocus"
             @blur="onBlur() && checkHtml5Validity()"/>
     </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import Dropdown from '../dropdown/Dropdown.vue'
 import DropdownItem from '../dropdown/DropdownItem.vue'
 import Input from '../input/Input.vue'
@@ -151,7 +153,6 @@ import Icon from '../icon/Icon.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
-import { defineComponent } from 'vue'
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
@@ -231,6 +232,7 @@ export default defineComponent({
         },
         nativeStep() {
             if (this.enableSeconds) return '1'
+            return null
         }
     }
 })
