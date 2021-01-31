@@ -124,8 +124,9 @@ export default {
         timeFormatter: {
             type: Function,
             default: (date, vm) => {
-                if (typeof config.defaultTimeFormatter === 'function') {
-                    return config.defaultTimeFormatter(date)
+                const timeFormatter = getValueByPath(config, 'timepicker.timeFormatter', undefined)
+                if (typeof timeFormatter === 'function') {
+                    return timeFormatter(date)
                 } else {
                     return defaultTimeFormatter(date, vm)
                 }
@@ -134,8 +135,9 @@ export default {
         timeParser: {
             type: Function,
             default: (date, vm) => {
-                if (typeof config.defaultTimeParser === 'function') {
-                    return config.defaultTimeParser(date)
+                const timeParser = getValueByPath(config, 'timepicker.timeParser', undefined)
+                if (typeof timeParser === 'function') {
+                    return timeParser(date)
                 } else {
                     return defaultTimeParser(date, vm)
                 }
@@ -143,13 +145,16 @@ export default {
         },
         mobileNative: {
             type: Boolean,
-            default: () => config.defaultTimepickerMobileNative
+            default: () => {
+                return getValueByPath(config, 'timepicker.mobileNative', true)
+            }
         },
         timeCreator: {
             type: Function,
             default: () => {
-                if (typeof config.defaultTimeCreator === 'function') {
-                    return config.defaultTimeCreator()
+                const timeCreator = getValueByPath(config, 'timepicker.timeCreator', undefined)
+                if (typeof timeCreator === 'function') {
+                    return timeCreator()
                 } else {
                     return new Date()
                 }
@@ -212,7 +217,8 @@ export default {
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds ? this.localeOptions.second || 'numeric' : undefined,
                 hour12: !this.isHourFormat24,
-                timeZone: 'UTC'
+
+                one: 'UTC'
             })
         },
         newHourFormat() {

@@ -1,8 +1,9 @@
 <template>
-    <div class="timepicker control" :class="[size, {'is-expanded': expanded}]">
+    <div :class="rootClasses">
         <o-dropdown
             v-if="!isMobile || inline"
             ref="dropdown"
+            v-bind="dropdownBind"
             :position="position"
             :disabled="disabled"
             :inline="inline"
@@ -13,6 +14,7 @@
                 <slot name="trigger">
                     <o-input
                         ref="input"
+                        v-bind="inputBind"
                         autocomplete="off"
                         :value="formatValue(computedValue)"
                         :placeholder="placeholder"
@@ -23,7 +25,6 @@
                         :disabled="disabled"
                         :readonly="!editable"
                         :rounded="rounded"
-                        v-bind="$attrs"
                         :use-html5-validation="useHtml5Validation"
                         @keyup.native.enter="toggle(true)"
                         @change.native="onChange($event.target.value)"
@@ -32,10 +33,10 @@
             </template>
 
             <o-dropdown-item
+                override
                 :disabled="disabled"
-                :focusable="focusable"
-                custom>
-                <o-field grouped position="is-centered">
+                :clickable="false">
+                <o-field grouped position="centered">
                     <o-select
                         v-model="hoursSelected"
                         @change.native="onHoursChange($event.target.value)"
@@ -96,7 +97,7 @@
 
                 <footer
                     v-if="$slots.default !== undefined && $slots.default.length"
-                    class="o-tpck__footer">
+                    :class="footerClasses">
                     <slot/>
                 </footer>
             </o-dropdown-item>
@@ -105,6 +106,7 @@
         <o-input
             v-else
             ref="input"
+            v-bind="inputBind"
             type="time"
             :step="nativeStep"
             autocomplete="off"
@@ -119,8 +121,6 @@
             :min="formatHHMMSS(minTime)"
             :disabled="disabled"
             :readonly="false"
-            :reset-on-meridian-change="isReset"
-            v-bind="$attrs"
             :use-html5-validation="useHtml5Validation"
             @change.native="onChange($event.target.value)"
             @focus="handleOnFocus"
@@ -138,9 +138,15 @@ import Icon from '../icon/Icon'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
+/**
+ * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
+ * @displayName Timepicker
+ * @style _timepicker.scss
+ */
 export default {
-    name: 'BTimepicker',
+    name: 'OTimepicker',
     components: {
         [Input.name]: Input,
         [Field.name]: Field,
@@ -149,9 +155,42 @@ export default {
         [Dropdown.name]: Dropdown,
         [DropdownItem.name]: DropdownItem
     },
-    mixins: [BaseComponentMixin, TimepickerMixin],
+    configField: 'timepicker',
+    mixins: [BaseComponentMixin, TimepickerMixin, MatchMediaMixin],
     inheritAttrs: false,
+    props: {
+        rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        footerClass: [String, Function, Array],
+        /** Classes to apply on internal input (@see o-input style docs) */
+        inputClasses: Object,
+        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
+        dropdownClasses: Object
+    },
     computed: {
+        inputBind() {
+            return {
+                ...this.$attrs,
+                ...this.inputClasses
+            }
+        },
+        dropdownBind() {
+            return {
+                ...this.dropdownClasses
+            }
+        },
+        rootClasses() {
+            return [
+                this.computedClass('rootClass', 'o-tpck'),
+                { [this.computedClass('sizeClass', 'o-tpck--', this.size)]: this.size },
+                 { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
+            ]
+        },
+        footerClasses() {
+            return [
+                this.computedClass('footerClass', 'o-tpck__footer')
+            ]
+        },
         nativeStep() {
             if (this.enableSeconds) return '1'
         }

@@ -7,6 +7,7 @@ $timepicker-font-size: $base-font-size !default;
             @include avariable('font-size', ('timepicker-font-size-' + #{$name}), $value);
         }
     }
+    /*
     .dropdown-menu {
         min-width: 0;
     }
@@ -34,9 +35,8 @@ $timepicker-font-size: $base-font-size !default;
         font-size: inherit;
         padding: 0;
     }
-    &__footer {
-        padding: 0 0.5rem 0 0.5rem;
-    }
+
+
     .dropdown-content {
         .control {
             font-size: 1.25em;
@@ -67,5 +67,10 @@ $timepicker-font-size: $base-font-size !default;
                 }
             }
         }
+    }
+    */
+
+    &__footer {
+        padding: 0 0.5rem 0 0.5rem;
     }
 }
