@@ -19,13 +19,13 @@ module.exports = {
     ['meta', { name: 'og:title', content: 'UI components for Vue.js and CSS framework agnostic' }],
     ['meta', { name: 'og:site_name', content: 'Oruga' }],
     ['meta', { name: 'og:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
-    ['meta', { name: 'og:image', content: 'https://oruga.io/logo-banner.png' }],
+    ['meta', { name: 'og:image', content: 'https://oruga.io/logo-banner.png?v=3' }],
     ['meta', { name: 'og:image:type', content: 'image/png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@walter_tommasi' }],
     ['meta', { name: 'twitter:title', content: 'UI components for Vue.js and CSS framework agnostic' }],
     ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
-    ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png' }]
+    ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png?v=3' }]
   ],
   plugins: [
     [
