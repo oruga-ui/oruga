@@ -41,9 +41,9 @@ Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bul
 
 Browse [online documentation here](https://oruga.io/documentation/).
 
-💅 For more info about components customization, go to the `Customization section` in the documentation.
+💅 For more info about components customization, [read carefully the "customization" section](https://oruga.io/documentation/#customization) in the documentation.
 
-🕹 To see Oruga in action, go to the `Example section` in the documentation.
+🕹 To see Oruga in action, go to the [Example section](https://oruga.io/documentation/#examples) in the documentation.
 
 Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
 
