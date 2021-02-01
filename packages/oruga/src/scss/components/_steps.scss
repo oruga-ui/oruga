@@ -2,12 +2,12 @@
 /* @docs */
 $steps-details-background-color: hsl(0, 0%, 100%) !default;
 $steps-details-padding: .2em !default;
-$steps-maker-default-background: $grey-light !default;
-$steps-maker-default-color: $primary-invert !default;
-$steps-marker-default-border: .2em solid #fff !default;
-$steps-maker-font-weight: 700 !default;
+$steps-marker-background: $grey-light !default;
+$steps-marker-color: $primary-invert !default;
+$steps-marker-border: .2em solid #fff !default;
+$steps-marker-font-weight: 700 !default;
 $steps-marker-rounded-border-radius: $base-rounded-border-radius !default;
-$steps-default-color: $grey-lighter !default;
+$steps-color: $grey-lighter !default;
 $steps-previous-color: $primary !default;
 $steps-active-color: $primary !default;
 $steps-divider-height: .2em !default;
@@ -137,7 +137,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         @include avariable('color', ('variant-' + #{$name}), $color);
                     }
                     .o-steps__divider {
-                        background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                        background: linear-gradient(to left, $steps-color 50%, $color 50%);
                         background-size: 200% 100%;
                     }
                 }
@@ -147,7 +147,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                         @include avariable('background-color', ('variant-' + #{$name}), $color);
                     }
                     .o-steps__divider {
-                        background: linear-gradient(to left, $steps-default-color 50%, $color 50%);
+                        background: linear-gradient(to left, $steps-color 50%, $color 50%);
                         background-size: 200% 100%;
                     }
                 }
@@ -156,7 +156,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
     }
 
     &__divider {
-        background: linear-gradient(to left, $steps-default-color 50%, $steps-active-color 50%);
+        background: linear-gradient(to left, $steps-color 50%, $steps-active-color 50%);
         background-size: 200% 100%;
         background-position: right bottom;
         // This will contain the divider
@@ -216,10 +216,10 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         align-items: center;
         display: flex;
         justify-content: center;
-        @include avariable('font-weight', 'steps-maker-font-weight', $steps-maker-font-weight);
-        @include avariable('background', 'steps-maker-default-background', $steps-maker-default-background);
-        @include avariable('color', 'steps-maker-default-color', $steps-maker-default-color);
-        @include avariable('border', 'steps-marker-default-border', $steps-marker-default-border);
+        @include avariable('font-weight', 'steps-marker-font-weight', $steps-marker-font-weight);
+        @include avariable('background', 'steps-marker-background', $steps-marker-background);
+        @include avariable('color', 'steps-marker-color', $steps-marker-color);
+        @include avariable('border', 'steps-marker-border', $steps-marker-border);
         z-index: 1;
         overflow: hidden;
 
@@ -241,7 +241,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
         }
 
         .o-steps__marker {
-            @include avariable('background-color', 'steps-maker-default-color', $steps-maker-default-color);
+            @include avariable('background-color', 'steps-marker-color', $steps-marker-color);
             @include avariable('border-color', 'steps-active-color', $steps-active-color);
             @include avariable('color', 'steps-active-color', $steps-active-color);
         }
@@ -253,7 +253,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
 
     &__nav-item-previous {
         .o-steps__marker {
-            @include avariable('color', 'steps-maker-default-color', $steps-maker-default-color);
+            @include avariable('color', 'steps-marker-color', $steps-marker-color);
             @include avariable('background-color', 'steps-previous-color', $steps-previous-color);
         }
 
@@ -301,7 +301,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
                 $color: nth($pair, 1);
                 &--#{$name} {
                     .o-steps__divider {
-                        background: linear-gradient(to top, $steps-default-color 50%, $color 50%);
+                        background: linear-gradient(to top, $steps-color 50%, $color 50%);
                         background-size: 100% 200%;
                         background-position: left bottom;
                     }

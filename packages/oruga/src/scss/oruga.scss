@@ -122,6 +122,16 @@ $whitelist: add-to-whitelist(
     'skeleton-duration'
 );
 
+// steps
+$whitelist: add-to-whitelist(
+    'steps-marker-color',
+    'steps-marker-border',
+    'steps-marker-background',
+    'steps-previous-color',
+    'steps-active-color',
+    'steps-details-background-color'
+);
+
 // switch
 $whitelist: add-to-whitelist(
     'switch-width',
@@ -131,6 +141,14 @@ $whitelist: add-to-whitelist(
     'switch-active-background-color',
     'switch-disabled-opacity',
     'switch-rounded-border-radius'
+);
+
+// tabs
+$whitelist: add-to-whitelist(
+    'tabs-disabled-opacity',
+    'tabs-link-active-color',
+    'tabs-link-active-border-bottom-color',
+    'tabs-link-color'
 );
 
 // tooltip

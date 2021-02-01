@@ -506,12 +506,12 @@ export default {
 | ------------------------------------------ | ------------------------------------ | ---------------------------- |
 | --oruga-steps-details-background-color     | \$steps-details-background-color     | hsl(0, 0%, 100%)             |
 | --oruga-steps-details-padding              | \$steps-details-padding              | .2em                         |
-| --oruga-steps-maker-default-background     | \$steps-maker-default-background     | \$grey-light                 |
-| --oruga-steps-maker-default-color          | \$steps-maker-default-color          | \$primary-invert             |
-| --oruga-steps-marker-default-border        | \$steps-marker-default-border        | .2em solid #fff              |
+| --oruga-steps-maker-background             | \$steps-maker-background             | \$grey-light                 |
+| --oruga-steps-maker-color                  | \$steps-maker-color                  | \$primary-invert             |
+| --oruga-steps-marker-border                | \$steps-marker-border                | .2em solid #fff              |
 | --oruga-steps-maker-font-weight            | \$steps-maker-font-weight            | 700                          |
 | --oruga-steps-marker-rounded-border-radius | \$steps-marker-rounded-border-radius | \$base-rounded-border-radius |
-| --oruga-steps-default-color                | \$steps-default-color                | \$grey-lighter               |
+| --oruga-steps-color                        | \$steps-color                        | \$grey-lighter               |
 | --oruga-steps-previous-color               | \$steps-previous-color               | \$primary                    |
 | --oruga-steps-active-color                 | \$steps-active-color                 | \$primary                    |
 | --oruga-steps-divider-height               | \$steps-divider-height               | .2em                         |
