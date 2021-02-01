@@ -35,11 +35,11 @@
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
 * **Lightweight**: no other internal dependency and import only components that you need
 
-Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. If you need a component library and want to easily apply your custom style, Oruga is the library for you!
+Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. Oruga wants you to focus only on UI/UX aspects of your application and be totally flexible to future changes without having to touch a line of JavaScript.
 
 ## Documentation
 
-Browse [online documentation here](https://oruga.io/).
+Browse [online documentation here](https://oruga.io/documentation/).
 
 💅 For more info about components customization, go to the `Customization section` in the documentation.
 
@@ -59,25 +59,17 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** 
 
-### 1 Install via npm
+### 1 Setup Oruga
 
 #### Vue 2
+
+Install Oruga
 
 ```bash
 npm install @oruga-ui/oruga
 ```
 
-#### Vue 3
-
-```bash
-npm install @oruga-ui/oruga-next
-```
-
-### 2 Import and use Oruga
-
-#### Vue 2
-
-Import the full bundle
+Then import the full bundle
 
 ```js
 import Vue from 'vue';
@@ -97,9 +89,15 @@ Vue.use(Field);
 Vue.use(Input);
 ```
 
-#### Vue 3
+#### Vue 3 (⚠️ Experimental)
 
-Import the full bundle
+Install Oruga
+
+```bash
+npm install @oruga-ui/oruga-next
+```
+
+Then import the full bundle
 
 ```js
 import { createApp } from 'vue'
@@ -122,7 +120,7 @@ createApp(...)
 
 ### 3 Customization
 
-Please [read carefully the "customization" section](https://oruga.io/documentation) in Oruga documentation.
+Please [read carefully the "customization" section](https://oruga.io/documentation/#customization) in Oruga documentation.
 
 If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
 
