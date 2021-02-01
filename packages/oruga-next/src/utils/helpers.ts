@@ -44,7 +44,7 @@ export { mod, bound, hasFlag }
  * Get value of an object property/path even if it's nested
  */
 export function getValueByPath(obj: any, path: string, defaultValue = undefined): any {
-    const value = path.split('.').reduce((o, i) => typeof o !== 'undefined' ? o[i] : obj[i], obj)
+    const value = path.split('.').reduce((o, i) => typeof o !== 'undefined' ? o[i] : undefined, obj)
     return typeof value !== 'undefined' ? value : defaultValue
 }
 
