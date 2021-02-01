@@ -85,30 +85,32 @@
                                     clickable />
                             </a>
                             <div :class="listsClasses">
-                                <o-select
-                                    v-if="!isTypeMonth"
-                                    v-model="focusedDateData.month"
-                                    :disabled="disabled"
-                                    :size="size">
-                                    <option
-                                        v-for="month in listOfMonths"
-                                        :value="month.index"
-                                        :key="month.name"
-                                        :disabled="month.disabled">
-                                        {{ month.name }}
-                                    </option>
-                                </o-select>
-                                <o-select
-                                    v-model="focusedDateData.year"
-                                    :disabled="disabled"
-                                    :size="size">
-                                    <option
-                                        v-for="year in listOfYears"
-                                        :value="year"
-                                        :key="year">
-                                        {{ year }}
-                                    </option>
-                                </o-select>
+                                <o-field>
+                                    <o-select
+                                        v-if="!isTypeMonth"
+                                        v-model="focusedDateData.month"
+                                        :disabled="disabled"
+                                        :size="size">
+                                        <option
+                                            v-for="month in listOfMonths"
+                                            :value="month.index"
+                                            :key="month.name"
+                                            :disabled="month.disabled">
+                                            {{ month.name }}
+                                        </option>
+                                    </o-select>
+                                    <o-select
+                                        v-model="focusedDateData.year"
+                                        :disabled="disabled"
+                                        :size="size">
+                                        <option
+                                            v-for="year in listOfYears"
+                                            :value="year"
+                                            :key="year">
+                                            {{ year }}
+                                        </option>
+                                    </o-select>
+                                </o-field>
                             </div>
                         </div>
                     </header>
@@ -207,6 +209,7 @@ import config from '../../utils/config'
 
 import Dropdown from '../dropdown/Dropdown.vue'
 import DropdownItem from '../dropdown/DropdownItem.vue'
+import Field from '../field/Field.vue'
 import Input from '../input/Input.vue'
 import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
@@ -269,6 +272,7 @@ export default defineComponent({
     name: 'ODatepicker',
     components: {
         [DatepickerTable.name]: DatepickerTable,
+        [Field.name]: Field,
         [Input.name]: Input,
         [Select.name]: Select,
         [Icon.name]: Icon,
