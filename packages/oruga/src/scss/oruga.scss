@@ -151,6 +151,11 @@ $whitelist: add-to-whitelist(
     'tabs-link-color'
 );
 
+// timepicker
+$whitelist: add-to-whitelist(
+    'timepicker-select-placeholder-opacity'
+);
+
 // tooltip
 $whitelist: add-to-whitelist(
     'tooltip-arrow-size',
