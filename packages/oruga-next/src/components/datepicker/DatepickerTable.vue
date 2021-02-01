@@ -12,7 +12,7 @@
             <o-datepicker-table-row
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"
-                :selected-date="value"
+                :selected-date="modelValue"
                 :day="focused.day"
                 :week="week"
                 :month="focused.month"
@@ -74,9 +74,9 @@ export default defineComponent({
     components: {
         [DatepickerTableRow.name]: DatepickerTableRow
     },
-    emits: ['input', 'range-start', 'range-end', 'update:focused'],
+    emits: ['update:modelValue', 'range-start', 'range-end', 'update:focused'],
     props: {
-        value: {
+        modelValue: {
             type: [Date, Array]
         },
         dayNames: Array,
@@ -128,7 +128,7 @@ export default defineComponent({
             selectedBeginDate: undefined,
             selectedEndDate: undefined,
             hoveredEndDate: undefined,
-            multipleSelectedDates: this.multiple && this.value ? this.value : []
+            multipleSelectedDates: this.multiple && this.modelValue ? this.modelValue : []
         }
     },
     computed: {
@@ -232,7 +232,7 @@ export default defineComponent({
         */
         updateSelectedDate(date) {
             if (!this.range && !this.multiple) {
-                this.$emit('input', date)
+                this.$emit('update:modelValue', date)
             } else if (this.range) {
                 this.handleSelectRangeDate(date)
             } else if (this.multiple) {
@@ -258,7 +258,7 @@ export default defineComponent({
                     this.selectedEndDate = date
                 }
                 this.$emit('range-end', date)
-                this.$emit('input', [this.selectedBeginDate, this.selectedEndDate])
+                this.$emit('update:modelValue', [this.selectedBeginDate, this.selectedEndDate])
             } else {
                 this.selectedBeginDate = date
                 this.$emit('range-start', date)
@@ -284,7 +284,7 @@ export default defineComponent({
             } else {
                 this.multipleSelectedDates.push(date)
             }
-            this.$emit('input', this.multipleSelectedDates)
+            this.$emit('update:modelValue', this.multipleSelectedDates)
         },
 
         /*
