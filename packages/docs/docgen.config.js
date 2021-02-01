@@ -113,7 +113,13 @@ function tmplProps(props, config, name) {
         const value = `${configParts[1].replace(/'/g, '')}: ${params[2]}`
         d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g, '')} {<br>&nbsp;&nbsp;${value}<br>}</code>`
       }
+      if (configParts && configParts.length == 1) {
+        const value = `${configParts[0].replace(/'/g, '')}: ${params[2]}`
+        d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`
+      }
     }
+
+    d = d.includes('=>') ? 'Default function (see source code)' : d
 
     ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + '\n'
   })
