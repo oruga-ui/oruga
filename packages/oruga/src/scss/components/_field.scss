@@ -51,7 +51,7 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         > button:last-child,
         > *:last-child:not(:only-child) input,
         > input:last-child,
-        > *:last-child:not(:only-child) button,
+        > *:last-child:not(:only-child) select,
         > select:last-child {
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
