@@ -7,16 +7,14 @@ module.exports = function nuxtOruga(moduleOptions = {}) {
     const options = Object.assign({}, this.options.oruga, moduleOptions)
 
     // Add css
-    if (options.css !== false) {
+    if (options.includeCss === 'vars') {
+        this.options.css.unshift('@oruga-ui/oruga/dist/oruga-full-vars.css');
+    }
+    else if (options.includeCss === 'full') {
+        this.options.css.unshift('@oruga-ui/oruga/dist/oruga-full.css');
+    }
+    else if (options.includeCss !== false) {
         this.options.css.unshift('@oruga-ui/oruga/dist/oruga.css');
-    }
-
-    if (options.cssVars !== false) {
-        this.options.css.unshift('@oruga-ui/oruga/dist/oruga-vars.css');
-    }
-
-    if (options.cssLite !== false) {
-        this.options.css.unshift('@oruga-ui/oruga/dist/oruga-lite.css');
     }
 
     // Register plugin
