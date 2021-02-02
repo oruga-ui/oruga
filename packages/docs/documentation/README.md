@@ -149,6 +149,21 @@ module.exports = {
 }
 ```
 
+By default Oruga Nuxt module includes `oruga.css` stylesheet. If you want to avoid including it you can set `includeCss` to `false` inside `nuxt.conf.js`
+
+```js
+  oruga: {
+    includeCss: false
+  },
+```
+
+`includeCss` accepts other 2 values: 
+
+- `full` to include `oruga-full.css`
+- `vars` to include `oruga-full-vars.css`
+
+See ["Customization section"](#customization) to understand the difference between these stylesheets.
+
 Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
 
 ```js
