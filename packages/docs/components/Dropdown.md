@@ -259,7 +259,7 @@ export default {
                 {
                     class: "menuClass",
                     description: "Class of the dropdown menu",
-                    specificity: "when <b>menuInlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
+                    specificity: "when <b>inlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
                     action: () => {
                         setTimeout(() => {
                             this.$refs.dropdownbtn.$el.click()
@@ -285,7 +285,7 @@ export default {
                     }
                 },
                 {
-                    class: "menuInlineClass",
+                    class: "inlineClass",
                     description: "Class of dropdown menu when inline",
                     properties: ['inline'],
                     action: (cmp) => {
@@ -380,7 +380,7 @@ export default {
 | mobileBreakpoint       | Mobile breakpoint as max-width value                                                                                                                   | string                                 | -                                        |                                                                                                                                          |
 | mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown {<br>&nbsp;&nbsp;mobileModal: true<br>}</code> |
 | multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                                                                                                          |
-| override               |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                          |
+| override               | Override classes                                                                                                                                       | boolean                                | -                                        | false                                                                                                                                    |
 | position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                                                                                                          |
 | scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                                                                                                          |
 | trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>   |
@@ -413,7 +413,7 @@ export default {
 | ariaRole  |                                                       | string                                 | -      | ''      |
 | clickable | Item is clickable and emit an event                   | boolean                                | -      | true    |
 | disabled  | Item is disabled                                      | boolean                                | -      |         |
-| override  |                                                       | boolean                                | -      |         |
+| override  | Override classes                                      | boolean                                | -      | false   |
 | tabindex  |                                                       | number\|string                         | -      | 0       |
 | value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
 

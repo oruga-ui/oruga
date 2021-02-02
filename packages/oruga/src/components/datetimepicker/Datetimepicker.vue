@@ -134,7 +134,13 @@ export default {
                 }
             }
         },
+        /**
+         * Properties and classes to bind to the internal DatePicker
+         */
         datepicker: Object,
+        /**
+         * Properties and classes to bind to the internal TimePicker
+         */
         timepicker: Object,
         locale: {
             type: [String, Array],

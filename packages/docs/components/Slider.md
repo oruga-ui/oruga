@@ -297,7 +297,7 @@ export default {
 | locale            |                                                  | string\|array | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; locale: undefined<br>}</code>     |
 | max               | Maximum value                                    | number        | -                                                                               | 100                                                                                                                                 |
 | min               | Minimum value                                    | number        | -                                                                               | 0                                                                                                                                   |
-| override          |                                                  | boolean       | -                                                                               |                                                                                                                                     |
+| override          | Override classes                                 | boolean       | -                                                                               | false                                                                                                                               |
 | rounded           | Rounded thumb                                    | boolean       | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> slider {<br>&nbsp;&nbsp;rounded: false<br>}</code> |
 | size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                                                                                                     |
 | step              | Step interval of ticks                           | number        | -                                                                               | 1                                                                                                                                   |
@@ -329,7 +329,7 @@ export default {
 
 | Prop name | Description          | Type    | Values | Default |
 | --------- | -------------------- | ------- | ------ | ------- |
-| override  |                      | boolean | -      |         |
+| override  | Override classes     | boolean | -      | false   |
 | value     | Value of single tick | number  | -      | 0       |
 
 ### Slots

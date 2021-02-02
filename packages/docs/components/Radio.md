@@ -191,7 +191,7 @@ export default {
 | disabled    | Same as native disabled        | boolean                        | -                                                                               |         |
 | name        | Same as native name            | string                         | -                                                                               |         |
 | nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
-| override    |                                | boolean                        | -                                                                               |         |
+| override    | Override classes               | boolean                        | -                                                                               | false   |
 | required    |                                | boolean                        | -                                                                               |         |
 | size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
 | v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |

@@ -304,7 +304,7 @@ export default {
 | leftLabel      | Show label on left                                 | boolean                 | -                                                                               | false   |
 | name           | Name attribute on native checkbox                  | string                  | -                                                                               |         |
 | nativeValue    | Same as native value                               | string\|number\|boolean | -                                                                               |         |
-| override       |                                                    | boolean                 | -                                                                               |         |
+| override       | Override classes                                   | boolean                 | -                                                                               | false   |
 | passiveVariant | Color of the switch when is passive, optional      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 | required       |                                                    | boolean                 | -                                                                               |         |
 | rounded        | Rounded style                                      | boolean                 | -                                                                               | true    |

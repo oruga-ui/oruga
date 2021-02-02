@@ -12,7 +12,13 @@ const _defaultSuffixProcessor = (input, suffix) => {
 export default {
     isOruga: true,
     props: {
-        override: Boolean
+        /**
+         * Override classes
+         */
+        override: {
+            type: Boolean,
+            default: false
+        }
     },
     methods: {
         computedClass(field, defaultValue, suffix='') {

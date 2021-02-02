@@ -103,7 +103,7 @@ function tmplProps(props, config, name) {
     const v = pr.values ? pr.values.map(pv => `\`${pv}\``).join(', ') : '-'
     const t = pr.description ? pr.description : ''
 
-    if (d.indexOf('getValueByPath') >= 0) {
+    if (d.indexOf('getValueByPath') >= 0 && d.indexOf('const ') < 0 && d.indexOf('if ') < 0 && d.indexOf('else ') < 0) {
       const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
       let configParts = null
       if (params[1]) {
