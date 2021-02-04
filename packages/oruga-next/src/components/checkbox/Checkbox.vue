@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
-        @click="focus"
+        @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
         <input
             v-model="computedValue"
@@ -38,6 +38,9 @@ export default defineComponent({
     name: 'OCheckbox',
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'checkbox',
+    emits: [
+        'input'
+    ],
     props: {
         /**
          * Same as native indeterminate
@@ -84,6 +87,7 @@ export default defineComponent({
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-chk'),
+                { [this.computedClass('checkedClass', 'o-chk--checked')] : this.isChecked },
                 { [this.computedClass('sizeClass', 'o-chk--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-chk--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-chk--', this.variant)]: this.variant }

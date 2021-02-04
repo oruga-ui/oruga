@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
-        @click="focus"
+        @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
         <input
             v-model="computedValue"
@@ -35,6 +35,9 @@ export default defineComponent({
     name: 'ORadio',
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'radio',
+    emits: [
+        'input'
+    ],
     props: {
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
@@ -48,6 +51,7 @@ export default defineComponent({
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-radio'),
+                { [this.computedClass('checkedClass', 'o-radio--checked')] : this.value === this.nativeValue },
                 { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }

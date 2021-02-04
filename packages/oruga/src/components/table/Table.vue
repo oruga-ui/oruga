@@ -170,7 +170,7 @@
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                                @input="checkRow(row, index, $event)"
                             />
                         </td>
 
@@ -199,7 +199,7 @@
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
-                                @click.native.prevent.stop="checkRow(row, index, $event)"
+                                @input="checkRow(row, index, $event)"
                             />
                         </td>
                     </tr>
