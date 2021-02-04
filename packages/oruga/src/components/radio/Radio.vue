@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         :disabled="disabled"
-        @click="focus"
+        @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
         <input
             v-model="computedValue"
