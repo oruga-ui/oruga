@@ -55,7 +55,7 @@
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                         <template v-if="headerCheckable">
                             <o-checkbox
-                                :value="isAllChecked"
+                                :modelValue="isAllChecked"
                                 :disabled="isAllUncheckable"
                                 @change="checkAll"/>
                         </template>
@@ -96,7 +96,7 @@
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                         <template v-if="headerCheckable">
                             <o-checkbox
-                                :value="isAllChecked"
+                                :modelValue="isAllChecked"
                                 :disabled="isAllUncheckable"
                                 @change="checkAll"/>
                         </template>
@@ -170,8 +170,8 @@
                             v-if="checkable && checkboxPosition === 'left'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
-                                :value="isRowChecked(row)"
-                                @click.prevent.stop="checkRow(row, index, $event)"
+                                :modelValue="isRowChecked(row)"
+                                @input="checkRow(row, index, $event)"
                             />
                         </td>
 
@@ -196,8 +196,8 @@
                             v-if="checkable && checkboxPosition === 'right'">
                             <o-checkbox
                                 :disabled="!isRowCheckable(row)"
-                                :value="isRowChecked(row)"
-                                @click.prevent.stop="checkRow(row, index, $event)"
+                                :modelValue="isRowChecked(row)"
+                                @input="checkRow(row, index, $event)"
                             />
                         </td>
                     </tr>
