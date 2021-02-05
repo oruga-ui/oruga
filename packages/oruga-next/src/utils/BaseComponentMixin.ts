@@ -11,6 +11,7 @@ const _defaultSuffixProcessor = (input: string, suffix: string) => {
 }
 
 export default defineComponent({
+    isOruga: true,
     props: {
         override: Boolean
     },
