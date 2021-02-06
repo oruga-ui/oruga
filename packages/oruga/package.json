@@ -38,7 +38,8 @@
     "build:scss": "sass src/scss/oruga.scss | node ./build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
     "build:style:watch": "concurrently \"sass src/scss/oruga-full-vars.scss dist/oruga-full-vars.css --watch\" \"sass src/scss/oruga.scss dist/oruga.css --watch\"",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
-    "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\""
+    "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
+    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish"
   },
   "keywords": [
     "oruga",
