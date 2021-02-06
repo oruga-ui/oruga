@@ -1,12 +1,13 @@
 const path = require('path')
 const fs = require('fs')
+const package = require('../package.json')
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
 const sidebarComponents = components.map(c => `/components/${c}`)
 
 module.exports = {
-  title: 'Oruga',
+  title: `Oruga (v${package.version})`,
   description: 'UI components for Vue.js and CSS framework agnostic',
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -22,7 +23,7 @@ module.exports = {
     ['meta', { name: 'og:image', content: 'https://oruga.io/logo-banner.png?v=3' }],
     ['meta', { name: 'og:image:type', content: 'image/png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:site', content: '@walter_tommasi' }],
+    ['meta', { name: 'twitter:site', content: '@oruga_ui' }],
     ['meta', { name: 'twitter:title', content: 'UI components for Vue.js and CSS framework agnostic' }],
     ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
     ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png?v=3' }]
