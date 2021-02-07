@@ -21,12 +21,12 @@
     </RouterLink>
 
     <div class="docs-switch-box">
-        <o-switch
-            v-model="lite"
-            elements-wrapper-class="docs-switch"
-            label-class="docs-switch-label">
-            Lite
-        </o-switch>
+      <o-switch
+        v-model="lite"
+        elements-wrapper-class="docs-switch"
+        label-class="docs-switch-label">
+        Lite
+      </o-switch>
     </div>
 
     <div
@@ -63,8 +63,7 @@ export default {
 
   data () {
     return {
-      linksWrapMaxWidth: null,
-      lite: false
+      linksWrapMaxWidth: null
     }
   },
 
@@ -75,24 +74,25 @@ export default {
 
     isAlgoliaSearch () {
       return this.algolia && this.algolia.apiKey && this.algolia.indexName
-    }
-  },
+    },
 
-  watch: {
-    lite(value) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('oruga.io_lite', value)
-        setTimeout(() => {
-          window.location.reload()
-        }, 250)
+    lite: {
+      get() {
+        if (typeof window !== 'undefined') {
+          return localStorage.getItem('oruga.io_lite') === 'true'
+        }
+        return false
+      },
+      set(value) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('oruga.io_lite', value)
+          setTimeout(() => window.location.reload(), 250)
+        }
       }
     }
   },
 
   mounted () {
-    if (typeof window !== 'undefined') {
-      this.lite = localStorage.getItem('oruga.io_lite') === 'true'
-    }
     const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
     const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
     const handleLinksWrapWidth = () => {
