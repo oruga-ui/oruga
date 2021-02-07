@@ -80,10 +80,12 @@ export default {
 
   watch: {
     lite(value) {
-      localStorage.setItem('oruga.io_lite', value)
-      setTimeout(() => {
-        window.location.reload()
-      }, 250)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('oruga.io_lite', value)
+        setTimeout(() => {
+          window.location.reload()
+        }, 250)
+      }
     }
   },
 
