@@ -1,5 +1,9 @@
-import Oruga from '../../oruga/dist/oruga'
-import '../../oruga/dist/oruga-full-vars.css';
+const lite = localStorage.getItem('oruga.io_lite') === 'true';
+
+import Oruga from '../../oruga/dist/oruga';
+
+if (lite) import('../../oruga/dist/oruga.css');
+else import('../../oruga/dist/oruga-full-vars.css');
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -18,8 +22,8 @@ export default ({
   Vue.component('inspector', Inspector)
 
   Vue.use(Oruga, {
-      iconPack: 'fas',
-      iconComponent: 'vue-fontawesome'
+    iconPack: 'fas',
+    iconComponent: 'vue-fontawesome'
   });
 
   // plugin-demo-block
