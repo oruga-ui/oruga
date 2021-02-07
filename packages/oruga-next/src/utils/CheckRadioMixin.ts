@@ -41,7 +41,7 @@ export default defineComponent({
 			},
 			set(value) {
                 this.newValue = value
-				this.$emit('input', this.newValue)
+				this.$emit('update:modelValue', this.newValue)
 			}
 		}
 	},
