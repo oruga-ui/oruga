@@ -1315,20 +1315,22 @@ export default defineComponent({
         },
 
         _addColumn(column) {
-            this.$nextTick(() => {
-                this.defaultSlots.push(column)
-                window.requestAnimationFrame(() => {
-                    const div = this.$refs['slot']
-                    if (div && div.children) {
-                        const position = [...div.children].map(c =>
-                            parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
-                        if (position !== this.defaultSlots.length) {
-                            this.defaultSlots.splice(position, 0, column);
-                            this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+            if (typeof window !== 'undefined') {
+                this.$nextTick(() => {
+                    this.defaultSlots.push(column)
+                    window.requestAnimationFrame(() => {
+                        const div = this.$refs['slot']
+                        if (div && div.children) {
+                            const position = [...div.children].map(c =>
+                                parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
+                            if (position !== this.defaultSlots.length) {
+                                this.defaultSlots.splice(position, 0, column);
+                                this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+                            }
                         }
-                    }
+                    })
                 })
-            })
+            }
         },
 
         _removeColumn(column) {
