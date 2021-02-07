@@ -1318,7 +1318,7 @@ export default defineComponent({
             if (typeof window !== 'undefined') {
                 this.$nextTick(() => {
                     this.defaultSlots.push(column)
-                    window.requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
                         const div = this.$refs['slot']
                         if (div && div.children) {
                             const position = [...div.children].map(c =>
