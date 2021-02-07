@@ -1,9 +1,11 @@
-const lite = localStorage.getItem('oruga.io_lite') === 'true';
 
 import Oruga from '../../oruga/dist/oruga';
 
-if (lite) import('../../oruga/dist/oruga.css');
-else import('../../oruga/dist/oruga-full-vars.css');
+if (typeof window !== 'undefined') {
+  const lite = localStorage.getItem('oruga.io_lite') === 'true';
+  if (lite) import('../../oruga/dist/oruga.css');
+  else import('../../oruga/dist/oruga-full-vars.css');
+}
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
