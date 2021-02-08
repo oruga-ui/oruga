@@ -31,9 +31,9 @@ export default ({
 
   // plugin-demo-block
   if (typeof window !== 'undefined') {
+    window.Vue = Vue;
     const value = localStorage.getItem('oruga.io_lite') === 'true';
     toggleStyle(value, true);
-    window.Vue = Vue;
   }
 
 }

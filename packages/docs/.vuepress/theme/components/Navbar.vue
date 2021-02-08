@@ -97,10 +97,9 @@ export default {
   },
 
   created() {
-      if (typeof window !== 'undefined') {
-        const value = localStorage.getItem('oruga.io_lite') === 'true'
-        this.toggleOrugaStyle(value, true)
-      }
+    if (typeof window !== 'undefined') {
+      this.lite = localStorage.getItem('oruga.io_lite') === 'true'
+    }
   },
 
   mounted () {
