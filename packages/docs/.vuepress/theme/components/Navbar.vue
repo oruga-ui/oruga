@@ -22,7 +22,8 @@
 
     <div class="docs-switch-box">
       <o-switch
-        v-model="lite"
+        :value="lite"
+        @input="toggleOrugaStyle"
         elements-wrapper-class="docs-switch"
         label-class="docs-switch-label">
         Lite
@@ -63,7 +64,9 @@ export default {
 
   data () {
     return {
-      linksWrapMaxWidth: null
+      linksWrapMaxWidth: null,
+      lite: false,
+      showSwitch: process.env.NODE_ENV === 'production'
     }
   },
 
@@ -74,22 +77,33 @@ export default {
 
     isAlgoliaSearch () {
       return this.algolia && this.algolia.apiKey && this.algolia.indexName
-    },
-
-    lite: {
-      get() {
-        if (typeof window !== 'undefined') {
-          return localStorage.getItem('oruga.io_lite') === 'true'
-        }
-        return false
-      },
-      set(value) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('oruga.io_lite', value)
-          setTimeout(() => window.location.reload(), 250)
-        }
-      }
     }
+  },
+
+  methods: {
+    toggleOrugaStyle(value, immediate = false) {
+        this.lite = value
+        localStorage.setItem('oruga.io_lite', value)
+        setTimeout(() => {
+            // switch style
+            let style = document.getElementById('orugacss')
+            if (style) document.head.removeChild(style)
+            style = document.createElement('link')
+            style.id = 'orugacss'
+            style.type = "text/css"
+            style.rel = "stylesheet"
+            // style.href = this.lite ? `${location.origin}/cdn/oruga.min.css` : `${location.origin}/cdn/oruga-full-vars.min.css`
+            style.href = this.lite ? `https://oruga.io/cdn/oruga.min.css` : `https://oruga.io/cdn/oruga-full-vars.min.css`
+            document.head.appendChild(style)
+        }, immediate ? 0 : 250)
+    }
+  },
+
+  created() {
+      if (typeof window !== 'undefined') {
+        const value = localStorage.getItem('oruga.io_lite') === 'true'
+        this.toggleOrugaStyle(value, true)
+      }
   },
 
   mounted () {

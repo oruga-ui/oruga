@@ -53,7 +53,8 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        vue: 'vue/dist/vue.common.js'
+        vue: 'vue/dist/vue.common.js',
+        'process.env.NODE_ENV': process.env.NODE_ENV
       }
     }
   },
