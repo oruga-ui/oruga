@@ -31,8 +31,7 @@
         roundedClass="navbar-switch--rounded"
         :value="lite"
         @input="toggleOrugaStyle"
-        elements-wrapper-class="docs-switch"
-        label-class="docs-switch-label">
+        labelClass="navbar-switch-label">
         Lite CSS <a href="" title="What does it mean?">[?]</a>
       </o-switch>
     </div>
@@ -58,6 +57,8 @@ import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SearchBox from '@SearchBox'
 import SidebarButton from '@theme/components/SidebarButton.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
+
+import toggleStyle from './togglestyles.js'
 
 export default {
   name: 'Navbar',
@@ -91,34 +92,7 @@ export default {
     toggleOrugaStyle(value, immediate = false) {
         this.lite = value
         localStorage.setItem('oruga.io_lite', value)
-        setTimeout(() => {
-            // switch style
-            if (this.lite) {
-                let style = document.getElementById('orugacss-lite')
-                let styleToRemove = document.getElementById('orugacss')
-                style = document.createElement('link')
-                style.id = 'orugacss-lite'
-                style.type = "text/css"
-                style.rel = "stylesheet"
-                style.href = `${location.origin}/cdn/oruga.min.css`
-                document.head.appendChild(style)
-                setTimeout(() => {
-                    if (styleToRemove) document.head.removeChild(styleToRemove)
-                }, 100);
-            } else {
-                let style = document.getElementById('orugacss')
-                let styleToRemove = document.getElementById('orugacss-lite')
-                style = document.createElement('link')
-                style.id = 'orugacss'
-                style.type = "text/css"
-                style.rel = "stylesheet"
-                style.href = `${location.origin}/cdn/oruga-full-vars.min.css`
-                document.head.appendChild(style)
-                setTimeout(() => {
-                    if (styleToRemove) document.head.removeChild(styleToRemove)
-                }, 100);
-            }
-        }, immediate ? 0 : 250)
+        toggleStyle(this.lite, immediate)
     }
   },
 
@@ -296,9 +270,7 @@ $navbar-horizontal-padding = 1.5rem
     display inline
     margin-left 0.8rem
 
-.docs-switch
-    vertical-align bottom
-.docs-switch-label
+.navbar-switch-label
     font-weight 500
 
 @media (max-width: $MQMobile)

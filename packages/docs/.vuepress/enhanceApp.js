@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import DocWrapper from './DocWrapper.vue';
 import Inspector from './Inspector.vue';
 
+import toggleStyle from './theme/components/togglestyles.js'
+
 export default ({
   Vue
 }) => {
@@ -29,6 +31,8 @@ export default ({
 
   // plugin-demo-block
   if (typeof window !== 'undefined') {
+    const value = localStorage.getItem('oruga.io_lite') === 'true';
+    toggleStyle(value, true);
     window.Vue = Vue;
   }
 
