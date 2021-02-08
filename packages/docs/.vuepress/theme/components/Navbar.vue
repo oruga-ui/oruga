@@ -92,8 +92,8 @@ export default {
             style.id = 'orugacss'
             style.type = "text/css"
             style.rel = "stylesheet"
-            // style.href = this.lite ? `${location.origin}/cdn/oruga.min.css` : `${location.origin}/cdn/oruga-full-vars.min.css`
-            style.href = this.lite ? `https://oruga.io/cdn/oruga.min.css` : `https://oruga.io/cdn/oruga-full-vars.min.css`
+            style.href = this.lite ? `${location.origin}/cdn/oruga.min.css` : `${location.origin}/cdn/oruga-full-vars.min.css`
+            // style.href = this.lite ? `https://oruga.io/cdn/oruga.min.css` : `https://oruga.io/cdn/oruga-full-vars.min.css`
             document.head.appendChild(style)
         }, immediate ? 0 : 250)
     }
