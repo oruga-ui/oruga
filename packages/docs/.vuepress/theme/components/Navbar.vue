@@ -93,15 +93,27 @@ export default {
         localStorage.setItem('oruga.io_lite', value)
         setTimeout(() => {
             // switch style
-            let style = document.getElementById('orugacss')
-            if (style) document.head.removeChild(style)
-            style = document.createElement('link')
-            style.id = 'orugacss'
-            style.type = "text/css"
-            style.rel = "stylesheet"
-            style.href = this.lite ? `${location.origin}/cdn/oruga.min.css` : `${location.origin}/cdn/oruga-full-vars.min.css`
+            if (this.lite) {
+                let style = document.getElementById('orugacss-lite')
+                if (style) document.head.removeChild(document.getElementById('orugacss'))
+                style = document.createElement('link')
+                style.id = 'orugacss-lite'
+                style.type = "text/css"
+                style.rel = "stylesheet"
+                style.href = `${location.origin}/cdn/oruga.min.css`
+                document.head.appendChild(style)
+            } else {
+                let style = document.getElementById('orugacss')
+                if (style) document.head.removeChild(document.getElementById('orugacss-lite'))
+                style = document.createElement('link')
+                style.id = 'orugacss'
+                style.type = "text/css"
+                style.rel = "stylesheet"
+                style.href = `${location.origin}/cdn/oruga-full-vars.min.css`
+                document.head.appendChild(style)
+            }
             // style.href = this.lite ? `https://oruga.io/cdn/oruga.min.css` : `https://oruga.io/cdn/oruga-full-vars.min.css`
-            document.head.appendChild(style)
+
         }, immediate ? 0 : 250)
     }
   },
