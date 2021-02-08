@@ -22,11 +22,18 @@
 
     <div class="docs-switch-box">
       <o-switch
+        override
+        rootClass="navbar-switch"
+        checkCheckedClass="navbar-switch__check--checked"
+        checkClass="navbar-switch__check"
+        checkSwitchClass="navbar-switch__check-switch"
+        elementsWrapperClass="navbar-switch__wrapper"
+        roundedClass="navbar-switch--rounded"
         :value="lite"
         @input="toggleOrugaStyle"
         elements-wrapper-class="docs-switch"
         label-class="docs-switch-label">
-        Lite
+        Lite CSS <a href="" title="What does it mean?">[?]</a>
       </o-switch>
     </div>
 
@@ -131,6 +138,115 @@ function css (el, property) {
 </script>
 
 <style lang="stylus">
+
+.navbar-switch {
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.navbar-switch--primary .navbar-switch__check--checked {
+  background: #445e00;
+}
+.navbar-switch--primary-passive .navbar-switch__check:not(.navbar-switch__check--checked) {
+  background: #445e00;
+}
+.navbar-switch--danger .navbar-switch__check--checked {
+  background: #b60000;
+}
+.navbar-switch--danger-passive .navbar-switch__check:not(.navbar-switch__check--checked) {
+  background: #b60000;
+}
+.navbar-switch--warning .navbar-switch__check--checked {
+  background: #f4c300;
+}
+.navbar-switch--warning-passive .navbar-switch__check:not(.navbar-switch__check--checked) {
+  background: #f4c300;
+}
+.navbar-switch--success .navbar-switch__check--checked {
+  background: #006724;
+}
+.navbar-switch--success-passive .navbar-switch__check:not(.navbar-switch__check--checked) {
+  background: #006724;
+}
+.navbar-switch--info .navbar-switch__check--checked {
+  background: #005c98;
+}
+.navbar-switch--info-passive .navbar-switch__check:not(.navbar-switch__check--checked) {
+  background: #005c98;
+}
+.navbar-switch--small {
+  font-size: 0.75rem;
+}
+.navbar-switch--medium {
+  font-size: 1.25rem;
+}
+.navbar-switch--large {
+  font-size: 1.5rem;
+}
+.navbar-switch__wrapper {
+  margin-left: -0.25em;
+  margin-right: -0.25em;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.navbar-switch__wrapper > * {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+.navbar-switch__wrapper--left {
+  flex-direction: row-reverse;
+}
+.navbar-switch__check-switch {
+  content: "";
+  display: block;
+  height: calc((2.75em - 0.2em * 2) / 2);
+  width: calc((2.75em - 0.2em * 2) / 2);
+  background: #f5f5f5;
+  box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+  transition-property: transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+  will-change: transform;
+  transform-origin: left;
+}
+.navbar-switch__check {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 2.75em;
+  height: calc(2.75em / 2 + 0.2em);
+  padding: 0.2em;
+  background: #b5b5b5;
+  border-radius: 4px;
+  transition-property: background;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+.navbar-switch__check--checked {
+  background: #445e00;
+}
+.navbar-switch__check--checked .navbar-switch__check-switch {
+  transform: translate3d(100%, 0, 0);
+}
+.navbar-switch input[type=checkbox] {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  outline: none;
+  z-index: -1;
+}
+.navbar-switch--rounded {
+  border-radius: 9999px;
+}
+.navbar-switch--disabled {
+  opacity: 0.5;
+}
+
+
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
 
