@@ -6,6 +6,18 @@ Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you!
 
+### How to use this documentation
+
+Oruga comes with a default stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch above. 
+
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/defaultswitch.mp4" type="video/mp4">
+</video>
+
+If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+
+### Availability
+
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
 
 ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
@@ -199,11 +211,15 @@ Oruga provides other 2 different stylesheets:
 - `oruga-full.css`: a stylesheet containing the complete Oruga style (the default style used for documentation).
 - `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
 
-For more info read ["Differences between standard and full css"](#differences-between-standard-and-full-css).
+For more info read ["Differences between default and full css"](#differences-between-default-and-full-css).
 
 ### Adding new classes or override existing ones
 
-With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects.
+With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects using the `Class prop inspector`.
+
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/inspectormov.mp4" type="video/mp4">
+</video>
 
 ### Adding classes
 
@@ -500,7 +516,7 @@ For example:
 
 ```
 
-### Differences between standard and full css
+### Differences between default and full css
 
 The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
 
