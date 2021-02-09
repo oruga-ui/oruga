@@ -339,6 +339,10 @@ export default {
                     specificity: "when <b>expandedClass</b> is applied",
                 },
                 {
+                    class: "contentClass",
+                    description: "Class of the tab content",
+                },
+                {
                     class: "itemClass",
                     description: "Class of the tab item",
                     subitem: true
