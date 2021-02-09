@@ -64,8 +64,6 @@ npm install @oruga-ui/oruga --save
 <script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
 
-You can use other stylesheets, as you can see in ["customization" section](#customization).
-
 #### Full bundle
 
 ```js
@@ -118,8 +116,6 @@ npm install @oruga-ui/oruga-next --save
 
 </o-tab-item>
 </o-tabs>
-
-You can use other stylesheets, as you can see in ["customization" section](#customization).
 
 #### Full bundle
 
