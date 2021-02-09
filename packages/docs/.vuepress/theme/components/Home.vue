@@ -39,11 +39,11 @@
           <h2>Vue 2 version</h2>
           v.{{pkg.version}}
         </div>
-        <div class="version">
-            <h2>
-          <a href="https://github.com/oruga-ui/oruga/releases">
-            Changelog
-          </a>
+        <div class="version changelog">
+          <h2>
+            <a href="https://github.com/oruga-ui/oruga/releases">
+              Changelog
+            </a>
           </h2>
         </div>
         <div class="version">
@@ -148,7 +148,7 @@ export default {
   .features
     border-top 1px solid $borderColor
     padding 1.2rem 0
-    margin-top 2.5rem
+    margin-top 1.5rem
     display flex
     flex-wrap wrap
     align-items flex-start
@@ -197,6 +197,13 @@ export default {
     .feature
       max-width 100%
       padding 0 2.5rem
+    .versions
+      flex-direction column
+    .version
+      width 100%;
+      padding .5rem
+    .changelog
+      order 2
 
 @media (max-width: $MQMobileNarrow)
   .home
