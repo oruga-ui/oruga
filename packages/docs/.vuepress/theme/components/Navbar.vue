@@ -32,7 +32,7 @@
         :value="lite"
         @input="toggleOrugaStyle"
         labelClass="navbar-switch-label">
-        Default CSS <a href="" title="What does it mean?">[?]</a>
+        Default CSS <a href="/documentation/#oruga-default-stylesheet" title="What does it mean?">[?]</a>
       </o-switch>
     </div>
 

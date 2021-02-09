@@ -6,9 +6,9 @@ Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you!
 
-### How to use this documentation
+### Oruga default stylesheet
 
-Oruga comes with a default stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch above. 
+Oruga comes with a default stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
