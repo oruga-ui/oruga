@@ -96,12 +96,6 @@ export default {
     }
   },
 
-  created() {
-    if (typeof window !== 'undefined') {
-      this.lite = localStorage.getItem('oruga.io_lite') === 'true'
-    }
-  },
-
   mounted () {
     const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
     const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
@@ -115,6 +109,9 @@ export default {
     }
     handleLinksWrapWidth()
     window.addEventListener('resize', handleLinksWrapWidth, false)
+    if (typeof window !== 'undefined') {
+      this.lite = localStorage.getItem('oruga.io_lite') === 'true'
+    }
   }
 }
 
