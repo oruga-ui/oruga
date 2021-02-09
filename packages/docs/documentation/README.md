@@ -32,7 +32,7 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ### Vue 2
 <br>
-<o-tabs override contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" >
+<o-tabs override contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
 <o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
@@ -94,7 +94,7 @@ Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use
 :::
 
 <br>
-<o-tabs override contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" >
+<o-tabs override contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
 <o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
