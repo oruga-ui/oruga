@@ -127,7 +127,7 @@ export default defineComponent({
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-switch__check'),
-                { [this.computedClass('checkCheckedClass', 'o-switch__check--checked')]: (this.newValue !== this.falseValue)},
+                { [this.computedClass('checkCheckedClass', 'o-switch__check--checked')]: (this.newValue === this.trueValue)},
                 { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
             ]
         },
