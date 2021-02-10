@@ -232,6 +232,10 @@ export default {
                     }
                 },
                 {
+                    class: "selectClass",
+                    description: "Class of the native select element"
+                },
+                {
                     class: "sizeClass",
                     description: "Class of the select size",
                     properties: ["size"],
