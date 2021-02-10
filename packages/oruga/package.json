@@ -15,6 +15,10 @@
     "nuxt",
     "types/*.d.ts"
   ],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/oruga-ui/oruga.git"
