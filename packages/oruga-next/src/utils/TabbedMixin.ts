@@ -77,6 +77,9 @@ export default (cmp: string) => defineComponent({
             if (this.activeId !== child.newValue) {
                 this.performAction()
                 this.activeId = child.newValue
+                if (!this.value) {
+                    this.performAction()
+                }
                 this.$emit('update:modelValue', this.activeId)
             }
         },
