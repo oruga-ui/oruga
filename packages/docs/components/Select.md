@@ -232,10 +232,6 @@ export default {
                     }
                 },
                 {
-                    class: "selectClass",
-                    description: "Class of the native select element"
-                },
-                {
                     class: "sizeClass",
                     description: "Class of the select size",
                     properties: ["size"],
@@ -255,6 +251,10 @@ export default {
                         cmp.data.fieldmessage = "Info for this field"
                         this.selectedOptions = null;
                     }
+                },
+                {
+                    class: "selectClass",
+                    description: "Class of the native select element"
                 },
                 {
                     class: "placeholderClass",
