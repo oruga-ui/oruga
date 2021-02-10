@@ -339,6 +339,10 @@ export default {
                     specificity: "when <b>expandedClass</b> is applied",
                 },
                 {
+                    class: "contentClass",
+                    description: "Class of the tab content",
+                },
+                {
                     class: "itemClass",
                     description: "Class of the tab item",
                     subitem: true
@@ -347,17 +351,20 @@ export default {
                     class: "itemHeaderClass",
                     description: "Class of the tab item header",
                     specificity: "when <b>verticalClass</b> or <b>expandedClass</b> or <b>positionClass</b> is applied",
-                    subitem: true
+                    subitem: true,
+                    suffixes: ['default', 'boxed', 'toggle'],
                 },
                 {
                     class: "itemHeaderActiveClass",
                     description: "Class of the tab item header when active",
-                    subitem: true
+                    subitem: true,
+                    suffixes: ['default', 'boxed', 'toggle'],
                 },
                 {
                     class: "itemHeaderDisabledClass",
                     description: "Class of the tab item header when disabled",
                     subitem: true,
+                    suffixes: ['default', 'boxed', 'toggle'],
                     action: (cmp) => {
                         cmp.data.disabled = true;
                     }
@@ -366,6 +373,7 @@ export default {
                     class: "itemHeaderTypeClass",
                     description: "Class of the tab item header type",
                     subitem: true,
+                    suffixes: ['default', 'boxed', 'toggle'],
                     action: () => {
                     }
                 },

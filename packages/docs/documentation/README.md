@@ -31,27 +31,31 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 ## Setup
 
 ### Vue 2
-
-#### Npm
-
-```bash
-npm install @oruga-ui/oruga --save
-```
-
-#### Yarn
+<br>
+<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
+<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga
 ```
 
-#### CDN
+</o-tab-item>
+<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+
+```bash
+npm install @oruga-ui/oruga --save
+```
+
+</o-tab-item>
+<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
 <script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
 ```
 
-You can use other stylesheets, as you can see in ["customization" section](#customization).
+</o-tab-item>
+</o-tabs>
 
 #### Build from "develop" branch
 
@@ -59,8 +63,6 @@ You can use other stylesheets, as you can see in ["customization" section](#cust
 <link rel="stylesheet" href="https://preview.oruga.io/cdn/oruga.min.css" />
 <script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
-
-You can use other stylesheets, as you can see in ["customization" section](#customization).
 
 #### Full bundle
 
@@ -89,26 +91,31 @@ Vue.use(Sidebar)
 Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
 :::
 
-#### Npm
-
-```bash
-npm install @oruga-ui/oruga-next --save
-```
-
-#### Yarn
+<br>
+<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
+<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga-next
 ```
 
-#### CDN
+</o-tab-item>
+<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+
+```bash
+npm install @oruga-ui/oruga-next --save
+```
+
+</o-tab-item>
+<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga-next/dist/oruga.css" />
 <script src="//unpkg.com/oruga-next/dist/oruga.js"></script>
 ```
 
-You can use other stylesheets, as you can see in ["customization" section](#customization).
+</o-tab-item>
+</o-tabs>
 
 #### Full bundle
 
