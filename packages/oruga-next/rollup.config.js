@@ -23,6 +23,7 @@ const components = fs
 const entries = {
     'index': './src/index.ts',
     'helpers': './src/utils/helpers.ts',
+    'config': './src/utils/config.ts',
     ...components.reduce((obj, name) => {
         obj[name] = (baseFolder + name)
         return obj
@@ -62,7 +63,7 @@ export default () => {
                 }),
                 typescript({
                     typescript: require('typescript')
-                }),    
+                }),
                 vue(vuePluginConfig),
                 babel(babelOptions),
                 cjs()
