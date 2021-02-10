@@ -233,7 +233,7 @@ export default {
                 },
                 {
                     class: "selectClass",
-                    description: "Class of the native select element",
+                    description: "Class of the native select element"
                 },
                 {
                     class: "sizeClass",
