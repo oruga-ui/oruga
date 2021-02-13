@@ -53,9 +53,10 @@
 <script>
 import Icon from '../icon/Icon'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
+
+import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 /**

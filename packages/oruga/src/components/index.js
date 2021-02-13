@@ -20,6 +20,7 @@ import Steps from './steps'
 import Switch from './switch'
 import Table from './table'
 import Tabs from './tabs'
+import Taginput from './taginput'
 import Timepicker from './timepicker'
 import Tooltip from './tooltip'
 import Upload from './upload'
@@ -47,6 +48,7 @@ export {
     Switch,
     Table,
     Tabs,
+    Taginput,
     Timepicker,
     Tooltip,
     Upload
