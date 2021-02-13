@@ -55,6 +55,7 @@
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
                         @click="setSelected(option, undefined, $event)"
+                        ref="items"
                     >
                         <slot
                             v-if="$scopedSlots.default"
@@ -526,7 +527,7 @@ export default {
                 this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
-                const element = list.querySelectorAll(`a`)[index]
+                const element = this.$refs.items[index]
 
                 if (!element) return
 
