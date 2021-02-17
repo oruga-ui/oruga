@@ -12,6 +12,7 @@
             v-trap-focus="trapFocus"
             tabindex="-1"
             :role="ariaRole"
+            :aria-label="ariaLabel"
             :aria-modal="ariaModal">
             <div :class="overlayClasses" @click="cancel('outside')"/>
             <div
@@ -139,6 +140,7 @@ export default {
             }
         },
         ariaModal: Boolean,
+        ariaLabel: String,
         /** Destroy modal on hide */
         destroyOnHide: {
             type: Boolean,
