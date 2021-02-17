@@ -10,6 +10,7 @@
         <o-field label="Find a JS framework">
             <o-autocomplete
                 rounded
+                expanded
                 v-model="name"
                 :data="filteredDataArray"
                 placeholder="e.g. jQuery"

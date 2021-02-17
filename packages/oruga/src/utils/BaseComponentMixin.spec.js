@@ -3,7 +3,7 @@ import BaseComponentMixin from '@utils/BaseComponentMixin'
 import OButton from '@components/button/Button'
 
 import { merge } from '@utils/helpers'
-import config, { setOptions } from '@utils/config'
+import { getOptions, setOptions } from '@utils/config'
 
 let wrapper
 
@@ -24,7 +24,7 @@ describe('BaseComponentMixin', () => {
             const initialTestValue = 'initial test'
             const newTestValue = 'new test'
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     test: newTestValue
                 }
@@ -32,7 +32,7 @@ describe('BaseComponentMixin', () => {
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('test', initialTestValue)).toBe(`${initialTestValue} ${newTestValue}`)
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     override: true
                 }
@@ -47,7 +47,7 @@ describe('BaseComponentMixin', () => {
             const newGlobalRootClassValue = 'new-global-class'
             const newRootClassValue = 'new-class'
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     rootClass: newGlobalRootClassValue,
                     override: false
@@ -57,7 +57,7 @@ describe('BaseComponentMixin', () => {
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`)
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     override: true
                 }
@@ -72,7 +72,7 @@ describe('BaseComponentMixin', () => {
             const newGlobalRootClassValue = 'new-global-class'
             const newRootClassValue = ['my-new-class', 'new-class']
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     rootClass: newGlobalRootClassValue,
                     override: false
@@ -82,7 +82,7 @@ describe('BaseComponentMixin', () => {
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue)).toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue.join(' ')}`)
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     override: true
                 }
@@ -103,7 +103,7 @@ describe('BaseComponentMixin', () => {
 
             /* Override all except sizeClass */
 
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     override: true,
                     rootClass: {
@@ -125,7 +125,7 @@ describe('BaseComponentMixin', () => {
 
 
             /* Override only sizeClass */
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     rootClass: {
                         class: newGlobalRootClassValue,
@@ -145,7 +145,7 @@ describe('BaseComponentMixin', () => {
                 .toBe(`${newGlobalSizeClassValue}${sizeSuffix} ${newSizeClassValue}${sizeSuffix}`)
 
             /* Override sizeClass using a function */
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     rootClass: {
                         class: newGlobalRootClassValue,
@@ -167,7 +167,7 @@ describe('BaseComponentMixin', () => {
                 .toBe(`${newGlobalSizeClassValue}suff-${sizeSuffix} ${newSizeClassValue}${sizeSuffix}`)
 
             /* Override sizeClass from prop using a function */
-            setOptions(merge(config, {
+            setOptions(merge(getOptions(), {
                 button: {
                     rootClass: {
                         class: newGlobalRootClassValue,

@@ -14,6 +14,7 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
+            :expanded="expanded"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -55,6 +56,7 @@
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
                         @click="setSelected(option, undefined, $event)"
+                        ref="items"
                     >
                         <slot
                             v-if="$slots.default"
@@ -88,8 +90,8 @@ import Input from '../input/Input.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 
-import config from '../../utils/config'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { getOptions } from '../../../../oruga/src/utils/config'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -157,7 +159,7 @@ export default defineComponent({
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'autocomplete.animation', 'fade')
+                return getValueByPath(getOptions(), 'autocomplete.animation', 'fade')
             }
         },
         /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
@@ -197,6 +199,7 @@ export default defineComponent({
             newAutocomplete: (this as any).autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
+            width: undefined,
             bodyEl: undefined, // Used to append to body
         }
     },
@@ -531,7 +534,7 @@ export default defineComponent({
                 this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
-                const element = list.querySelectorAll(`a`)[index]
+                const element = this.$refs.items ? this.$refs.items[index] : undefined
 
                 if (!element) return
 
@@ -657,6 +660,9 @@ export default defineComponent({
             this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
         }
+    },
+    beforeUpdate() {
+        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
     },
     beforeUnmount() {
         if (typeof window !== 'undefined') {

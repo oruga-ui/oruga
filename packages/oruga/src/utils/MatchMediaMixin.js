@@ -1,4 +1,4 @@
-import config from '../utils/config'
+import { getOptions } from '../utils/config'
 import { getValueByPath } from './helpers'
 
 export default {
@@ -23,6 +23,7 @@ export default {
         if (typeof window !== 'undefined') {
             let width = this.mobileBreakpoint
             if (!width) {
+                const config = getOptions()
                 const defaultWidth = getValueByPath(config, `mobileBreakpoint`, '1023px')
                 width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
             }

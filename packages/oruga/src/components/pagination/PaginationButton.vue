@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 export default {
@@ -31,7 +31,7 @@ export default {
         tag: {
             type: String,
             default: 'a',
-            validator: (value) => getValueByPath(config, 'linkTags', ['a', 'button', 'input', 'router-link', 'nuxt-link']).indexOf(value) >= 0
+            validator: (value) => getValueByPath(getOptions(), 'linkTags', ['a', 'button', 'input', 'router-link', 'nuxt-link']).indexOf(value) >= 0
         },
         disabled: {
             type: Boolean,

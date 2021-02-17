@@ -53,10 +53,9 @@
 <script>
 import Icon from '../icon/Icon'
 
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
-
-import config from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -109,7 +108,7 @@ export default {
          */
         hasCounter: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'input.counter', false) }
+            default: () => { return getValueByPath(getOptions(), 'input.counter', false) }
         },
         /**
          * 	Icon name to be added on the right side
@@ -137,7 +136,7 @@ export default {
         return {
             newValue: this.value,
             newType: this.type,
-            newAutocomplete: this.autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
+            newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
             isPasswordVisible: false
         }
     },

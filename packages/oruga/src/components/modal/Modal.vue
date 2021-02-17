@@ -12,6 +12,7 @@
             v-trap-focus="trapFocus"
             tabindex="-1"
             :role="ariaRole"
+            :aria-label="ariaLabel"
             :aria-modal="ariaModal">
             <div :class="overlayClasses" @click="cancel('outside')"/>
             <div
@@ -44,7 +45,7 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import trapFocus from '../../directives/trapFocus'
 import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
 
@@ -86,7 +87,7 @@ export default {
         width: {
             type: [String, Number],
             default: () => {
-                return getValueByPath(config, 'modal.width', 960)
+                return getValueByPath(getOptions(), 'modal.width', 960)
             }
         },
         /** Enable custom style on modal content */
@@ -95,7 +96,7 @@ export default {
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'modal.animation', 'zoom-out')
+                return getValueByPath(getOptions(), 'modal.animation', 'zoom-out')
             }
         },
         /**
@@ -105,7 +106,7 @@ export default {
         canCancel: {
             type: [Array, Boolean],
             default: () => {
-                return getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
+                return getValueByPath(getOptions(), 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
             }
         },
         /** Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside) */
@@ -120,7 +121,7 @@ export default {
         scroll: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'modal.scroll', 'keep')
+                return getValueByPath(getOptions(), 'modal.scroll', 'keep')
             }
         },
         /** Display modal as full screen */
@@ -129,7 +130,7 @@ export default {
         trapFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'modal.trapFocus', true)
+                return getValueByPath(getOptions(), 'modal.trapFocus', true)
             }
         },
         ariaRole: {
@@ -139,25 +140,26 @@ export default {
             }
         },
         ariaModal: Boolean,
+        ariaLabel: String,
         /** Destroy modal on hide */
         destroyOnHide: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'modal.destroyOnHide', true)
+                return getValueByPath(getOptions(), 'modal.destroyOnHide', true)
             }
         },
         /** Automatically focus modal when active */
         autoFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'modal.autoFocus', true)
+                return getValueByPath(getOptions(), 'modal.autoFocus', true)
             }
         },
         /** Icon name */
         closeIcon: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'modal.closeIcon', 'times')
+                return getValueByPath(getOptions(), 'modal.closeIcon', 'times')
             }
         },
         closeIconSize: {
@@ -206,7 +208,7 @@ export default {
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
                 ? this.canCancel
-                    ? getValueByPath(config, 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
+                    ? getValueByPath(getOptions(), 'modal.canCancel', ['escape', 'x', 'outside', 'button'])
                     : []
                 : this.canCancel
         },

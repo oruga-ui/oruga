@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import config from './config'
+import { getOptions } from './config';
 import { getValueByPath } from './helpers'
 
 export default defineComponent({
@@ -34,14 +34,14 @@ export default defineComponent({
 		useHtml5Validation: {
 			type: Boolean,
 			default: () => {
-				return getValueByPath(config, "useHtml5Validation", true);
+				return getValueByPath(getOptions(), "useHtml5Validation", true);
 			},
 		},
 		/** Show status icon using field and variant prop */
 		statusIcon: {
 			type: Boolean,
 			default: () => {
-				return getValueByPath(config, "statusIcon", true);
+				return getValueByPath(getOptions(), "statusIcon", true);
 			},
 		},
 		/**

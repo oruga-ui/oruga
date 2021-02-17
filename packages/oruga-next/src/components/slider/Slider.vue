@@ -62,7 +62,7 @@
 import SliderThumb from './SliderThumb.vue'
 import SliderTick from './SliderTick.vue'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 import { defineComponent } from 'vue'
@@ -140,7 +140,7 @@ export default defineComponent({
         rounded: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'slider.rounded', false)
+                return getValueByPath(getOptions(), 'slider.rounded', false)
             }
         },
         disabled: {
@@ -177,7 +177,7 @@ export default defineComponent({
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         /** Tooltip displays always */

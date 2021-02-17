@@ -4,6 +4,7 @@
             v-model="newValue"
             ref="input"
             type="text"
+            v-bind="inputBind"
             :size="size"
             :rounded="rounded"
             :icon="icon"
@@ -13,7 +14,7 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
-            v-bind="inputBind"
+            :expanded="expanded"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -55,6 +56,7 @@
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
                         @click="setSelected(option, undefined, $event)"
+                        ref="items"
                     >
                         <slot
                             v-if="$scopedSlots.default"
@@ -83,10 +85,10 @@
 <script>
 import Input from '../input/Input'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -153,7 +155,7 @@ export default {
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'autocomplete.animation', 'fade')
+                return getValueByPath(getOptions(), 'autocomplete.animation', 'fade')
             }
         },
         /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
@@ -192,6 +194,7 @@ export default {
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
+            width: undefined,
             bodyEl: undefined, // Used to append to body
         }
     },
@@ -306,7 +309,8 @@ export default {
 
         menuStyle() {
             return {
-                maxHeight: toCssDimension(this.maxHeight)
+                maxHeight: toCssDimension(this.maxHeight),
+                width: toCssDimension(this.width),
             }
         }
     },
@@ -526,7 +530,7 @@ export default {
                 this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
-                const element = list.querySelectorAll(`a`)[index]
+                const element = this.$refs.items ? this.$refs.items[index] : undefined
 
                 if (!element) return
 
@@ -652,6 +656,9 @@ export default {
             this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
         }
+    },
+    beforeUpdate() {
+        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {

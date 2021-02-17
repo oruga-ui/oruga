@@ -1,7 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import ODatepicker from '@components/datepicker/Datepicker'
 
-import config, {setOptions} from '@utils/config'
+import {setOptions} from '@utils/config'
+import { getOptions } from '../../utils/config'
 
 let wrapper, defaultProps
 
@@ -23,7 +24,7 @@ const defaultLocale = 'it-IT'
 describe('ODatepicker', () => {
 
     beforeEach(() => {
-        setOptions(Object.assign(config, {
+        setOptions(Object.assign(getOptions(), {
             datepicker: {
                 monthNames: defaultMonthNames,
                 dayNames: defaultDayNames,

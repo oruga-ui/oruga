@@ -2,7 +2,7 @@
 import { defineComponent, h, Transition, vShow, withDirectives } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -30,7 +30,7 @@ export default defineComponent({
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'collapse.animation', 'fade')
+                return getValueByPath(getOptions(), 'collapse.animation', 'fade')
             }
         },
         ariaId: {

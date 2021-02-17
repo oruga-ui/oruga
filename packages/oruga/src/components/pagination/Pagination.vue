@@ -118,7 +118,7 @@
 import PaginationButton from './PaginationButton'
 import Icon from '../icon/Icon'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -149,7 +149,7 @@ export default {
         /** Items count for each page */
         perPage: {
             type: [Number, String],
-            default: () => { return getValueByPath(config, 'pagination.perPage', 20) }
+            default: () => { return getValueByPath(getOptions(), 'pagination.perPage', 20) }
         },
         /** Current page number, use the .sync modifier (Vue 2.x) or v-model:current (Vue 3.x) to make it two-way binding */
         current: {
@@ -188,12 +188,12 @@ export default {
         /** Icon to use for previous button */
         iconPrev: {
             type: String,
-            default: () => { return getValueByPath(config, 'pagination.iconPrev', 'chevron-left') }
+            default: () => { return getValueByPath(getOptions(), 'pagination.iconPrev', 'chevron-left') }
         },
          /** Icon to use for next button */
         iconNext: {
             type: String,
-            default: () => { return getValueByPath(config, 'pagination.iconNext', 'chevron-right') }
+            default: () => { return getValueByPath(getOptions(), 'pagination.iconNext', 'chevron-right') }
         },
         ariaNextLabel: String,
         ariaPreviousLabel: String,

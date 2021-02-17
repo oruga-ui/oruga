@@ -1,4 +1,4 @@
-import config from '../utils/config'
+import { getOptions } from './config';
 import { getValueByPath, blankIfUndefined } from './helpers'
 
 const _defaultSuffixProcessor = (input, suffix) => {
@@ -22,6 +22,8 @@ export default {
     },
     methods: {
         computedClass(field, defaultValue, suffix='') {
+            const config = getOptions();
+
             let override = this.$props.override || getValueByPath(config, `${this.$options.configField}.override`, false)
             let overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
 

@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin.js'
 import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -65,7 +65,7 @@ export default {
         animated: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'tabs.animated', true)
+                return getValueByPath(getOptions(), 'tabs.animated', true)
             }
         },
         /** Show tab items multiline when there is no space */
