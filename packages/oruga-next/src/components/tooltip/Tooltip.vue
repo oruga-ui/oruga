@@ -240,7 +240,8 @@ export default defineComponent({
                 if (Array.isArray(this.autoClose)) {
                     if (this.autoClose.indexOf('outside') >= 0) {
                         if (!this.isInWhiteList(event.target)) this.isActive = false
-                    } else if (this.autoClose.indexOf('inside') >= 0) {
+                    }
+                    if (this.autoClose.indexOf('inside') >= 0) {
                         if (this.isInWhiteList(event.target)) this.isActive = false
                     }
                 }
