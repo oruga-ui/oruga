@@ -18,7 +18,7 @@
                 :disabled="disabled"
                 @click.prevent="emitChosenDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
-                @keydown.prevent="manageKeydown($event, weekDay)"
+                @keydown="manageKeydown($event, weekDay)"
                 :tabindex="day === weekDay.getDate() ? null : -1">
                 <span>{{ weekDay.getDate() }}</span>
                 <div
@@ -384,9 +384,15 @@ export default {
             }
         },
 
-        manageKeydown({ key }, weekDay) {
+        manageKeydown(event, weekDay) {
             // https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/key/Key_Values#Navigation_keys
+            const { key } = event
+            let preventDefault = true
             switch (key) {
+                case 'Tab': {
+                    preventDefault = false
+                    break
+                }
                 case ' ':
                 case 'Space':
                 case 'Spacebar':
@@ -416,10 +422,13 @@ export default {
                     break
                 }
             }
+            if (preventDefault) {
+                event.preventDefault()
+            }
         },
 
         changeFocus(day, inc) {
-            const nextDay = day
+            const nextDay = new Date(day)
             nextDay.setDate(day.getDate() + inc)
             while (
                 (!this.minDate || nextDay > this.minDate) &&
