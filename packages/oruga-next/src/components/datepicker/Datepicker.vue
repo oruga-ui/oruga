@@ -205,7 +205,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import { isMobile, getMonthNames, getWeekdayNames, matchWithGroups, getValueByPath } from '../../utils/helpers'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 
 import Dropdown from '../dropdown/Dropdown.vue'
 import DropdownItem from '../dropdown/DropdownItem.vue'
@@ -295,19 +295,19 @@ export default defineComponent({
         dayNames: {
             type: Array,
             default: () => {
-                return getValueByPath(config, 'datepicker.dayNames', undefined)
+                return getValueByPath(getOptions(), 'datepicker.dayNames', undefined)
             }
         },
         monthNames: {
             type: Array,
             default: () => {
-                return getValueByPath(config, 'datepicker.monthNames', undefined)
+                return getValueByPath(getOptions(), 'datepicker.monthNames', undefined)
             }
         },
         firstDayOfWeek: {
             type: Number,
             default: () => {
-                return getValueByPath(config, 'datepicker.firstDayOfWeek', 0)
+                return getValueByPath(getOptions(), 'datepicker.firstDayOfWeek', 0)
             }
         },
         /**
@@ -326,14 +326,14 @@ export default defineComponent({
         unselectableDaysOfWeek: {
             type: Array,
             default: () => {
-                return getValueByPath(config, 'datepicker.unselectableDaysOfWeek', undefined)
+                return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
         selectableDates: Array,
         dateFormatter: {
             type: Function,
             default: (date: string, vm: App) => {
-                const dateFormatter = getValueByPath(config, 'datepicker.dateFormatter', undefined)
+                const dateFormatter = getValueByPath(getOptions(), 'datepicker.dateFormatter', undefined)
                 if (typeof dateFormatter === 'function') {
                     return dateFormatter(date)
                 } else {
@@ -344,7 +344,7 @@ export default defineComponent({
         dateParser: {
             type: Function,
             default: (date: string, vm: App) => {
-                const dateParser = getValueByPath(config, 'datepicker.dateParser', undefined)
+                const dateParser = getValueByPath(getOptions(), 'datepicker.dateParser', undefined)
                 if (typeof dateParser === 'function') {
                     return dateParser(date)
                 } else {
@@ -355,7 +355,7 @@ export default defineComponent({
         dateCreator: {
             type: Function,
             default: () => {
-                const dateCreator = getValueByPath(config, 'datepicker.dateCreator', undefined)
+                const dateCreator = getValueByPath(getOptions(), 'datepicker.dateCreator', undefined)
                 if (typeof dateCreator === 'function') {
                     return dateCreator()
                 } else {
@@ -366,7 +366,7 @@ export default defineComponent({
         mobileNative: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.mobileNative', true)
+                return getValueByPath(getOptions(), 'datepicker.mobileNative', true)
             }
         },
         position: String,
@@ -380,19 +380,19 @@ export default defineComponent({
         iconPrev: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'datepicker.iconPrev', 'chevron-left')
+                return getValueByPath(getOptions(), 'datepicker.iconPrev', 'chevron-left')
             }
         },
         iconNext: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'datepicker.iconNext', 'chevron-right')
+                return getValueByPath(getOptions(), 'datepicker.iconNext', 'chevron-right')
             }
         },
         yearsRange: {
             type: Array,
             default: () => {
-                return getValueByPath(config, 'datepicker.yearsRange', [-100, 10])
+                return getValueByPath(getOptions(), 'datepicker.yearsRange', [-100, 10])
             }
         },
         type: {
@@ -406,25 +406,25 @@ export default defineComponent({
         nearbyMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.nearbyMonthDays', true)
+                return getValueByPath(getOptions(), 'datepicker.nearbyMonthDays', true)
             }
         },
         nearbySelectableMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.nearbySelectableMonthDays', false)
+                return getValueByPath(getOptions(), 'datepicker.nearbySelectableMonthDays', false)
             }
         },
         showWeekNumber: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.showWeekNumber', false)
+                return getValueByPath(getOptions(), 'datepicker.showWeekNumber', false)
             }
         },
         weekNumberClickable: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.weekNumberClickable', false)
+                return getValueByPath(getOptions(), 'datepicker.weekNumberClickable', false)
             }
         },
         rulesForFirstWeek: {
@@ -446,19 +446,19 @@ export default defineComponent({
         mobileModal: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.mobileModal', true)
+                return getValueByPath(getOptions(), 'datepicker.mobileModal', true)
             }
         },
         trapFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'datepicker.trapFocus', true)
+                return getValueByPath(getOptions(), 'datepicker.trapFocus', true)
             }
         },
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         appendToBody: Boolean,

@@ -30,7 +30,7 @@
 <script>
 import Tooltip from '../tooltip/Tooltip'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 export default {
@@ -74,7 +74,7 @@ export default {
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         tooltipAlways: {

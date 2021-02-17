@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
 import { defineComponent } from 'vue'
@@ -61,7 +61,7 @@ export default defineComponent({
          */
         position: {
             type: String,
-            default: () => { return getValueByPath(config, 'tooltip.position', 'top') },
+            default: () => { return getValueByPath(getOptions(), 'tooltip.position', 'top') },
             validator(value: string) {
                 return [
                     'top',
@@ -77,7 +77,7 @@ export default defineComponent({
          */
         triggers: {
             type: Array,
-            default: () => { return getValueByPath(config, 'tooltip.triggers', ['hover']) }
+            default: () => { return getValueByPath(getOptions(), 'tooltip.triggers', ['hover']) }
         },
         /** Tooltip will be always active */
         always: Boolean,
@@ -89,7 +89,7 @@ export default defineComponent({
         /** Tooltip default animation */
         animation: {
             type: String,
-            default: () => { return getValueByPath(config, 'tooltip.animation', 'fade') }
+            default: () => { return getValueByPath(getOptions(), 'tooltip.animation', 'fade') }
         },
         /**
          * Tooltip auto close options

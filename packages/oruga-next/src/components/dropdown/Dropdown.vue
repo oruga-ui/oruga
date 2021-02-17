@@ -49,7 +49,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import trapFocus from '../../directives/trapFocus'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
 
 /**
@@ -96,7 +96,7 @@ export default defineComponent({
         maxHeight: {
             type: [String, Number],
             default: () => {
-                return getValueByPath(config, 'dropdown.maxHeight', 200)
+                return getValueByPath(getOptions(), 'dropdown.maxHeight', 200)
             }
         },
         /**
@@ -120,7 +120,7 @@ export default defineComponent({
         mobileModal: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'dropdown.mobileModal', true)
+                return getValueByPath(getOptions(), 'dropdown.mobileModal', true)
             }
         },
         /**
@@ -144,7 +144,7 @@ export default defineComponent({
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'dropdown.animation', 'fade')
+                return getValueByPath(getOptions(), 'dropdown.animation', 'fade')
             }
         },
         /**
@@ -157,7 +157,7 @@ export default defineComponent({
         trapFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'dropdown.trapFocus', true)
+                return getValueByPath(getOptions(), 'dropdown.trapFocus', true)
             }
         },
         /**

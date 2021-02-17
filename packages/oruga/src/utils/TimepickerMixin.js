@@ -1,6 +1,6 @@
+import { getOptions } from './config'
 import FormElementMixin from './FormElementMixin'
 import { getValueByPath, isMobile, matchWithGroups } from './helpers'
-import config from './config'
 
 const AM = 'AM'
 const PM = 'PM'
@@ -129,7 +129,7 @@ export default {
         timeFormatter: {
             type: Function,
             default: (date, vm) => {
-                const timeFormatter = getValueByPath(config, 'timepicker.timeFormatter', undefined)
+                const timeFormatter = getValueByPath(getOptions(), 'timepicker.timeFormatter', undefined)
                 if (typeof timeFormatter === 'function') {
                     return timeFormatter(date)
                 } else {
@@ -140,7 +140,7 @@ export default {
         timeParser: {
             type: Function,
             default: (date, vm) => {
-                const timeParser = getValueByPath(config, 'timepicker.timeParser', undefined)
+                const timeParser = getValueByPath(getOptions(), 'timepicker.timeParser', undefined)
                 if (typeof timeParser === 'function') {
                     return timeParser(date)
                 } else {
@@ -151,13 +151,13 @@ export default {
         mobileNative: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'timepicker.mobileNative', true)
+                return getValueByPath(getOptions(), 'timepicker.mobileNative', true)
             }
         },
         timeCreator: {
             type: Function,
             default: () => {
-                const timeCreator = getValueByPath(config, 'timepicker.timeCreator', undefined)
+                const timeCreator = getValueByPath(getOptions(), 'timepicker.timeCreator', undefined)
                 if (typeof timeCreator === 'function') {
                     return timeCreator()
                 } else {

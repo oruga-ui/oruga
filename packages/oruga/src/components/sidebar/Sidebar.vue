@@ -24,7 +24,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 
 /**
@@ -53,7 +53,7 @@ export default {
          */
         position: {
             type: String,
-            default: () => { return getValueByPath(config, 'sidebar.position', 'fixed') },
+            default: () => { return getValueByPath(getOptions(), 'sidebar.position', 'fixed') },
             validator: (value) => {
                 return [
                     'fixed',
@@ -95,7 +95,7 @@ export default {
          */
         canCancel: {
             type: [Array, Boolean],
-            default: () => { return getValueByPath(config, 'sidebar.canCancel', ['escape', 'outside']) }
+            default: () => { return getValueByPath(getOptions(), 'sidebar.canCancel', ['escape', 'outside']) }
         },
         /**
          * Callback on cancel
@@ -107,7 +107,7 @@ export default {
         scroll: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'sidebar.scroll', 'clip')
+                return getValueByPath(getOptions(), 'sidebar.scroll', 'clip')
             },
             validator: (value) => {
                 return [
@@ -169,7 +169,7 @@ export default {
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
                 ? this.canCancel
-                    ? getValueByPath(config, 'sidebar.canCancel', ['escape', 'outside'])
+                    ? getValueByPath(getOptions(), 'sidebar.canCancel', ['escape', 'outside'])
                     : []
                 : this.canCancel
         },

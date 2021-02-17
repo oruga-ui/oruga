@@ -84,10 +84,10 @@
 <script>
 import Input from '../input/Input'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -154,7 +154,7 @@ export default {
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'autocomplete.animation', 'fade')
+                return getValueByPath(getOptions(), 'autocomplete.animation', 'fade')
             }
         },
         /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
@@ -527,7 +527,7 @@ export default {
                 this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
-                const element = this.$refs.items[index]
+                const element = this.$refs.items ? this.$refs.items[index] : undefined
 
                 if (!element) return
 

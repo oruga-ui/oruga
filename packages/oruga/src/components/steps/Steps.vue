@@ -65,7 +65,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -93,14 +93,14 @@ export default {
         iconPrev: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'steps.iconPrev', 'chevron-left')
+                return getValueByPath(getOptions(), 'steps.iconPrev', 'chevron-left')
             }
         },
         /** Icon to use for navigation button */
         iconNext: {
             type: String,
             default: () => {
-                return getValueByPath(config, 'steps.iconNext', 'chevron-right')
+                return getValueByPath(getOptions(), 'steps.iconNext', 'chevron-right')
             }
         },
         /**

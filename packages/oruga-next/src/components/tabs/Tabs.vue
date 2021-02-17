@@ -37,7 +37,7 @@ import { defineComponent } from 'vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedMixin from '../../utils/TabbedMixin'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 
@@ -69,7 +69,7 @@ export default defineComponent({
         animated: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'tabs.animated', true)
+                return getValueByPath(getOptions(), 'tabs.animated', true)
             }
         },
         /** Show tab items multiline when there is no space */

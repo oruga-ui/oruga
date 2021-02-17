@@ -35,7 +35,7 @@ import { defineComponent } from 'vue'
 
 import Icon from '../icon/Icon.vue'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -86,7 +86,7 @@ export default defineComponent({
          */
         rounded: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'button.rounded', false) }
+            default: () => { return getValueByPath(getOptions(), 'button.rounded', false) }
         },
         /**
          * Outlined style
