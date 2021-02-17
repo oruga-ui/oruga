@@ -92,7 +92,8 @@ describe('Datetimepicker', () => {
             propsData: {
                 locale: defaultLocale,
                 timepicker: {
-                    enableSeconds: true
+                    enableSeconds: true,
+                    locale: defaultLocale
                 }
             },
             stubs: {
