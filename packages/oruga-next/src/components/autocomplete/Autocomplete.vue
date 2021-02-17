@@ -14,6 +14,7 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
+            :expanded="expanded"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -198,6 +199,7 @@ export default defineComponent({
             newAutocomplete: (this as any).autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
+            width: undefined,
             bodyEl: undefined, // Used to append to body
         }
     },
@@ -658,6 +660,9 @@ export default defineComponent({
             this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
         }
+    },
+    beforeUpdate() {
+        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
     },
     beforeUnmount() {
         if (typeof window !== 'undefined') {

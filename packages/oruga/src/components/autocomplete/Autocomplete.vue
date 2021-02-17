@@ -4,6 +4,7 @@
             v-model="newValue"
             ref="input"
             type="text"
+            v-bind="inputBind"
             :size="size"
             :rounded="rounded"
             :icon="icon"
@@ -13,7 +14,7 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
-            v-bind="inputBind"
+            :expanded="expanded"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
@@ -193,6 +194,7 @@ export default {
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
+            width: undefined,
             bodyEl: undefined, // Used to append to body
         }
     },
@@ -307,7 +309,8 @@ export default {
 
         menuStyle() {
             return {
-                maxHeight: toCssDimension(this.maxHeight)
+                maxHeight: toCssDimension(this.maxHeight),
+                width: toCssDimension(this.width),
             }
         }
     },
@@ -653,6 +656,9 @@ export default {
             this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
         }
+    },
+    beforeUpdate() {
+        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
