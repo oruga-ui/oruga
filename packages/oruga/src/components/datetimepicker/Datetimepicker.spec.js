@@ -102,20 +102,19 @@ describe('Datetimepicker', () => {
         await wrapper.vm.$nextTick()
         const datetimeToFormat = new Date(2019, 9, 1, 8, 30, 0, 0)
         const formattedDatetime = wrapper.vm.defaultDatetimeFormatter(datetimeToFormat)
-        expect(formattedDatetime).toEqual('1/10/2019, 08:30:00 AM')
+        expect(formattedDatetime).toEqual('1/10/2019, 08:30:00')
     })
 
     it('should format date time according init value', async () => {
         const date = new Date(2019, 9, 1, 8, 30, 0, 0)
         wrapper = mount(Datetimepicker, {
             propsData: {
-                value: date,
-                locale: defaultLocale
+                locale: defaultLocale,
+                value: date
             },
             stubs: {
                 transition: false
-            },
-            sync: false
+            }
         })
         await wrapper.vm.$nextTick()
         expect(wrapper.find('input').element.value).toEqual('1/10/2019, 08:30')
