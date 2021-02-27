@@ -1,10 +1,10 @@
 ---
-title: Taginput
+title: Multiple Input
 ---
 
-# Taginput
+# Multiple Input
 
-> A simple tag input field that can have autocomplete functionality
+> A simple item input field that can have autocomplete functionality
 
 ---
 
@@ -172,14 +172,12 @@ title: Taginput
 | allowNew            |                                                             | boolean        | -                                                 |                                                                                                                                                    |
 | appendToBody        |                                                             | boolean        | -                                                 |                                                                                                                                                    |
 | ariaCloseLabel      |                                                             | string         | -                                                 |                                                                                                                                                    |
-| attached            |                                                             | boolean        | -                                                 | false                                                                                                                                              |
 | autocomplete        | Native options to use in HTML5 validation                   | boolean        | -                                                 |                                                                                                                                                    |
 | beforeAdding        |                                                             | func           | -                                                 | Default function (see source code)                                                                                                                 |
 | checkInfiniteScroll |                                                             | boolean        | -                                                 | false                                                                                                                                              |
 | closable            |                                                             | boolean        | -                                                 | true                                                                                                                                               |
-| closeType           |                                                             | string         | -                                                 |                                                                                                                                                    |
 | confirmKeys         |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;confirmKeys: ['<br>}</code>             |
-| createTag           |                                                             | func           | -                                                 | Default function (see source code)                                                                                                                 |
+| createItem          |                                                             | func           | -                                                 | Default function (see source code)                                                                                                                 |
 | data                |                                                             | array          | -                                                 | []                                                                                                                                                 |
 | disabled            |                                                             | boolean        | -                                                 |                                                                                                                                                    |
 | ellipsis            |                                                             | boolean        | -                                                 |                                                                                                                                                    |
@@ -190,8 +188,8 @@ title: Taginput
 | hasCounter          |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;hasCounter: true<br>}</code>            |
 | icon                | Icon name to be added                                       | string         | -                                                 |                                                                                                                                                    |
 | iconPack            | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                    |
+| maxitems            |                                                             | number\|string | -                                                 |                                                                                                                                                    |
 | maxlength           | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                                                                                                                    |
-| maxtags             |                                                             | number\|string | -                                                 |                                                                                                                                                    |
 | nativeAutocomplete  |                                                             | string         | -                                                 |                                                                                                                                                    |
 | onPasteSeparators   |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;onPasteSeparators: ['<br>}</code>       |
 | openOnFocus         |                                                             | boolean        | -                                                 |                                                                                                                                                    |
@@ -228,6 +226,22 @@ title: Taginput
 
 ## Style
 
-| CSS Variable            | SASS Variable     | Default         |
-| ----------------------- | ----------------- | --------------- |
-| --oruga-taginput-height | \$taginput-height | calc(2em - 1px) |
+| CSS Variable                           | SASS Variable                    | Default                          |
+| -------------------------------------- | -------------------------------- | -------------------------------- |
+| --oruga-taginput-height                | \$taginput-height                | calc(2em - 1px)                  |
+| --oruga-taginput-padding               | \$taginput-padding               | calc(.275em - 1px) 0 0           |
+| --oruga-taginput-border-color          | \$taginput-border-color          | \$grey-lighter                   |
+| --oruga-taginput-border-style          | \$taginput-border-style          | solid                            |
+| --oruga-taginput-border-width          | \$taginput-border-width          | 1px                              |
+| --oruga-taginput-border-radius         | \$taginput-border-radius         | \$base-border-radius             |
+| --oruga-taginput-color                 | \$taginput-color                 | #363636                          |
+| --oruga-taginput-line-height           | \$taginput-line-height           | \$base-line-height               |
+| --oruga-taginput-box-shadow            | \$taginput-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1) |
+| --oruga-taginput-max-width             | \$taginput-max-width             | 100%                             |
+| --oruga-taginput-width                 | \$taginput-width                 | 100%                             |
+| --oruga-taginput-counter-font-size     | \$taginput-counter-font-size     | .75rem                           |
+| --oruga-taginput-counter-margin        | \$taginput-counter-margin        | .25rem 0 0 .5rem                 |
+| --oruga-taginput-items-margin          | \$taginput-items-margin          | 0 0 calc(0.275em - 1px) 0.275rem |
+| --oruga-taginput-item-font-size        | \$taginput-item-font-size        | 0.9em                            |
+| --oruga-taginput-item-background-color | \$taginput-item-background-color | \$primary                        |
+| --oruga-taginput-item-border-radius    | \$taginput-item-border-radius    | \$base-rounded-border-radius     |

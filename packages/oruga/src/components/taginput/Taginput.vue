@@ -4,41 +4,26 @@
             :class="containerClasses"
             :disabled="disabled"
             @click="hasInput && focus($event)">
-            <slot name="selected" :tags="tags">
-                <!--
-                <o-tag
-                    v-for="(tag, index) in tags"
-                    :key="getNormalizedTagText(tag) + index"
-                    :type="type"
-                    :close-type="closeType"
-                    :size="size"
-                    :rounded="rounded"
-                    :attached="attached"
-                    :tabstop="false"
-                    :disabled="disabled"
-                    :ellipsis="ellipsis"
-                    :closable="closable"
-                    :aria-close-label="ariaCloseLabel"
-                    :title="ellipsis && getNormalizedTagText(tag)"
-                    @close="removeTag(index, $event)">
-                    <slot name="tag" :tag="tag">
-                        {{ getNormalizedTagText(tag) }}
-                    </slot>
-                </o-tag>
-                -->
-                <span class="tag"
-                    v-for="(tag, index) in tags"
-                    :key="getNormalizedTagText(tag) + index"
-                >
-                    {{ getNormalizedTagText(tag) }}
-                </span>
+            <slot name="selected" :items="items">
+                <div :class="itemsClasses">
+                    <o-button
+                        v-for="(item, index) in items"
+                        :key="getNormalizedItemText(item) + index"
+                        :class="itemClasses"
+                        :rounded="rounded"
+                    >
+                        {{ getNormalizedItemText(item) }}
+                    </o-button>
+                </div>
             </slot>
 
             <o-autocomplete
                 ref="autocomplete"
                 v-if="hasInput"
-                v-model="newTag"
+                v-model="newItem"
                 v-bind="$attrs"
+                :root-class="autocompleteClasses"
+                :input-classes="inputClasses"
                 :data="data"
                 :field="field"
                 :icon="icon"
@@ -91,12 +76,14 @@
             </o-autocomplete>
         </div>
 
-        <small v-if="hasCounter && (maxtags || maxlength)" class="help counter">
+        <small
+            v-if="hasCounter && (maxitems || maxlength)"
+            :class="counterClasses">
             <template v-if="maxlength && valueLength > 0">
                 {{ valueLength }} / {{ maxlength }}
             </template>
-            <template v-else-if="maxtags">
-                {{ tagsLength }} / {{ maxtags }}
+            <template v-else-if="maxitems">
+                {{ itemsLength }} / {{ maxitems }}
             </template>
         </small>
     </div>
@@ -104,23 +91,25 @@
 
 <script>
 import Autocomplete from '../autocomplete/Autocomplete'
+import Button from '../button/Button'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 import { getValueByPath } from '../../utils/helpers'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 
 /**
- * A simple tag input field that can have autocomplete functionality
- * @displayName Taginput
+ * A simple item input field that can have autocomplete functionality
+ * @displayName Multiple Input
  * @example ./examples/Taginput.md
  * @style _taginput.scss
  */
 export default {
     name: 'OTaginput',
     components: {
-        [Autocomplete.name]: Autocomplete
+        [Autocomplete.name]: Autocomplete,
+        [Button.name]: Button
     },
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
@@ -135,22 +124,19 @@ export default {
             default: () => []
         },
         type: String,
-        closeType: String,
         rounded: {
             type: Boolean,
             default: false
         },
-        attached: {
-            type: Boolean,
-            default: false
-        },
-        maxtags: {
+        maxitems: {
             type: [Number, String],
             required: false
         },
         hasCounter: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'taginput.hasCounter', true) }
+            default: () => {
+                return getValueByPath(getOptions(), 'taginput.hasCounter', true)
+            }
         },
         field: {
             type: String,
@@ -170,16 +156,22 @@ export default {
         ariaCloseLabel: String,
         confirmKeys: {
             type: Array,
-            default: () => { return getValueByPath(config, 'taginput.confirmKeys', [',', 'Tab', 'Enter']) }
+            default: () => {
+                return getValueByPath(getOptions(), 'taginput.confirmKeys', [',', 'Tab', 'Enter'])
+            }
         },
         removeOnKeys: {
             type: Array,
-            default: () => { return getValueByPath(config, 'taginput.removeOnKeys', ['Backspace']) }
+            default: () => {
+                return getValueByPath(getOptions(), 'taginput.removeOnKeys', ['Backspace'])
+            }
         },
         allowNew: Boolean,
         onPasteSeparators: {
             type: Array,
-            default: () => { return getValueByPath(config, 'taginput.onPasteSeparators', [',']) }
+            default: () => {
+                return getValueByPath(getOptions(), 'taginput.onPasteSeparators', [','])
+            }
         },
         beforeAdding: {
             type: Function,
@@ -193,21 +185,26 @@ export default {
             type: Boolean,
             default: false
         },
-        createTag: {
+        createItem: {
             type: Function,
-            default: (tag) => tag
+            default: (item) => item
         },
         appendToBody: Boolean,
         rootClass: [String, Array, Function],
-        expandedClass: [String, Array, Function]
+        expandedClass: [String, Array, Function],
+        itemsClass: [String, Array, Function],
+        itemClass: [String, Array, Function],
+        counterClass: [String, Array, Function],
+        autocompleteClass: [String, Array, Function],
+        inputClass: [String, Array, Function],
     },
     data() {
         return {
-            tags: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
-            newTag: '',
+            items: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
+            newItem: '',
             isComposing: false,
             _elementRef: 'autocomplete',
-            _isTaginput: true
+            _isIteminput: true
         }
     },
     computed: {
@@ -226,8 +223,38 @@ export default {
             ]
         },
 
+        itemsClasses() {
+            return [
+                this.computedClass('itemsClasses', 'o-taginput__items')
+            ]
+        },
+
+        itemClasses() {
+            return [
+                this.computedClass('itemClasses', 'o-taginput__item')
+            ]
+        },
+
+        autocompleteClasses() {
+            return [
+                this.computedClass('autocompleteClass', 'o-taginput__autocomplete')
+            ]
+        },
+
+        inputClasses() {
+            return {
+                'input-class': this.computedClass('inputClass', 'o-taginput__input')
+            }
+        },
+
+        counterClasses() {
+            return [
+                this.computedClass('counterClass', 'o-taginput__counter')
+            ]
+        },
+
         valueLength() {
-            return this.newTag.trim().length
+            return this.newItem.trim().length
         },
 
         hasDefaultSlot() {
@@ -247,18 +274,18 @@ export default {
         },
 
         /**
-         * Show the input field if a maxtags hasn't been set or reached.
+         * Show the input field if a maxitems hasn't been set or reached.
          */
         hasInput() {
-            return this.maxtags == null || this.tagsLength < this.maxtags
+            return this.maxitems == null || this.itemsLength < this.maxitems
         },
 
-        tagsLength() {
-            return this.tags.length
+        itemsLength() {
+            return this.items.length
         },
 
         /**
-         * If Taginput has onPasteSeparators prop,
+         * If input has onPasteSeparators prop,
          * returning new RegExp used to split pasted string.
          */
         separatorsAsRegExp() {
@@ -274,7 +301,7 @@ export default {
          * When v-model is changed set internal value.
          */
         value(value) {
-            this.tags = Array.isArray(value) ? value.slice(0) : (value || [])
+            this.items = Array.isArray(value) ? value.slice(0) : (value || [])
         },
 
         hasInput() {
@@ -282,44 +309,44 @@ export default {
         }
     },
     methods: {
-        addTag(tag) {
-            const tagToAdd = tag || this.newTag.trim()
+        addItem(item) {
+            const itemToAdd = item || this.newItem.trim()
 
-            if (tagToAdd) {
+            if (itemToAdd) {
                 if (!this.autocomplete) {
                     const reg = this.separatorsAsRegExp
-                    if (reg && tagToAdd.match(reg)) {
-                        tagToAdd.split(reg)
+                    if (reg && itemToAdd.match(reg)) {
+                        itemToAdd.split(reg)
                             .map((t) => t.trim())
                             .filter((t) => t.length !== 0)
-                            .map(this.addTag)
+                            .map(this.addItem)
                         return
                     }
                 }
-                // Add the tag input if it is not blank
+                // Add the item input if it is not blank
                 // or previously added (if not allowDuplicates).
-                const add = !this.allowDuplicates ? this.tags.indexOf(tagToAdd) === -1 : true
-                if (add && this.beforeAdding(tagToAdd)) {
-                    this.tags.push(this.createTag(tagToAdd))
-                    this.$emit('input', this.tags)
-                    this.$emit('add', tagToAdd)
+                const add = !this.allowDuplicates ? this.items.indexOf(itemToAdd) === -1 : true
+                if (add && this.beforeAdding(itemToAdd)) {
+                    this.items.push(this.createItem(itemToAdd))
+                    this.$emit('input', this.items)
+                    this.$emit('add', itemToAdd)
                 }
             }
 
-            this.newTag = ''
+            this.newItem = ''
         },
 
-        getNormalizedTagText(tag) {
-            if (typeof tag === 'object') {
-                tag = getValueByPath(tag, this.field)
+        getNormalizedItemText(item) {
+            if (typeof item === 'object') {
+                item = getValueByPath(item, this.field)
             }
 
-            return `${tag}`
+            return `${item}`
         },
 
         customOnBlur(event) {
-            // Add tag on-blur if not select only
-            if (!this.autocomplete) this.addTag()
+            // Add item on-blur if not select only
+            if (!this.autocomplete) this.addItem()
 
             this.onBlur(event)
         },
@@ -327,33 +354,33 @@ export default {
         onSelect(option) {
             if (!option) return
 
-            this.addTag(option)
+            this.addItem(option)
             this.$nextTick(() => {
-                this.newTag = ''
+                this.newItem = ''
             })
         },
 
-        removeTag(index, event) {
-            const tag = this.tags.splice(index, 1)[0]
-            this.$emit('input', this.tags)
-            this.$emit('remove', tag)
+        removeItem(index, event) {
+            const item = this.items.splice(index, 1)[0]
+            this.$emit('input', this.items)
+            this.$emit('remove', item)
             if (event) event.stopPropagation()
             if (this.openOnFocus && this.$refs.autocomplete) {
                 this.$refs.autocomplete.focus()
             }
-            return tag
+            return item
         },
 
-        removeLastTag() {
-            if (this.tagsLength > 0) {
-                this.removeTag(this.tagsLength - 1)
+        removeLastItem() {
+            if (this.itemsLength > 0) {
+                this.removeItem(this.itemsLength - 1)
             }
         },
 
         keydown(event) {
             const { key } = event // cannot destructure preventDefault (https://stackoverflow.com/a/49616808/2774496)
-            if (this.removeOnKeys.indexOf(key) !== -1 && !this.newTag.length) {
-                this.removeLastTag()
+            if (this.removeOnKeys.indexOf(key) !== -1 && !this.newItem.length) {
+                this.removeLastItem()
             }
             // Stop if is to accept select only
             if (this.autocomplete && !this.allowNew) return
@@ -362,7 +389,7 @@ export default {
                 // Allow Tab to advance to next field regardless
                 if (key !== 'Tab') event.preventDefault()
                 if (key === 'Enter' && this.isComposing) return
-                this.addTag()
+                this.addItem()
             }
         },
 
