@@ -59,7 +59,7 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** 
 
-### 1 Setup Oruga
+### Setup Oruga
 
 #### Vue 2
 
@@ -118,7 +118,7 @@ createApp(...)
   .use(Input)
 ```
 
-### 3 Customization
+### Customization
 
 Please [read carefully the "customization" section](https://oruga.io/documentation/#customization) in Oruga documentation.
 
