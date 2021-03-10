@@ -469,10 +469,10 @@ You can easily customize Oruga using CSS or SASS/SCSS variables. Each component 
 In order to work with SASS/SCSS you might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
 :::
 
-To use CSS variables you have to import `oruga-vars.css` stylesheet
+To use CSS variables you have to import `oruga-full-vars.css` stylesheet
 
 ```js
-import '@oruga-ui/oruga/dist/oruga-vars.css'
+import '@oruga-ui/oruga/dist/oruga-full-vars.css'
 ```
 
 and redefine the variables you want to change. For example you can change variants globally
