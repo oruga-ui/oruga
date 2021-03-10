@@ -230,6 +230,7 @@ export default {
                     description : 'Class of the input variant',
                     properties: ["variant"],
                     suffixes: ['primary', 'info', 'warning', 'danger'],
+                    warning: "Variant property should be applied to the wrapping field",
                     action: (cmp) => {
                         cmp.data.fieldvariant = "warning";
                     }
