@@ -18,6 +18,8 @@
 
 * **[Mateus Machado Luna](https://github.com/mateuswetah)**
 
+* **[Nikhil Kutinha](https://github.com/nikhilkutinha)**
+
 * **[Renato Cardoso](https://github.com/re2005)**
 
-* **[Nikhil Kutinha](https://github.com/nikhilkutinha)**
+* **[Stefano Bartoletti](https://github.com/stefanobartoletti)**
