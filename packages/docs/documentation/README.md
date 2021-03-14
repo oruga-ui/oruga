@@ -405,7 +405,7 @@ If you want to set height to 50% keeping the other attributes unchanged you can'
 }
 ```
 
-and in your configurtion
+and in your configuration
 
 ```js
 Vue.use(Oruga, {
@@ -445,7 +445,7 @@ or directly in your component
     rootClass="myautocomplete-root">
 ```
 
-You can also specify the override beahviour for each class
+You can also specify the override behaviour for each class
 
 ```js
 Vue.use(Config, {
