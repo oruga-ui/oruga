@@ -167,7 +167,7 @@
                 </div>
 
                 <footer
-                    v-if="$slots.default !== undefined && $slots.default.length"
+                    v-if="$slots.default !== undefined"
                     :class="footerClasses">
                     <slot/>
                 </footer>
