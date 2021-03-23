@@ -32,7 +32,7 @@ import { defineComponent } from 'vue'
 
 import Tooltip from '../tooltip/Tooltip.vue'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 export default defineComponent({
@@ -75,7 +75,7 @@ export default defineComponent({
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         tooltipAlways: {

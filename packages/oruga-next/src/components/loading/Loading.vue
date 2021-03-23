@@ -18,7 +18,7 @@ import Icon from '../icon/Icon.vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
@@ -49,7 +49,7 @@ export default defineComponent({
         /* Custom animation (transition name) */
         animation: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.animation', 'fade') }
+            default: () => { return getValueByPath(getOptions(), 'loading.animation', 'fade') }
         },
         /** Can close Loading by pressing escape or clicking outside */
         canCancel: {
@@ -64,7 +64,7 @@ export default defineComponent({
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.icon', 'sync-alt') }
+            default: () => { return getValueByPath(getOptions(), 'loading.icon', 'sync-alt') }
         },
         /** Enable spin effect on icon */
         iconSpin: {

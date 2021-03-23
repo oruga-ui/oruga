@@ -290,7 +290,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
 
@@ -392,7 +392,7 @@ export default {
         mobileCards: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'table.mobileCards', true)
+                return getValueByPath(getOptions(), 'table.mobileCards', true)
             }
         },
         /** Sets the default sort column and order — e.g. ['first_name', 'desc']	 */
@@ -408,7 +408,7 @@ export default {
         /** Sets the header sorting icon */
         sortIcon: {
             type: String,
-            default: () => { return getValueByPath(config, 'table.sortIcon', 'arrow-up') }
+            default: () => { return getValueByPath(getOptions(), 'table.sortIcon', 'arrow-up') }
         },
         /**
          * Sets the size of the sorting icon
@@ -416,7 +416,7 @@ export default {
          */
         sortIconSize: {
             type: String,
-            default: () => { return getValueByPath(config, 'table.sortIconSize', 'small') }
+            default: () => { return getValueByPath(getOptions(), 'table.sortIconSize', 'small') }
         },
         /** Adds pagination to the table */
         paginated: Boolean,
@@ -428,7 +428,7 @@ export default {
         /** How many rows per page (if paginated) */
         perPage: {
             type: [Number, String],
-            default: () => { return getValueByPath(config, 'table.perPage', 20) }
+            default: () => { return getValueByPath(getOptions(), 'table.perPage', 20) }
         },
         /** Allow chevron icon and column to be visible */
         showDetailIcon: {
@@ -441,7 +441,7 @@ export default {
          */
         paginationPosition: {
             type: String,
-            default: () => { return getValueByPath(config, 'table.paginationPosition', 'bottom') },
+            default: () => { return getValueByPath(getOptions(), 'table.paginationPosition', 'bottom') },
             validator: (value) => {
                 return [
                     'bottom',
@@ -517,7 +517,7 @@ export default {
         /** Show header */
         showHeader: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'table.showHeader', true) }
+            default: () => { return getValueByPath(getOptions(), 'table.showHeader', true) }
         },
         /** Make the checkbox column sticky when checkable */
         stickyCheckbox: {
@@ -1314,20 +1314,22 @@ export default {
         },
 
         _addColumn(column) {
-            this.$nextTick(() => {
-                this.defaultSlots.push(column)
-                window.requestAnimationFrame(() => {
-                    const div = this.$refs['slot']
-                    if (div && div.children) {
-                        const position = [...div.children].map(c =>
-                            parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
-                        if (position !== this.defaultSlots.length) {
-                            this.defaultSlots.splice(position, 0, column);
-                            this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+            if (typeof window !== 'undefined') {
+                this.$nextTick(() => {
+                    this.defaultSlots.push(column)
+                    requestAnimationFrame(() => {
+                        const div = this.$refs['slot']
+                        if (div && div.children) {
+                            const position = [...div.children].map(c =>
+                                parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
+                            if (position !== this.defaultSlots.length) {
+                                this.defaultSlots.splice(position, 0, column);
+                                this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
+                            }
                         }
-                    }
+                    })
                 })
-            })
+            }
         },
 
         _removeColumn(column) {

@@ -14,7 +14,7 @@
 <script>
 import Icon from '../icon/Icon'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { removeElement, getValueByPath } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
@@ -45,7 +45,7 @@ export default {
         /* Custom animation (transition name) */
         animation: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.animation', 'fade') }
+            default: () => { return getValueByPath(getOptions(), 'loading.animation', 'fade') }
         },
         /** Can close Loading by pressing escape or clicking outside */
         canCancel: {
@@ -60,7 +60,7 @@ export default {
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(config, 'loading.icon', 'sync-alt') }
+            default: () => { return getValueByPath(getOptions(), 'loading.icon', 'sync-alt') }
         },
         /** Enable spin effect on icon */
         iconSpin: {

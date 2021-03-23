@@ -1,13 +1,12 @@
 const path = require('path')
 const fs = require('fs')
-const package = require('../package.json')
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
 const sidebarComponents = components.map(c => `/components/${c}`)
 
 module.exports = {
-  title: `Oruga (v${package.version})`,
+  title: `Oruga`,
   description: 'UI components for Vue.js and CSS framework agnostic',
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -54,7 +53,8 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        vue: 'vue/dist/vue.common.js'
+        vue: 'vue/dist/vue.common.js',
+        'process.env.NODE_ENV': process.env.NODE_ENV
       }
     }
   },

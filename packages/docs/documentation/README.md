@@ -6,6 +6,18 @@ Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you!
 
+### Oruga default stylesheet
+
+Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
+
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/defaultswitch.mp4" type="video/mp4">
+</video>
+
+If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+
+### Availability
+
 🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
 
 ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://upload.wikimedia.org/wikipedia/commons/a/aa/Internet_Explorer_logo_6.png)
@@ -19,27 +31,31 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 ## Setup
 
 ### Vue 2
-
-#### Npm
-
-```bash
-npm install @oruga-ui/oruga --save
-```
-
-#### Yarn
+<br>
+<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
+<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga
 ```
 
-#### CDN
+</o-tab-item>
+<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+
+```bash
+npm install @oruga-ui/oruga --save
+```
+
+</o-tab-item>
+<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
 <script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
 ```
 
-You can use other stylesheets, as you can see in ["customization" section](#customization).
+</o-tab-item>
+</o-tabs>
 
 #### Build from "develop" branch
 
@@ -47,8 +63,6 @@ You can use other stylesheets, as you can see in ["customization" section](#cust
 <link rel="stylesheet" href="https://preview.oruga.io/cdn/oruga.min.css" />
 <script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
-
-You can use other stylesheets, as you can see in ["customization" section](#customization).
 
 #### Full bundle
 
@@ -77,26 +91,31 @@ Vue.use(Sidebar)
 Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
 :::
 
-#### Npm
-
-```bash
-npm install @oruga-ui/oruga-next --save
-```
-
-#### Yarn
+<br>
+<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
+<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga-next
 ```
 
-#### CDN
+</o-tab-item>
+<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+
+```bash
+npm install @oruga-ui/oruga-next --save
+```
+
+</o-tab-item>
+<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga-next/dist/oruga.css" />
 <script src="//unpkg.com/oruga-next/dist/oruga.js"></script>
 ```
 
-You can use other stylesheets, as you can see in ["customization" section](#customization).
+</o-tab-item>
+</o-tabs>
 
 #### Full bundle
 
@@ -199,11 +218,15 @@ Oruga provides other 2 different stylesheets:
 - `oruga-full.css`: a stylesheet containing the complete Oruga style (the default style used for documentation).
 - `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
 
-For more info read ["Differences between standard and full css"](#differences-between-standard-and-full-css).
+For more info read ["Differences between default and full css"](#differences-between-default-and-full-css).
 
 ### Adding new classes or override existing ones
 
-With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects.
+With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects using the `Class prop inspector`.
+
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/inspectormov.mp4" type="video/mp4">
+</video>
 
 ### Adding classes
 
@@ -382,7 +405,7 @@ If you want to set height to 50% keeping the other attributes unchanged you can'
 }
 ```
 
-and in your configurtion
+and in your configuration
 
 ```js
 Vue.use(Oruga, {
@@ -422,7 +445,7 @@ or directly in your component
     rootClass="myautocomplete-root">
 ```
 
-You can also specify the override beahviour for each class
+You can also specify the override behaviour for each class
 
 ```js
 Vue.use(Config, {
@@ -442,17 +465,15 @@ Vue.use(Config, {
 
 You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
 
-::: warning
-In order to work with SASS/SCSS you might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
-:::
-
-To use CSS variables you have to import `oruga-vars.css` stylesheet
+To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
 
 ```js
-import '@oruga-ui/oruga/dist/oruga-vars.css'
+import '@oruga-ui/oruga/dist/oruga-full-vars.css'
 ```
 
-and redefine the variables you want to change. For example you can change variants globally
+and redefine the variables you want to change. 
+
+For example to change variants globally using CSS variables you can do
 
 ```css
 :root {
@@ -469,7 +490,17 @@ or a specific component variable, such as button icon width
 }
 ```
 
-For example, look at the [Button style section](components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
+To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
+
+```js
+import '@oruga-ui/oruga/src/scss/oruga-full-vars';
+```
+
+::: warning
+In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
+:::
+
+An example can be found in the [Button style section](/components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
 
 ## Configuration
 
@@ -500,7 +531,7 @@ For example:
 
 ```
 
-### Differences between standard and full css
+### Differences between default and full css
 
 The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
 

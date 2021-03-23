@@ -4,6 +4,7 @@
         v-bind="$attrs"
         :type="computedNativeType"
         :class="rootClasses"
+        :disabled="disabled"
         v-on="$listeners"
     >
         <span :class="elementsWrapperClasses">
@@ -34,9 +35,9 @@
 <script>
 import Icon from '../icon/Icon'
 
-import config from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -85,7 +86,7 @@ export default {
          */
         rounded: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'button.rounded', false) }
+            default: () => { return getValueByPath(getOptions(), 'button.rounded', false) }
         },
         /**
          * Outlined style

@@ -74,7 +74,7 @@
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath, isMobile, matchWithGroups } from '../../utils/helpers'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 
 import Datepicker from '../datepicker/Datepicker'
 import Timepicker from '../timepicker/Timepicker'
@@ -126,7 +126,7 @@ export default {
         datetimeCreator: {
             type: Function,
             default: (date) => {
-                const datetimeCreator = getValueByPath(config, 'datetimepicker.datetimeCreator', undefined)
+                const datetimeCreator = getValueByPath(getOptions(), 'datetimepicker.datetimeCreator', undefined)
                 if (typeof datetimeCreator === 'function') {
                     return datetimeCreator(date)
                 } else {
@@ -145,7 +145,7 @@ export default {
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         appendToBody: Boolean,
@@ -291,7 +291,7 @@ export default {
             return !this.localeOptions.hour12
         },
         defaultDatetimeParser(date) {
-            const datetimeParser = getValueByPath(config, 'datetimepicker.datetimeParser', undefined)
+            const datetimeParser = getValueByPath(getOptions(), 'datetimepicker.datetimeParser', undefined)
             if (typeof this.datetimeParser === 'function') {
                 return this.datetimeParser(date)
             } else if (typeof datetimeParser === 'function') {
@@ -348,7 +348,7 @@ export default {
             }
         },
         defaultDatetimeFormatter(date) {
-             const datetimeFormatter = getValueByPath(config, 'datetimepicker.datetimeFormatter', undefined)
+             const datetimeFormatter = getValueByPath(getOptions(), 'datetimepicker.datetimeFormatter', undefined)
             if (typeof this.datetimeFormatter === 'function') {
                 return this.datetimeFormatter(date)
             } else if (typeof datetimeFormatter === 'function') {

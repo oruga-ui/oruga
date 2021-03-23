@@ -91,7 +91,7 @@
     transition: opacity $speed-slow $easing;
 }
 .fade-enter,
-.fade-enter-from
+.fade-enter-from,
 .fade-leave-to {
     opacity: 0;
 }

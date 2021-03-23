@@ -17,7 +17,7 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import getIcons from '../../utils/icons'
 import { defaultIfUndefined, getValueByPath } from '../../utils/helpers'
 
@@ -113,7 +113,7 @@ export default {
             return `${this.iconPrefix}${this.getEquivalentIconOf(this.icon)}`
         },
         newPack() {
-            return this.pack || getValueByPath(config, 'iconPack', 'mdi')
+            return this.pack || getValueByPath(getOptions(), 'iconPack', 'mdi')
         },
         newVariant() {
             if (!this.variant) return
@@ -140,7 +140,7 @@ export default {
         },
         useIconComponent() {
             if (this.component) return this.component
-            const component = getValueByPath(config, 'iconComponent')
+            const component = getValueByPath(getOptions(), 'iconComponent')
             if (component) return component
             return null;
         }

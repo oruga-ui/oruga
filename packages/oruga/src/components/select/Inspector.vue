@@ -123,6 +123,10 @@ export default {
                     }
                 },
                 {
+                    class: "selectClass",
+                    description: "Class of the native select element"
+                },
+                {
                     class: "placeholderClass",
                     description: "Class of the select placeholder",
                     action: () => {

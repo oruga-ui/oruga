@@ -62,7 +62,7 @@
 import SliderThumb from './SliderThumb'
 import SliderTick from './SliderTick'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 
@@ -138,7 +138,7 @@ export default {
         rounded: {
             type: Boolean,
             default: () => {
-                return getValueByPath(config, 'slider.rounded', false)
+                return getValueByPath(getOptions(), 'slider.rounded', false)
             }
         },
         disabled: {
@@ -175,7 +175,7 @@ export default {
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(config, 'locale')
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         /** Tooltip displays always */

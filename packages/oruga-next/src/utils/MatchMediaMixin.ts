@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import config from './config'
+import { getOptions } from './config'
 import { getValueByPath } from './helpers'
 
 export default defineComponent({
@@ -24,6 +24,7 @@ export default defineComponent({
         if (typeof window !== 'undefined') {
             let width = this.mobileBreakpoint
             if (!width) {
+                const config = getOptions()
                 const defaultWidth = getValueByPath(config, `mobileBreakpoint`, '1023px')
                 width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
             }

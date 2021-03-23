@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import ODatepickerTable from '@components/datepicker/DatepickerTable'
-import config, {setOptions} from '@utils/config'
+import { getOptions, setOptions} from '@utils/config'
 
 let defaultProps
 
@@ -13,6 +13,9 @@ const newDate = (y, m, d) => {
 }
 
 describe('ODatepickerTable', () => {
+
+    const config = getOptions()
+
     beforeEach(() => {
         setOptions(Object.assign(config, {
             defaultFirstDayOfWeek: 0,

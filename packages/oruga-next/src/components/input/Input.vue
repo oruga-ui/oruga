@@ -58,7 +58,7 @@ import Icon from '../icon/Icon.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 
-import config from '../../utils/config'
+import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
 /**
@@ -112,7 +112,7 @@ export default defineComponent({
          */
         hasCounter: {
             type: Boolean,
-            default: () => { return getValueByPath(config, 'input.counter', false) }
+            default: () => { return getValueByPath(getOptions(), 'input.counter', false) }
         },
         /**
          * 	Icon name to be added on the right side
@@ -141,7 +141,7 @@ export default defineComponent({
             newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
-            newAutocomplete: (this as any).autocomplete || getValueByPath(config, 'input.autocompletete', 'off'),
+            newAutocomplete: (this as any).autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
             isPasswordVisible: false
         }
     },

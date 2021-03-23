@@ -1,14 +1,15 @@
 import * as components from './components'
 
 import { merge } from './utils/helpers'
-import config, { setOptions, setVueInstance, Programmatic as ConfigProgrammatic } from './utils/config'
+import { setOptions, setVueInstance, Programmatic as ConfigProgrammatic, getOptions } from './utils/config'
 import { use, registerComponentProgrammatic, registerPlugin } from './utils/plugins'
 
 const Oruga = {
     install(Vue, options = {}) {
         setVueInstance(Vue)
         // Options
-        setOptions(merge(config, options, true))
+        const defaultConfig = getOptions()
+        setOptions(merge(defaultConfig, options, true))
         // Components
         for (const componentKey in components) {
             registerPlugin(Vue, components[componentKey])

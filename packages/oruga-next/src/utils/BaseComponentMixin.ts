@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import config from './config'
+import { getOptions } from './config'
 import { getValueByPath, blankIfUndefined } from './helpers'
 
 const _defaultSuffixProcessor = (input: string, suffix: string) => {
@@ -17,6 +17,8 @@ export default defineComponent({
     },
     methods: {
         computedClass(field: string, defaultValue: string, suffix: string = '') {
+            const config = getOptions()
+
             let override = this.$props.override || getValueByPath(config, `${this.$options.configField}.override`, false)
             let overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
 

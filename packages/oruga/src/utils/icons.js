@@ -1,5 +1,5 @@
-import config from '../utils/config'
 import { merge, getValueByPath } from '../utils/helpers'
+import { getOptions } from './config'
 
 const mdiIcons = {
     sizes: {
@@ -12,7 +12,7 @@ const mdiIcons = {
 }
 
 const faIcons = () => {
-    const iconComponent = getValueByPath(config, 'iconComponent')
+    const iconComponent = getValueByPath(getOptions(), 'iconComponent')
     const faIconPrefix = iconComponent ? '' : 'fa-'
     return {
         sizes: {
@@ -50,7 +50,7 @@ const getIcons = () => {
         fal: faIcons()
     }
 
-    const customIconPacks = getValueByPath(config, 'customIconPacks')
+    const customIconPacks = getValueByPath(getOptions(), 'customIconPacks')
     if (customIconPacks) {
         icons = merge(icons, customIconPacks, true)
     }
