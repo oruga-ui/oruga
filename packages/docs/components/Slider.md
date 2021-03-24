@@ -183,7 +183,6 @@ title: Slider
             </template>
         </doc-wrapper>
         <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-        <br/>
     </div>
 </template>
 
