@@ -98,15 +98,21 @@ export default {
 			});
 		},
 
-		onBlur($event) {
+		onBlur(event) {
 			this.isFocused = false;
-			this.$emit("blur", $event);
+            if (this.parentField) {
+                this.parentField.isFocused = false;
+            }
+			this.$emit("blur", event);
 			this.checkHtml5Validity();
 		},
 
-		onFocus($event) {
+		onFocus(event) {
 			this.isFocused = true;
-			this.$emit("focus", $event);
+            if (this.parentField) {
+                this.parentField.isFocused = true;
+            }
+			this.$emit("focus", event);
 		},
 
 		getElement() {
@@ -158,6 +164,12 @@ export default {
 			}
 
 			return this.isValid;
-		}
+		},
+
+        syncFilled(value) {
+            if (this.parentField) {
+                this.parentField.isFilled = !!value
+            }
+        }
 	}
 }

@@ -100,15 +100,21 @@ export default defineComponent({
 			});
 		},
 
-		onBlur($event) {
+		onBlur(event: Event) {
 			this.isFocused = false;
-			this.$emit("blur", $event);
+            if (this.parentField) {
+                this.parentField.isFocused = false;
+            }
+			this.$emit("blur", event);
 			this.checkHtml5Validity();
 		},
 
-		onFocus($event) {
+		onFocus(event: Event) {
 			this.isFocused = true;
-			this.$emit("focus", $event);
+            if (this.parentField) {
+                this.parentField.isFocused = true;
+            }
+			this.$emit("focus", event);
 		},
 
 		getElement() {
@@ -160,6 +166,12 @@ export default defineComponent({
 			}
 
 			return this.isValid;
-		}
+		},
+
+        syncFilled(value) {
+            if (this.parentField) {
+                this.parentField.isFilled = !!value
+            }
+        }
 	}
 })

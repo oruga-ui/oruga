@@ -3,7 +3,7 @@
         <doc-wrapper>
             <template v-slot:default="s">
                 <o-field v-bind="s" label="Field">
-                    <o-input name="name" placeholder="Name" expanded></o-input>
+                    <o-input v-model="name" name="name" placeholder="Name" expanded></o-input>
                     <o-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></o-input>
                 </o-field>
             </template>
@@ -16,6 +16,7 @@
 export default {
     data() {
         return {
+            name: '',
             inspectData: [
                 {
                     class: "rootClass",
@@ -111,7 +112,23 @@ export default {
                         cmp.data.variant = "info";
                         cmp.data.message = 'This is a message for the field';
                     }
-                }
+                },
+                {
+                    class: "focusedClass",
+                    description: "Class for the focused field",
+                    warning: "focus event emitted by form elements",
+                    action: (cmp) => {
+                        cmp.$el.focus()
+                    }
+                },
+                {
+                    class: "filledClass",
+                    description: "Class for the filled field",
+                    warning: "when it contains a input",
+                    action: (_cmp) => {
+                        this.name = 'Oruga'
+                    }
+                },
             ],
         };
     },

@@ -185,6 +185,7 @@ export default defineComponent({
             set(value) {
                 this.newValue = value
                 this.$emit('update:modelValue', this.newValue)
+                this.syncFilled(this.newValue)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -249,8 +250,12 @@ export default defineComponent({
         * When v-model is changed:
         *   1. Set internal value.
         */
-        modelValue(value) {
-            this.newValue = value
+        modelValue: {
+            immediate: true,
+            handler(value) {
+                this.newValue = value
+                this.syncFilled(this.newValue)
+            }
         }
     },
     methods: {

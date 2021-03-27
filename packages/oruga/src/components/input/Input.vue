@@ -74,9 +74,7 @@ export default {
     inheritAttrs: false,
     provide() {
         return {
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
+
         }
     },
     props: {
@@ -137,7 +135,10 @@ export default {
             newValue: this.value,
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
-            isPasswordVisible: false
+            isPasswordVisible: false,
+            $elementRef: this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
         }
     },
     computed: {
@@ -180,6 +181,7 @@ export default {
             set(value) {
                 this.newValue = value
                 this.$emit('input', this.newValue)
+                this.syncFilled(this.newValue)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
@@ -244,8 +246,12 @@ export default {
         * When v-model is changed:
         *   1. Set internal value.
         */
-        value(value) {
-            this.newValue = value
+        value: {
+            immediate: true,
+            handler(value) {
+                this.newValue = value
+                this.syncFilled(this.newValue)
+            }
         }
     },
     methods: {
