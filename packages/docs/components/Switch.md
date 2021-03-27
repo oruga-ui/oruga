@@ -194,7 +194,6 @@ title: Switch
             </template>
         </doc-wrapper>
         <inspector :inspectData="inspectData"></inspector>
-         <br/>
     </div>
 </template>
 

@@ -44,7 +44,7 @@
                 :locale="locale"
             />
         </div>
-        <template v-if="$slots.default !== undefined && $slots.default.length">
+        <template v-if="$slots.default !== undefined">
             <slot/>
         </template>
     </o-datepicker>

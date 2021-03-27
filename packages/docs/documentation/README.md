@@ -8,7 +8,7 @@ If you need a component library and want to easily apply your custom styles, Oru
 
 ### Oruga default stylesheet
 
-Oruga comes with a default stylesheet containing only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
+Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
@@ -405,7 +405,7 @@ If you want to set height to 50% keeping the other attributes unchanged you can'
 }
 ```
 
-and in your configurtion
+and in your configuration
 
 ```js
 Vue.use(Oruga, {
@@ -445,7 +445,7 @@ or directly in your component
     rootClass="myautocomplete-root">
 ```
 
-You can also specify the override beahviour for each class
+You can also specify the override behaviour for each class
 
 ```js
 Vue.use(Config, {
@@ -465,17 +465,15 @@ Vue.use(Config, {
 
 You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
 
-::: warning
-In order to work with SASS/SCSS you might also have to install `node-sass` or `sass` and `sass-loader` depending on your environment.
-:::
-
-To use CSS variables you have to import `oruga-vars.css` stylesheet
+To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
 
 ```js
-import '@oruga-ui/oruga/dist/oruga-vars.css'
+import '@oruga-ui/oruga/dist/oruga-full-vars.css'
 ```
 
-and redefine the variables you want to change. For example you can change variants globally
+and redefine the variables you want to change. 
+
+For example to change variants globally using CSS variables you can do
 
 ```css
 :root {
@@ -492,7 +490,17 @@ or a specific component variable, such as button icon width
 }
 ```
 
-For example, look at the [Button style section](components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
+To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
+
+```js
+import '@oruga-ui/oruga/src/scss/oruga-full-vars';
+```
+
+::: warning
+In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
+:::
+
+An example can be found in the [Button style section](/components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
 
 ## Configuration
 
