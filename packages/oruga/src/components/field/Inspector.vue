@@ -125,7 +125,7 @@ export default {
                     class: "filledClass",
                     description: "Class for the filled field",
                     warning: "when it contains a input",
-                    action: (_cmp) => {
+                    action: () => {
                         this.name = 'Oruga'
                     }
                 },
