@@ -323,6 +323,10 @@ export default {
             $table: this
         }
     },
+    mounted() {
+        this.refreshSlots()
+        this.checkSort()
+    },
     props: {
         /** Table data */
         data: {
@@ -569,8 +573,7 @@ export default {
             isAsc: true,
             filters: {},
             defaultSlots: [],
-            // firstTimeSort: true, // Used by first time initSort
-            firstTimeSort: false,
+            firstTimeSort: true,
             sequence: 1
         }
     },
@@ -768,6 +771,11 @@ export default {
                 })
             }
             return this.defaultSlots
+                .filter((vnode) =>
+                    vnode.componentInstance &&
+                    vnode.componentInstance.$data &&
+                    vnode.componentInstance.$data._isTableColumn)
+                .map((vnode) => vnode.componentInstance)
         },
 
         isMobile() {
@@ -848,6 +856,9 @@ export default {
         }
     },
     methods: {
+        refreshSlots() {
+            this.defaultSlots = this.$slots.default || []
+        },
         thClasses(column) {
             return [
                 ...this.thBaseClasses,
