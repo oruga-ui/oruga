@@ -576,10 +576,14 @@ export default defineComponent({
             isAsc: true,
             filters: {},
             defaultSlots: [],
-            // firstTimeSort: true, // Used by first time initSort
-            firstTimeSort: false, // TODO
+            firstTimeSort: true,
             sequence: 1
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.checkSort()
+        })
     },
     computed: {
         tableClasses() {
@@ -767,7 +771,11 @@ export default defineComponent({
                         .mount(document.createElement('div'))
                 })
             }
-            return this.defaultSlots
+            let defaultSlots = this.defaultSlots
+                .filter((vnode) =>
+                    vnode && vnode.$data && vnode.$data._isTableColumn
+                )
+            return defaultSlots
         },
 
         isMobile() {
@@ -1182,7 +1190,6 @@ export default defineComponent({
         * Call initSort only first time (For example async data).
         */
         checkSort() {
-            // TODO
             if (this.newColumns.length && this.firstTimeSort) {
                 this.initSort()
                 this.firstTimeSort = false
