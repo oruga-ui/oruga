@@ -21,7 +21,8 @@ module.exports = {
     'vue/no-v-for-template-key': 'off',
     'vue/no-template-key': 'off',
     'vue/comment-directive': 'off',
-    'vue/custom-event-name-casing': 'off'
+    'vue/custom-event-name-casing': 'off',
+    'vue/no-reserved-keys': 'warn',
   },
   overrides: [
     {
