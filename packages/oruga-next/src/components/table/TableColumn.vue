@@ -53,7 +53,8 @@ export default defineComponent({
     },
     data() {
         return {
-            newKey: undefined
+            newKey: undefined,
+            _isTableColumn: true
         }
     },
     computed: {
