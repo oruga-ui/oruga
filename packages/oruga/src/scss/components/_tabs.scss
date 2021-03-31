@@ -122,6 +122,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
             display: none;
             -webkit-appearance: none;
         }
+        scrollbar-width: none;
 
         @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
         @each $name, $value in $sizes {
