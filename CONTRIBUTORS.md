@@ -18,6 +18,8 @@
 
 * **[Marcos](https://github.com/marcjcs)**
 
+* **[Marcos Mendes](https://github.com/MarcosMe)**
+
 * **[Mateus Machado Luna](https://github.com/mateuswetah)**
 
 * **[Nikhil Kutinha](https://github.com/nikhilkutinha)**
