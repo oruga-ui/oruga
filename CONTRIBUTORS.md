@@ -8,6 +8,8 @@
 
 * **[Fabrizio Masini](https://github.com/Nemesis19)**
 
+* **[Fahd Addi](https://github.com/fahdaddi/)**
+
 * **[Febri Hidayan](https://github.com/febrihidayan)**
 
 * **[Filip Delperdange](https://github.com/bzd2000)**
