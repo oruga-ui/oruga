@@ -113,17 +113,7 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         justify-content: flex-start;
         overflow-x: auto;
         // padding bottom to keep showing the border-bottom
-        padding-bottom: $tabs-border-bottom-width;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-
-        // to hide scrollbar
-        &::-webkit-scrollbar {
-            display: none;
-            -webkit-appearance: none;
-        }
-        scrollbar-width: none;
-
+        @include avariable('padding-bottom', 'tabs-border-bottom-width', $tabs-border-bottom-width);
         @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
         @each $name, $value in $sizes {
             &--#{$name} {
