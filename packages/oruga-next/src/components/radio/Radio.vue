@@ -51,7 +51,7 @@ export default defineComponent({
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-radio'),
-                { [this.computedClass('checkedClass', 'o-radio--checked')] : this.value === this.nativeValue },
+                { [this.computedClass('checkedClass', 'o-radio--checked')] : this.modelValue === this.nativeValue },
                 { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
                 { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
                 { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }
@@ -61,7 +61,7 @@ export default defineComponent({
         checkClasses() {
             return [
                 this.computedClass('checkClass', 'o-radio__check'),
-                { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.value === this.nativeValue },
+                { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.modelValue === this.nativeValue },
             ]
         },
         labelClasses() {

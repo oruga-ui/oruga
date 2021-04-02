@@ -110,14 +110,14 @@ export default defineComponent({
             return this.$parent.precision
         },
         currentPosition() {
-            return `${(this.value - this.min) / (this.max - this.min) * 100}%`
+            return `${(this.modelValue - this.min) / (this.max - this.min) * 100}%`
         },
         wrapperStyle() {
             return { left: this.currentPosition }
         },
         formattedValue() {
             if (typeof this.customFormatter !== 'undefined') {
-                return this.customFormatter(this.value)
+                return this.customFormatter(this.modelValue)
             }
             if (this.format === 'percent') {
                 return new Intl.NumberFormat(
@@ -125,9 +125,9 @@ export default defineComponent({
                     {
                         style: 'percent'
                     }
-                ).format(((this.value - this.min)) / (this.max - this.min))
+                ).format(((this.modelValue - this.min)) / (this.max - this.min))
             }
-            return new Intl.NumberFormat(this.locale).format(this.value)
+            return new Intl.NumberFormat(this.locale).format(this.modelValue)
         }
     },
     methods: {
