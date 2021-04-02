@@ -16,6 +16,8 @@
 
 * **[Jonathan Bakebwa](https://github.com/codebender828)**
 
+* **[Logan Snow](https://github.com/lsnow99)**
+
 * **[Marcos](https://github.com/marcjcs)**
 
 * **[Marcos Mendes](https://github.com/MarcosMe)**
