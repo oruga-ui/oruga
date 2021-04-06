@@ -94,9 +94,11 @@ export default defineComponent({
             ]
         },
         rootStyle() {
-            return {
-                transform: `rotate(${defaultIfUndefined(this.rotation, 0)}deg)`
+            const style = {}
+            if (this.rotation) {
+                style['transform'] = `rotate(${this.rotation}deg)`
             }
+            return style
         },
         iconConfig() {
             return getIcons()[this.newPack]
