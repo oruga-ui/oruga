@@ -11,10 +11,11 @@
                         :component="childItem"
                         name="header"
                         tag="button"
+                        type="button"
                         @click.native="childClick(childItem)"
                         :class="childItem.headerClasses"
                     />
-                    <button v-else @click="childClick(childItem)" :class="childItem.headerClasses">
+                    <button v-else @click="childClick(childItem)" :class="childItem.headerClasses" type="button">
                         <o-icon
                             v-if="childItem.icon"
                             :rootClass="childItem.headerIconClasses"
