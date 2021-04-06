@@ -5,6 +5,15 @@
         :disabled="disabled"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
+        <template v-if="iconCheck">
+            <o-icon
+                v-if="isChecked"
+                :icon="iconCheck"
+                :pack="iconPack"
+                :size="size"
+                :class="iconCheckClasses"
+            />
+        </template>
         <input
             v-model="computedValue"
             :indeterminate.prop="indeterminate"
@@ -25,6 +34,9 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
+
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select a single or grouped options
@@ -58,6 +70,10 @@ export default {
             type: [String, Number, Boolean],
             default: false
         },
+        iconCheck: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
+        },
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],
@@ -66,7 +82,8 @@ export default {
         checkIndeterminateClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array]
+        variantClass: [String, Function, Array],
+        iconCheckClass: [String, Function, Array]
     },
     watch: {
         indeterminate: {
@@ -77,8 +94,9 @@ export default {
         },
     },
     computed: {
-        isChecked () {
-            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
+        isChecked() {
+            return this.computedValue === this.trueValue
+                || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
         },
         rootClasses() {
             return [
@@ -99,6 +117,11 @@ export default {
         labelClasses() {
             return [
                 this.computedClass('labelClass', 'o-chk__label')
+            ]
+        },
+        iconCheckClasses() {
+            return [
+                this.computedClass('iconCheckClass', 'o-chk__icon')
             ]
         }
     }
