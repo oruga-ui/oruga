@@ -3,10 +3,10 @@
 exports[`OTabs render correctly 1`] = `
 <div class="o-tabs">
     <nav class="o-tabs__nav">
-        <div class="o-tabs__nav-item-wrapper"><button class="o-tabs__nav-item-default o-tabs__nav-item-default--active o-tabs__nav-item-default">
+        <div class="o-tabs__nav-item-wrapper"><button type="button" class="o-tabs__nav-item-default o-tabs__nav-item-default--active o-tabs__nav-item-default">
                 <!----> <span class="o-tabs__nav-item-text"></span>
             </button></div>
-        <div class="o-tabs__nav-item-wrapper" style="display: none;"><button class="o-tabs__nav-item-default o-tabs__nav-item-default">
+        <div class="o-tabs__nav-item-wrapper" style="display: none;"><button type="button" class="o-tabs__nav-item-default o-tabs__nav-item-default">
                 <!----> <span class="o-tabs__nav-item-text"></span>
             </button></div>
     </nav>
