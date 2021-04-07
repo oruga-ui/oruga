@@ -211,7 +211,7 @@ Oruga allows you to customize components in 3 different ways:
 
 You can mix them, for example adding new classes and using CSS variables!
 
-Oruga provides `oruga.css`, a lightweight stylesheet containing only minimal CSS rules (position, , display, z-index ...). Include it if you want to perform a complete customization. 
+Oruga provides `oruga.css`, a lightweight stylesheet containing only minimal CSS rules (position, display, z-index ...). Include it if you want to perform a complete customization. 
 
 Oruga provides other 2 different stylesheets:
 
