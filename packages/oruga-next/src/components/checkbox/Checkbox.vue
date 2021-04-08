@@ -5,15 +5,13 @@
         :disabled="disabled"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
-        <template v-if="iconCheck">
-            <o-icon
-                v-if="isChecked"
-                :icon="iconCheck"
-                :pack="iconPack"
-                :size="size"
-                :class="iconCheckClasses"
-            />
-        </template>
+        <o-icon
+             v-if="iconCheck"
+            :icon="iconCheck"
+            :pack="iconPack"
+            :size="size"
+            :class="iconCheckClasses"
+        />
         <input
             v-model="computedValue"
             :indeterminate.prop="indeterminate"
@@ -34,6 +32,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import Icon from '../icon/Icon.vue'
+
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 
@@ -48,6 +48,9 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default defineComponent({
     name: 'OCheckbox',
+    components: {
+        [Icon.name]: Icon
+    },
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'checkbox',
     emits: [
@@ -87,7 +90,8 @@ export default defineComponent({
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         variantClass: [String, Function, Array],
-        iconCheckClass: [String, Function, Array]
+        iconCheckClass: [String, Function, Array],
+        iconCheckCheckedClass: [String, Function, Array]
     },
     watch: {
         indeterminate: {
@@ -125,7 +129,8 @@ export default defineComponent({
         },
         iconCheckClasses() {
             return [
-                this.computedClass('iconCheckClass', 'o-chk__icon')
+                this.computedClass('iconCheckClass', 'o-chk__icon'),
+                { [this.computedClass('iconCheckCheckedClass', 'o-chk__icon--checked')] : this.isChecked },
             ]
         }
     }
