@@ -132,9 +132,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- :key="customRowKey ? row[customRowKey] : index" -->
                 <template
-                    v-for="(row, index) in visibleData">
+                    v-for="(row, index) in visibleData"
+                    :key="customRowKey ? row[customRowKey] : index">
                     <tr
                         :class="rowClasses(row, index)"
                         @click="selectRow(row)"
@@ -175,8 +175,6 @@
                             />
                         </td>
 
-                        <!-- :key="column.newKey + index + ':' + colindex" -->
-
                         <o-slot-component
                             v-for="(column, colindex) in visibleColumns"
                             :key="column.newKey + index + ':' + colindex"
@@ -202,12 +200,10 @@
                         </td>
                     </tr>
 
-                     <transition
-                        :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                        :name="detailTransition"
-                    >
+                    <transition :name="detailTransition">
                         <tr
                             v-if="isActiveDetailRow(row)"
+                            :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
                             :class="detailedClasses">
                             <td :colspan="columnCount">
                                 <slot
