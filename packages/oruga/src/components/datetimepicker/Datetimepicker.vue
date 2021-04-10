@@ -198,7 +198,7 @@ export default {
                     }
                     this.newValue = new Date(val.getTime())
                 } else {
-                    this.newValue = this.value
+                    this.newValue = value
                 }
                 this.$emit('input', this.newValue)
             }
@@ -221,8 +221,7 @@ export default {
                 hour: this.localeOptions.hour || 'numeric',
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds() ? this.localeOptions.second || 'numeric' : undefined,
-                hour12: !this.isHourFormat24(),
-                // timeZone: 'UTC'
+                hour12: !this.isHourFormat24()
             })
         },
         isMobileNative() {

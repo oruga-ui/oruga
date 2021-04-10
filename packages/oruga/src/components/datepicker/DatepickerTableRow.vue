@@ -437,6 +437,7 @@ export default {
             ) {
                 nextDay.setDate(day.getDate() + Math.sign(inc))
             }
+            this.setRangeHoverEndDate(nextDay)
             this.$emit('change-focus', nextDay)
         }
     }

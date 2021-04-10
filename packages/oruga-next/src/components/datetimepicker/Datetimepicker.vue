@@ -194,7 +194,7 @@ export default defineComponent({
                     }
                     this.newValue = new Date(val.getTime())
                 } else {
-                    this.newValue = this.modelValue
+                    this.newValue = value
                 }
                 this.$emit('update:modelValue', this.newValue)
             }
@@ -217,8 +217,7 @@ export default defineComponent({
                 hour: this.localeOptions.hour || 'numeric',
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds() ? this.localeOptions.second || 'numeric' : undefined,
-                hour12: !this.isHourFormat24(),
-                // timeZone: 'UTC'
+                hour12: !this.isHourFormat24()
             })
         },
         isMobileNative() {

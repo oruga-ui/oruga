@@ -138,8 +138,8 @@
                         :class="rowClasses(row, index)"
                         @click="selectRow(row)"
                         @dblclick="$emit('dblclick', row)"
-                        @mouseenter="$listeners.mouseenter ? $emit('mouseenter', row) : null"
-                        @mouseleave="$listeners.mouseleave ? $emit('mouseleave', row) : null"
+                        @mouseenter="emitEventForRow('mouseenter', $event, row)"
+                        @mouseleave="emitEventForRow('mouseleave', $event, row)"
                         @contextmenu="$emit('contextmenu', row, $event)"
                         :draggable="draggable"
                         @dragstart="handleDragStart($event, row, index)"
@@ -204,17 +204,21 @@
                         </td>
                     </tr>
 
-                    <tr
-                        v-if="isActiveDetailRow(row)"
+                    <transition
                         :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                        :class="detailedClasses">
-                        <td :colspan="columnCount">
-                            <slot
-                                name="detail"
-                                :row="row"
-                                :index="index"/>
-                        </td>
-                    </tr>
+                        :name="detailTransition"
+                    >
+                        <tr
+                            v-if="isActiveDetailRow(row)"
+                            :class="detailedClasses">
+                            <td :colspan="columnCount">
+                                <slot
+                                    name="detail"
+                                    :row="row"
+                                    :index="index"/>
+                            </td>
+                        </tr>
+                    </transition>
                     <slot
                         v-if="isActiveCustomDetailRow(row)"
                         name="detail"
@@ -482,6 +486,11 @@ export default {
         customDetailRow: {
             type: Boolean,
             default: false
+        },
+        /* Transition name to use when toggling row details. */
+        detailTransition: {
+            type: String,
+            default: ''
         },
         /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
         backendPagination: Boolean,
@@ -1322,6 +1331,10 @@ export default {
         handleDragLeave(event, row, index) {
             if (!this.draggable) return
             this.$emit('dragleave', {event, row, index})
+        },
+
+        emitEventForRow(eventName, event, row) {
+            return this.$listeners[eventName] ? this.$emit(eventName, row, event) : null
         },
 
         _addColumn(column) {

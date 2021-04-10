@@ -295,6 +295,7 @@ describe('ODatepickerTable', () => {
         })
     })
 
+    /*
     describe('Multiple dates', () => {
         let wrapper
         beforeEach(() => {
@@ -328,4 +329,5 @@ describe('ODatepickerTable', () => {
             expect(wrapper.vm.multipleSelectedDates).toEqual([date2, date3])
         })
     })
+    */
 })
