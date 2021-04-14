@@ -27,7 +27,7 @@
     "url": "https://github.com/oruga-ui/oruga/issues"
   },
   "scripts": {
-    "ci": "npm run test && codecov",
+    "ci": "cross-env NODE_ICU_DATA=node_modules/full-icu node --expose-gc ./node_modules/.bin/jest --logHeapUsage -u && codecov",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "lint:staged": "lint-staged",
