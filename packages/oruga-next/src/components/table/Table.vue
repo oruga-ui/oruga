@@ -328,7 +328,7 @@ export default defineComponent({
         'check', 'check-all', 'update:checkedRows',
         'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
         'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
-        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover'
+        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click'
     ],
     props: {
         /** Table data */
