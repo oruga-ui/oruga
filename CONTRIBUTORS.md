@@ -29,3 +29,5 @@
 * **[Renato Cardoso](https://github.com/re2005)**
 
 * **[Stefano Bartoletti](https://github.com/stefanobartoletti)**
+
+* **[Thomas Cricket](https://github.com/cricketthomas)**
