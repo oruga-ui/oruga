@@ -4,6 +4,7 @@
         v-bind="$attrs"
         :type="computedNativeType"
         :class="rootClasses"
+        :disabled="disabled"
         v-on="$listeners"
     >
         <span :class="elementsWrapperClasses">

@@ -189,6 +189,7 @@ export default {
 | Prop name   | Description                    | Type                           | Values                                                                          | Default |
 | ----------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
 | disabled    | Same as native disabled        | boolean                        | -                                                                               |         |
+| iconPack    | Icon pack to use               | string                         | `mdi`, `fa`, `fas and any other custom icon pack`                               |         |
 | name        | Same as native name            | string                         | -                                                                               |         |
 | nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
 | override    | Override classes               | boolean                        | -                                                                               | false   |

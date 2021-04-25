@@ -128,11 +128,15 @@ export default defineComponent({
         messageClass: [String, Function, Array],
         variantClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        focusedClass: [String, Function, Array],
+        filledClass: [String, Function, Array]
     },
     data() {
         return {
             newVariant: this.variant,
-            newMessage: this.message
+            newMessage: this.message,
+            isFocused: false,
+            isFilled: false
         }
     },
     computed: {
@@ -140,7 +144,9 @@ export default defineComponent({
             return [
                 this.computedClass('rootClass', 'o-field'),
                 { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal },
-                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia }
+                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia },
+                { [this.computedClass('focusedClass', 'o-field--focused')]: this.isFocused },
+                { [this.computedClass('filledClass', 'o-field--filled')]: this.isFilled }
             ]
         },
         messageClasses() {

@@ -111,6 +111,9 @@ $tabs-toggle-link-active-color: $primary-invert !default;
         flex-grow: 1;
         flex-shrink: 0;
         justify-content: flex-start;
+        overflow-x: auto;
+        // padding bottom to keep showing the border-bottom
+        @include avariable('padding-bottom', 'tabs-border-bottom-width', $tabs-border-bottom-width);
         @include avariable('font-size', 'tabs-font-size', $tabs-font-size);
         @each $name, $value in $sizes {
             &--#{$name} {

@@ -5,6 +5,13 @@
         :disabled="disabled"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
+        <o-icon
+             v-if="iconCheck"
+            :icon="iconCheck"
+            :pack="iconPack"
+            :size="size"
+            :class="iconCheckClasses"
+        />
         <input
             v-model="computedValue"
             :indeterminate.prop="indeterminate"
@@ -25,8 +32,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import Icon from '../icon/Icon.vue'
+
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
+
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select a single or grouped options
@@ -36,6 +48,9 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
  */
 export default defineComponent({
     name: 'OCheckbox',
+    components: {
+        [Icon.name]: Icon
+    },
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'checkbox',
     emits: [
@@ -63,6 +78,10 @@ export default defineComponent({
             type: [String, Number, Boolean],
             default: false
         },
+        iconCheck: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
+        },
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],
@@ -70,7 +89,9 @@ export default defineComponent({
         checkIndeterminateClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array]
+        variantClass: [String, Function, Array],
+        iconCheckClass: [String, Function, Array],
+        iconCheckCheckedClass: [String, Function, Array]
     },
     watch: {
         indeterminate: {
@@ -82,7 +103,8 @@ export default defineComponent({
     },
     computed: {
         isChecked () {
-            return this.computedValue === this.trueValue || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
+            return this.computedValue === this.trueValue
+                || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1
         },
         rootClasses() {
             return [
@@ -103,6 +125,12 @@ export default defineComponent({
         labelClasses() {
             return [
                 this.computedClass('labelClass', 'o-chk__label')
+            ]
+        },
+        iconCheckClasses() {
+            return [
+                this.computedClass('iconCheckClass', 'o-chk__icon'),
+                { [this.computedClass('iconCheckCheckedClass', 'o-chk__icon--checked')] : this.isChecked },
             ]
         }
     }

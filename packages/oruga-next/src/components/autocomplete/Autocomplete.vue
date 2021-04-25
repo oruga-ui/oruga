@@ -441,6 +441,8 @@ export default defineComponent({
          */
         keydown(event) {
             const { key } = event // cannot destructure preventDefault (https://stackoverflow.com/a/49616808/2774496)
+            // prevent emit submit event
+            if (key === 'Enter') event.preventDefault()
             // Close dropdown on Tab & no hovered
             this.isActive = key !== 'Tab'
             if (this.hovered === null) return

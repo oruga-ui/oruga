@@ -51,7 +51,8 @@ export default {
     },
     data() {
         return {
-            newKey: this.$table._nextSequence()
+            newKey: this.$table._nextSequence(),
+            _isTableColumn: true
         }
     },
     computed: {

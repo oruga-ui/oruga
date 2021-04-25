@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga",
-  "version": "0.3.4",
+  "version": "0.3.6",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -27,7 +27,7 @@
     "url": "https://github.com/oruga-ui/oruga/issues"
   },
   "scripts": {
-    "ci": "npm run test && codecov",
+    "ci": "cross-env NODE_ICU_DATA=node_modules/full-icu node --expose-gc ./node_modules/.bin/jest --logHeapUsage -u && codecov",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "lint:staged": "lint-staged",

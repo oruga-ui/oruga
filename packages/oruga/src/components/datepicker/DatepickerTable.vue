@@ -124,8 +124,7 @@ export default {
         return {
             selectedBeginDate: undefined,
             selectedEndDate: undefined,
-            hoveredEndDate: undefined,
-            multipleSelectedDates: this.multiple && this.value ? this.value : []
+            hoveredEndDate: undefined
         }
     },
     computed: {
@@ -154,6 +153,14 @@ export default {
             return [
                 this.computedClass('tableCellClass', 'o-dpck__table__cell'),
             ]
+        },
+        multipleSelectedDates: {
+            get() {
+                return this.multiple && this.value ? this.value : []
+            },
+            set(value) {
+                this.$emit('input', value)
+            }
         },
         visibleDayNames() {
             const visibleDayNames = []
@@ -279,9 +286,8 @@ export default {
                     selectedDate.getMonth() !== date.getMonth()
                 )
             } else {
-                this.multipleSelectedDates.push(date)
+                this.multipleSelectedDates = [...this.multipleSelectedDates, date]
             }
-            this.$emit('input', this.multipleSelectedDates)
         },
 
         /*

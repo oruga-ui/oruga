@@ -1,6 +1,7 @@
 <template>
     <component
         v-bind="$attrs"
+        :disabled="disabled"
         :is="computedTag"
         :type="computedNativeType"
         :class="rootClasses"

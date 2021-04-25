@@ -27,7 +27,12 @@ export default defineComponent({
 		 * Size of the control, optional
 		 * @values small, medium, large
 		 */
-		size: String
+		size: String,
+        /**
+		 * Icon pack to use
+		 * @values mdi, fa, fas and any other custom icon pack
+		 */
+		iconPack: String
 	},
 	data() {
 		return {

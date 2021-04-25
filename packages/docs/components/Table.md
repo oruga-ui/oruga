@@ -769,6 +769,139 @@ title: Table
 
 :::
 
+### Async Data
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-table
+      :data="data"
+      :loading="loading"
+      paginated
+      backend-pagination
+      :total="total"
+      :per-page="perPage"
+      @page-change="onPageChange"
+      aria-next-label="Next page"
+      aria-previous-label="Previous page"
+      aria-page-label="Page"
+      aria-current-label="Current page"
+      backend-sorting
+      :default-sort-direction="defaultSortOrder"
+      :default-sort="[sortField, sortOrder]"
+      @sort="onSort"
+    >
+      <o-table-column field="original_title" label="Title" sortable v-slot="props">
+        {{ props.row.original_title }}
+      </o-table-column>
+      <o-table-column field="vote_average" label="Vote Average" numeric sortable v-slot="props">
+        <span class="tag" :class="type(props.row.vote_average)">
+          {{ props.row.vote_average }}
+        </span>
+      </o-table-column>
+      <o-table-column field="vote_count" label="Vote Count" numeric sortable v-slot="props">
+        {{ props.row.vote_count }}
+      </o-table-column>
+      <o-table-column field="release_date" label="Release Date" sortable centered v-slot="props">
+        {{ props.row.release_date ? new Date(props.row.release_date).toLocaleDateString() : 'unknown' }}
+      </o-table-column>
+      <o-table-column label="Overview" width="500" v-slot="props">
+        {{ props.row.overview }}
+      </o-table-column>
+    </o-table>
+  </section>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        data: [],
+        total: 0,
+        loading: false,
+        sortField: 'vote_count',
+        sortOrder: 'desc',
+        defaultSortOrder: 'desc',
+        page: 1,
+        perPage: 20
+      }
+    },
+    methods: {
+      /*
+       * Load async data
+       */
+      loadAsyncData() {
+        const params = [
+          'api_key=bb6f51bef07465653c3e553d6ab161a8',
+          'language=en-US',
+          'include_adult=false',
+          'include_video=false',
+          `sort_by=${this.sortField}.${this.sortOrder}`,
+          `page=${this.page}`
+        ].join('&')
+        this.loading = true
+        fetch(`https://api.themoviedb.org/3/discover/movie?${params}`)
+          .then(response => response.json())
+          .then(data => {
+            // api.themoviedb.org manage max 1000 pages
+            this.data = []
+            let currentTotal = data.total_results
+            if (data.total_results / this.perPage > 1000) {
+              currentTotal = this.perPage * 1000
+            }
+            this.total = currentTotal
+            data.results.forEach(item => {
+              item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
+              this.data.push(item)
+            })
+            this.loading = false
+          })
+          .catch(error => {
+            this.data = []
+            this.total = 0
+            this.loading = false
+            throw error
+          })
+      },
+      /*
+       * Handle page-change event
+       */
+      onPageChange(page) {
+        this.page = page
+        this.loadAsyncData()
+      },
+      /*
+       * Handle sort event
+       */
+      onSort(field, order) {
+        this.sortField = field
+        this.sortOrder = order
+        this.loadAsyncData()
+      },
+      /*
+       * Type style in relation to the value
+       */
+      type(value) {
+        const number = parseFloat(value)
+        if (number < 6) {
+          return 'is-danger'
+        } else if (number >= 6 && number < 8) {
+          return 'is-warning'
+        } else if (number >= 8) {
+          return 'is-success'
+        }
+      }
+    },
+    mounted() {
+      this.loadAsyncData()
+    }
+  }
+</script>
+```
+
+:::
+
 ### Checkable
 
 ::: demo
@@ -1769,6 +1902,7 @@ export default {
 | defaultSort           | Sets the default sort column and order — e.g. ['first_name', 'desc']                                                                    | string\|array  | -                          |                                                                                                                                                  |
 | defaultSortDirection  | Sets the default sort column direction on the first click                                                                               | string         | `asc`, `desc`              | 'asc'                                                                                                                                            |
 | detailKey             | Use a unique key of your data Object when use detailed or opened detailed. (id recommended)                                             | string         | -                          | ''                                                                                                                                               |
+| detailTransition      |                                                                                                                                         | string         | -                          | ''                                                                                                                                               |
 | detailed              | Allow row details                                                                                                                       | boolean        | -                          |                                                                                                                                                  |
 | draggable             | Allows rows to be draggable                                                                                                             | boolean        | -                          | false                                                                                                                                            |
 | filtersEvent          | Add a native event to filter                                                                                                            | string         | -                          | ''                                                                                                                                               |
@@ -1808,8 +1942,6 @@ export default {
 | --------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
 | page-change           |                                                                                                                    |
 | dblclick              |                                                                                                                    |
-| mouseenter            |                                                                                                                    |
-| mouseleave            |                                                                                                                    |
 | contextmenu           |                                                                                                                    |
 | cell-click            |                                                                                                                    |
 | update:currentPage    |                                                                                                                    |

@@ -74,9 +74,7 @@ export default {
     inheritAttrs: false,
     provide() {
         return {
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
+
         }
     },
     props: {
@@ -119,7 +117,12 @@ export default {
          */
         iconRightClickable: Boolean,
         /** Variant of right icon */
-        iconRightType: [String, Function, Array],
+        iconRightVariant: String,
+        /** Add a button/icon to clear the inputed text */
+        clearable: {
+            type: Boolean,
+            default: () => { return getValueByPath(getOptions(), 'input.clearable', false) }
+        },
         rootClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
         iconLeftSpaceClass: [String, Function, Array],
@@ -137,7 +140,10 @@ export default {
             newValue: this.value,
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
-            isPasswordVisible: false
+            isPasswordVisible: false,
+            $elementRef: this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
         }
     },
     computed: {
@@ -180,15 +186,21 @@ export default {
             set(value) {
                 this.newValue = value
                 this.$emit('input', this.newValue)
+                this.syncFilled(this.newValue)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
         hasIconRight() {
-            return this.passwordReveal || (this.statusIcon && this.statusVariantIcon) || this.iconRight
+            return this.passwordReveal
+                || (this.statusIcon && this.statusVariantIcon)
+                || this.clearable
+                || this.iconRight
         },
         rightIcon() {
             if (this.passwordReveal) {
                 return this.passwordVisibleIcon
+            } else if (this.clearable && this.newValue) {
+                return 'close-circle'
             } else if (this.iconRight) {
                 return this.iconRight
             }
@@ -196,7 +208,7 @@ export default {
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return this.iconRightType || null
+                return this.iconRightVariant || null
             }
             return this.statusVariant
         },
@@ -244,8 +256,12 @@ export default {
         * When v-model is changed:
         *   1. Set internal value.
         */
-        value(value) {
-            this.newValue = value
+        value: {
+            immediate: true,
+            handler(value) {
+                this.newValue = value
+                this.syncFilled(this.newValue)
+            }
         }
     },
     methods: {
@@ -272,6 +288,8 @@ export default {
         rightIconClick(event) {
             if (this.passwordReveal) {
                 this.togglePasswordVisibility()
+            } else if (this.clearable) {
+                this.computedValue = ''
             } else if (this.iconRightClickable) {
                 this.iconClick('icon-right-click', event)
             }

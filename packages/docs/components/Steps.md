@@ -265,7 +265,6 @@ title: Steps
             </template>
         </doc-wrapper>
         <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-        <br/>
     </div>
 </template>
 

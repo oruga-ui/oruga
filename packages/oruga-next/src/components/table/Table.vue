@@ -132,15 +132,15 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- :key="customRowKey ? row[customRowKey] : index" -->
                 <template
-                    v-for="(row, index) in visibleData">
+                    v-for="(row, index) in visibleData"
+                    :key="this.customRowKey ? row[this.customRowKey] : index">
                     <tr
                         :class="rowClasses(row, index)"
                         @click="selectRow(row)"
                         @dblclick="$emit('dblclick', row)"
-                        @mouseenter="$attrs.mouseenter ? $emit('mouseenter', row) : null"
-                        @mouseleave="$attrs.mouseleave ? $emit('mouseleave', row) : null"
+                        @mouseenter="emitEventForRow('mouseenter', $event, row)"
+                        @mouseleave="emitEventForRow('mouseleave', $event, row)"
                         @contextmenu="$emit('contextmenu', row, $event)"
                         :draggable="draggable"
                         @dragstart="handleDragStart($event, row, index)"
@@ -175,8 +175,6 @@
                             />
                         </td>
 
-                        <!-- :key="column.newKey + index + ':' + colindex" -->
-
                         <o-slot-component
                             v-for="(column, colindex) in visibleColumns"
                             :key="column.newKey + index + ':' + colindex"
@@ -202,17 +200,19 @@
                         </td>
                     </tr>
 
-                    <tr
-                        v-if="isActiveDetailRow(row)"
-                        :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                        :class="detailedClasses">
-                        <td :colspan="columnCount">
-                            <slot
-                                name="detail"
-                                :row="row"
-                                :index="index"/>
-                        </td>
-                    </tr>
+                    <transition :name="detailTransition">
+                        <tr
+                            v-if="isActiveDetailRow(row)"
+                            :key="(this.customRowKey ? row[this.customRowKey] : index) + 'detail'"
+                            :class="detailedClasses">
+                            <td :colspan="columnCount">
+                                <slot
+                                    name="detail"
+                                    :row="row"
+                                    :index="index"/>
+                            </td>
+                        </tr>
+                    </transition>
                     <slot
                         v-if="isActiveCustomDetailRow(row)"
                         name="detail"
@@ -328,7 +328,7 @@ export default defineComponent({
         'check', 'check-all', 'update:checkedRows',
         'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
         'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
-        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover'
+        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click'
     ],
     props: {
         /** Table data */
@@ -486,6 +486,11 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        /* Transition name to use when toggling row details. */
+        detailTransition: {
+            type: String,
+            default: ''
+        },
         /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
         backendPagination: Boolean,
         /** Total number of table data if backend-pagination is enabled */
@@ -576,10 +581,14 @@ export default defineComponent({
             isAsc: true,
             filters: {},
             defaultSlots: [],
-            // firstTimeSort: true, // Used by first time initSort
-            firstTimeSort: false, // TODO
+            firstTimeSort: true,
             sequence: 1
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.checkSort()
+        })
     },
     computed: {
         tableClasses() {
@@ -767,7 +776,11 @@ export default defineComponent({
                         .mount(document.createElement('div'))
                 })
             }
-            return this.defaultSlots
+            let defaultSlots = this.defaultSlots
+                .filter((vnode) =>
+                    vnode && vnode.$data && vnode.$data._isTableColumn
+                )
+            return defaultSlots
         },
 
         isMobile() {
@@ -1182,7 +1195,6 @@ export default defineComponent({
         * Call initSort only first time (For example async data).
         */
         checkSort() {
-            // TODO
             if (this.newColumns.length && this.firstTimeSort) {
                 this.initSort()
                 this.firstTimeSort = false
@@ -1312,6 +1324,10 @@ export default defineComponent({
         handleDragLeave(event, row, index) {
             if (!this.draggable) return
             this.$emit('dragleave', {event, row, index})
+        },
+
+        emitEventForRow(eventName, event, row) {
+            return this.$attrs[eventName] ? this.$emit(eventName, row, event) : null
         },
 
         _addColumn(column) {

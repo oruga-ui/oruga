@@ -7,7 +7,7 @@
 
 # Submitting a Pull Request
 
-* The ``master`` branch is a snapshot of the latest release. **Submit your PR in the ``dev`` branch**
+* The ``master`` branch is a snapshot of the latest release. **Submit your PR in the ``develop`` branch**
 * Include **screenshots** or animated GIFs in your pull request whenever needed (if visual changes)
 * It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging
 * **DO NOT** commit the ``lib`` and ``dist`` folder, use it only for testing on your end

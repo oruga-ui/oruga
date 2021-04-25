@@ -167,7 +167,7 @@
                 </div>
 
                 <footer
-                    v-if="$slots.default !== undefined && $slots.default.length"
+                    v-if="$slots.default !== undefined"
                     :class="footerClasses">
                     <slot/>
                 </footer>
@@ -858,10 +858,13 @@ export default {
          */
         togglePicker(active) {
             if (this.$refs.dropdown) {
-                if (this.closeOnClick) {
-                    this.$refs.dropdown.isActive = typeof active === 'boolean'
-                        ? active
-                        : !this.$refs.dropdown.isActive
+                const isActive = typeof active === 'boolean'
+                    ? active
+                    : !this.$refs.dropdown.isActive
+                if (isActive) {
+                    this.$refs.dropdown.isActive = isActive
+                } else if (this.closeOnClick) {
+                    this.$refs.dropdown.isActive = isActive
                 }
             }
         },

@@ -19,7 +19,7 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getOptions } from '../../utils/config'
 import getIcons from '../../utils/icons'
-import { defaultIfUndefined, getValueByPath } from '../../utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Icons take an important role of any application
@@ -91,9 +91,11 @@ export default {
             ]
         },
         rootStyle() {
-            return {
-                transform: `rotate(${defaultIfUndefined(this.rotation, 0)}deg)`
+            const style = {}
+            if (this.rotation) {
+                style['transform'] = `rotate(${this.rotation}deg)`
             }
+            return style
         },
         iconConfig() {
             return getIcons()[this.newPack]

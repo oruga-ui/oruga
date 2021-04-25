@@ -123,7 +123,12 @@ export default defineComponent({
          */
         iconRightClickable: Boolean,
         /** Variant of right icon */
-        iconRightType: [String, Function],
+        iconRightVariant: String,
+        /** Add a button/icon to clear the inputed text */
+        clearable: {
+            type: Boolean,
+            default: () => { return getValueByPath(getOptions(), 'input.clearable', false) }
+        },
         rootClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
         iconLeftSpaceClass: [String, Function, Array],
@@ -185,15 +190,21 @@ export default defineComponent({
             set(value) {
                 this.newValue = value
                 this.$emit('update:modelValue', this.newValue)
+                this.syncFilled(this.newValue)
                 !this.isValid && this.checkHtml5Validity()
             }
         },
         hasIconRight() {
-            return this.passwordReveal || (this.statusIcon && this.statusVariantIcon) || this.iconRight
+            return this.passwordReveal
+                || (this.statusIcon && this.statusVariantIcon)
+                || this.clearable
+                || this.iconRight
         },
         rightIcon() {
             if (this.passwordReveal) {
                 return this.passwordVisibleIcon
+            } else if (this.clearable && this.newValue) {
+                return 'close-circle'
             } else if (this.iconRight) {
                 return this.iconRight
             }
@@ -201,7 +212,7 @@ export default defineComponent({
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return this.iconRightType || null
+                return this.iconRightVariant || null
             }
             return this.statusVariant
         },
@@ -249,8 +260,12 @@ export default defineComponent({
         * When v-model is changed:
         *   1. Set internal value.
         */
-        modelValue(value) {
-            this.newValue = value
+        modelValue: {
+            immediate: true,
+            handler(value) {
+                this.newValue = value
+                this.syncFilled(this.newValue)
+            }
         }
     },
     methods: {
@@ -274,9 +289,11 @@ export default defineComponent({
             })
         },
 
-        rightIconClick(event) {
+        rrightIconClick(event) {
             if (this.passwordReveal) {
                 this.togglePasswordVisibility()
+            } else if (this.clearable) {
+                this.computedValue = ''
             } else if (this.iconRightClickable) {
                 this.iconClick('icon-right-click', event)
             }
