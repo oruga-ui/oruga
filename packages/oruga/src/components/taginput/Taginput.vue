@@ -5,16 +5,21 @@
             :disabled="disabled"
             @click="hasInput && focus($event)">
             <slot name="selected" :items="items">
-                <div :class="itemsClasses">
-                    <o-button
-                        v-for="(item, index) in items"
-                        :key="getNormalizedItemText(item) + index"
-                        :class="itemClasses"
-                        :rounded="rounded"
-                    >
-                        {{ getNormalizedItemText(item) }}
-                    </o-button>
-                </div>
+                <span
+                    v-for="(item, index) in items"
+                    :key="getNormalizedItemText(item) + index"
+                    :class="itemClasses"
+                >
+                    <span>{{ getNormalizedItemText(item) }}</span>
+                    <o-icon
+                        v-if="closable"
+                        :class="closeClasses"
+                        clickable
+                        icon="times"
+                        @click.native="removeItem(index, $event)"
+                        :aria-label="ariaCloseLabel"
+                    />
+                </span>
             </slot>
 
             <o-autocomplete
@@ -91,6 +96,7 @@
 <script>
 import Autocomplete from '../autocomplete/Autocomplete'
 import Button from '../button/Button'
+import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -108,7 +114,8 @@ export default {
     name: 'OTaginput',
     components: {
         [Autocomplete.name]: Autocomplete,
-        [Button.name]: Button
+        [Button.name]: Button,
+        [Icon.name]: Icon
     },
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
@@ -122,11 +129,7 @@ export default {
             type: Array,
             default: () => []
         },
-        type: String,
-        rounded: {
-            type: Boolean,
-            default: false
-        },
+        variant: String,
         maxitems: {
             type: [Number, String],
             required: false
@@ -147,10 +150,11 @@ export default {
         nativeAutocomplete: String,
         openOnFocus: Boolean,
         disabled: Boolean,
-        ellipsis: Boolean,
         closable: {
             type: Boolean,
-            default: true
+            default: () => {
+                return getValueByPath(getOptions(), 'taginput.closable', true)
+            }
         },
         ariaCloseLabel: String,
         confirmKeys: {
@@ -188,10 +192,12 @@ export default {
             type: Function,
             default: (item) => item
         },
+        ariaCloseLabel: String,
         appendToBody: Boolean,
         rootClass: [String, Array, Function],
         expandedClass: [String, Array, Function],
-        itemsClass: [String, Array, Function],
+        variantClass: [String, Array, Function],
+        closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
         autocompleteClass: [String, Array, Function],
@@ -202,8 +208,7 @@ export default {
             items: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
             newItem: '',
             isComposing: false,
-            _elementRef: 'autocomplete',
-            _isIteminput: true
+            _elementRef: 'autocomplete'
         }
     },
     computed: {
@@ -217,20 +222,20 @@ export default {
         containerClasses() {
             return [
                 this.computedClass('containerClass', 'o-taginput__container'),
-                { [this.computedClass('expandedClass', 'o-taginput__container-is-focused')]: this.isFocused },
                 { [this.computedClass('sizeClass', 'o-taginput__container--', this.size)]: this.size },
-            ]
-        },
-
-        itemsClasses() {
-            return [
-                this.computedClass('itemsClasses', 'o-taginput__items')
             ]
         },
 
         itemClasses() {
             return [
-                this.computedClass('itemClasses', 'o-taginput__item')
+                this.computedClass('itemClasses', 'o-taginput__item'),
+                { [this.computedClass('variantClass', 'o-taginput__item--', this.variant)]: this.variant }
+            ]
+        },
+
+        closeClasses() {
+            return [
+                this.computedClass('closeClass', 'o-taginput__item__close')
             ]
         },
 

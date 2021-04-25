@@ -12,10 +12,12 @@ $taginput-max-width: 100% !default;
 $taginput-width: 100% !default;
 $taginput-counter-font-size: .75rem !default;
 $taginput-counter-margin: .25rem 0 0 .5rem !default;
-$taginput-items-margin: 0 0 calc(0.275em - 1px) 0.275rem !default;
-$taginput-item-font-size: 0.9em !default;
 $taginput-item-background-color: $primary !default;
-$taginput-item-border-radius: $base-rounded-border-radius !default;
+$taginput-item-color: $primary-invert !default;
+$taginput-item-border-radius: $base-border-radius !default;
+$taginput-item-margin: 0 0 0 0.275em !default;
+$taginput-item-padding: 0 .75em 0 .75em !default;
+$taginput-margin-icon-to-text: .1875em !default;
 /* @docs */
 
 .o-taginput {
@@ -55,11 +57,25 @@ $taginput-item-border-radius: $base-rounded-border-radius !default;
             box-shadow: none;
         }
     }
-    &__items {
-        @include avariable('margin', 'taginput-items-margin', $taginput-items-margin);
-    }
     &__item {
-        @include avariable('font-size', 'taginput-item-font-size', $taginput-item-font-size);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        @include side-flex-gap($taginput-margin-icon-to-text);
+        @include avariable('background-color', 'taginput-item-background-color', $taginput-item-background-color);
+        @include avariable('color', 'taginput-item-color', $taginput-item-color);
+        @include avariable('border-radius', 'taginput-item-border-radius', $taginput-item-border-radius);
+        @include avariable('margin', 'taginput-item-margin', $taginput-item-margin);
+        @include avariable('padding', 'taginput-item-padding', $taginput-item-padding);
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+            &--#{$name} {
+                @include avariable('background-color', ('variant-' + #{$name}), $color);
+                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
+            }
+        }
     }
     &__counter {
         display: block;

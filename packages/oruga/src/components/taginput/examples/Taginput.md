@@ -9,7 +9,6 @@
         <o-field label="Add some tags">
             <o-taginput
                 v-model="tags"
-                ellipsis
                 icon="tag"
                 placeholder="Add a tag"
                 aria-close-label="Delete this tag">
@@ -150,6 +149,100 @@
                 })
             }
         }
+    }
+</script>
+```
+:::
+
+### Custom selected
+
+::: demo
+```html
+<template>
+    <section>
+        <o-field label="Enter some items">
+            <o-taginput
+                v-model="items"
+                ref="input"
+                icon="tag"
+                placeholder="Add an item">
+                <template #selected="{ items }">
+                    <o-button
+                        native-type="button"
+                        v-for="(item, index) in items"
+                        :key="index"
+                        :variant="getType(item)"
+                        rounded
+                        @click="$refs.input.removeItem(index, $event)">
+                        {{ item }}
+                    </o-button>
+                </template>
+            </o-taginput>
+        </o-field>
+        <p class="content"><b>Items:</b> {{ items }}</p>
+    </section>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                items: []
+            }
+        },
+        methods: {
+            getType(item) {
+                const random = 'Z'.charCodeAt(0) - item.toUpperCase().charCodeAt(0) 
+                if (random >= 1 && random < 5) {
+                    return 'primary'
+                } else if (random >= 6 && random < 10) {
+                    return 'danger'
+                } else if (random >= 11 && random < 15) {
+                    return 'warning'
+                } else if (random >= 15 && random < 20) {
+                    return 'success'
+                } else if (random >= 20 && random < 25) {
+                    return 'info'
+                }
+            }
+        }
+    }
+</script>
+```
+:::
+
+### Limits
+
+::: demo
+```html
+<template>
+    <section>
+        <o-field label="Limited to 10 characters">
+            <o-taginput
+                maxlength="10"
+                :value="['Oruga', 'Vue', 'CSS']">
+            </o-taginput>
+        </o-field>
+
+        <o-field label="Limited to 5 tags">
+            <o-taginput
+                maxitems="5"
+                :value="['One', 'Two', 'Three', 'Four']">
+            </o-taginput>
+        </o-field>
+
+        <o-field label="Limited to 10 characters and 5 tags">
+            <o-taginput
+                maxlength="10"
+                maxitems="5"
+                :value="['Red', 'Green', 'Blue', 'White']">
+            </o-taginput>
+        </o-field>
+    </section>
+</template>
+
+<script>
+    export default {
     }
 </script>
 ```

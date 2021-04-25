@@ -20,7 +20,7 @@ title: Multiple Input
 <template>
   <section>
     <o-field label="Add some tags">
-      <o-taginput v-model="tags" ellipsis icon="tag" placeholder="Add a tag" aria-close-label="Delete this tag"> </o-taginput>
+      <o-taginput v-model="tags" icon="tag" placeholder="Add a tag" aria-close-label="Delete this tag"> </o-taginput>
     </o-field>
     <p class="content"><b>Tags:</b> {{ tags }}</p>
   </section>
@@ -164,6 +164,83 @@ title: Multiple Input
 
 :::
 
+### Custom selected
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-field label="Enter some items">
+      <o-taginput v-model="items" ref="input" icon="tag" placeholder="Add an item">
+        <template #selected="{ items }">
+          <o-button native-type="button" v-for="(item, index) in items" :key="index" :variant="getType(item)" rounded @click="$refs.input.removeItem(index, $event)">
+            {{ item }}
+          </o-button>
+        </template>
+      </o-taginput>
+    </o-field>
+    <p class="content"><b>Items:</b> {{ items }}</p>
+  </section>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        items: []
+      }
+    },
+    methods: {
+      getType(item) {
+        const random = 'Z'.charCodeAt(0) - item.toUpperCase().charCodeAt(0)
+        if (random >= 1 && random < 5) {
+          return 'primary'
+        } else if (random >= 6 && random < 10) {
+          return 'danger'
+        } else if (random >= 11 && random < 15) {
+          return 'warning'
+        } else if (random >= 15 && random < 20) {
+          return 'success'
+        } else if (random >= 20 && random < 25) {
+          return 'info'
+        }
+      }
+    }
+  }
+</script>
+```
+
+:::
+
+### Limits
+
+::: demo
+
+```html
+<template>
+  <section>
+    <o-field label="Limited to 10 characters">
+      <o-taginput maxlength="10" :value="['Oruga', 'Vue', 'CSS']"> </o-taginput>
+    </o-field>
+
+    <o-field label="Limited to 5 tags">
+      <o-taginput maxitems="5" :value="['One', 'Two', 'Three', 'Four']"> </o-taginput>
+    </o-field>
+
+    <o-field label="Limited to 10 characters and 5 tags">
+      <o-taginput maxlength="10" maxitems="5" :value="['Red', 'Green', 'Blue', 'White']"> </o-taginput>
+    </o-field>
+  </section>
+</template>
+
+<script>
+  export default {}
+</script>
+```
+
+:::
+
 ## Props
 
 | Prop name           | Description                                                 | Type           | Values                                            | Default                                                                                                                                            |
@@ -175,12 +252,11 @@ title: Multiple Input
 | autocomplete        | Native options to use in HTML5 validation                   | boolean        | -                                                 |                                                                                                                                                    |
 | beforeAdding        |                                                             | func           | -                                                 | Default function (see source code)                                                                                                                 |
 | checkInfiniteScroll |                                                             | boolean        | -                                                 | false                                                                                                                                              |
-| closable            |                                                             | boolean        | -                                                 | true                                                                                                                                               |
+| closable            |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;closable: true<br>}</code>              |
 | confirmKeys         |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;confirmKeys: ['<br>}</code>             |
 | createItem          |                                                             | func           | -                                                 | Default function (see source code)                                                                                                                 |
 | data                |                                                             | array          | -                                                 | []                                                                                                                                                 |
 | disabled            |                                                             | boolean        | -                                                 |                                                                                                                                                    |
-| ellipsis            |                                                             | boolean        | -                                                 |                                                                                                                                                    |
 | expanded            | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                                                                                                    |
 | field               |                                                             | string         | -                                                 | 'value'                                                                                                                                            |
 | groupField          |                                                             | string         | -                                                 |                                                                                                                                                    |
@@ -195,12 +271,12 @@ title: Multiple Input
 | openOnFocus         |                                                             | boolean        | -                                                 |                                                                                                                                                    |
 | override            | Override classes                                            | boolean        | -                                                 | false                                                                                                                                              |
 | removeOnKeys        |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> taginput {<br>&nbsp;&nbsp;removeOnKeys: ['Backspace']<br>}</code> |
-| rounded             | Makes the element rounded                                   | boolean        | -                                                 | false                                                                                                                                              |
+| rounded             | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                                    |
 | statusIcon          | Show status icon using field and variant prop               | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "statusIcon": true<br>}</code>                   |
-| type                |                                                             | string         | -                                                 |                                                                                                                                                    |
 | useHtml5Validation  | Enable html 5 native validation                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code>           |
 | validationMessage   | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                                    |
 | value               |                                                             | array          | -                                                 | []                                                                                                                                                 |
+| variant             |                                                             | string         | -                                                 |                                                                                                                                                    |
 
 ## Events
 
@@ -241,7 +317,9 @@ title: Multiple Input
 | --oruga-taginput-width                 | \$taginput-width                 | 100%                             |
 | --oruga-taginput-counter-font-size     | \$taginput-counter-font-size     | .75rem                           |
 | --oruga-taginput-counter-margin        | \$taginput-counter-margin        | .25rem 0 0 .5rem                 |
-| --oruga-taginput-items-margin          | \$taginput-items-margin          | 0 0 calc(0.275em - 1px) 0.275rem |
-| --oruga-taginput-item-font-size        | \$taginput-item-font-size        | 0.9em                            |
 | --oruga-taginput-item-background-color | \$taginput-item-background-color | \$primary                        |
-| --oruga-taginput-item-border-radius    | \$taginput-item-border-radius    | \$base-rounded-border-radius     |
+| --oruga-taginput-item-color            | \$taginput-item-color            | \$primary-invert                 |
+| --oruga-taginput-item-border-radius    | \$taginput-item-border-radius    | \$base-border-radius             |
+| --oruga-taginput-item-margin           | \$taginput-item-margin           | 0 0 0 0.275em                    |
+| --oruga-taginput-item-padding          | \$taginput-item-padding          | 0 .75em 0 .75em                  |
+| --oruga-taginput-margin-icon-to-text   | \$taginput-margin-icon-to-text   | .1875em                          |
