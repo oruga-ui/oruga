@@ -26,9 +26,7 @@
                 ref="autocomplete"
                 v-if="hasInput"
                 v-model="newItem"
-                v-bind="$attrs"
-                :root-class="autocompleteClasses"
-                :input-classes="inputClasses"
+                v-bind="autocompleteBind"
                 :data="data"
                 :field="field"
                 :icon="icon"
@@ -106,12 +104,12 @@ import { getOptions } from '../../utils/config'
 
 /**
  * A simple item input field that can have autocomplete functionality
- * @displayName Multiple Input
- * @example ./examples/Taginput.md
- * @style _taginput.scss
+ * @displayName Inputitems
+ * @example ./examples/InputItems.md
+ * @style _inputItems.scss
  */
 export default {
-    name: 'OTaginput',
+    name: 'OInputitems',
     components: {
         [Autocomplete.name]: Autocomplete,
         [Button.name]: Button,
@@ -119,7 +117,7 @@ export default {
     },
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
-    configField: 'taginput',
+    configField: 'inputitems',
     props: {
         value: {
             type: Array,
@@ -137,7 +135,7 @@ export default {
         hasCounter: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'taginput.hasCounter', true)
+                return getValueByPath(getOptions(), 'inputitems.hasCounter', true)
             }
         },
         field: {
@@ -153,27 +151,26 @@ export default {
         closable: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'taginput.closable', true)
+                return getValueByPath(getOptions(), 'inputitems.closable', true)
             }
         },
-        ariaCloseLabel: String,
         confirmKeys: {
             type: Array,
             default: () => {
-                return getValueByPath(getOptions(), 'taginput.confirmKeys', [',', 'Tab', 'Enter'])
+                return getValueByPath(getOptions(), 'inputitems.confirmKeys', [',', 'Tab', 'Enter'])
             }
         },
         removeOnKeys: {
             type: Array,
             default: () => {
-                return getValueByPath(getOptions(), 'taginput.removeOnKeys', ['Backspace'])
+                return getValueByPath(getOptions(), 'inputitems.removeOnKeys', ['Backspace'])
             }
         },
         allowNew: Boolean,
         onPasteSeparators: {
             type: Array,
             default: () => {
-                return getValueByPath(getOptions(), 'taginput.onPasteSeparators', [','])
+                return getValueByPath(getOptions(), 'inputitems.onPasteSeparators', [','])
             }
         },
         beforeAdding: {
@@ -200,8 +197,10 @@ export default {
         closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
-        autocompleteClass: [String, Array, Function],
-        inputClass: [String, Array, Function],
+        /** Classes to apply on internal autocomplete (@see o-autocomplete style docs) */
+        autocompleteClasses: Object,
+        /** Classes to apply on internal input (@see o-input style docs) */
+        inputClasses: Object
     },
     data() {
         return {
@@ -214,47 +213,47 @@ export default {
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-taginput'),
-                { [this.computedClass('expandedClass', 'o-taginput--expanded')]: this.expanded }
+                this.computedClass('rootClass', 'o-inputit'),
+                { [this.computedClass('expandedClass', 'o-inputit--expanded')]: this.expanded }
             ]
         },
 
         containerClasses() {
             return [
-                this.computedClass('containerClass', 'o-taginput__container'),
-                { [this.computedClass('sizeClass', 'o-taginput__container--', this.size)]: this.size },
+                this.computedClass('containerClass', 'o-inputit__container'),
+                { [this.computedClass('sizeClass', 'o-inputit__container--', this.size)]: this.size },
             ]
         },
 
         itemClasses() {
             return [
-                this.computedClass('itemClasses', 'o-taginput__item'),
-                { [this.computedClass('variantClass', 'o-taginput__item--', this.variant)]: this.variant }
+                this.computedClass('itemClasses', 'o-inputit__item'),
+                { [this.computedClass('variantClass', 'o-inputit__item--', this.variant)]: this.variant }
             ]
         },
 
         closeClasses() {
             return [
-                this.computedClass('closeClass', 'o-taginput__item__close')
+                this.computedClass('closeClass', 'o-inputit__item__close')
             ]
-        },
-
-        autocompleteClasses() {
-            return [
-                this.computedClass('autocompleteClass', 'o-taginput__autocomplete')
-            ]
-        },
-
-        inputClasses() {
-            return {
-                'input-class': this.computedClass('inputClass', 'o-taginput__input')
-            }
         },
 
         counterClasses() {
             return [
-                this.computedClass('counterClass', 'o-taginput__counter')
+                this.computedClass('counterClass', 'o-inputit__counter')
             ]
+        },
+
+        autocompleteBind() {
+            return {
+                ...this.$attrs,
+                'root-class': this.computedClass('autocompleteClass', 'o-inputit__autocomplete'),
+                'input-classes': {
+                    'input-class': this.computedClass('inputClass', 'o-inputit__input'),
+                    ...this.inputClasses
+                },
+                ...this.autocompleteClasses
+            }
         },
 
         valueLength() {

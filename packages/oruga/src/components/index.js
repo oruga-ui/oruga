@@ -8,6 +8,7 @@ import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
 import Input from './input'
+import Inputitems from './inputitems'
 import Loading from './loading'
 import Modal from './modal'
 import Pagination from './pagination'
@@ -20,7 +21,6 @@ import Steps from './steps'
 import Switch from './switch'
 import Table from './table'
 import Tabs from './tabs'
-import Taginput from './taginput'
 import Timepicker from './timepicker'
 import Tooltip from './tooltip'
 import Upload from './upload'
@@ -36,6 +36,7 @@ export {
     Field,
     Icon,
     Input,
+    Inputitems,
     Loading,
     Modal,
     Pagination,
@@ -48,7 +49,6 @@ export {
     Switch,
     Table,
     Tabs,
-    Taginput,
     Timepicker,
     Tooltip,
     Upload

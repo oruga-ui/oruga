@@ -1,10 +1,10 @@
-import Taginput from './Taginput'
+import Inputitems from './Inputitems'
 
 import { use, registerComponent } from '../../utils/plugins'
 
 const Plugin = {
     install(Vue) {
-        registerComponent(Vue, Taginput)
+        registerComponent(Vue, Inputitems)
     }
 }
 
@@ -13,5 +13,5 @@ use(Plugin)
 export default Plugin
 
 export {
-    Taginput as BTaginput
+    Inputitems as OInputitems
 }

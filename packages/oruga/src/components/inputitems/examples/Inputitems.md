@@ -7,12 +7,12 @@
 <template>
     <section>
         <o-field label="Add some tags">
-            <o-taginput
+            <o-inputitems
                 v-model="tags"
                 icon="tag"
                 placeholder="Add a tag"
                 aria-close-label="Delete this tag">
-            </o-taginput>
+            </o-inputitems>
         </o-field>
         <p class="content"><b>Tags:</b> {{ tags }}</p>
     </section>
@@ -49,7 +49,7 @@
             </o-switch>
         </div>
         <o-field label="Enter some tags">
-            <o-taginput
+            <o-inputitems
                 v-model="tags"
                 :data="filteredTags"
                 autocomplete
@@ -59,7 +59,7 @@
                 icon="tag"
                 placeholder="Add a tag"
                 @typing="getFilteredTags">
-            </o-taginput>
+            </o-inputitems>
         </o-field>
         <p class="content"><b>Tags:</b> {{ tags }}</p>
     </section>
@@ -133,7 +133,6 @@
         data() {
             return {
                 filteredTags: data,
-                isSelectOnly: false,
                 tags: [],
                 allowNew: false,
                 openOnFocus: false
@@ -161,7 +160,7 @@
 <template>
     <section>
         <o-field label="Enter some items">
-            <o-taginput
+            <o-inputitems
                 v-model="items"
                 ref="input"
                 icon="tag"
@@ -177,7 +176,7 @@
                         {{ item }}
                     </o-button>
                 </template>
-            </o-taginput>
+            </o-inputitems>
         </o-field>
         <p class="content"><b>Items:</b> {{ items }}</p>
     </section>
@@ -218,25 +217,25 @@
 <template>
     <section>
         <o-field label="Limited to 10 characters">
-            <o-taginput
+            <o-inputitems
                 maxlength="10"
                 :value="['Oruga', 'Vue', 'CSS']">
-            </o-taginput>
+            </o-inputitems>
         </o-field>
 
         <o-field label="Limited to 5 tags">
-            <o-taginput
+            <o-inputitems
                 maxitems="5"
                 :value="['One', 'Two', 'Three', 'Four']">
-            </o-taginput>
+            </o-inputitems>
         </o-field>
 
         <o-field label="Limited to 10 characters and 5 tags">
-            <o-taginput
+            <o-inputitems
                 maxlength="10"
                 maxitems="5"
                 :value="['Red', 'Green', 'Blue', 'White']">
-            </o-taginput>
+            </o-inputitems>
         </o-field>
     </section>
 </template>
