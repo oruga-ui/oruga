@@ -199,6 +199,15 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
   </tr>
 </table>
 
+## Contributors
+Thank you to everyone involved for improving this project, day by day 💚
+
+<a href="https://github.com/oruga-ui/oruga">
+  <img
+  src="https://contrib.rocks/image?repo=oruga-ui/oruga"
+  />
+</a>
+
 ## Credits
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
