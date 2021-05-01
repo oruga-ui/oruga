@@ -197,10 +197,9 @@ export default {
         closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
+        autocompleteClass: [String, Array, Function],
         /** Classes to apply on internal autocomplete (@see o-autocomplete style docs) */
-        autocompleteClasses: Object,
-        /** Classes to apply on internal input (@see o-input style docs) */
-        inputClasses: Object
+        autocompleteClasses: Object
     },
     data() {
         return {
@@ -248,10 +247,6 @@ export default {
             return {
                 ...this.$attrs,
                 'root-class': this.computedClass('autocompleteClass', 'o-inputit__autocomplete'),
-                'input-classes': {
-                    'input-class': this.computedClass('inputClass', 'o-inputit__input'),
-                    ...this.inputClasses
-                },
                 ...this.autocompleteClasses
             }
         },

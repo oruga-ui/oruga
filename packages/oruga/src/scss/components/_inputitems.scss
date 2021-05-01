@@ -49,12 +49,12 @@ $inputitems-margin-icon-to-text: .1875em !default;
     &__autocomplete {
         position: static;
         flex: 1;
-    }
-    &__input {
-        border: none;
-        box-shadow: none;
-        &:focus {
+        input {
+            border: none;
             box-shadow: none;
+            &:focus {
+                box-shadow: none;
+            }
         }
     }
     &__item {
