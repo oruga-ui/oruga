@@ -16,7 +16,7 @@ export default {
     mixins: [NoticeMixin],
     data() {
         return {
-            newDuration: this.duration || getValueByPath(getOptions(), 'notification.defaultNotificationDuration', 1000)
+            newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000)
         }
     }
 }
