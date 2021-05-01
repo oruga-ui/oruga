@@ -19,8 +19,8 @@ const NotificationProgrammatic = {
         }
 
         const defaultParam = {
-            position: getValueByPath(getOptions(), 'notification.defaultNotificationPosition', 'top-right'),
-            closable: params.closable || getValueByPath(getOptions(), 'notification.defaultNotificationClosable', false)
+            position: getValueByPath(getOptions(), 'notification.position', 'top-right'),
+            closable: params.closable || getValueByPath(getOptions(), 'notification.closable', false)
         }
         if (params.parent) {
             parent = params.parent
