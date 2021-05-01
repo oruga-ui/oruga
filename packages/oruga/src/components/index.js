@@ -10,6 +10,8 @@ import Icon from './icon'
 import Input from './input'
 import Inputitems from './inputitems'
 import Loading from './loading'
+import Notification from './notification'
+import NotificationNotice from './notification'
 import Modal from './modal'
 import Pagination from './pagination'
 import Radio from './radio'
@@ -39,6 +41,8 @@ export {
     Inputitems,
     Loading,
     Modal,
+    Notification,
+    NotificationNotice,
     Pagination,
     Radio,
     Select,
