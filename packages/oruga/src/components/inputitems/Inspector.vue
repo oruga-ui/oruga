@@ -7,7 +7,6 @@
 					v-model="tags"
 					:data="filteredTags"
 					autocomplete
-                    root-class="pippo"
 					field="user.first_name"
 					icon="tag"
 					placeholder="Add a tag"
@@ -84,16 +83,15 @@
 	{"id":60,"user":{"first_name":"Christopher","last_name":"Palmer"},"date":"2016/05/24 08:58:12","gender":"Male"}
 ]
 
-
 export default {
   	data() {
 		return {
 			filteredTags: data,
-			tags: [],
+			tags: [ data[1] ],
 			inspectData: [
 				{
 					class: "rootClass",
-					description: "'Class of the root element"
+					description: "Class of the root element"
 				},
 				{
 					class: "expandedClass",
@@ -103,9 +101,13 @@ export default {
 						cmp.data.expanded = true;
 					}
 				},
+                {
+					class: "itemClass",
+					description: "Class of the entered item"
+				},
 				{
 					class: "variantClass",
-					description: "Class of the button variant",
+					description: "Class of the entered item variant",
 					properties: ["variant"],
 					suffixes: ['primary', 'info', 'warning', 'danger'],
 					action: (cmp) => {
@@ -123,17 +125,17 @@ export default {
 				{
 					class: "counterClass",
 					description: "Class of the counter element",
-					properties: ['hasCounter', 'maxlength'],
+					properties: ['hasCounter', 'maxitems'],
 					action: (cmp) => {
 						cmp.data.hasCounter = true;
-						cmp.data.maxlength = 10;
-						let el = cmp.$el.querySelector('input')
-						el.dispatchEvent(new Event('focus'));
+						cmp.data.maxitems = 5;
 					}
 				},
 				{
-					class: "autocompleteClass",
-					description: "'Class of the autocomplete/input element"
+					class: "autocompleteClasses",
+                    realClass: "autocompleteClasses.inputClass",
+					description: "Classes to apply on internal autocomplete.",
+                    componentRef: "Autocomplete"
 				},
 			],
 		};

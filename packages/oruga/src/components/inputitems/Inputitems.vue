@@ -119,77 +119,106 @@ export default {
     inheritAttrs: false,
     configField: 'inputitems',
     props: {
+        /** @model */
         value: {
             type: Array,
             default: () => []
         },
+        /** Items data */
         data: {
             type: Array,
             default: () => []
         },
+        /**
+         * Color of the each items, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: String,
+        /** Limits the number of items, plus item counter */
         maxitems: {
             type: [Number, String],
             required: false
         },
+        /** Show counter when maxlength or maxtags props are passed */
         hasCounter: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'inputitems.hasCounter', true)
             }
         },
+        /** Property of the object (if data is array of objects) to use as display text */
         field: {
             type: String,
             default: 'value'
         },
+        /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
         autocomplete: Boolean,
+        /**  Property of the object (if data is array of objects) to use as display text of group */
         groupField: String,
+        /**  Property of the object (if data is array of objects) to use as key to get items array of each group, optional */
         groupOptions: String,
         nativeAutocomplete: String,
+        /**  Opens a dropdown with choices when the input field is focused */
         openOnFocus: Boolean,
+        /** Input will be disabled */
         disabled: Boolean,
+        /** Add close/delete button to the item */
         closable: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'inputitems.closable', true)
             }
         },
+        /**
+         * Array of keys
+         * {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values}
+         * which will add a item when typing (default comma, tab and enter)
+         */
         confirmKeys: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'inputitems.confirmKeys', [',', 'Tab', 'Enter'])
             }
         },
+        /** Allow removing last item when pressing given keys, if input is empty */
         removeOnKeys: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'inputitems.removeOnKeys', ['Backspace'])
             }
         },
+        /** When autocomplete, it allow to add new items */
         allowNew: Boolean,
+        /** Array of chars used to split when pasting a new string */
         onPasteSeparators: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'inputitems.onPasteSeparators', [','])
             }
         },
+        /** Function to validate the value of the item before adding */
         beforeAdding: {
             type: Function,
             default: () => true
         },
+        /** Allows adding the same item multiple time */
         allowDuplicates: {
             type: Boolean,
             default: false
         },
+        /** Makes the autocomplete component check if list reached scroll end and emit infinite-scroll event */
         checkInfiniteScroll: {
             type: Boolean,
             default: false
         },
+        /** Function to create item item to push into v-model (items) */
         createItem: {
             type: Function,
             default: (item) => item
         },
+        /** Accessibility label for the close button */
         ariaCloseLabel: String,
+        /** Append autocomplete content to body */
         appendToBody: Boolean,
         rootClass: [String, Array, Function],
         expandedClass: [String, Array, Function],
@@ -197,8 +226,6 @@ export default {
         closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
-        autocompleteClass: [String, Array, Function],
-        /** Classes to apply on internal autocomplete (@see o-autocomplete style docs) */
         autocompleteClasses: Object
     },
     data() {
@@ -246,7 +273,10 @@ export default {
         autocompleteBind() {
             return {
                 ...this.$attrs,
-                'root-class': this.computedClass('autocompleteClass', 'o-inputit__autocomplete'),
+                'root-class': this.computedClass('autocompleteClasses.rootClass', 'o-inputit__autocomplete'),
+                'input-classes': {
+                    'input-class': this.computedClass('autocompleteClasses.inputClasses.inputClass', 'o-inputit__input'),
+                },
                 ...this.autocompleteClasses
             }
         },

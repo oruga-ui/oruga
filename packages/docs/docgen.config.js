@@ -93,7 +93,7 @@ function tmplProps(props, config, name) {
 
   props.forEach(pr => {
     const p = pr.name
-    if (p.endsWith("Class")) {
+    if (p.endsWith("Class") || p.endsWith("Classes")) {
       if (!(IGNORE_CLASSES[name] && IGNORE_CLASSES[name].indexOf(p) >= 0)) {
         return;
       }
@@ -111,7 +111,7 @@ function tmplProps(props, config, name) {
       }
       if (configParts && configParts[0] && configParts[1]) {
         const value = `${configParts[1].replace(/'/g, '')}: ${params[2]}`
-        d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g, '')} {<br>&nbsp;&nbsp;${value}<br>}</code>`
+        d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g, '')}: {<br>&nbsp;&nbsp;${value}<br>}</code>`
       }
       if (configParts && configParts.length == 1) {
         const value = `${configParts[0].replace(/'/g, '')}: ${params[2]}`

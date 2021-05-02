@@ -67,6 +67,9 @@
                 <td v-if="data.subitem">▷ <a :href="`#${subitem}`">{{data.class}}</a></td>
                 <td>
                     <span>{{data.description | addDotToTheEnd}}</span>
+                    <span v-if="data.componentRef">
+                        More detail <a target="_blank" :href="`/components/${data.componentRef}.html#class-props`">here</a>
+                    </span>
                     <span v-if="data.warning"><br>👉 <i><span v-html="data.warning"></span></i></span>
                     <span v-if="data.specificity"><br>🔍 <i><span>Classes applied have a higher specificity than expected <span v-html="data.specificity"></span></span></i></span>
                 </td>
@@ -116,7 +119,8 @@ export default {
         },
         inspectClass(index, selectedData) {
             this.selectedElementIndex = index
-            this.$root.$emit('inspect-class', selectedData.class, selectedData.action)
+            const selectedClass = selectedData.realClass || selectedData.class
+            this.$root.$emit('inspect-class', selectedClass, selectedData.action)
             document.getElementById("class-props").scrollIntoView();
         }
     }
