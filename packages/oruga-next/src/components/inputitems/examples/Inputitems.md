@@ -60,7 +60,7 @@
                 @typing="getFilteredTags">
             </o-inputitems>
         </o-field>
-        <p class="content"><b>Tags:</b> {{ tags }}</p>
+        <p class="content"><b>Items:</b> {{ tags }}</p>
     </section>
 </template>
 
