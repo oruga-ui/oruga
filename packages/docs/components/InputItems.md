@@ -348,6 +348,10 @@ export default {
 						cmp.data.expanded = true;
 					}
 				},
+                {
+					class: "itemClass",
+					description: "Class of the entered item"
+				},
 				{
 					class: "variantClass",
 					description: "Class of the entered item variant",

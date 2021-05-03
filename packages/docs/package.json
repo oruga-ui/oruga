@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "docs:dev": "npm link @oruga-ui/oruga && concurrently \"vue-docgen --watch\" \"vuepress dev --host localhost\"",
-    "docs:build": "vue-docgen && vuepress build"
+    "docs:build": "vuepress build"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",
