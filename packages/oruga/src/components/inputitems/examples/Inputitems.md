@@ -6,15 +6,15 @@
 ```html
 <template>
     <section>
-        <o-field label="Add some tags">
+        <o-field label="Add some items">
             <o-inputitems
                 v-model="tags"
                 icon="tag"
-                placeholder="Add a tag"
-                aria-close-label="Delete this tag">
+                placeholder="Add an item"
+                aria-close-label="Delete this item">
             </o-inputitems>
         </o-field>
-        <p class="content"><b>Tags:</b> {{ tags }}</p>
+        <p class="content"><b>Items:</b> {{ tags }}</p>
     </section>
 </template>
 
@@ -23,9 +23,8 @@
         data() {
             return {
                 tags: [
-                    'Auckland',
-                    'Wellington',
-                    'Very long string that would overflow'
+                    'Pistoia',
+                    'Valdinievole'
                 ]
             }
         }
@@ -42,13 +41,13 @@
     <section>
         <div class="block">
             <o-switch v-model="allowNew">
-                Allow new tags
+                Allow new items
             </o-switch>
             <o-switch v-model="openOnFocus">
                 Open on focus
             </o-switch>
         </div>
-        <o-field label="Enter some tags">
+        <o-field label="Enter some items">
             <o-inputitems
                 v-model="tags"
                 :data="filteredTags"
@@ -57,7 +56,7 @@
                 :open-on-focus="openOnFocus"
                 field="user.first_name"
                 icon="tag"
-                placeholder="Add a tag"
+                placeholder="Add an item"
                 @typing="getFilteredTags">
             </o-inputitems>
         </o-field>
