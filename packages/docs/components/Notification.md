@@ -98,10 +98,9 @@ title: Notification
       component() {
         this.$oruga.notification.open({
           component: NotificationForm,
-          duration: 5000,
           position: 'bottom-right',
           variant: 'warning',
-          autoClose: false
+          indefinite: true
         })
       }
     }
