@@ -23,6 +23,7 @@
                         autocomplete="off"
                         v-bind="inputBind"
                         :value="formattedValue"
+                        :expanded="expanded"
                         :placeholder="placeholder"
                         :size="size"
                         :icon="icon"

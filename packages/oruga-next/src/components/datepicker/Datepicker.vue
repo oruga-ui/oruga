@@ -22,6 +22,7 @@
                         ref="input"
                         autocomplete="off"
                         :value="formattedValue"
+                        :expanded="expanded"
                         :placeholder="placeholder"
                         :size="size"
                         :icon="icon"
