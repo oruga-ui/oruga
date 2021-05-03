@@ -91,15 +91,16 @@
     </div>
 </template>
 
-<script>
-import Autocomplete from '../autocomplete/Autocomplete'
-import Icon from '../icon/Icon'
+<script lang="ts">
+import Autocomplete from '../autocomplete/Autocomplete.vue'
+import Icon from '../icon/Icon.vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+import { defineComponent } from 'vue'
 
 /**
  * A simple item input field that can have autocomplete functionality
@@ -107,7 +108,7 @@ import { getOptions } from '../../utils/config'
  * @example ./examples/InputItems.md
  * @style _inputItems.scss
  */
-export default {
+export default defineComponent({
     name: 'OInputitems',
     components: {
         [Autocomplete.name]: Autocomplete,
@@ -116,9 +117,10 @@ export default {
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     configField: 'inputitems',
+    emits: ['update:modelValue', 'focus', 'blur', 'add', 'remove', 'typing', 'infinite-scroll'],
     props: {
         /** @model */
-        value: {
+        modelValue: {
             type: Array,
             default: () => []
         },
@@ -212,7 +214,7 @@ export default {
         /** Function to create item item to push into v-model (items) */
         createItem: {
             type: Function,
-            default: (item) => item
+            default: (item: any) => item
         },
         /** Accessibility label for the close button */
         ariaCloseLabel: String,
@@ -228,7 +230,7 @@ export default {
     },
     data() {
         return {
-            items: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
+            items: Array.isArray(this.modelValue) ? this.modelValue.slice(0) : (this.modelValue || []),
             newItem: '',
             isComposing: false,
             _elementRef: 'autocomplete'
@@ -354,7 +356,7 @@ export default {
                 const add = !this.allowDuplicates ? this.items.indexOf(itemToAdd) === -1 : true
                 if (add && this.beforeAdding(itemToAdd)) {
                     this.items.push(this.createItem(itemToAdd))
-                    this.$emit('input', this.items)
+                    this.$emit('update:modelValue', this.items)
                     this.$emit('add', itemToAdd)
                 }
             }
@@ -388,7 +390,7 @@ export default {
 
         removeItem(index, event) {
             const item = this.items.splice(index, 1)[0]
-            this.$emit('input', this.items)
+            this.$emit('update:modelValue', this.items)
             this.$emit('remove', item)
             if (event) event.stopPropagation()
             if (this.openOnFocus && this.$refs.autocomplete) {
@@ -427,5 +429,5 @@ export default {
             this.$emit('infinite-scroll')
         }
     }
-}
+})
 </script>
