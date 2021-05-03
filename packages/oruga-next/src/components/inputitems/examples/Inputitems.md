@@ -6,19 +6,15 @@
 ```html
 <template>
     <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
-        <o-field label="Find a JS framework">
-            <o-autocomplete
-                rounded
-                v-model="name"
-                :data="filteredDataArray"
-                placeholder="e.g. jQuery"
-                icon="search"
-                clearable
-                @select="option => selected = option">
-                <template slot="empty">No results found</template>
-            </o-autocomplete>
+        <o-field label="Add some tags">
+            <o-inputitems
+                v-model="tags"
+                icon="tag"
+                placeholder="Add a tag"
+                aria-close-label="Delete this tag">
+            </o-inputitems>
         </o-field>
+        <p class="content"><b>Tags:</b> {{ tags }}</p>
     </section>
 </template>
 
@@ -26,32 +22,11 @@
     export default {
         data() {
             return {
-                data: [
-                    'Angular',
-                    'Angular 2',
-                    'Aurelia',
-                    'Backbone',
-                    'Ember',
-                    'jQuery',
-                    'Meteor',
-                    'Node.js',
-                    'Polymer',
-                    'React',
-                    'RxJS',
-                    'Vue.js'
-                ],
-                name: '',
-                selected: null
-            }
-        },
-        computed: {
-            filteredDataArray() {
-                return this.data.filter((option) => {
-                    return option
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(this.name.toLowerCase()) >= 0
-                })
+                tags: [
+                    'Auckland',
+                    'Wellington',
+                    'Very long string that would overflow'
+                ]
             }
         }
     }
@@ -59,28 +34,34 @@
 ```
 :::
 
-### Object array
+### Autocomplete
 
 ::: demo
 ```html
 <template>
     <section>
-        <o-field grouped group-multiline>
-            <o-switch v-model="openOnFocus">Open dropdown on focus</o-switch>
-            <o-switch v-model="keepFirst">Keep-first</o-switch>
-        </o-field>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
-        <o-field label="Find a name">
-            <o-autocomplete
-                v-model="name"
-                placeholder="e.g. Anne"
-                :keep-first="keepFirst"
+        <div class="block">
+            <o-switch v-model="allowNew">
+                Allow new tags
+            </o-switch>
+            <o-switch v-model="openOnFocus">
+                Open on focus
+            </o-switch>
+        </div>
+        <o-field label="Enter some tags">
+            <o-inputitems
+                v-model="tags"
+                :data="filteredTags"
+                autocomplete
+                :allow-new="allowNew"
                 :open-on-focus="openOnFocus"
-                :data="filteredDataObj"
                 field="user.first_name"
-                @select="option => selected = option">
-            </o-autocomplete>
+                icon="tag"
+                placeholder="Add a tag"
+                @typing="getFilteredTags">
+            </o-inputitems>
         </o-field>
+        <p class="content"><b>Tags:</b> {{ tags }}</p>
     </section>
 </template>
 
@@ -151,20 +132,19 @@
     export default {
         data() {
             return {
-                data,
-                keepFirst: false,
-                openOnFocus: false,
-                name: '',
-                selected: null
+                filteredTags: data,
+                tags: [],
+                allowNew: false,
+                openOnFocus: false
             }
         },
-        computed: {
-            filteredDataObj() {
-                return this.data.filter((option) => {
+        methods: {
+            getFilteredTags(text) {
+                this.filteredTags = data.filter((option) => {
                     return option.user.first_name
                         .toString()
                         .toLowerCase()
-                        .indexOf(this.name.toLowerCase()) >= 0
+                        .indexOf(text.toLowerCase()) >= 0
                 })
             }
         }
@@ -173,104 +153,32 @@
 ```
 :::
 
-### Groups
+### Custom selected
 
 ::: demo
 ```html
 <template>
     <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
-        <o-field label="Find a food">
-            <o-autocomplete
-                v-model="name"
-                group-field="type"
-                group-options="items"
-                open-on-focus
-                :data="filteredDataObj"
-                field="user.first_name"
-                @select="option => (selected = option)"
-            >
-            </o-autocomplete>
-        </o-field>
-    </section>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            data: [
-                {
-                    type: 'Fruit',
-                    items: ['Apple', 'Banana', 'Watermelon']
-                },
-                {
-                    type: 'Vegetables',
-                    items: ['Carrot', 'Broccoli', 'Cucumber', 'Onion']
-                }
-            ],
-            name: '',
-            selected: null
-        }
-    },
-    computed: {
-        filteredDataObj() {
-            const newData = []
-              this.data.forEach(element => {
-                const items = element.items.filter(item =>
-                    item.toLowerCase().indexOf(this.name.toLowerCase()) >= 0)
-                if (items.length) {
-                    newData.push({ type: element.type, items})
-                }
-            })
-            return newData
-        }
-    }
-}
-</script>
- 98 
-```
-:::
-
-### Infinite Scroll
-
-::: demo
-```html
-<template>
-    <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
-        <o-field label="Find a movie">
-            <o-autocomplete
-                :data="data"
-                placeholder="e.g. Fight Club"
-                field="title"
-                :loading="isFetching"
-                check-infinite-scroll
-                :debounce-typing="500"
-                @typing="getAsyncData"
-                @select="option => selected = option"
-                @infinite-scroll="getMoreAsyncData">
-
-                <template slot-scope="props">
-                    <div class="media">
-                        <div class="media-left">
-                            <img width="32" :src="`https://image.tmdb.org/t/p/w500/${props.option.poster_path}`">
-                        </div>
-                        <div class="media-content">
-                            {{ props.option.title }}
-                            <br>
-                            <small>
-                                Released at {{ props.option.release_date }},
-                                rated <b>{{ props.option.vote_average }}</b>
-                            </small>
-                        </div>
-                    </div>
+        <o-field label="Enter some items">
+            <o-inputitems
+                v-model="items"
+                ref="input"
+                icon="tag"
+                placeholder="Add an item">
+                <template #selected="{ items }">
+                    <o-button
+                        native-type="button"
+                        v-for="(item, index) in items"
+                        :key="index"
+                        :variant="getType(item)"
+                        rounded
+                        @click="$refs.input.removeItem(index, $event)">
+                        {{ item }}
+                    </o-button>
                 </template>
-                <template slot="footer">
-                    <span v-show="page > totalPages" class="has-text-grey"> Thats it! No more movies found. </span>
-                </template>
-            </o-autocomplete>
+            </o-inputitems>
         </o-field>
+        <p class="content"><b>Items:</b> {{ items }}</p>
     </section>
 </template>
 
@@ -278,54 +186,62 @@ export default {
     export default {
         data() {
             return {
-                data: [],
-                selected: null,
-                isFetching: false,
-                name: '',
-                page: 1,
-                totalPages: 1
+                items: []
             }
         },
         methods: {
-            getAsyncData(name) {
-                // String update
-                if (this.name !== name) {
-                    this.name = name
-                    this.data = []
-                    this.page = 1
-                    this.totalPages = 1
+            getType(item) {
+                const random = 'Z'.charCodeAt(0) - item.toUpperCase().charCodeAt(0) 
+                if (random >= 1 && random < 5) {
+                    return 'primary'
+                } else if (random >= 6 && random < 10) {
+                    return 'danger'
+                } else if (random >= 11 && random < 15) {
+                    return 'warning'
+                } else if (random >= 15 && random < 20) {
+                    return 'success'
+                } else if (random >= 20 && random < 25) {
+                    return 'info'
                 }
-                // String cleared
-                if (!name.length) {
-                    this.data = []
-                    this.page = 1
-                    this.totalPages = 1
-                    return
-                }
-                // Reached last page
-                if (this.page > this.totalPages) {
-                    return
-                }
-                this.isFetching = true
-                fetch(`https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${name}&page=${this.page}`)
-                    .then(response => response.json())
-                    .then((data) => {
-                        data.results.forEach((item) => this.data.push(item))
-                        
-                        this.page++
-                        this.totalPages = data.total_pages
-                    })
-                    .catch((error) => {
-                        throw error
-                    })
-                    .finally(() => {
-                        this.isFetching = false
-                    })
-            },
-            getMoreAsyncData() {
-                this.getAsyncData(this.name)
             }
         }
+    }
+</script>
+```
+:::
+
+### Limits
+
+::: demo
+```html
+<template>
+    <section>
+        <o-field label="Limited to 10 characters">
+            <o-inputitems
+                maxlength="10"
+                :value="['Oruga', 'Vue', 'CSS']">
+            </o-inputitems>
+        </o-field>
+
+        <o-field label="Limited to 5 tags">
+            <o-inputitems
+                maxitems="5"
+                :value="['One', 'Two', 'Three', 'Four']">
+            </o-inputitems>
+        </o-field>
+
+        <o-field label="Limited to 10 characters and 5 tags">
+            <o-inputitems
+                maxlength="10"
+                maxitems="5"
+                :value="['Red', 'Green', 'Blue', 'White']">
+            </o-inputitems>
+        </o-field>
+    </section>
+</template>
+
+<script>
+    export default {
     }
 </script>
 ```

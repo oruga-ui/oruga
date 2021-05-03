@@ -191,6 +191,9 @@ export default defineComponent({
          * Append dropdown content to body
          */
         appendToBody: Boolean,
+        /**
+        * @ignore
+        */
         appendToBodyCopyParent: Boolean,
         rootClass: [String, Function, Array],
         triggerClass: [String, Function, Array],

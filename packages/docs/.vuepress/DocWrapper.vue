@@ -1,4 +1,5 @@
 <script>
+import { setValueByPath } from '../../oruga/src/utils/helpers'
 const UNDERLINE_CLASS = 'odocs-underline-element'
 
 export default {
@@ -17,7 +18,7 @@ export default {
                 if (action) {
                     action(this)
                 }
-                this.classes[className] = () => UNDERLINE_CLASS
+                setValueByPath(this.classes, className, () => UNDERLINE_CLASS)
                 this.classes = Object.assign({}, this.classes)
                 this.data = Object.assign({}, this.data)
                 this.$nextTick(() => {

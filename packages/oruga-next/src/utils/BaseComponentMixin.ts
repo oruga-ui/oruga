@@ -24,7 +24,7 @@ export default defineComponent({
 
             let globalClass = getValueByPath(config, `${this.$options.configField}.${field}.class`, '')
                 || getValueByPath(config, `${this.$options.configField}.${field}`, '')
-            let currentClass = this.$props[field]
+            let currentClass = getValueByPath(this.$props, field)
 
             if (Array.isArray(currentClass)) {
                 currentClass = currentClass.join(' ')

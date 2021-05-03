@@ -8,6 +8,7 @@ import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
 import Input from './input'
+import Inpuitems from './inputitems'
 import Loading from './loading'
 import Modal from './modal'
 import Pagination from './pagination'
@@ -35,6 +36,7 @@ export {
     Field,
     Icon,
     Input,
+    Inpuitems,
     Loading,
     Modal,
     Pagination,

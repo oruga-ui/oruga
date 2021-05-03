@@ -67,6 +67,16 @@ $whitelist: add-to-whitelist(
 // input
 $whitelist: add-to-whitelist();
 
+// inputitems
+$whitelist: add-to-whitelist(
+    'inputitems-border-style',
+    'inputitems-border-color',
+    'inputitems-border-width',
+    'inputitems-color',
+    'inputitems-item-color',
+    'inputitems-item-background-color'
+);
+
 // modal
 $whitelist: add-to-whitelist(
     'modal-zindex',
