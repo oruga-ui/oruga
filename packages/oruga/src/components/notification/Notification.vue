@@ -15,6 +15,12 @@
                     :icon="closeIcon"
                     size="small"/>
             </button>
+            <component
+                v-if="component"
+                v-bind="props"
+                v-on="events"
+                :is="component"
+                @close="close"/>
             <div :class="wrapperClasses" v-if="$scopedSlots.default || message">
                 <o-icon
                     :icon="computedIcon"
@@ -63,6 +69,8 @@ export default {
             type: String,
             default: 'fade'
         },
+        /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
+        component: [Object, Function],
         /** Icon name */
         closeIcon: {
             type: String,

@@ -91,7 +91,7 @@ $notification-icon-margin-right: 1rem;
     pointer-events: none;
 
     .o-notification {
-        // Modifiers
+        pointer-events: stroke;
         max-width: 600px;
         &--top, &--bottom {
             align-self: center;
@@ -104,7 +104,6 @@ $notification-icon-margin-right: 1rem;
         }
     }
 
-    // Modifiers
     &--top {
         flex-direction: column;
     }

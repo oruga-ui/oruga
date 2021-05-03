@@ -12,6 +12,105 @@ title: Notification
 
 ## Examples
 
+### Programmatically opening
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="buttons">
+      <o-button label="Launch notification (default)" size="medium" @click="simple" />
+      <o-button label="Launch notification (custom)" variant="success" size="medium" @click="success" />
+      <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
+      <o-button label="Launch notification (component)" variant="warning" size="medium" @click="component" />
+    </div>
+  </section>
+</template>
+
+<script>
+  const NotificationForm = {
+    props: ['email', 'password'],
+    template: `
+                <form action="">
+                    <div class="modal-card" style="width: auto">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Login</p>
+                        </header>
+                        <section class="modal-card-body">
+                            <o-field label="Email">
+                                <o-input
+                                    type="email"
+                                    :value="email"
+                                    placeholder="Your email"
+                                    required>
+                                </o-input>
+                            </o-field>
+
+                            <o-field label="Password">
+                                <o-input
+                                    type="password"
+                                    :value="password"
+                                    password-reveal
+                                    placeholder="Your password"
+                                    required>
+                                </o-input>
+                            </o-field>
+
+                            <o-field>
+                                <o-checkbox>Remember me</o-checkbox>
+                            </o-field>
+                        </section>
+                        <footer class="modal-card-foot">
+                            <o-button type="button" @click="$emit('close')">Close</o-button>
+                            <o-button variant="primary">Login</o-button>
+                        </footer>
+                    </div>
+                </form>
+            `
+  }
+  export default {
+    methods: {
+      simple() {
+        this.$oruga.notification.open('Something happened')
+      },
+      success() {
+        this.$oruga.notification.open({
+          message: 'Something happened correctly!',
+          type: 'success',
+          variant: 'success',
+          closable: true
+        })
+      },
+      danger() {
+        const notif = this.$oruga.notification.open({
+          duration: 5000,
+          message: `Something's not good, also I'm on <b>bottom</b>`,
+          position: 'bottom-right',
+          type: 'danger',
+          variant: 'danger',
+          closable: true
+        })
+        notif.$on('close', () => {
+          this.$oruga.notification.open('Custom notification closed!')
+        })
+      },
+      component() {
+        this.$oruga.notification.open({
+          component: NotificationForm,
+          duration: 5000,
+          position: 'bottom-right',
+          variant: 'warning',
+          autoClose: false
+        })
+      }
+    }
+  }
+</script>
+```
+
+:::
+
 ### Base
 
 ::: demo
@@ -89,77 +188,29 @@ title: Notification
 
 :::
 
-### Programmatically opening
-
-::: demo
-
-```html
-<template>
-  <section>
-    <div class="buttons">
-      <o-button label="Launch notification (default)" size="medium" @click="simple" />
-      <o-button label="Launch notification (custom)" variant="success" size="medium" @click="success" />
-      <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
-    </div>
-  </section>
-</template>
-
-<script>
-  export default {
-    methods: {
-      simple() {
-        this.$oruga.notification.open('Something happened')
-      },
-      success() {
-        this.$oruga.notification.open({
-          message: 'Something happened correctly!',
-          type: 'is-success',
-          variant: 'success',
-          closable: true
-        })
-      },
-      danger() {
-        const notif = this.$oruga.notification.open({
-          duration: 5000,
-          message: `Something's not good, also I'm on <b>bottom</b>`,
-          position: 'bottom-right',
-          type: 'danger',
-          variant: 'danger',
-          closable: true
-        })
-        notif.$on('close', () => {
-          this.$oruga.notification.open('Custom notification closed!')
-        })
-      }
-    }
-  }
-</script>
-```
-
-:::
-
 ## Props
 
-| Prop name      | Description                    | Type           | Values                                                                          | Default                                                                                                                                       |
-| -------------- | ------------------------------ | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| animation      |                                | string         | -                                                                               | 'fade'                                                                                                                                        |
-| ariaCloseLabel |                                | string         | -                                                                               |                                                                                                                                               |
-| autoClose      |                                | boolean        | -                                                                               | false                                                                                                                                         |
-| closable       |                                | boolean        | -                                                                               | false                                                                                                                                         |
-| closeIcon      | Icon name                      | string         | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification {<br>&nbsp;&nbsp;closeIcon: 'times'<br>}</code> |
-| duration       |                                | number         | -                                                                               | 2000                                                                                                                                          |
-| hasIcon        |                                | boolean        | -                                                                               |                                                                                                                                               |
-| icon           |                                | string         | -                                                                               |                                                                                                                                               |
-| iconPack       |                                | string         | -                                                                               |                                                                                                                                               |
-| iconSize       |                                | string         | -                                                                               |                                                                                                                                               |
-| message        |                                | string         | -                                                                               |                                                                                                                                               |
-| override       | Override classes               | boolean        | -                                                                               | false                                                                                                                                         |
-| position       |                                | string         | -                                                                               |                                                                                                                                               |
-| size           |                                | string         | -                                                                               |                                                                                                                                               |
-| title          |                                | string         | -                                                                               |                                                                                                                                               |
-| type           |                                | string         | -                                                                               |                                                                                                                                               |
-| v-model        |                                | boolean        | -                                                                               | true                                                                                                                                          |
-| variant        | Color of the control, optional | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                               |
+| Prop name      | Description                                                                                                                                                    | Type           | Values                                                                          | Default                                                                                                                                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| animation      |                                                                                                                                                                | string         | -                                                                               | 'fade'                                                                                                                                        |
+| ariaCloseLabel |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| autoClose      |                                                                                                                                                                | boolean        | -                                                                               | false                                                                                                                                         |
+| closable       |                                                                                                                                                                | boolean        | -                                                                               | false                                                                                                                                         |
+| closeIcon      | Icon name                                                                                                                                                      | string         | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification {<br>&nbsp;&nbsp;closeIcon: 'times'<br>}</code> |
+| component      | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close') | object\|func   | -                                                                               |                                                                                                                                               |
+| duration       |                                                                                                                                                                | number         | -                                                                               | 2000                                                                                                                                          |
+| hasIcon        |                                                                                                                                                                | boolean        | -                                                                               |                                                                                                                                               |
+| icon           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| iconPack       |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| iconSize       |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| message        |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| override       | Override classes                                                                                                                                               | boolean        | -                                                                               | false                                                                                                                                         |
+| position       |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| size           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| title          |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| type           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                               |
+| v-model        |                                                                                                                                                                | boolean        | -                                                                               | true                                                                                                                                          |
+| variant        | Color of the control, optional                                                                                                                                 | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                               |
 
 ## Events
 
