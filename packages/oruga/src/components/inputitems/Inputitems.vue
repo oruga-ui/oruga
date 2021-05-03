@@ -251,7 +251,7 @@ export default {
 
         itemClasses() {
             return [
-                this.computedClass('itemClasses', 'o-inputit__item'),
+                this.computedClass('itemClass', 'o-inputit__item'),
                 { [this.computedClass('variantClass', 'o-inputit__item--', this.variant)]: this.variant }
             ]
         },
