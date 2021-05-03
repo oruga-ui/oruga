@@ -2,8 +2,8 @@
 $notification-background-color: $primary !default;
 $notification-border-radius: 4px !default;
 $notification-padding: 1.75em 1.75em !default;
-$notification-margin-bottom: 1.5rem;
-$notification-color: $white;
+$notification-margin-bottom: 1.5rem !default;
+$notification-color: $white !default;
 
 $notification-close-border-radius: $base-rounded-border-radius !default;
 $notification-close-right: .5rem !default;
@@ -12,7 +12,7 @@ $notification-close-size: 20px !default;
 $notification-close-color: $white !default;
 $notification-close-background-color: hsla(0,0%,4%,.2) !default;
 
-$notification-icon-margin-right: 1rem;
+$notification-icon-margin-right: 1rem !default;
 /* @docs */
 
 .o-notification {
