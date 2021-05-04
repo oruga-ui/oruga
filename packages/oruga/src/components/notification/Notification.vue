@@ -56,6 +56,7 @@ import { getOptions } from '../../utils/config'
  */
 export default {
     name: 'ONotification',
+    configField: 'notification',
     mixins: [BaseComponentMixin, MessageMixin],
     props: {
         position: String,

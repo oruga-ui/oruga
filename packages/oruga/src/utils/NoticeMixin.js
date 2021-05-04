@@ -116,19 +116,19 @@ export default {
         },
 
         setupContainer() {
-            this.parentTop = document.querySelector((this.newContainer ? this.newContainer : 'body') + '>.o-notices.o-notices--top')
-            this.parentBottom = document.querySelector((this.newContainer ? this.newContainer : 'body') + '>.o-notices.o-notices--bottom')
+            this.parentTop = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('top').join('.')}`)
+            this.parentBottom = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('bottom').join('.')}`)
 
             if (this.parentTop && this.parentBottom) return
 
             if (!this.parentTop) {
                 this.parentTop = document.createElement('div')
-                this.parentTop.className = 'o-notices o-notices--top'
+                this.parentTop.className = `${this.rootClasses().join(' ')} ${this.positionClasses('top').join(' ')}`
             }
 
             if (!this.parentBottom) {
                 this.parentBottom = document.createElement('div')
-                this.parentBottom.className = 'o-notices o-notices--bottom'
+                this.parentBottom.className = `${this.rootClasses().join(' ')} ${this.positionClasses('bottom').join(' ')}`
             }
 
             const container = document.querySelector(this.newContainer) || document.body

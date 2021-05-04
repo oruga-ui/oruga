@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import NoticeMixin from '@utils/NoticeMixin'
+import BaseComponentMixin from '@utils/BaseComponentMixin'
 
 let wrapper
 
@@ -7,11 +8,14 @@ describe('NoticeMixin', () => {
     HTMLElement.prototype.insertAdjacentElement = jest.fn()
     beforeEach(() => {
         const component = {
-            template: '<div class="o-component"></div>'
+            template: '<div class="o-component"></div>',
+            methods: {
+                rootClasses() { return ['o-notices']},
+                positionClasses(position) {return ['o-notices--' + position]}
+            }
         }
         wrapper = shallowMount(component, {
-            attachToDocument: true,
-            mixins: [NoticeMixin]
+            mixins: [BaseComponentMixin, NoticeMixin]
         })
     })
 
