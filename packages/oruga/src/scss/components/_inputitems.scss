@@ -21,7 +21,7 @@ $inputitems-margin-icon-to-text: .1875em !default;
 /* @docs */
 
 .o-inputit {
-    display: inline-flex;
+    display: block;
     &__container {
         display: flex;
         align-items: center;
