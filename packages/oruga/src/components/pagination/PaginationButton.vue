@@ -45,7 +45,7 @@ export default {
             return [
                 this.linkClass || [...this.$pagination.linkClasses],
                 this.page.class,
-                { [this.linkCurrentClass]: this.page.isCurrent }
+                { [this.linkCurrentClasses || this.$pagination.linkCurrentClasses]: this.page.isCurrent }
             ]
         },
         href() {
