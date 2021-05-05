@@ -289,7 +289,7 @@ export default defineComponent({
             })
         },
 
-        rrightIconClick(event) {
+        rightIconClick(event) {
             if (this.passwordReveal) {
                 this.togglePasswordVisibility()
             } else if (this.clearable) {
