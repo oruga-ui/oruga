@@ -149,7 +149,7 @@
 ```
 :::
 
-### Use icons
+### Use types
 
 ::: demo
 ```html
@@ -171,7 +171,7 @@
 ```
 :::
 
-### Use buttons
+### Add custom buttons
 
 ::: demo
 ```html

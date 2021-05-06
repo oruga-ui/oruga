@@ -59,6 +59,10 @@ export default {
     configField: 'notification',
     mixins: [BaseComponentMixin, MessageMixin],
     props: {
+        /**
+        * Which position the notification will appear when programmatically
+        * @values top-right, top, top-left, bottom-right, bottom, bottom-left
+        */
         position: String,
         /**
         * Color of the control, optional

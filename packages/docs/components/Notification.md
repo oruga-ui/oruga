@@ -141,7 +141,7 @@ title: Notification
 
 :::
 
-### Use icons
+### Use types
 
 ::: demo
 
@@ -160,7 +160,7 @@ title: Notification
 
 :::
 
-### Use buttons
+### Add custom buttons
 
 ::: demo
 
@@ -187,6 +187,84 @@ title: Notification
 
 :::
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
+
+<br />
+<template>
+  <div>
+    <doc-wrapper>
+        <template v-slot:default="s">
+            <o-notification v-bind="s">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+            </o-notification>
+        </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element"
+                },
+                {
+                    class: "closeClass",
+                    description: "Class of the close button container",
+                    properties: ["closable"],
+                    action: (cmp) => {
+                        cmp.data.closable = true;
+                    },
+                },
+                {
+                    class: "contentClass",
+                    description: "Class of the content element"
+                },
+                {
+                    class: "iconClass",
+                    description: "Class of the icon on the left",
+                    properties: ["type"],
+                    action: (cmp) => {
+                        cmp.data.type = 'info';
+                    },
+                },
+                {
+                    class: "positionClass",
+                    description: "Class of the element when positioned",
+                    properties: ["position"],
+                    suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
+                    action: (cmp) => {
+                        cmp.data.position = 'top-right';
+                    },
+                },
+                {
+                    class: "wrapperClass",
+                    description: "Class of the wrapper element"
+                },
+                {
+                    class: "variantClass",
+                    description: "Class of the notification variant",
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = 'warning';
+                    },
+                },
+            ],
+        };
+    },
+};
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name      | Description                                                                                                                                                    | Type           | Values                                                                          | Default                                                                                                                                        |
@@ -204,9 +282,8 @@ title: Notification
 | iconSize       |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | message        |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | override       | Override classes                                                                                                                                               | boolean        | -                                                                               | false                                                                                                                                          |
-| position       |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
+| position       | Which position the notification will appear when programmatically                                                                                              | string         | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         |                                                                                                                                                |
 | size           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
-| title          |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | type           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | v-model        |                                                                                                                                                                | boolean        | -                                                                               | true                                                                                                                                           |
 | variant        | Color of the control, optional                                                                                                                                 | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                |

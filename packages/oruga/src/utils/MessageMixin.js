@@ -14,7 +14,6 @@ export default {
             type: Boolean,
             default: true
         },
-        title: String,
         closable: {
             type: Boolean,
             default: false

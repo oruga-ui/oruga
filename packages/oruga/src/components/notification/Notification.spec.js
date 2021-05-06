@@ -3,7 +3,7 @@ import ONotification from '@components/notification/Notification'
 
 let wrapper
 
-describe('BNotification', () => {
+describe('ONotification', () => {
     beforeEach(() => {
         wrapper = shallowMount(ONotification)
     })
