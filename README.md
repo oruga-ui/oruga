@@ -89,7 +89,7 @@ Vue.use(Field);
 Vue.use(Input);
 ```
 
-#### Vue 3 (⚠️ Experimental)
+#### Vue 3
 
 Install Oruga
 
