@@ -4,16 +4,9 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    // deprecated, to replace with default 'value' in the next breaking change
-    model: {
-        prop: 'active',
-        event: 'update:active'
-    },
     props: {
-        active: {
-            type: Boolean,
-            default: true
-        },
+        /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        active: Boolean,
         closable: {
             type: Boolean,
             default: false
@@ -36,7 +29,7 @@ export default {
     },
     data() {
         return {
-            isActive: this.active
+            isActive: this.active || true
         }
     },
     watch: {
