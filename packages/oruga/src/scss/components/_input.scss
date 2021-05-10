@@ -14,16 +14,18 @@ $input-counter-margin: .25rem 0 0 .5rem !default;
 $input-height: $control-height !default;
 $input-line-height: $base-line-height !default;
 $input-margin: 0 !default;
-$input-max-width: 100% !default;
 $input-padding: $control-padding-vertical $control-padding-horizontal !default;
 $input-textarea-max-height: 600px !default;
 $input-textarea-min-height: 120px !default;
 $input-textarea-padding: 0.625em !default;
+// @deprecated
 $input-width: 100% !default;
+// @deprecated
+$input-max-width: 100% !default;
 /* @docs */
 
 .o-ctrl-input {
-    display: inline-flex;
+    display: block;
     position: relative;
     &--expanded {
         width: 100%;
@@ -39,9 +41,9 @@ $input-width: 100% !default;
     position: relative;
     vertical-align: top;
     outline: none;
+    width: $input-width;
     @include avariable('box-shadow', 'input-box-shadow', $input-box-shadow);
     @include avariable('max-width', 'input-max-width', $input-max-width);
-    @include avariable('width', 'input-width', $input-width);
     @include avariable('background-color', 'input-background-color', $input-background-color);
     @include avariable('border-color', 'input-border-color', $input-border-color);
     @include avariable('border-style', 'input-border-style', $input-border-style);

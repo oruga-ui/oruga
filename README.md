@@ -22,7 +22,7 @@
     <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
-*Oruga Next version for Vue 3.x* (Experimental)
+*Oruga Next version for Vue 3.x*
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
@@ -89,7 +89,7 @@ Vue.use(Field);
 Vue.use(Input);
 ```
 
-#### Vue 3 (⚠️ Experimental)
+#### Vue 3
 
 Install Oruga
 
