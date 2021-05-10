@@ -4,20 +4,27 @@ import { removeElement } from './helpers'
 
 export default {
     props: {
+        /** Type (color) of the notification, optional. */
         type: {
             type: String,
-            default: '--dark'
         },
+        /** Message text (can contain HTML). */
         message: [String, Array],
-        duration: Number,
+        /** Visibility duration in miliseconds. */
+        duration: {
+            type: Number
+        },
+        /** If should queue with others notices (snackbar/toast/notification). */
         queue: {
             type: Boolean,
             default: undefined
         },
+        /** Show the Notification indefinitely until it is dismissed when programmatically. */
         indefinite: {
             type: Boolean,
             default: false
         },
+        /** Which position the notification will appear when programmatically. */
         position: {
             type: String,
             default: 'top',
@@ -32,6 +39,7 @@ export default {
                 ].indexOf(value) > -1
             }
         },
+        /** DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. */
         container: String
     },
     data() {

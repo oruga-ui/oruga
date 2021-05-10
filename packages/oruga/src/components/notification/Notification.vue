@@ -50,7 +50,7 @@ import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 /**
- * Classic modal overlay to include any content you may need
+ * Bold notification blocks to alert your users of something
  * @displayName Notification
  * @requires ./NotificationNotice.vue
  * @example ./examples/Notification.md
@@ -71,14 +71,20 @@ export default {
         * @values primary, info, success, warning, danger, and any other custom color
         */
         variant: [String, Object],
+        /**
+         * Label for the close button, to be read by accessibility screenreaders.
+         */
         ariaCloseLabel: String,
+        /**
+         * Custom animation (transition name).
+         */
         animation: {
             type: String,
             default: 'fade'
         },
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],
-        /** Icon name */
+        /** Close icon name */
         closeIcon: {
             type: String,
             default: () => {
