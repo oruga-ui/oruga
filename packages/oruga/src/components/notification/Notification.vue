@@ -28,7 +28,7 @@
                     v-if="computedIcon"
                     :class="iconClasses"
                     both
-                    size="large"
+                    :size="iconSize"
                     aria-hidden/>
                 <div :class="contentClasses">
                     <template v-if="$scopedSlots.default">

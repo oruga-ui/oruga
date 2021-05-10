@@ -21,13 +21,15 @@ export default {
         type: String,
         /** Adds an icon on the left side depending on the type (or the icon prop if defined). */
         hasIcon: Boolean,
-        size: String,
         /** Icon name to use with has-icon. */
         icon: String,
         /** Icon pack to use. */
         iconPack: String,
         /** Icon size */
-        iconSize: String,
+        iconSize: {
+            type: String,
+            default: 'large'
+        },
         /** Hide notification after duration only not programmatic. */
         autoClose: {
             type: Boolean,
