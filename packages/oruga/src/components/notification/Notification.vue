@@ -48,9 +48,11 @@ import MessageMixin from '../../utils/MessageMixin.js'
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Notification
+ * @requires ./NotificationNotice.vue
  * @example ./examples/Notification.md
  * @style _notification.scss
  */

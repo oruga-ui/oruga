@@ -2,6 +2,8 @@
 
 ### Programmatically opening
 
+Go to [Notification Notice](#notification-notice) section to see all the available options.
+
 ::: demo
 ```html
 <template>

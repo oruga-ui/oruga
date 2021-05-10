@@ -12,6 +12,9 @@ import { getValueByPath } from '../../utils/helpers'
 import NoticeMixin from '../../utils/NoticeMixin.js'
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 
+/**
+ * @displayName Notification Notice
+ */
 export default {
     name: 'ONotificationNotice',
     configField: 'notice',

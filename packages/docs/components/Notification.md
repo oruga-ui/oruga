@@ -14,6 +14,8 @@ title: Notification
 
 ### Programmatically opening
 
+Go to [Notification Notice](#notification-notice) section to see all the available options.
+
 ::: demo
 
 ```html
@@ -288,14 +290,43 @@ export default {
 | type           |                                                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | variant        | Color of the control, optional                                                                                                                                 | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                |
 
-## Events
+### Events
 
 | Event name    | Properties | Description |
 | ------------- | ---------- | ----------- |
 | close         |            |
 | update:active |            |
 
-## Slots
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+---
+
+# Notification Notice
+
+## Props
+
+| Prop name  | Description      | Type          | Values                                                                  | Default   |
+| ---------- | ---------------- | ------------- | ----------------------------------------------------------------------- | --------- |
+| container  |                  | string        | -                                                                       |           |
+| duration   |                  | number        | -                                                                       |           |
+| indefinite |                  | boolean       | -                                                                       | false     |
+| message    |                  | string\|array | -                                                                       |           |
+| override   | Override classes | boolean       | -                                                                       | false     |
+| position   |                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'     |
+| queue      |                  | boolean       | -                                                                       | undefined |
+| type       |                  | string        | -                                                                       | '--dark'  |
+
+### Events
+
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| close      |            |
+
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
