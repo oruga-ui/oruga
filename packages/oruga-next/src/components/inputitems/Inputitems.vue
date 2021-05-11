@@ -16,7 +16,7 @@
                         :class="closeClasses"
                         clickable
                         icon="times"
-                        @click.native="removeItem(index, $event)"
+                        @click="removeItem(index, $event)"
                         :aria-label="ariaCloseLabel"
                     />
                 </span>
@@ -35,7 +35,6 @@
                 :has-counter="false"
                 :size="size"
                 :disabled="disabled"
-                :loading="loading"
                 :autocomplete="nativeAutocomplete"
                 :open-on-focus="openOnFocus"
                 :keep-open="openOnFocus"
@@ -48,9 +47,9 @@
                 @typing="onTyping"
                 @focus="onFocus"
                 @blur="customOnBlur"
-                @keydown.native="keydown"
-                @compositionstart.native="isComposing = true"
-                @compositionend.native="isComposing = false"
+                @keydown="keydown"
+                @compositionstart="isComposing = true"
+                @compositionend="isComposing = false"
                 @select="onSelect"
                 @infinite-scroll="emitInfiniteScroll">
                 <template
@@ -124,6 +123,11 @@ export default defineComponent({
             type: Array,
             default: () => []
         },
+        /**
+         * Vertical size of input, optional
+         * @values small, medium, large
+         */
+        size: String,
         /** Items data */
         data: {
             type: Array,
@@ -286,7 +290,7 @@ export default defineComponent({
         },
 
         hasDefaultSlot() {
-            return !!this.$scopedSlots.default
+            return !!this.$slots.default
         },
 
         hasEmptySlot() {
@@ -326,9 +330,9 @@ export default defineComponent({
     },
     watch: {
         /**
-         * When v-model is changed set internal value.
+         * When modelValue is changed set internal value.
          */
-        value(value) {
+        modelValue(value) {
             this.items = Array.isArray(value) ? value.slice(0) : (value || [])
         },
 
