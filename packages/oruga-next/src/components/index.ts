@@ -8,9 +8,10 @@ import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
 import Input from './input'
-import Inpuitems from './inputitems'
+import Inputitems from './inputitems'
 import Loading from './loading'
 import Modal from './modal'
+import Notification from './notification'
 import Pagination from './pagination'
 import Radio from './radio'
 import Select from './select'
@@ -36,9 +37,10 @@ export {
     Field,
     Icon,
     Input,
-    Inpuitems,
+    Inputitems,
     Loading,
     Modal,
+    Notification,
     Pagination,
     Radio,
     Select,

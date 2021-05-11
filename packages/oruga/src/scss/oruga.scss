@@ -87,6 +87,18 @@ $whitelist: add-to-whitelist(
     'modal-close-right'
 );
 
+// notification
+$whitelist: add-to-whitelist(
+    'notification-background-color',
+    'notification-color',
+    'notification-border-radius',
+    'notification-padding',
+    'notification-close-right',
+    'notification-close-top',
+    'notification-icon-margin-right',
+    'notification-padding'
+);
+
 // pagination
 $whitelist: add-to-whitelist(
     'pagination-link-current-background-color',

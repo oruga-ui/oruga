@@ -1,0 +1,125 @@
+/* @docs */
+$notification-background-color: $primary !default;
+$notification-border-radius: 4px !default;
+$notification-padding: 1.75em 1.75em !default;
+$notification-margin-bottom: 1.5rem !default;
+$notification-color: $white !default;
+
+$notification-close-border-radius: $base-rounded-border-radius !default;
+$notification-close-right: .5rem !default;
+$notification-close-top: .5rem !default;
+$notification-close-size: 20px !default;
+$notification-close-color: $white !default;
+$notification-close-background-color: hsla(0,0%,4%,.2) !default;
+
+$notification-icon-margin-right: 1rem !default;
+/* @docs */
+
+.o-notification {
+    // Modifiers
+    @include avariable('background-color', 'notification-background-color', $notification-background-color);
+    @include avariable('color', 'notification-color', $notification-color);
+    @include avariable('border-radius', 'notification-border-radius', $notification-border-radius);
+    @include avariable('padding', 'notification-padding', $notification-padding);
+    @include avariable('margin-bottom', 'notification-margin-bottom', $notification-margin-bottom);
+    position: relative;
+    &__content {
+        flex-basis: auto;
+        flex-grow: 1;
+        flex-shrink: 1;
+        text-align: inherit;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+    &__wrapper {
+        align-items: flex-start;
+        display: flex;
+        text-align: inherit;
+        padding-top: 0;
+        border: 0;
+    }
+    &__icon {
+        flex-basis: auto;
+        flex-grow: 0;
+        flex-shrink: 0;
+        @include avariable('margin-right', 'notification-icon-margin-right', $notification-icon-margin-right);
+    }
+    &__close {
+        position: absolute;
+        border: none;
+        cursor: pointer;
+        pointer-events: auto;
+        display: inline-block;
+        flex-grow: 0;
+        flex-shrink: 0;
+        outline: none;
+        vertical-align: top;
+        @include avariable('background-color', 'notification-close-background-color', $notification-close-background-color);
+        @include avariable('border-radius', 'notification-close-border-radius', $notification-close-border-radius);
+        @include avariable('right', 'notification-close-right', $notification-close-right);
+        @include avariable('top', 'notification-close-top', $notification-close-top);
+        @include avariable('height', 'notification-close-size', $notification-close-size);
+        @include avariable('width', 'notification-close-size', $notification-close-size);
+        @include avariable('color', 'notification-close-color', $notification-close-color);
+    }
+    @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+        &--#{$name} {
+            border-color: transparent;
+            @include avariable('background-color', ('variant-' + #{$name}), $color);
+            @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
+            &:hover {
+                // background-color: darken($color, 2.5%)
+                // IE 11 needs polyfill
+                filter: brightness(97.5%);
+            }
+        }
+    }
+}
+
+.o-notices {
+    position: fixed;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2em;
+    overflow: hidden;
+    z-index: 1000;
+    pointer-events: none;
+
+    .o-notification {
+        pointer-events: stroke;
+        max-width: 600px;
+        &--top, &--bottom {
+            align-self: center;
+        }
+        &--top-right, &--bottom-right {
+            align-self: flex-end;
+        }
+        &--top-left, &--bottom-left {
+            align-self: flex-start;
+        }
+    }
+
+    &--top {
+        flex-direction: column;
+    }
+    &--bottom {
+        flex-direction: column-reverse;
+
+        // Since the columns are reversed, we need to reverse the margin logic from
+        // :not(:last-child) to :not(:first-child)
+        .o-notification {
+            margin-bottom: 0;
+            &:not(:first-child) {
+                margin-bottom: $notification-margin-bottom;
+            }
+        }
+    }
+    &.has-custom-container {
+        position: absolute;
+    }
+}
