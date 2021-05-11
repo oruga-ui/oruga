@@ -114,6 +114,11 @@ export default {
             type: Function,
             default: () => {}
         },
+        /** Callback function to call after close (programmatically close or user canceled) */
+        onClose: {
+            type: Function,
+            default: () => {}
+        },
         /**
          * clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts
          * @values keep, clip
@@ -286,6 +291,7 @@ export default {
         close() {
             this.$emit('close')
             this.$emit('update:active', false)
+            this.onClose.apply(null, arguments)
 
             // Timeout for the animation complete before destroying
             if (this.programmatic) {
