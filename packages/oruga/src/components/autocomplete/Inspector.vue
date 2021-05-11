@@ -85,6 +85,12 @@ export default {
                         el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
                     },
                 },
+                {
+                    class: "inputClasses",
+                    realClass: "inputClasses.rootClass",
+                    description: "Classes to apply on internal input.",
+                    componentRef: "Input"
+                },
             ],
         };
     }

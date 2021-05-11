@@ -288,6 +288,7 @@ export default {
         }
     },
     props: {
+        /** @model */
         value: {
             type: [Date, Array]
         },
@@ -497,9 +498,7 @@ export default {
         tableEventClass: [String, Function, Array],
         tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
-        /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object,
-        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
         dropdownClasses: Object
     },
     data() {
