@@ -113,7 +113,7 @@ $dropdown-mobile-zindex: 50 !default;
         pointer-events: none;
     }
     &--mobile {
-        .o-drop__menu {
+        > .o-drop__menu {
             position: fixed;
             top: 25%;
             left: 50%;
@@ -126,7 +126,7 @@ $dropdown-mobile-zindex: 50 !default;
             @include avariable('max-height', 'dropdown-mobile-max-height', $dropdown-mobile-max-height);
             @include avariable('z-index', 'dropdown-mobile-zindex', $dropdown-mobile-zindex);
         }
-        .o-drop__overlay {
+        > .o-drop__overlay {
             display: block;
         }
     }

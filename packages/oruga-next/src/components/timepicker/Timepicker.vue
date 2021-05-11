@@ -177,9 +177,7 @@ export default defineComponent({
         selectPlaceholderClass: [String, Function, Array],
         separatorClass: [String, Function, Array],
         footerClass: [String, Function, Array],
-        /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object,
-        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
         dropdownClasses: Object
     },
     computed: {
