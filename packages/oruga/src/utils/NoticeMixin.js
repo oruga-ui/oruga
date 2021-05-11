@@ -40,7 +40,12 @@ export default {
             }
         },
         /** DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. */
-        container: String
+        container: String,
+        /** Callback function to call after close (programmatically close or user canceled) */
+        onClose: {
+            type: Function,
+            default: () => {}
+        }
     },
     data() {
         return {
@@ -101,6 +106,7 @@ export default {
             clearTimeout(this.timer)
             this.isActive = false
             this.$emit('close')
+            this.onClose.apply(null, arguments)
 
             // Timeout for the animation complete before destroying
             setTimeout(() => {
