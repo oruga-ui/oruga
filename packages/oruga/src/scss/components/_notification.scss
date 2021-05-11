@@ -4,15 +4,15 @@ $notification-border-radius: 4px !default;
 $notification-padding: 1.75em 1.75em !default;
 $notification-margin-bottom: 1.5rem !default;
 $notification-color: $white !default;
-
 $notification-close-border-radius: $base-rounded-border-radius !default;
 $notification-close-right: .5rem !default;
 $notification-close-top: .5rem !default;
 $notification-close-size: 20px !default;
 $notification-close-color: $white !default;
 $notification-close-background-color: hsla(0,0%,4%,.2) !default;
-
 $notification-icon-margin-right: 1rem !default;
+$notification-notices-padding: 2em !default;
+$notification-notices-zindex: 1000 !default;
 /* @docs */
 
 .o-notification {
@@ -85,11 +85,10 @@ $notification-icon-margin-right: 1rem !default;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 2em;
     overflow: hidden;
-    z-index: 1000;
     pointer-events: none;
-
+    @include avariable('padding', 'notification-notices-padding', $notification-notices-padding);
+    @include avariable('z-index', 'notification-notices-zindex', $notification-notices-zindex);
     .o-notification {
         pointer-events: stroke;
         max-width: 600px;

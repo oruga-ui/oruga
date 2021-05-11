@@ -79,7 +79,6 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
       success() {
         this.$oruga.notification.open({
           message: 'Something happened correctly!',
-          type: 'success',
           variant: 'success',
           closable: true
         })
@@ -89,12 +88,11 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
           duration: 5000,
           message: `Something's not good, also I'm on <b>bottom</b>`,
           position: 'bottom-right',
-          type: 'danger',
           variant: 'danger',
-          closable: true
-        })
-        notif.$on('close', () => {
-          this.$oruga.notification.open('Custom notification closed!')
+          closable: true,
+          onClose: () => {
+            this.$oruga.notification.open('Custom notification closed!')
+          }
         })
       },
       component() {
@@ -348,3 +346,5 @@ export default {
 | --oruga-notification-close-color            | \$notification-close-color            | \$white                      |
 | --oruga-notification-close-background-color | \$notification-close-background-color | hsla(0,0%,4%,.2)             |
 | --oruga-notification-icon-margin-right      | \$notification-icon-margin-right      | 1rem                         |
+| --oruga-notification-notices-padding        | \$notification-notices-padding        | 2em                          |
+| --oruga-notification-notices-zindex         | \$notification-notices-zindex         | 1000                         |
