@@ -694,7 +694,22 @@ export default {
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
-                }
+                },
+                {
+                    class: "inputClasses",
+                    realClass: "inputClasses.rootClass",
+                    description: "Classes to apply on internal input.",
+                    componentRef: "Input"
+                },
+                {
+                    class: "dropdownClasses",
+                    realClass: "dropdownClasses.rootClass",
+                    description: "Classes to apply on dropdown.",
+                    componentRef: "Dropdown",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
             ],
         };
     }
@@ -762,8 +777,8 @@ export default {
 | unselectableDates         |                                                             | array          | -                                                 |                                                                                                                                                             |
 | unselectableDaysOfWeek    |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;unselectableDaysOfWeek: undefined<br>}</code> |
 | useHtml5Validation        | Enable html 5 native validation                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code>                    |
+| v-model                   |                                                             | date\|array    | -                                                 |                                                                                                                                                             |
 | validationMessage         | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                                             |
-| value                     |                                                             | date\|array    | -                                                 |                                                                                                                                                             |
 | weekNumberClickable       |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;weekNumberClickable: false<br>}</code>        |
 | yearsRange                |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;yearsRange: [-100<br>}</code>                 |
 

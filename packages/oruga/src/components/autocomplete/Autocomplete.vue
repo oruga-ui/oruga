@@ -182,7 +182,6 @@ export default {
         itemClass: [String, Function, Array],
         itemHoverClass: [String, Function, Array],
         itemGroupTitleClass: [String, Function, Array],
-        /** Classes to apply on internal input (@see o-input style docs) */
         inputClasses: Object
     },
     data() {

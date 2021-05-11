@@ -79,6 +79,21 @@ export default {
                     description: "Class of the Table when on mobile",
                     warning: "Switch to mobile view to see it in action!"
                 },
+                {
+                    class: "inputClasses",
+                    realClass: "inputClasses.rootClass",
+                    description: "Classes to apply on internal input.",
+                    componentRef: "Input"
+                },
+                {
+                    class: "dropdownClasses",
+                    realClass: "dropdownClasses.rootClass",
+                    description: "Classes to apply on dropdown.",
+                    componentRef: "Dropdown",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
             ],
         };
     }

@@ -39,6 +39,11 @@ export default {
         duration: {
             type: Number,
             default: 2000
+        },
+        /** Callback function to call after close (programmatically close or user canceled) */
+        onClose: {
+            type: Function,
+            default: () => {}
         }
     },
     data() {
@@ -90,6 +95,7 @@ export default {
             this.isActive = false
             this.$emit('close')
             this.$emit('update:active', false)
+            this.onClose.apply(null, arguments)
         },
         /**
          * Set timer to auto close message

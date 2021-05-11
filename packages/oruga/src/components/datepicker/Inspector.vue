@@ -326,7 +326,22 @@ export default {
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
-                }
+                },
+                {
+                    class: "inputClasses",
+                    realClass: "inputClasses.rootClass",
+                    description: "Classes to apply on internal input.",
+                    componentRef: "Input"
+                },
+                {
+                    class: "dropdownClasses",
+                    realClass: "dropdownClasses.rootClass",
+                    description: "Classes to apply on dropdown.",
+                    componentRef: "Dropdown",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
             ],
         };
     }
