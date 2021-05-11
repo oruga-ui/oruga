@@ -196,7 +196,7 @@ export default defineComponent({
             return [
                 this.computedClass('rootClass', 'o-tpck'),
                 { [this.computedClass('sizeClass', 'o-tpck--', this.size)]: this.size },
-                 { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
+                { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
             ]
         },
         boxClasses() {

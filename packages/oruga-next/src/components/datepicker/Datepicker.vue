@@ -21,7 +21,7 @@
                     <o-input
                         ref="input"
                         autocomplete="off"
-                        :value="formattedValue"
+                        :model-value="formattedValue"
                         :expanded="expanded"
                         :placeholder="placeholder"
                         :size="size"
