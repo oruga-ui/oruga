@@ -42,7 +42,6 @@
                 :disabled="timepickerDisabled"
                 :mobile-native="isMobileNative"
                 :locale="locale"
-                :mobile-modal="false"
             />
         </div>
         <template v-if="$slots.default !== undefined">
