@@ -84,6 +84,10 @@ export default {
         },
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],
+        /** Props to be binded to the injected component */
+        props: Object,
+         /** Events to be binded to the injected component */
+        events: Object,
         /** Close icon name */
         closeIcon: {
             type: String,
