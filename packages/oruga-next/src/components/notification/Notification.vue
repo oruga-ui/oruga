@@ -31,11 +31,11 @@
                     :size="iconSize"
                     aria-hidden/>
                 <div :class="contentClasses">
-                    <template v-if="$slots.default">
-                        <slot v-bind:closeNotification="close" />
+                    <template v-if="message">
+                        <span v-html="message" />
                     </template>
                     <template v-else>
-                        <span v-html="message" />
+                        <slot v-bind:closeNotification="close" />
                     </template>
                 </div>
             </div>

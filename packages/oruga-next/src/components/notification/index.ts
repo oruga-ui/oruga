@@ -48,12 +48,6 @@ const NotificationProgrammatic = {
         const defaultSlot = () => { return newParams.message }
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot)
         vnode.appContext = app._context
-
-        // if (slot) {
-        //     vnode.component.slots.default = slot
-        //     //vnode.dynamicChildren[0].$forceUpdate()
-        // }
-        // vnode.component.props.isActive = true
         return render(vnode, document.createElement('div'))
     }
 }
