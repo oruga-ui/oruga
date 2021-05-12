@@ -846,7 +846,7 @@ export default defineComponent({
         },
         updateInternalState(value) {
             const currentDate = Array.isArray(value)
-                ? (!value.length ? this.dateCreator() : value[0])
+                ? (!value.length ? this.dateCreator() : value[value.length - 1])
                 : (!value ? this.dateCreator() : value)
             this.focusedDateData = {
                 day: currentDate.getDate(),
