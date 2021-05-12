@@ -96,11 +96,16 @@ export default {
     mixins: [FormElementMixin],
     inheritAttrs: false,
     props: {
+        /* @model */
         value: Date,
+        /* Timepicker is shown inline, input is removed */
         inline: Boolean,
+        /* Earliest time available for selection */
         minTime: Date,
+        /* Latest time available for selection */
         maxTime: Date,
         placeholder: String,
+        /* Enable input/typing. Note that you might have to set a custom time parser */
         editable: Boolean,
         disabled: Boolean,
         /**
@@ -108,24 +113,32 @@ export default {
          * @values small, medium, large
          */
         size: String,
+        /**
+         * Hour format for input and display
+         * @values 12, 24
+         */
         hourFormat: {
             type: String,
             validator: (value) => {
                 return value === HOUR_FORMAT_24 || value === HOUR_FORMAT_12
             }
         },
+        /* Step hours for select component */
         incrementHours: {
             type: Number,
             default: 1
         },
+        /* Step minutes for select component */
         incrementMinutes: {
             type: Number,
             default: 1
         },
+        /* Step seconds for select component */
         incrementSeconds: {
             type: Number,
             default: 1
         },
+        /* Function to format time (Date type) to a string for display in the input */
         timeFormatter: {
             type: Function,
             default: (date, vm) => {
@@ -137,6 +150,7 @@ export default {
                 }
             }
         },
+        /* Function to parse string to a time (Date type) for set a time from the input to the component */
         timeParser: {
             type: Function,
             default: (date, vm) => {
@@ -148,12 +162,14 @@ export default {
                 }
             }
         },
+        /* Enable native timepicker on mobile */
         mobileNative: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'timepicker.mobileNative', true)
             }
         },
+        /* Function used internally to create a new Date instance */
         timeCreator: {
             type: Function,
             default: () => {
@@ -165,17 +181,24 @@ export default {
                 }
             }
         },
+        /**
+         * Optional, position of the datepicker relative to the input
+         * @values top-right, top-left, bottom-left
+         */
         position: String,
+        /* Array of unselectable times (Date object) */
         unselectableTimes: Array,
+        /* Open timepicker on input focus */
         openOnFocus: Boolean,
+        /* Show seconds picker */
         enableSeconds: Boolean,
+        /* Default value when hours change */
         defaultMinutes: Number,
+        /* Default value when hours or minutes change */
         defaultSeconds: Number,
-        focusable: {
-            type: Boolean,
-            default: true
-        },
+        /* Append timepicker calendar to body */
         appendToBody: Boolean,
+        /* Reset timepicker values on meridian change */
         resetOnMeridianChange: {
             type: Boolean,
             default: false
