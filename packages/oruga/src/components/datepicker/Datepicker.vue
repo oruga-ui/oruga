@@ -292,18 +292,24 @@ export default {
         value: {
             type: [Date, Array]
         },
+        /* Names of days to display in table header */
         dayNames: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.dayNames', undefined)
             }
         },
+        /* Names of months to display in table header */
         monthNames: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.monthNames', undefined)
             }
         },
+        /**
+         * First day of week to display in table header (getDay() of Date Object)
+         * @values 0, 1, 2, 3, 4, 5, 6
+         */
         firstDayOfWeek: {
             type: Number,
             default: () => {
@@ -315,21 +321,30 @@ export default {
          * @values small, medium, large
          */
         size: String,
+        /* Datepicker is shown inline, input is removed */
         inline: Boolean,
+        /* Earliest date available for selection */
         minDate: Date,
+        /* Latest date available for selection */
         maxDate: Date,
+        /* Date that should be initially focused upon */ 
         focusedDate: Date,
         placeholder: String,
+        /* Enable input/typing. Note that you might have to set a custom date parser */
         editable: Boolean,
         disabled: Boolean,
+        /* Array of unselectable dates */
         unselectableDates: Array,
+        /* Array of unselectable days of week */
         unselectableDaysOfWeek: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
+        /* Array of selectable dates */
         selectableDates: Array,
+        /* Function to format date to a string for display in the input */
         dateFormatter: {
             type: Function,
             default: (date, vm) => {
@@ -341,6 +356,7 @@ export default {
                 }
             }
         },
+        /* Function to parse string to a date for set a date from the input to the component */
         dateParser: {
             type: Function,
             default: (date, vm) => {
@@ -352,6 +368,7 @@ export default {
                 }
             }
         },
+        /* Function used internally to create a new Date instance */
         dateCreator: {
             type: Function,
             default: () => {
@@ -363,32 +380,43 @@ export default {
                 }
             }
         },
+        /* Enable native datepicker on mobile */
         mobileNative: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.mobileNative', true)
             }
         },
+        /**
+         * Optional, position of the datepicker relative to the input
+         * @values top-right, top-left, bottom-left
+         */
         position: String,
         iconRight: String,
+        /* Dates to display indicators */
         events: Array,
+        /* Shape to use when showing event indicators */
         indicators: {
             type: String,
             default: 'dots'
         },
+        /* Open datepicker on input focus */
         openOnFocus: Boolean,
+        /* Icon to use for previous month */
         iconPrev: {
             type: String,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.iconPrev', 'chevron-left')
             }
         },
+        /* Icon to use for next month */
         iconNext: {
             type: String,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.iconNext', 'chevron-right')
             }
         },
+        /* Years range relative to selected year */
         yearsRange: {
             type: Array,
             default: () => {
@@ -403,66 +431,80 @@ export default {
                 ].indexOf(value) >= 0
             }
         },
+        /* Show/Hide nearby month days (prev and next month) */
         nearbyMonthDays: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.nearbyMonthDays', true)
             }
         },
+        /* When nearby-month-days, it allows to select/unselect nearby month days */
         nearbySelectableMonthDays: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.nearbySelectableMonthDays', false)
             }
         },
+        /* Display week number */
         showWeekNumber: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.showWeekNumber', false)
             }
         },
+        /* Enable click on week number */
         weekNumberClickable: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.weekNumberClickable', false)
             }
         },
+        /* Choose the rule to determinate the first week of Year, 4 for ISO or 1 for other */
         rulesForFirstWeek: {
             type: Number,
             default: () => 4
         },
+        /* Flag to allow choosing a range of date */
         range: {
             type: Boolean,
             default: false
         },
+        /* Choose whether the Datepicker should close after selecting a date */
         closeOnClick: {
             type: Boolean,
             default: true
         },
+        /* Flag to allow choosing multiple dates */
         multiple: {
             type: Boolean,
             default: false
         },
+        /* Datepicker is shown into a modal on mobile */
         mobileModal: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.mobileModal', true)
             }
         },
+        /* Trap focus inside the datepicker */
         trapFocus: {
             type: Boolean,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.trapFocus', true)
             }
         },
+        /* Accept a string with a BCP 47 language tag, or an array of such strings. See Unicode BCP 47 locale identifier */
         locale: {
             type: [String, Array],
             default: () => {
                 return getValueByPath(getOptions(), 'locale')
             }
         },
+        /* Append datepicker calendar to body */
         appendToBody: Boolean,
+        /* Accessibility label for the next month button */
         ariaNextLabel: String,
+        /* Accessibility label for the prev month button */
         ariaPreviousLabel: String,
         rootClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
