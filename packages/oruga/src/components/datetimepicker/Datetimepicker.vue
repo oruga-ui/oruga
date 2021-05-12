@@ -97,32 +97,44 @@ export default {
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     props: {
+        /* @model */
         value: {
             type: Date
         },
+        /* Enable input/typing. Note that you might have to set a custom datetime parser */
         editable: {
             type: Boolean,
             default: false
         },
         placeholder: String,
         disabled: Boolean,
-        icon: String,
-        iconPack: String,
+        /* Datimepicker is shown inline, input is removed */
         inline: Boolean,
+        /* Open datetimepicker on input focus */
         openOnFocus: Boolean,
+        /**
+         * Optional, position of the datepicker relative to the input
+         * @values top-right, top-left, bottom-left
+         */
         position: String,
+        /* Enable native datetimepicker on mobile */
         mobileNative: {
             type: Boolean,
             default: true
         },
+        /* Earliest datetime available for selection */
         minDatetime: Date,
+        /* Latest datetime available for selection */
         maxDatetime: Date,
+        /* Function to format datetime (Date type) to a string for displaying in the input */
         datetimeFormatter: {
             type: Function
         },
+        /* Function to parse string to a datetime (Date type) for setting the component's datetime from the input */
         datetimeParser: {
             type: Function
         },
+        /* Function used internally to create a new Date instance */
         datetimeCreator: {
             type: Function,
             default: (date) => {
@@ -142,12 +154,14 @@ export default {
          * Properties and classes to bind to the internal TimePicker
          */
         timepicker: Object,
+        /* Accept a string with a BCP 47 language tag, or an array of such strings. See Unicode BCP 47 locale identifier */
         locale: {
             type: [String, Array],
             default: () => {
                 return getValueByPath(getOptions(), 'locale')
             }
         },
+        /* Append datetimepicker calendar to body */
         appendToBody: Boolean,
         datepickerWrapperClass: [String, Function, Array],
         timepickerWrapperClass: [String, Function, Array],
