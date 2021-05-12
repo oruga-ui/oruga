@@ -86,7 +86,7 @@ export default {
         component: [Object, Function],
         /** Props to be binded to the injected component */
         props: Object,
-         /** Events to be binded to the injected component */
+        /** Events to be binded to the injected component */
         events: Object,
         /** Close icon name */
         closeIcon: {
