@@ -237,7 +237,7 @@ export default defineComponent({
             items: Array.isArray(this.modelValue) ? this.modelValue.slice(0) : (this.modelValue || []),
             newItem: '',
             isComposing: false,
-            _elementRef: 'autocomplete'
+            $elementRef: 'autocomplete'
         }
     },
     computed: {

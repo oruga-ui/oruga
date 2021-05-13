@@ -231,7 +231,7 @@ export default {
             items: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
             newItem: '',
             isComposing: false,
-            _elementRef: 'autocomplete'
+            $elementRef: 'autocomplete'
         }
     },
     computed: {
