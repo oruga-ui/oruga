@@ -19,6 +19,10 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                 size="medium"
                 @click="success" />
             <o-button
+                label="Launch toast"
+                size="medium"
+                @click="toast" />
+            <o-button
                 label="Launch notification (custom)"
                 variant="danger"
                 size="medium"
@@ -85,6 +89,13 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     closable: true
                 })
             },
+            toast() {
+                this.$oruga.notification.open({
+                    message: 'Something happened correctly!',
+                    rootClass: 'toast-notification',
+                    position: 'top'
+                })
+            },
             danger() {
                 const notif = this.$oruga.notification.open({
                     duration: 5000,
@@ -108,6 +119,18 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
         }
     }
 </script>
+<style>
+.toast-notification {
+    margin: .5em 0;
+    text-align: center;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%);
+    border-radius: 2em;
+    padding: .75em 1.5em;
+    pointer-events: auto;
+    color: rgba(0,0,0,.7);
+    background: #ffdd57;
+}
+</style>
 ```
 :::
 

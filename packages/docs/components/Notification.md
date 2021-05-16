@@ -1,8 +1,8 @@
 ---
-title: Notification
+title: Notification/Toast
 ---
 
-# Notification
+# Notification/Toast
 
 > Bold notification blocks to alert your users of something
 
@@ -24,6 +24,7 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     <div class="buttons">
       <o-button label="Launch notification (default)" size="medium" @click="simple" />
       <o-button label="Launch notification (custom)" variant="success" size="medium" @click="success" />
+      <o-button label="Launch toast" size="medium" @click="toast" />
       <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
       <o-button label="Launch notification (component)" variant="warning" size="medium" @click="component" />
     </div>
@@ -83,6 +84,13 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
           closable: true
         })
       },
+      toast() {
+        this.$oruga.notification.open({
+          message: 'Something happened correctly!',
+          rootClass: 'toast-notification',
+          position: 'top'
+        })
+      },
       danger() {
         const notif = this.$oruga.notification.open({
           duration: 5000,
@@ -106,6 +114,18 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     }
   }
 </script>
+<style>
+  .toast-notification {
+    margin: 0.5em 0;
+    text-align: center;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%);
+    border-radius: 2em;
+    padding: 0.75em 1.5em;
+    pointer-events: auto;
+    color: rgba(0, 0, 0, 0.7);
+    background: #ffdd57;
+  }
+</style>
 ```
 
 :::
@@ -186,84 +206,6 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 ```
 
 :::
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
-
-<br />
-<template>
-  <div>
-    <doc-wrapper>
-        <template v-slot:default="s">
-            <o-notification v-bind="s">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-            </o-notification>
-        </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "closeClass",
-                    description: "Class of the close button container",
-                    properties: ["closable"],
-                    action: (cmp) => {
-                        cmp.data.closable = true;
-                    },
-                },
-                {
-                    class: "contentClass",
-                    description: "Class of the content element"
-                },
-                {
-                    class: "iconClass",
-                    description: "Class of the icon on the left",
-                    properties: ["type"],
-                    action: (cmp) => {
-                        cmp.data.type = 'info';
-                    },
-                },
-                {
-                    class: "positionClass",
-                    description: "Class of the element when positioned",
-                    properties: ["position"],
-                    suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
-                    action: (cmp) => {
-                        cmp.data.position = 'top-right';
-                    },
-                },
-                {
-                    class: "wrapperClass",
-                    description: "Class of the wrapper element"
-                },
-                {
-                    class: "variantClass",
-                    description: "Class of the notification variant",
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                    },
-                },
-            ],
-        };
-    },
-};
-</script>
-
-<br />
-<br />
 
 ## Props
 
