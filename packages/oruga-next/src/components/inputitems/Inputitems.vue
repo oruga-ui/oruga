@@ -37,6 +37,7 @@
                 :disabled="disabled"
                 :autocomplete="nativeAutocomplete"
                 :open-on-focus="openOnFocus"
+                :keep-first="keepFirst"
                 :keep-open="openOnFocus"
                 :group-field="groupField"
                 :group-options="groupOptions"
@@ -220,6 +221,8 @@ export default defineComponent({
             type: Function,
             default: (item: any) => item
         },
+        /** The first option will always be pre-selected (easier to just hit enter or tab) */
+        keepFirst: Boolean,
         /** Accessibility label for the close button */
         ariaCloseLabel: String,
         /** Append autocomplete content to body */
