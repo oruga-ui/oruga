@@ -6,7 +6,7 @@
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
         <o-icon
-             v-if="iconCheck"
+            v-if="iconCheck"
             :icon="iconCheck"
             :pack="iconPack"
             :size="size"
@@ -22,6 +22,7 @@
             :disabled="disabled"
             :required="required"
             :name="name"
+            :autocomplete="autocomplete"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
@@ -73,10 +74,13 @@ export default {
             type: [String, Number, Boolean],
             default: false
         },
+        /** Icon for checkbox (optional)  */
         iconCheck: {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
         },
+        /* Same as native autocomplete */
+        autocomplete: String,
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],

@@ -22,6 +22,7 @@
             :disabled="disabled"
             :required="required"
             :name="name"
+            :autocomplete="autocomplete"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue">
@@ -82,6 +83,8 @@ export default defineComponent({
             type: String,
             default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
         },
+        /* Same as native autocomplete */
+        autocomplete: String,
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],

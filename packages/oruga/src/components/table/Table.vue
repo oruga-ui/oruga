@@ -55,6 +55,7 @@
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                         <template v-if="headerCheckable">
                             <o-checkbox
+                                autocomplete="off"
                                 :value="isAllChecked"
                                 :disabled="isAllUncheckable"
                                 @change.native="checkAll"/>
@@ -96,6 +97,7 @@
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                         <template v-if="headerCheckable">
                             <o-checkbox
+                                autocomplete="off"
                                 :value="isAllChecked"
                                 :disabled="isAllUncheckable"
                                 @change.native="checkAll"/>
@@ -168,6 +170,7 @@
                             :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'left'">
                             <o-checkbox
+                                autocomplete="off"
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
                                 @input="checkRow(row, index, $event)"
@@ -197,6 +200,7 @@
                             :class="tdCheckboxClasses"
                             v-if="checkable && checkboxPosition === 'right'">
                             <o-checkbox
+                                autocomplete="off"
                                 :disabled="!isRowCheckable(row)"
                                 :value="isRowChecked(row)"
                                 @input="checkRow(row, index, $event)"
