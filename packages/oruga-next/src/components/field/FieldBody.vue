@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h } from "vue"
+import { defineComponent, h, resolveComponent } from "vue"
 
 export default defineComponent({
     name: 'OFieldBody',
@@ -17,15 +17,18 @@ export default defineComponent({
             { class: this.parent.bodyHorizontalClasses },
             this.$slots.default().map((element) => {
                 // skip returns and comments
+                /*
                 if (!element.tag) {
                     return element
                 }
+                */
                 let message
                 if (first) {
                     message = this.parent.newMessage
                     first = false
                 }
-                return h('o-field',
+                // @ts-ignore (Why props null ??)
+                return h(resolveComponent('o-field'),
                     { variant: this.parent.newVariant, message }, [element])
             })
         )
