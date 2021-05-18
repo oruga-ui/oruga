@@ -19,7 +19,7 @@
                 @click.prevent="emitChosenDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
                 @keydown="manageKeydown($event, weekDay)"
-                :tabindex="day === weekDay.getDate() ? null : -1">
+                :tabindex="day === weekDay.getDate() && month === weekDay.getMonth() ? null : -1">
                 <span>{{ weekDay.getDate() }}</span>
                 <div
                     :class="tableEventsClasses"
