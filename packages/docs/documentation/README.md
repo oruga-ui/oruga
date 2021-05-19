@@ -573,7 +573,7 @@ import '@oruga-ui/oruga/dist/oruga-full.css'
 
 Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
 
-### Global
+## Global Props
 
 | Field              | Description                                                   | Default |
 | ------------------ | ------------------------------------------------------------- | ------- |
