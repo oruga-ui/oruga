@@ -4,7 +4,7 @@ Oruga is a <b>lightweight library of UI components for [Vue.js](https://vuejs.or
 It <b>doesn't depend on any specific style or CSS framework</b> (like Bootstrap, Bulma, TailwindCSS, etc) and it <b>doesn't provide any grid system or CSS utility</b>, it just offer a <b>set of components easy to customize only modifying your stylesheets</b> or <b>integrating it with a CSS framework</b> (see the [demo](#examples)).<br>
 Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b>be totally flexible to future changes</b> without having to touch a line of JavaScript. 
 
-If you need a component library and want to easily apply your custom styles, Oruga is the library for you!
+If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
 ### Oruga default stylesheet
 
@@ -638,3 +638,9 @@ This simple demo shows a simple recipe website. Oruga components like Input, Rad
 
 - [Online demo](https://oruga-tailwindcss-demo.netlify.app)
 - [Source code](https://github.com/oruga-ui/demo-tailwindcss)
+
+## Articles
+
+- [Oruga UI Components without CSS Framework Dependency - Article by Walter Tommasi](https://dev.to/jtommy/oruga-ui-components-library-without-css-framework-dependency-4m3m)
+- [Oruga, the new kid on the block - Article by Andrea Stagi](https://dev.to/astagi/oruga-the-new-kid-on-the-block-1n55)
+ 
