@@ -74,7 +74,9 @@ export default {
     inheritAttrs: false,
     provide() {
         return {
-
+            $elementRef: this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
         }
     },
     props: {
@@ -140,10 +142,7 @@ export default {
             newValue: this.value,
             newType: this.type,
             newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
-            isPasswordVisible: false,
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
+            isPasswordVisible: false
         }
     },
     computed: {
@@ -211,19 +210,6 @@ export default {
                 return this.iconRightVariant || null
             }
             return this.statusVariant
-        },
-
-        /**
-        * Icon name (MDI) based on the type.
-        */
-        statusVariantIcon() {
-            switch (this.statusVariant) {
-                case 'success': return 'check'
-                case 'danger': return 'alert-circle'
-                case 'info': return 'information'
-                case 'warning': return 'alert'
-                default: return ''
-            }
         },
 
         /**

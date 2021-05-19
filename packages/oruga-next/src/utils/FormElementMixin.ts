@@ -86,6 +86,19 @@ export default defineComponent({
 
 			return this.parentField.newMessage || this.parentField.hasMessageSlot;
 		},
+
+        /**
+        * Icon name based on the variant.
+        */
+        statusVariantIcon() {
+            const statusVariantIcon = getValueByPath(getOptions(), "statusVariantIcon", {
+                'success': 'check',
+                'danger': 'alert-circle',
+                'info': 'information',
+                'warning': 'alert'
+            });
+            return statusVariantIcon[this.statusVariant] || ''
+        }
 	},
 	methods: {
 		/**

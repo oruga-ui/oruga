@@ -218,19 +218,6 @@ export default defineComponent({
         },
 
         /**
-        * Icon name (MDI) based on the type.
-        */
-        statusVariantIcon() {
-            switch (this.statusVariant) {
-                case 'success': return 'check'
-                case 'danger': return 'alert-circle'
-                case 'info': return 'information'
-                case 'warning': return 'alert'
-                default: return ''
-            }
-        },
-
-        /**
         * Check if have any message prop from parent if it's a Field.
         */
         hasMessage() {
