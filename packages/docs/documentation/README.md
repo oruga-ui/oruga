@@ -578,6 +578,7 @@ Take a look at the [official TailwindCSS + Oruga example](https://github.com/oru
 | Field              | Description                                                   | Default |
 | ------------------ | ------------------------------------------------------------- | ------- |
 | statusIcon         | Show status icon using field and variant prop                 | true    |
+| statusVariantIcon  | Default mapping of variant and icon name                      | <code style='white-space: nowrap; padding: 0;'>{ 'success': 'check', 'danger': 'alert-circle', 'info':'information', 'warning': 'alert'} </code>  |
 | useHtml5Validation | Default form components use-html5-validation attribute        | true    |
 | iconPack           | Icon pack used internally and on the Icon component attribute | 'mdi'   |
 
