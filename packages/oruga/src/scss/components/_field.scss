@@ -10,6 +10,7 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
 /* @docs */
 
 .o-field {
+    flex-grow: 1;
     &:not(:last-child) {
         @include avariable('margin-bottom', 'field-margin-bottom', $field-margin-bottom);
     }
