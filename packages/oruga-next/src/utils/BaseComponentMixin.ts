@@ -37,12 +37,12 @@ export default defineComponent({
             }
 
             if (typeof currentClass === "function") {
-                currentClass = currentClass(suffix, {props: this.$props})
+                currentClass = currentClass(suffix, {props: this.$props, instance: this})
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
             if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, {props: this.$props})
+                globalClass = globalClass(suffix, {props: this.$props, instance: this})
             } else {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix)
             }
