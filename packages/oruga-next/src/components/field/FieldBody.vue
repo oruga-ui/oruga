@@ -12,23 +12,19 @@ export default defineComponent({
     },
     render() {
         let first = true
+        const slot = this.$slots.default()
+        const children = slot.length === 1 && slot[0].children ? slot[0].children : slot
         return h(
             'div',
             { class: this.parent.bodyHorizontalClasses },
-            this.$slots.default().map((element) => {
-                // skip returns and comments
-                /*
-                if (!element.tag) {
-                    return element
-                }
-                */
+            children.map((element) => {
                 let message
                 if (first) {
                     message = this.parent.newMessage
                     first = false
                 }
                 // @ts-ignore (Why props null ??)
-                return h(resolveComponent('o-field'),
+                return h(resolveComponent('OField'),
                     { variant: this.parent.newVariant, message }, [element])
             })
         )

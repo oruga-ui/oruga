@@ -231,8 +231,8 @@ export default defineComponent({
             let renderedNode = 0
             const slot = this.$slots.default()
             if (slot) {
-                /* equivalent .tag ?? */
-                renderedNode = slot.reduce((i, node) => node ? i + 1 : i, 0)
+                const children = slot.length === 1 && slot[0].children ? slot[0].children : slot
+                renderedNode = children.reduce((i, node) => node ? i + 1 : i, 0)
             }
             return renderedNode > 1 && this.addons && !this.horizontal
         }
