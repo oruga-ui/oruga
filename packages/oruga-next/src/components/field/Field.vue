@@ -231,13 +231,10 @@ export default defineComponent({
             let renderedNode = 0
             const slot = this.$slots.default()
             if (slot) {
-                renderedNode = slot.reduce((i, node) => node.tag ? i + 1 : i, 0)
+                /* equivalent .tag ?? */
+                renderedNode = slot.reduce((i, node) => node ? i + 1 : i, 0)
             }
-            return (
-                renderedNode > 1 &&
-                this.addons &&
-                !this.horizontal
-            )
+            return renderedNode > 1 && this.addons && !this.horizontal
         }
     }
 })
