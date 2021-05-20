@@ -13,7 +13,7 @@ export default defineComponent({
     render() {
         let first = true
         const slot = this.$slots.default()
-        const children = slot.length === 1 && slot[0].children ? slot[0].children : slot
+        const children = slot.length === 1 && Array.isArray(slot[0].children) ? slot[0].children : slot
         return h(
             'div',
             { class: this.parent.bodyHorizontalClasses },
