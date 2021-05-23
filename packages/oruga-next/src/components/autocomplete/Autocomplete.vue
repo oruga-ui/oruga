@@ -41,7 +41,7 @@
                     <div
                         v-if="element.group"
                         :key="groupindex + 'group'"
-                        :class="itemEmptyClasses">
+                        :class="itemGroupClasses">
                         <slot
                             v-if="$slots.group"
                             name="group"
@@ -186,7 +186,7 @@ export default defineComponent({
         itemClass: [String, Function, Array],
         itemHoverClass: [String, Function, Array],
         itemGroupTitleClass: [String, Function, Array],
-        /** Classes to apply on internal input (@see o-input style docs) */
+        itemEmptyClasses: [String, Function, Array],
         inputClasses: Object
     },
     data() {
@@ -222,6 +222,12 @@ export default defineComponent({
             ]
         },
         itemEmptyClasses() {
+            return [
+                ...this.itemClasses,
+                this.computedClass('itemEmptyClass', 'o-acp__item--empty')
+            ]
+        },
+        itemGroupClasses() {
             return [
                 ...this.itemClasses,
                 this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')

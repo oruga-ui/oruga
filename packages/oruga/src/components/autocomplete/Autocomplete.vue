@@ -41,7 +41,7 @@
                     <div
                         v-if="element.group"
                         :key="groupindex + 'group'"
-                        :class="itemEmptyClasses">
+                        :class="itemGroupClasses">
                         <slot
                             v-if="$scopedSlots.group"
                             name="group"
@@ -182,6 +182,7 @@ export default {
         itemClass: [String, Function, Array],
         itemHoverClass: [String, Function, Array],
         itemGroupTitleClass: [String, Function, Array],
+        itemEmptyClasses: [String, Function, Array],
         inputClasses: Object
     },
     data() {
@@ -216,6 +217,12 @@ export default {
             ]
         },
         itemEmptyClasses() {
+            return [
+                ...this.itemClasses,
+                this.computedClass('itemEmptyClass', 'o-acp__item--empty')
+            ]
+        },
+        itemGroupClasses() {
             return [
                 ...this.itemClasses,
                 this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')

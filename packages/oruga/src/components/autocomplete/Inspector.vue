@@ -86,6 +86,15 @@ export default {
                     },
                 },
                 {
+                    class: "itemEmptyClass",
+                    description: "Class of the menu empty placeholder item",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "|", char : "|", shiftKey : true}));
+                    },
+                },
+                {
                     class: "inputClasses",
                     realClass: "inputClasses.rootClass",
                     description: "Classes to apply on internal input.",
