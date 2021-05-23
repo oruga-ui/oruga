@@ -182,7 +182,7 @@ export default {
         itemClass: [String, Function, Array],
         itemHoverClass: [String, Function, Array],
         itemGroupTitleClass: [String, Function, Array],
-        itemEmptyClasses: [String, Function, Array],
+        itemEmptyClass: [String, Function, Array],
         inputClasses: Object
     },
     data() {
