@@ -56,7 +56,7 @@
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
                         @click="setSelected(option, undefined, $event)"
-                        ref="items"
+                        :ref="setItemRef"
                     >
                         <slot
                             v-if="$slots.default"
@@ -199,6 +199,7 @@ export default defineComponent({
             newAutocomplete: (this as any).autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
+            itemRefs: [],
             width: undefined,
             bodyEl: undefined, // Used to append to body
         }
@@ -532,7 +533,7 @@ export default defineComponent({
                 this.setHovered(data[index])
 
                 const list = this.$refs.dropdown
-                const element = this.$refs.items ? this.$refs.items[index] : undefined
+                const element = this.itemRefs ? this.itemRefs[index] : undefined
 
                 if (!element) return
 
@@ -609,6 +610,11 @@ export default defineComponent({
                 })
             }
         },
+        setItemRef(el) {
+            if (el) {
+                this.itemRefs.push(el)
+            }
+        },
         updateAppendToBody() {
             const dropdownMenu = this.$refs.dropdown
             const trigger = this.$refs.input.$el
@@ -661,6 +667,7 @@ export default defineComponent({
     },
     beforeUpdate() {
         this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
+        this.itemRefs = []
     },
     beforeUnmount() {
         if (typeof window !== 'undefined') {
