@@ -9,6 +9,12 @@ const _defaultSuffixProcessor = (input, suffix) => {
         .join(' ');
 }
 
+const _getContext = (vm) => {
+    const computedNames = Object.keys(vm.$options.computed)
+    const computed = Object.keys(vm).filter(k => computedNames.indexOf(k) >= 0)
+    return {props: vm.$props, data: vm.$data, computed}
+}
+
 export default {
     isOruga: true,
     props: {
@@ -42,12 +48,12 @@ export default {
             }
 
             if (typeof currentClass === "function") {
-                currentClass = currentClass(suffix, {props: this.$props, instance: this})
+                currentClass = currentClass(suffix, _getContext(this))
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
             if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, {props: this.$props, instance: this})
+                globalClass = globalClass(suffix, _getContext(this))
             } else {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix)
             }

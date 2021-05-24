@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { ComponentOptions, defineComponent } from 'vue';
 import { getOptions } from './config'
 import { getValueByPath, blankIfUndefined } from './helpers'
 
@@ -8,6 +8,12 @@ const _defaultSuffixProcessor = (input: string, suffix: string) => {
         .filter((cls) => cls.length > 0)
         .map((cls) => cls + suffix)
         .join(' ');
+}
+
+const _getContext = (vm: ComponentOptions) => {
+    const computedNames = Object.keys(vm.$options.computed)
+    const computed = Object.keys(vm).filter(k => computedNames.indexOf(k) >= 0)
+    return {props: vm.$props, data: vm.$data, computed}
 }
 
 export default defineComponent({
@@ -37,12 +43,12 @@ export default defineComponent({
             }
 
             if (typeof currentClass === "function") {
-                currentClass = currentClass(suffix, {props: this.$props, instance: this})
+                currentClass = currentClass(suffix, _getContext(this))
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
             if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, {props: this.$props, instance: this})
+                globalClass = globalClass(suffix, _getContext(this))
             } else {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix)
             }
