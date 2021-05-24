@@ -2,7 +2,6 @@
     <div :class="rootClasses">
         <div
             :class="containerClasses"
-            :disabled="disabled"
             @click="hasInput && focus($event)">
             <slot name="selected" :items="items">
                 <span
