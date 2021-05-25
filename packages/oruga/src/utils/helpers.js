@@ -321,3 +321,7 @@ export function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args)
     }
 }
+
+export function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}

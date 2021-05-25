@@ -1,6 +1,6 @@
 import { ComponentOptions, defineComponent } from 'vue';
 import { getOptions } from './config'
-import { getValueByPath, blankIfUndefined } from './helpers'
+import { getValueByPath, blankIfUndefined, endsWith } from './helpers'
 
 const _defaultSuffixProcessor = (input: string, suffix: string) => {
     return blankIfUndefined(input)
@@ -12,7 +12,7 @@ const _defaultSuffixProcessor = (input: string, suffix: string) => {
 
 const _getContext = (vm: ComponentOptions) => {
     const computedNames = Object.keys(vm.$options.computed)
-    const computed = computedNames.reduce((o, key) => {
+    const computed = computedNames.filter(e => !endsWith(e, 'Classes')).reduce((o, key) => {
         o[key] = vm[key]
         return o
     }, {})

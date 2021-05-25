@@ -288,11 +288,16 @@ Vue.use(Config, {
 })
 ```
 
-For a better customization experience this function accepts the component `context` containing its `props` as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
+For a better customization experience this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
 
 ```js
 Vue.use(Config, {
-    button: {
+    input: {
+        rootClass: (_, context) => {
+            if (context.computed.hasIconRight) {
+                return 'has-icons-right')
+            }
+        },
         variantClass: (variant, context) => {
             if (!context.props.outlined) {
                 return `btn-${variant}`
