@@ -11,7 +11,10 @@ const _defaultSuffixProcessor = (input, suffix) => {
 
 const _getContext = (vm) => {
     const computedNames = Object.keys(vm.$options.computed)
-    const computed = Object.keys(vm).filter(k => computedNames.indexOf(k) >= 0)
+    const computed = Object.keys(vm).filter(k => computedNames.indexOf(k) >= 0).reduce((o, k) => {
+        o[k] = vm[k]
+        return o
+    }, {})
     return {props: vm.$props, data: vm.$data, computed}
 }
 
