@@ -78,9 +78,9 @@ export default defineComponent({
     render() {
         const trigger = h('div', {
             class: this.computedClass('triggerClass', 'o-clps__trigger'),
-            onClick: { click: this.toggle }
+            onClick: this.toggle
         }, this.$slots.trigger({ open: this.isOpen }) )
-        const content = h(Transition, { name: this.animation }, [
+        const content = h(Transition, { name: this.animation }, () =>
             withDirectives(
                 h('div', {
                     class: this.computedClass('contentClass', 'o-clps__content'),
@@ -89,10 +89,11 @@ export default defineComponent({
                 }, this.$slots.default()),
                 [ [vShow, this.isOpen] ]
             )
-        ])
+        )
         return h('div',
             { class: this.computedClass('rootClass', 'o-clps') },
-            () => (this.position === 'top' ? [trigger, content] : [content, trigger]) )
+            (this.position === 'top' ? [trigger, content] : [content, trigger])
+        )
     }
 })
 </script>
