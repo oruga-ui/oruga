@@ -44,7 +44,7 @@ export default defineComponent({
             return [
                 this.linkClass || [...this.$pagination.linkClasses],
                 this.page.class,
-                { [this.linkCurrentClasses || this.$pagination.linkCurrentClasses]: this.page.isCurrent }
+                { [this.linkCurrentClass || this.$pagination.linkCurrentClasses]: this.page.isCurrent }
             ]
         },
         href() {
@@ -54,6 +54,7 @@ export default defineComponent({
             return ''
         },
         isDisabled() {
+            if (this.tag === 'a') return null
             return this.disabled || this.page.disabled
         }
     }
