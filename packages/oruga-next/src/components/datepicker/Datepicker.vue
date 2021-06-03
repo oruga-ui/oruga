@@ -531,6 +531,7 @@ export default defineComponent({
         },
         dropdownBind() {
             return {
+                'root-class': this.computedClass('dropdownClasses.rootClass', 'o-dpck__dropdown'),
                 ...this.dropdownClasses
             }
         },

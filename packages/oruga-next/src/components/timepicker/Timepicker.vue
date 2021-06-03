@@ -189,6 +189,7 @@ export default defineComponent({
         },
         dropdownBind() {
             return {
+                'root-class': this.computedClass('dropdownClasses.rootClass', 'o-tpck__dropdown'),
                 ...this.dropdownClasses
             }
         },

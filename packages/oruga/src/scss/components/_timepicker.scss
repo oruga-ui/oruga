@@ -19,6 +19,9 @@ $timepicker-separator-font-weight: 600 !default;
             @include avariable('font-size', ('timepicker-font-size-' + #{$name}), $value);
         }
     }
+    &__dropdown {
+        width: 100%;
+    }
     &__box {
         display: flex;
         justify-content: center;

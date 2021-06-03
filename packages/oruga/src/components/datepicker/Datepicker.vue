@@ -327,7 +327,7 @@ export default {
         minDate: Date,
         /* Latest date available for selection */
         maxDate: Date,
-        /* Date that should be initially focused upon */ 
+        /* Date that should be initially focused upon */
         focusedDate: Date,
         placeholder: String,
         /* Enable input/typing. Note that you might have to set a custom date parser */
@@ -570,6 +570,7 @@ export default {
         },
         dropdownBind() {
             return {
+                'root-class': this.computedClass('dropdownClasses.rootClass', 'o-dpck__dropdown'),
                 ...this.dropdownClasses
             }
         },

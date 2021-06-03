@@ -52,6 +52,9 @@ $datepicker-btn-padding: .5em .5em !default;
             @include avariable('font-size', ('datepicker-font-size-' + #{$name}), $value);
         }
     }
+    &__dropdown {
+        width: 100%;
+    }
     &__box {
         display: block;
         position: relative;
@@ -253,8 +256,5 @@ $datepicker-btn-padding: .5em .5em !default;
             flex-grow: 1;
             flex-shrink: 1;
         }
-    }
-    .o-drop {
-        width: 100%;
     }
 }
