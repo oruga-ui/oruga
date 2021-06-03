@@ -2,7 +2,6 @@
     <label
         :class="rootClasses"
         ref="label"
-        :disabled="disabled"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
         <input
