@@ -150,27 +150,27 @@ export default defineComponent({
             }
         },
         onLeftKeyDown() {
-            if (this.disabled || this.value === this.min) return
+            if (this.disabled || this.modelvalue === this.min) return
             this.newPosition = parseFloat(this.currentPosition) -
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onRightKeyDown() {
-            if (this.disabled || this.value === this.max) return
+            if (this.disabled || this.modelvalue === this.max) return
             this.newPosition = parseFloat(this.currentPosition) +
                 this.step / (this.max - this.min) * 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onHomeKeyDown() {
-            if (this.disabled || this.value === this.min) return
+            if (this.disabled || this.modelvalue === this.min) return
             this.newPosition = 0
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
         },
         onEndKeyDown() {
-            if (this.disabled || this.value === this.max) return
+            if (this.disabled || this.modelvalue === this.max) return
             this.newPosition = 100
             this.setPosition(this.newPosition)
             this.$parent.emitValue('change')
@@ -198,7 +198,7 @@ export default defineComponent({
         onDragEnd() {
             this.dragging = false
             this.$emit('dragend')
-            if (this.value !== this.oldValue) {
+            if (this.modelvalue !== this.oldValue) {
                 this.$parent.emitValue('change')
             }
             this.setPosition(this.newPosition)
