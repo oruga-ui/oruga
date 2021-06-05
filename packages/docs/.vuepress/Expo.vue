@@ -1,26 +1,28 @@
 <template>
-  <section class="section">
-      <o-loading :full-page="false" :active="loading"></o-loading>
-      <div class="grids">
-        <div class="grid"
-            v-for="item in items"
-            :key="item.id">
-            <a
-                target="_blank"
-                :href="item.url">
-                <img :src="`https://res.cloudinary.com/nuxt/image/upload/w_1200,h_900,f_auto,q_auto/${item.screenshotUrl}`">
-                <p>
-                    <strong>{{ item.hostname }}</strong>
-                </p>
-            </a>
-        </div>
-      </div>
-      <div
-        class="buttons"
-        v-if="items.length < count">
-          <o-button @click="loadMore" variant="primary">Load more</o-button>
-      </div>
-  </section>
+    <client-only>
+        <section class="section">
+            <o-loading :full-page="false" :active="loading"></o-loading>
+            <div class="grids">
+                <div class="grid"
+                    v-for="item in items"
+                    :key="item.id">
+                    <a
+                        target="_blank"
+                        :href="item.url">
+                        <img :src="`https://res.cloudinary.com/nuxt/image/upload/w_1200,h_900,f_auto,q_auto/${item.screenshotUrl}`">
+                        <p>
+                            <strong>{{ item.hostname }}</strong>
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="buttons"
+                v-if="items.length && items.length < count">
+                <o-button @click="loadMore" variant="primary">Load more</o-button>
+            </div>
+        </section>
+    </client-only>
 </template>
 
 <script>
@@ -95,5 +97,6 @@ export default {
 
 .section {
     position: relative;
+    width: 100%;
 }
 </style>
