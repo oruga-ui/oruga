@@ -61,8 +61,10 @@ export default {
         }
     },
     beforeMount() {
-        this.loadCount()
-        this.loadItems()
+        if (typeof window !== 'undefined') {
+            this.loadCount()
+            this.loadItems()
+        }
     }
 }
 </script>
