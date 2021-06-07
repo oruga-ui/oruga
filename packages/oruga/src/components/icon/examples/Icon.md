@@ -2,7 +2,7 @@
 ## Examples
 
 Oruga is compatible with both <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a>
-and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you can also add your custom icon pack.<br>
+and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you can also add your own custom icon pack.<br>
 
 ### Base
 
@@ -110,10 +110,10 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ```
 :::
 
-### Custon icon pack
+### Custom icon pack
 
 <p>
-    Can also add it during Oruga import as default config
+    You can also add it during Oruga import as default config
 </p>
 
 ::: demo
@@ -275,7 +275,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ### Override icon pack
 
 <p>
-    Can also customize some properties of the default icon packs. In this example, default sizes for FontAwesome have been modified.
+    You can also customize some properties of the default icon packs. In this example, default sizes for FontAwesome have been modified.
 </p>
 
 ```js
@@ -301,7 +301,7 @@ export default {
 ### Custom icon component
 
 ::: tip
-You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should works with other Vue icon components).
+You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should work with other Vue icon components as well).
 :::
 
 ```js
