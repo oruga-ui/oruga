@@ -186,6 +186,7 @@ export default defineComponent({
             default: false
         },
         rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
         trackClass: [String, Function, Array],
         fillClass: [String, Function, Array],
         thumbRoundedClass: [String, Function, Array],
