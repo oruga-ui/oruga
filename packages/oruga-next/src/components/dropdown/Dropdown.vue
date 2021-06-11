@@ -6,6 +6,7 @@
         <div
             v-if="!inline"
             role="button"
+            :tabindex="disabled ? false : 0"
             ref="trigger"
             :class="triggerClasses"
             @click="onClick"
