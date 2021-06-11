@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -36,7 +36,7 @@
     "build:style:watch": "concurrently \"sass ../oruga/src/scss/oruga-full-vars.scss dist/oruga-full-vars.css --watch\" \"sass ../oruga/src/scss/oruga.scss dist/oruga.css --watch\"",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
-    "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish"
+    "publish:lib": "npm run build:lib && npm publish"
   },
   "keywords": [
     "oruga",
