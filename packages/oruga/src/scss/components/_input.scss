@@ -79,6 +79,7 @@ $input-max-width: 100% !default;
         display: block;
         max-width: 100%;
         min-width: 100%;
+        height: auto;
         resize: vertical;
         @include avariable('padding', 'input-textarea-padding', $input-textarea-padding);
         &:not([rows]) {
