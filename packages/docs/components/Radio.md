@@ -186,17 +186,18 @@ export default {
 
 ## Props
 
-| Prop name   | Description                    | Type                           | Values                                                                          | Default |
-| ----------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
-| disabled    | Same as native disabled        | boolean                        | -                                                                               |         |
-| iconPack    | Icon pack to use               | string                         | `mdi`, `fa`, `fas and any other custom icon pack`                               |         |
-| name        | Same as native name            | string                         | -                                                                               |         |
-| nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
-| override    | Override classes               | boolean                        | -                                                                               | false   |
-| required    |                                | boolean                        | -                                                                               |         |
-| size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
-| v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |
-| variant     | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| Prop name   | Description                    | Type                           | Values                                                                          | Default                                                                                                                                   |
+| ----------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled    | Same as native disabled        | boolean                        | -                                                                               |                                                                                                                                           |
+| iconCheck   |                                | string                         | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> radio: {<br>&nbsp;&nbsp;iconCheck: undefined<br>}</code> |
+| iconPack    | Icon pack to use               | string                         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                                                                                                           |
+| name        | Same as native name            | string                         | -                                                                               |                                                                                                                                           |
+| nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |                                                                                                                                           |
+| override    | Override classes               | boolean                        | -                                                                               | false                                                                                                                                     |
+| required    |                                | boolean                        | -                                                                               |                                                                                                                                           |
+| size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |                                                                                                                                           |
+| v-model     |                                | string\|number\|boolean\|array | -                                                                               |                                                                                                                                           |
+| variant     | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                           |
 
 ## Events
 
