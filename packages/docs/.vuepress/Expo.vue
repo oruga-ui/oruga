@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <vue-telescope-expo :slugs="{ui: 'oruga'}" :image-width="800"/>
+        <vue-telescope-expo :slugs="{ui: 'oruga'}" sortField="createdAt" :image-width="800"/>
     </client-only>
 </template>
 
