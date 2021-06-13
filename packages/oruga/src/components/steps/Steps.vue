@@ -152,7 +152,6 @@ export default {
         stepContentClass: [String, Function, Array],
         stepContentTransitioningClass: [String, Function, Array],
         stepNavigationClass: [String, Function, Array],
-        stepTitleClass: [String, Function, Array],
         stepLinkClass: [String, Function, Array],
         stepLinkClickableClass: [String, Function, Array],
         stepLinkLabelClass: [String, Function, Array],
@@ -172,7 +171,6 @@ export default {
         mainClasses() {
             return [
                 this.computedClass('stepsClass', 'o-steps'),
-                { [this.computedClass('variantClass', 'o-steps--', this.variant)]: this.variant },
                 { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
         },

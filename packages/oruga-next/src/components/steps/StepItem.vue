@@ -24,7 +24,8 @@ export default defineComponent({
         itemClass: [String, Function, Array],
         itemHeaderClass: [String, Function, Array],
         itemHeaderActiveClass: [String, Function, Array],
-        itemHeaderPreviousClass: [String, Function, Array]
+        itemHeaderPreviousClass: [String, Function, Array],
+        itemHeaderVariantClass: [String, Function, Array],
     },
     computed: {
         elementClasses() {
@@ -36,6 +37,7 @@ export default defineComponent({
             return [
                 this.headerClass,
                 this.computedClass('itemHeaderClass', 'o-steps__nav-item'),
+                { [this.computedClass('itemHeaderVariantClass', 'o-steps__nav-item--', this.variant || this.parent.variant)]: this.variant || this.parent.variant },
                 { [this.computedClass('itemHeaderActiveClass', 'o-steps__nav-item-active')]: this.isActive },
                 { [this.computedClass('itemHeaderPreviousClass', 'o-steps__nav-item-previous')]: this.parent.activeItem.index > this.index }
             ]

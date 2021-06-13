@@ -146,7 +146,6 @@ export default defineComponent({
         verticalClass: [String, Function, Array],
         positionClass: [String, Function, Array],
         stepsClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
         animatedClass: [String, Function, Array],
         stepMarkerRoundedClass: [String, Function, Array],
         stepDividerClass: [String, Function, Array],
@@ -154,8 +153,6 @@ export default defineComponent({
         stepContentClass: [String, Function, Array],
         stepContentTransitioningClass: [String, Function, Array],
         stepNavigationClass: [String, Function, Array],
-        stepDetailsClass: [String, Function, Array],
-        stepTitleClass: [String, Function, Array],
         stepLinkClass: [String, Function, Array],
         stepLinkClickableClass: [String, Function, Array],
         stepLinkLabelClass: [String, Function, Array],
@@ -175,7 +172,6 @@ export default defineComponent({
         mainClasses() {
             return [
                 this.computedClass('stepsClass', 'o-steps'),
-                { [this.computedClass('variantClass', 'o-steps--', this.variant)]: this.variant },
                 { [this.computedClass('animatedClass', 'o-steps--animated')]: this.animated }
             ]
         },

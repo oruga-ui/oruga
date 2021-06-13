@@ -90,6 +90,16 @@ export default {
                     }
                 },
                 {
+                    class: "itemHeaderVariantClass",
+                    description: "Class of the nav item with variant (default value by parent steps component)",
+                    subitem: true,
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = 'warning';
+                    }
+                },
+                {
                     class: "stepsClass",
                     description: "Class of the steps container",
                     specificity: "when <b>positionClass</b> is applied",
@@ -174,15 +184,6 @@ export default {
                     suffixes: ['bottom', 'right', 'left'],
                     action: (cmp) => {
                         cmp.data.labelPosition = "right"
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the Steps component variant',
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
                     }
                 }
             ]
