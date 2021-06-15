@@ -81,7 +81,7 @@ title: Steps
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''}">
+      <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''">
         <h1 class="title has-text-centered">Profile</h1>
         Lorem ipsum dolor sit amet.
       </o-step-item>

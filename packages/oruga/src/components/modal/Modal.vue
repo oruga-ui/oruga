@@ -30,6 +30,7 @@
                     v-if="showX"
                     v-show="!animating"
                     clickable
+                    both
                     :class="closeClasses"
                     :icon="closeIcon"
                     :size="closeIconSize"

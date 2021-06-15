@@ -14,7 +14,8 @@
                         v-if="closable"
                         :class="closeClasses"
                         clickable
-                        icon="times"
+                        both
+                        :icon="closeIcon"
                         @click="removeItem(index, $event)"
                         :aria-label="ariaCloseLabel"
                     />
@@ -219,6 +220,13 @@ export default defineComponent({
         createItem: {
             type: Function,
             default: (item: any) => item
+        },
+        /** Icon name of close icon on selected item */
+        closeIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'inputitems.closeIcon', 'times')
+            }
         },
         /** The first option will always be pre-selected (easier to just hit enter or tab) */
         keepFirst: Boolean,
