@@ -14,6 +14,10 @@ const IGNORE_CLASSES = {
     'icon' : ['customClass']
 }
 
+const NAME_FOLDER_MAPPING = {
+    'notification/toast' : 'notification'
+}
+
 module.exports = {
   componentsRoot: `${src}/components`,
   components: '**/[A-Z]*.vue',
@@ -65,6 +69,7 @@ ${style ? renderStyleDocs(config, style[0].description) : ''}
 
 function tmplClassProps(config, name) {
     try {
+        name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name
         const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
         return `
 ## Class props
