@@ -368,7 +368,7 @@ export default defineComponent({
             this.dragging = false
             this.$emit('dragend')
             if (this.lazy) {
-                this.emitValue('input')
+                this.emitValue('update:modelValue')
             }
         },
         emitValue(event) {
