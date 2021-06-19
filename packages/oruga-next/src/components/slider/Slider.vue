@@ -381,7 +381,7 @@ export default defineComponent({
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.value)
+        this.setValues(this.modelValue)
     }
 })
 </script>
