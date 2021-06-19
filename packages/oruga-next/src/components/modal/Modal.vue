@@ -21,7 +21,7 @@
                 <component
                     v-if="component"
                     v-bind="props"
-                    v-on="events"
+                    v-on="events || {}"
                     :is="component"
                     @close="close"/>
                 <div v-else-if="content"> {{ content }} </div>
