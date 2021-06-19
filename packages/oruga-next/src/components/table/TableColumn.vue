@@ -88,7 +88,7 @@ export default defineComponent({
     },
     render() {
         // renderless
-        return h('span', { domProps: { 'data-id': this.newKey } }, this.label)
+        return h('span', { 'data-id': this.newKey }, this.label)
     }
 })
 </script>
