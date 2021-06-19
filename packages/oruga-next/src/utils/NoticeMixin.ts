@@ -124,7 +124,7 @@ export default {
             this.isActive = true
 
             if (!this.indefinite) {
-                this.timer = setTimeout(() => this.close(), this.newDuration)
+                this.timer = setTimeout(() => this.timeoutCallback(), this.newDuration)
             }
         },
 
@@ -153,6 +153,10 @@ export default {
                 this.parentTop.classList.add('has-custom-container')
                 this.parentBottom.classList.add('has-custom-container')
             }
+        },
+
+        timeoutCallback() {
+            return this.close()
         }
     },
     beforeMount() {

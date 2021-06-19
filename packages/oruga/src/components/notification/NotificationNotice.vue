@@ -1,6 +1,7 @@
 <template>
     <o-notification
         v-bind="$options.propsData"
+        ref="notification"
         @close="close">
         <slot />
     </o-notification>
@@ -35,6 +36,9 @@ export default {
                 this.computedClass('positionClass', 'o-notices--', position),
             ]
         },
+        timeoutCallback() {
+            return this.$refs.notification.close()
+        }
     }
 }
 </script>
