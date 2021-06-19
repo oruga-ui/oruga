@@ -49,12 +49,12 @@ $switch-width: 2.75 * 1em !default;
         content: "";
         display: block;
         @include evariable(
-            'height', 'calc(($width - $padding * 2) / 2)',
+            'height', 'calc(($width - $padding * 2) * 0.5)',
             eparam('$width', variable('switch-width', $switch-width)),
             eparam('$padding', variable('switch-padding', $switch-padding))
         );
         @include evariable(
-            'width', 'calc(($width - $padding * 2) / 2)',
+            'width', 'calc(($width - $padding * 2) * 0.5)',
             eparam('$width', variable('switch-width', $switch-width)),
             eparam('$padding', variable('switch-padding', $switch-padding))
         );
@@ -73,7 +73,7 @@ $switch-width: 2.75 * 1em !default;
         flex-shrink: 0;
         @include avariable('width', 'switch-width', $switch-width);
         @include evariable(
-            'height', 'calc($width / 2 + $padding)',
+            'height', 'calc($width * 0.5 + $padding)',
             eparam('$width', variable('switch-width', $switch-width)),
             eparam('$padding', variable('switch-padding', $switch-padding))
         );

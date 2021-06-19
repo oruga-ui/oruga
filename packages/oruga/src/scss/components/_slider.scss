@@ -25,7 +25,7 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
 /* @docs */
 
 @mixin slider-size($size, $name: null) {
-	$track-height: $size / $slider-thumb-to-track-ratio;
+	$track-height: divide($size, $slider-thumb-to-track-ratio);
 	$tick-height: $track-height * $slider-tick-to-track-ratio;
 	$thumb-size: $size;
 
@@ -63,10 +63,9 @@ $slider-track-shadow: 0px 0px 0px $grey !default;
         }
         position: absolute;
         @include evariable(
-            'top', 'calc($label-top / 2 + 2px)',
+            'top', 'calc($label-top * 0.5 + 2px)',
             eparam('$label-top', variable('slider-tick-label-top-' + #{$name}, $track-height))
         );
-        // top: calc(#{$track-height} / 2 + 2px);
         left: 50%;
         transform: translateX(-50%);
     }

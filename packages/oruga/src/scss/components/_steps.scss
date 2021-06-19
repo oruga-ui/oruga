@@ -19,7 +19,7 @@ $steps-font-size: $base-font-size !default;
 $steps-details-title-font-weight: 600 !default;
 /* @docs */
 
-$LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
+$LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
 
 @mixin steps-size($size, $name: null) {
 
@@ -281,7 +281,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) / 2)";
             height: 100%;
             @include avariable('width', 'steps-divider-height', $steps-divider-height);
             top: -50%;
-            left: calc(50% - #{$steps-divider-height / 2});
+            left: calc(50% - #{$steps-divider-height * 0.5});
         }
 
         .o-steps__item-active, .o-steps__item-previous {
