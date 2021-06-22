@@ -15,7 +15,7 @@
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
             :expanded="expanded"
-            @input="onInput"
+            @update:modelValue="onInput"
             @focus="focused"
             @blur="onBlur"
             @keyup.esc.prevent="isActive = false"
