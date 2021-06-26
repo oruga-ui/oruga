@@ -55,6 +55,7 @@ $button-disabled-opacity: $base-disabled-opacity !default;
     &--disabled {
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
+        pointer-events: none;
     }
     @each $name, $value in $sizes {
         &--#{$name} {
