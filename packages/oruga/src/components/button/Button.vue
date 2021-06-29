@@ -29,6 +29,11 @@
                 :class="iconClasses"
             />
         </span>
+        <div v-if="loading" :class="loadingSpinnerClasses">
+            <slot name="loading">
+                <o-icon icon="loading" :size="size" spin />
+            </slot>
+        </div>
     </component>
 </template>
 
@@ -123,6 +128,10 @@ export default {
          * Button will be disabled
          */
         disabled: Boolean,
+        /**
+         * Button represents an active action
+         */
+        loading: Boolean,
         /**  @ignore */
         iconBoth: Boolean, // This is used internally
         rootClass: [String, Function, Array],
@@ -131,6 +140,8 @@ export default {
         expandedClass: [String, Function, Array],
         roundedClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
+        loadingClass: [String, Function, Array],
+        loadingSpinnerClass: [String, Function, Array],
         iconClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         variantClass: [String, Function, Array]
@@ -148,12 +159,18 @@ export default {
                 { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
                 { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
                 { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
+                { [this.computedClass('loadingClass', 'o-btn--loading')]: this.loading },
             ]
         },
         iconClasses() {
-          return [
-            this.computedClass('iconClass', 'o-btn__icon'),
-          ]
+            return [
+                this.computedClass('iconClass', 'o-btn__icon'),
+            ]
+        },
+        loadingSpinnerClasses() {
+            return [
+                this.computedClass('loadingSpinnerClass', 'o-btn__spinner'),
+            ]
         },
         elementsWrapperClasses() {
             return [
@@ -161,9 +178,13 @@ export default {
             ]
         },
         computedTag() {
-            if (this.disabled !== undefined && this.disabled !== false) {
+            const isNotDisabled = this.disabled !== undefined && this.disabled !== false;
+            const isNotLoading = this.loading !== undefined && this.loading !== false;
+
+            if (isNotDisabled && isNotLoading) {
                 return 'button'
             }
+
             return this.tag
         },
         computedNativeType() {

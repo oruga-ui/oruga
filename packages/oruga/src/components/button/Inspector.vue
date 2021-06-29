@@ -63,6 +63,14 @@ export default {
                     },
                 },
                 {
+                    class: "loadingClass",
+                    description: "Class of the button when loading",
+                    properties: ["loading"],
+                    action: (cmp) => {
+                        cmp.data.loading = true;
+                    },
+                },
+                {
                     class: "iconClass",
                     description: "Class of the button icon",
                     properties: ["iconLeft", "iconRight"],

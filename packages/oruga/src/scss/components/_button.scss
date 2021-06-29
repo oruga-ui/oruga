@@ -46,6 +46,16 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         align-items: center;
         position: relative;
     }
+    &__spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
     &--expanded {
         width: 100%;
     }
@@ -56,6 +66,12 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
         cursor: not-allowed;
         pointer-events: none;
+    }
+    &--loading {
+        pointer-events: none;
+    }
+    &--loading &__wrapper {
+        opacity: 0;
     }
     @each $name, $value in $sizes {
         &--#{$name} {
