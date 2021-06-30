@@ -27,6 +27,7 @@
                         :size="size"
                         :icon="icon"
                         :icon-right="iconRight"
+                        :icon-right-clickable="iconRightClickable"
                         :icon-pack="iconPack"
                         :rounded="rounded"
                         :disabled="disabled"
@@ -34,6 +35,7 @@
                         v-bind="inputBind"
                         :use-html5-validation="false"
                         @click="onInputClick"
+                        @icon-right-click="$emit('icon-right-click')"
                         @keyup.enter="togglePicker(true)"
                         @change="onChange($event.target.value)"
                         @focus="handleOnFocus" />
@@ -370,6 +372,7 @@ export default defineComponent({
         },
         position: String,
         iconRight: String,
+        iconRightClickable: Boolean,
         events: Array,
         indicators: {
             type: String,

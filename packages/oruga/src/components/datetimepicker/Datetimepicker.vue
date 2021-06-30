@@ -17,6 +17,8 @@
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"
+        :icon-right="iconRight"
+        :icon-right-clickable="iconRightClickable"
         :icon-pack="iconPack"
         :size="datepickerSize"
         :placeholder="placeholder"
@@ -108,6 +110,14 @@ export default {
         },
         placeholder: String,
         disabled: Boolean,
+        /**
+         * 	Icon name to be added on the right side
+         */
+        iconRight: String,
+        /**
+         * Make the icon right clickable
+         */
+        iconRightClickable: Boolean,
         /* Datimepicker is shown inline, input is removed */
         inline: Boolean,
         /* Open datetimepicker on input focus */
