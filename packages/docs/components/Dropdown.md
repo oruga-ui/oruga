@@ -408,14 +408,15 @@ export default {
 
 ## Props
 
-| Prop name | Description                                           | Type                                   | Values | Default |
-| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | ------- |
-| ariaRole  |                                                       | string                                 | -      | ''      |
-| clickable | Item is clickable and emit an event                   | boolean                                | -      | true    |
-| disabled  | Item is disabled                                      | boolean                                | -      |         |
-| override  | Override classes                                      | boolean                                | -      | false   |
-| tabindex  |                                                       | number\|string                         | -      | 0       |
-| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null    |
+| Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                |
+| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                     |
+| clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                   |
+| disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                        |
+| override  | Override classes                                      | boolean                                | -      | false                                                                                                                                  |
+| tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                      |
+| tag       | Dropdown item tag name                                | string                                 | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null                                                                                                                                   |
 
 ### Events
 

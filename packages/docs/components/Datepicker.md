@@ -747,7 +747,8 @@ export default {
 | iconNext                  |                                                                        | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code>         |
 | iconPack                  | Icon pack to use                                                       | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                             |
 | iconPrev                  |                                                                        | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>          |
-| iconRight                 |                                                                        | string         | -                                                 |                                                                                                                                                             |
+| iconRight                 | Icon name to be added on the right side                                | string         | -                                                 |                                                                                                                                                             |
+| iconRightClickable        | Make the icon right clickable                                          | boolean        | -                                                 |                                                                                                                                                             |
 | indicators                |                                                                        | string         | -                                                 | 'dots'                                                                                                                                                      |
 | inline                    |                                                                        | boolean        | -                                                 |                                                                                                                                                             |
 | locale                    |                                                                        | string\|array  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; locale: undefined<br>}</code>                             |
@@ -784,15 +785,16 @@ export default {
 
 ## Events
 
-| Event name   | Properties | Description |
-| ------------ | ---------- | ----------- |
-| range-start  |            |
-| range-end    |            |
-| blur         |            |
-| focus        |            |
-| input        |            |
-| change-month |            |
-| change-year  |            |
+| Event name       | Properties | Description |
+| ---------------- | ---------- | ----------- |
+| icon-right-click |            |
+| range-start      |            |
+| range-end        |            |
+| blur             |            |
+| focus            |            |
+| input            |            |
+| change-month     |            |
+| change-year      |            |
 
 ## Slots
 
