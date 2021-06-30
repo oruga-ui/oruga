@@ -3,9 +3,18 @@
         <div
             :class="rootClasses"
             v-if="isActive">
-            <div :class="overlayClasses" @click="cancel"/>
+            <div
+                :class="overlayClasses"
+                @click="cancel"
+            />
             <slot>
-                <o-icon :icon="icon" :spin="iconSpin" :size="iconSize" :class="iconClasses"/>
+                <o-icon
+                    :icon="icon"
+                    :spin="iconSpin"
+                    :size="iconSize"
+                    :class="iconClasses"
+                    both
+                />
             </slot>
         </div>
     </transition>
@@ -60,7 +69,7 @@ export default {
         /** Icon name */
         icon: {
             type: String,
-            default: () => { return getValueByPath(getOptions(), 'loading.icon', 'sync-alt') }
+            default: () => { return getValueByPath(getOptions(), 'loading.icon', 'loading') }
         },
         /** Enable spin effect on icon */
         iconSpin: {
