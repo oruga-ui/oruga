@@ -80,10 +80,13 @@ export default {
             type: String,
             default: 'medium'
         },
+        overlay: {
+            type: Boolean,
+            default: true
+        },
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
-        iconClass: [String, Function, Array],
-        fullPageIconClass: [String, Function, Array],
+        iconClass: [String, Function, Array]
     },
     data() {
         return {
@@ -108,13 +111,12 @@ export default {
         },
         overlayClasses() {
             return [
-                this.computedClass('overlayClass', 'o-load__overlay')
+                { [this.computedClass('overlayClass', 'o-load__overlay')]: this.overlay }
             ]
         },
         iconClasses() {
             return [
-                this.computedClass('iconClass', 'o-load__icon'),
-                { [this.computedClass('fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
+                this.computedClass('iconClass', 'o-load__icon')
             ]
         }
     },

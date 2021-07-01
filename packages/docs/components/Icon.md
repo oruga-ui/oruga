@@ -151,7 +151,7 @@ Take a look at below example code (click on "Show code") to know all internal ic
           'eye-off': 'eye-off',
           'caret-down': 'arrow-dropdown',
           'caret-up': 'arrow-dropup',
-          spin: 'reload-outline',
+          loading: 'reload-outline',
           times: 'close-outline',
           'close-circle': 'close-circle-outline'
         }

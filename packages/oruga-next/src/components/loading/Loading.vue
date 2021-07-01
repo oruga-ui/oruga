@@ -86,8 +86,7 @@ export default defineComponent({
         },
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
-        iconClass: [String, Function, Array],
-        fullPageIconClass: [String, Function, Array],
+        iconClass: [String, Function, Array]
     },
     data() {
         return {
@@ -117,8 +116,7 @@ export default defineComponent({
         },
         iconClasses() {
             return [
-                this.computedClass('iconClass', 'o-load__icon'),
-                { [this.computedClass('fullPageIconClass', 'o-load__icon--fullpage')]: this.displayInFullPage }
+                this.computedClass('iconClass', 'o-load__icon')
             ]
         }
     },
