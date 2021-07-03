@@ -17,6 +17,8 @@
         :min-date="minDate"
         :max-date="maxDate"
         :icon="icon"
+        :icon-right="iconRight"
+        :icon-right-clickable="iconRightClickable"
         :icon-pack="iconPack"
         :size="datepickerSize"
         :placeholder="placeholder"
@@ -108,8 +110,8 @@ export default defineComponent({
         },
         placeholder: String,
         disabled: Boolean,
-        icon: String,
-        iconPack: String,
+        iconRight: String,
+        iconRightClickable: Boolean,
         inline: Boolean,
         openOnFocus: Boolean,
         position: String,

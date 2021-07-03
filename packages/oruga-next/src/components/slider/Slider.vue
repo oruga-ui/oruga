@@ -368,7 +368,7 @@ export default defineComponent({
             this.dragging = false
             this.$emit('dragend')
             if (this.lazy) {
-                this.emitValue('input')
+                this.emitValue('update:modelValue')
             }
         },
         emitValue(event) {
@@ -381,7 +381,7 @@ export default defineComponent({
     created() {
         this.isThumbReversed = false
         this.isTrackClickDisabled = false
-        this.setValues(this.value)
+        this.setValues(this.modelValue)
     }
 })
 </script>

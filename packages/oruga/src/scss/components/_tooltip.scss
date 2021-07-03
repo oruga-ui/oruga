@@ -182,7 +182,7 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         @include avariable('box-shadow', 'tooltip-content-box-shadow', $tooltip-content-box-shadow);
         @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
         @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
-        @include avariable('color', 'tooltip-background-color', $tooltip-color);
+        @include avariable('color', 'tooltip-color', $tooltip-color);
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);

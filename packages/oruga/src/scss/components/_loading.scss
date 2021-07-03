@@ -19,10 +19,6 @@ $loading-zindex: 999 !default;
     &--fullpage {
         position: fixed;
     }
-    &__icon {
-        &--fullpage {
-        }
-    }
     &__overlay {
         position: absolute;
         bottom: 0;

@@ -157,7 +157,7 @@
 
                             <o-icon
                                 v-if="hasDetailedVisible(row)"
-                                icon="chevron-right"
+                                :icon="detailIcon"
                                 :pack="iconPack"
                                 :rotation="isVisibleDetailRow(row) ? 90 : 0"
                                 role="button"
@@ -442,10 +442,15 @@ export default {
             type: [Number, String],
             default: () => { return getValueByPath(getOptions(), 'table.perPage', 20) }
         },
-        /** Allow chevron icon and column to be visible */
+        /** Allow icon and column to be visible */
         showDetailIcon: {
             type: Boolean,
             default: true
+        },
+        /** Icon name of detail action */
+        detailIcon: {
+            type: String,
+            default: 'chevron-right'
         },
         /**
          * Pagination position (if paginated)

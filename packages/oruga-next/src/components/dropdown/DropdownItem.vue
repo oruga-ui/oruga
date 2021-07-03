@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="'div'"
+        :is="tag"
         :class="rootClasses"
         @click="selectItem"
         :role="ariaRoleItem"
@@ -13,6 +13,9 @@
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * @displayName Dropdown Item
@@ -40,6 +43,15 @@ export default defineComponent({
         clickable: {
             type: Boolean,
             default: true
+        },
+        /**
+         * Dropdown item tag name
+         */
+        tag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'dropdown.itemTag', 'div')
+            }
         },
         tabindex: {
             type: [Number, String],

@@ -23,18 +23,21 @@ const faIcons = () => {
         },
         iconPrefix: faIconPrefix,
         internalIcons: {
+            'check': 'check',
             'information': 'info-circle',
             'alert': 'exclamation-triangle',
             'alert-circle': 'exclamation-circle',
+            'arrow-up': 'arrow-up',
             'chevron-right': 'angle-right',
             'chevron-left': 'angle-left',
             'chevron-down': 'angle-down',
             'chevron-up': 'angle-up',
+            'eye': 'eye',
             'eye-off': 'eye-slash',
             'caret-down': 'caret-down',
             'caret-up': 'caret-up',
             'close-circle': 'times-circle',
-            'spin': 'circle-notch'
+            'loading': 'circle-notch'
         }
     }
 }

@@ -28,7 +28,7 @@
     $encoded:'';
     $slice: 2000;
     $index: 0;
-    $loops: ceil(str-length($svg)/$slice);
+    $loops: ceil(divide(str-length($svg), $slice));
     @for $i from 1 through $loops {
         $chunk: str-slice($svg, $index, $index + $slice - 1);
         // Encode
@@ -165,4 +165,31 @@
         margin-left: $gap;
         margin-right: $gap;
     }
+}
+
+// Custom divide function by @mdo from https://github.com/twbs/bootstrap/pull/34245
+// Replaces old slash division deprecated in Dart Sass
+@function divide($dividend, $divisor, $precision: 10) {
+  $sign: if($dividend > 0 and $divisor > 0, 1, -1);
+  $dividend: abs($dividend);
+  $divisor: abs($divisor);
+  $quotient: 0;
+  $remainder: $dividend;
+  @if $dividend == 0 {
+    @return 0;
+  }
+  @if $divisor == 0 {
+    @error "Cannot divide by 0";
+  }
+  @if $divisor == 1 {
+    @return $dividend;
+  }
+  @while $remainder >= $divisor {
+    $quotient: $quotient + 1;
+    $remainder: $remainder - $divisor;
+  }
+  @if $remainder > 0 and $precision > 0 {
+    $remainder: divide($remainder * 10, $divisor, $precision - 1) * .1;
+  }
+  @return ($quotient + $remainder) * $sign;
 }

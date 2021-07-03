@@ -158,7 +158,7 @@
 
                             <o-icon
                                 v-if="hasDetailedVisible(row)"
-                                icon="chevron-right"
+                                :icon="detailIcon"
                                 :pack="iconPack"
                                 :rotation="isVisibleDetailRow(row) ? 90 : 0"
                                 role="button"
@@ -174,7 +174,7 @@
                                 autocomplete="off"
                                 :disabled="!isRowCheckable(row)"
                                 :modelValue="isRowChecked(row)"
-                                @input="checkRow(row, index, $event)"
+                                @update:modelValue="checkRow(row, index, $event)"
                             />
                         </td>
 
@@ -199,7 +199,7 @@
                                 autocomplete="off"
                                 :disabled="!isRowCheckable(row)"
                                 :modelValue="isRowChecked(row)"
-                                @input="checkRow(row, index, $event)"
+                                @update:modelvalue="checkRow(row, index, $event)"
                             />
                         </td>
                     </tr>
@@ -445,6 +445,11 @@ export default defineComponent({
         showDetailIcon: {
             type: Boolean,
             default: true
+        },
+        /** Icon name of detail action */
+        detailIcon: {
+            type: String,
+            default: 'chevron-right'
         },
         /**
          * Pagination position (if paginated)

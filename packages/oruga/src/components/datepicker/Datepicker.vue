@@ -28,12 +28,14 @@
                         :size="size"
                         :icon="icon"
                         :icon-right="iconRight"
+                        :icon-right-clickable="iconRightClickable"
                         :icon-pack="iconPack"
                         :rounded="rounded"
                         :disabled="disabled"
                         :readonly="!editable"
                         :use-html5-validation="false"
                         @click.native="onInputClick"
+                        @icon-right-click="$emit('icon-right-click')"
                         @keyup.native.enter="togglePicker(true)"
                         @change.native="onChange($event.target.value)"
                         @focus="handleOnFocus" />
@@ -392,7 +394,14 @@ export default {
          * @values top-right, top-left, bottom-left
          */
         position: String,
+        /**
+         * 	Icon name to be added on the right side
+         */
         iconRight: String,
+        /**
+         * Make the icon right clickable
+         */
+        iconRightClickable: Boolean,
         /* Dates to display indicators */
         events: Array,
         /* Shape to use when showing event indicators */

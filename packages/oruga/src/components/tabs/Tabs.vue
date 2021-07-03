@@ -6,24 +6,26 @@
                 :key="childItem.newValue"
                 v-show="childItem.visible"
                 :class="itemWrapperClasses">
-                    <o-slot-component
-                        v-if="childItem.$scopedSlots.header"
-                        :component="childItem"
-                        name="header"
-                        tag="button"
-                        type="button"
-                        @click.native="childClick(childItem)"
-                        :class="childItem.headerClasses"
-                    />
-                    <button v-else @click="childClick(childItem)" :class="childItem.headerClasses" type="button">
-                        <o-icon
-                            v-if="childItem.icon"
-                            :rootClass="childItem.headerIconClasses"
-                            :icon="childItem.icon"
-                            :pack="childItem.iconPack"
-                            :size="size"/>
-                        <span :class="childItem.headerTextClasses">{{ childItem.label }}</span>
-                    </button>
+                <o-slot-component
+                    v-if="childItem.$scopedSlots.header"
+                    :component="childItem"
+                    name="header"
+                    tag="button"
+                    @click.native="childClick(childItem)"
+                    :class="childItem.headerClasses"
+                />
+                <button
+                    v-else
+                    @click="childClick(childItem)"
+                    :class="childItem.headerClasses">
+                    <o-icon
+                        v-if="childItem.icon"
+                        :rootClass="childItem.headerIconClasses"
+                        :icon="childItem.icon"
+                        :pack="childItem.iconPack"
+                        :size="size"/>
+                    <span :class="childItem.headerTextClasses">{{ childItem.label }}</span>
+                </button>
             </div>
         </nav>
         <section :class="contentClasses">

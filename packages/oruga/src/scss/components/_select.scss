@@ -65,7 +65,7 @@ $select-padding: $control-padding-vertical $control-padding-horizontal !default;
         background-repeat: no-repeat;
         @include avariable('background-size', 'select-arrow-size', $select-arrow-size);
         @include evariable(
-            'background-position', 'calc(100% - $param / 2) center',
+            'background-position', 'calc(100% - $param * 0.5) center',
             eparam('$param', variable('select-arrow-size', $select-arrow-size))
         );
         @include evariable(

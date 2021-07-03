@@ -113,8 +113,12 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ### Custom icon pack
 
 <p>
-    You can also add it during Oruga import as default config
+    You can also add it during Oruga import as default config.
 </p>
+
+::: tip
+Take a look at below example code (click on "Show code") to know all internal icons to replace with the releated icons of your custom icon pack
+:::
 
 ::: demo
 ```html
@@ -228,7 +232,6 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
                 internalIcons: {
                     'check': 'checkmark',
                     'information': 'information',
-                    'check-circle': 'checkmark-circle-outline',
                     'alert': 'alert',
                     'alert-circle': 'alert',
                     'arrow-up': 'arrow-up',
@@ -238,7 +241,10 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
                     'eye': 'eye',
                     'eye-off': 'eye-off',
                     'caret-down': 'arrow-dropdown',
-                    'caret-up': 'arrow-dropup'
+                    'caret-up': 'arrow-dropup',
+                    'loading': 'reload-outline',
+                    'times': 'close-outline',
+                    'close-circle': 'close-circle-outline'
                 }
             }
         }
@@ -293,6 +299,7 @@ const customIconConfig = {
 }
 export default {
     created() {
+        // only for docs purpose, you can set in globally
         this.$oruga.config.setOptions(customIconConfig)
     }
 }
@@ -309,12 +316,12 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // internal icons
 import { faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
     faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
-    faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload } from "@fortawesome/free-solid-svg-icons";
+    faEye, faEyeSlash, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faCheck, faCheckCircle, faInfoCircle, faExclamationTriangle, faExclamationCircle,
     faArrowUp, faAngleRight, faAngleLeft, faAngleDown,
-    faEye, faEyeSlash, faCaretDown, faCaretUp, faUpload);
+    faEye, faEyeSlash, faCaretDown, faCaretUp);
 Vue.component('vue-fontawesome', FontAwesomeIcon);
 
 // ...
