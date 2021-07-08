@@ -208,6 +208,13 @@ export default {
                     },
                 },
                 {
+                    class: "elementsWrapperClass",
+                    description: "Class of the button elements wrapper",
+                    action: (cmp) => {
+                        cmp.data.expanded = true;
+                    },
+                },
+                {
                     class: "roundedClass",
                     description: "Class of the button when rounded",
                     properties: ["rounded"],

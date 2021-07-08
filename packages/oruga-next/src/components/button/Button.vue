@@ -126,6 +126,7 @@ export default defineComponent({
         disabled: Boolean,
         /**  @ignore */
         iconBoth: Boolean, // This is used internally
+        elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
         outlinedClass: [String, Function, Array],
         invertedClass: [String, Function, Array],
