@@ -32,12 +32,9 @@
       </div>
     </div>
     <div class="controls">
-      <div v-if="loading">
-        <slot v-bind:loading="loading" name="loading">{{labelLoading}}</slot>
-      </div>
-      <div v-if="!loading && items.length && items.length < count">
-        <slot name="buttons" v-bind:loadMore="loadMore">
-          <button class="button" @click="loadMore">{{labelLoadMore}}</button>
+      <div v-if="!retry">
+        <slot name="buttons" v-bind="{ loading, loadMoreItems, hasMoreItems, labelLoadMore, labelLoading }">
+          <button v-if="hasMoreItems" class="button" @click="loadMoreItems">{{!loading ? labelLoadMore : labelLoading}}</button>
         </slot>
       </div>
       <div v-if="retry">
@@ -97,6 +94,11 @@ export default {
       retry: false
     }
   },
+  computed: {
+    hasMoreItems() {
+      return this.items.length < this.count
+    }
+  },
   methods: {
     firstLoadItems() {
       this.retry = false;
@@ -117,7 +119,7 @@ export default {
           this.loading = false
         });
     },
-    loadMore() {
+    loadMoreItems() {
       this.start += this.limit
       this.loadItems();
     }
@@ -144,11 +146,12 @@ export default {
 .grid-item-image {
   border-radius: 1rem;
   box-shadow: 2px 2px 4px #424e5a;
-  transition: transform .3s;
+  transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
 }
 
 .grid-item-image:hover {
   transform: scale(1.02);
+  box-shadow: 4px 4px 4px #424e5a;
 }
 
 .grid-item-details {

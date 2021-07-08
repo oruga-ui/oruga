@@ -1,11 +1,11 @@
 <template>
     <client-only>
         <vue-telescope-expo :slugs="{ui: 'oruga'}" sortField="createdAt" :image-width="800">
-            <template v-slot:buttons="methods">
-                <o-button @click="methods.loadMore">Load more!</o-button>
-            </template>
-            <template v-slot:loading>
-                <o-icon pack="fas" icon="sync-alt" spin> </o-icon>
+            <template v-slot:buttons="{ loading, hasMoreItems, loadMoreItems}">
+                <o-button v-if="hasMoreItems" root-class="loadingbtn" elements-wrapper-class="loadingbtnwrapper" @click="loadMoreItems">
+                  <o-icon root-class="loadingicon" v-if="loading" pack="fas" icon="sync-alt" spin> </o-icon>
+                  <span v-else>Load more</span>
+                </o-button>
             </template>
             <template v-slot:retry="methods">
                 <p>Something went wrong!</p>
@@ -23,5 +23,20 @@ export default {
 </script>
 
 <style scoped>
-
+.loadingbtn {
+  min-width: 9rem;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  justify-content: center;
+  padding: calc(.5em - 1px) 1em;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 4px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.loadingicon {
+  margin-top: 0.3rem;
+}
 </style>
