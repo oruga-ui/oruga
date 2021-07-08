@@ -2,6 +2,7 @@
 node_modules
 /dist
 /coverage
+/src/scss
 
 # local env files
 .env.local
