@@ -9,7 +9,7 @@
             </template>
             <template v-slot:retry="methods">
                 <p>Something went wrong!</p>
-                <o-button @click="methods.setUp">Retry</o-button>
+                <o-button @click="methods.firstLoadItems">Retry</o-button>
             </template>
         </vue-telescope-expo>
     </client-only>
