@@ -31,6 +31,8 @@ export * from './components'
 export { LoadingProgrammatic } from './components/loading'
 export { ModalProgrammatic } from './components/modal'
 export { Programmatic as ConfigProgrammatic } from './utils/config'
+// export programmatic composable
+export { useProgrammatic } from './utils/useProgrammatic'
 
 // export config plugin
 export { Plugin as Config } from './utils/config'
