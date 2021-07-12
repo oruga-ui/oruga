@@ -58,13 +58,13 @@ export default {
       type: Number,
       default: 800
     },
-    sortField: {
+    sortBy: {
       type: String,
       default: "rank"
     },
     sortDirection: {
       type: String,
-      default: "desc"
+      default: "asc"
     },
     labelRetry: {
       type: String,
@@ -102,7 +102,7 @@ export default {
   methods: {
     firstLoadItems() {
       this.retry = false;
-      this.client.getItemsCount(this.slugs, this.sortField, this.sortDirection)
+      this.client.getItemsCount(this.slugs, this.sortBy, this.sortDirection)
         .then(data => {
           this.count = parseInt(data, 10)
           this.loadItems()
@@ -112,7 +112,7 @@ export default {
     },
     loadItems() {
       this.loading = true;
-      this.client.getItems(this.slugs, this.sortField, this.sortDirection, this.limit, this.start)
+      this.client.getItems(this.slugs, this.sortBy, this.sortDirection, this.limit, this.start)
         .then(data => {
           this.items = [...this.items, ...data.filter(d => d.isPublic)]
         }).finally(() => {
@@ -147,6 +147,7 @@ export default {
   border-radius: 1rem;
   box-shadow: 2px 2px 4px #424e5a;
   transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
+  max-width: 100%;
 }
 
 .grid-item-image:hover {
@@ -172,7 +173,7 @@ export default {
 @media screen and (min-width: 719px) {
   .grid-item {
     flex: none;
-    width: 50%;
+    width: calc(50% - 2rem);
   }
 }
 
@@ -190,8 +191,8 @@ export default {
   text-align: center;
   white-space: nowrap;
   border-radius: 4px;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  min-width: 9rem;
+  padding: 0.5rem;
 }
 
 .retry-label {
