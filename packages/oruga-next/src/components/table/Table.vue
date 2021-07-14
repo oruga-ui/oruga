@@ -804,17 +804,20 @@ export default defineComponent({
         *   3. Sort again if it's not backend-sorted.
         *   4. Set new total if it's not backend-paginated.
         */
-        data(value) {
-            this.newData = value
-            if (!this.backendFiltering) {
-                this.newData = value.filter((row) => this.isRowFiltered(row))
-            }
-            if (!this.backendSorting) {
-                this.sort(this.currentSortColumn, true)
-            }
-            if (!this.backendPagination) {
-                this.newDataTotal = this.newData.length
-            }
+        data: {
+            handler(value) {
+                this.newData = value
+                if (!this.backendFiltering) {
+                    this.newData = value.filter((row) => this.isRowFiltered(row))
+                }
+                if (!this.backendSorting) {
+                    this.sort(this.currentSortColumn, true)
+                }
+                if (!this.backendPagination) {
+                    this.newDataTotal = this.newData.length
+                }
+            },
+            deep: true,
         },
 
         /**
@@ -835,8 +838,11 @@ export default defineComponent({
         * When checkedRows prop change, update internal value without
         * mutating original data.
         */
-        checkedRows(rows) {
-            this.newCheckedRows = [...rows]
+        checkedRows: {
+            handler(rows) {
+                this.newCheckedRows = [...rows]
+            },
+            deep: true,
         },
 
         debounceSearch: {
@@ -854,7 +860,7 @@ export default defineComponent({
                     this.handleFiltersChange(value)
                 }
             },
-            deep: true
+            deep: true,
         },
 
         /**
