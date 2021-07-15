@@ -87,4 +87,18 @@ describe('OButton', () => {
         })
         expect(wrapper.vm.computedTag).toBe('button')
     })
+
+    it('should set tag to "button" if loading', () => {
+        wrapper.setProps({
+            tag: 'a'
+        })
+        expect(wrapper.vm.computedTag).toBe('a')
+
+        wrapper = shallowMount(OButton, {
+            attrs: {
+                'loading': true
+            }
+        })
+        expect(wrapper.vm.computedTag).toBe('button')
+    })
 })
