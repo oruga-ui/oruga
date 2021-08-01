@@ -172,7 +172,7 @@ export default defineComponent({
             if (this.tag === 'button' || this.tag === 'input') {
                 return this.nativeType
             }
-            return
+            return null
         }
     }
 })
