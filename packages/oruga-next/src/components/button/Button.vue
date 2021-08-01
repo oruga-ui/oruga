@@ -169,10 +169,10 @@ export default defineComponent({
             return this.tag
         },
         computedNativeType() {
-            if (this.tag === 'a') {
-                return
+            if (this.tag === 'button' || this.tag === 'input') {
+                return this.nativeType
             }
-            return this.nativeType
+            return
         }
     }
 })
