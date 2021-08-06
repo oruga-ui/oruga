@@ -1,22 +1,23 @@
 <template>
     <client-only>
-        <vue-telescope-expo :slugs="{ui: 'oruga'}" sortBy="rank" :image-width="800">
+        <vue-telescope-expo :slugs="{ui: 'oruga'}">
             <template v-slot:buttons="{ loading, hasMoreItems, loadMoreItems}">
                 <o-button v-if="hasMoreItems" root-class="loadingbtn" elements-wrapper-class="loadingbtnwrapper" @click="loadMoreItems">
                   <o-icon root-class="loadingicon" v-if="loading" pack="fas" icon="sync-alt" spin> </o-icon>
                   <span v-else>Load more</span>
                 </o-button>
             </template>
-            <template v-slot:retry="methods">
+            <template v-slot:retry="{firstLoadItems}">
                 <p>Something went wrong!</p>
-                <o-button @click="methods.firstLoadItems">Retry</o-button>
+                <o-button @click="firstLoadItems">Retry</o-button>
             </template>
         </vue-telescope-expo>
     </client-only>
 </template>
 
 <script>
-import VueTelescopeExpo from './VueTelescopeExpo.vue'
+import VueTelescopeExpo from 'vue-telescope-expo'
+import 'vue-telescope-expo/dist/vue-telescope-expo.css'
 export default {
   components: { VueTelescopeExpo },
 }

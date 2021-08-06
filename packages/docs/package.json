@@ -24,5 +24,7 @@
   "resolutions": {
     "watchpack": "1.6.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vue-telescope-expo": "^1.0.0"
+  }
 }
