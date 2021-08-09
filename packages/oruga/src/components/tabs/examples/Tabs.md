@@ -109,7 +109,7 @@ export default {
 ```html
 <template>
     <o-tabs type="boxed">
-        <o-tab-item v-for="(item, index) in new Array(45)">
+        <o-tab-item v-for="(item, index) in new Array(45)" :key="`longitem-${index}`">
             <template slot="header">
                 <span>Head {{index}}</span>
             </template>

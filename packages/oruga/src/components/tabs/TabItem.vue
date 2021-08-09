@@ -1,6 +1,8 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TabbedChildMixin from '../../utils/TabbedChildMixin'
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 
 /**
  * @displayName Tab Item
@@ -19,6 +21,15 @@ export default {
         itemHeaderTypeClass: [String, Function, Array],
         itemHeaderIconClass: [String, Function, Array],
         itemHeaderTextClass: [String, Function, Array],
+        /**
+         * Tabs item tag name
+         */
+        tag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'tabs.itemTag', 'button')
+            }
+        }
     },
     computed: {
         elementClasses() {
@@ -28,7 +39,7 @@ export default {
         },
         headerClasses() {
             return [
-                { [this.computedClass('itemHeaderClass', 'o-tabs__nav-item-{*}', this.$parent.type)]: this.$parent.type },
+                this.computedClass('itemHeaderClass', 'o-tabs__nav-item'),
                 { [this.computedClass('itemHeaderActiveClass', 'o-tabs__nav-item-{*}--active', this.$parent.type)]: this.isActive },
                 { [this.computedClass('itemHeaderDisabledClass', 'o-tabs__nav-item-{*}--disabled', this.$parent.type)]: this.disabled },
                 { [this.computedClass('itemHeaderTypeClass', 'o-tabs__nav-item-', this.$parent.type)]: this.$parent.type },

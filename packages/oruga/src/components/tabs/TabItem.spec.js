@@ -2,6 +2,9 @@ import {mount} from '@vue/test-utils'
 import OTabs from '@components/tabs/Tabs'
 import OTabItem from '@components/tabs/TabItem'
 
+import {setOptions} from '@utils/config'
+import { getOptions } from '../../utils/config'
+
 let wrapper
 let wrapperParent
 
@@ -87,6 +90,18 @@ describe('OTabItem', () => {
         }
     })
     */
+
+    it('transforms default item tag accordingly to props', async () => {
+        expect(wrapperParent.find('.o-tabs__nav-item').is('button')).toBe(true)
+        setOptions(Object.assign(getOptions(), {
+            tabs: {
+                itemTag: 'a',
+            },
+        }))
+        wrapperParent = mount(WrapperComp)
+        await wrapperParent.vm.$nextTick()
+        expect(wrapperParent.find('.o-tabs__nav-item').is('a')).toBe(true)
+    })
 
     it('unregisters when destroyed', async () => {
         const wrapper = mount({
