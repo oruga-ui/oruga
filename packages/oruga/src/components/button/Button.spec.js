@@ -36,6 +36,17 @@ describe('OButton', () => {
         expect(wrapper.contains('.o-icon')).toBeTruthy()
     })
 
+    it('should show icon on the right and on the left', () => {
+        wrapper = mount(OButton, {
+            propsData: {
+                iconLeft: 'plus',
+                iconRight: 'plus'
+            }
+        })
+        expect(wrapper.contains('.o-btn__icon-left')).toBeTruthy()
+        expect(wrapper.contains('.o-btn__icon-right')).toBeTruthy()
+    })
+
     it('should be medium', async () => {
         wrapper.setProps({
             size: 'medium'

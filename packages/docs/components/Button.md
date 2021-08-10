@@ -239,6 +239,22 @@ export default {
                     },
                 },
                 {
+                    class: "iconLeftClass",
+                    description: "Class of the button icon on the left",
+                    properties: ["iconLeft"],
+                    action: (cmp) => {
+                        cmp.data['icon-left'] = "plus"
+                    },
+                },
+                {
+                    class: "iconRightClass",
+                    description: "Class of the button icon on the right",
+                    properties: ["iconRight"],
+                    action: (cmp) => {
+                        cmp.data['icon-right'] = "plus"
+                    },
+                },
+                {
                     class: "sizeClass",
                     description: "Class of the button size",
                     properties: ["size"],
