@@ -124,7 +124,7 @@ title: Tabs
 ```html
 <template>
   <o-tabs type="boxed">
-    <o-tab-item v-for="(item, index) in new Array(45)">
+    <o-tab-item v-for="(item, index) in new Array(45)" :key="`longitem-${index}`">
       <template slot="header">
         <span>Head {{index}}</span>
       </template>
@@ -478,15 +478,16 @@ export default {
 
 ## Props
 
-| Prop name | Description                                                  | Type           | Values | Default |
-| --------- | ------------------------------------------------------------ | -------------- | ------ | ------- |
-| disabled  | Item will be disabled                                        | boolean        | -      |         |
-| icon      | Icon on the left                                             | string         | -      |         |
-| iconPack  | Icon pack                                                    | string         | -      |         |
-| label     | Item label                                                   | string         | -      |         |
-| override  | Override classes                                             | boolean        | -      | false   |
-| value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |         |
-| visible   | Show/hide item                                               | boolean        | -      | true    |
+| Prop name | Description                                                  | Type           | Values | Default                                                                                                                               |
+| --------- | ------------------------------------------------------------ | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled  | Item will be disabled                                        | boolean        | -      |                                                                                                                                       |
+| icon      | Icon on the left                                             | string         | -      |                                                                                                                                       |
+| iconPack  | Icon pack                                                    | string         | -      |                                                                                                                                       |
+| label     | Item label                                                   | string         | -      |                                                                                                                                       |
+| override  | Override classes                                             | boolean        | -      | false                                                                                                                                 |
+| tag       | Tabs item tag name                                           | string         | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
+| value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |                                                                                                                                       |
+| visible   | Show/hide item                                               | boolean        | -      | true                                                                                                                                  |
 
 ### Slots
 
