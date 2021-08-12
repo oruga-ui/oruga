@@ -18,6 +18,6 @@ export const registerComponentProgrammatic = (app: App, property: string, compon
     addProgrammatic(property, component);
 
     // add provide and $oruga (only needed once)
-    if (!app._context.provides?.oruga) app.provide('oruga', oruga);
+    if (!(app._context.provides && app._context.provides.oruga)) app.provide('oruga', oruga);
     if (!app.config.globalProperties.$oruga) app.config.globalProperties.$oruga = oruga;
   }

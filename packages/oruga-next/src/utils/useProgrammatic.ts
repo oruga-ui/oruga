@@ -3,9 +3,6 @@ const oruga = {};
 
 // add components to the oruga object
 function addProgrammatic(property: string, component: any) {
-    if (!oruga[property]) {
-        oruga[property] = {};
-    }
     oruga[property] = component;
 }
 
