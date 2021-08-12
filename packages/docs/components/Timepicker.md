@@ -6,6 +6,8 @@ title: Timepicker
 
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/timepicker/examples/Timepicker.md" class="docgen-edit-link">edit on github</a>
@@ -172,7 +174,6 @@ title: Timepicker
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_timepicker.scss)

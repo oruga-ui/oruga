@@ -6,6 +6,8 @@ title: Sidebar
 
 > A sidebar to use as left/right overlay or static
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/sidebar/examples/Sidebar.md" class="docgen-edit-link">edit on github</a>
@@ -125,7 +127,6 @@ title: Sidebar
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)

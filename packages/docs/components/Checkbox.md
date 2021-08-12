@@ -6,6 +6,8 @@ title: Checkbox
 
 > Select a single or grouped options
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/checkbox/examples/Checkbox.md" class="docgen-edit-link">edit on github</a>
@@ -145,7 +147,6 @@ title: Checkbox
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)

@@ -6,6 +6,8 @@ title: Modal
 
 > Classic modal overlay to include any content you may need
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/modal/examples/Modal.md" class="docgen-edit-link">edit on github</a>
@@ -216,7 +218,6 @@ title: Modal
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)

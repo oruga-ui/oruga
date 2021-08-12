@@ -6,6 +6,8 @@ title: Slider
 
 > A slider to select a value or range from a given range
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/slider/examples/Slider.md" class="docgen-edit-link">edit on github</a>
@@ -166,7 +168,6 @@ title: Slider
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
@@ -324,6 +325,8 @@ export default {
 ---
 
 # Slider Tick
+
+> <CarbonAds />
 
 ## Props
 

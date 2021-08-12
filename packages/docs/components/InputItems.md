@@ -6,6 +6,8 @@ title: Inputitems
 
 > A simple item input field that can have autocomplete functionality
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/inputitems/examples/Inputitems.md" class="docgen-edit-link">edit on github</a>
@@ -240,7 +242,6 @@ title: Inputitems
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_inputitems.scss)

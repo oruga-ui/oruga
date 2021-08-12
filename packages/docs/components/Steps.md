@@ -6,6 +6,8 @@ title: Steps
 
 > Responsive horizontal process steps
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
@@ -239,7 +241,6 @@ title: Steps
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
@@ -480,6 +481,8 @@ export default {
 ---
 
 # Step Item
+
+> <CarbonAds />
 
 ## Props
 

@@ -6,6 +6,8 @@ title: Field
 
 > Fields are used to add functionality to controls and to attach/group components and elements together
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/field/examples/Field.md" class="docgen-edit-link">edit on github</a>
@@ -268,7 +270,6 @@ title: Field
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_field.scss)

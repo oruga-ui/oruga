@@ -6,6 +6,8 @@ title: Dropdown
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
@@ -206,7 +208,6 @@ title: Dropdown
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
@@ -406,6 +407,8 @@ export default {
 ---
 
 # Dropdown Item
+
+> <CarbonAds />
 
 ## Props
 

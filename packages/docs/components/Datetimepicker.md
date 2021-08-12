@@ -6,6 +6,8 @@ title: Datetimepicker
 
 > An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/datetimepicker/examples/Datetimepicker.md" class="docgen-edit-link">edit on github</a>
@@ -136,7 +138,6 @@ title: Datetimepicker
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datetimepicker.scss)

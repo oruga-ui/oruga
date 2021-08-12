@@ -6,6 +6,8 @@ title: Pagination
 
 > A responsive and flexible pagination
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/pagination/examples/Pagination.md" class="docgen-edit-link">edit on github</a>
@@ -214,7 +216,6 @@ title: Pagination
 
 :::
 
-<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_pagination.scss)

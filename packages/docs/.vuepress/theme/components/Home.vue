@@ -24,10 +24,6 @@
         {{ data.tagline || $description || 'Welcome to your VuePress site' }}
       </p>
 
-      <div class="ads-centered">
-        <CarbonAds />
-      </div>
-
       <p
         v-if="data.actionText && data.actionLink"
         class="action"
@@ -37,6 +33,10 @@
           :item="actionLink"
         />
       </p>
+
+      <div class="ads-centered">
+        <CarbonAds />
+      </div>
 
       <div class="versions">
         <div class="version">
@@ -122,6 +122,7 @@ export default {
 .ads-centered
   display: flex
   justify-content: center
+  margin-bottom: 2rem
 .home
   padding $navbarHeight 2rem 0
   max-width $homePageWidth
