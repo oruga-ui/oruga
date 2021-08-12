@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import DocWrapper from './DocWrapper.vue';
 import Inspector from './Inspector.vue';
+import CarbonAds from './theme/components/CarbonAds.vue'
 import Expo from './Expo.vue';
 
 import toggleStyle from './theme/components/togglestyles.js'
@@ -18,6 +19,7 @@ export default ({
   library.add(fas);
   Vue.component('vue-fontawesome', FontAwesomeIcon);
 
+  Vue.component('CarbonAds', CarbonAds);
   Vue.component('doc-wrapper', DocWrapper);
   Vue.component('inspector', Inspector);
   Vue.component('expo', Expo);

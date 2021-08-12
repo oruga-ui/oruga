@@ -72,6 +72,7 @@ function tmplClassProps(config, name) {
         name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name
         const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
         return `
+<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_${name}.scss)

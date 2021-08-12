@@ -24,6 +24,10 @@
         {{ data.tagline || $description || 'Welcome to your VuePress site' }}
       </p>
 
+      <div class="ads-centered">
+        <CarbonAds />
+      </div>
+
       <p
         v-if="data.actionText && data.actionLink"
         class="action"
@@ -51,6 +55,7 @@
           v.{{pkgNext.version}}
         </div>
       </div>
+
     </header>
 
     <div
@@ -80,6 +85,8 @@
 
 <script>
 import NavLink from '@theme/components/NavLink.vue'
+import CarbonAds from '@theme/components/CarbonAds.vue'
+
 
 import pkg from '../../../../oruga/package.json'
 import pkgNext from '../../../../oruga-next/package.json'
@@ -87,7 +94,7 @@ import pkgNext from '../../../../oruga-next/package.json'
 export default {
   name: 'Home',
 
-  components: { NavLink },
+  components: { NavLink, CarbonAds },
 
   data() {
     return {
@@ -112,6 +119,9 @@ export default {
 </script>
 
 <style lang="stylus">
+.ads-centered
+  display: flex
+  justify-content: center
 .home
   padding $navbarHeight 2rem 0
   max-width $homePageWidth

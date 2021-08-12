@@ -207,6 +207,7 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 
 :::
 
+<CarbonAds />
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
