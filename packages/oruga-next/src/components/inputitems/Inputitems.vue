@@ -176,7 +176,7 @@ export default defineComponent({
         },
         /**
          * Array of keys
-         * {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values}
+         * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
          * which will add a item when typing (default comma, tab and enter)
          */
         confirmKeys: {
@@ -216,7 +216,7 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
-        /** Function to create item item to push into v-model (items) */
+        /** Function to create a new item to push into v-model (items) */
         createItem: {
             type: Function,
             default: (item: any) => item
@@ -367,7 +367,7 @@ export default defineComponent({
                 }
                 // Add the item input if it is not blank
                 // or previously added (if not allowDuplicates).
-                const add = !this.allowDuplicates ? this.items.indexOf(itemToAdd) === -1 : true
+                const add = !this.allowDuplicates ? this.items.indexOf(this.createItem(itemToAdd)) === -1 : true
                 if (add && this.beforeAdding(itemToAdd)) {
                     this.items.push(this.createItem(itemToAdd))
                     this.$emit('update:modelValue', this.items)
