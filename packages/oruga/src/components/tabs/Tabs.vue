@@ -9,13 +9,14 @@
                 <o-slot-component
                     v-if="childItem.$scopedSlots.header"
                     :component="childItem"
+                    :tag="childItem.tag"
                     name="header"
-                    tag="button"
                     @click.native="childClick(childItem)"
                     :class="childItem.headerClasses"
                 />
-                <button
+                <component
                     v-else
+                    :is="childItem.tag"
                     @click="childClick(childItem)"
                     :class="childItem.headerClasses">
                     <o-icon
@@ -25,7 +26,7 @@
                         :pack="childItem.iconPack"
                         :size="size"/>
                     <span :class="childItem.headerTextClasses">{{ childItem.label }}</span>
-                </button>
+                </component>
             </div>
         </nav>
         <section :class="contentClasses">

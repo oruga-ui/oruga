@@ -111,6 +111,9 @@ function tmplProps(props, config, name) {
     if (d.indexOf('getValueByPath') >= 0 && d.indexOf('const ') < 0 && d.indexOf('if ') < 0 && d.indexOf('else ') < 0) {
       const params = d.substring(d.lastIndexOf('('), d.lastIndexOf(')')).split(',')
       let configParts = null
+      if (params.length > 3) { // In case last param contains a ','
+        params[2] = params.slice(2).join(',')
+      }
       if (params[1]) {
         configParts = params[1].split('.')
       }
