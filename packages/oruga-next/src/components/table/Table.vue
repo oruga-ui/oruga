@@ -49,6 +49,9 @@
             :tabindex="!focusable ? false : 0"
             @keydown.self.prevent.up="pressedArrow(-1)"
             @keydown.self.prevent.down="pressedArrow(1)">
+            <caption v-if="$slots.caption">
+                <slot name="caption">
+            </caption>
             <thead v-if="newColumns.length && showHeader">
                 <tr>
                     <th v-if="showDetailRowIcon" width="40px"/>
