@@ -374,8 +374,8 @@ export default defineComponent({
                     this.$emit('add', itemToAdd)
                 }
             }
-
-            this.newItem = ''
+            // after autocomplete events
+            requestAnimationFrame(() => (this.newItem = ''))
         },
 
         getNormalizedItemText(item) {
@@ -397,9 +397,6 @@ export default defineComponent({
             if (!option) return
 
             this.addItem(option)
-            this.$nextTick(() => {
-                this.newItem = ''
-            })
         },
 
         removeItem(index, event) {
