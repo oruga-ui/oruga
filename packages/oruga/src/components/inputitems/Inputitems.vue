@@ -369,7 +369,10 @@ export default {
                 }
             }
             // after autocomplete events
-            requestAnimationFrame(() => (this.newItem = ''))
+            requestAnimationFrame(() => {
+                this.newItem = ''
+                this.$emit('typing', '')
+            })
         },
 
         getNormalizedItemText(item) {
