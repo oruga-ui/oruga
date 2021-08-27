@@ -3,7 +3,7 @@
         <o-input
             v-model="newValue"
             ref="input"
-            type="text"
+            :type="type"
             v-bind="inputBind"
             :size="size"
             :rounded="rounded"
@@ -14,11 +14,11 @@
             :maxlength="maxlength"
             :autocomplete="newAutocomplete"
             :use-html5-validation="false"
+            :aria-autocomplete="ariaAutocomplete"
             :expanded="expanded"
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
-            @keyup.native.esc.prevent="isActive = false"
             @keydown.native="keydown"
             @keydown.native.up.prevent="keyArrows('up')"
             @keydown.native.down.prevent="keyArrows('down')"
@@ -175,6 +175,13 @@ export default {
             type: Array,
             default: () => ['Tab', 'Enter']
         },
+        /** Input type */
+        type: {
+            type: String,
+            default: 'text'
+        },
+        /** Trigger the select event for the first pre-selected option when clicking outside and <code>keep-first</code> is enabled */
+        selectOnClickOutside: Boolean,
         rootClass: [String, Function, Array],
         menuClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
@@ -191,6 +198,7 @@ export default {
             hovered: null,
             isActive: false,
             newValue: this.value,
+            ariaAutocomplete: this.keepFirst ? 'both' : 'list',
             newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
@@ -437,6 +445,9 @@ export default {
             if (key === 'Enter') event.preventDefault()
             // Close dropdown on Tab & no hovered
             this.isActive = key !== 'Tab'
+            if (key === 'Escape' || key === 'Tab') {
+                this.isActive = false
+            }
             if (this.hovered === null) return
             if (this.confirmKeys.indexOf(key) >= 0) {
                 // If adding by comma, don't add the comma to the input
@@ -452,7 +463,7 @@ export default {
          */
         clickedOutside(event) {
             if (!this.hasFocus && this.whiteList.indexOf(event.target) < 0) {
-                if (this.keepFirst && this.hovered) {
+                if (this.keepFirst && this.hovered && this.selectOnClickOutside) {
                     this.setSelected(this.hovered, true)
                 } else {
                     this.isActive = false

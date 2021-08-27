@@ -88,7 +88,7 @@ describe('OAutocomplete', () => {
         await wrapper.vm.$nextTick()
         expect(wrapper.vm.isActive).toBeTruthy()
 
-        $input.trigger('keyup.esc')
+        $input.trigger('keydown', {'key': 'Escape'})
         await wrapper.vm.$nextTick()
 
         expect(wrapper.vm.isActive).toBeFalsy()
