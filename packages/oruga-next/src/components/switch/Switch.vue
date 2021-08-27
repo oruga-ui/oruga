@@ -18,12 +18,17 @@
             :required="required"
             :value="nativeValue"
             :true-value="trueValue"
-            :false-value="falseValue">
+            :false-value="falseValue"
+            :aria-labelledby="ariaLabelledby">
         <span :class="elementsWrapperClasses">
             <span :class="checkClasses">
                 <span :class="checkSwitchClasses"></span>
             </span>
-            <span :class="labelClasses"><slot/></span>
+            <span
+                :id="ariaLabelledby"
+                :class="labelClasses">
+                <slot/>
+            </span>
         </span>
     </label>
 </template>
@@ -94,6 +99,8 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        /** Accessibility label to establish relationship between the switch and control label' */
+        ariaLabelledby: String,
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],
