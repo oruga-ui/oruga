@@ -3,7 +3,7 @@
 exports[`OInputitems render correctly 1`] = `
 <div class="o-inputit">
     <div class="o-inputit__container">
-        <o-autocomplete-stub usehtml5validation="true" statusicon="true" value="" data="" field="value" menuposition="auto" animation="fade" confirmkeys=",,Tab,Enter" rootclass="o-inputit__autocomplete" inputclasses="[object Object]"></o-autocomplete-stub>
+        <o-autocomplete-stub usehtml5validation="true" statusicon="true" value="" data="" field="value" menuposition="auto" animation="fade" confirmkeys=",,Tab,Enter" type="text" rootclass="o-inputit__autocomplete" inputclasses="[object Object]"></o-autocomplete-stub>
     </div>
     <!---->
 </div>

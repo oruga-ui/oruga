@@ -2,7 +2,7 @@
 
 exports[`OAutocomplete render correctly 1`] = `
 <div class="o-acp">
-    <div class="o-ctrl-input"><input autocomplete="off" type="text" class="o-input">
+    <div class="o-ctrl-input"><input autocomplete="off" type="text" aria-autocomplete="list" class="o-input">
         <!---->
         <!---->
         <!---->
