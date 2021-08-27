@@ -51,6 +51,7 @@ ${since ? `Since: ${since[0].description}\n` : ''}
 ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
+> <CarbonAds />
 ${docsBlocks ? '---\n' + docsBlocks.join('\n---\n') : ''}
 ${tmplClassProps(config, displayName.toLowerCase())}
 ${tmplProps(renderedUsage.props, config, displayName.toLowerCase())}

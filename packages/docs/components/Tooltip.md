@@ -6,6 +6,8 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tooltip/examples/Tooltip.md" class="docgen-edit-link">edit on github</a>

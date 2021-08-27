@@ -6,6 +6,8 @@ title: Loading
 
 > A simple loading overlay
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/loading/examples/Loading.md" class="docgen-edit-link">edit on github</a>

@@ -6,6 +6,8 @@ title: Datepicker
 
 > An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/datepicker/examples/Datepicker.md" class="docgen-edit-link">edit on github</a>

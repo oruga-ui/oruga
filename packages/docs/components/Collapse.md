@@ -6,6 +6,8 @@ title: Collapse
 
 > An easy way to toggle what you want
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/collapse/examples/Collapse.md" class="docgen-edit-link">edit on github</a>

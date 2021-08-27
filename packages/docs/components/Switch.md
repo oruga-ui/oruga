@@ -6,6 +6,8 @@ title: Switch
 
 > Switch between two opposing states
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/switch/examples/Switch.md" class="docgen-edit-link">edit on github</a>

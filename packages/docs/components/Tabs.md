@@ -6,6 +6,8 @@ title: Tabs
 
 > Responsive horizontal navigation tabs, switch between contents with ease
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
@@ -475,6 +477,8 @@ export default {
 ---
 
 # Tab Item
+
+> <CarbonAds />
 
 ## Props
 

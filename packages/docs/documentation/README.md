@@ -6,6 +6,8 @@ Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
+<CarbonAds />
+
 ### Oruga default stylesheet
 
 Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
@@ -63,6 +65,8 @@ npm install @oruga-ui/oruga --save
 <link rel="stylesheet" href="https://preview.oruga.io/cdn/oruga.min.css" />
 <script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
 ```
+
+
 
 #### Full bundle
 
@@ -219,6 +223,8 @@ Oruga provides other 2 different stylesheets:
 - `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
 
 For more info read ["Differences between default and full css"](#differences-between-default-and-full-css).
+
+
 
 ### Adding new classes or override existing ones
 
@@ -466,6 +472,8 @@ Vue.use(Config, {
 })
 ```
 
+
+
 ### Using CSS or SASS/SCSS variables
 
 You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
@@ -649,3 +657,4 @@ This simple demo shows a simple recipe website. Oruga components like Input, Rad
 - [Oruga UI Components without CSS Framework Dependency - Article by Walter Tommasi](https://dev.to/jtommy/oruga-ui-components-library-without-css-framework-dependency-4m3m)
 - [Oruga, the new kid on the block - Article by Andrea Stagi](https://dev.to/astagi/oruga-the-new-kid-on-the-block-1n55)
  
+

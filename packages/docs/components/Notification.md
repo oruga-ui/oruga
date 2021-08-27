@@ -6,6 +6,8 @@ title: Notification/Toast
 
 > Bold notification blocks to alert your users of something
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/notification/examples/Notification.md" class="docgen-edit-link">edit on github</a>
@@ -325,6 +327,8 @@ export default {
 ---
 
 # Notification Notice
+
+> <CarbonAds />
 
 ## Props
 

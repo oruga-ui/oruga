@@ -6,6 +6,8 @@ title: Table
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/table/examples/Table.md" class="docgen-edit-link">edit on github</a>
@@ -1979,6 +1981,8 @@ export default {
 ---
 
 # Table Column
+
+> <CarbonAds />
 
 ## Props
 

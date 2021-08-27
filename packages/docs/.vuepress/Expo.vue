@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <vue-telescope-expo :slugs="{ui: 'oruga'}">
+        <vue-telescope-expo :slugs="{ui: 'oruga'}" sortBy="lastDetectedAt" sortDirection="desc">
             <template v-slot:buttons="{ loading, hasMoreItems, loadMoreItems}">
                 <o-button v-if="hasMoreItems" root-class="loadingbtn" elements-wrapper-class="loadingbtnwrapper" @click="loadMoreItems">
                   <o-icon root-class="loadingicon" v-if="loading" pack="fas" icon="sync-alt" spin> </o-icon>

@@ -6,6 +6,8 @@ title: Icon
 
 > Icons take an important role of any application
 
+> <CarbonAds />
+
 ---
 
 <a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/icon/examples/Icon.md" class="docgen-edit-link">edit on github</a>
