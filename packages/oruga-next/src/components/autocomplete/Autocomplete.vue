@@ -347,7 +347,6 @@ export default defineComponent({
                     }, 100)
                 }
             }
-            if (active) this.$nextTick(() => this.setHovered(null))
         },
 
         /**

@@ -343,7 +343,6 @@ export default {
                     }, 100)
                 }
             }
-            if (active) this.$nextTick(() => this.setHovered(null))
         },
 
         /**
