@@ -452,8 +452,8 @@ export default {
 | focus           |            |
 | input           |            |
 | add             |            |
-| remove          |            |
 | typing          |            |
+| remove          |            |
 | infinite-scroll |            |
 
 ## Slots

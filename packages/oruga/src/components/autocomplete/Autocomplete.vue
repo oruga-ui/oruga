@@ -456,7 +456,6 @@ export default {
             // prevent emit submit event
             if (key === 'Enter') event.preventDefault()
             // Close dropdown on Tab & no hovered
-            this.isActive = key !== 'Tab'
             if (key === 'Escape' || key === 'Tab') {
                 this.isActive = false
             }

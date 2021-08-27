@@ -298,21 +298,22 @@ export default {
 
 ## Props
 
-| Prop name      | Description                                        | Type                    | Values                                                                          | Default |
-| -------------- | -------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
-| disabled       |                                                    | boolean                 | -                                                                               |         |
-| falseValue     | Overrides the returned value when it's not checked | string\|number\|boolean | -                                                                               | false   |
-| leftLabel      | Show label on left                                 | boolean                 | -                                                                               | false   |
-| name           | Name attribute on native checkbox                  | string                  | -                                                                               |         |
-| nativeValue    | Same as native value                               | string\|number\|boolean | -                                                                               |         |
-| override       | Override classes                                   | boolean                 | -                                                                               | false   |
-| passiveVariant | Color of the switch when is passive, optional      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
-| required       |                                                    | boolean                 | -                                                                               |         |
-| rounded        | Rounded style                                      | boolean                 | -                                                                               | true    |
-| size           | Vertical size of switch, optional                  | string                  | `small`, `medium`, `large`                                                      |         |
-| trueValue      | Overrides the returned value when it's checked     | string\|number\|boolean | -                                                                               | true    |
-| v-model        |                                                    | string\|number\|boolean | -                                                                               |         |
-| variant        | Color of the switch, optional                      | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| Prop name      | Description                                                                         | Type                    | Values                                                                          | Default |
+| -------------- | ----------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
+| ariaLabelledby | Accessibility label to establish relationship between the switch and control label' | string                  | -                                                                               |         |
+| disabled       |                                                                                     | boolean                 | -                                                                               |         |
+| falseValue     | Overrides the returned value when it's not checked                                  | string\|number\|boolean | -                                                                               | false   |
+| leftLabel      | Show label on left                                                                  | boolean                 | -                                                                               | false   |
+| name           | Name attribute on native checkbox                                                   | string                  | -                                                                               |         |
+| nativeValue    | Same as native value                                                                | string\|number\|boolean | -                                                                               |         |
+| override       | Override classes                                                                    | boolean                 | -                                                                               | false   |
+| passiveVariant | Color of the switch when is passive, optional                                       | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| required       |                                                                                     | boolean                 | -                                                                               |         |
+| rounded        | Rounded style                                                                       | boolean                 | -                                                                               | true    |
+| size           | Vertical size of switch, optional                                                   | string                  | `small`, `medium`, `large`                                                      |         |
+| trueValue      | Overrides the returned value when it's checked                                      | string\|number\|boolean | -                                                                               | true    |
+| v-model        |                                                                                     | string\|number\|boolean | -                                                                               |         |
+| variant        | Color of the switch, optional                                                       | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Events
 

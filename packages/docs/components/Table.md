@@ -1972,6 +1972,7 @@ export default {
 | default     |             |          |
 | pagination  |             |          |
 | top-left    |             |          |
+| caption     |             |          |
 | detail      |             | <br>     |
 | empty       |             |          |
 | footer      |             |          |

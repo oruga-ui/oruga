@@ -7,6 +7,7 @@ exports[`OTable render correctly 1`] = `
     <!---->
     <table class="o-table o-table--table__empty">
         <!---->
+        <!---->
         <tbody>
             <tr>
                 <td colspan="0"></td>
