@@ -366,12 +366,18 @@ export default {
         },
 
         /**
-         * Select first option if "keep-first"
+         * Select first option if "keep-first
          */
-        data(value) {
+        data() {
             // Keep first option always pre-selected
             if (this.keepFirst) {
-                this.selectFirstOption(value)
+                this.$nextTick(() => {
+                    if (this.isActive) {
+                        this.selectFirstOption(this.computedData)
+                    } else {
+                        this.setHovered(null)
+                    }
+                })
             }
         },
 
@@ -427,13 +433,14 @@ export default {
         /**
          * Select first option
          */
-        selectFirstOption(options) {
+        selectFirstOption(computedData) {
             this.$nextTick(() => {
-                if (options.length) {
-                    // If has visible data or open on focus, keep updating the hovered
-                    if (this.openOnFocus || (this.newValue !== '' && this.hovered !== options[0])) {
-                        this.setHovered(options[0])
-                    }
+                const nonEmptyElements = computedData.filter(
+                    (element) => element.items && element.items.length
+                )
+                if (nonEmptyElements.length) {
+                    const option = nonEmptyElements[0].items[0]
+                    this.setHovered(option)
                 } else {
                     this.setHovered(null)
                 }
@@ -576,6 +583,7 @@ export default {
             if (this.openOnFocus) {
                 this.isActive = true
                 if (this.keepFirst) {
+                    // If open on focus, update the hovered
                     this.selectFirstOption(this.computedData)
                 }
             }
