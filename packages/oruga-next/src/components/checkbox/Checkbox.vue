@@ -24,8 +24,13 @@
             :autocomplete="autocomplete"
             :value="nativeValue"
             :true-value="trueValue"
-            :false-value="falseValue">
-        <span :class="labelClasses"><slot/></span>
+            :false-value="falseValue"
+            :aria-labelledby="ariaLabelledby">
+        <span
+            :id="ariaLabelledby"
+            :class="labelClasses">
+            <slot/>
+        </span>
     </label>
 </template>
 
@@ -78,10 +83,13 @@ export default defineComponent({
             type: [String, Number, Boolean],
             default: false
         },
+        /** Icon for checkbox (optional)  */
         iconCheck: {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
         },
+        /** Accessibility label to establish relationship between the checkbox and control label */
+        ariaLabelledby: String,
         /* Same as native autocomplete */
         autocomplete: String,
         rootClass: [String, Function, Array],
