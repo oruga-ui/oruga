@@ -290,7 +290,6 @@ import Button from '../button/Button'
 import Checkbox from '../checkbox/Checkbox'
 import Icon from '../icon/Icon'
 import Input from '../input/Input'
-import Pagination from '../pagination/Pagination'
 import Loading from '../loading/Loading'
 import SlotComponent from '../../utils/SlotComponent'
 import TableMobileSort from './TableMobileSort'
@@ -319,7 +318,6 @@ export default {
         [Checkbox.name]: Checkbox,
         [Icon.name]: Icon,
         [Input.name]: Input,
-        [Pagination.name]: Pagination,
         [Loading.name]: Loading,
         [SlotComponent.name]: SlotComponent,
         [TableMobileSort.name]: TableMobileSort,
