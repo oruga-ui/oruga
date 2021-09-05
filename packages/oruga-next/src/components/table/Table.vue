@@ -286,7 +286,6 @@ import Button from '../button/Button.vue'
 import Checkbox from '../checkbox/Checkbox.vue'
 import Icon from '../icon/Icon.vue'
 import Input from '../input/Input.vue'
-import Pagination from '../pagination/Pagination.vue'
 import Loading from '../loading/Loading.vue'
 
 import SlotComponent from '../../utils/SlotComponent'
@@ -315,7 +314,6 @@ export default defineComponent({
         [Checkbox.name]: Checkbox,
         [Icon.name]: Icon,
         [Input.name]: Input,
-        [Pagination.name]: Pagination,
         [Loading.name]: Loading,
         [SlotComponent.name]: SlotComponent,
         [TableMobileSort.name]: TableMobileSort,
