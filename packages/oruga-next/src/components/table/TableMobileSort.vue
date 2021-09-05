@@ -43,7 +43,7 @@ import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
 import Field from '../field/Field.vue'
 
-import { getValueByPath } from '../../../../oruga/src/utils/helpers'
+import { getValueByPath } from '../../utils/helpers'
 
 export default defineComponent({
     name: 'OTableMobileSort',
