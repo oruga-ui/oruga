@@ -82,6 +82,11 @@ export default {
             type: String,
             default: 'fade'
         },
+         /**
+         * Icon pack to use
+         * @values mdi, fa, fas and any other custom icon pack
+         */
+        iconPack: String,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],
         /** Props to be binded to the injected component */
