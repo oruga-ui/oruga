@@ -3,6 +3,7 @@ $notification-background-color: $primary !default;
 $notification-border-radius: 4px !default;
 $notification-padding: 1.75em 1.75em !default;
 $notification-margin-bottom: 1.5rem !default;
+$notification-animantion: append-animate .3s linear !default;
 $notification-color: $white !default;
 $notification-close-border-radius: $base-rounded-border-radius !default;
 $notification-close-right: .5rem !default;
@@ -22,7 +23,9 @@ $notification-notices-zindex: 1000 !default;
     @include avariable('border-radius', 'notification-border-radius', $notification-border-radius);
     @include avariable('padding', 'notification-padding', $notification-padding);
     @include avariable('margin-bottom', 'notification-margin-bottom', $notification-margin-bottom);
+    @include avariable('animation', 'notification-animantion', $notification-animantion);
     position: relative;
+    transform-origin: 50% 0;
     &__content {
         flex-basis: auto;
         flex-grow: 1;
