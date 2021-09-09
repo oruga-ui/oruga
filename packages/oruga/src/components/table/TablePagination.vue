@@ -24,8 +24,13 @@
 </template>
 
 <script>
+import Pagination from '../pagination/Pagination.vue'
+
 export default {
     name: 'OTablePagination',
+    components: {
+        [Pagination.name]: Pagination
+    },
     props: {
         paginated: Boolean,
         total: [Number, String],

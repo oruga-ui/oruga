@@ -25,9 +25,13 @@
 
 <script>
 import { defineComponent } from "vue"
+import Pagination from '../pagination/Pagination.vue'
 
 export default defineComponent({
     name: 'OTablePagination',
+    components: {
+        [Pagination.name]: Pagination
+    },
     emits: ['update:currentPage', 'page-change'],
     props: {
         paginated: Boolean,
