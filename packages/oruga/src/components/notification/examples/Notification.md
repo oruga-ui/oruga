@@ -110,6 +110,7 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
             },
             component() {
                 this.$oruga.notification.open({
+                    parent: this,
                     component: NotificationForm,
                     position: 'bottom-right',
                     variant: 'warning',
