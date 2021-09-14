@@ -1,7 +1,7 @@
 <template>
     <component
         v-bind="$attrs"
-        :disabled="disabled"
+        :disabled="computedDisabled"
         :is="computedTag"
         :type="computedNativeType"
         :class="rootClasses"
@@ -177,7 +177,7 @@ export default defineComponent({
             ]
         },
         computedTag() {
-            if (this.disabled !== undefined && this.disabled !== false) {
+            if (typeof this.disabled !== 'undefined' && this.disabled !== false) {
                 return 'button'
             }
             return this.tag
@@ -186,6 +186,10 @@ export default defineComponent({
             if (this.tag === 'button' || this.tag === 'input') {
                 return this.nativeType
             }
+            return null
+        },
+        computedDisabled() {
+            if (this.disabled) return true
             return null
         }
     }
