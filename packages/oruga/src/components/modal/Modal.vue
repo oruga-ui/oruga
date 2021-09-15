@@ -290,17 +290,17 @@ export default {
         * Emit events, and destroy modal if it's programmatic.
         */
         close() {
+            this.isActive = false
             this.$emit('close')
             this.$emit('update:active', false)
             this.onClose.apply(null, arguments)
 
-            // Timeout for the animation complete before destroying
+            // Waiting for the animation complete before destroying
             if (this.programmatic) {
-                this.isActive = false
-                setTimeout(() => {
+                window.requestAnimationFrame(() => {
                     this.$destroy()
                     removeElement(this.$el)
-                }, 150)
+                })
             }
         },
 

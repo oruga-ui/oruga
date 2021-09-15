@@ -3,7 +3,6 @@
         :name="animation"
         @after-enter="afterEnter"
         @before-leave="beforeLeave"
-        @after-leave="afterLeave"
     >
         <div
             v-if="!destroyed"
@@ -291,16 +290,19 @@ export default defineComponent({
         * Emit events, and destroy modal if it's programmatic.
         */
         close() {
+            this.isActive = false
+            if (this.destroyOnHide) {
+                this.destroyed = true
+            }
             this.$emit('close')
             this.$emit('update:active', false)
             this.onClose.apply(null, arguments)
 
-            // Timeout for the animation complete before destroying
+            // Waiting for the animation complete before destroying
             if (this.programmatic) {
-                this.isActive = false
-                setTimeout(() => {
+                window.requestAnimationFrame(() => {
                     removeElement(this.$el)
-                }, 150)
+                })
             }
         },
 
@@ -323,15 +325,6 @@ export default defineComponent({
         */
         beforeLeave() {
             this.animating = true
-        },
-
-        /**
-        * Transition after-leave hook
-        */
-        afterLeave() {
-            if (this.destroyOnHide) {
-                this.destroyed = true
-            }
         }
     },
     created() {
