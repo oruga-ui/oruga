@@ -77,7 +77,6 @@ describe('OModal', () => {
         wrapper.vm.close()
         expect(wrapper.vm.isActive).toBeFalsy()
 
-        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 150)
         jest.advanceTimersByTime(150)
         expect(wrapper.vm.$destroy).toHaveBeenCalled()
     })
