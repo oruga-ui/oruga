@@ -65,9 +65,7 @@ describe('OModal', () => {
         expect(wrapper.vm.cancel).toHaveBeenCalledTimes(1)
     })
 
-    it('emit events on close', () => {
-        jest.useFakeTimers()
-
+    it('emit events on close', (done) => {
         wrapper.vm.$destroy = jest.fn(() => wrapper.vm.$destroy)
         wrapper.vm.close()
         expect(wrapper.emitted()['close']).toBeTruthy()
@@ -77,7 +75,10 @@ describe('OModal', () => {
         wrapper.vm.close()
         expect(wrapper.vm.isActive).toBeFalsy()
 
-        jest.advanceTimersByTime(150)
-        expect(wrapper.vm.$destroy).toHaveBeenCalled()
+        window.requestAnimationFrame(() => {
+            expect(wrapper.vm.$destroy).toHaveBeenCalled()
+            done()
+        }, 150)
+
     })
 })
