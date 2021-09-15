@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div class="carbon-container">
+    <div class="carbon-container" v-if="show">
       <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CESI42JW&placement=orugaio" id="_carbonads_js"></script>
     </div>
   </client-only>
@@ -8,6 +8,11 @@
 <script>
 // https://github.com/vuejs/vuefire/blob/master/packages/documentation/docs/.vuepress/components/CarbonAds.vue
 export default {
+    data () {
+      return {
+        show: false
+      }
+    },
     watch: {
         $route(to, from) {
             if (to.path !== from.path && typeof _carbonads === 'object') {
@@ -15,10 +20,23 @@ export default {
                 _carbonads.refresh()
             }
         }
+    },
+    mounted: function () {
+      if ((new URL(location.href)).hostname !== "oruga.io") {
+        return;
+      }
+      setTimeout(() => {
+        this.show = true
+        setTimeout(() => {
+          document.querySelectorAll("div[id^=carbonads_]").forEach(el => el.remove());
+        }, 1000)
+      }, 1000)
     }
 }
 </script>
 <style lang="stylus">
+div[id^=carbonads_]
+  display: none;
 .carbon-container
     align-items: center;
     display: flex;
