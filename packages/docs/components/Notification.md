@@ -107,6 +107,7 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
       },
       component() {
         this.$oruga.notification.open({
+          parent: this,
           component: NotificationForm,
           position: 'bottom-right',
           variant: 'warning',
@@ -364,6 +365,7 @@ export default {
 | --oruga-notification-border-radius          | \$notification-border-radius          | 4px                          |
 | --oruga-notification-padding                | \$notification-padding                | 1.75em 1.75em                |
 | --oruga-notification-margin-bottom          | \$notification-margin-bottom          | 1.5rem                       |
+| --oruga-notification-animantion             | \$notification-animantion             | append-animate .3s linear    |
 | --oruga-notification-color                  | \$notification-color                  | \$white                      |
 | --oruga-notification-close-border-radius    | \$notification-close-border-radius    | \$base-rounded-border-radius |
 | --oruga-notification-close-right            | \$notification-close-right            | .5rem                        |
