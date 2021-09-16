@@ -83,6 +83,14 @@ export default defineComponent({
             type: [String, Number, Boolean],
             default: false
         },
+        /**
+		 * Icon pack to use
+		 * @values mdi, fa, fas and any other custom icon pack
+		 */
+        iconPack: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'checkbox.iconPack', undefined) }
+        },
         /** Icon for checkbox (optional)  */
         iconCheck: {
             type: String,

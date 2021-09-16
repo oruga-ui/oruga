@@ -1,3 +1,6 @@
+import { getOptions } from "./config"
+import { getValueByPath } from "./helpers"
+
 export default {
 	props: {
 		/** @model */
@@ -24,12 +27,7 @@ export default {
 		 * Size of the control, optional
 		 * @values small, medium, large
 		 */
-		size: String,
-        /**
-		 * Icon pack to use
-		 * @values mdi, fa, fas and any other custom icon pack
-		 */
-		iconPack: String
+		size: String
 	},
 	data() {
 		return {

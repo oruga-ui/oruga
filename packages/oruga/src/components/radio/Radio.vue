@@ -49,6 +49,14 @@ export default {
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'radio',
     props: {
+        /**
+		 * Icon pack to use
+		 * @values mdi, fa, fas and any other custom icon pack
+		 */
+        iconPack: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'radio.iconPack', undefined) }
+        },
         iconCheck: {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'radio.iconCheck', undefined) }

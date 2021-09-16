@@ -1,4 +1,6 @@
-import { defineComponent } from "vue"
+import { ComponentOptions, defineComponent } from 'vue';
+import { getOptions } from "./config"
+import { getValueByPath } from "./helpers"
 
 export default defineComponent({
     emits: ['update:modelValue'],
@@ -27,12 +29,7 @@ export default defineComponent({
 		 * Size of the control, optional
 		 * @values small, medium, large
 		 */
-		size: String,
-        /**
-		 * Icon pack to use
-		 * @values mdi, fa, fas and any other custom icon pack
-		 */
-		iconPack: String
+		size: String
 	},
 	data() {
 		return {
