@@ -472,7 +472,31 @@ Vue.use(Config, {
 })
 ```
 
+### Transform classes
 
+In case you want to transform applied classes' names you can use `transformClasses` function directly in your configuration.
+
+```js
+Vue.use(Config, {
+    button: {
+        transformClasses: (appliedClasses) => {
+            return appliedClasses.replace(/-/g, '--')
+        }
+    }
+    ...
+})
+```
+
+You can also use `transformClasses` globally if you need to transform classes for any component.
+
+```js
+Vue.use(Config, {
+    transformClasses: (appliedClasses) => {
+        return appliedClasses.replace(/-/g, '--')
+    }
+    ...
+})
+```
 
 ### Using CSS or SASS/SCSS variables
 

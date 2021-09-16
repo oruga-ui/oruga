@@ -188,5 +188,60 @@ describe('BaseComponentMixin', () => {
             expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
                 .toBe(`${newGlobalSizeClassValue}suff-${sizeSuffix} ${newSizeClassValue}suff-${sizeSuffix}`)
         })
+        it('transform global and local classes as expected', async () => {
+            // TODO test local classes -- rootClass
+            const initialRootClassValue = 'initial-class'
+            const newGlobalRootClassValue = 'new-global-class'
+            const newRootClassValue = 'new-class'
+
+
+            // Locally
+            setOptions(merge(getOptions(), {
+                button: {
+                    rootClass: newGlobalRootClassValue,
+                    override: false,
+                    transformClasses: (appliedClasses) => {
+                        return appliedClasses.replace(/-/g, '--')
+                    }
+                }
+            }, true))
+            wrapper.setProps({ rootClass: newRootClassValue })
+            await wrapper.vm.$nextTick()
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
+                .toBe(`${initialRootClassValue} ${newGlobalRootClassValue} ${newRootClassValue}`.replace(/-/g, '--'))
+
+            // Globally
+            setOptions({})
+            setOptions(merge(getOptions(), {
+                transformClasses: (appliedClasses) => {
+                    return appliedClasses.replace(/-/g, '--')
+                },
+                button: {
+                    rootClass: newGlobalRootClassValue,
+                    override: true
+                }
+            }, true))
+            await wrapper.vm.$nextTick()
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
+                .toBe(`${newGlobalRootClassValue} ${newRootClassValue}`.replace(/-/g, '--'))
+
+            // Both globally and locally
+            setOptions({})
+            setOptions(merge(getOptions(), {
+                transformClasses: (appliedClasses) => {
+                    return appliedClasses.replace(/-/g, '__')
+                },
+                button: {
+                    rootClass: newGlobalRootClassValue,
+                    override: true,
+                    transformClasses: (appliedClasses) => {
+                        return appliedClasses.replace(/-/g, '--')
+                    },
+                }
+            }, true))
+            await wrapper.vm.$nextTick()
+            expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
+                .toBe(`${newGlobalRootClassValue} ${newRootClassValue}`.replace(/-/g, '--').replace(/-/g, '__'))
+        })
     })
 })
