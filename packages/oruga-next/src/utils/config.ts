@@ -4,7 +4,8 @@ import { merge } from "./helpers"
 let config = {
     iconPack: 'mdi',
     useHtml5Validation: true,
-    statusIcon: true
+    statusIcon: true,
+    transformClasses: undefined
 }
 
 export const setOptions = (options: any) => { config = options }

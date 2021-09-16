@@ -28,8 +28,11 @@ export default defineComponent({
         computedClass(field: string, defaultValue: string, suffix: string = '') {
             const config = getOptions()
 
-            let override = this.$props.override || getValueByPath(config, `${this.$options.configField}.override`, false)
-            let overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
+            const override = this.$props.override || getValueByPath(config, `${this.$options.configField}.override`, false)
+            const overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
+
+            const globalTransformClasses = config.transformClasses || undefined
+            const localTransformClasses = getValueByPath(config, `${this.$options.configField}.transformClasses`, undefined)
 
             let globalClass = getValueByPath(config, `${this.$options.configField}.${field}.class`, '')
                 || getValueByPath(config, `${this.$options.configField}.${field}`, '')
@@ -55,9 +58,16 @@ export default defineComponent({
             } else {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix)
             }
-            return (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
+            let appliedClasses = (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
                + `${blankIfUndefined(globalClass)} `
                + `${blankIfUndefined(currentClass)}`).trim().replace(/\s\s+/g, ' ');
+            if (localTransformClasses) {
+                appliedClasses = localTransformClasses(appliedClasses)
+            }
+            if (globalTransformClasses) {
+                appliedClasses = globalTransformClasses(appliedClasses)
+            }
+            return appliedClasses
         }
     }
 })
