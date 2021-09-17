@@ -1,6 +1,3 @@
-import { getOptions } from "./config"
-import { getValueByPath } from "./helpers"
-
 export default {
 	props: {
 		/** @model */

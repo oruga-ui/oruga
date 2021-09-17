@@ -1,6 +1,4 @@
-import { ComponentOptions, defineComponent } from 'vue';
-import { getOptions } from "./config"
-import { getValueByPath } from "./helpers"
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     emits: ['update:modelValue'],
