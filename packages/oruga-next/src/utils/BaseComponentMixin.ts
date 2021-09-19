@@ -48,15 +48,21 @@ export default defineComponent({
                 defaultValue = defaultValue + suffix
             }
 
+            let context = null
             if (typeof currentClass === "function") {
-                currentClass = currentClass(suffix, _getContext(this))
+                context = _getContext(this)
+                currentClass = currentClass(suffix, context)
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
-            if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, _getContext(this))
+            if (this.$props.override !== true) {
+                if (typeof globalClass === "function") {
+                    globalClass = globalClass(suffix, context || _getContext(this))
+                } else {
+                    globalClass = _defaultSuffixProcessor(globalClass, suffix)
+                }
             } else {
-                globalClass = _defaultSuffixProcessor(globalClass, suffix)
+                globalClass = ''
             }
             let appliedClasses = (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
                + `${blankIfUndefined(globalClass)} `

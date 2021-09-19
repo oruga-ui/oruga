@@ -56,14 +56,18 @@ export default {
             let context = null
             if (typeof currentClass === "function") {
                 context = _getContext(this)
-                currentClass = currentClass(suffix, )
+                currentClass = currentClass(suffix, context)
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
-            if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, context || _getContext(this))
+            if (this.$props.override !== true) {
+                if (typeof globalClass === "function") {
+                    globalClass = globalClass(suffix, context || _getContext(this))
+                } else {
+                    globalClass = _defaultSuffixProcessor(globalClass, suffix)
+                }
             } else {
-                globalClass = _defaultSuffixProcessor(globalClass, suffix)
+                globalClass = ''
             }
             let appliedClasses = (`${(override && !overrideClass) || (!override && !overrideClass) ? defaultValue : ''} `
                + `${blankIfUndefined(globalClass)} `
