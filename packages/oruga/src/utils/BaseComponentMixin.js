@@ -31,12 +31,12 @@ export default {
     },
     methods: {
         computedClass(field, defaultValue, suffix='') {
-            const config = getOptions();
+            const config = this.$props.override === true ? {} : getOptions();
 
             const override = this.$props.override || getValueByPath(config, `${this.$options.configField}.override`, false)
             const overrideClass = getValueByPath(config, `${this.$options.configField}.${field}.override`, override)
 
-            const globalTransformClasses = config.transformClasses || undefined
+            const globalTransformClasses = getValueByPath(config, `transformClasses`, undefined)
             const localTransformClasses = getValueByPath(config, `${this.$options.configField}.transformClasses`, undefined)
 
             let globalClass = getValueByPath(config, `${this.$options.configField}.${field}.class`, '')
@@ -56,7 +56,7 @@ export default {
             let context = null
             if (typeof currentClass === "function") {
                 context = _getContext(this)
-                currentClass = currentClass(suffix, )
+                currentClass = currentClass(suffix, context)
             } else {
                 currentClass = _defaultSuffixProcessor(currentClass, suffix)
             }
