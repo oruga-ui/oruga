@@ -456,6 +456,10 @@ or directly in your component
     rootClass="myautocomplete-root">
 ```
 
+::: warning
+In this case `override` property replaces Oruga existing classes completely, ignoring your configuration.
+:::
+
 You can also specify the override behaviour for each class
 
 ```js

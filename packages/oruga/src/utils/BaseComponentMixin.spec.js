@@ -114,7 +114,7 @@ describe('BaseComponentMixin', () => {
                         class: newGlobalSizeClassValue,
                     },
                 }
-            }, true)
+            })
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
@@ -135,7 +135,7 @@ describe('BaseComponentMixin', () => {
                         override: true
                     },
                 }
-            }, true)
+            })
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
@@ -157,7 +157,7 @@ describe('BaseComponentMixin', () => {
                         override: true
                     },
                 }
-            }, true)
+            })
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: newSizeClassValue })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
@@ -179,7 +179,7 @@ describe('BaseComponentMixin', () => {
                         override: true
                     },
                 }
-            }, true)
+            })
             wrapper.setProps({ rootClass: newRootClassValue, sizeClass: (suffix) => `${newSizeClassValue}suff-${suffix}` })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
@@ -189,6 +189,10 @@ describe('BaseComponentMixin', () => {
                 .toBe(`${newGlobalSizeClassValue}suff-${sizeSuffix} ${newSizeClassValue}suff-${sizeSuffix}`)
 
             /* Override true as prop */
+            wrapper = shallowMount(OButton, {
+                attachToDocument: true,
+                mixins: [BaseComponentMixin]
+            })
             setOptions({
                 button: {
                     rootClass: {
@@ -198,17 +202,16 @@ describe('BaseComponentMixin', () => {
                         class: (suffix) => {
                             return `${newGlobalSizeClassValue}suff-${suffix}`
                         },
-                        override: true
                     },
                 }
-            }, true)
-            wrapper.setProps({ override: true, rootClass: newRootClassValue, sizeClass: (suffix) => `${newSizeClassValue}suff-${suffix}` })
+            })
+            wrapper.setProps({ override: true, rootClass: newRootClassValue })
             await wrapper.vm.$nextTick()
             expect(wrapper.vm.computedClass('rootClass', initialRootClassValue))
                 .toBe(`${newRootClassValue}`)
 
             expect(wrapper.vm.computedClass('sizeClass', initialSizeClassValue, sizeSuffix))
-                .toBe(`${newSizeClassValue}suff-${sizeSuffix}`)
+                .toBe(``)
         })
         it('transform global and local classes as expected', async () => {
             // TODO test local classes -- rootClass
