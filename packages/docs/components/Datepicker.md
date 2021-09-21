@@ -797,6 +797,7 @@ export default {
 | input            |            |
 | change-month     |            |
 | change-year      |            |
+| active-change    |            |
 
 ## Slots
 

@@ -252,8 +252,9 @@ export default {
 
 ## Style
 
-| CSS Variable                   | SASS Variable            | Default               |
-| ------------------------------ | ------------------------ | --------------------- |
-| --oruga-loading-overlay-legacy | \$loading-overlay-legacy | #7f7f7f               |
-| --oruga-loading-overlay        | \$loading-overlay        | rgba(255,255,255,0.5) |
-| --oruga-loading-zindex         | \$loading-zindex         | 999                   |
+| CSS Variable                    | SASS Variable             | Default               |
+| ------------------------------- | ------------------------- | --------------------- |
+| --oruga-loading-overlay-legacy  | \$loading-overlay-legacy  | #7f7f7f               |
+| --oruga-loading-overlay         | \$loading-overlay         | rgba(255,255,255,0.5) |
+| --oruga-loading-zindex          | \$loading-zindex          | 29                    |
+| --oruga-loading-fullpage-zindex | \$loading-fullpage-zindex | 999                   |

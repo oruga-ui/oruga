@@ -236,13 +236,15 @@ export default {
 
 ## Events
 
-| Event name   | Properties | Description |
-| ------------ | ---------- | ----------- |
-| change-month |            |
-| change-year  |            |
-| blur         |            |
-| focus        |            |
-| input        |            |
+| Event name       | Properties | Description |
+| ---------------- | ---------- | ----------- |
+| active-change    |            |
+| icon-right-click |            |
+| change-month     |            |
+| change-year      |            |
+| blur             |            |
+| focus            |            |
+| input            |            |
 
 ## Slots
 
