@@ -29,6 +29,8 @@
         :append-to-body="appendToBody"
         @focus="onFocus"
         @blur="onBlur"
+        @active-change="$emit('active-change', $event)"
+        @icon-right-click="$emit('icon-right-click')"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)">
         <div :class="timepickerWrapperClasses">

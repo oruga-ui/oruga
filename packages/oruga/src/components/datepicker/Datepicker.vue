@@ -973,6 +973,7 @@ export default {
             if (!value) {
                 this.onBlur()
             }
+            this.$emit('active-change', value)
         },
 
         changeFocus(day) {
