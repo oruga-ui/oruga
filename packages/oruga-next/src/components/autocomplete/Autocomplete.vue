@@ -34,7 +34,11 @@
                 ref="dropdown">
                 <div
                     v-if="$slots.header"
-                    :class="itemClasses">
+                    ref="header"
+                    role="button"
+                    tabindex="0"
+                    @click="checkIfHeaderOrFooterSelected($event, true)"
+                    :class="itemHeaderClasses">
                     <slot name="header"/>
                 </div>
                 <template v-for="(element, groupindex) in computedData">
@@ -74,7 +78,11 @@
                 </div>
                 <div
                     v-if="$slots.footer"
-                    :class="itemClasses">
+                    ref="footer"
+                    role="button"
+                    tabindex="0"
+                    @click="checkIfHeaderOrFooterSelected($event, true)"
+                    :class="itemFooterClasses">
                     <slot name="footer"/>
                 </div>
             </div>
@@ -186,6 +194,10 @@ export default defineComponent({
         },
         /** Trigger the select event for the first pre-selected option when clicking outside and <code>keep-first</code> is enabled */
         selectOnClickOutside: Boolean,
+        /** Allows the header in the autocomplete to be selectable */
+        selectableHeader: Boolean,
+        /** Allows the footer in the autocomplete to be selectable */
+        selectableFooter: Boolean,
         rootClass: [String, Function, Array],
         menuClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
@@ -200,6 +212,8 @@ export default defineComponent({
         return {
             selected: null,
             hovered: null,
+             headerHovered: null,
+            footerHovered: null,
             isActive: false,
             newValue: this.modelValue,
             // from mixin (ts workaround)
@@ -239,6 +253,18 @@ export default defineComponent({
             return [
                 ...this.itemClasses,
                 this.computedClass('itemGroupTitleClass', 'o-acp__item-group-title')
+            ]
+        },
+        itemHeaderClasses() {
+            return [
+                ...this.itemClasses,
+                { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: this.headerHovered }
+            ]
+        },
+        itemFooterClasses() {
+            return [
+                ...this.itemClasses,
+                { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: this.footerHovered }
             ]
         },
         inputBind() {
@@ -462,13 +488,36 @@ export default defineComponent({
             if (key === 'Escape' || key === 'Tab') {
                 this.isActive = false
             }
-            if (this.hovered === null) return
             if (this.confirmKeys.indexOf(key) >= 0) {
                 // If adding by comma, don't add the comma to the input
                 if (key === ',') event.preventDefault()
                 // Close dropdown on select by Tab
                 const closeDropdown = !this.keepOpen || key === 'Tab'
+                if (this.hovered === null) {
+                    // header and footer uses headerHovered && footerHovered. If header or footer
+                    // was selected then fire event otherwise just return so a value isn't selected
+                    this.checkIfHeaderOrFooterSelected(event, false, closeDropdown)
+                    return
+                }
                 this.setSelected(this.hovered, closeDropdown, event)
+            }
+        },
+
+        /**
+         * Check if header or footer was selected.
+         */
+        checkIfHeaderOrFooterSelected(event, triggeredByclick, closeDropdown = true) {
+            if (this.selectableHeader && (this.headerHovered || triggeredByclick)) {
+                this.$emit('select-header', event)
+                this.headerHovered = false
+                if (triggeredByclick) this.setHovered(null)
+                if (closeDropdown) this.isActive = false
+            }
+            if (this.selectableFooter && (this.footerHovered || triggeredByclick)) {
+                this.$emit('select-footer', event)
+                this.footerHovered = false
+                if (triggeredByclick) this.setHovered(null)
+                if (closeDropdown) this.isActive = false
             }
         },
 
@@ -546,14 +595,45 @@ export default defineComponent({
             if (this.isActive) {
                 const data = this.computedData.map(
                     (d) => d.items).reduce((a, b) => ([...a, ...b]), [])
-                let index = data.indexOf(this.hovered) + sum
+
+                if (this.$slots.header && this.selectableHeader) {
+                    data.unshift(undefined)
+                }
+                if (this.$slots.footer && this.selectableFooter) {
+                    data.push(undefined)
+                }
+                let index
+                if (this.headerHovered) {
+                    index = 0 + sum
+                } else if (this.footerHovered) {
+                    index = (data.length - 1) + sum
+                } else {
+                    index = data.indexOf(this.hovered) + sum
+                }
+
                 index = index > data.length - 1 ? data.length - 1 : index
                 index = index < 0 ? 0 : index
 
-                this.setHovered(data[index])
+                this.footerHovered = false
+                this.headerHovered = false
+                this.setHovered(data[index] !== undefined ? data[index] : null)
+                if (this.$slots.header && this.selectableFooter && index === data.length - 1) {
+                    this.footerHovered = true
+                }
+                if (this.$slots.footer && this.selectableHeader && index === 0) {
+                    this.headerHovered = true
+                }
 
                 const list = this.$refs.dropdown
-                const element = this.itemRefs ? this.itemRefs[index] : undefined
+                let items = this.$refs.items || []
+
+                if (this.$slots.header && this.selectableHeader) {
+                    items = [this.$refs.header, ...items]
+                }
+                if (this.$slots.footer && this.selectableFooter) {
+                    items = [...items, this.$refs.footer]
+                }
+                const element = items[index]
 
                 if (!element) return
 
