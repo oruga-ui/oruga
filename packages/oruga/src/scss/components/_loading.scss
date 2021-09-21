@@ -2,7 +2,8 @@
 /* @docs */
 $loading-overlay-legacy: #7f7f7f !default;
 $loading-overlay: rgba(255,255,255,0.5) !default;
-$loading-zindex: 999 !default;
+$loading-zindex: 29 !default;
+$loading-fullpage-zindex: 999 !default;
 /* @docs */
 
 .o-load {
@@ -18,6 +19,7 @@ $loading-zindex: 999 !default;
     @include avariable('z-index', 'loading-zindex', $loading-zindex);
     &--fullpage {
         position: fixed;
+        @include avariable('z-index', 'loading-fullpage-zindex', $loading-fullpage-zindex);
     }
     &__overlay {
         position: absolute;
