@@ -52,7 +52,8 @@
                 @compositionstart="isComposing = true"
                 @compositionend="isComposing = false"
                 @select="onSelect"
-                @infinite-scroll="emitInfiniteScroll">
+                @infinite-scroll="$emit('infinite-scroll', $event)"
+                @icon-right-click="$emit('icon-right-click', $event)">
                 <template
                     v-if="hasHeaderSlot"
                     #header>
@@ -437,10 +438,6 @@ export default defineComponent({
 
         onTyping(event) {
             this.$emit('typing', event.trim())
-        },
-
-        emitInfiniteScroll() {
-            this.$emit('infinite-scroll')
         }
     }
 })
