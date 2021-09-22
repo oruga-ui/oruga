@@ -401,6 +401,9 @@ export default defineComponent({
             if (!option) return
 
             this.addItem(option)
+            this.$nextTick(() => {
+                this.newItem = ''
+            })
         },
 
         removeItem(index, event) {
