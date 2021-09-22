@@ -208,6 +208,8 @@ Thank you to everyone involved for improving this project, day by day 💚
   />
 </a>
 
+[Complete list](CONTRIBUTORS.md).
+
 ## Credits
 
 Oruga logo designed by [Matteo Guadagnini](mailto:matteoguadagnini67@gmail.com)
