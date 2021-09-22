@@ -59,7 +59,7 @@
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
                         :class="itemOptionClasses(option)"
-                        @click="setSelected(option, undefined, $event)"
+                        @click.stop="setSelected(option, !keepOpen, $event)"
                         ref="items"
                     >
                         <slot
