@@ -35,21 +35,21 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 ### Vue 2
 <br>
 <o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
-<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga
 ```
 
 </o-tab-item>
-<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Npm" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 npm install @oruga-ui/oruga --save
 ```
 
 </o-tab-item>
-<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Cdn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
@@ -97,21 +97,21 @@ Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use
 
 <br>
 <o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
-<o-tab-item override label="Yarn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 yarn add @oruga-ui/oruga-next
 ```
 
 </o-tab-item>
-<o-tab-item override label="Npm" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Npm" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```bash
 npm install @oruga-ui/oruga-next --save
 ```
 
 </o-tab-item>
-<o-tab-item override label="Cdn" itemHeaderClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+<o-tab-item override label="Cdn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
 <link rel="stylesheet" href="//unpkg.com/oruga-next/dist/oruga.css" />
