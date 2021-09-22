@@ -383,7 +383,6 @@ export default {
                     description: "Class of the tab item header",
                     specificity: "when <b>verticalClass</b> or <b>expandedClass</b> or <b>positionClass</b> is applied",
                     subitem: true,
-                    suffixes: ['default', 'boxed', 'toggle'],
                 },
                 {
                     class: "itemHeaderActiveClass",
