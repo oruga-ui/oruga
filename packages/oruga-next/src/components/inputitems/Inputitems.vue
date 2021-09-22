@@ -118,7 +118,7 @@ export default defineComponent({
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     configField: 'inputitems',
-    emits: ['update:modelValue', 'focus', 'blur', 'add', 'remove', 'typing', 'infinite-scroll'],
+    emits: ['update:modelValue', 'focus', 'blur', 'add', 'remove', 'typing', 'infinite-scroll', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: {

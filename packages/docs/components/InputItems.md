@@ -446,15 +446,16 @@ export default {
 
 ## Events
 
-| Event name      | Properties | Description |
-| --------------- | ---------- | ----------- |
-| blur            |            |
-| focus           |            |
-| input           |            |
-| add             |            |
-| typing          |            |
-| remove          |            |
-| infinite-scroll |            |
+| Event name       | Properties | Description |
+| ---------------- | ---------- | ----------- |
+| infinite-scroll  |            |
+| icon-right-click |            |
+| blur             |            |
+| focus            |            |
+| input            |            |
+| add              |            |
+| typing           |            |
+| remove           |            |
 
 ## Slots
 
