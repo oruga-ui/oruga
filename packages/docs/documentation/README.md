@@ -89,12 +89,7 @@ Vue.use(Autocomplete)
 Vue.use(Sidebar)
 ```
 
-### Vue 3 (⚠️ Experimental!)
-
-::: warning
-Vue 3 version of Oruga (`oruga-next`) is "experimental" for various reasons. Use at your own risk!
-:::
-
+### Vue 3
 <br>
 <o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
 <o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
