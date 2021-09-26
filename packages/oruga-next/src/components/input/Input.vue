@@ -8,7 +8,8 @@
             :type="newType"
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
-            v-model="computedValue"
+            :value="computedValue"
+            @input="computedValue = $event.target.value"
             @blur="onBlur"
             @focus="onFocus">
 
@@ -18,7 +19,8 @@
             ref="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
-            v-model="computedValue"
+            :value="computedValue"
+            @input="computedValue = $event.target.value"
             @blur="onBlur"
             @focus="onFocus"/>
 

@@ -8,7 +8,8 @@
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
             v-bind="$attrs"
-            v-model="computedValue"
+            :value="computedValue"
+            @input="computedValue = $event.target.value"
             @blur="onBlur"
             @focus="onFocus">
 
@@ -18,7 +19,8 @@
             :class="inputClasses"
             :maxlength="maxlength"
             v-bind="$attrs"
-            v-model="computedValue"
+            :value="computedValue"
+            @input="computedValue = $event.target.value"
             @blur="onBlur"
             @focus="onFocus"/>
 
