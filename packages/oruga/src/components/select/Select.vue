@@ -144,6 +144,7 @@ export default {
             set(value) {
                 this.selected = value
                 this.$emit('input', value)
+                this.syncFilled(this.selected)
                 !this.isValid && this.checkHtml5Validity()
             }
         }
@@ -156,6 +157,7 @@ export default {
         */
         value(value) {
             this.selected = value
+            this.syncFilled(this.selected)
             !this.isValid && this.checkHtml5Validity()
         }
     }

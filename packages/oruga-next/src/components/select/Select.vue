@@ -147,6 +147,7 @@ export default defineComponent({
             set(value) {
                 this.selected = value
                 this.$emit('update:modelValue', value)
+                this.syncFilled(this.selected)
                 !this.isValid && this.checkHtml5Validity()
             }
         }
@@ -159,6 +160,7 @@ export default defineComponent({
         */
         modelValue(value) {
             this.selected = value
+            this.syncFilled(this.selected)
             !this.isValid && this.checkHtml5Validity()
         }
     }
