@@ -1,14 +1,17 @@
 <template>
     <client-only>
         <div>
-            <div v-for="repo of repos" :key="repo.id" class="hfrepo">
-                <div class="hfrepo__header">
-                    <div class="hfrepo__title">{{repo.name}}</div>
-                    <div class="hfrepo__subtitle">{{repo.description}}</div>
-                </div>
-                <div class="hfrepo__actions">
-                    <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Explore repo</o-button>
-                    <o-button override rootClass="hfrepo__btn" @click="goToIssues(repo)">See issues</o-button>
+            <div class="hfrepos__container">
+                <o-loading :full-page="false" :active="repos.length === 0" />
+                <div v-for="repo of repos" :key="repo.id" class="hfrepo">
+                    <div class="hfrepo__header">
+                        <div class="hfrepo__title">{{repo.name}}</div>
+                        <div class="hfrepo__subtitle">{{repo.description}}</div>
+                    </div>
+                    <div class="hfrepo__actions">
+                        <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Explore repo</o-button>
+                        <o-button override rootClass="hfrepo__btn" @click="goToIssues(repo)">See issues</o-button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,6 +42,11 @@ export default {
 </script>
 
 <style scoped>
+.hfrepos__container {
+    position: relative;
+    min-height: 100px;
+}
+
 .hfrepo {
     margin-top: 1rem;
     margin-bottom: 1rem;
