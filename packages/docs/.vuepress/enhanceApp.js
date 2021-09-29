@@ -9,6 +9,7 @@ import DocWrapper from './DocWrapper.vue';
 import Inspector from './Inspector.vue';
 import CarbonAds from './theme/components/CarbonAds.vue'
 import Expo from './Expo.vue';
+import HFRepos from './HFRepos.vue';
 
 import toggleStyle from './theme/components/togglestyles.js'
 
@@ -23,6 +24,8 @@ export default ({
   Vue.component('doc-wrapper', DocWrapper);
   Vue.component('inspector', Inspector);
   Vue.component('expo', Expo);
+  Vue.component('HFRepos', HFRepos);
+
 
   Vue.use(Oruga, {
     iconPack: 'fas',

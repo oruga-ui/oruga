@@ -75,6 +75,7 @@ module.exports = {
       { text: 'Home', link: '/' },
       { text: 'Documentation', link: '/documentation/' },
       { text: 'Expo', link: '/expo/' },
+      { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
       { text: 'Discord', link: 'https://discord.gg/RuKuBYN' },
       { text: 'Twitter', link: 'https://twitter.com/oruga_ui' },
     ],
