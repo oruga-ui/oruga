@@ -3,7 +3,7 @@
         <div>
             <div class="hfrepos__container">
                 <o-loading :full-page="false" :active="repos.length === 0" />
-                <div v-for="repo of repos" :key="repo.id" class="hfrepo">
+                <div v-for="repo of filteredRepos" :key="repo.id" class="hfrepo">
                     <div class="hfrepo__header">
                         <div class="hfrepo__title">{{repo.name}}</div>
                         <div class="hfrepo__subtitle">{{repo.description}}</div>
@@ -20,6 +20,12 @@
 
 <script>
 export default {
+    props: {
+        filter_fullname: {
+            type: String,
+            default: null
+        }
+    },
     data() {
         return {
             repos: []
@@ -29,6 +35,15 @@ export default {
         fetch("/hfrepos.json")
           .then(data => data.json())
           .then(data => this.repos = data.items)
+    },
+    computed: {
+        filteredRepos() {
+            if (!this.filter_fullname) {
+                return this.repos
+            }
+            const regex = new RegExp(this.filter_fullname, "gi")
+            return this.repos.filter((repo) => repo.full_name.match(regex))
+        }
     },
     methods: {
         goToIssues(repo) {
