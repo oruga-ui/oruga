@@ -7,7 +7,7 @@
                     <div class="hfrepo__subtitle">{{repo.description}}</div>
                 </div>
                 <div class="hfrepo__actions">
-                    <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Expore repo</o-button>
+                    <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Explore repo</o-button>
                     <o-button override rootClass="hfrepo__btn" @click="goToIssues(repo)">See issues</o-button>
                 </div>
             </div>
