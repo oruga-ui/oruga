@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         goToIssues(repo) {
-            window.location.href = `${repo.html_url}/issues/q=is:issue+is:open+label:hacktoberfest`;
+            window.location.href = `${repo.html_url}/issues/?q=is:issue+is:open+label:hacktoberfest`;
         },
         goToRepo(repo) {
             window.location.href = repo.html_url;
