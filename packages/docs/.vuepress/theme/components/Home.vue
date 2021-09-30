@@ -5,7 +5,7 @@
   >
     <header class="hero">
       <div style="margin-top: 2rem;">
-          🎃 Psst... <a href="/hacktoberfest/">Oruga partecipates to Hacktoberfest 2021</a>!
+          🎃 Psst... <a href="/hacktoberfest/">Oruga participates in Hacktoberfest 2021</a>!
       </div>
 
       <img
