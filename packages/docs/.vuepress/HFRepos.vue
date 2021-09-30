@@ -6,7 +6,7 @@
                 <div v-for="repo of filteredRepos" :key="repo.id" class="hfrepo">
                     <div class="hfrepo__header">
                         <div class="hfrepo__title">{{repo.name}}</div>
-                        <div class="hfrepo__subtitle">{{repo.description}}</div>
+                        <p class="hfrepo__subtitle">{{repo.description}}</p>
                     </div>
                     <div class="hfrepo__actions">
                         <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Explore repo</o-button>
@@ -84,14 +84,14 @@ export default {
 }
 
 .hfrepo__header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.7rem;
 }
 
 .hfrepo__btn {
     cursor: pointer;
     background: #F74700;
     color: white;
-    padding: 0.8rem;
+    padding: 0.9rem;
     border: 0;
     border-radius: 0.5rem;
     text-decoration: none !important;
