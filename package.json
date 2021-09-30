@@ -12,6 +12,7 @@
     "build:lib:oruga": "lerna run build:lib --parallel --scope @oruga-ui/oruga",
     "build:lib:watch:oruga": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga",
     "build:docs:oruga": "lerna run docs:build --scope @oruga-ui/docs",
+    "build:docs:hacktoberfest": "lerna run docs:hacktoberfest --scope @oruga-ui/docs",
     "build:docs:watch:oruga": "lerna run docs:dev --parallel --scope @oruga-ui/docs",
     "build:lib:oruga-next": "lerna run build:lib --parallel --scope @oruga-ui/oruga-next",
     "build:lib:watch:oruga-next": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga-next",
