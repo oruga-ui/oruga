@@ -1,7 +1,7 @@
 ---
 title: Hacktoberfest
 ---
-# Oruga partecipates to Hacktoberfest 2021 🎃
+# Oruga participates to Hacktoberfest 2021 🎃
 
 <img src="https://hacktoberfest.digitalocean.com/_nuxt/img/divider.d80d9b6.svg">
 
