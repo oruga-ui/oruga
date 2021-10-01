@@ -17,7 +17,16 @@ Discover our repositories, pick an issue and contribute to the betterment of Oru
 
 <HFRepos filter_fullname="^(?!oruga-ui/demo).+$"/>
 
-🐛 All projects are [available on GitHub](https://github.com/oruga-ui)
+🎃 All projects are [available on GitHub](https://github.com/oruga-ui)
+
+## Stay tuned!
+
+New issues will be created during this month and properly labeled as well, so stay tuned!
+
+Don't forget that we'll be very happy to help new devs approaching to hack and improve Oruga for the first time!
+<br/>You can use [GitHub](https://github.com/oruga-ui/oruga), [Twitter](https://twitter.com/oruga_ui) and [Discord](https://discord.gg/RuKuBYN) to communicate with us!
+
+Happy coding! 🐛 
 
 #
 
