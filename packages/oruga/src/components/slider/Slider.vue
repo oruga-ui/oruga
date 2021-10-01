@@ -127,7 +127,9 @@ export default {
         /** Show tooltip when thumb is being dragged */
         tooltip: {
             type: Boolean,
-            default: true
+            default: () => {
+                return getValueByPath(getOptions(), 'slider.tooltip', true)
+            }
         },
         /**
          * Color of the tooltip
