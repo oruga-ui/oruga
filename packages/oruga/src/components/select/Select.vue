@@ -7,8 +7,8 @@
             :multiple="multiple"
             :size="nativeSize"
             v-bind="$attrs"
-            @blur="$emit('blur', $event) && checkHtml5Validity()"
-            @focus="$emit('focus', $event)">
+            @blur="onBlur"
+            @focus="onFocus">
 
             <template v-if="placeholder">
                 <option

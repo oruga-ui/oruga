@@ -7,8 +7,8 @@
             ref="select"
             :multiple="multiple"
             :size="nativeSize"
-            @blur="$emit('blur', $event) && checkHtml5Validity()"
-            @focus="$emit('focus', $event)">
+            @blur="onBlur"
+            @focus="onFocus">
 
             <template v-if="placeholder">
                 <option
