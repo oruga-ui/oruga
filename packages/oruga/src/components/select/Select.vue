@@ -45,6 +45,8 @@ import Icon from '../icon/Icon'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -77,9 +79,20 @@ export default {
          */
         size: String,
         /**
+		 * Icon pack to use
+		 * @values mdi, fa, fas and any other custom icon pack
+		 */
+        iconPack: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'select.iconPack', undefined) }
+        },
+        /**
          * 	Icon name to be added on the right side
          */
-        iconRight: String,
+        iconRight: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'select.iconRight', undefined) }
+        },
         /** Text when nothing is selected */
         placeholder: String,
         multiple: Boolean,
