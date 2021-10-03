@@ -14,13 +14,6 @@ export default {
     props: {
         /** Item will be disabled */
         disabled: Boolean,
-        itemClass: [String, Function, Array],
-        itemHeaderClass: [String, Function, Array],
-        itemHeaderActiveClass: [String, Function, Array],
-        itemHeaderDisabledClass: [String, Function, Array],
-        itemHeaderTypeClass: [String, Function, Array],
-        itemHeaderIconClass: [String, Function, Array],
-        itemHeaderTextClass: [String, Function, Array],
         /**
          * Tabs item tag name
          */
@@ -29,7 +22,14 @@ export default {
             default: () => {
                 return getValueByPath(getOptions(), 'tabs.itemTag', 'button')
             }
-        }
+        },
+        itemClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemHeaderActiveClass: [String, Function, Array],
+        itemHeaderDisabledClass: [String, Function, Array],
+        itemHeaderTypeClass: [String, Function, Array],
+        itemHeaderIconClass: [String, Function, Array],
+        itemHeaderTextClass: [String, Function, Array]
     },
     computed: {
         elementClasses() {
