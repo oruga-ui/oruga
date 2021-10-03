@@ -4,6 +4,8 @@
       <template v-slot:default="s">
       <o-autocomplete v-bind="s" group-field="type" group-options="items" placeholder="e.g. Vue.js" :data="filtered" icon="search" clearable @select="option => selected = option">
         <template slot="empty">No results found</template>
+        <template slot="header">Header slot (optional)</template>
+        <template slot="footer">Footer slot (optional)</template>
       </o-autocomplete>
       </template>
     </doc-wrapper>
@@ -92,6 +94,24 @@ export default {
                         let el = cmp.$el.querySelector('input')
                         el.dispatchEvent(new Event('focus'));
                         el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "|", char : "|", shiftKey : true}));
+                    },
+                },
+                {
+                    class: "itemHeaderClass",
+                    description: "Class of the menu header item",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
+                    },
+                },
+                {
+                    class: "itemFooterClass",
+                    description: "Class of the menu footer item",
+                    action: (cmp) => {
+                        let el = cmp.$el.querySelector('input')
+                        el.dispatchEvent(new Event('focus'));
+                        el.dispatchEvent(new KeyboardEvent("keydown", {bubbles : true, cancelable : true, key : "Q", char : "Q", shiftKey : true}));
                     },
                 },
                 {

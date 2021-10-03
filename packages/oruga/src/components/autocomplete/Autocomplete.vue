@@ -37,7 +37,7 @@
                     ref="header"
                     role="button"
                     tabindex="0"
-                    @click="checkIfHeaderOrFooterSelected($event, true)"
+                    @click="selectHeaderOrFoterByClick($event, 'header')"
                     :class="itemHeaderClasses">
                     <slot name="header"/>
                 </div>
@@ -81,7 +81,7 @@
                     ref="footer"
                     role="button"
                     tabindex="0"
-                    @click="checkIfHeaderOrFooterSelected($event, true)"
+                    @click="selectHeaderOrFoterByClick($event, 'footer')"
                     :class="itemFooterClasses">
                     <slot name="footer"/>
                 </div>
@@ -202,6 +202,8 @@ export default {
         itemHoverClass: [String, Function, Array],
         itemGroupTitleClass: [String, Function, Array],
         itemEmptyClass: [String, Function, Array],
+        itemHeaderClass: [String, Function, Array],
+        itemFooterClass: [String, Function, Array],
         inputClasses: Object
     },
     data() {
@@ -253,12 +255,14 @@ export default {
         itemHeaderClasses() {
             return [
                 ...this.itemClasses,
+                this.computedClass('itemHeaderClass', 'o-acp__item-header'),
                 { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: this.headerHovered }
             ]
         },
         itemFooterClasses() {
             return [
                 ...this.itemClasses,
+                this.computedClass('itemFooterClass', 'o-acp__item-footer'),
                 { [this.computedClass('itemHoverClass', 'o-acp__item--hover')]: this.footerHovered }
             ]
         },
@@ -492,27 +496,31 @@ export default {
                 if (this.hovered === null) {
                     // header and footer uses headerHovered && footerHovered. If header or footer
                     // was selected then fire event otherwise just return so a value isn't selected
-                    this.checkIfHeaderOrFooterSelected(event, false, closeDropdown)
+                    this.checkIfHeaderOrFooterSelected(event, null, closeDropdown)
                     return
                 }
                 this.setSelected(this.hovered, closeDropdown, event)
             }
         },
 
+        selectHeaderOrFoterByClick(event, origin) {
+            this.checkIfHeaderOrFooterSelected(event, {origin: origin})
+        },
+
         /**
          * Check if header or footer was selected.
          */
-        checkIfHeaderOrFooterSelected(event, triggeredByclick, closeDropdown = true) {
-            if (this.selectableHeader && (this.headerHovered || triggeredByclick)) {
+        checkIfHeaderOrFooterSelected(event, triggerClick, closeDropdown = true) {
+            if (this.selectableHeader && (this.headerHovered || (triggerClick && triggerClick.origin === 'header'))) {
                 this.$emit('select-header', event)
                 this.headerHovered = false
-                if (triggeredByclick) this.setHovered(null)
+                if (triggerClick) this.setHovered(null)
                 if (closeDropdown) this.isActive = false
             }
-            if (this.selectableFooter && (this.footerHovered || triggeredByclick)) {
+            if (this.selectableFooter && (this.footerHovered || (triggerClick && triggerClick.origin === 'footer'))) {
                 this.$emit('select-footer', event)
                 this.footerHovered = false
-                if (triggeredByclick) this.setHovered(null)
+                if (triggerClick) this.setHovered(null)
                 if (closeDropdown) this.isActive = false
             }
         },
@@ -613,10 +621,10 @@ export default {
                 this.footerHovered = false
                 this.headerHovered = false
                 this.setHovered(data[index] !== undefined ? data[index] : null)
-                if (this.$slots.header && this.selectableFooter && index === data.length - 1) {
+                if (this.$slots.footer && this.selectableFooter && index === data.length - 1) {
                     this.footerHovered = true
                 }
-                if (this.$slots.footer && this.selectableHeader && index === 0) {
+                if (this.$slots.header && this.selectableHeader && index === 0) {
                     this.headerHovered = true
                 }
 
