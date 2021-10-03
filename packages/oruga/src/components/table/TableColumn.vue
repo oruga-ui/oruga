@@ -47,7 +47,8 @@ export default {
         tdAttrs: {
             type: Function,
             default: () => ({})
-        }
+        },
+        subheading: String
     },
     data() {
         return {
