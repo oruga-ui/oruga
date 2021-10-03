@@ -135,6 +135,40 @@
                     </th>
                     <th v-if="checkable && checkboxPosition === 'right'" />
                 </tr>
+                <tr v-if="hasCustomSubheadings" class="is-subheading">
+                    <th v-if="showDetailRowIcon" width="40px" />
+                    <th v-if="checkable && checkboxPosition === 'left'" />
+                    <th
+                        v-for="(column, index) in visibleColumns"
+                        :key="column.newKey + ':' + index + 'subheading'"
+                        :style="column.style"
+                    >
+                        <div
+                            class="th-wrap"
+                            :class="{
+                                'is-numeric': column.numeric,
+                                'is-centered': column.centered
+                            }"
+                        >
+                            <template
+                                v-if="
+                                    column.$scopedSlots &&
+                                        column.$scopedSlots.subheading
+                                "
+                            >
+                                <o-slot-component
+                                    :component="column"
+                                    scoped
+                                    name="subheading"
+                                    tag="span"
+                                    :props="{ column, index }"
+                                />
+                            </template>
+                            <template v-else>{{ column.subheading }}</template>
+                        </div>
+                    </th>
+                    <th v-if="checkable && checkboxPosition === 'right'" />
+                </tr>
             </thead>
             <tbody>
                 <template
@@ -795,7 +829,14 @@ export default defineComponent({
 
         isMobile() {
             return this.mobileCards && this.isMatchMedia
-        }
+        },
+
+        hasCustomSubheadings() {
+            if (this.$scopedSlots && this.$scopedSlots.subheading) return true
+            return this.newColumns.some((column) => {
+                return column.subheading || (column.$scopedSlots && column.$scopedSlots.subheading)
+            })
+        },
     },
     watch: {
         /**
