@@ -11,7 +11,7 @@
             :fullwidth="fullwidth"
             :overlay="overlay"
             :right="right"
-            :open.sync="open"
+            v-model:open="open"
             >
             <o-button v-if="fullwidth" icon-left="times" label="Close" @click="open = false" />
             <img
