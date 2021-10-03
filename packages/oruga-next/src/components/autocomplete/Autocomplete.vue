@@ -218,6 +218,7 @@ export default defineComponent({
             footerHovered: null,
             isActive: false,
             newValue: this.modelValue,
+            ariaAutocomplete: this.keepFirst ? 'both' : 'list',
             // from mixin (ts workaround)
             newAutocomplete: (this as any).autocomplete || 'off',
             isListInViewportVertically: true,
