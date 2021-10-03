@@ -135,7 +135,7 @@
                     </th>
                     <th v-if="checkable && checkboxPosition === 'right'" />
                 </tr>
-                <tr v-if="hasCustomSubheadings" class="is-subheading">
+                <tr v-if="hasCustomSubheadings" class="o-table__th">
                     <th v-if="showDetailRowIcon" width="40px" />
                     <th v-if="checkable && checkboxPosition === 'left'" />
                     <th
@@ -144,7 +144,6 @@
                         :style="column.style"
                     >
                         <div
-                            class="th-wrap"
                             :class="{
                                 'is-numeric': column.numeric,
                                 'is-centered': column.centered
