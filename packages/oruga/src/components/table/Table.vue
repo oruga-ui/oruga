@@ -1,6 +1,5 @@
 <template>
-    <div
-        :class="tableWrapperClasses"
+    <div :class="tableWrapperClasses"
         :style="tableWrapperStyle"
     >
 
@@ -54,7 +53,7 @@
             </caption>
             <thead v-if="newColumns.length && showHeader">
                 <tr>
-                    <th v-if="showDetailRowIcon" width="40px"/>
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                         <template v-if="headerCheckable">
                             <o-checkbox
@@ -135,36 +134,29 @@
                     </th>
                     <th v-if="checkable && checkboxPosition === 'right'" />
                 </tr>
-                <tr v-if="hasCustomSubheadings" class="o-table__th">
-                    <th v-if="showDetailRowIcon" width="40px" />
+                <tr v-if="hasCustomSubheadings">
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
                     <th v-if="checkable && checkboxPosition === 'left'" />
                     <th
                         v-for="(column, index) in visibleColumns"
                         :key="column.newKey + ':' + index + 'subheading'"
                         :style="column.style"
+                        :class="thSubheadingClasses"
                     >
-                        <div
-                            :class="{
-                                'is-numeric': column.numeric,
-                                'is-centered': column.centered
-                            }"
-                        >
-                            <template
-                                v-if="
-                                    column.$scopedSlots &&
-                                    column.$scopedSlots.subheading
-                                "
-                            >
-                                <o-slot-component
-                                    :component="column"
-                                    scoped
-                                    name="subheading"
-                                    tag="span"
-                                    :props="{ column, index }"
-                                />
-                            </template>
-                            <template v-else>{{ column.subheading }}</template>
-                        </div>
+                        <template
+                            v-if="
+                                column.$scopedSlots &&
+                                column.$scopedSlots.subheading
+                            ">
+                            <o-slot-component
+                                :component="column"
+                                scoped
+                                name="subheading"
+                                tag="span"
+                                :props="{ column, index }"
+                            />
+                        </template>
+                        <template v-else>{{ column.subheading }}</template>
                     </th>
                     <th v-if="checkable && checkboxPosition === 'right'" />
                 </tr>
@@ -611,6 +603,7 @@ export default {
         mobileSortClass: [String, Function, Array],
         paginationWrapperClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        thSubheadingClass: [String, Function, Array]
     },
     data() {
         return {
@@ -674,6 +667,12 @@ export default {
                  ...this.thBaseClasses,
                 this.computedClass('thDetailedClass', 'o-table__th--detailed')
             ]
+        },
+        thSubheadingClasses() {
+            return [
+                ...this.thBaseClasses,
+                this.computedClass('thSubheadingClass', 'o-table__th')
+            ];
         },
         tdCheckboxClasses() {
             return [
