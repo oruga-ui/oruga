@@ -22,7 +22,9 @@
             :value="computedValue"
             @input="computedValue = $event.target.value"
             @blur="onBlur"
-            @focus="onFocus"/>
+            @focus="onFocus"
+            :style="computedStyles"
+            />
 
         <o-icon
             v-if="icon"
@@ -117,6 +119,13 @@ export default defineComponent({
             default: () => { return getValueByPath(getOptions(), 'input.counter', false) }
         },
         /**
+         * Automatically adjust height in textarea
+         */
+        autosize: {
+            type: Boolean,
+            default: false
+        },
+        /**
          * 	Icon name to be added on the right side
          */
         iconRight: String,
@@ -149,7 +158,8 @@ export default defineComponent({
             newType: this.type,
             // from mixin (ts workaround)
             newAutocomplete: (this as any).autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
-            isPasswordVisible: false
+            isPasswordVisible: false,
+            height: 'auto'
         }
     },
     computed: {
@@ -242,7 +252,18 @@ export default defineComponent({
                 return this.computedValue.toString().length
             }
             return 0
-        }
+        },
+        /**
+        * Computed inline styles for autoresize
+        */
+        computedStyles () {
+            if (!this.autosize) return {}
+            return {
+                resize: 'none',
+                height: this.height,
+                overflow: 'hidden'
+            }
+        },
     },
     watch: {
         /**
@@ -254,6 +275,9 @@ export default defineComponent({
             handler(value) {
                 this.newValue = value
                 this.syncFilled(this.newValue)
+                if(this.autosize) {
+                    this.resize()
+                }
             }
         }
     },
@@ -286,6 +310,14 @@ export default defineComponent({
             } else if (this.iconRightClickable) {
                 this.iconClick('icon-right-click', event)
             }
+        },
+
+        resize() {
+            this.height = 'auto'
+            this.$nextTick(() => {
+                let scrollHeight = this.$refs.textarea.scrollHeight
+                this.height = scrollHeight + 'px'
+            })
         }
     }
 })
