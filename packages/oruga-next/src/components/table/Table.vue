@@ -54,7 +54,7 @@
             </caption>
             <thead v-if="newColumns.length && showHeader">
                 <tr>
-                    <th v-if="showDetailRowIcon" width="40px"/>
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
                     <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                         <template v-if="headerCheckable">
                             <o-checkbox
@@ -132,6 +132,32 @@
                                 v-model="filters[column.field]"
                                 :type="column.numeric ? 'number' : 'text'" />
                         </template>
+                    </th>
+                    <th v-if="checkable && checkboxPosition === 'right'" />
+                </tr>
+                <tr v-if="hasCustomSubheadings">
+                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
+                    <th v-if="checkable && checkboxPosition === 'left'" />
+                    <th
+                        v-for="(column, index) in visibleColumns"
+                        :key="column.newKey + ':' + index + 'subheading'"
+                        :style="column.style"
+                        :class="thSubheadingClasses"
+                    >
+                        <template
+                            v-if="
+                                column.$scopedSlots &&
+                                column.$scopedSlots.subheading
+                            ">
+                            <o-slot-component
+                                :component="column"
+                                scoped
+                                name="subheading"
+                                tag="span"
+                                :props="{ column, index }"
+                            />
+                        </template>
+                        <template v-else>{{ column.subheading }}</template>
                     </th>
                     <th v-if="checkable && checkboxPosition === 'right'" />
                 </tr>
@@ -577,6 +603,7 @@ export default defineComponent({
         mobileSortClass: [String, Function, Array],
         paginationWrapperClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        thSubheadingClass: [String, Function, Array]
     },
     data() {
         return {
@@ -645,6 +672,12 @@ export default defineComponent({
                  ...this.thBaseClasses,
                 this.computedClass('thDetailedClass', 'o-table__th--detailed')
             ]
+        },
+        thSubheadingClasses() {
+            return [
+                ...this.thBaseClasses,
+                this.computedClass('thSubheadingClass', 'o-table__th')
+            ];
         },
         tdCheckboxClasses() {
             return [
@@ -795,7 +828,14 @@ export default defineComponent({
 
         isMobile() {
             return this.mobileCards && this.isMatchMedia
-        }
+        },
+
+        hasCustomSubheadings() {
+            if (this.$scopedSlots && this.$scopedSlots.subheading) return true
+            return this.newColumns.some((column) => {
+                return column.subheading || (column.$scopedSlots && column.$scopedSlots.subheading)
+            })
+        },
     },
     watch: {
         /**

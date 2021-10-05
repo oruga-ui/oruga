@@ -1978,7 +1978,7 @@ export default {
 | footer      |             |          |
 | loading     |             |          |
 | bottom-left |             |          |
-
+| subheading  |             |          |
 ---
 
 # Table Column
@@ -2005,6 +2005,7 @@ export default {
 | thAttrs          | Adds native attributes to th :th-attrs="(column)" => ({})"      | func                                         | -                   | Default function (see source code) |
 | visible          |                                                                 | boolean                                      | -                   | true                               |
 | width            |                                                                 | number\|string                               | -                   |                                    |
+| subheading       |                                                                 | string                                       |                     |                                    |
 
 ## Style
 
