@@ -18,8 +18,6 @@ const Oruga = {
         }
         // Config component
         registerComponentProgrammatic(app, 'config', ConfigProgrammatic)
-        // Provide programmatic usage
-        app.provide('oruga', app.config.globalProperties.$oruga);
     }
 }
 
