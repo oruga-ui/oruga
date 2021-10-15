@@ -605,10 +605,10 @@ export default defineComponent({
                 const data = this.computedData.map(
                     (d) => d.items).reduce((a, b) => ([...a, ...b]), [])
 
-                if (this.$slots.header && this.selectableHeader) {
+                if (this.$slots.header() && this.selectableHeader) {
                     data.unshift(undefined)
                 }
-                if (this.$slots.footer && this.selectableFooter) {
+                if (this.$slots.footer() && this.selectableFooter) {
                     data.push(undefined)
                 }
                 let index
@@ -626,20 +626,20 @@ export default defineComponent({
                 this.footerHovered = false
                 this.headerHovered = false
                 this.setHovered(data[index] !== undefined ? data[index] : null)
-                if (this.$slots.footer && this.selectableFooter && index === data.length - 1) {
+                if (this.$slots.footer() && this.selectableFooter && index === data.length - 1) {
                     this.footerHovered = true
                 }
-                if (this.$slots.header && this.selectableHeader && index === 0) {
+                if (this.$slots.header() && this.selectableHeader && index === 0) {
                     this.headerHovered = true
                 }
 
                 const list = this.$refs.dropdown
                 let items = this.$refs.items || []
 
-                if (this.$slots.header && this.selectableHeader) {
+                if (this.$slots.header() && this.selectableHeader) {
                     items = [this.$refs.header, ...items]
                 }
-                if (this.$slots.footer && this.selectableFooter) {
+                if (this.$slots.footer() && this.selectableFooter) {
                     items = [...items, this.$refs.footer]
                 }
                 const element = items[index]

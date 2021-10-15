@@ -355,13 +355,13 @@ export default defineComponent({
         },
 
         hasDefaultSlot() {
-            return this.$slots.default
+            return this.$slots.default()
         },
         hasPreviousSlot() {
-            return this.$slots.previous
+            return this.$slots.previous()
         },
         hasNextSlot() {
-            return this.$slots.next
+            return this.$slots.next()
         }
     },
     watch: {

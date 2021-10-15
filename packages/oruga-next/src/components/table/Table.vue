@@ -146,8 +146,8 @@
                     >
                         <template
                             v-if="
-                                column.$scopedSlots &&
-                                column.$scopedSlots.subheading
+                                column.$slots &&
+                                column.$slots.subheading
                             ">
                             <o-slot-component
                                 :component="column"
@@ -831,9 +831,9 @@ export default defineComponent({
         },
 
         hasCustomSubheadings() {
-            if (this.$scopedSlots && this.$scopedSlots.subheading) return true
+            if (this.$slots && this.$slots.subheading()) return true
             return this.newColumns.some((column) => {
-                return column.subheading || (column.$scopedSlots && column.$scopedSlots.subheading)
+                return column.subheading || (column.$slots && column.$slots.subheading())
             })
         },
     },
@@ -1271,7 +1271,7 @@ export default defineComponent({
         * Check if footer slot has custom content.
         */
         hasCustomFooterSlot() {
-            const footer = this.$slots.footer
+            const footer = this.$slots.footer()
             if (footer.length > 1) return true
 
             const tag = footer[0].tag

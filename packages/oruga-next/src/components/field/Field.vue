@@ -187,10 +187,10 @@ export default defineComponent({
             return this.$field
         },
         hasLabelSlot() {
-            return this.$slots.label
+            return this.$slots.label()
         },
         hasMessageSlot() {
-            return this.$slots.message
+            return this.$slots.message()
         },
         hasLabel() {
             return this.label || this.hasLabelSlot
