@@ -87,7 +87,7 @@ describe('OCollapse', () => {
     it('should have scoped trigger slot', () => {
         const triggerSlot = '<strong> Header </strong>'
         const wrapper = shallowMount(OCollapse, {
-            scopedSlots: {
+            slots: {
                 trigger: triggerSlot
             }
         })

@@ -301,19 +301,19 @@ export default defineComponent({
         },
 
         hasDefaultSlot() {
-            return !!this.$slots.default
+            return !!this.$slots.default()
         },
 
         hasEmptySlot() {
-            return !!this.$slots.empty
+            return !!this.$slots.empty()
         },
 
         hasHeaderSlot() {
-            return !!this.$slots.header
+            return !!this.$slots.header()
         },
 
         hasFooterSlot() {
-            return !!this.$slots.footer
+            return !!this.$slots.footer()
         },
 
         /**
