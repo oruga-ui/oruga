@@ -241,7 +241,12 @@ export default defineComponent({
         closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
-        autocompleteClasses: Object
+        autocompleteClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'inputitems.autocompleteClasses', {})
+            }
+        }
     },
     data() {
         return {

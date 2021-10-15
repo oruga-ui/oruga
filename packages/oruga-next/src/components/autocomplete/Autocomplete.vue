@@ -208,7 +208,12 @@ export default defineComponent({
         itemEmptyClass: [String, Function, Array],
         itemHeaderClass: [String, Function, Array],
         itemFooterClass: [String, Function, Array],
-        inputClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.inputClasses', {})
+            }
+        }
     },
     data() {
         return {
