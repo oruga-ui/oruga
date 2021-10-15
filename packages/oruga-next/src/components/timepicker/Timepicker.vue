@@ -147,6 +147,7 @@ import Icon from '../icon/Icon.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
+
 import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 

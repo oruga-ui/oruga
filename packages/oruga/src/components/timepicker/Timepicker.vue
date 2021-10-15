@@ -146,6 +146,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
+
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
  * @displayName Timepicker
