@@ -458,8 +458,9 @@ export default defineComponent({
             this.$emit('select', this.selected, event)
             if (this.selected !== null) {
                 if (this.clearOnSelect) {
-                    const input = this.$refs.input.$refs.input
-                    input.value = ''
+                    const input = this.$refs.input
+                    input.newValue = ''
+                    input.$refs.input.value = ''
                 } else {
                     this.newValue = this.getValue(this.selected)
                 }
