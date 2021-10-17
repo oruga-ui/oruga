@@ -20,6 +20,9 @@
     "test:all": "lerna run test --stream"
   },
   "devDependencies": {
-    "lerna": "3.21.0"
+    "lerna": "^4.0.0"
+  },
+  "engines": {
+    "node": "0.8.x"
   }
 }
