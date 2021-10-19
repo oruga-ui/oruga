@@ -86,7 +86,8 @@ export default {
         },
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
-        iconClass: [String, Function, Array]
+        iconClass: [String, Function, Array],
+        fullPageClass:[String, Function, Array]
     },
     data() {
         return {
