@@ -201,8 +201,8 @@ export default {
                     }
                 },
                 {
-                    class: "fullPageIconClass",
-                    description: "Class for the loading icon when fullpage",
+                    class: "fullPageClass",
+                    description: "Class for the root element when fullpage",
                     properties: ['fullPage'],
                     action: (cmp) => {
                         cmp.data.fullPage = true;
