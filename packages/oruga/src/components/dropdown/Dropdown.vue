@@ -401,22 +401,22 @@ export default {
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const dropdown = this.$data.bodyEl.children[0]
-                dropdown.classList.forEach((item) => dropdown.classList.remove(item))
+                dropdown.classList.forEach((item) => dropdown.classList.remove(...item.split(' ')))
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
                             Object.keys(item).filter(key => item[key]).forEach(
                                 key => dropdown.classList.add(key))
                         } else {
-                            dropdown.classList.add(item)
+                            dropdown.classList.add(...item.split(' '))
                         }
                     }
                 })
                 if (this.appendToBodyCopyParent) {
                     const parentNode = this.$refs.dropdown.parentNode
                     const parent = this.$data.bodyEl
-                    parent.classList.forEach((item) => parent.classList.remove(item))
-                    parentNode.classList.forEach((item) => parent.classList.add(item))
+                    parent.classList.forEach((item) => parent.classList.remove(...item.split(' ')))
+                    parentNode.classList.forEach((item) => parent.classList.add(...item.split(' ')))
                 }
                 const rect = trigger.getBoundingClientRect()
                 let top = rect.top + window.scrollY

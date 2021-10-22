@@ -737,14 +737,14 @@ export default defineComponent({
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const root = this.$data.bodyEl
-                root.classList.forEach((item) => root.classList.remove(item))
+                root.classList.forEach((item) => root.classList.remove(...item.split(' ')))
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
                             Object.keys(item).filter(key => item[key]).forEach(
                                 key => root.classList.add(key))
                         } else {
-                            root.classList.add(item)
+                            root.classList.add(...item.split(' '))
                         }
                     }
                 })
