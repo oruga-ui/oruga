@@ -77,7 +77,7 @@ Then open up new bash and run the live server **concurrently** with the above co
 $ npm run build:docs:watch:oruga
 ```
 
-After writing tests, run the following commant:
+After writing tests, run the following command:
 ```bash
 # launch tests suite
 $ npm run test:oruga
