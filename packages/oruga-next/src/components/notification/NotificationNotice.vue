@@ -18,7 +18,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  */
 export default {
     name: 'ONotificationNotice',
-    configField: 'notice',
+    configField: 'notification',
     mixins: [BaseComponentMixin, NoticeMixin],
     emits: ['update:active', 'close'],
     props: {
@@ -32,12 +32,12 @@ export default {
     methods: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-notices'),
+                this.computedClass('noticeClass', 'o-notices'),
             ]
         },
         positionClasses(position) {
             return [
-                this.computedClass('positionClass', 'o-notices--', position),
+                this.computedClass('noticePositionClass', 'o-notices--', position),
             ]
         },
         timeoutCallback() {

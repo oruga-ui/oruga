@@ -234,6 +234,21 @@ export default {
         return {
             inspectData: [
                 {
+                    class: "noticeClass",
+                    description: "Root class of the notice",
+                    nospec: true
+                },
+                {
+                    class: "noticePositionClass",
+                    description: "Class of the notice when positioned",
+                    properties: ["position"],
+                    suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
+                    action: (cmp) => {
+                        cmp.data.position = 'top-right';
+                    },
+                    nospec: true
+                },
+                {
                     class: "rootClass",
                     description: "Class of the root element"
                 },

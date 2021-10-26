@@ -80,7 +80,7 @@
                     <span v-if="data.suffixes"><code style='white-space: nowrap; padding: 0;' v-html="setByProperties(data.suffixes)"></code></span>
                 </td>
                 <td>
-                    <button class="inspector__btn" type="button" @click="inspectClass(index, data)">Inspect</button>
+                    <button v-if="!data.nospec === true" class="inspector__btn" type="button" @click="inspectClass(index, data)">Inspect</button>
                 </td>
             </tr>
         </table>
