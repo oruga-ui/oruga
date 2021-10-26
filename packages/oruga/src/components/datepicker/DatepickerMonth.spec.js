@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import ODatepickerMonth from '@components/datepicker/DatepickerMonth'
 
-import {getOptions, setOptions} from '@utils/config'
+//import {getOptions, setOptions} from '@utils/config'
 
 const newDate = (y, m, d) => {
     const date = new Date(Date.UTC(y, m, d))
@@ -56,9 +56,17 @@ let events = [
     }
 ]
 
+
+const config = {
+    defaultMonthNames: [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'
+    ],
+    focusedDate: newDate(2019, thisMonth, 11)
+}
 describe('ODatepickerMonth', () => {
 
-    let config = getOptions()
+   /* let config = getOptions()
 
     beforeEach(() => {
         setOptions(Object.assign(config, {
@@ -68,7 +76,7 @@ describe('ODatepickerMonth', () => {
             ],
             focusedDate: newDate(2019, thisMonth, 11)
         }))
-    })
+    })*/
 
     const dateCreator = () => newDate()
 
@@ -344,18 +352,19 @@ describe('ODatepickerMonth', () => {
             const wrapper = shallowMount(ODatepickerMonth, {
                 propsData: {
                     monthNames: config.defaultMonthNames,
+                    range: true,
                     focused: {
                         month: newDate(2020, 1, 1).getMonth(),
                         year: newDate(2020, 1, 1).getFullYear()
                     },
-                    value: [newDate(2020, 1, 1), newDate(2020, 5, 1)],
+                    value: [newDate(2020, 1, 1), newDate(2020, 4, 1)],
                     dateCreator
                 }
             })
             expect(wrapper.findAll('section > div > div > .is-selected.is-within-selected').length).toBe(3)
         })
 
-        /*it('should have is-last-selected class for the last date selected within the range', () => {
+        it('should have is-last-selected class for the last date selected within the range', () => {
             const wrapper = shallowMount(ODatepickerMonth, {
                 propsData: {
                     monthNames: config.defaultMonthNames,
@@ -368,14 +377,14 @@ describe('ODatepickerMonth', () => {
                 }
             })
             expect(wrapper.findAll('section > div > div > .is-selected').at(4).classes()).toContain('is-last-selected')
-        })*/
+        })
 
         describe('hoverd class with range props', () => {
-            /*it('should have is-within-hovered-range class for all range of dates hovered', () => {
+            it('should have is-within-hovered-range class for all range of dates hovered', () => {
                 const wrapper = shallowMount(ODatepickerMonth, {
                     propsData: {
                         monthNames: config.defaultMonthNames,
-                        range: false,
+                        range: true,
                         focused: {
                             month: newDate(2020, 1, 1).getMonth(),
                             year: newDate(2020, 1, 1).getFullYear()
@@ -391,13 +400,13 @@ describe('ODatepickerMonth', () => {
                     }
                 })
                 expect(wrapper.findAll('section > div > div > .is-within-hovered-range').length).toBe(4)
-            })*/
+            })
 
-            /*it('should have is-first-hovered class for the first date hovered within the range', () => {
+            it('should have is-first-hovered class for the first date hovered within the range', () => {
                 const wrapper = shallowMount(ODatepickerMonth, {
                     propsData: {
                         monthNames: config.defaultMonthNames,
-                        range: false,
+                        range: true,
                         focused: {
                             month: newDate(2020, 1, 1).getMonth(),
                             year: newDate(2020, 1, 1).getFullYear()
@@ -413,14 +422,14 @@ describe('ODatepickerMonth', () => {
                     }
                 })
                 expect(wrapper.findAll('section > div > div > .is-first-hovered').at(0).classes()).toContain('is-first-hovered')
-            })*/
+            })
 
 
-            it('should have is-within-hovered class for the dates hovered within the range', () => {
+           /*it('should have is-within-hovered class for the dates hovered within the range', () => {
                 const wrapper = shallowMount(ODatepickerMonth, {
                     propsData: {
                         monthNames: config.defaultMonthNames,
-                        range: false,
+                        range: true,
                         focused: {
                             month: newDate(2020, 1, 1).getMonth(),
                             year: newDate(2020, 1, 1).getFullYear()
@@ -436,13 +445,13 @@ describe('ODatepickerMonth', () => {
                     }
                 })
                 expect(wrapper.findAll('section > div > div > .is-within-hovered-range.is-within-hovered').length).toBe(2)
-            })
+            })*/
 
             it('should have is-last-hovered class for the last date hovered within the range', () => {
                 const wrapper = shallowMount(ODatepickerMonth, {
                     propsData: {
                         monthNames: config.defaultMonthNames,
-                        range: false,
+                        range: true,
                         focused: {
                             month: newDate(2020, 1, 1).getMonth(),
                             year: newDate(2020, 1, 1).getFullYear()
