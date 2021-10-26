@@ -325,3 +325,5 @@ export function debounce(func, wait, immediate) {
 export function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
+
+export const isDefined = (d) => d !== undefined
