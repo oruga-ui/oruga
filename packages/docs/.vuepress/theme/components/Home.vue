@@ -60,6 +60,12 @@
         </div>
       </div>
 
+      <p align="center">
+        <a href="https://ko-fi.com/orugaui">
+          <img style="min-width:32px;height:32px;" src="https://github.githubassets.com/images/modules/site/icons/funding_platforms/ko_fi.svg" />Buy us a coffee ☕️
+        </a>
+      </p>
+
     </header>
 
     <div
