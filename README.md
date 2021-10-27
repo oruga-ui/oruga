@@ -20,6 +20,7 @@
     <a href="https://circleci.com/gh/oruga-ui/oruga"><img src="https://img.shields.io/circleci/project/github/oruga-ui/oruga.svg?style=flat-square" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://img.shields.io/codecov/c/github/oruga-ui/oruga.svg?style=flat-square" /></a>
     <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
+    <a href="https://ko-fi.com/orugaui"><img src="https://img.shields.io/badge/donate-support%20us-00AA00.svg?logo=ko-fi" /></a>
 </p>
 
 *Oruga Next version for Vue 3.x*
