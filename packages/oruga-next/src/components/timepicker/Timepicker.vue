@@ -208,7 +208,6 @@ export default defineComponent({
             }
         },
         selectBind() {
-            console.log('selectBind', this.selectClasses)
             return {
                 'select-class': this.computedClass('selectClasses.selectClass', 'o-tpck__select'),
                 'placeholder-class': this.computedClass('selectClasses.placeholderClass', 'o-tpck__select-placeholder'),
