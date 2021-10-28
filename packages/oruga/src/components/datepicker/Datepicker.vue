@@ -117,6 +117,10 @@
                             </div>
                         </div>
                     </header>
+                    <div
+                        v-if="!isTypeMonth"
+                        class="datepicker-content"
+                        :class="{'content-horizonal-timepicker': horizontalTimePicker}">
                     <o-datepicker-table
                         v-model="computedValue"
                         :day-names="newDayNames"
@@ -167,6 +171,29 @@
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
                         @update:focused="focusedDateData = $event" />
+                    </div>
+                    <div v-else>
+                        <o-datepicker-month
+                            v-model="computedValue"
+                            :month-names="newMonthNames"
+                            :min-date="minDate"
+                            :max-date="maxDate"
+                            :focused="focusedDateData"
+                            :disabled="disabled"
+                            :unselectable-dates="unselectableDates"
+                            :unselectable-days-of-week="unselectableDaysOfWeek"
+                            :selectable-dates="selectableDates"
+                            :events="events"
+                            :indicators="indicators"
+                            :date-creator="dateCreator"
+                            :range="range"
+                            :multiple="multiple"
+                            @range-start="date => $emit('range-start', date)"
+                            @range-end="date => $emit('range-end', date)"
+                            @close="togglePicker(false)"
+                            @change-focus="changeFocus"
+                            @update:focused="focusedDateData = $event" />
+                    </div>
                 </div>
 
                 <footer
@@ -216,6 +243,7 @@ import Select from '../select/Select'
 import Icon from '../icon/Icon'
 
 import DatepickerTable from './DatepickerTable'
+import DatepickerMonth from './DatepickerMonth'
 
 const defaultDateFormatter = (date, vm) => {
     const targetDates = Array.isArray(date) ? date : [date]
@@ -274,6 +302,7 @@ export default {
     name: 'ODatepicker',
     components: {
         [DatepickerTable.name]: DatepickerTable,
+        [DatepickerMonth.name]: DatepickerMonth,
         [Field.name]: Field,
         [Input.name]: Input,
         [Select.name]: Select,
