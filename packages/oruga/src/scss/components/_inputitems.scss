@@ -1,7 +1,7 @@
 /* @docs */
 $inputitems-background-color: $input-background-color !default;
 $inputitems-height: calc(2em - 1px) !default;
-$inputitems-padding: calc(.275em - 1px) 0 0 !default;
+$inputitems-padding: calc(0.275em - 1px) 0 calc(0.275em - 1px) 0 !default;
 $inputitems-border-color: $grey-lighter !default;
 $inputitems-border-style: solid !default;
 $inputitems-border-width: 1px !default;
@@ -16,7 +16,7 @@ $inputitems-counter-margin: .25rem 0 0 .5rem !default;
 $inputitems-item-background-color: $primary !default;
 $inputitems-item-color: $primary-invert !default;
 $inputitems-item-border-radius: $base-border-radius !default;
-$inputitems-item-margin: 0 0 0 0.275em !default;
+$inputitems-item-margin: 0.1em 0 0.1em 0.275em !default;
 $inputitems-item-padding: 0 .75em 0 .75em !default;
 $inputitems-margin-icon-to-text: .1875em !default;
 /* @docs */
@@ -55,6 +55,9 @@ $inputitems-margin-icon-to-text: .1875em !default;
     &__input {
         border: none;
         box-shadow: none;
+        height: auto;
+        padding-top: 0.1em;
+        padding-bottom: 0.1em;
         &:focus {
             box-shadow: none;
         }

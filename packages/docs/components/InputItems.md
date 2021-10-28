@@ -469,25 +469,25 @@ export default {
 
 ## Style
 
-| CSS Variable                             | SASS Variable                      | Default                          |
-| ---------------------------------------- | ---------------------------------- | -------------------------------- |
-| --oruga-inputitems-background-color      | \$inputitems-background-color      | $input-background-color          |
-| --oruga-inputitems-height                | \$inputitems-height                | calc(2em - 1px)                  |
-| --oruga-inputitems-padding               | \$inputitems-padding               | calc(.275em - 1px) 0 0           |
-| --oruga-inputitems-border-color          | \$inputitems-border-color          | \$grey-lighter                   |
-| --oruga-inputitems-border-style          | \$inputitems-border-style          | solid                            |
-| --oruga-inputitems-border-width          | \$inputitems-border-width          | 1px                              |
-| --oruga-inputitems-border-radius         | \$inputitems-border-radius         | \$base-border-radius             |
-| --oruga-inputitems-color                 | \$inputitems-color                 | #363636                          |
-| --oruga-inputitems-line-height           | \$inputitems-line-height           | \$base-line-height               |
-| --oruga-inputitems-box-shadow            | \$inputitems-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1) |
-| --oruga-inputitems-max-width             | \$inputitems-max-width             | 100%                             |
-| --oruga-inputitems-width                 | \$inputitems-width                 | 100%                             |
-| --oruga-inputitems-counter-font-size     | \$inputitems-counter-font-size     | .75rem                           |
-| --oruga-inputitems-counter-margin        | \$inputitems-counter-margin        | .25rem 0 0 .5rem                 |
-| --oruga-inputitems-item-background-color | \$inputitems-item-background-color | \$primary                        |
-| --oruga-inputitems-item-color            | \$inputitems-item-color            | \$primary-invert                 |
-| --oruga-inputitems-item-border-radius    | \$inputitems-item-border-radius    | \$base-border-radius             |
-| --oruga-inputitems-item-margin           | \$inputitems-item-margin           | 0 0 0 0.275em                    |
-| --oruga-inputitems-item-padding          | \$inputitems-item-padding          | 0 .75em 0 .75em                  |
-| --oruga-inputitems-margin-icon-to-text   | \$inputitems-margin-icon-to-text   | .1875em                          |
+| CSS Variable                             | SASS Variable                      | Default                                     |
+| ---------------------------------------- | ---------------------------------- | ------------------------------------------- |
+| --oruga-inputitems-background-color      | \$inputitems-background-color      | $input-background-color                     |
+| --oruga-inputitems-height                | \$inputitems-height                | calc(2em - 1px)                             |
+| --oruga-inputitems-padding               | \$inputitems-padding               | calc(0.275em - 1px) 0 calc(0.275em - 1px) 0 |
+| --oruga-inputitems-border-color          | \$inputitems-border-color          | \$grey-lighter                              |
+| --oruga-inputitems-border-style          | \$inputitems-border-style          | solid                                       |
+| --oruga-inputitems-border-width          | \$inputitems-border-width          | 1px                                         |
+| --oruga-inputitems-border-radius         | \$inputitems-border-radius         | \$base-border-radius                        |
+| --oruga-inputitems-color                 | \$inputitems-color                 | #363636                                     |
+| --oruga-inputitems-line-height           | \$inputitems-line-height           | \$base-line-height                          |
+| --oruga-inputitems-box-shadow            | \$inputitems-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)            |
+| --oruga-inputitems-max-width             | \$inputitems-max-width             | 100%                                        |
+| --oruga-inputitems-width                 | \$inputitems-width                 | 100%                                        |
+| --oruga-inputitems-counter-font-size     | \$inputitems-counter-font-size     | .75rem                                      |
+| --oruga-inputitems-counter-margin        | \$inputitems-counter-margin        | .25rem 0 0 .5rem                            |
+| --oruga-inputitems-item-background-color | \$inputitems-item-background-color | \$primary                                   |
+| --oruga-inputitems-item-color            | \$inputitems-item-color            | \$primary-invert                            |
+| --oruga-inputitems-item-border-radius    | \$inputitems-item-border-radius    | \$base-border-radius                        |
+| --oruga-inputitems-item-margin           | \$inputitems-item-margin           | 0.1em 0 0.1em 0.275em                       |
+| --oruga-inputitems-item-padding          | \$inputitems-item-padding          | 0 .75em 0 .75em                             |
+| --oruga-inputitems-margin-icon-to-text   | \$inputitems-margin-icon-to-text   | .1875em                                     |
