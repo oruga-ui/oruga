@@ -32,6 +32,7 @@ $inputitems-margin-icon-to-text: .1875em !default;
         @include avariable('max-width', 'inputitems-max-width', $inputitems-max-width);
         @include avariable('width', 'inputitems-width', $inputitems-width);
         @include avariable('padding', 'inputitems-padding', $inputitems-padding);
+        @include avariable('background-color', 'input-background-color', $input-background-color);
         @include avariable('border-color', 'inputitems-border-color', $inputitems-border-color);
         @include avariable('border-style', 'inputitems-border-style', $inputitems-border-style);
         @include avariable('border-width', 'inputitems-border-width', $inputitems-border-width);
