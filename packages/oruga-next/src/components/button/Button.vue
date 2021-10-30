@@ -15,11 +15,8 @@
                 :both="iconBoth"
                 :class="iconLeftClasses"
             />
-            <span
-                :class="labelClasses"
-                v-if="label || $slots.default">
-                <slot>{{ label }}</slot>
-            </span>
+            <span v-if="label" :class="labelClasses">{{ label }}</span>
+            <slot v-else-if="$slots.default" />
             <o-icon
                 v-if="iconRight"
                 :pack="iconPack"
