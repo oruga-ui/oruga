@@ -56,8 +56,10 @@ $inputitems-margin-icon-to-text: .1875em !default;
         border: none;
         box-shadow: none;
         height: auto;
-        padding-top: 0.1em;
-        padding-bottom: 0.1em;
+        @include avariable('margin', 'inputitems-item-margin', $inputitems-item-margin);
+        margin-left: 0;
+        padding-top: 0;
+        padding-bottom: 0;
         &:focus {
             box-shadow: none;
         }
