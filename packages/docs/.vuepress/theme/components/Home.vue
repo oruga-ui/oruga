@@ -4,9 +4,6 @@
     :aria-labelledby="data.heroText !== null ? 'main-title' : null"
   >
     <header class="hero">
-      <div style="margin-top: 2rem;">
-          🎃 Psst... <a href="/hacktoberfest/">Oruga participates in Hacktoberfest 2021</a>!
-      </div>
 
       <img
         v-if="data.heroImage"
