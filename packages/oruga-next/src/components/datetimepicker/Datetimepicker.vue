@@ -221,6 +221,7 @@ export default defineComponent({
                 hour: this.localeOptions.hour || 'numeric',
                 minute: this.localeOptions.minute || 'numeric',
                 second: this.enableSeconds() ? this.localeOptions.second || 'numeric' : undefined,
+                // @ts-ignore to update types
                 hourCycle: !this.isHourFormat24() ? 'h12' : 'h23'
             })
         },
