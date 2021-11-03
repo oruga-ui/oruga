@@ -112,11 +112,6 @@ export default {
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     props: {
         /** @model */
         value: [Number, String],
@@ -225,6 +220,7 @@ export default {
             hasFocus: false,
             width: undefined,
             bodyEl: undefined, // Used to append to body
+            $elementRef: 'input'
         }
     },
     computed: {

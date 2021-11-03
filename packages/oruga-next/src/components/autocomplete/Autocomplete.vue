@@ -115,11 +115,6 @@ export default defineComponent({
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
@@ -231,6 +226,7 @@ export default defineComponent({
             itemRefs: [],
             width: undefined,
             bodyEl: undefined, // Used to append to body
+            $elementRef: 'input'
         }
     },
     computed: {

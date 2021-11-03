@@ -76,13 +76,6 @@ export default {
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'input',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
-        }
-    },
     props: {
         /** @model */
         value: [Number, String],
@@ -259,6 +252,12 @@ export default {
                 overflow: 'hidden'
             }
         },
+
+        $elementRef() {
+            return this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
+        }
     },
     watch: {
         /**

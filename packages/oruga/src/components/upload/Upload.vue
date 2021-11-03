@@ -43,11 +43,6 @@ export default {
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'upload',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     props: {
         /** @model */
         value: [Object, File, Array],
@@ -86,7 +81,8 @@ export default {
     data() {
         return {
             newValue: this.value,
-            dragDropFocus: false
+            dragDropFocus: false,
+            $elementRef: 'input'
         }
     },
     computed: {

@@ -64,11 +64,6 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'select',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'select'
-        }
-    },
     emits: ['update:modelValue', 'focus', 'blur'],
     props: {
         /** @model */
@@ -117,7 +112,8 @@ export default defineComponent({
     },
     data() {
         return {
-            selected: this.modelValue
+            selected: this.modelValue,
+            $elementRef: 'select'
         }
     },
     computed: {
