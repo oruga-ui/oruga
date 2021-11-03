@@ -23,10 +23,21 @@ title: Autocomplete
   <section>
     <p class="content"><b>Selected:</b> {{ selected }}</p>
     <o-field label="Find a JS framework">
-      <o-autocomplete rounded expanded v-model="name" :data="filteredDataArray" placeholder="e.g. jQuery" icon="search" clearable @select="option => selected = option">
+      <o-autocomplete
+        ref="myautocomplete"
+        rounded
+        expanded
+        v-model="name"
+        :data="filteredDataArray"
+        placeholder="e.g. jQuery"
+        icon="search"
+        clearable
+        @select="option => selected = option"
+      >
         <template slot="empty">No results found</template>
       </o-autocomplete>
     </o-field>
+    <o-button @click="$refs.myautocomplete.focus()">Focus</o-button>
   </section>
 </template>
 

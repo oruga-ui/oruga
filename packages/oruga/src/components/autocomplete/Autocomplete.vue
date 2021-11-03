@@ -220,7 +220,6 @@ export default {
             hasFocus: false,
             width: undefined,
             bodyEl: undefined, // Used to append to body
-            $elementRef: 'input'
         }
     },
     computed: {
@@ -347,6 +346,10 @@ export default {
                 maxHeight: toCssDimension(this.maxHeight),
                 width: toCssDimension(this.width),
             }
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

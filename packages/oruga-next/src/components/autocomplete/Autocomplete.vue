@@ -226,7 +226,6 @@ export default defineComponent({
             itemRefs: [],
             width: undefined,
             bodyEl: undefined, // Used to append to body
-            $elementRef: 'input'
         }
     },
     computed: {
@@ -352,6 +351,10 @@ export default defineComponent({
             return {
                 maxHeight: toCssDimension(this.maxHeight)
             }
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

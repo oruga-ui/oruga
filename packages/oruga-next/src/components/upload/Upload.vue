@@ -45,11 +45,6 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'upload',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     emits: ['update:modelValue'],
     props: {
         /** @model */
@@ -106,6 +101,9 @@ export default defineComponent({
                 { [this.computedClass('hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
                 { [this.computedClass('variantClass', 'o-upl__draggable--hovered-', this.variant)]: this.variant && this.dragDropFocus },
             ]
+        },
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

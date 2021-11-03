@@ -81,8 +81,7 @@ export default {
     data() {
         return {
             newValue: this.value,
-            dragDropFocus: false,
-            $elementRef: 'input'
+            dragDropFocus: false
         }
     },
     computed: {
@@ -99,6 +98,9 @@ export default {
                 { [this.computedClass('hoveredClass', 'o-upl__draggable--hovered')]: !this.variant && this.dragDropFocus },
                 { [this.computedClass('variantClass', 'o-upl__draggable--hovered-', this.variant)]: this.variant && this.dragDropFocus },
             ]
+        },
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

@@ -579,8 +579,7 @@ export default {
                 day: focusedDate.getDate(),
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
-            },
-            $elementRef: 'input'
+            }
         }
     },
     computed: {
@@ -756,6 +755,10 @@ export default {
 
         ariaRole() {
             return !this.inline ? 'dialog' : undefined
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

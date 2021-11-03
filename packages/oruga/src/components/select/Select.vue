@@ -109,8 +109,7 @@ export default {
     },
     data() {
         return {
-            selected: this.value,
-            $elementRef: 'select'
+            selected: this.value
         }
     },
     computed: {
@@ -156,6 +155,10 @@ export default {
                 this.syncFilled(this.selected)
                 !this.isValid && this.checkHtml5Validity()
             }
+        },
+
+        $elementRef() {
+            return 'select'
         }
     },
     watch: {

@@ -112,8 +112,7 @@ export default defineComponent({
     },
     data() {
         return {
-            selected: this.modelValue,
-            $elementRef: 'select'
+            selected: this.modelValue
         }
     },
     computed: {
@@ -159,6 +158,10 @@ export default defineComponent({
                 this.syncFilled(this.selected)
                 !this.isValid && this.checkHtml5Validity()
             }
+        },
+
+        $elementRef() {
+            return 'select'
         }
     },
     watch: {

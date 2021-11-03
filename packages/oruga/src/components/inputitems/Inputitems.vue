@@ -246,8 +246,7 @@ export default {
         return {
             items: Array.isArray(this.value) ? this.value.slice(0) : (this.value || []),
             newItem: '',
-            isComposing: false,
-            $elementRef: 'autocomplete'
+            isComposing: false
         }
     },
     computed: {
@@ -336,6 +335,10 @@ export default {
             return sep.length ? new RegExp(sep.map((s) => {
                 return s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') : null
             }).join('|'), 'g') : null
+        },
+
+        $elementRef() {
+            return 'autocomplete'
         }
     },
     watch: {
