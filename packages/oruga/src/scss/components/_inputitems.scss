@@ -85,4 +85,9 @@ $inputitems-margin-icon-to-text: .1875em !default;
         @include avariable('font-size', 'inputitems-counter-font-size', $inputitems-counter-font-size);
         @include avariable('margin', 'inputitems-counter-margin', $inputitems-counter-margin);
     }
+    &--expanded {
+        width: 100%;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
 }
