@@ -75,11 +75,11 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ### Custom icon pack
 
 <p>
-    You can add it during Oruga setup and set it as the default config using the <code>iconPack</code> property.
+    You can also add it during Oruga import as default config.
 </p>
 
 ::: tip
-Take a look at the example code below (click on "Show code") to see how internal icons can be replaced with the corresponding icons of your custom icon pack.
+Take a look at below example code (click on "Show code") to know all internal icons to replace with the releated icons of your custom icon pack
 :::
 
 ::: demo
@@ -88,41 +88,41 @@ Take a look at the example code below (click on "Show code") to see how internal
 <template>
   <section>
     <div class="block">
-      <o-icon icon="person" size="small"> </o-icon>
-      <o-icon icon="home" size="small"> </o-icon>
-      <o-icon icon="apps" size="small"> </o-icon>
+      <o-icon pack="ionicons" icon="person" size="small"> </o-icon>
+      <o-icon pack="ionicons" icon="home" size="small"> </o-icon>
+      <o-icon pack="ionicons" icon="apps" size="small"> </o-icon>
     </div>
 
     <div class="block">
-      <o-icon icon="person"> </o-icon>
-      <o-icon icon="home"> </o-icon>
-      <o-icon icon="apps"> </o-icon>
+      <o-icon pack="ionicons" icon="person"> </o-icon>
+      <o-icon pack="ionicons" icon="home"> </o-icon>
+      <o-icon pack="ionicons" icon="apps"> </o-icon>
     </div>
 
     <div class="block">
-      <o-icon icon="person" size="medium"> </o-icon>
-      <o-icon icon="home" size="medium"> </o-icon>
-      <o-icon icon="apps" size="medium"> </o-icon>
+      <o-icon pack="ionicons" icon="person" size="medium"> </o-icon>
+      <o-icon pack="ionicons" icon="home" size="medium"> </o-icon>
+      <o-icon pack="ionicons" icon="apps" size="medium"> </o-icon>
     </div>
 
     <div class="block">
-      <o-icon icon="person" size="large" variant="success"> </o-icon>
-      <o-icon icon="home" size="large" variant="info"> </o-icon>
-      <o-icon icon="apps" size="large" variant="primary"> </o-icon>
+      <o-icon pack="ionicons" icon="person" size="large" variant="success"> </o-icon>
+      <o-icon pack="ionicons" icon="home" size="large" variant="info"> </o-icon>
+      <o-icon pack="ionicons" icon="apps" size="large" variant="primary"> </o-icon>
     </div>
 
     <o-button variant="primary">
-      <o-icon icon="checkmark"></o-icon>
+      <o-icon pack="ionicons" icon="checkmark"></o-icon>
       <span>Finish</span>
     </o-button>
 
     <o-button variant="warning">
-      <o-icon icon="checkmark"></o-icon>
+      <o-icon pack="ionicons" icon="checkmark"></o-icon>
       <span>Finish</span>
     </o-button>
 
     <o-button variant="warning">
-      <o-icon spin icon="refresh"> </o-icon>
+      <o-icon spin pack="ionicons" icon="refresh"> </o-icon>
       <span>Refresh</span>
     </o-button>
   </section>
@@ -131,7 +131,6 @@ Take a look at the example code below (click on "Show code") to see how internal
 <script>
   const customIconConfig = {
     iconComponent: undefined,
-    iconPack: 'ionicons',
     customIconPacks: {
       ionicons: {
         sizes: {
