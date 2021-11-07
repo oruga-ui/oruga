@@ -60,6 +60,7 @@ export default {
     name: 'ONotification',
     configField: 'notification',
     mixins: [BaseComponentMixin, MessageMixin],
+    emits: ['update:active', 'close'],
     props: {
         /**
         * Which position the notification will appear when programmatically
