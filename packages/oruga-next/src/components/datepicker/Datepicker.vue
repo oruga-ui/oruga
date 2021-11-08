@@ -289,7 +289,7 @@ export default defineComponent({
             $datepicker: this
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end'],
+    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change'],
     props: {
         modelValue: {
             type: [Date, Array]
