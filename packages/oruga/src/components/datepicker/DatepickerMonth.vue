@@ -1,6 +1,6 @@
 <template>
-    <section class="datepicker-table">
-        <div class="datepicker-body" :class="{'has-events':hasEvents}">
+    <section :class="tableClasses">
+        <div :class="tableBodyClasses">
             <div class="datepicker-months">
                 <template v-for="(date, index) in monthDates">
                     <a
@@ -45,8 +45,11 @@
 <script>
 import { isDefined } from '../../utils/helpers'
 
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 export default {
     name: 'ODatepickerMonth',
+    mixins: [BaseComponentMixin],
     props: {
         value: {
             type: [Date, Array]
@@ -74,6 +77,16 @@ export default {
         }
     },
     computed: {
+        tableClasses() {
+            return [
+                this.computedClass('tableClass', 'o-dpck__month')
+            ]
+        },
+        tableBodyClasses() {
+            return [
+                this.computedClass('datepicker-body', 'o-dpck__month__body')
+            ]
+        },
         hasEvents() {
             return this.events && this.events.length
         },
