@@ -11,6 +11,16 @@ const mdiIcons = {
     iconPrefix: 'mdi-'
 }
 
+const materialIcons = {
+    sizes: {
+        'default': null,
+        'small': 'md-18',
+        'medium': 'md-36p',
+        'large': 'md-48p'
+    },
+    ligature: true
+}
+
 const faIcons = () => {
     const iconComponent = getValueByPath(getOptions(), 'iconComponent')
     const faIconPrefix = iconComponent ? '' : 'fa-'
@@ -45,6 +55,7 @@ const faIcons = () => {
 const getIcons = () => {
     let icons = {
         mdi: mdiIcons,
+        'material-icons': materialIcons,
         fa: faIcons(),
         fas: faIcons(),
         far: faIcons(),

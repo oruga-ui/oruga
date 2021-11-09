@@ -2,9 +2,8 @@
     <span
         :class="rootClasses"
         :style="rootStyle">
-        <i
-            v-if="!useIconComponent"
-            :class="[newPack, newIcon, newCustomSize, customClass]"/>
+        <i v-if="!useIconComponent"
+           :class="iconClasses">{{isLigatureFont?newIcon:null}}</i>
         <!-- custom icon component -->
         <component
             v-else
@@ -93,6 +92,14 @@ export default defineComponent({
                 { [this.computedClass('variantClass', 'o-icon--', this.newVariant)]: this.newVariant }
             ]
         },
+        iconClasses() {
+            return [
+                this.newPack,
+                {[this.newIcon]: !this.isLigatureFont},
+                this.newCustomSize,
+                this.customClass
+            ];
+        },
         rootStyle() {
             const style = {}
             if (this.rotation) {
@@ -132,6 +139,10 @@ export default defineComponent({
         },
         newCustomSize() {
             return this.customSize || this.customSizeByPack
+        },
+        isLigatureFont() {
+            return this.iconConfig && this.iconConfig.ligature;
+
         },
         customSizeByPack() {
             if (this.iconConfig && this.iconConfig.sizes) {

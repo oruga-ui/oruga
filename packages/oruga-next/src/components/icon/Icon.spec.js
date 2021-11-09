@@ -20,7 +20,9 @@ describe('OIcon', () => {
         })
 
         expect(wrapper.classes()).toContain('o-icon')
-        expect(wrapper.find('i').classes()).toContain('mdi', 'mdi-eye', 'mdi-24px')
+        expect(wrapper.find('i').classes()).toContain('mdi')
+        expect(wrapper.find('i').classes()).toContain( 'mdi-eye')
+        expect(wrapper.find('i').classes()).toContain( 'mdi-24px')
     })
 
     it('returns correct color for newVariant when type is passed as an object', () => {
@@ -56,7 +58,8 @@ describe('OIcon', () => {
 
         wrapper.setProps({ size: 'small' })
         await wrapper.vm.$nextTick()
-        expect(wrapper.find('i').classes()).toContainEqual('mdi', 'mdi-eye')
+        expect(wrapper.find('i').classes()).toContain('mdi')
+        expect(wrapper.find('i').classes()).toContain('mdi-eye')
 
         wrapper.setProps({ size: 'medium' })
         await wrapper.vm.$nextTick()
@@ -76,7 +79,20 @@ describe('OIcon', () => {
             }
         })
 
-        expect(wrapper.find('i').classes()).toContainEqual('fa', 'fa-2x')
+        expect(wrapper.find('i').classes()).toContain('fa')
+        expect(wrapper.find('i').classes()).toContain('fa-2x')
+    })
+
+    it('render icon correctly when the pack is ligature font.', () => {
+        const wrapper = shallowMount(OIcon, {
+            propsData: {
+                icon: 'eye',
+                pack: 'material-icons'
+            }
+        })
+
+        expect(wrapper.find('i').classes()).not.toContain('eye')
+        expect(wrapper.find('i').text()).toBe('eye')
     })
 
     it('render custom classes when customClass property is passed', () => {

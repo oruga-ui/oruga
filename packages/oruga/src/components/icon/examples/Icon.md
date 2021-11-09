@@ -1,8 +1,7 @@
 
 ## Examples
 
-Oruga is compatible with both <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a>
-and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you can also add your own custom icon pack.<br>
+Oruga is compatible with <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a>, <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> and <a href="https://fonts.google.com/icons" target="_blank">Material Icons</a> but you can also add your own custom icon pack.<br>
 
 ### Base
 
