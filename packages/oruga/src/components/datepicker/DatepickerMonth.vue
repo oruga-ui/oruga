@@ -46,10 +46,11 @@
 import { isDefined } from '../../utils/helpers'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import DatepickerMixin from './DatepickerMixin'
 
 export default {
     name: 'ODatepickerMonth',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, DatepickerMixin],
     props: {
         value: {
             type: [Date, Array]
@@ -319,7 +320,7 @@ export default {
             }
         },
 
-        manageKeydown({ key }, date) {
+        /*manageKeydown({ key }, date) {
             // https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/key/Key_Values#Navigation_keys
             switch (key) {
                 case ' ':
@@ -351,7 +352,7 @@ export default {
                     break
                 }
             }
-        },
+        },*/
 
         /*
         * Emit input event with selected date as payload for v-model in parent

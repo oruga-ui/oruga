@@ -42,10 +42,11 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import DatePickerMixin from './DatepickerMixin'
 
 export default {
     name: 'ODatepickerTableRow',
-    mixins: [BaseComponentMixin],
+    mixins: [BaseComponentMixin, DatePickerMixin],
     configField: 'datepicker',
     inject: {
         $datepicker: { name: '$datepicker', default: false }
@@ -384,7 +385,7 @@ export default {
             }
         },
 
-        manageKeydown(event, weekDay) {
+        /*manageKeydown(event, weekDay) {
             // https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/key/Key_Values#Navigation_keys
             const { key } = event
             let preventDefault = true
@@ -425,7 +426,7 @@ export default {
             if (preventDefault) {
                 event.preventDefault()
             }
-        },
+        },*/
 
         changeFocus(day, inc) {
             const nextDay = new Date(day.getTime())
