@@ -320,41 +320,7 @@ export default {
             }
         },
 
-        /*manageKeydown({ key }, date) {
-            // https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/key/Key_Values#Navigation_keys
-            switch (key) {
-                case ' ':
-                case 'Space':
-                case 'Spacebar':
-                case 'Enter': {
-                    this.updateSelectedDate(date)
-                    break
-                }
-
-                case 'ArrowLeft':
-                case 'Left': {
-                    this.changeFocus(date, -1)
-                    break
-                }
-                case 'ArrowRight':
-                case 'Right': {
-                    this.changeFocus(date, 1)
-                    break
-                }
-                case 'ArrowUp':
-                case 'Up': {
-                    this.changeFocus(date, -3)
-                    break
-                }
-                case 'ArrowDown':
-                case 'Down': {
-                    this.changeFocus(date, 3)
-                    break
-                }
-            }
-        },*/
-
-        /*
+       /*
         * Emit input event with selected date as payload for v-model in parent
         */
         updateSelectedDate(date) {
