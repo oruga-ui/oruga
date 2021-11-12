@@ -1,17 +1,16 @@
 <template>
     <div
-        class="o-car__list"
-        :class="{'o-car__list--shadow': scrollIndex > 0}"
+        :class="listClasses"
+        @mouseenter="itemsHovered = true"
+        @mouseleave="itemsHovered = false"
         @mousedown.prevent="dragStart"
         @touchstart="dragStart">
         <div
-            class="o-car__slides"
-            :class="listClass"
+            :class="slidesClasses"
             :style="'transform:translateX('+translation+'px)'">
             <div
-                v-for="(list, index) in data"
-                class="o-car__slide"
-                :class="{'o-car__slide--active': asIndicator ? activeItem === index : scrollIndex === index}"
+                v-for="(item, index) in data"
+                :class="slideClasses(index)"
                 @mouseup="checkAsIndicator(index, $event)"
                 @touchend="checkAsIndicator(index, $event)"
                 :key="index"
@@ -20,18 +19,14 @@
                     :index="index"
                     :active="activeItem"
                     :scroll="scrollIndex"
-                    v-bind="list"
-                    :list="list"
+                    :item="item"
                     name="item" />
             </div>
         </div>
-        <div
-            v-if="arrow"
-            class="o_car__arrow"
-            :class="{'o_car__arrow--hovered': settings.arrowHover}">
+        <template v-if="arrow">
             <o-icon
                 v-show="hasPrev"
-                class="o-car__icons-left"
+                :class="arrowIconPrevClasses"
                 @click.native.prevent="prev"
                 :pack="settings.iconPack"
                 :icon="settings.iconPrev"
@@ -39,13 +34,13 @@
                 both />
             <o-icon
                 v-show="hasNext"
-                class="o_car__icons-right"
+                :class="arrowIconNextClasses"
                 @click.native.prevent="next"
                 :pack="settings.iconPack"
                 :icon="settings.iconNext"
                 :size="settings.iconSize"
                 both />
-        </div>
+        </template>
     </div>
 </template>
 
@@ -54,6 +49,7 @@ import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
  * @displayName Carousel List
@@ -63,6 +59,8 @@ export default {
     components: {
         [Icon.name]: Icon
     },
+    configField: 'carousel',
+    mixins: [BaseComponentMixin],
     props: {
         data: {
             type: Array,
@@ -80,8 +78,6 @@ export default {
             type: Boolean,
             default: true
         },
-        hasGrayscale: Boolean,
-        hasOpacity: Boolean,
         repeat: Boolean,
         itemsToShow: {
             type: Number,
@@ -113,7 +109,12 @@ export default {
         breakpoints: {
             type: Object,
             default: () => ({})
-        }
+        },
+        listClass: [String, Function, Array],
+        slidesClass: [String, Function, Array],
+        slidesDraggingClass: [String, Function, Array],
+        sliceClass: [String, Function, Array],
+        sliceActiveClass: [String, Function, Array]
     },
     data() {
         return {
@@ -125,21 +126,41 @@ export default {
             windowWidth: 0,
             touch: false,
             observer: null,
-            refresh_: 0
+            refresh_: 0,
+            itemsHovered: false
         }
     },
     computed: {
+        listClasses() {
+            return [
+                this.computedClass('listClass', 'o-car__list')
+            ]
+        },
+        slidesClasses() {
+            return [
+                this.computedClass('slidesClass', 'o-car__slides'),
+                { [this.computedClass('slidesDraggingClass', 'o-car__slides--dragging')]: this.dragging },
+            ]
+        },
+        arrowIconClasses() {
+            return [
+                this.computedClass('arrowIconClass', 'o-car__arrow__icon'),
+            ]
+        },
+        arrowIconPrevClasses() {
+            return [
+                ...this.arrowIconClasses,
+                this.computedClass('arrowIconLeftClass', 'o-car__arrow__icon-left')
+            ]
+        },
+        arrowIconNextClasses() {
+            return [
+                ...this.arrowIconClasses,
+                this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
+            ]
+        },
         dragging() {
             return this.dragX !== false
-        },
-        listClass() {
-            return [
-                {
-                    'has-grayscale': this.settings.hasGrayscale,
-                    'has-opacity': this.settings.hasOpacity,
-                    'is-dragging': this.dragging
-                }
-            ]
         },
         itemStyle() {
             return `width: ${this.itemWidth}px;`
@@ -153,11 +174,14 @@ export default {
         total() {
             return this.data.length - this.settings.itemsToShow
         },
+        hasArrows() {
+            return (this.settings.arrowHover && this.itemsHovered) || !this.settings.arrowHover
+        },
         hasPrev() {
-            return (this.settings.repeat || this.scrollIndex > 0)
+            return (this.settings.repeat || this.scrollIndex > 0) && this.hasArrows
         },
         hasNext() {
-            return (this.settings.repeat || this.scrollIndex < this.total)
+            return (this.settings.repeat || this.scrollIndex < this.total) && this.hasArrows
         },
         breakpointKeys() {
             return Object.keys(this.breakpoints).sort((a, b) => b - a)
@@ -199,6 +223,13 @@ export default {
         }
     },
     methods: {
+        slideClasses(index) {
+            return [
+                this.computedClass('slideClass', 'o-car__slide'),
+                {[this.computedClass('sliceActiveClass', 'o-car__slide--active')]: this.asIndicator ?
+                    this.activeItem === index : this.scrollIndex === index}
+            ]
+        },
         resized() {
             this.windowWidth = window.innerWidth
         },

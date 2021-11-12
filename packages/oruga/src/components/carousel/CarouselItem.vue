@@ -1,12 +1,13 @@
 <template>
     <transition :name="transition">
-        <div v-show="isActive" class="o-car__item">
+        <div v-show="isActive" :class="itemClasses">
             <slot />
         </div>
     </transition>
 </template>
 
 <script>
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMixin'
 
 /**
@@ -14,13 +15,19 @@ import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMi
  */
 export default {
     name: 'OCarouselItem',
-    mixins: [InjectedChildMixin('carousel', Sorted)],
+    config: 'carousel',
+    mixins: [InjectedChildMixin('carousel', Sorted), BaseComponentMixin],
     data() {
         return {
             transitionName: null
         }
     },
     computed: {
+        itemClasses() {
+            return [
+                this.computedClass('itemClass', 'o-car__item'),
+            ]
+        },
         transition() {
             if (this.parent.animated === 'fade') {
                 return 'fade'

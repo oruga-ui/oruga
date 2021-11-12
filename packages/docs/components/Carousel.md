@@ -22,10 +22,8 @@ title: Carousel
 <template>
   <o-carousel>
     <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-      <section :class="`hero is-medium is-${carousel.color}`">
-        <div class="hero-body has-text-centered">
-          <h1 class="title">{{carousel.text}}</h1>
-        </div>
+      <section class="ex-slide" :style="{'background-color': carousel.color }">
+        <h1>{{carousel.text}}</h1>
       </section>
     </o-carousel-item>
   </o-carousel>
@@ -36,31 +34,27 @@ title: Carousel
     data() {
       return {
         carousels: [
-          { text: 'Slide 1', color: 'primary' },
-          { text: 'Slide 2', color: 'info' },
-          { text: 'Slide 3', color: 'success' },
-          { text: 'Slide 4', color: 'warning' },
-          { text: 'Slide 5', color: 'danger' }
+          { text: 'Slide 1', color: '#445e00' },
+          { text: 'Slide 2', color: '#006724' },
+          { text: 'Slide 3', color: '#b60000' },
+          { text: 'Slide 4', color: '#f4c300' },
+          { text: 'Slide 5', color: '#005c98' }
         ]
       }
     }
   }
 </script>
-
-<style scoped>
-  .is-primary {
-    background-color: green;
-  }
-  .is-info {
-    background-color: blue;
-  }
-  .is-success {
-    background-color: green;
-  }
-</style>
 ```
 
 :::
+
+<style>
+.ex-slide {
+    padding: 9rem 4.5rem;
+    color: #ffffff;
+    text-align: center;
+}
+</style>
 
 ### Carousel List
 
@@ -81,39 +75,26 @@ title: Carousel
           <o-switch v-model="drag">Drag event</o-switch>
         </div>
         <div class="control">
-          <o-switch v-model="gray" :disabled="opacity">Grayscale</o-switch>
-        </div>
-        <div class="control">
-          <o-switch v-model="opacity" :disabled="gray">Opacity</o-switch>
-        </div>
-        <div class="control">
           <o-switch v-model="repeat">Repeat</o-switch>
         </div>
       </o-field>
       <o-field grouped group-multiline>
         <o-field label="Value">
-          <o-input type="number" v-model="values" min="0" :max="items.length - 1" />
+          <o-input type="number" v-model.number="values" min="0" :max="items.length - 1" />
         </o-field>
         <o-field label="Items to Show">
-          <o-input type="number" v-model="perList" min="1" :max="items.length" />
+          <o-input type="number" v-model.number="perList" min="1" :max="items.length" />
         </o-field>
         <o-field label="Items to List">
-          <o-input type="number" v-model="increment" min="1" :max="items.length - 1" />
+          <o-input type="number" v-model.number="increment" min="1" :max="items.length - 1" />
         </o-field>
       </o-field>
     </div>
-    <o-carousel-list
-      v-model="values"
-      :data="items"
-      :arrow="arrow"
-      :arrow-hover="arrowHover"
-      :items-to-show="perList"
-      :items-to-list="increment"
-      :repeat="repeat"
-      :has-drag="drag"
-      :has-grayscale="gray"
-      :has-opacity="opacity"
-    />
+    <o-carousel-list v-model="values" :data="items" :arrow="arrow" :arrow-hover="arrowHover" :items-to-show="perList" :items-to-list="increment" :repeat="repeat" :has-drag="drag">
+      <template #item="{ item }">
+        <img :src="item.image" />
+      </template>
+    </o-carousel-list>
   </section>
 </template>
 
@@ -124,18 +105,14 @@ title: Carousel
         arrow: true,
         arrowHover: true,
         drag: true,
-        gray: false,
-        opacity: false,
         values: 1,
         perList: 4,
         increment: 1,
         repeat: false,
         items: [
           {
-            alt: 'Slide 1',
             title: 'Slide 1',
-            image: 'https://picsummm.photos/id/0/1230/500',
-            srcFallback: 'https://picsum.photos/id/0/1230/500'
+            image: 'https://picsummm.photos/id/0/1230/500'
           },
           {
             title: 'Slide 2',
@@ -188,7 +165,11 @@ title: Carousel
     </o-carousel-item>
     <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-large" />
     <template #list="props">
-      <o-carousel-list v-model="props.active" :data="items" v-bind="al" @switch="props.switch($event, false)" as-indicator />
+      <o-carousel-list v-model="props.active" :data="items" v-bind="al" @switch="props.switch($event, false)" as-indicator>
+        <template #item="{ item }">
+          <img :src="item.image" />
+        </template>
+      </o-carousel-list>
     </template>
     <template #overlay>
       <div class="has-text-centered has-text-white">
@@ -204,15 +185,12 @@ title: Carousel
       return {
         gallery: false,
         al: {
-          hasGrayscale: true,
           itemsToShow: 2,
           breakpoints: {
             768: {
-              hasGrayscale: false,
               itemsToShow: 4
             },
             960: {
-              hasGrayscale: true,
               itemsToShow: 6
             }
           }
@@ -296,10 +274,10 @@ title: Carousel
       </o-field>
       <o-field grouped group-multiline>
         <o-field label="Value">
-          <o-input type="number" v-model="carousel" min="0" :max="carousels.length - 1" />
+          <o-input type="number" v-model.number="carousel" min="0" :max="carousels.length - 1" />
         </o-field>
         <o-field label="Interval">
-          <o-input type="number" v-model="interval" min="0" step="1000" :disabled="!autoPlay" />
+          <o-input type="number" v-model.number="interval" min="0" step="1000" :disabled="!autoPlay" />
         </o-field>
         <o-field label="Animated">
           <o-field>
@@ -311,13 +289,6 @@ title: Carousel
             </o-radio>
           </o-field>
         </o-field>
-        <o-field label="Pause Type">
-          <o-select v-model="pauseType" :disabled="!pauseInfo">
-            <option value="is-white">is-white</option>
-            <option value="is-dark">is-dark</option>
-            <option value="is-primary">is-primary</option>
-          </o-select>
-        </o-field>
       </o-field>
     </div>
 
@@ -328,18 +299,15 @@ title: Carousel
       :autoplay="autoPlay"
       :pause-hover="pauseHover"
       :pause-info="pauseInfo"
-      :pause-info-type="pauseType"
       :interval="interval"
       :repeat="repeat"
       @change="info($event)"
     >
       <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-        <section :class="`hero is-medium is-${carousel.color} is-bold`">
-          <div class="hero-body has-text-centered">
-            <h1 class="title">{{carousel.title}}</h1>
-            <o-input :placeholder="carousel.title"></o-input>
-            <p>A link that <a href="#arrow">goes to arrow</a></p>
-          </div>
+        <section class="ex-slide" :style="{'background-color': carousel.color }">
+          <h1>{{carousel.title}}</h1>
+          <o-input :placeholder="carousel.title"></o-input>
+          <p>A link that <a href="#arrow">goes to arrow</a></p>
         </section>
       </o-carousel-item>
     </o-carousel>
@@ -351,21 +319,19 @@ title: Carousel
     data() {
       return {
         carousel: 0,
-        animated: 'fade',
+        animated: 'slide',
         drag: false,
         autoPlay: false,
         pauseHover: false,
         pauseInfo: false,
         repeat: false,
-        pauseType: 'is-primary',
         interval: 3000,
         carousels: [
-          { title: 'Slide 1', color: 'dark' },
-          { title: 'Slide 2', color: 'primary' },
-          { title: 'Slide 3', color: 'info' },
-          { title: 'Slide 4', color: 'success' },
-          { title: 'Slide 5', color: 'warning' },
-          { title: 'Slide 6', color: 'danger' }
+          { text: 'Slide 1', color: '#445e00' },
+          { text: 'Slide 2', color: '#006724' },
+          { text: 'Slide 3', color: '#b60000' },
+          { text: 'Slide 4', color: '#f4c300' },
+          { text: 'Slide 5', color: '#005c98' }
         ]
       }
     },
@@ -386,36 +352,32 @@ title: Carousel
 
 ## Props
 
-| Prop name           | Description | Type    | Values | Default                                                                                                                                           |
-| ------------------- | ----------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated            |             | string  | -      | 'slide'                                                                                                                                           |
-| arrow               |             | boolean | -      | true                                                                                                                                              |
-| arrowHover          |             | boolean | -      | true                                                                                                                                              |
-| autoplay            |             | boolean | -      | true                                                                                                                                              |
-| hasDrag             |             | boolean | -      | true                                                                                                                                              |
-| iconNext            |             | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
-| iconPack            |             | string  | -      |                                                                                                                                                   |
-| iconPrev            |             | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
-| iconSize            |             | string  | -      |                                                                                                                                                   |
-| indicator           |             | boolean | -      | true                                                                                                                                              |
-| indicatorBackground |             | boolean | -      |                                                                                                                                                   |
-| indicatorCustom     |             | boolean | -      |                                                                                                                                                   |
-| indicatorCustomSize |             | string  | -      | 'small'                                                                                                                                           |
-| indicatorInside     |             | boolean | -      | true                                                                                                                                              |
-| indicatorMode       |             | string  | -      | 'click'                                                                                                                                           |
-| indicatorPosition   |             | string  | -      | 'bottom'                                                                                                                                          |
-| indicatorStyle      |             | string  | -      | 'is-dots'                                                                                                                                         |
-| interval            |             | number  | -      |                                                                                                                                                   |
-| overlay             |             | boolean | -      |                                                                                                                                                   |
-| pauseHover          |             | boolean | -      | true                                                                                                                                              |
-| pauseInfo           |             | boolean | -      | true                                                                                                                                              |
-| pauseInfoType       |             | string  | -      | 'white'                                                                                                                                           |
-| pauseText           |             | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;pauseText: 'Pause'<br>}</code>        |
-| progress            |             | boolean | -      |                                                                                                                                                   |
-| progressVariant     |             | string  | -      | 'primary'                                                                                                                                         |
-| repeat              |             | boolean | -      | true                                                                                                                                              |
-| value               |             | number  | -      | 0                                                                                                                                                 |
-| withCarouselList    |             | boolean | -      |                                                                                                                                                   |
+| Prop name         | Description      | Type    | Values | Default                                                                                                                                           |
+| ----------------- | ---------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated          |                  | string  | -      | 'slide'                                                                                                                                           |
+| arrow             |                  | boolean | -      | true                                                                                                                                              |
+| arrowHover        |                  | boolean | -      | true                                                                                                                                              |
+| autoplay          |                  | boolean | -      | true                                                                                                                                              |
+| hasDrag           |                  | boolean | -      | true                                                                                                                                              |
+| iconNext          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
+| iconPack          |                  | string  | -      |                                                                                                                                                   |
+| iconPrev          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
+| iconSize          |                  | string  | -      |                                                                                                                                                   |
+| indicator         |                  | boolean | -      | true                                                                                                                                              |
+| indicatorInside   |                  | boolean | -      | true                                                                                                                                              |
+| indicatorMode     |                  | string  | -      | 'click'                                                                                                                                           |
+| indicatorPosition |                  | string  | -      | 'bottom'                                                                                                                                          |
+| indicatorStyle    |                  | string  | -      | 'dots'                                                                                                                                            |
+| interval          |                  | number  | -      |                                                                                                                                                   |
+| overlay           |                  | boolean | -      |                                                                                                                                                   |
+| override          | Override classes | boolean | -      | false                                                                                                                                             |
+| pauseHover        |                  | boolean | -      | true                                                                                                                                              |
+| pauseInfo         |                  | boolean | -      | true                                                                                                                                              |
+| pauseText         |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;pauseText: 'Pause'<br>}</code>        |
+| progress          |                  | boolean | -      |                                                                                                                                                   |
+| repeat            |                  | boolean | -      | true                                                                                                                                              |
+| value             |                  | number  | -      | 0                                                                                                                                                 |
+| withCarouselList  |                  | boolean | -      |                                                                                                                                                   |
 
 ## Events
 
@@ -436,16 +398,17 @@ title: Carousel
 
 ## Style
 
-| CSS Variable                          | SASS Variable                   | Default                      |
-| ------------------------------------- | ------------------------------- | ---------------------------- |
-| --oruga-carousel-min-height           | \$carousel-min-height           | 120px                        |
-| --oruga-carousel-arrow-background     | \$carousel-arrow-background     | \$primary                    |
-| --oruga-carousel-arrow-color          | \$carousel-arrow-color          | \$primary                    |
-| --oruga-carousel-arrow-icon-spaced    | \$carousel-arrow-icon-spaced    | 1.5rem                       |
-| --oruga-carousel-arrow-top            | \$carousel-arrow-top            | 50%                          |
-| --oruga-carousel-indicator-background | \$carousel-indicator-background | rgba(\$primary-invert, 0.50) |
-| --oruga-carousel-indicator-border     | \$carousel-indicator-border     | \$primary                    |
-| --oruga-carousel-indicator-color      | \$carousel-indicator-color      | \$primary                    |
-| --oruga-carousel-indicator-spaced     | \$carousel-indicator-spaced     | .5rem                        |
-| --oruga-carousel-overlay-background   | \$carousel-overlay-background   | rgba(\$primary-invert, 0.86) |
-| --oruga-carousel-overlay-z            | \$carousel-overlay-z            | 40                           |
+| CSS Variable                          | SASS Variable                   | Default              |
+| ------------------------------------- | ------------------------------- | -------------------- |
+| --oruga-carousel-min-height           | \$carousel-min-height           | 120px                |
+| --oruga-carousel-arrow-background     | \$carousel-arrow-background     | \$white              |
+| --oruga-carousel-arrow-color          | \$carousel-arrow-color          | \$primary            |
+| --oruga-carousel-arrow-icon-spaced    | \$carousel-arrow-icon-spaced    | 1.5rem               |
+| --oruga-carousel-arrow-top            | \$carousel-arrow-top            | 50%                  |
+| --oruga-carousel-arrow-size           | \$carousel-arrow-size           | 1.5rem               |
+| --oruga-carousel-indicator-background | \$carousel-indicator-background | rgba(\$white , 0.50) |
+| --oruga-carousel-indicator-border     | \$carousel-indicator-border     | \$white              |
+| --oruga-carousel-indicator-color      | \$carousel-indicator-color      | \$primary            |
+| --oruga-carousel-indicator-spaced     | \$carousel-indicator-spaced     | .5rem                |
+| --oruga-carousel-overlay-background   | \$carousel-overlay-background   | rgba(\$white , 0.86) |
+| --oruga-carousel-overlay-z            | \$carousel-overlay-z            | 40                   |

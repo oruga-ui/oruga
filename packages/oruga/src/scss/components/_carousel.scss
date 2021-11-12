@@ -4,8 +4,9 @@ $carousel-arrow-background: $white !default;
 $carousel-arrow-color: $primary !default;
 $carousel-arrow-icon-spaced: 1.5rem !default;
 $carousel-arrow-top: 50% !default;
+$carousel-arrow-size: 1.5rem !default;
 $carousel-indicator-background: rgba($white , 0.50) !default;
-$carousel-indicator-border: $primary !default;
+$carousel-indicator-border: $white !default;
 $carousel-indicator-color: $primary !default;
 $carousel-indicator-spaced: .5rem !default;
 $carousel-overlay-background: rgba($white , 0.86) !default;
@@ -36,9 +37,6 @@ $carousel-overlay-z: 40 !default;
         display: flex;
         overflow: hidden;
         width: 100%;
-        &:hover .o-car__arrow--hovered {
-            opacity: 1;
-        }
     }
     &__item {
         flex-shrink: 0;
@@ -51,15 +49,13 @@ $carousel-overlay-z: 40 !default;
         right: 0.15rem;
         z-index: 1;
     }
-    &__indicator {
+    &__indicators {
         width: 100%;
         padding: $carousel-indicator-spaced;
         display: flex;
         align-items: center;
         justify-content: center;
-        &--background {
-            background: $carousel-indicator-background;
-        }
+        background: $carousel-indicator-background;
         &--inside {
             position: absolute;
             &--bottom {
@@ -69,22 +65,22 @@ $carousel-overlay-z: 40 !default;
                 top: 0;
             }
         }
-        &__item {
-            &:not(:last-child) {
-                margin-right: $carousel-indicator-spaced;
-            }
-            &--active .o_car__indicator__style,
-            .o_car__indicator__style:hover {
-                background: $carousel-indicator-color;
-                border: 1px solid $carousel-indicator-border;
-            }
+    }
+    &__indicator {
+        &:not(:last-child) {
+            margin-right: $carousel-indicator-spaced;
         }
-        &__style {
+
+        &__item {
             display: block;
             border: 1px solid $carousel-indicator-color;
             background: $carousel-indicator-border;
             outline: none;
             transition: $speed-slow $easing;
+            &--active, :hover {
+                background: $carousel-indicator-color;
+                border: 1px solid $carousel-indicator-border;
+            }
             &--boxes {
                 height: 10px;
                 width: 10px;
@@ -101,49 +97,20 @@ $carousel-overlay-z: 40 !default;
         }
     }
 
-
     &__list {
         @include unselectable;
         position: relative;
         overflow: hidden;
         width: 100%;
-        &--shadow {
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-        }
-        &:hover {
-            //@include tablet {
-                opacity: 1;
-            //}
-        }
     }
+
     &__slides {
         position: relative;
         display: flex;
         width: 100%;
-        &:not(.is-dragging) {
+        &:not(&--dragging) {
             transition: all $speed-slower ease-out 0s;
         }
-        &---grayscale {
-            .carousel-slide {
-                img {
-                    filter: grayscale(100%);
-                }
-                &.is-active img {
-                    filter: grayscale(0%);
-                }
-            }
-        }
-        &--opacity {
-            .carousel-slide {
-                img {
-                    opacity: 0.25
-                }
-                &.is-active img {
-                    opacity: 1
-                }
-            }
-        }
-
     }
 
     &__slide {
@@ -151,36 +118,33 @@ $carousel-overlay-z: 40 !default;
         flex-shrink: 0;
     }
 
-    &__arrow {
+    &__arrow__icon {
+        background: $carousel-arrow-background;
+        color: $carousel-arrow-color;
+        cursor: pointer;
+        border: 1px solid $carousel-arrow-background;
+        border-radius: $base-rounded-border-radius;
         transition: $speed-slow $easing;
-        &--hovered {
-            opacity: 0;
+        outline: 0;
+        width: $carousel-arrow-size;
+        height:$carousel-arrow-size;
+        &:hover {
+            border: 1px solid $carousel-arrow-color;
+            opacity: 1;
         }
-        &__icon {
-            background: $carousel-arrow-background;
-            color: $carousel-arrow-color;
-            cursor: pointer;
-            border: 1px solid $carousel-arrow-background;
-            border-radius: $base-border-radius;
-            outline: 0;
-            &:hover {
-                border: 1px solid $carousel-arrow-color;
-                opacity: 1;
-            }
-        }
-        &__icons-left,
-        &__icons-right {
-            position: absolute;
-            top: $carousel-arrow-top;
-            transform: translateY(-$carousel-arrow-top);
-            z-index: 1;
-        }
-        &__icons-left {
-            left: $carousel-arrow-icon-spaced;
-        }
-        &__icons-right {
-            right: $carousel-arrow-icon-spaced;
-        }
+    }
+    &__arrow__icon-left,
+    &__arrow__icon-right {
+        position: absolute;
+        top: $carousel-arrow-top;
+        transform: translateY(-$carousel-arrow-top);
+        z-index: 1;
+    }
+    &__arrow__icon-left {
+        left: $carousel-arrow-icon-spaced;
+    }
+    &__arrow__icon-right {
+        right: $carousel-arrow-icon-spaced;
     }
 
 }

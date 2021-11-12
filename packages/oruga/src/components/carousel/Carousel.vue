@@ -1,32 +1,28 @@
 <template>
     <div
-        class="o-car"
-        :class="{'o-car--overlay': overlay}"
+        :class="rootClasses"
         @mouseenter="checkPause"
         @mouseleave="startTimer">
         <progress
             v-if="progress"
-            class="o-car__progress"
-            :class="progressVariant"
+            :class="progressClasses"
             :value="activeChild"
             :max="childItems.length - 1">
             {{ childItems.length - 1 }}
         </progress>
         <div
-            class="o-car__items"
+            :class="itemsClasses"
+            @mouseenter="itemsHovered = true"
+            @mouseleave="itemsHovered = false"
             @mousedown="dragStart"
             @mouseup="dragEnd"
             @touchstart.stop="dragStart"
             @touchend.stop="dragEnd">
             <slot/>
-            <div
-                v-if="arrow"
-                class="o-car__arrow"
-                :class="{'o-car__arrow--hovered': arrowHover}">
+            <template v-if="arrow">
                 <o-icon
                     v-show="hasPrev"
-                    root-class="o-car__arrow__icon"
-                    class="o-car__arrow__icons-left"
+                    :class="arrowIconPrevClasses"
                     @click.native="prev"
                     :pack="iconPack"
                     :icon="iconPrev"
@@ -34,23 +30,18 @@
                     both />
                 <o-icon
                     v-show="hasNext"
-                    root-class="o-car__arrow__icon"
-                    class="o-car__arrow__icons-right"
+                    :class="arrowIconNextClasses"
                     @click.native="next"
                     :pack="iconPack"
                     :icon="iconNext"
                     :size="iconSize"
                     both />
-            </div>
+            </template>
         </div>
         <div
-            v-if="autoplay && pauseHover && pauseInfo && isPause"
-            class="o-car__pause">
-            <span
-                class="tag"
-                :class="pauseInfoType">
-                {{ pauseText }}
-            </span>
+            v-if="autoplay && (pauseHover && itemsHovered) && isPause"
+            :class="pauseClasses">
+            {{ pauseText }}
         </div>
         <template v-if="withCarouselList && !indicator">
             <slot
@@ -60,19 +51,17 @@
         </template>
         <div
             v-if="indicator"
-            class="o-car__indicator"
-            :class="indicatorClasses">
+            :class="indicatorsClasses">
             <a
                 v-for="(item, index) in sortedItems"
-                class="o_car__indicator__item"
-                :class="{'o_car__indicator__item--active': item.isActive}"
+                :class="indicatorClasses"
                 @mouseover="modeChange('hover', index)"
                 @click="modeChange('click', index)"
                 :key="item._uid">
                 <slot
                     :i="index"
                     name="indicators">
-                    <span class="o-car__indicator__style" :class="`o-car__indicator__style--${indicatorStyle}`"/>
+                    <span :class="indicatorItemClasses(item)"/>
                 </slot>
             </a>
         </div>
@@ -88,6 +77,7 @@ import { getOptions } from '../../utils/config'
 import Icon from '../icon/Icon'
 import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParentMixin'
 import {mod, bound, getValueByPath} from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -100,7 +90,8 @@ export default {
     components: {
         [Icon.name]: Icon
     },
-    mixins: [ProviderParentMixin('carousel', Sorted)],
+    configField: 'carousel',
+    mixins: [ProviderParentMixin('carousel', Sorted), BaseComponentMixin],
     props: {
         value: {
             type: Number,
@@ -126,10 +117,6 @@ export default {
         pauseInfo: {
             type: Boolean,
             default: true
-        },
-        pauseInfoType: {
-            type: String,
-            default: 'white'
         },
         pauseText: {
             type: String,
@@ -179,11 +166,21 @@ export default {
         },
         overlay: Boolean,
         progress: Boolean,
-        progressVariant: {
-            type: String,
-            default: 'primary'
-        },
-        withCarouselList: Boolean
+        withCarouselList: Boolean,
+        rootClass: [String, Function, Array],
+        overlayClass: [String, Function, Array],
+        progressClass: [String, Function, Array],
+        itemsClass: [String, Function, Array],
+        arrowIconClass: [String, Function, Array],
+        arrowIconPrevClass: [String, Function, Array],
+        arrowIconNextClass: [String, Function, Array],
+        pauseClass: [String, Function, Array],
+        indicatorsClass: [String, Function, Array],
+        indicatorsInsideClass: [String, Function, Array],
+        indicatorsInsidePositionClass: [String, Function, Array],
+        indicatorItemClass: [String, Function, Array],
+        indicatorItemActiveClass: [String, Function, Array],
+        indicatorItemStyleClass: [String, Function, Array]
     },
     data() {
         return {
@@ -191,23 +188,74 @@ export default {
             activeChild: this.value || 0,
             isPause: false,
             dragX: false,
-            timer: null
+            timer: null,
+            itemsHovered: false
         }
     },
     computed: {
-        indicatorClasses() {
-            return {
-                'o-car__indicator--inside': this.indicatorInside,
-                [`o-car__indicator--inside--${this.indicatorPosition}`]: this.indicatorInside && this.indicatorPosition
-            }
+        rootClasses() {
+            return [
+                this.computedClass('rootClass', 'o-car'),
+                { [this.computedClass('overlayClass', 'o-car--overlay')]: this.overlay }
+            ]
         },
-
-        // checking arrows
+        progressClasses() {
+            return [
+                this.computedClass('progressClass', 'o-car__progress')
+            ]
+        },
+        itemsClasses() {
+            return [
+                this.computedClass('itemsClass', 'o-car__items'),
+            ]
+        },
+        arrowIconClasses() {
+            return [
+                this.computedClass('arrowIconClass', 'o-car__arrow__icon'),
+            ]
+        },
+        arrowIconClasses() {
+            return [
+                this.computedClass('arrowIconClass', 'o-car__arrow__icon'),
+            ]
+        },
+        arrowIconPrevClasses() {
+            return [
+                ...this.arrowIconClasses,
+                this.computedClass('arrowIconLeftClass', 'o-car__arrow__icon-left')
+            ]
+        },
+        arrowIconNextClasses() {
+            return [
+                ...this.arrowIconClasses,
+                this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
+            ]
+        },
+        pauseClasses() {
+            return [
+                this.computedClass('pauseClass', 'o-car__pause')
+            ]
+        },
+        indicatorsClasses() {
+            return [
+                this.computedClass('indicatorsClass', 'o-car__indicators'),
+                { [this.computedClass('indicatorsInsideClass', 'o-car__indicators--inside')]: this.indicatorInside },
+                { [this.computedClass('indicatorsInsidePositionClass', 'o-car__indicators--inside--', this.indicatorPosition)]: this.indicatorInside && this.indicatorPosition }
+            ]
+        },
+        indicatorClasses() {
+            return [
+                this.computedClass('indicatorClass', 'o-car__indicator')
+            ]
+        },
+        hasArrows() {
+            return (this.arrowHover && this.itemsHovered) || !this.arrowHover
+        },
         hasPrev() {
-            return this.repeat || this.activeChild !== 0
+            return (this.repeat || this.activeChild !== 0) && this.hasArrows
         },
         hasNext() {
-            return this.repeat || this.activeChild < this.childItems.length - 1
+            return (this.repeat || this.activeChild < this.childItems.length - 1) && this.hasArrows
         }
     },
     watch: {
@@ -238,8 +286,14 @@ export default {
             if (status) { this.startTimer() }
         }
     },
-
     methods: {
+        indicatorItemClasses(item) {
+            return [
+                this.computedClass('indicatorItemClass', 'o-car__indicator__item'),
+                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: item.isActive },
+                { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
+            ]
+        },
         startTimer() {
             if (!this.autoplay || this.timer) return
             this.isPause = false
