@@ -1,6 +1,6 @@
 <template>
     <transition :name="transition">
-        <div v-show="isActive" class="carousel-item">
+        <div v-show="isActive" class="o-car__item">
             <slot />
         </div>
     </transition>
@@ -9,6 +9,9 @@
 <script>
 import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMixin'
 
+/**
+ * @displayName Carousel Item
+ */
 export default {
     name: 'OCarouselItem',
     mixins: [InjectedChildMixin('carousel', Sorted)],

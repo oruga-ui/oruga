@@ -1,19 +1,19 @@
 <template>
     <div
-        class="carousel"
-        :class="{'is-overlay': overlay}"
+        class="o-car"
+        :class="{'o-car--overlay': overlay}"
         @mouseenter="checkPause"
         @mouseleave="startTimer">
         <progress
             v-if="progress"
-            class="progress"
+            class="o-car__progress"
             :class="progressVariant"
             :value="activeChild"
             :max="childItems.length - 1">
             {{ childItems.length - 1 }}
         </progress>
         <div
-            class="carousel-items"
+            class="o-car__items"
             @mousedown="dragStart"
             @mouseup="dragEnd"
             @touchstart.stop="dragStart"
@@ -21,11 +21,12 @@
             <slot/>
             <div
                 v-if="arrow"
-                class="carousel-arrow"
-                :class="{'is-hovered': arrowHover}">
+                class="o-car__arrow"
+                :class="{'o-car__arrow--hovered': arrowHover}">
                 <o-icon
                     v-show="hasPrev"
-                    class="has-icons-left"
+                    root-class="o-car__arrow__icon"
+                    class="o-car__arrow__icons-left"
                     @click.native="prev"
                     :pack="iconPack"
                     :icon="iconPrev"
@@ -33,7 +34,8 @@
                     both />
                 <o-icon
                     v-show="hasNext"
-                    class="has-icons-right"
+                    root-class="o-car__arrow__icon"
+                    class="o-car__arrow__icons-right"
                     @click.native="next"
                     :pack="iconPack"
                     :icon="iconNext"
@@ -43,7 +45,7 @@
         </div>
         <div
             v-if="autoplay && pauseHover && pauseInfo && isPause"
-            class="carousel-pause">
+            class="o-car__pause">
             <span
                 class="tag"
                 :class="pauseInfoType">
@@ -58,19 +60,19 @@
         </template>
         <div
             v-if="indicator"
-            class="carousel-indicator"
+            class="o-car__indicator"
             :class="indicatorClasses">
             <a
                 v-for="(item, index) in sortedItems"
-                class="indicator-item"
-                :class="{'is-active': item.isActive}"
+                class="o_car__indicator__item"
+                :class="{'o_car__indicator__item--active': item.isActive}"
                 @mouseover="modeChange('hover', index)"
                 @click="modeChange('click', index)"
                 :key="item._uid">
                 <slot
                     :i="index"
                     name="indicators">
-                    <span class="indicator-style" :class="indicatorStyle"/>
+                    <span class="o-car__indicator__style" :class="`o-car__indicator__style--${indicatorStyle}`"/>
                 </slot>
             </a>
         </div>
@@ -87,6 +89,12 @@ import Icon from '../icon/Icon'
 import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParentMixin'
 import {mod, bound, getValueByPath} from '../../utils/helpers'
 
+/**
+ * A Slideshow for cycling images in confined spaces
+ * @displayName Carousel
+ * @example ./examples/Carousel.md
+ * @style _carousel.scss
+ */
 export default {
     name: 'OCarousel',
     components: {
@@ -153,12 +161,6 @@ export default {
             type: Boolean,
             default: true
         },
-        indicatorBackground: Boolean,
-        indicatorCustom: Boolean,
-        indicatorCustomSize: {
-            type: String,
-            default: 'small'
-        },
         indicatorInside: {
             type: Boolean,
             default: true
@@ -173,7 +175,7 @@ export default {
         },
         indicatorStyle: {
             type: String,
-            default: 'is-dots'
+            default: 'dots'
         },
         overlay: Boolean,
         progress: Boolean,
@@ -194,15 +196,10 @@ export default {
     },
     computed: {
         indicatorClasses() {
-            return [
-                {
-                    'has-background': this.indicatorBackground,
-                    'has-custom': this.indicatorCustom,
-                    'is-inside': this.indicatorInside
-                },
-                this.indicatorCustom && this.indicatorCustomSize,
-                this.indicatorInside && this.indicatorPosition
-            ]
+            return {
+                'o-car__indicator--inside': this.indicatorInside,
+                [`o-car__indicator--inside--${this.indicatorPosition}`]: this.indicatorInside && this.indicatorPosition
+            }
         },
 
         // checking arrows

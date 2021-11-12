@@ -1,17 +1,17 @@
 <template>
     <div
-        class="carousel-list"
-        :class="{'has-shadow': scrollIndex > 0}"
+        class="o-car__list"
+        :class="{'o-car__list--shadow': scrollIndex > 0}"
         @mousedown.prevent="dragStart"
         @touchstart="dragStart">
         <div
-            class="carousel-slides"
+            class="o-car__slides"
             :class="listClass"
             :style="'transform:translateX('+translation+'px)'">
             <div
                 v-for="(list, index) in data"
-                class="carousel-slide"
-                :class="{'is-active': asIndicator ? activeItem === index : scrollIndex === index}"
+                class="o-car__slide"
+                :class="{'o-car__slide--active': asIndicator ? activeItem === index : scrollIndex === index}"
                 @mouseup="checkAsIndicator(index, $event)"
                 @touchend="checkAsIndicator(index, $event)"
                 :key="index"
@@ -27,11 +27,11 @@
         </div>
         <div
             v-if="arrow"
-            class="carousel-arrow"
-            :class="{'is-hovered': settings.arrowHover}">
+            class="o_car__arrow"
+            :class="{'o_car__arrow--hovered': settings.arrowHover}">
             <o-icon
                 v-show="hasPrev"
-                class="has-icons-left"
+                class="o-car__icons-left"
                 @click.native.prevent="prev"
                 :pack="settings.iconPack"
                 :icon="settings.iconPrev"
@@ -39,7 +39,7 @@
                 both />
             <o-icon
                 v-show="hasNext"
-                class="has-icons-right"
+                class="o_car__icons-right"
                 @click.native.prevent="next"
                 :pack="settings.iconPack"
                 :icon="settings.iconNext"
@@ -55,6 +55,9 @@ import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
 
+/**
+ * @displayName Carousel List
+ */
 export default {
     name: 'OCarouselList',
     components: {
