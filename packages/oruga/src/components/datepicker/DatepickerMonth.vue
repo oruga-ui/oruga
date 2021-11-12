@@ -1,18 +1,13 @@
 <template>
-    <section :class="tableClasses">
-        <div :class="tableBodyClasses">
+    <section :class="monthClasses">
+        <div :class="monthBodyClasses">
             <div class="datepicker-months">
                 <template v-for="(date, index) in monthDates">
                     <a
                         :ref="`month-${date.getMonth()}`"
                         v-if="selectableDate(date) && !disabled"
                         :key="index"
-                        :class="[
-                            classObject(date),
-                            {'has-event': eventsDateMatch(date)},
-                            indicators
-                        ]"
-                        class="datepicker-cell"
+                        :class="cellClasses"
                         role="button"
                         href="#"
                         :disabled="disabled"
@@ -32,8 +27,7 @@
                     <div
                         v-else
                         :key="index"
-                        :class="classObject(date)"
-                        class="datepicker-cell">
+                        :class="cellClasses(date)">
                         {{ monthNames[date.getMonth()] }}
                     </div>
                 </template>
@@ -67,7 +61,21 @@ export default {
         unselectableDaysOfWeek: Array,
         selectableDates: [Array, Function],
         range: Boolean,
-        multiple: Boolean
+        multiple: Boolean,
+        monthClass: [String, Function, Array],
+        monthBodyClass: [String, Function, Array],
+        monthCellSelectedClass: [String, Function, Array],
+        monthCellFirstSelectedClass: [String, Function, Array],
+        monthCellWithinSelectedClass: [String, Function, Array],
+        monthCellLastSelectedClass: [String, Function, Array],
+        monthCellWithinHoveredRangeClass: [String, Function, Array],
+        monthCellFirstHoveredClass: [String, Function, Array],
+        monthCellWithinHoveredClass: [String, Function, Array],
+        monthCellLastHoveredClass: [String, Function, Array],
+        monthCellTodayClass: [String, Function, Array],
+        monthCellSelectableClass: [String, Function, Array],
+        monthCellUnselectableClass: [String, Function, Array],
+        monthCellEventsClass: [String, Function, Array]
     },
     data() {
         return {
@@ -78,14 +86,14 @@ export default {
         }
     },
     computed: {
-        tableClasses() {
+        monthClasses() {
             return [
-                this.computedClass('tableClass', 'o-dpck__month')
+                this.computedClass('monthClass', 'o-dpck__month')
             ]
         },
-        tableBodyClasses() {
+        monthBodyClasses() {
             return [
-                this.computedClass('datepicker-body', 'o-dpck__month__body')
+                this.computedClass('monthBodyClass', 'o-dpck__month__body')
             ]
         },
         hasEvents() {
@@ -251,9 +259,9 @@ export default {
             return monthEvents
         },
         /*
-        * Build classObject for cell using validations
+        * Build cellClasses for cell using validations
         */
-        classObject(day) {
+        cellClasses(day) {
             function dateMatch(dateOne, dateTwo, multiple) {
                 // if either date is null or undefined, return false
                 if (!dateOne || !dateTwo || multiple) {
@@ -282,7 +290,76 @@ export default {
                 ))
             }
 
-            return {
+            return [
+                {
+                    [this.computedClass('monthCellSelectedClass', 'o-dpck__month__cell--selected')] :
+                        dateMatch(day, this.value, this.multiple) ||
+                        dateWithin(day, this.value, this.multiple) ||
+                        dateMultipleSelected(day, this.multipleSelectedDates, this.multiple)
+                },
+                {
+                    [this.computedClass('monthCellFirstSelectedClass', 'o-dpck__month__cell--first-selected')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.value) && this.value[0],
+                            this.multiple)
+                },
+                {
+                    [this.computedClass('monthCellWithinSelectedClass', 'o-dpck__month__cell--within-selected')] :
+                        dateWithin(day, this.value, this.multiple)
+                },
+                {
+                    [this.computedClass('monthCellLastSelectedClass', 'o-dpck__month__cell--last-selected')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.value) && this.value[1],
+                            this.multiple)
+                },
+                {
+                    [this.computedClass('monthCellWithinHoveredRangeClass', 'o-dpck__month__cell--within-hovered-range')] :
+                        this.hoveredDateRange && this.hoveredDateRange.length === 2 &&
+                        (dateMatch(day, this.hoveredDateRange) ||
+                        dateWithin(day, this.hoveredDateRange))
+                },
+                {
+                    [this.computedClass('monthCellFirstHoveredClass', 'o-dpck__month__cell--first-hovered')] :
+                       dateMatch(
+                            day,
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0])
+                },
+                {
+                    [this.computedClass('monthCellWithinHoveredClass', 'o-dpck__month__cell--within-hovered')] :
+                        dateWithin(day, this.hoveredDateRange)
+                },
+                {
+                    [this.computedClass('monthCellLastHoveredClass', 'o-dpck__month__cell--last-hovered')] :
+                        dateMatch(
+                            day,
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1])
+                },
+                {
+                    [this.computedClass('monthCellTodayClass', 'o-dpck__month__cell--today')] :
+                        dateMatch(day, this.dateCreator())
+                },
+                {
+                    [this.computedClass('monthCellSelectableclass', 'o-dpck__month__cell--selectable')] :
+                        this.selectableDate(day) && !this.disabled
+                },
+                {
+                    [this.computedClass('monthCellUnselectableClass', 'o-dpck__month__cell--unselectable')] :
+                        !this.selectableDate(day) || this.disabled
+                },
+                {
+                    [this.computedClass('monthCellEventsClass', 'o-dpck__month__cell--events')] :
+                        this.hasEvents
+                },
+                {
+                    [this.computedClass('monthEventIndicatorsClass', 'o-dpck__month__event--', this.indicators)]:
+                        this.indicators
+                }
+            ]
+
+            /*return {
                 'is-selected': dateMatch(day, this.value, this.multiple) ||
                                dateWithin(day, this.value, this.multiple) ||
                                dateMultipleSelected(day, this.multipleSelectedDates, this.multiple),
@@ -317,7 +394,7 @@ export default {
                 'is-today': dateMatch(day, this.dateCreator()),
                 'is-selectable': this.selectableDate(day) && !this.disabled,
                 'is-unselectable': !this.selectableDate(day) || this.disabled
-            }
+            }*/
         },
 
        /*

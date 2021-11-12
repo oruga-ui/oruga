@@ -331,7 +331,7 @@ describe('ODatepickerMonth', () => {
                     dateCreator
                 }
             })
-            expect(wrapper.findAll('section > div > div > .is-selected').length).toBe(5)
+            expect(wrapper.findAll('.o-dpck__month__cell--selected').length).toBe(5)
         })
 
         it('should have is-first-selected class for the first date selected within the range', () => {
@@ -347,7 +347,7 @@ describe('ODatepickerMonth', () => {
                     dateCreator
                 }
             })
-            expect(wrapper.findAll('section > div > div > .is-selected').at(0).classes()).toContain('is-first-selected')
+            expect(wrapper.findAll('.o-dpck__month__cell--selected').at(0).classes()).toContain('o-dpck__month__cell--first-selected')
         })
 
         /* WARNING: this test fails, TO BE FIXED
@@ -380,7 +380,7 @@ describe('ODatepickerMonth', () => {
                     dateCreator
                 }
             })
-            expect(wrapper.findAll('section > div > div > .is-selected').at(4).classes()).toContain('is-last-selected')
+            expect(wrapper.findAll('.o-dpck__month__cell--selected').at(4).classes()).toContain('.o-dpck__month__cell--last-selected')
         })
 
         describe('hoverd class with range props', () => {
@@ -403,7 +403,7 @@ describe('ODatepickerMonth', () => {
                         }
                     }
                 })
-                expect(wrapper.findAll('section > div > div > .is-within-hovered-range').length).toBe(4)
+                expect(wrapper.findAll('.o-dpck__month__cell--within-hovered-range').length).toBe(4)
             })
 
             it('should have is-first-hovered class for the first date hovered within the range', () => {
@@ -425,7 +425,7 @@ describe('ODatepickerMonth', () => {
                         }
                     }
                 })
-                expect(wrapper.findAll('section > div > div > .is-first-hovered').at(0).classes()).toContain('is-first-hovered')
+                expect(wrapper.findAll('.o-dpck__month__cell--first-hovered').at(0).classes()).toContain('o-dpck__month__cell--first-hovered')
             })
 
             /* WARNING: this test fails, TO BE FIXED
@@ -470,7 +470,7 @@ describe('ODatepickerMonth', () => {
                         }
                     }
                 })
-                expect(wrapper.findAll('section > div > div > .is-within-hovered-range').at(3).classes()).toContain('is-last-hovered')
+                expect(wrapper.findAll('.o-dpck__month__cell--within-hovered-range').at(3).classes()).toContain('.o-dpck__month__cell--last-hovered')
             })
         })
     })
