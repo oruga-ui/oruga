@@ -585,7 +585,7 @@ export default defineComponent({
                 * this.$refs.dropdown may be undefined
                 * when Autocomplete is conditional rendered
                 */
-                if (this.$refs.dropdown === undefined) return
+                if (!this.$refs.dropdown) return
 
                 const rect = this.$refs.dropdown.getBoundingClientRect()
 
