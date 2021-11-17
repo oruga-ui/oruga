@@ -18,7 +18,6 @@
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             @sort="(column, event) => sort(column, null, event)"
-            @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
@@ -86,7 +85,7 @@
                                 {{ column.label }}
                                 <span
                                     v-show="column.sortable && currentSortColumn === column"
-                                    :class="thSortIconClasses(column)">
+                                    :class="thSortIconClasses()">
                                     <o-icon
                                         :icon="sortIcon"
                                         :pack="iconPack"
@@ -168,7 +167,7 @@
                     :key="this.customRowKey ? row[this.customRowKey] : index">
                     <tr
                         :class="rowClasses(row, index)"
-                        @click="selectRow(row)"
+                        @click="selectRow(row, index)"
                         @dblclick="$emit('dblclick', row)"
                         @mouseenter="emitEventForRow('mouseenter', $event, row)"
                         @mouseleave="emitEventForRow('mouseleave', $event, row)"
@@ -236,7 +235,7 @@
                     <transition :name="detailTransition">
                         <tr
                             v-if="isActiveDetailRow(row)"
-                            :key="(this.customRowKey ? row[this.customRowKey] : index) + 'detail'"
+                            :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
                             :class="detailedClasses">
                             <td :colspan="columnCount">
                                 <slot
@@ -988,7 +987,7 @@ export default defineComponent({
 
                     // sort boolean type
                     if (typeof newA === 'boolean' && typeof newB === 'boolean') {
-                        return isAsc ? newA - newB : newB - newA
+                        return isAsc ? newA > newB ? 1 : -1: newA > newB ? -1 : 1
                     }
 
                     if (!newA && newA !== 0) return 1

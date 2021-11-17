@@ -200,7 +200,7 @@
 </template>
 
 <script lang="ts">
-import { App, defineComponent } from 'vue'
+import { App, defineComponent, PropType } from 'vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -289,7 +289,7 @@ export default defineComponent({
             $datepicker: this
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change'],
+    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change', 'icon-right-click'],
     props: {
         modelValue: {
             type: [Date, Array]
@@ -318,9 +318,9 @@ export default defineComponent({
          */
         size: String,
         inline: Boolean,
-        minDate: Date,
-        maxDate: Date,
-        focusedDate: Date,
+        minDate: Date as PropType<Date>,
+        maxDate: Date as PropType<Date>,
+        focusedDate: Date as PropType<Date>,
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,

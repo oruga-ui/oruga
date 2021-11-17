@@ -17,7 +17,6 @@
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             @sort="(column, event) => sort(column, null, event)"
-            @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
@@ -166,7 +165,7 @@
                     <tr
                         :key="customRowKey ? row[customRowKey] : index"
                         :class="rowClasses(row, index)"
-                        @click="selectRow(row)"
+                        @click="selectRow(row, index)"
                         @dblclick="$emit('dblclick', row)"
                         @mouseenter="emitEventForRow('mouseenter', $event, row)"
                         @mouseleave="emitEventForRow('mouseleave', $event, row)"

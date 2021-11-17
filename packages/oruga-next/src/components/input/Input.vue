@@ -83,6 +83,8 @@ export default defineComponent({
     props: {
         /** @model */
         modelValue: [Number, String],
+        /** Native options to use in HTML5 validation */
+		autocomplete: String,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
