@@ -228,20 +228,6 @@ export default {
                     }
                 },
                 {
-                    class: "selectClass",
-                    description: "Class of the Timepicker select",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-                {
-                    class: "selectPlaceholderClass",
-                    description: "Class of the Timepicker select placeholder",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-                {
                     class: "separatorClass",
                     description: "Class of the Timepicker separator",
                     action: () => {
@@ -271,6 +257,15 @@ export default {
                     realClass: "dropdownClasses.rootClass",
                     description: "Classes to apply on dropdown.",
                     componentRef: "Dropdown",
+                    action: () => {
+                        this.openTimePicker();
+                    }
+                },
+                {
+                    class: "selectClasses",
+                    realClass: "selectClasses.selectClass",
+                    description: "Classes to apply on select.",
+                    componentRef: "Select",
                     action: () => {
                         this.openTimePicker();
                     }

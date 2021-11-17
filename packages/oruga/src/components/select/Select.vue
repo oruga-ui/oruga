@@ -62,11 +62,6 @@ export default {
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'select',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'select'
-        }
-    },
     props: {
         /** @model */
         value: {
@@ -160,6 +155,10 @@ export default {
                 this.syncFilled(this.selected)
                 !this.isValid && this.checkHtml5Validity()
             }
+        },
+
+        $elementRef() {
+            return 'select'
         }
     },
     watch: {

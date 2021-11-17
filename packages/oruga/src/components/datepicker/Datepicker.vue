@@ -43,84 +43,86 @@
             </template>
             <o-dropdown-item
                 override
+                tag="div"
+                :item-class="boxClasses"
                 :disabled="disabled"
                 :clickable="false">
-                <div :class="boxClasses">
-                    <header :class="headerClasses">
-                        <template v-if="$slots.header !== undefined && $slots.header.length">
-                            <slot name="header" />
-                        </template>
-                        <div
-                            v-else
-                            :class="headerButtonsClasses">
-                            <a
-                                v-show="!showPrev && !disabled"
-                                :class="prevBtnClasses"
-                                role="button"
-                                href="#"
-                                :disabled="disabled"
-                                :aria-label="ariaPreviousLabel"
-                                @click.prevent="prev"
-                                @keydown.enter.prevent="prev"
-                                @keydown.space.prevent="prev">
 
-                                <o-icon
-                                    :icon="iconPrev"
-                                    :pack="iconPack"
-                                    both
-                                    clickable />
-                            </a>
-                            <a
-                                v-show="!showNext && !disabled"
-                                :class="nextBtnClasses"
-                                role="button"
-                                href="#"
-                                :disabled="disabled"
-                                :aria-label="ariaNextLabel"
-                                @click.prevent="next"
-                                @keydown.enter.prevent="next"
-                                @keydown.space.prevent="next">
-
-                                <o-icon
-                                    :icon="iconNext"
-                                    :pack="iconPack"
-                                    both
-                                    clickable />
-                            </a>
-                            <div :class="listsClasses">
-                                <o-field>
-                                    <o-select
-                                        v-if="!isTypeMonth"
-                                        v-model="focusedDateData.month"
-                                        :disabled="disabled"
-                                        :size="size">
-                                        <option
-                                            v-for="month in listOfMonths"
-                                            :value="month.index"
-                                            :key="month.name"
-                                            :disabled="month.disabled">
-                                            {{ month.name }}
-                                        </option>
-                                    </o-select>
-                                    <o-select
-                                        v-model="focusedDateData.year"
-                                        :disabled="disabled"
-                                        :size="size">
-                                        <option
-                                            v-for="year in listOfYears"
-                                            :value="year"
-                                            :key="year">
-                                            {{ year }}
-                                        </option>
-                                    </o-select>
-                                </o-field>
-                            </div>
-                        </div>
-                    </header>
+                <header :class="headerClasses">
+                    <template v-if="$slots.header !== undefined && $slots.header.length">
+                        <slot name="header" />
+                    </template>
                     <div
-                        v-if="!isTypeMonth"
-                        class="datepicker-content"
-                        :class="{'content-horizonal-timepicker': horizontalTimePicker}">
+                        v-else
+                        :class="headerButtonsClasses">
+                        <a
+                            v-show="!showPrev && !disabled"
+                            :class="prevBtnClasses"
+                            role="button"
+                            href="#"
+                            :disabled="disabled"
+                            :aria-label="ariaPreviousLabel"
+                            @click.prevent="prev"
+                            @keydown.enter.prevent="prev"
+                            @keydown.space.prevent="prev">
+
+                            <o-icon
+                                :icon="iconPrev"
+                                :pack="iconPack"
+                                both
+                                clickable />
+                        </a>
+                        <a
+                            v-show="!showNext && !disabled"
+                            :class="nextBtnClasses"
+                            role="button"
+                            href="#"
+                            :disabled="disabled"
+                            :aria-label="ariaNextLabel"
+                            @click.prevent="next"
+                            @keydown.enter.prevent="next"
+                            @keydown.space.prevent="next">
+
+                            <o-icon
+                                :icon="iconNext"
+                                :pack="iconPack"
+                                both
+                                clickable />
+                        </a>
+                        <div :class="listsClasses">
+                            <o-field>
+                                <o-select
+                                    v-if="!isTypeMonth"
+                                    v-model="focusedDateData.month"
+                                    :disabled="disabled"
+                                    :size="size">
+                                    <option
+                                        v-for="month in listOfMonths"
+                                        :value="month.index"
+                                        :key="month.name"
+                                        :disabled="month.disabled">
+                                        {{ month.name }}
+                                    </option>
+                                </o-select>
+                                <o-select
+                                    v-model="focusedDateData.year"
+                                    :disabled="disabled"
+                                    :size="size">
+                                    <option
+                                        v-for="year in listOfYears"
+                                        :value="year"
+                                        :key="year">
+                                        {{ year }}
+                                    </option>
+                                </o-select>
+                            </o-field>
+                        </div>
+                    </div>
+                </header>
+                <div
+                    v-if="!isTypeMonth"
+                    class="datepicker-content"
+                    :class="{'content-horizonal-timepicker': horizontalTimePicker}">
                     <o-datepicker-table
                         v-model="computedValue"
                         :day-names="newDayNames"
@@ -171,31 +173,29 @@
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
                         @update:focused="focusedDateData = $event" />
-                    </div>
-                    <div v-else>
-                        <o-datepicker-month
-                            v-model="computedValue"
-                            :month-names="newMonthNames"
-                            :min-date="minDate"
-                            :max-date="maxDate"
-                            :focused="focusedDateData"
-                            :disabled="disabled"
-                            :unselectable-dates="unselectableDates"
-                            :unselectable-days-of-week="unselectableDaysOfWeek"
-                            :selectable-dates="selectableDates"
-                            :events="events"
-                            :indicators="indicators"
-                            :date-creator="dateCreator"
-                            :range="range"
-                            :multiple="multiple"
-                            @range-start="date => $emit('range-start', date)"
-                            @range-end="date => $emit('range-end', date)"
-                            @close="togglePicker(false)"
-                            @change-focus="changeFocus"
-                            @update:focused="focusedDateData = $event" />
-                    </div>
                 </div>
-
+                <div v-else>
+                    <o-datepicker-month
+                        v-model="computedValue"
+                        :month-names="newMonthNames"
+                        :min-date="minDate"
+                        :max-date="maxDate"
+                        :focused="focusedDateData"
+                        :disabled="disabled"
+                        :unselectable-dates="unselectableDates"
+                        :unselectable-days-of-week="unselectableDaysOfWeek"
+                        :selectable-dates="selectableDates"
+                        :events="events"
+                        :indicators="indicators"
+                        :date-creator="dateCreator"
+                        :range="range"
+                        :multiple="multiple"
+                        @range-start="date => $emit('range-start', date)"
+                        @range-end="date => $emit('range-end', date)"
+                        @close="togglePicker(false)"
+                        @change-focus="changeFocus"
+                        @update:focused="focusedDateData = $event" />
+                </div>
                 <footer
                     v-if="$slots.default !== undefined"
                     :class="footerClasses">
@@ -578,8 +578,18 @@ export default {
         tableEventClass: [String, Function, Array],
         tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
-        inputClasses: Object,
-        dropdownClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'datepicker.inputClasses', {})
+            }
+        },
+        dropdownClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'datepicker.dropdownClasses', {})
+            }
+        }
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -595,8 +605,7 @@ export default {
                 day: focusedDate.getDate(),
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
-            },
-            $elementRef: 'input'
+            }
         }
     },
     computed: {
@@ -772,6 +781,10 @@ export default {
 
         ariaRole() {
             return !this.inline ? 'dialog' : undefined
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {
@@ -924,11 +937,11 @@ export default {
         },
         updateInternalState(value) {
             if (this.dateSelected === value) return
-            const currentDate = Array.isArray(value)
+            const isArray = Array.isArray(value)
+            const currentDate = isArray
                 ? (!value.length ? this.dateCreator() : value[value.length - 1])
                 : (!value ? this.dateCreator() : value)
-            if (Array.isArray(value) &&
-                this.dateSelected && value.length > this.dateSelected.length) {
+            if (!isArray || (isArray && this.dateSelected && value.length > this.dateSelected.length)) {
                 this.focusedDateData = {
                     day: currentDate.getDate(),
                     month: currentDate.getMonth(),

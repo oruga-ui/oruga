@@ -17,6 +17,7 @@ exports[`OTableMobileSort render correctly 1`] = `
                 <!---->
             </tr>
             <!---->
+            <!---->
         </thead>
         <tbody>
             <tr>

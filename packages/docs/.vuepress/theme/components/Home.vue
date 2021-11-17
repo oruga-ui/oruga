@@ -4,9 +4,6 @@
     :aria-labelledby="data.heroText !== null ? 'main-title' : null"
   >
     <header class="hero">
-      <div style="margin-top: 2rem;">
-          🎃 Psst... <a href="/hacktoberfest/">Oruga participates in Hacktoberfest 2021</a>!
-      </div>
 
       <img
         v-if="data.heroImage"
@@ -59,6 +56,13 @@
           v.{{pkgNext.version}}
         </div>
       </div>
+
+      <p align="center">
+        <a href="https://ko-fi.com/orugaui">
+          <img style="min-width:32px;height:32px;" src="https://github.githubassets.com/images/modules/site/icons/funding_platforms/ko_fi.svg" />Buy us a coffee ☕️
+        </a>
+        <a href="https://liberapay.com/oruga-ui/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+      </p>
 
     </header>
 

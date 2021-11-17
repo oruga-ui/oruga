@@ -241,14 +241,18 @@ export default defineComponent({
         closeClass: [String, Array, Function],
         itemClass: [String, Array, Function],
         counterClass: [String, Array, Function],
-        autocompleteClasses: Object
+        autocompleteClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'inputitems.autocompleteClasses', {})
+            }
+        }
     },
     data() {
         return {
             items: Array.isArray(this.modelValue) ? this.modelValue.slice(0) : (this.modelValue || []),
             newItem: '',
-            isComposing: false,
-            $elementRef: 'autocomplete'
+            isComposing: false
         }
     },
     computed: {
@@ -301,19 +305,19 @@ export default defineComponent({
         },
 
         hasDefaultSlot() {
-            return !!this.$slots.default()
+            return !!this.$slots.default
         },
 
         hasEmptySlot() {
-            return !!this.$slots.empty()
+            return !!this.$slots.empty
         },
 
         hasHeaderSlot() {
-            return !!this.$slots.header()
+            return !!this.$slots.header
         },
 
         hasFooterSlot() {
-            return !!this.$slots.footer()
+            return !!this.$slots.footer
         },
 
         /**
@@ -337,6 +341,10 @@ export default defineComponent({
             return sep.length ? new RegExp(sep.map((s) => {
                 return s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') : null
             }).join('|'), 'g') : null
+        },
+
+        $elementRef() {
+            return 'autocomplete'
         }
     },
     watch: {

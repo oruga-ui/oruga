@@ -79,13 +79,6 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'input',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
-        }
-    },
     emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
@@ -264,6 +257,12 @@ export default defineComponent({
                 overflow: 'hidden'
             }
         },
+
+        $elementRef() {
+            return this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
+        }
     },
     watch: {
         /**

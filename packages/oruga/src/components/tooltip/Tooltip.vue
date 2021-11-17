@@ -169,7 +169,7 @@ export default {
             if (tooltip && trigger) {
                 // update wrapper tooltip
                 const tooltipEl = this.$data.bodyEl.children[0]
-                tooltipEl.classList.forEach((item) => tooltipEl.classList.remove(item))
+                tooltipEl.classList.forEach((item) => tooltipEl.classList.remove(...item.split(' ')))
                 if (this.$vnode && this.$vnode.data && this.$vnode.data.staticClass) {
                     tooltipEl.classList.add(this.$vnode.data.staticClass)
                 }
@@ -178,7 +178,7 @@ export default {
                         Object.keys(item).filter(key => !!item[key]).forEach(
                             key => tooltipEl.classList.add(key))
                     } else {
-                        tooltipEl.classList.add(item)
+                        tooltipEl.classList.add(...item.split(' '))
                     }
                 })
                 tooltipEl.style.width = `${trigger.clientWidth}px`

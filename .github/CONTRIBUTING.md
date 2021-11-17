@@ -64,18 +64,20 @@ and run:
 $ npm run bootstrap
 ```
 
-Common used NPM scripts
+**Common used NPM scripts: (Quick Start)**
 
+To compile the code in watch mode:
 ```bash
 # build lib in watch mode
 $ npm run build:lib:watch:oruga
 ```
-
+Then open up new bash and run the live server **concurrently** with the above command, and then start working to see your changes live on [http://localhost:8080](http://localhost:8080):
 ```bash
-# build lib in watch mode
+# build and launch live server of docs in watch mode to see the changes
 $ npm run build:docs:watch:oruga
 ```
 
+After writing tests, run the following command:
 ```bash
 # launch tests suite
 $ npm run test:oruga

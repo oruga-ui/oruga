@@ -43,129 +43,130 @@
             </template>
             <o-dropdown-item
                 override
+                tag="div"
+                :item-class="boxClasses"
                 :disabled="disabled"
                 :clickable="false">
-                <div :class="boxClasses">
-                    <header :class="headerClasses">
-                        <template v-if="$slots.header !== undefined && $slots.header.length">
-                            <slot name="header" />
-                        </template>
-                        <div
-                            v-else
-                            :class="headerButtonsClasses">
-                            <a
-                                v-show="!showPrev && !disabled"
-                                :class="prevBtnClasses"
-                                role="button"
-                                href="#"
-                                :aria-label="ariaPreviousLabel"
-                                @click.prevent="prev"
-                                @keydown.enter.prevent="prev"
-                                @keydown.space.prevent="prev">
 
-                                <o-icon
-                                    :icon="iconPrev"
-                                    :pack="iconPack"
-                                    both
-                                    clickable />
-                            </a>
-                            <a
-                                v-show="!showNext && !disabled"
-                                :class="nextBtnClasses"
-                                role="button"
-                                href="#"
-                                :aria-label="ariaNextLabel"
-                                @click.prevent="next"
-                                @keydown.enter.prevent="next"
-                                @keydown.space.prevent="next">
+                <header :class="headerClasses">
+                    <template v-if="$slots.header !== undefined && $slots.header.length">
+                        <slot name="header" />
+                    </template>
+                    <div
+                        v-else
+                        :class="headerButtonsClasses">
+                        <a
+                            v-show="!showPrev && !disabled"
+                            :class="prevBtnClasses"
+                            role="button"
+                            href="#"
+                            :aria-label="ariaPreviousLabel"
+                            @click.prevent="prev"
+                            @keydown.enter.prevent="prev"
+                            @keydown.space.prevent="prev">
 
-                                <o-icon
-                                    :icon="iconNext"
-                                    :pack="iconPack"
-                                    both
-                                    clickable />
-                            </a>
-                            <div :class="listsClasses">
-                                <o-field>
-                                    <o-select
-                                        v-if="!isTypeMonth"
-                                        v-model="focusedDateData.month"
-                                        :disabled="disabled"
-                                        :size="size">
-                                        <option
-                                            v-for="month in listOfMonths"
-                                            :value="month.index"
-                                            :key="month.name"
-                                            :disabled="month.disabled">
-                                            {{ month.name }}
-                                        </option>
-                                    </o-select>
-                                    <o-select
-                                        v-model="focusedDateData.year"
-                                        :disabled="disabled"
-                                        :size="size">
-                                        <option
-                                            v-for="year in listOfYears"
-                                            :value="year"
-                                            :key="year">
-                                            {{ year }}
-                                        </option>
-                                    </o-select>
-                                </o-field>
-                            </div>
+                            <o-icon
+                                :icon="iconPrev"
+                                :pack="iconPack"
+                                both
+                                clickable />
+                        </a>
+                        <a
+                            v-show="!showNext && !disabled"
+                            :class="nextBtnClasses"
+                            role="button"
+                            href="#"
+                            :aria-label="ariaNextLabel"
+                            @click.prevent="next"
+                            @keydown.enter.prevent="next"
+                            @keydown.space.prevent="next">
+
+                            <o-icon
+                                :icon="iconNext"
+                                :pack="iconPack"
+                                both
+                                clickable />
+                        </a>
+                        <div :class="listsClasses">
+                            <o-field>
+                                <o-select
+                                    v-if="!isTypeMonth"
+                                    v-model="focusedDateData.month"
+                                    :disabled="disabled"
+                                    :size="size">
+                                    <option
+                                        v-for="month in listOfMonths"
+                                        :value="month.index"
+                                        :key="month.name"
+                                        :disabled="month.disabled">
+                                        {{ month.name }}
+                                    </option>
+                                </o-select>
+                                <o-select
+                                    v-model="focusedDateData.year"
+                                    :disabled="disabled"
+                                    :size="size">
+                                    <option
+                                        v-for="year in listOfYears"
+                                        :value="year"
+                                        :key="year">
+                                        {{ year }}
+                                    </option>
+                                </o-select>
+                            </o-field>
                         </div>
-                    </header>
-                    <o-datepicker-table
-                        v-model="computedValue"
-                        :day-names="newDayNames"
-                        :month-names="newMonthNames"
-                        :first-day-of-week="firstDayOfWeek"
-                        :rules-for-first-week="rulesForFirstWeek"
-                        :min-date="minDate"
-                        :max-date="maxDate"
-                        :focused="focusedDateData"
-                        :disabled="disabled"
-                        :unselectable-dates="unselectableDates"
-                        :unselectable-days-of-week="unselectableDaysOfWeek"
-                        :selectable-dates="selectableDates"
-                        :events="events"
-                        :indicators="indicators"
-                        :date-creator="dateCreator"
-                        :type-month="isTypeMonth"
-                        :nearby-month-days="nearbyMonthDays"
-                        :nearby-selectable-month-days="nearbySelectableMonthDays"
-                        :show-week-number="showWeekNumber"
-                        :week-number-clickable="weekNumberClickable"
-                        :range="range"
-                        :multiple="multiple"
-                        :table-class="tableClass"
-                        :table-head-class="tableHeadClass"
-                        :table-head-cell-class="tableHeadCellClass"
-                        :table-body-class="tableBodyClass"
-                        :table-row-class="tableRowClass"
-                        :table-cell-class="tableCellClass"
-                        :table-cell-selected-class="tableCellSelectedClass"
-                        :table-cell-first-selected-class="tableCellFirstSelectedClass"
-                        :table-cell-invisible-class="tableCellInvisibleClass"
-                        :table-cell-within-selected-class="tableCellWithinSelectedClass"
-                        :table-cell-last-selected-class="tableCellLastSelectedClass"
-                        :table-cell-first-hovered-class="tableCellFirstHoveredClass"
-                        :table-cell-within-hovered-class="tableCellWithinHoveredClass"
-                        :table-cell-last-hovered-class="tableCellLastHoveredClass"
-                        :table-cell-today-class="tableCellTodayClass"
-                        :table-cell-selectable-class="tableCellSelectableClass"
-                        :table-cell-unselectable-class="tableCellUnselectableClass"
-                        :table-cell-nearby-class="tableCellNearbyClass"
-                        :table-cell-events-class="tableCellEventsClass"
-                        :table-events-class="tableEventsClass"
-                        :table-event-variant-class="tableEventVariantClass"
-                        :table-event-class="tableEventClass"
-                        :table-event-indicators-class="tableEventIndicatorsClass"
-                        @range-start="date => $emit('range-start', date)"
-                        @range-end="date => $emit('range-end', date)"
-                        @close="togglePicker(false)"
-                        @update:focused="focusedDateData = $event" />
-                </div>
+                    </div>
+                </header>
+                <o-datepicker-table
+                    v-model="computedValue"
+                    :day-names="newDayNames"
+                    :month-names="newMonthNames"
+                    :first-day-of-week="firstDayOfWeek"
+                    :rules-for-first-week="rulesForFirstWeek"
+                    :min-date="minDate"
+                    :max-date="maxDate"
+                    :focused="focusedDateData"
+                    :disabled="disabled"
+                    :unselectable-dates="unselectableDates"
+                    :unselectable-days-of-week="unselectableDaysOfWeek"
+                    :selectable-dates="selectableDates"
+                    :events="events"
+                    :indicators="indicators"
+                    :date-creator="dateCreator"
+                    :type-month="isTypeMonth"
+                    :nearby-month-days="nearbyMonthDays"
+                    :nearby-selectable-month-days="nearbySelectableMonthDays"
+                    :show-week-number="showWeekNumber"
+                    :week-number-clickable="weekNumberClickable"
+                    :range="range"
+                    :multiple="multiple"
+                    :table-class="tableClass"
+                    :table-head-class="tableHeadClass"
+                    :table-head-cell-class="tableHeadCellClass"
+                    :table-body-class="tableBodyClass"
+                    :table-row-class="tableRowClass"
+                    :table-cell-class="tableCellClass"
+                    :table-cell-selected-class="tableCellSelectedClass"
+                    :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                    :table-cell-invisible-class="tableCellInvisibleClass"
+                    :table-cell-within-selected-class="tableCellWithinSelectedClass"
+                    :table-cell-last-selected-class="tableCellLastSelectedClass"
+                    :table-cell-first-hovered-class="tableCellFirstHoveredClass"
+                    :table-cell-within-hovered-class="tableCellWithinHoveredClass"
+                    :table-cell-last-hovered-class="tableCellLastHoveredClass"
+                    :table-cell-today-class="tableCellTodayClass"
+                    :table-cell-selectable-class="tableCellSelectableClass"
+                    :table-cell-unselectable-class="tableCellUnselectableClass"
+                    :table-cell-nearby-class="tableCellNearbyClass"
+                    :table-cell-events-class="tableCellEventsClass"
+                    :table-events-class="tableEventsClass"
+                    :table-event-variant-class="tableEventVariantClass"
+                    :table-event-class="tableEventClass"
+                    :table-event-indicators-class="tableEventIndicatorsClass"
+                    @range-start="date => $emit('range-start', date)"
+                    @range-end="date => $emit('range-end', date)"
+                    @close="togglePicker(false)"
+                    @update:focused="focusedDateData = $event" />
 
                 <footer
                     v-if="$slots.default !== undefined"
@@ -288,7 +289,7 @@ export default defineComponent({
             $datepicker: this
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end'],
+    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change'],
     props: {
         modelValue: {
             type: [Date, Array]
@@ -500,10 +501,18 @@ export default defineComponent({
         tableEventClass: [String, Function, Array],
         tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
-        /** Classes to apply on internal input (@see o-input style docs) */
-        inputClasses: Object,
-        /** Classes to apply on internal dropdown (@see o-dropdown style docs) */
-        dropdownClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'datepicker.inputClasses', {})
+            }
+        },
+        dropdownClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'datepicker.dropdownClasses', {})
+            }
+        }
     },
     data() {
         const focusedDate = (Array.isArray(this.modelValue) ? this.modelValue[0] : (this.modelValue)) ||
@@ -519,8 +528,7 @@ export default defineComponent({
                 day: focusedDate.getDate(),
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
-            },
-            $elementRef: 'input'
+            }
         }
     },
     computed: {
@@ -696,6 +704,10 @@ export default defineComponent({
 
         ariaRole() {
             return !this.inline ? 'dialog' : undefined
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {
@@ -848,11 +860,11 @@ export default defineComponent({
         },
         updateInternalState(value) {
             if (this.dateSelected === value) return
-            const currentDate = Array.isArray(value)
+            const isArray = Array.isArray(value)
+            const currentDate = isArray
                 ? (!value.length ? this.dateCreator() : value[value.length - 1])
                 : (!value ? this.dateCreator() : value)
-            if (Array.isArray(value) &&
-                this.dateSelected && value.length > this.dateSelected.length) {
+            if (!isArray || (isArray && this.dateSelected && value.length > this.dateSelected.length)) {
                 this.focusedDateData = {
                     day: currentDate.getDate(),
                     month: currentDate.getMonth(),

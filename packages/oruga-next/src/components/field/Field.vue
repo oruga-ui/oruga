@@ -26,7 +26,6 @@
         <div v-else-if="hasInnerField" :class="bodyClasses">
             <o-field
                 :addons="false"
-                :variant="newVariant"
                 :class="innerFieldClasses">
                 <slot/>
             </o-field>
@@ -39,7 +38,7 @@
             :class="messageClasses"
         >
             <slot v-if="hasMessageSlot" name="message"/>
-            <template v-else>{{ message }}</template>
+            <template v-else>{{ newMessage }}</template>
         </p>
     </div>
 </template>
@@ -187,10 +186,10 @@ export default defineComponent({
             return this.$field
         },
         hasLabelSlot() {
-            return this.$slots.label()
+            return this.$slots.label
         },
         hasMessageSlot() {
-            return this.$slots.message()
+            return this.$slots.message
         },
         hasLabel() {
             return this.label || this.hasLabelSlot
@@ -222,7 +221,12 @@ export default defineComponent({
         */
         newMessage(value) {
             if (this.parent && this.parent.hasInnerField) {
-                this.parent.newMessage = value
+                if (!this.parent.variant) {
+                    this.parent.newVariant = this.newVariant
+                }
+                if (!this.parent.message) {
+                    this.parent.newMessage = value
+                }
             }
         }
     },

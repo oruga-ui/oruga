@@ -831,9 +831,9 @@ export default defineComponent({
         },
 
         hasCustomSubheadings() {
-            if (this.$slots && this.$slots.subheading()) return true
+            if (this.$slots.subheading) return true
             return this.newColumns.some((column) => {
-                return column.subheading || (column.$slots && column.$slots.subheading())
+                return column.subheading || (column.$slots.subheading)
             })
         },
     },
@@ -1271,12 +1271,13 @@ export default defineComponent({
         * Check if footer slot has custom content.
         */
         hasCustomFooterSlot() {
-            const footer = this.$slots.footer()
-            if (footer.length > 1) return true
+            if (this.$slots.footer) {
+                const footer = this.$slots.footer()
+                if (footer.length > 1) return true
 
-            const tag = footer[0].tag
-            if (tag !== 'th' && tag !== 'td') return false
-
+                const tag = footer[0].tag
+                if (tag !== 'th' && tag !== 'td') return false
+            }
             return true
         },
 

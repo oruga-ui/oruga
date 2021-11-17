@@ -65,13 +65,13 @@ export default defineComponent({
             }
         },
         hasDefaultSlot() {
-            return this.$slots.default()
+            return this.$slots.default
         },
         hasSearchableSlot() {
-            return this.$slots.searchable()
+            return this.$slots.searchable
         },
         hasHeaderSlot() {
-            return this.$slots.header()
+            return this.$slots.header
         },
         isHeaderUnselectable() {
             return !this.headerSelectable && this.sortable

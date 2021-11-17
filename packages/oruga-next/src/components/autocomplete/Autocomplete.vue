@@ -29,7 +29,7 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
-                v-show="isActive && (!isEmpty || $slots.empty || $slots.header)"
+                v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
@@ -115,11 +115,6 @@ export default defineComponent({
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
@@ -208,7 +203,12 @@ export default defineComponent({
         itemEmptyClass: [String, Function, Array],
         itemHeaderClass: [String, Function, Array],
         itemFooterClass: [String, Function, Array],
-        inputClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.inputClasses', {})
+            }
+        }
     },
     data() {
         return {
@@ -351,6 +351,10 @@ export default defineComponent({
             return {
                 maxHeight: toCssDimension(this.maxHeight)
             }
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {
@@ -453,8 +457,9 @@ export default defineComponent({
             this.$emit('select', this.selected, event)
             if (this.selected !== null) {
                 if (this.clearOnSelect) {
-                    const input = this.$refs.input.$refs.input
-                    input.value = ''
+                    const input = this.$refs.input
+                    input.newValue = ''
+                    input.$refs.input.value = ''
                 } else {
                     this.newValue = this.getValue(this.selected)
                 }
@@ -580,7 +585,7 @@ export default defineComponent({
                 * this.$refs.dropdown may be undefined
                 * when Autocomplete is conditional rendered
                 */
-                if (this.$refs.dropdown === undefined) return
+                if (!this.$refs.dropdown) return
 
                 const rect = this.$refs.dropdown.getBoundingClientRect()
 
@@ -605,10 +610,10 @@ export default defineComponent({
                 const data = this.computedData.map(
                     (d) => d.items).reduce((a, b) => ([...a, ...b]), [])
 
-                if (this.$slots.header() && this.selectableHeader) {
+                if (this.$slots.header && this.selectableHeader) {
                     data.unshift(undefined)
                 }
-                if (this.$slots.footer() && this.selectableFooter) {
+                if (this.$slots.footer && this.selectableFooter) {
                     data.push(undefined)
                 }
                 let index
@@ -626,20 +631,20 @@ export default defineComponent({
                 this.footerHovered = false
                 this.headerHovered = false
                 this.setHovered(data[index] !== undefined ? data[index] : null)
-                if (this.$slots.footer() && this.selectableFooter && index === data.length - 1) {
+                if (this.$slots.footer && this.selectableFooter && index === data.length - 1) {
                     this.footerHovered = true
                 }
-                if (this.$slots.header() && this.selectableHeader && index === 0) {
+                if (this.$slots.header && this.selectableHeader && index === 0) {
                     this.headerHovered = true
                 }
 
                 const list = this.$refs.dropdown
                 let items = this.$refs.items || []
 
-                if (this.$slots.header() && this.selectableHeader) {
+                if (this.$slots.header && this.selectableHeader) {
                     items = [this.$refs.header, ...items]
                 }
-                if (this.$slots.footer() && this.selectableFooter) {
+                if (this.$slots.footer && this.selectableFooter) {
                     items = [...items, this.$refs.footer]
                 }
                 const element = items[index]
@@ -731,14 +736,14 @@ export default defineComponent({
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const root = this.$data.bodyEl
-                root.classList.forEach((item) => root.classList.remove(item))
+                root.classList.forEach((item) => root.classList.remove(...item.split(' ')))
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
                             Object.keys(item).filter(key => item[key]).forEach(
                                 key => root.classList.add(key))
                         } else {
-                            root.classList.add(item)
+                            root.classList.add(...item.split(' '))
                         }
                     }
                 })

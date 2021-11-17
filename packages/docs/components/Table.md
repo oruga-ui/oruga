@@ -1978,7 +1978,7 @@ export default {
 | footer      |             |          |
 | loading     |             |          |
 | bottom-left |             |          |
-| subheading  |             |          |
+
 ---
 
 # Table Column
@@ -2001,11 +2001,11 @@ export default {
 | searchable       |                                                                 | boolean                                      | -                   |                                    |
 | sortable         |                                                                 | boolean                                      | -                   |                                    |
 | sticky           |                                                                 | boolean                                      | -                   |                                    |
+| subheading       |                                                                 | string                                       | -                   |                                    |
 | tdAttrs          | Adds native attributes to td :td-attrs="(row, column)" => ({})" | func                                         | -                   | Default function (see source code) |
 | thAttrs          | Adds native attributes to th :th-attrs="(column)" => ({})"      | func                                         | -                   | Default function (see source code) |
 | visible          |                                                                 | boolean                                      | -                   | true                               |
 | width            |                                                                 | number\|string                               | -                   |                                    |
-| subheading       |                                                                 | string                                       |                     |                                    |
 
 ## Style
 

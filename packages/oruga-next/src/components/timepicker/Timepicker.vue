@@ -33,78 +33,75 @@
 
             <o-dropdown-item
                 override
+                tag="div"
+                :item-class="boxClasses"
                 :disabled="disabled"
                 :clickable="false">
-                <div :class="boxClasses">
+
+                <o-select
+                    override
+                    v-bind="selectBind"
+                    v-model="hoursSelected"
+                    @change="onHoursChange($event.target.value)"
+                    :disabled="disabled"
+                    placeholder="00">
+                    <option
+                        v-for="hour in hours"
+                        :value="hour.value"
+                        :key="hour.value"
+                        :disabled="isHourDisabled(hour.value)">
+                        {{ hour.label }}
+                    </option>
+                </o-select>
+                <span :class="separatorClasses">{{ hourLiteral }}</span>
+                <o-select
+                    override
+                    v-bind="selectBind"
+                    v-model="minutesSelected"
+                    @change="onMinutesChange($event.target.value)"
+                    :disabled="disabled"
+                    placeholder="00">
+                    <option
+                        v-for="minute in minutes"
+                        :value="minute.value"
+                        :key="minute.value"
+                        :disabled="isMinuteDisabled(minute.value)">
+                        {{ minute.label }}
+                    </option>
+                </o-select>
+                <template v-if="enableSeconds">
+                    <span :class="separatorClasses">{{ minuteLiteral }}</span>
                     <o-select
                         override
-                        :select-class="selectClasses"
-                        :placeholder-class="selectPlaceholderClasses"
-                        v-model="hoursSelected"
-                        @change="onHoursChange($event.target.value)"
+                        v-bind="selectBind"
+                        v-model="secondsSelected"
+                        @change="onSecondsChange($event.target.value)"
                         :disabled="disabled"
                         placeholder="00">
                         <option
-                            v-for="hour in hours"
-                            :value="hour.value"
-                            :key="hour.value"
-                            :disabled="isHourDisabled(hour.value)">
-                            {{ hour.label }}
+                            v-for="second in seconds"
+                            :value="second.value"
+                            :key="second.value"
+                            :disabled="isSecondDisabled(second.value)">
+                            {{ second.label }}
                         </option>
                     </o-select>
-                    <span :class="separatorClasses">{{ hourLiteral }}</span>
-                    <o-select
-                        override
-                        :select-class="selectClasses"
-                        :placeholder-class="selectPlaceholderClasses"
-                        v-model="minutesSelected"
-                        @change="onMinutesChange($event.target.value)"
-                        :disabled="disabled"
-                        placeholder="00">
-                        <option
-                            v-for="minute in minutes"
-                            :value="minute.value"
-                            :key="minute.value"
-                            :disabled="isMinuteDisabled(minute.value)">
-                            {{ minute.label }}
-                        </option>
-                    </o-select>
-                    <template v-if="enableSeconds">
-                        <span>{{ minuteLiteral }}</span>
-                        <o-select
-                            override
-                            :select-class="selectClasses"
-                            :placeholder-class="selectPlaceholderClasses"
-                            v-model="secondsSelected"
-                            @change="onSecondsChange($event.target.value)"
-                            :disabled="disabled"
-                            placeholder="00">
-                            <option
-                                v-for="second in seconds"
-                                :value="second.value"
-                                :key="second.value"
-                                :disabled="isSecondDisabled(second.value)">
-                                {{ second.label }}
-                            </option>
-                        </o-select>
-                        <span :class="separatorClasses">{{ secondLiteral }}</span>
-                    </template>
-                    <o-select
-                        override
-                        :select-class="selectClasses"
-                        :placeholder-class="selectPlaceholderClasses"
-                        v-model="meridienSelected"
-                        @change="onMeridienChange($event.target.value)"
-                        v-if="!isHourFormat24"
-                        :disabled="disabled">
-                        <option
-                            v-for="meridien in meridiens"
-                            :value="meridien"
-                            :key="meridien">
-                            {{ meridien }}
-                        </option>
-                    </o-select>
-                </div>
+                    <span :class="separatorClasses">{{ secondLiteral }}</span>
+                </template>
+                <o-select
+                    override
+                    v-bind="selectBind"
+                    v-model="meridienSelected"
+                    @change="onMeridienChange($event.target.value)"
+                    v-if="!isHourFormat24"
+                    :disabled="disabled">
+                    <option
+                        v-for="meridien in meridiens"
+                        :value="meridien"
+                        :key="meridien">
+                        {{ meridien }}
+                    </option>
+                </o-select>
 
                 <footer
                     v-if="$slots.default !== undefined"
@@ -151,6 +148,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import TimepickerMixin from '../../utils/TimepickerMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
+import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
+
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
  * @displayName Timepicker
@@ -173,12 +173,26 @@ export default defineComponent({
         rootClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         boxClass: [String, Function, Array],
-        selectClass: [String, Function, Array],
-        selectPlaceholderClass: [String, Function, Array],
         separatorClass: [String, Function, Array],
         footerClass: [String, Function, Array],
-        inputClasses: Object,
-        dropdownClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'timepicker.inputClasses', {})
+            }
+        },
+        dropdownClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'timepicker.dropdownClasses', {})
+            }
+        },
+        selectClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'timepicker.selectClasses', {})
+            }
+        }
     },
     computed: {
         inputBind() {
@@ -193,6 +207,13 @@ export default defineComponent({
                 ...this.dropdownClasses
             }
         },
+        selectBind() {
+            return {
+                'select-class': this.computedClass('selectClasses.selectClass', 'o-tpck__select'),
+                'placeholder-class': this.computedClass('selectClasses.placeholderClass', 'o-tpck__select-placeholder'),
+                ...this.selectClasses
+            }
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-tpck'),
@@ -203,16 +224,6 @@ export default defineComponent({
         boxClasses() {
             return [
                 this.computedClass('boxClass', 'o-tpck__box')
-            ]
-        },
-        selectClasses() {
-            return [
-                this.computedClass('selectClass', 'o-tpck__select')
-            ]
-        },
-        selectPlaceholderClasses() {
-            return [
-                this.computedClass('selectPlaceholderClass', 'o-tpck__select-placeholder')
             ]
         },
         separatorClasses() {

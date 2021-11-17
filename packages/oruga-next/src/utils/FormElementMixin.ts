@@ -4,8 +4,7 @@ import { getValueByPath } from './helpers'
 
 export default defineComponent({
 	inject: {
-        $field: { from: "$field", default: false },
-        $elementRef: { from: "$elementRef", default: false },
+        $field: { from: "$field", default: false }
     },
 	emits: ['blur', 'focus'],
 	props: {

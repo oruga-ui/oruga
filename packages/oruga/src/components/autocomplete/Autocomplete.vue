@@ -29,7 +29,7 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
-                v-show="isActive && (!isEmpty || $slots.empty || $slots.header)"
+                v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
@@ -112,11 +112,6 @@ export default {
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     props: {
         /** @model */
         value: [Number, String],
@@ -204,7 +199,12 @@ export default {
         itemEmptyClass: [String, Function, Array],
         itemHeaderClass: [String, Function, Array],
         itemFooterClass: [String, Function, Array],
-        inputClasses: Object
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.inputClasses', {})
+            }
+        }
     },
     data() {
         return {
@@ -346,6 +346,10 @@ export default {
                 maxHeight: toCssDimension(this.maxHeight),
                 width: toCssDimension(this.width),
             }
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {
@@ -448,8 +452,9 @@ export default {
             this.$emit('select', this.selected, event)
             if (this.selected !== null) {
                 if (this.clearOnSelect) {
-                    const input = this.$refs.input.$refs.input
-                    input.value = ''
+                    const input = this.$refs.input
+                    input.newValue = ''
+                    input.$refs.input.value = ''
                 } else {
                     this.newValue = this.getValue(this.selected)
                 }
@@ -721,14 +726,14 @@ export default {
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const root = this.$data.bodyEl
-                root.classList.forEach((item) => root.classList.remove(item))
+                root.classList.forEach((item) => root.classList.remove(...item.split(' ')))
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
                             Object.keys(item).filter(key => item[key]).forEach(
                                 key => root.classList.add(key))
                         } else {
-                            root.classList.add(item)
+                            root.classList.add(...item.split(' '))
                         }
                     }
                 })
