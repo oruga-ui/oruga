@@ -81,7 +81,7 @@ export default defineComponent({
         if (!this.$table) {
             throw new Error('You should wrap oTableColumn on a oTable')
         }
-        this.newKey = (this.$table as any)._nextSequence()
+        this.newKey = this.$table._nextSequence()
         this.$table._addColumn(this)
     },
     beforeUnmount() {

@@ -150,7 +150,7 @@ export default defineComponent({
             newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
-            newAutocomplete: (this as any).autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
+            newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
             isPasswordVisible: false,
             height: 'auto'
         }
