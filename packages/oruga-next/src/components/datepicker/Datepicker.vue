@@ -518,8 +518,8 @@ export default defineComponent({
         const focusedDate = (Array.isArray(this.modelValue) ? this.modelValue[0] : (this.modelValue)) ||
             this.focusedDate || this.dateCreator()
 
-        if (!this.modelValue && this.maxDate && (this.maxDate as any).getFullYear() < focusedDate.getFullYear()) {
-            focusedDate.setFullYear((this.maxDate as any).getFullYear())
+        if (!this.modelValue && this.maxDate && this.maxDate.getFullYear() < focusedDate.getFullYear()) {
+            focusedDate.setFullYear(this.maxDate.getFullYear())
         }
 
         return {

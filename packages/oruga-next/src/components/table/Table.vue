@@ -988,7 +988,7 @@ export default defineComponent({
 
                     // sort boolean type
                     if (typeof newA === 'boolean' && typeof newB === 'boolean') {
-                        return isAsc ? (newA as any) - (newB as any) : (newB as any) - (newA as any)
+                        return isAsc ? newA - newB : newB - newA
                     }
 
                     if (!newA && newA !== 0) return 1
