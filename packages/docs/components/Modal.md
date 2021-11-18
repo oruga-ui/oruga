@@ -145,7 +145,6 @@ title: Modal
         this.$oruga.modal.open({
           parent: this,
           component: ModalForm,
-          custom: true,
           trapFocus: true
         })
       }
