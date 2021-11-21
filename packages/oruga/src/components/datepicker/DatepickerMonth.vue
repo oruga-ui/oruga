@@ -1,37 +1,35 @@
 <template>
     <section :class="monthClasses">
         <div :class="monthBodyClasses">
-            <div class="datepicker-months">
-                <template v-for="(date, index) in monthDates">
-                    <a
-                        :ref="`month-${date.getMonth()}`"
-                        v-if="selectableDate(date) && !disabled"
-                        :key="index"
-                        :class="cellClasses"
-                        role="button"
-                        href="#"
-                        :disabled="disabled"
-                        @click.prevent="updateSelectedDate(date)"
-                        @mouseenter="setRangeHoverEndDate(date)"
-                        @keydown.prevent="manageKeydown($event, date)"
-                        :tabindex="focused.month === date.getMonth() ? null : -1">
-                        {{ monthNames[date.getMonth()] }}
-                        <div class="events" v-if="eventsDateMatch(date)">
-                            <div
-                                class="event"
-                                :class="event.type"
-                                v-for="(event, index) in eventsDateMatch(date)"
-                                :key="index"/>
-                        </div>
-                    </a>
-                    <div
-                        v-else
-                        :key="index"
-                        :class="cellClasses(date)">
-                        {{ monthNames[date.getMonth()] }}
+            <template v-for="(date, index) in monthDates">
+                <a
+                    :ref="`month-${date.getMonth()}`"
+                    v-if="selectableDate(date) && !disabled"
+                    :key="index"
+                    :class="cellClasses"
+                    role="button"
+                    href="#"
+                    :disabled="disabled"
+                    @click.prevent="updateSelectedDate(date)"
+                    @mouseenter="setRangeHoverEndDate(date)"
+                    @keydown.prevent="manageKeydown($event, date)"
+                    :tabindex="focused.month === date.getMonth() ? null : -1">
+                    {{ monthNames[date.getMonth()] }}
+                    <div class="events" v-if="eventsDateMatch(date)">
+                        <div
+                            class="event"
+                            :class="event.type"
+                            v-for="(event, index) in eventsDateMatch(date)"
+                            :key="index"/>
                     </div>
-                </template>
-            </div>
+                </a>
+                <div
+                    v-else
+                    :key="index"
+                    :class="cellClasses(date)">
+                    {{ monthNames[date.getMonth()] }}
+                </div>
+            </template>
         </div>
     </section>
 </template>
