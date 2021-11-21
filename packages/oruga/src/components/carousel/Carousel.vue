@@ -41,14 +41,10 @@
         <div
             v-if="autoplay && (pauseHover && itemsHovered) && isPause"
             :class="pauseClasses">
-            {{ pauseText }}
+            <slot name="pause">
+                {{ pauseText }}
+            </slot>
         </div>
-        <template v-if="withCarouselList && !indicator">
-            <slot
-                :active="activeChild"
-                :switch="changeActive"
-                name="list"/>
-        </template>
         <div
             v-if="indicator"
             :class="indicatorsClasses">
@@ -65,6 +61,10 @@
                 </slot>
             </a>
         </div>
+        <slot
+            :active="activeChild"
+            :switch="changeActive"
+            name="list"/>
         <template v-if="overlay">
             <slot name="overlay"/>
         </template>
@@ -164,9 +164,8 @@ export default {
             type: String,
             default: 'dots'
         },
-        overlay: Boolean,
         progress: Boolean,
-        withCarouselList: Boolean,
+        overlay: Boolean,
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
         progressClass: [String, Function, Array],
@@ -196,7 +195,7 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-car'),
-                { [this.computedClass('overlayClass', 'o-car--overlay')]: this.overlay }
+                { [this.computedClass('overlayClass', 'o-car__overlay')]: this.overlay }
             ]
         },
         progressClasses() {

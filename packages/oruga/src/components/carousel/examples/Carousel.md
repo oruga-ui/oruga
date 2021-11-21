@@ -148,16 +148,15 @@
 <template>
     <o-carousel
         :autoplay="false"
-        with-carousel-list
         :indicator="false"
         :overlay="gallery"
         @click="switchGallery(true)">
         <o-carousel-item v-for="(item, i) in items" :key="i">
-            <figure class="image">
+            <a class="image">
                 <img :src="item.image">
-            </figure>
+            </a>
         </o-carousel-item>
-        <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-large"/>
+        <o-button v-if="gallery" icon-left="times" outlined @click="switchGallery(false)" />
         <template #list="props">
             <o-carousel-list
                 v-model="props.active"
@@ -171,13 +170,12 @@
             </o-carousel-list>
         </template>
         <template #overlay>
-            <div class="has-text-centered has-text-white">
+            <div style="color: #ffffff; text-align: center">
                 Hello, I'm an overlay!
             </div>
         </template>
     </o-carousel>
 </template>
-
 
 <script>
     export default {
@@ -235,14 +233,27 @@
             switchGallery(value) {
                 this.gallery = value
                 if (value) {
-                    document.documentElement.classList.add('is-clipped')
+                    document.documentElement.classList.add('o-clipped')
                 } else {
-                    document.documentElement.classList.remove('is-clipped')
+                    document.documentElement.classList.remove('o-clipped')
                 }
             }
         }
     }
 </script>
+
+<style>
+.image img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+.ex-close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+</style>
 ```
 :::
 

@@ -157,13 +157,13 @@ title: Carousel
 
 ```html
 <template>
-  <o-carousel :autoplay="false" with-carousel-list :indicator="false" :overlay="gallery" @click="switchGallery(true)">
+  <o-carousel :autoplay="false" :indicator="false" :overlay="gallery" @click="switchGallery(true)">
     <o-carousel-item v-for="(item, i) in items" :key="i">
-      <figure class="image">
+      <a class="image">
         <img :src="item.image" />
-      </figure>
+      </a>
     </o-carousel-item>
-    <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-large" />
+    <o-button v-if="gallery" icon-left="times" @click="switchGallery(false)" />
     <template #list="props">
       <o-carousel-list v-model="props.active" :data="items" v-bind="al" @switch="props.switch($event, false)" as-indicator>
         <template #item="{ item }">
@@ -172,7 +172,7 @@ title: Carousel
       </o-carousel-list>
     </template>
     <template #overlay>
-      <div class="has-text-centered has-text-white">
+      <div style="color: #ffffff; text-align: center">
         Hello, I'm an overlay!
       </div>
     </template>
@@ -243,6 +243,14 @@ title: Carousel
     }
   }
 </script>
+
+<style>
+  .image img {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+</style>
 ```
 
 :::
@@ -377,7 +385,6 @@ title: Carousel
 | progress          |                  | boolean | -      |                                                                                                                                                   |
 | repeat            |                  | boolean | -      | true                                                                                                                                              |
 | value             |                  | number  | -      | 0                                                                                                                                                 |
-| withCarouselList  |                  | boolean | -      |                                                                                                                                                   |
 
 ## Events
 
@@ -392,8 +399,9 @@ title: Carousel
 | Name       | Description | Bindings |
 | ---------- | ----------- | -------- |
 | default    |             |          |
-| list       |             | <br>     |
+| pause      |             |          |
 | indicators |             |          |
+| list       |             | <br>     |
 | overlay    |             |          |
 
 ## Style
