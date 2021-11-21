@@ -128,7 +128,7 @@ $datepicker-btn-padding: .5em .5em !default;
         @include avariable('margin', 'datepicker-header-margin', $datepicker-footer-margin);
         @include avariable('border-top', 'datepicker-header-border-top', $datepicker-footer-border-top);
     }
-    &__table {
+    &__table, &__month {
         display: table;
         margin: 0 auto 0 auto;
         &__head {
