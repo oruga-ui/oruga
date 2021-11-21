@@ -186,6 +186,20 @@
                     :date-creator="dateCreator"
                     :range="range"
                     :multiple="multiple"
+                    :month-class="monthClass"
+                    :month-body-class="monthBodyClass"
+                    :month-cell-selected-class="monthCellSelectedClass"
+                    :month-cell-first-selected-class="monthCellFirstSelectedClass"
+                    :month-cell-within-selected-class="monthCellWithinSelectedClass"
+                    :month-cell-last-selected-class="monthCellLastSelectedClass"
+                    :month-cell-within-hovered-range-class="monthCellWithinHoveredRangeClass"
+                    :month-cell-first-hovered-class="monthCellFirstHoveredClass"
+                    :month-cell-within-hovered-class="monthCellWithinHoveredClass"
+                    :month-cell-last-hovered-class="monthCellLastHoveredClass"
+                    :month-cell-today-class="monthCellTodayClass"
+                    :month-cell-selectable-class="monthCellSelectableClass"
+                    :month-cell-unselectable-class="monthCellUnselectableClass"
+                    :month-cell-events-class="monthCellEventsClass"
                     @range-start="date => $emit('range-start', date)"
                     @range-end="date => $emit('range-end', date)"
                     @close="togglePicker(false)"
@@ -573,6 +587,21 @@ export default {
         tableEventClass: [String, Function, Array],
         tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        /* datapickermonth classes */
+        monthClass: [String, Function, Array],
+        monthBodyClass: [String, Function, Array],
+        monthCellSelectedClass: [String, Function, Array],
+        monthCellFirstSelectedClass: [String, Function, Array],
+        monthCellWithinSelectedClass: [String, Function, Array],
+        monthCellLastSelectedClass: [String, Function, Array],
+        monthCellWithinHoveredRangeClass: [String, Function, Array],
+        monthCellFirstHoveredClass: [String, Function, Array],
+        monthCellWithinHoveredClass: [String, Function, Array],
+        monthCellLastHoveredClass: [String, Function, Array],
+        monthCellTodayClass: [String, Function, Array],
+        monthCellSelectableClass: [String, Function, Array],
+        monthCellUnselectableClass: [String, Function, Array],
+        monthCellEventsClass: [String, Function, Array],
         inputClasses: {
             type: Object,
             default: () => {
