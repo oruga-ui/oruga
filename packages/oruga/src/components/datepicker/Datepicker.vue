@@ -188,6 +188,7 @@
                     :multiple="multiple"
                     :month-class="monthClass"
                     :month-body-class="monthBodyClass"
+                    :month-table-class="monthTableClass"
                     :month-cell-selected-class="monthCellSelectedClass"
                     :month-cell-first-selected-class="monthCellFirstSelectedClass"
                     :month-cell-within-selected-class="monthCellWithinSelectedClass"
@@ -590,6 +591,7 @@ export default {
         /* datapickermonth classes */
         monthClass: [String, Function, Array],
         monthBodyClass: [String, Function, Array],
+        monthTableClass: [String, Function, Array],
         monthCellSelectedClass: [String, Function, Array],
         monthCellFirstSelectedClass: [String, Function, Array],
         monthCellWithinSelectedClass: [String, Function, Array],

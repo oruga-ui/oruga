@@ -1,6 +1,7 @@
 <template>
     <section :class="monthClasses">
         <div :class="monthBodyClasses">
+            <div :class="monthTableClasses">
             <template v-for="(date, index) in monthDates">
                 <a
                     :ref="`month-${date.getMonth()}`"
@@ -30,6 +31,7 @@
                     {{ monthNames[date.getMonth()] }}
                 </div>
             </template>
+            </div>
         </div>
     </section>
 </template>
@@ -62,6 +64,7 @@ export default {
         multiple: Boolean,
         monthClass: [String, Function, Array],
         monthBodyClass: [String, Function, Array],
+        monthTableClass: [String, Function, Array],
         monthCellSelectedClass: [String, Function, Array],
         monthCellFirstSelectedClass: [String, Function, Array],
         monthCellWithinSelectedClass: [String, Function, Array],
@@ -92,6 +95,11 @@ export default {
         monthBodyClasses() {
             return [
                 this.computedClass('monthBodyClass', 'o-dpck__month__body')
+            ]
+        },
+        monthTableClasses() {
+            return [
+                this.computedClass('monthTableClass', 'o-dpck__month__table')
             ]
         },
         hasEvents() {
