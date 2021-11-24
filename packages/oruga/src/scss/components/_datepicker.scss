@@ -246,6 +246,13 @@ $datepicker-btn-padding: .5em .5em !default;
         flex-direction: row;
         width: 17rem;
     }
+    &__month__cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 33.33%;
+        height: 2.5rem;
+    }
     &--mobile {
         .o-dpck__header__previous {
             order: 1;

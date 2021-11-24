@@ -7,7 +7,7 @@
                     :ref="`month-${date.getMonth()}`"
                     v-if="selectableDate(date) && !disabled"
                     :key="index"
-                    :class="cellClasses"
+                    :class="cellClasses(date)"
                     role="button"
                     href="#"
                     :disabled="disabled"
@@ -65,6 +65,7 @@ export default {
         monthClass: [String, Function, Array],
         monthBodyClass: [String, Function, Array],
         monthTableClass: [String, Function, Array],
+        monthCellClass: [String, Function, Array],
         monthCellSelectedClass: [String, Function, Array],
         monthCellFirstSelectedClass: [String, Function, Array],
         monthCellWithinSelectedClass: [String, Function, Array],
@@ -100,6 +101,11 @@ export default {
         monthTableClasses() {
             return [
                 this.computedClass('monthTableClass', 'o-dpck__month__table')
+            ]
+        },
+        monthCellClasses() {
+            return [
+                this.computedClass('monthCellClass', 'o-dpck__month__cell')
             ]
         },
         hasEvents() {
@@ -297,6 +303,7 @@ export default {
             }
 
             return [
+                ...this.monthCellClasses,
                 {
                     [this.computedClass('monthCellSelectedClass', 'o-dpck__month__cell--selected')] :
                         dateMatch(day, this.value, this.multiple) ||
@@ -359,10 +366,10 @@ export default {
                     [this.computedClass('monthCellEventsClass', 'o-dpck__month__cell--events')] :
                         this.hasEvents
                 },
-                {
+                /*{
                     [this.computedClass('monthEventIndicatorsClass', 'o-dpck__month__event--', this.indicators)]:
                         this.indicators
-                }
+                }*/
             ]
 
             /*return {
