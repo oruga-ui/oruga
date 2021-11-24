@@ -240,6 +240,12 @@ $datepicker-btn-padding: .5em .5em !default;
             }
         }
     }
+    &__month__table {
+        display: inline-flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 17rem;
+    }
     &--mobile {
         .o-dpck__header__previous {
             order: 1;
