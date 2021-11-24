@@ -366,48 +366,7 @@ export default {
                     [this.computedClass('monthCellEventsClass', 'o-dpck__month__cell--events')] :
                         this.hasEvents
                 },
-                /*{
-                    [this.computedClass('monthEventIndicatorsClass', 'o-dpck__month__event--', this.indicators)]:
-                        this.indicators
-                }*/
             ]
-
-            /*return {
-                'is-selected': dateMatch(day, this.value, this.multiple) ||
-                               dateWithin(day, this.value, this.multiple) ||
-                               dateMultipleSelected(day, this.multipleSelectedDates, this.multiple),
-                'is-first-selected':
-                    dateMatch(
-                        day,
-                        Array.isArray(this.value) && this.value[0],
-                        this.multiple
-                    ),
-                'is-within-selected':
-                    dateWithin(day, this.value, this.multiple),
-                'is-last-selected':
-                    dateMatch(
-                        day,
-                        Array.isArray(this.value) && this.value[1],
-                        this.multiple
-                    ),
-                'is-within-hovered-range':
-                    this.hoveredDateRange && this.hoveredDateRange.length === 2 &&
-                    (dateMatch(day, this.hoveredDateRange) ||
-                        dateWithin(day, this.hoveredDateRange)),
-                'is-first-hovered': dateMatch(
-                    day,
-                    Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
-                ),
-                'is-within-hovered':
-                    dateWithin(day, this.hoveredDateRange),
-                'is-last-hovered': dateMatch(
-                    day,
-                    Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
-                ),
-                'is-today': dateMatch(day, this.dateCreator()),
-                'is-selectable': this.selectableDate(day) && !this.disabled,
-                'is-unselectable': !this.selectableDate(day) || this.disabled
-            }*/
         },
 
        /*

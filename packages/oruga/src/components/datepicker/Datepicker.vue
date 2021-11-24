@@ -189,6 +189,7 @@
                     :month-class="monthClass"
                     :month-body-class="monthBodyClass"
                     :month-table-class="monthTableClass"
+                    :month-cell-class="monthCellClass"
                     :month-cell-selected-class="monthCellSelectedClass"
                     :month-cell-first-selected-class="monthCellFirstSelectedClass"
                     :month-cell-within-selected-class="monthCellWithinSelectedClass"
@@ -592,6 +593,7 @@ export default {
         monthClass: [String, Function, Array],
         monthBodyClass: [String, Function, Array],
         monthTableClass: [String, Function, Array],
+        monthCellClass: [String, Function, Array],
         monthCellSelectedClass: [String, Function, Array],
         monthCellFirstSelectedClass: [String, Function, Array],
         monthCellWithinSelectedClass: [String, Function, Array],

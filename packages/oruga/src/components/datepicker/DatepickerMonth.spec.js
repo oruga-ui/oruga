@@ -1,8 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import ODatepickerMonth from '@components/datepicker/DatepickerMonth'
 
-//import {getOptions, setOptions} from '@utils/config'
-
 const newDate = (y, m, d) => {
     const date = new Date(Date.UTC(y, m, d))
     date.getDate = jest.fn(() => date.getUTCDate())
@@ -65,19 +63,6 @@ const config = {
     focusedDate: newDate(2019, thisMonth, 11)
 }
 describe('ODatepickerMonth', () => {
-
-   /* let config = getOptions()
-
-    beforeEach(() => {
-        setOptions(Object.assign(config, {
-            defaultMonthNames: [
-                'January', 'February', 'March', 'April', 'May', 'June', 'July',
-                'August', 'September', 'October', 'November', 'December'
-            ],
-            focusedDate: newDate(2019, thisMonth, 11)
-        }))
-    })*/
-
     const dateCreator = () => newDate()
 
     it('is called', () => {
