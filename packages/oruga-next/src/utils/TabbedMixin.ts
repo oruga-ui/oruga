@@ -65,9 +65,9 @@ export default (cmp: string) => defineComponent({
          * When v-model is changed set the new active tab.
          */
         modelValue(value) {
-            this.performAction()
-            this.activeId = value
-            this.performAction()
+            if (this.activeId !== value) {
+                this.performAction(value)
+            }
         }
     },
     methods: {
@@ -76,19 +76,18 @@ export default (cmp: string) => defineComponent({
         */
         childClick(child: any) {
             if (this.activeId !== child.newValue) {
-                this.performAction()
-                this.activeId = child.newValue
-                this.performAction()
+                this.performAction(child.newValue)
                 this.$emit('update:modelValue', this.activeId)
             }
         },
         /**
         * Activate next child and deactivate prev child
         */
-        performAction() {
+        performAction(newId: number) {
             const oldValue = this.activeId
             const oldTab = oldValue !== undefined && oldValue !== null
                 ? this.childItems.filter((i: any) => i.newValue === oldValue)[0] : this.items[0]
+            this.activeId = newId
             if (oldTab && this.activeItem) {
                 oldTab.deactivate(this.activeItem.index)
                 this.activeItem.activate(oldTab.index)
