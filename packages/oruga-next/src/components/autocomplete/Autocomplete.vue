@@ -640,7 +640,7 @@ export default defineComponent({
                 }
 
                 const list = this.$refs.dropdown
-                let items = this.$refs.items || []
+                let items = this.itemRefs || []
 
                 if (this.$slots.header && this.selectableHeader) {
                     items = [this.$refs.header, ...items]
