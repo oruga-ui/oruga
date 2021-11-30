@@ -73,19 +73,18 @@
                 </o-field>
             </o-field>
         </div>
-        <o-carousel-list
+        <o-carousel
             v-model="values"
-            :data="items"
             :arrow="arrow"
             :arrow-hover="arrowHover"
             :items-to-show="perList"
             :items-to-list="increment"
             :repeat="repeat"
             :has-drag="drag">
-            <template #item="{ item }">
+            <o-carousel-item v-for="(item, i) in items" :key="i">
                 <img :src="item.image">
-            </template>
-        </o-carousel-list>
+            </o-carousel-item>
+        </o-carousel>
     </section>
 </template>
 
@@ -157,17 +156,16 @@
             </a>
         </o-carousel-item>
         <o-button v-if="gallery" icon-left="times" outlined @click="switchGallery(false)" />
-        <template #list="props">
-            <o-carousel-list
+        <template #indicators="props">
+            <o-carousel
                 v-model="props.active"
-                :data="items"
                 v-bind="al"
                 @switch="props.switch($event, false)"
                 as-indicator>
-                <template #item="{ item }">
+                <o-carousel-item v-for="(item, i) in items" :key="i">
                     <img :src="item.image">
-                </template>
-            </o-carousel-list>
+                </o-carousel-item>
+            </o-carousel>
         </template>
         <template #overlay>
             <div style="color: #ffffff; text-align: center">

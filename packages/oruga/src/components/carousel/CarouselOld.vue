@@ -1,15 +1,8 @@
 <template>
     <div
         :class="rootClasses"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
-        @mousedown.prevent="dragStart"
-        @touchstart="dragStart">
-        <div
-            :class="slidesClasses"
-            :style="'transform:translateX('+translation+'px)'">
-            <slot/>
-        </div>
+        @mouseenter="checkPause"
+        @mouseleave="startTimer">
         <progress
             v-if="progress"
             :class="progressClasses"
@@ -80,19 +73,13 @@
 </template>
 
 <script>
-import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParentMixin'
+import {mod, bound, getValueByPath} from '../../utils/helpers'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
-/**
- * A Slideshow for cycling images in confined spaces
- * @displayName Carousel
- * @example ./examples/Carousel.md
- * @style _carousel.scss
- */
 export default {
     name: 'OCarousel',
     components: {
@@ -130,9 +117,27 @@ export default {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'carousel.pauseText', 'Pause') }
         },
+        arrow: {
+            type: Boolean,
+            default: true
+        },
+        arrowHover: {
+            type: Boolean,
+            default: true
+        },
         repeat: {
             type: Boolean,
             default: true
+        },
+        iconPack: String,
+        iconSize: String,
+        iconPrev: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'carousel.iconPrev', 'chevron-left') }
+        },
+        iconNext: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'carousel.iconNext', 'chevron-right') }
         },
         indicator: {
             type: Boolean,
@@ -156,41 +161,6 @@ export default {
         },
         progress: Boolean,
         overlay: Boolean,
-        hasDrag: {
-            type: Boolean,
-            default: true
-        },
-        itemsToShow: {
-            type: Number,
-            default: 1
-        },
-        itemsToList: {
-            type: Number,
-            default: 1
-        },
-        asIndicator: Boolean,
-        arrow: {
-            type: Boolean,
-            default: true
-        },
-        arrowHover: {
-            type: Boolean,
-            default: true
-        },
-        iconPack: String,
-        iconSize: String,
-        iconPrev: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'carousel.iconPrev', 'chevron-left') }
-        },
-        iconNext: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'carousel.iconNext', 'chevron-right') }
-        },
-        breakpoints: {
-            type: Object,
-            default: () => ({})
-        },
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
         progressClass: [String, Function, Array],
@@ -204,38 +174,38 @@ export default {
         indicatorsInsidePositionClass: [String, Function, Array],
         indicatorItemClass: [String, Function, Array],
         indicatorItemActiveClass: [String, Function, Array],
-        indicatorItemStyleClass: [String, Function, Array],
-        slidesClass: [String, Function, Array],
-        slidesDraggingClass: [String, Function, Array]
+        indicatorItemStyleClass: [String, Function, Array]
     },
     data() {
         return {
-            activeItem: this.value,
-            scrollIndex: this.value,
-            delta: 0,
-            dragX: false,
-            hold: 0,
-            windowWidth: 0,
-            touch: false,
-            observer: null,
-            refresh_: 0,
-            itemsHovered: false,
+            transition: 'next',
+            activeChild: this.value || 0,
             isPause: false,
-            timer: null
+            dragX: false,
+            timer: null,
+            itemsHovered: false
         }
     },
     computed: {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-car'),
-                this.computedClass('listClass', 'o-car__list'),
                 { [this.computedClass('overlayClass', 'o-car__overlay')]: this.overlay }
             ]
         },
-        slidesClasses() {
+        progressClasses() {
             return [
-                this.computedClass('slidesClass', 'o-car__slides'),
-                { [this.computedClass('slidesDraggingClass', 'o-car__slides--dragging')]: this.dragging },
+                this.computedClass('progressClass', 'o-car__progress')
+            ]
+        },
+        itemsClasses() {
+            return [
+                this.computedClass('itemsClass', 'o-car__items'),
+            ]
+        },
+        arrowIconClasses() {
+            return [
+                this.computedClass('arrowIconClass', 'o-car__arrow__icon'),
             ]
         },
         arrowIconClasses() {
@@ -255,53 +225,31 @@ export default {
                 this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
             ]
         },
-        dragging() {
-            return this.dragX !== false
+        pauseClasses() {
+            return [
+                this.computedClass('pauseClass', 'o-car__pause')
+            ]
         },
-        itemStyle() {
-            return `width: ${this.itemWidth}px;`
+        indicatorsClasses() {
+            return [
+                this.computedClass('indicatorsClass', 'o-car__indicators'),
+                { [this.computedClass('indicatorsInsideClass', 'o-car__indicators--inside')]: this.indicatorInside },
+                { [this.computedClass('indicatorsInsidePositionClass', 'o-car__indicators--inside--', this.indicatorPosition)]: this.indicatorInside && this.indicatorPosition }
+            ]
         },
-        translation() {
-            return -bound(
-                this.delta + (this.scrollIndex * this.itemWidth), 0,
-                (this.childItems.length - this.settings.itemsToShow) * this.itemWidth
-            )
-        },
-        total() {
-            return this.childItems.length - this.settings.itemsToShow
+        indicatorClasses() {
+            return [
+                this.computedClass('indicatorClass', 'o-car__indicator')
+            ]
         },
         hasArrows() {
-            return (this.settings.arrowHover && this.itemsHovered) || !this.settings.arrowHover
+            return (this.arrowHover && this.itemsHovered) || !this.arrowHover
         },
         hasPrev() {
-            return (this.settings.repeat || this.scrollIndex > 0) && this.hasArrows
+            return (this.repeat || this.activeChild !== 0) && this.hasArrows
         },
         hasNext() {
-            return (this.settings.repeat || this.scrollIndex < this.total) && this.hasArrows
-        },
-        breakpointKeys() {
-            return Object.keys(this.breakpoints).sort((a, b) => b - a)
-        },
-        settings() {
-            let breakpoint = this.breakpointKeys.filter((breakpoint) => {
-                if (this.windowWidth >= breakpoint) {
-                    return true
-                }
-            })[0]
-            if (breakpoint) {
-                return {...this.$props, ...this.breakpoints[breakpoint]}
-            }
-            return this.$props
-        },
-        itemWidth() {
-            if (this.windowWidth) { // Ensure component is mounted
-                /* eslint-disable-next-line */
-                this.refresh_; // We force the computed property to refresh if this prop is changed
-
-                const rect = this.$el.getBoundingClientRect()
-                return rect.width / this.settings.itemsToShow
-            }
-            return 0
+            return (this.repeat || this.activeChild < this.childItems.length - 1) && this.hasArrows
         }
     },
     watch: {
@@ -309,10 +257,7 @@ export default {
          * When v-model is changed set the new active item.
          */
         value(value) {
-            this.switchTo(this.asIndicator ? value - (this.itemsToShow - 3) / 2 : value)
-            if (this.activeItem !== value) {
-                this.activeItem = bound(value, 0, this.childItems.length - 1)
-            }
+            this.changeActive(value)
         },
         /**
          * When carousel-items are updated, set active one.
@@ -342,14 +287,6 @@ export default {
                 { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: item.isActive },
                 { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
             ]
-        },
-        onMouseEnter() {
-            this.itemsHovered = true
-            this.checkPause()
-        },
-        onMouseLeave() {
-            this.itemsHovered = false
-            this.startTimer()
         },
         startTimer() {
             if (!this.autoplay || this.timer) return
@@ -407,115 +344,49 @@ export default {
                 return this.changeActive(value)
             }
         },
-        resized() {
-            this.windowWidth = window.innerWidth
-        },
-        switchTo(newIndex) {
-            if (newIndex === this.scrollIndex || isNaN(newIndex)) { return }
-
-            if (this.settings.repeat) {
-                newIndex = mod(newIndex, this.total + 1)
-            }
-            newIndex = bound(newIndex, 0, this.total)
-            this.scrollIndex = newIndex
-            if (!this.asIndicator && this.value !== newIndex) {
-                this.$emit('input', newIndex)
-            } else if (this.scrollIndex !== newIndex) {
-                this.$emit('updated:scroll', newIndex)
-            }
+        prev() {
+            this.changeActive(this.activeChild - 1, -1)
         },
         next() {
-            this.switchTo(this.scrollIndex + this.settings.itemsToList)
-        },
-        prev() {
-            this.switchTo(this.scrollIndex - this.settings.itemsToList)
-        },
-        checkAsIndicator(value, event) {
-            if (!this.asIndicator) return
-
-            const dragEndX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX
-            if (this.hold - Date.now() > 2000 || Math.abs(this.dragX - dragEndX) > 10) return
-
-            this.dragX = false
-            this.hold = 0
-            event.preventDefault()
-
-            // Make the item appear in the middle
-            this.activeItem = value
-
-            this.$emit('switch', value)
+            this.changeActive(this.activeChild + 1, 1)
         },
         // handle drag event
         dragStart(event) {
-            if (this.dragging || !this.settings.hasDrag || (event.button !== 0 && event.type !== 'touchstart')) return
-            this.hold = Date.now()
-            this.touch = !!event.touches
-            this.dragX = this.touch ? event.touches[0].clientX : event.clientX
-            if (this.touch) {
+            if (!this.hasDrag ||
+                !event.target.draggable) return
+            this.dragX = event.touches ? event.changedTouches[0].pageX : event.pageX
+            if (event.touches) {
                 this.pauseTimer()
-            }
-            window.addEventListener(this.touch ? 'touchmove' : 'mousemove', this.dragMove)
-            window.addEventListener(this.touch ? 'touchend' : 'mouseup', this.dragEnd)
-        },
-        dragMove(event) {
-            if (!this.dragging) return
-            const dragEndX = event.touches
-                ? (event.changedTouches[0] || event.touches[0]).clientX : event.clientX
-            this.delta = this.dragX - dragEndX
-            if (!event.touches) {
+            } else {
                 event.preventDefault()
             }
         },
         dragEnd(event) {
-            if (!this.dragging && !this.hold) return
-            if (this.hold) {
-                const signCheck = sign(this.delta)
-                const results = Math.round(Math.abs(this.delta / this.itemWidth) + 0.15)// Hack
-                this.switchTo(this.scrollIndex + signCheck * results)
+            if (this.dragX === false) return
+            const detected = event.touches ? event.changedTouches[0].pageX : event.pageX
+            const diffX = detected - this.dragX
+            if (Math.abs(diffX) > 30) {
+                if (diffX < 0) {
+                    this.next()
+                } else {
+                    this.prev()
+                }
+            } else {
+                event.target.click()
+                this.sortedItems[this.activeChild].$emit('click')
+                this.$emit('click')
             }
-            this.delta = 0
-            this.dragX = false
             if (event.touches) {
                 this.startTimer()
             }
-            window.removeEventListener(this.touch ? 'touchmove' : 'mousemove', this.dragMove)
-            window.removeEventListener(this.touch ? 'touchend' : 'mouseup', this.dragEnd)
-        },
-        refresh() {
-            this.$nextTick(() => {
-                this.refresh_++
-            })
+            this.dragX = false
         }
     },
     mounted() {
-        if (typeof window !== 'undefined') {
-            this.startTimer()
-            if (window.ResizeObserver) {
-                this.observer = new ResizeObserver(this.refresh)
-                this.observer.observe(this.$el)
-            }
-            window.addEventListener('resize', this.resized)
-            document.addEventListener('animationend', this.refresh)
-            document.addEventListener('transitionend', this.refresh)
-            document.addEventListener('transitionstart', this.refresh)
-            this.resized()
-        }
-        if (this.$attrs.config) {
-            throw new Error('The config prop was removed, you need to use v-bind instead')
-        }
+        this.startTimer()
     },
     beforeDestroy() {
-        if (typeof window !== 'undefined') {
-            this.pauseTimer()
-            if (window.ResizeObserver) {
-                this.observer.disconnect()
-            }
-            window.removeEventListener('resize', this.resized)
-            document.removeEventListener('animationend', this.refresh)
-            document.removeEventListener('transitionend', this.refresh)
-            document.removeEventListener('transitionstart', this.refresh)
-            this.dragEnd()
-        }
+        this.pauseTimer()
     }
 }
 </script>

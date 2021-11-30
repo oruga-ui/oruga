@@ -1,6 +1,10 @@
 <template>
     <transition :name="transition">
-        <div v-show="isActive" :class="itemClasses">
+        <div
+            :class="slideClasses"
+            @mouseup="checkAsIndicator"
+            @touchend="checkAsIndicator"
+            :style="itemStyle">
             <slot />
         </div>
     </transition>
@@ -23,20 +27,27 @@ export default {
         }
     },
     computed: {
-        itemClasses() {
+        slideClasses() {
             return [
-                this.computedClass('itemClass', 'o-car__item'),
+                this.computedClass('slideClass', 'o-car__slide'),
+                {[this.computedClass('sliceActiveClass', 'o-car__slide--active')]: this.parent.asIndicator ?
+                    this.parent.activeItem === this.index : this.parent.scrollIndex === this.index}
             ]
         },
         transition() {
             if (this.parent.animated === 'fade') {
                 return 'fade'
-            } else if (this.parent.transition) {
+            } /*else if (this.parent.transition) {
                 return 'slide-' + this.parent.transition
-            }
+            }*/
         },
-        isActive() {
-            return this.parent.activeChild === this.index
+        itemStyle() {
+            return `width: ${this.parent.itemWidth}px;`
+        }
+    },
+    methods: {
+        checkAsIndicator(event) {
+            this.parent.checkAsIndicator(this.index, event)
         }
     }
 }

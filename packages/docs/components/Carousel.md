@@ -90,11 +90,11 @@ title: Carousel
         </o-field>
       </o-field>
     </div>
-    <o-carousel-list v-model="values" :data="items" :arrow="arrow" :arrow-hover="arrowHover" :items-to-show="perList" :items-to-list="increment" :repeat="repeat" :has-drag="drag">
-      <template #item="{ item }">
+    <o-carousel v-model="values" :arrow="arrow" :arrow-hover="arrowHover" :items-to-show="perList" :items-to-list="increment" :repeat="repeat" :has-drag="drag">
+      <o-carousel-item v-for="(item, i) in items" :key="i">
         <img :src="item.image" />
-      </template>
-    </o-carousel-list>
+      </o-carousel-item>
+    </o-carousel>
   </section>
 </template>
 
@@ -163,13 +163,13 @@ title: Carousel
         <img :src="item.image" />
       </a>
     </o-carousel-item>
-    <o-button v-if="gallery" icon-left="times" @click="switchGallery(false)" />
-    <template #list="props">
-      <o-carousel-list v-model="props.active" :data="items" v-bind="al" @switch="props.switch($event, false)" as-indicator>
-        <template #item="{ item }">
+    <o-button v-if="gallery" icon-left="times" outlined @click="switchGallery(false)" />
+    <template #indicators="props">
+      <o-carousel v-model="props.active" v-bind="al" @switch="props.switch($event, false)" as-indicator>
+        <o-carousel-item v-for="(item, i) in items" :key="i">
           <img :src="item.image" />
-        </template>
-      </o-carousel-list>
+        </o-carousel-item>
+      </o-carousel>
     </template>
     <template #overlay>
       <div style="color: #ffffff; text-align: center">
@@ -235,9 +235,9 @@ title: Carousel
       switchGallery(value) {
         this.gallery = value
         if (value) {
-          document.documentElement.classList.add('is-clipped')
+          document.documentElement.classList.add('o-clipped')
         } else {
-          document.documentElement.classList.remove('is-clipped')
+          document.documentElement.classList.remove('o-clipped')
         }
       }
     }
@@ -249,6 +249,11 @@ title: Carousel
     display: block;
     height: auto;
     width: 100%;
+  }
+  .ex-close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 </style>
 ```
@@ -365,7 +370,9 @@ title: Carousel
 | animated          |                  | string  | -      | 'slide'                                                                                                                                           |
 | arrow             |                  | boolean | -      | true                                                                                                                                              |
 | arrowHover        |                  | boolean | -      | true                                                                                                                                              |
+| asIndicator       |                  | boolean | -      |                                                                                                                                                   |
 | autoplay          |                  | boolean | -      | true                                                                                                                                              |
+| breakpoints       |                  | object  | -      |                                                                                                                                                   |
 | hasDrag           |                  | boolean | -      | true                                                                                                                                              |
 | iconNext          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
 | iconPack          |                  | string  | -      |                                                                                                                                                   |
@@ -377,6 +384,8 @@ title: Carousel
 | indicatorPosition |                  | string  | -      | 'bottom'                                                                                                                                          |
 | indicatorStyle    |                  | string  | -      | 'dots'                                                                                                                                            |
 | interval          |                  | number  | -      |                                                                                                                                                   |
+| itemsToList       |                  | number  | -      | 1                                                                                                                                                 |
+| itemsToShow       |                  | number  | -      | 1                                                                                                                                                 |
 | overlay           |                  | boolean | -      |                                                                                                                                                   |
 | override          | Override classes | boolean | -      | false                                                                                                                                             |
 | pauseHover        |                  | boolean | -      | true                                                                                                                                              |
@@ -388,11 +397,12 @@ title: Carousel
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
-| change     |            |
-| click      |            |
+| Event name     | Properties | Description |
+| -------------- | ---------- | ----------- |
+| input          |            |
+| change         |            |
+| updated:scroll |            |
+| switch         |            |
 
 ## Slots
 
@@ -400,8 +410,8 @@ title: Carousel
 | ---------- | ----------- | -------- |
 | default    |             |          |
 | pause      |             |          |
+| indicator  |             | <br>     |
 | indicators |             |          |
-| list       |             | <br>     |
 | overlay    |             |          |
 
 ## Style
