@@ -1,5 +1,4 @@
 /* @docs */
-$carousel-min-height: 120px !default;
 $carousel-arrow-background: $white !default;
 $carousel-arrow-color: $primary !default;
 $carousel-arrow-icon-spaced: 1.5rem !default;
@@ -15,8 +14,9 @@ $carousel-overlay-z: 40 !default;
 
 .o-car {
     @include unselectable;
-    min-height: $carousel-min-height;
     position: relative;
+    overflow: hidden;
+    width: 100%;
     &__overlay {
         background-color: $carousel-overlay-background;
         bottom: 0;
@@ -39,19 +39,32 @@ $carousel-overlay-z: 40 !default;
     &__items {
         position: relative;
         display: flex;
-        overflow: hidden;
         width: 100%;
+        &:not(&--dragging) {
+            transition: all $speed-slower ease-out 0s;
+        }
     }
     &__item {
+        border: 2px solid transparent;
         flex-shrink: 0;
-        width: 100%;
     }
     &__pause {
         pointer-events: none;
         position: absolute;
-        top: 0;
+        top: 0.15rem;
         right: 0.15rem;
         z-index: 1;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        color: #4a4a4a;
+        display: inline-flex;
+        font-size: .75rem;
+        height: 2em;
+        justify-content: center;
+        line-height: 1.5;
+        padding: 0 0.75em 0 0.75em;
+        white-space: nowrap;
     }
     &__indicators {
         width: 100%;
@@ -99,27 +112,6 @@ $carousel-overlay-z: 40 !default;
                 width: 25px;
             }
         }
-    }
-
-    &__list {
-        @include unselectable;
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-    }
-
-    &__slides {
-        position: relative;
-        display: flex;
-        width: 100%;
-        &:not(&--dragging) {
-            transition: all $speed-slower ease-out 0s;
-        }
-    }
-
-    &__slide {
-        border: 2px solid transparent;
-        flex-shrink: 0;
     }
 
     &__arrow__icon {

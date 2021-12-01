@@ -15,7 +15,7 @@ title: OCarousel
 | animated          |                  | string  | -      | 'slide'                                                                                                                                           |
 | arrow             |                  | boolean | -      | true                                                                                                                                              |
 | arrowHover        |                  | boolean | -      | true                                                                                                                                              |
-| autoplay          |                  | boolean | -      | true                                                                                                                                              |
+| autoplay          |                  | boolean | -      | false                                                                                                                                             |
 | hasDrag           |                  | boolean | -      | true                                                                                                                                              |
 | iconNext          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
 | iconPack          |                  | string  | -      |                                                                                                                                                   |
@@ -29,8 +29,7 @@ title: OCarousel
 | interval          |                  | number  | -      |                                                                                                                                                   |
 | overlay           |                  | boolean | -      |                                                                                                                                                   |
 | override          | Override classes | boolean | -      | false                                                                                                                                             |
-| pauseHover        |                  | boolean | -      | true                                                                                                                                              |
-| pauseInfo         |                  | boolean | -      | true                                                                                                                                              |
+| pauseHover        |                  | boolean | -      | false                                                                                                                                             |
 | pauseText         |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;pauseText: 'Pause'<br>}</code>        |
 | progress          |                  | boolean | -      |                                                                                                                                                   |
 | repeat            |                  | boolean | -      | true                                                                                                                                              |

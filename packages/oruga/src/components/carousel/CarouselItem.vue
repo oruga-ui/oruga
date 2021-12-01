@@ -1,13 +1,11 @@
 <template>
-    <transition :name="transition">
-        <div
-            :class="slideClasses"
-            @mouseup="checkAsIndicator"
-            @touchend="checkAsIndicator"
-            :style="itemStyle">
-            <slot />
-        </div>
-    </transition>
+    <div
+        :class="slideClasses"
+        @mouseup="checkAsIndicator"
+        @touchend="checkAsIndicator"
+        :style="itemStyle">
+        <slot />
+    </div>
 </template>
 
 <script>
@@ -21,28 +19,22 @@ export default {
     name: 'OCarouselItem',
     config: 'carousel',
     mixins: [InjectedChildMixin('carousel', Sorted), BaseComponentMixin],
-    data() {
-        return {
-            transitionName: null
-        }
+    props: {
+        itemsClass: [String, Function, Array],
+        itemActiveClass: [String, Function, Array]
     },
     computed: {
         slideClasses() {
             return [
-                this.computedClass('slideClass', 'o-car__slide'),
-                {[this.computedClass('sliceActiveClass', 'o-car__slide--active')]: this.parent.asIndicator ?
-                    this.parent.activeItem === this.index : this.parent.scrollIndex === this.index}
+                this.computedClass('itemClass', 'o-car__item'),
+                {[this.computedClass('itemActiveClass', 'o-car__item--active')]: this.isActive}
             ]
-        },
-        transition() {
-            if (this.parent.animated === 'fade') {
-                return 'fade'
-            } /*else if (this.parent.transition) {
-                return 'slide-' + this.parent.transition
-            }*/
         },
         itemStyle() {
             return `width: ${this.parent.itemWidth}px;`
+        },
+        isActive() {
+            return this.parent.scrollIndex === this.index
         }
     },
     methods: {

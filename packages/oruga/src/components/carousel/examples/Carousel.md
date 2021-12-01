@@ -102,34 +102,30 @@
                 items: [
                     {
                         title: 'Slide 1',
-                        image: 'https://picsummm.photos/id/0/1230/500'
-                    },
-                    {
-                        title: 'Slide 2',
                         image: 'https://picsum.photos/id/1/1230/500'
                     },
                     {
-                        title: 'Slide 3',
+                        title: 'Slide 2',
                         image: 'https://picsum.photos/id/2/1230/500'
                     },
                     {
-                        title: 'Slide 4',
+                        title: 'Slide 3',
                         image: 'https://picsum.photos/id/3/1230/500'
                     },
                     {
-                        title: 'Slide 5',
+                        title: 'Slide 4',
                         image: 'https://picsum.photos/id/4/1230/500'
                     },
                     {
-                        title: 'Slide 6',
+                        title: 'Slide 5',
                         image: 'https://picsum.photos/id/5/1230/500'
                     },
                     {
-                        title: 'Slide 7',
+                        title: 'Slide 6',
                         image: 'https://picsum.photos/id/6/1230/500'
                     },
                     {
-                        title: 'Slide 8',
+                        title: 'Slide 7',
                         image: 'https://picsum.photos/id/7/1230/500'
                     }
                 ]
@@ -147,7 +143,6 @@
 <template>
     <o-carousel
         :autoplay="false"
-        :indicator="false"
         :overlay="gallery"
         @click="switchGallery(true)">
         <o-carousel-item v-for="(item, i) in items" :key="i">
@@ -155,19 +150,29 @@
                 <img :src="item.image">
             </a>
         </o-carousel-item>
-        <o-button v-if="gallery" icon-left="times" outlined @click="switchGallery(false)" />
-        <template #indicators="props">
+        
+        <template #indicators="{ active, switchTo }">
             <o-carousel
-                v-model="props.active"
+                v-model="active"
                 v-bind="al"
-                @switch="props.switch($event, false)"
+                @switch="switchTo($event)"
                 as-indicator>
-                <o-carousel-item v-for="(item, i) in items" :key="i">
+                <o-carousel-item 
+                    v-for="(item, i) in items"
+                    :key="i" 
+                    item-active-class="img-indicator">
                     <img :src="item.image">
                 </o-carousel-item>
             </o-carousel>
         </template>
         <template #overlay>
+            <o-icon 
+                v-if="gallery"
+                icon="times"
+                root-class="ex-close-icon"
+                clickable
+                @click.native="switchGallery(false)" 
+            />
             <div style="color: #ffffff; text-align: center">
                 Hello, I'm an overlay!
             </div>
@@ -194,34 +199,30 @@
                 items: [
                     {
                         title: 'Slide 1',
-                        image: 'https://picsum.photos/id/0/1230/500'
-                    },
-                    {
-                        title: 'Slide 2',
                         image: 'https://picsum.photos/id/1/1230/500'
                     },
                     {
-                        title: 'Slide 3',
+                        title: 'Slide 2',
                         image: 'https://picsum.photos/id/2/1230/500'
                     },
                     {
-                        title: 'Slide 4',
+                        title: 'Slide 3',
                         image: 'https://picsum.photos/id/3/1230/500'
                     },
                     {
-                        title: 'Slide 5',
+                        title: 'Slide 4',
                         image: 'https://picsum.photos/id/4/1230/500'
                     },
                     {
-                        title: 'Slide 6',
+                        title: 'Slide 5',
                         image: 'https://picsum.photos/id/5/1230/500'
                     },
                     {
-                        title: 'Slide 7',
+                        title: 'Slide 6',
                         image: 'https://picsum.photos/id/6/1230/500'
                     },
                     {
-                        title: 'Slide 8',
+                        title: 'Slide 7',
                         image: 'https://picsum.photos/id/7/1230/500'
                     }
                 ]
@@ -246,10 +247,15 @@
     height: auto;
     width: 100%;
 }
+.img-indicator {
+    border: 1px solid blue;
+}
 .ex-close-icon {
     position: absolute;
     top: 10px;
     right: 10px;
+    color: #ffffff;
+    z-index: 99;
 }
 </style>
 ```
@@ -271,9 +277,6 @@
                     <o-switch v-model="pauseHover" :disabled="!autoPlay">Pause on hover</o-switch>
                 </div>
                 <div class="control">
-                    <o-switch v-model="pauseInfo" :disabled="!pauseHover">Pause info</o-switch>
-                </div>
-                <div class="control">
                     <o-switch v-model="drag">Drag event</o-switch>
                 </div>
                 <div class="control">
@@ -287,28 +290,14 @@
                 <o-field label="Interval">
                     <o-input type="number" v-model.number="interval" min="0" step="1000" :disabled="!autoPlay"/>
                 </o-field>
-                <o-field label="Animated">
-                    <o-field>
-                        <o-radio v-model="animated"
-                            native-value="fade">
-                            Fade
-                        </o-radio>
-                        <o-radio v-model="animated"
-                            native-value="slide">
-                            Slide
-                        </o-radio>
-                    </o-field>
-                </o-field>
             </o-field>
         </div>
 
         <o-carousel
             v-model="carousel"
-            :animated="animated"
             :has-drag="drag"
             :autoplay="autoPlay"
             :pause-hover="pauseHover"
-            :pause-info="pauseInfo"
             :interval="interval"
             :repeat="repeat"
             @change="info($event)">

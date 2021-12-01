@@ -2,49 +2,40 @@
     <div
         :class="rootClasses"
         @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
-        @mousedown.prevent="dragStart"
-        @touchstart="dragStart">
+        @mouseleave="onMouseLeave">
         <div
-            :class="slidesClasses"
+            @mousedown.prevent="dragStart"
+            @touchstart="dragStart"
+            @click="$emit('click', $event)"
+            :class="itemsClasses"
             :style="'transform:translateX('+translation+'px)'">
             <slot/>
         </div>
+        <template v-if="arrow">
+            <o-icon
+                v-show="hasPrev"
+                :class="arrowIconPrevClasses"
+                @click.native="prev"
+                :pack="iconPack"
+                :icon="iconPrev"
+                :size="iconSize"
+                both />
+            <o-icon
+                v-show="hasNext"
+                :class="arrowIconNextClasses"
+                @click.native="next"
+                :pack="iconPack"
+                :icon="iconNext"
+                :size="iconSize"
+                both />
+        </template>
         <progress
             v-if="progress"
             :class="progressClasses"
-            :value="activeChild"
+            :value="scrollIndex"
             :max="childItems.length - 1">
             {{ childItems.length - 1 }}
         </progress>
-        <div
-            :class="itemsClasses"
-            @mouseenter="itemsHovered = true"
-            @mouseleave="itemsHovered = false"
-            @mousedown="dragStart"
-            @mouseup="dragEnd"
-            @touchstart.stop="dragStart"
-            @touchend.stop="dragEnd">
-            <slot/>
-            <template v-if="arrow">
-                <o-icon
-                    v-show="hasPrev"
-                    :class="arrowIconPrevClasses"
-                    @click.native="prev"
-                    :pack="iconPack"
-                    :icon="iconPrev"
-                    :size="iconSize"
-                    both />
-                <o-icon
-                    v-show="hasNext"
-                    :class="arrowIconNextClasses"
-                    @click.native="next"
-                    :pack="iconPack"
-                    :icon="iconNext"
-                    :size="iconSize"
-                    both />
-            </template>
-        </div>
         <div
             v-if="autoplay && (pauseHover && itemsHovered) && isPause"
             :class="pauseClasses">
@@ -53,22 +44,22 @@
             </slot>
         </div>
         <slot
-            :active="activeChild"
-            :switch="changeActive"
-            name="indicator">
+            :active="scrollIndex"
+            :switchTo="switchTo"
+            name="indicators">
             <div
-                v-if="indicator"
+                v-if="indicator && !asIndicator"
                 :class="indicatorsClasses">
                 <a
-                    v-for="(item, index) in sortedItems"
+                    v-for="(_, index) in indicatorsCount"
                     :class="indicatorClasses"
                     @mouseover="modeChange('hover', index)"
                     @click="modeChange('click', index)"
-                    :key="item._uid">
+                    :key="index">
                     <slot
                         :i="index"
-                        name="indicators">
-                        <span :class="indicatorItemClasses(item)"/>
+                        name="indicator">
+                        <span :class="indicatorItemClasses(index)"/>
                     </slot>
                 </a>
             </div>
@@ -105,10 +96,6 @@ export default {
             type: Number,
             default: 0
         },
-        animated: {
-            type: String,
-            default: 'slide'
-        },
         interval: Number,
         hasDrag: {
             type: Boolean,
@@ -116,15 +103,11 @@ export default {
         },
         autoplay: {
             type: Boolean,
-            default: true
+            default: false
         },
         pauseHover: {
             type: Boolean,
-            default: true
-        },
-        pauseInfo: {
-            type: Boolean,
-            default: true
+            default: false
         },
         pauseText: {
             type: String,
@@ -132,7 +115,7 @@ export default {
         },
         repeat: {
             type: Boolean,
-            default: true
+            default: false
         },
         indicator: {
             type: Boolean,
@@ -204,9 +187,7 @@ export default {
         indicatorsInsidePositionClass: [String, Function, Array],
         indicatorItemClass: [String, Function, Array],
         indicatorItemActiveClass: [String, Function, Array],
-        indicatorItemStyleClass: [String, Function, Array],
-        slidesClass: [String, Function, Array],
-        slidesDraggingClass: [String, Function, Array]
+        indicatorItemStyleClass: [String, Function, Array]
     },
     data() {
         return {
@@ -228,14 +209,13 @@ export default {
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-car'),
-                this.computedClass('listClass', 'o-car__list'),
                 { [this.computedClass('overlayClass', 'o-car__overlay')]: this.overlay }
             ]
         },
-        slidesClasses() {
+        itemsClasses() {
             return [
-                this.computedClass('slidesClass', 'o-car__slides'),
-                { [this.computedClass('slidesDraggingClass', 'o-car__slides--dragging')]: this.dragging },
+                this.computedClass('itemsClass', 'o-car__items'),
+                { [this.computedClass('itemsDraggingClass', 'o-car__items--dragging')]: this.dragging },
             ]
         },
         arrowIconClasses() {
@@ -255,6 +235,23 @@ export default {
                 this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
             ]
         },
+        pauseClasses() {
+            return [
+                this.computedClass('pauseClass', 'o-car__pause')
+            ]
+        },
+        indicatorsClasses() {
+            return [
+                this.computedClass('indicatorsClass', 'o-car__indicators'),
+                { [this.computedClass('indicatorsInsideClass', 'o-car__indicators--inside')]: this.indicatorInside },
+                { [this.computedClass('indicatorsInsidePositionClass', 'o-car__indicators--inside--', this.indicatorPosition)]: this.indicatorInside && this.indicatorPosition }
+            ]
+        },
+        indicatorClasses() {
+            return [
+                this.computedClass('indicatorClass', 'o-car__indicator')
+            ]
+        },
         dragging() {
             return this.dragX !== false
         },
@@ -269,6 +266,11 @@ export default {
         },
         total() {
             return this.childItems.length - this.settings.itemsToShow
+        },
+        indicatorsCount() {
+            if (!this.childItems.length) return
+            const diff = this.settings.itemsToShow - this.settings.itemsToList
+            return Math.ceil(this.childItems.length / this.settings.itemsToList) - diff
         },
         hasArrows() {
             return (this.settings.arrowHover && this.itemsHovered) || !this.settings.arrowHover
@@ -309,17 +311,10 @@ export default {
          * When v-model is changed set the new active item.
          */
         value(value) {
-            this.switchTo(this.asIndicator ? value - (this.itemsToShow - 3) / 2 : value)
-            if (this.activeItem !== value) {
-                this.activeItem = bound(value, 0, this.childItems.length - 1)
-            }
-        },
-        /**
-         * When carousel-items are updated, set active one.
-         */
-        sortedItems(items) {
-            if (this.activeChild >= items.length && this.activeChild > 0) {
-                this.changeActive(this.activeChild - 1)
+            if (!this.asIndicator) {
+                this.switchTo(value)
+            } else {
+                this.checkAsIndicator(value)
             }
         },
         /**
@@ -336,10 +331,11 @@ export default {
         }
     },
     methods: {
-        indicatorItemClasses(item) {
+        indicatorItemClasses(index) {
+            let isActive = this.scrollIndex / this.settings.itemsToList === index
             return [
                 this.computedClass('indicatorItemClass', 'o-car__indicator__item'),
-                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: item.isActive },
+                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: isActive },
                 { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
             ]
         },
@@ -356,7 +352,7 @@ export default {
             this.isPause = false
             const interval = getValueByPath(getOptions(), 'carousel.interval', 3500)
             this.timer = setInterval(() => {
-                if (!this.repeat && this.activeChild >= this.childItems.length - 1) {
+                if (!this.repeat && this.scrollIndex >= this.childItems.length - 1) {
                     this.pauseTimer()
                 } else {
                     this.next()
@@ -379,32 +375,10 @@ export default {
                 this.pauseTimer()
             }
         },
-        /**
-         * Change the active item and emit change event.
-         * action only for animated slide, there true = next, false = prev
-         */
-        changeActive(newIndex, direction = 0) {
-            if (this.activeChild === newIndex || isNaN(newIndex)) return
-
-            direction = direction || (newIndex - this.activeChild)
-
-            newIndex = this.repeat ? mod(newIndex, this.childItems.length)
-                : bound(newIndex, 0, this.childItems.length - 1)
-
-            this.transition = direction > 0 ? 'prev' : 'next'
-            // Transition names are reversed from the actual direction for correct effect
-
-            this.activeChild = newIndex
-            if (newIndex !== this.value) {
-                this.$emit('input', newIndex)
-            }
-            this.restartTimer()
-            this.$emit('change', newIndex) // BC
-        },
         // Indicator trigger when change active item.
         modeChange(trigger, value) {
             if (this.indicatorMode === trigger) {
-                return this.changeActive(value)
+                return this.switchTo(value)
             }
         },
         resized() {
@@ -416,12 +390,11 @@ export default {
             if (this.settings.repeat) {
                 newIndex = mod(newIndex, this.total + 1)
             }
+
             newIndex = bound(newIndex, 0, this.total)
             this.scrollIndex = newIndex
-            if (!this.asIndicator && this.value !== newIndex) {
+            if (this.value !== newIndex) {
                 this.$emit('input', newIndex)
-            } else if (this.scrollIndex !== newIndex) {
-                this.$emit('updated:scroll', newIndex)
             }
         },
         next() {
@@ -433,15 +406,16 @@ export default {
         checkAsIndicator(value, event) {
             if (!this.asIndicator) return
 
-            const dragEndX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX
-            if (this.hold - Date.now() > 2000 || Math.abs(this.dragX - dragEndX) > 10) return
-
-            this.dragX = false
-            this.hold = 0
-            event.preventDefault()
+            if (event) {
+                const dragEndX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX
+                if (this.hold - Date.now() > 2000 || Math.abs(this.dragX - dragEndX) > 10) return
+                this.dragX = false
+                this.hold = 0
+                event.preventDefault()
+            }
 
             // Make the item appear in the middle
-            this.activeItem = value
+            this.scrollIndex = value
 
             this.$emit('switch', value)
         },
