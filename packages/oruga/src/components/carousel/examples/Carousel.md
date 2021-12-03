@@ -160,7 +160,8 @@
                 <o-carousel-item 
                     v-for="(item, i) in items"
                     :key="i" 
-                    item-active-class="img-indicator">
+                    item-class="img-indicator"
+                    item-active-class="img-indicator-active">
                     <img :src="item.image">
                 </o-carousel-item>
             </o-carousel>
@@ -248,7 +249,10 @@
     width: 100%;
 }
 .img-indicator {
-    border: 1px solid blue;
+    filter: grayscale(100%);
+}
+.img-indicator-active {
+    filter: grayscale(0%);
 }
 .ex-close-icon {
     position: absolute;
@@ -299,8 +303,7 @@
             :autoplay="autoPlay"
             :pause-hover="pauseHover"
             :interval="interval"
-            :repeat="repeat"
-            @change="info($event)">
+            :repeat="repeat">
             <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
                 <section class="ex-slide" :style="{'background-color': carousel.color }">
                     <h1>{{carousel.title}}</h1>
@@ -331,15 +334,6 @@
                     { text: 'Slide 4', color: '#f4c300' },
                     { text: 'Slide 5', color: '#005c98' }
                 ]
-            }
-        },
-        methods: {
-            info(value) {
-                this.carousel = value
-                this.$oruga.notification.open({
-                    message: `This Slide ${value} !`,
-                    variant: 'info'
-                })
             }
         }
     }

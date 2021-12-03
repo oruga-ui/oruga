@@ -112,7 +112,7 @@ title: Carousel
         items: [
           {
             title: 'Slide 1',
-            image: 'https://picsummm.photos/id/1/1230/500'
+            image: 'https://picsum.photos/id/1/1230/500'
           },
           {
             title: 'Slide 2',
@@ -162,7 +162,7 @@ title: Carousel
 
     <template #indicators="{ active, switchTo }">
       <o-carousel v-model="active" v-bind="al" @switch="switchTo($event)" as-indicator>
-        <o-carousel-item v-for="(item, i) in items" :key="i" item-active-class="img-indicator">
+        <o-carousel-item v-for="(item, i) in items" :key="i" item-class="img-indicator" item-active-class="img-indicator-active">
           <img :src="item.image" />
         </o-carousel-item>
       </o-carousel>
@@ -244,7 +244,10 @@ title: Carousel
     width: 100%;
   }
   .img-indicator {
-    border: 1px solid blue;
+    filter: grayscale(100%);
+  }
+  .img-indicator-active {
+    filter: grayscale(0%);
   }
   .ex-close-icon {
     position: absolute;
@@ -287,29 +290,10 @@ title: Carousel
         <o-field label="Interval">
           <o-input type="number" v-model.number="interval" min="0" step="1000" :disabled="!autoPlay" />
         </o-field>
-        <o-field label="Animated">
-          <o-field>
-            <o-radio v-model="animated" native-value="fade">
-              Fade
-            </o-radio>
-            <o-radio v-model="animated" native-value="slide">
-              Slide
-            </o-radio>
-          </o-field>
-        </o-field>
       </o-field>
     </div>
 
-    <o-carousel
-      v-model="carousel"
-      :animated="animated"
-      :has-drag="drag"
-      :autoplay="autoPlay"
-      :pause-hover="pauseHover"
-      :interval="interval"
-      :repeat="repeat"
-      @change="info($event)"
-    >
+    <o-carousel v-model="carousel" :has-drag="drag" :autoplay="autoPlay" :pause-hover="pauseHover" :interval="interval" :repeat="repeat">
       <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
         <section class="ex-slide" :style="{'background-color': carousel.color }">
           <h1>{{carousel.title}}</h1>
@@ -341,15 +325,6 @@ title: Carousel
           { text: 'Slide 5', color: '#005c98' }
         ]
       }
-    },
-    methods: {
-      info(value) {
-        this.carousel = value
-        this.$oruga.notification.open({
-          message: `This Slide ${value} !`,
-          variant: 'info'
-        })
-      }
     }
   }
 </script>
@@ -361,7 +336,6 @@ title: Carousel
 
 | Prop name         | Description      | Type    | Values | Default                                                                                                                                           |
 | ----------------- | ---------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated          |                  | string  | -      | 'slide'                                                                                                                                           |
 | arrow             |                  | boolean | -      | true                                                                                                                                              |
 | arrowHover        |                  | boolean | -      | true                                                                                                                                              |
 | asIndicator       |                  | boolean | -      |                                                                                                                                                   |
@@ -377,7 +351,7 @@ title: Carousel
 | indicatorMode     |                  | string  | -      | 'click'                                                                                                                                           |
 | indicatorPosition |                  | string  | -      | 'bottom'                                                                                                                                          |
 | indicatorStyle    |                  | string  | -      | 'dots'                                                                                                                                            |
-| interval          |                  | number  | -      |                                                                                                                                                   |
+| interval          |                  | number  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>            |
 | itemsToList       |                  | number  | -      | 1                                                                                                                                                 |
 | itemsToShow       |                  | number  | -      | 1                                                                                                                                                 |
 | overlay           |                  | boolean | -      |                                                                                                                                                   |
@@ -392,9 +366,7 @@ title: Carousel
 
 | Event name | Properties | Description |
 | ---------- | ---------- | ----------- |
-| click      |            |
 | input      |            |
-| switch     |            |
 
 ## Slots
 

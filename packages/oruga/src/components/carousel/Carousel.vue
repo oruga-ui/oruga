@@ -6,7 +6,6 @@
         <div
             @mousedown.prevent="dragStart"
             @touchstart="dragStart"
-            @click="$emit('click', $event)"
             :class="itemsClasses"
             :style="'transform:translateX('+translation+'px)'">
             <slot/>
@@ -32,7 +31,7 @@
         <progress
             v-if="progress"
             :class="progressClasses"
-            :value="scrollIndex"
+            :value="activeIndex"
             :max="childItems.length - 1">
             {{ childItems.length - 1 }}
         </progress>
@@ -44,7 +43,7 @@
             </slot>
         </div>
         <slot
-            :active="scrollIndex"
+            :active="activeIndex"
             :switchTo="switchTo"
             name="indicators">
             <div
@@ -96,7 +95,10 @@ export default {
             type: Number,
             default: 0
         },
-        interval: Number,
+        interval: {
+            type: Number,
+            default: () => { getValueByPath(getOptions(), 'carousel.interval', 3500) }
+        },
         hasDrag: {
             type: Boolean,
             default: true
@@ -191,7 +193,7 @@ export default {
     },
     data() {
         return {
-            activeItem: this.value,
+            activeIndex: this.value,
             scrollIndex: this.value,
             delta: 0,
             dragX: false,
@@ -311,31 +313,35 @@ export default {
          * When v-model is changed set the new active item.
          */
         value(value) {
-            if (!this.asIndicator) {
-                this.switchTo(value)
-            } else {
-                this.checkAsIndicator(value)
+            if (this.activeIndex !== value) {
+                this.activeIndex = value
+                this.switchTo(value * this.settings.itemsToList)
             }
         },
         /**
          *  When autoplay is changed, start or pause timer accordingly
          */
         autoplay(status) {
-            status ? this.startTimer() : this.pauseTimer()
+            if (status) {
+                this.startTimer()
+            } else {
+                this.pauseTimer()
+            }
         },
         /**
          *  Since the timer can get paused at the end, if repeat is changed we need to restart it
          */
         repeat(status) {
-            if (status) { this.startTimer() }
+            if (status) {
+                this.startTimer()
+            }
         }
     },
     methods: {
         indicatorItemClasses(index) {
-            let isActive = this.scrollIndex / this.settings.itemsToList === index
             return [
                 this.computedClass('indicatorItemClass', 'o-car__indicator__item'),
-                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: isActive },
+                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: this.activeIndex === index },
                 { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
             ]
         },
@@ -350,14 +356,13 @@ export default {
         startTimer() {
             if (!this.autoplay || this.timer) return
             this.isPause = false
-            const interval = getValueByPath(getOptions(), 'carousel.interval', 3500)
             this.timer = setInterval(() => {
-                if (!this.repeat && this.scrollIndex >= this.childItems.length - 1) {
+                if (!this.repeat && this.activeIndex >= this.childItems.length - 1) {
                     this.pauseTimer()
                 } else {
                     this.next()
                 }
-            }, (this.interval || interval))
+            }, this.interval)
         },
         pauseTimer() {
             this.isPause = true
@@ -378,23 +383,23 @@ export default {
         // Indicator trigger when change active item.
         modeChange(trigger, value) {
             if (this.indicatorMode === trigger) {
-                return this.switchTo(value)
+                return this.switchTo(value * this.settings.itemsToList)
             }
         },
         resized() {
             this.windowWidth = window.innerWidth
         },
-        switchTo(newIndex) {
-            if (newIndex === this.scrollIndex || isNaN(newIndex)) { return }
-
+        switchTo(newIndex, onlyMove = this.asIndicator) {
             if (this.settings.repeat) {
                 newIndex = mod(newIndex, this.total + 1)
             }
-
             newIndex = bound(newIndex, 0, this.total)
             this.scrollIndex = newIndex
-            if (this.value !== newIndex) {
-                this.$emit('input', newIndex)
+            if (!onlyMove) {
+                this.activeIndex = Math.ceil(newIndex / this.settings.itemsToList)
+                if (this.value !== this.activeIndex) {
+                    this.$emit('input', this.activeIndex)
+                }
             }
         },
         next() {
@@ -402,22 +407,6 @@ export default {
         },
         prev() {
             this.switchTo(this.scrollIndex - this.settings.itemsToList)
-        },
-        checkAsIndicator(value, event) {
-            if (!this.asIndicator) return
-
-            if (event) {
-                const dragEndX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX
-                if (this.hold - Date.now() > 2000 || Math.abs(this.dragX - dragEndX) > 10) return
-                this.dragX = false
-                this.hold = 0
-                event.preventDefault()
-            }
-
-            // Make the item appear in the middle
-            this.scrollIndex = value
-
-            this.$emit('switch', value)
         },
         // handle drag event
         dragStart(event) {

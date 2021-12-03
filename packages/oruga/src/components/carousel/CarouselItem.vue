@@ -1,8 +1,7 @@
 <template>
     <div
         :class="slideClasses"
-        @mouseup="checkAsIndicator"
-        @touchend="checkAsIndicator"
+        @click="onClick"
         :style="itemStyle">
         <slot />
     </div>
@@ -20,26 +19,29 @@ export default {
     config: 'carousel',
     mixins: [InjectedChildMixin('carousel', Sorted), BaseComponentMixin],
     props: {
-        itemsClass: [String, Function, Array],
+        itemClass: [String, Function, Array],
         itemActiveClass: [String, Function, Array]
     },
     computed: {
         slideClasses() {
             return [
                 this.computedClass('itemClass', 'o-car__item'),
-                {[this.computedClass('itemActiveClass', 'o-car__item--active')]: this.isActive}
+                {[this.computedClass('itemActiveClass', 'o-car__item--active')]: this.parent.activeIndex === this.index}
             ]
         },
         itemStyle() {
             return `width: ${this.parent.itemWidth}px;`
-        },
-        isActive() {
-            return this.parent.scrollIndex === this.index
         }
     },
     methods: {
-        checkAsIndicator(event) {
-            this.parent.checkAsIndicator(this.index, event)
+        onClick(event) {
+            if (this.isActive) {
+                this.parent.$emit('click', event)
+            }
+            if (this.parent.asIndicator) {
+                this.parent.activeIndex = this.index
+                this.parent.$emit('switch', this.index)
+            }
         }
     }
 }
