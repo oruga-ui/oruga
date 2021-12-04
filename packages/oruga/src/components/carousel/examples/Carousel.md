@@ -62,9 +62,6 @@
                 </div>
             </o-field>
             <o-field grouped group-multiline>
-                <o-field label="Value">
-                    <o-input type="number" v-model.number="values" min="0" :max="items.length - 1" />
-                </o-field>
                 <o-field label="Items to Show">
                     <o-input type="number" v-model.number="perList" min="1" :max="items.length" />
                 </o-field>
@@ -153,9 +150,9 @@
         
         <template #indicators="{ active, switchTo }">
             <o-carousel
-                v-model="active"
+                :value="active"
+                @input="switchTo($event)"
                 v-bind="al"
-                @switch="switchTo($event)"
                 as-indicator>
                 <o-carousel-item 
                     v-for="(item, i) in items"

@@ -35,12 +35,12 @@ export default {
     },
     methods: {
         onClick(event) {
-            if (this.isActive) {
+            if (this.parent.activeIndex === this.index) {
                 this.parent.$emit('click', event)
             }
             if (this.parent.asIndicator) {
                 this.parent.activeIndex = this.index
-                this.parent.$emit('switch', this.index)
+                this.parent.$emit('input', this.index)
             }
         }
     }

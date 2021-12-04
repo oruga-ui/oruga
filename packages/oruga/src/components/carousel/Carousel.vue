@@ -3,65 +3,64 @@
         :class="rootClasses"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave">
-        <div
-            @mousedown.prevent="dragStart"
-            @touchstart="dragStart"
-            :class="itemsClasses"
-            :style="'transform:translateX('+translation+'px)'">
-            <slot/>
-        </div>
-        <template v-if="arrow">
-            <o-icon
-                v-show="hasPrev"
-                :class="arrowIconPrevClasses"
-                @click.native="prev"
-                :pack="iconPack"
-                :icon="iconPrev"
-                :size="iconSize"
-                both />
-            <o-icon
-                v-show="hasNext"
-                :class="arrowIconNextClasses"
-                @click.native="next"
-                :pack="iconPack"
-                :icon="iconNext"
-                :size="iconSize"
-                both />
-        </template>
-        <progress
-            v-if="progress"
-            :class="progressClasses"
-            :value="activeIndex"
-            :max="childItems.length - 1">
-            {{ childItems.length - 1 }}
-        </progress>
-        <div
-            v-if="autoplay && (pauseHover && itemsHovered) && isPause"
-            :class="pauseClasses">
-            <slot name="pause">
-                {{ pauseText }}
+        <div :class="sceneClasses">
+            <div
+                @mousedown.prevent="dragStart"
+                @touchstart="dragStart"
+                :class="itemsClasses"
+                :style="'transform:translateX('+translation+'px)'">
+                <slot/>
+            </div>
+            <slot
+                name="arrow"
+                :hasPrev="hasPrev"
+                :prev="prev"
+                :hasNext="hasNext"
+                :next="next"
+            >
+                <template v-if="arrow">
+                    <o-icon
+                        v-show="hasPrev"
+                        :class="arrowIconPrevClasses"
+                        @click.native="prev"
+                        :pack="iconPack"
+                        :icon="iconPrev"
+                        :size="iconSize"
+                        both />
+                    <o-icon
+                        v-show="hasNext"
+                        :class="arrowIconNextClasses"
+                        @click.native="next"
+                        :pack="iconPack"
+                        :icon="iconNext"
+                        :size="iconSize"
+                        both />
+                </template>
             </slot>
-        </div>
+         </div>
         <slot
             :active="activeIndex"
             :switchTo="switchTo"
+            :indicatorIndex="indicatorIndex"
             name="indicators">
-            <div
-                v-if="indicator && !asIndicator"
-                :class="indicatorsClasses">
-                <a
-                    v-for="(_, index) in indicatorsCount"
-                    :class="indicatorClasses"
-                    @mouseover="modeChange('hover', index)"
-                    @click="modeChange('click', index)"
-                    :key="index">
-                    <slot
-                        :i="index"
-                        name="indicator">
-                        <span :class="indicatorItemClasses(index)"/>
-                    </slot>
-                </a>
-            </div>
+            <template v-if="childItems.length">
+                <div
+                    v-if="indicator && !asIndicator"
+                    :class="indicatorsClasses">
+                    <a
+                        v-for="(_, index) in indicatorCount"
+                        :class="indicatorClasses"
+                        @mouseover="modeChange('hover', index)"
+                        @click="modeChange('click', index)"
+                        :key="index">
+                        <slot
+                            :i="index"
+                            name="indicator">
+                            <span :class="indicatorItemClasses(index)"/>
+                        </slot>
+                    </a>
+                </div>
+            </template>
         </slot>
         <template v-if="overlay">
             <slot name="overlay"/>
@@ -111,10 +110,6 @@ export default {
             type: Boolean,
             default: false
         },
-        pauseText: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'carousel.pauseText', 'Pause') }
-        },
         repeat: {
             type: Boolean,
             default: false
@@ -125,7 +120,7 @@ export default {
         },
         indicatorInside: {
             type: Boolean,
-            default: true
+            default: false
         },
         indicatorMode: {
             type: String,
@@ -139,7 +134,6 @@ export default {
             type: String,
             default: 'dots'
         },
-        progress: Boolean,
         overlay: Boolean,
         hasDrag: {
             type: Boolean,
@@ -178,12 +172,11 @@ export default {
         },
         rootClass: [String, Function, Array],
         overlayClass: [String, Function, Array],
-        progressClass: [String, Function, Array],
+        sceneClass: [String, Function, Array],
         itemsClass: [String, Function, Array],
         arrowIconClass: [String, Function, Array],
         arrowIconPrevClass: [String, Function, Array],
         arrowIconNextClass: [String, Function, Array],
-        pauseClass: [String, Function, Array],
         indicatorsClass: [String, Function, Array],
         indicatorsInsideClass: [String, Function, Array],
         indicatorsInsidePositionClass: [String, Function, Array],
@@ -214,6 +207,11 @@ export default {
                 { [this.computedClass('overlayClass', 'o-car__overlay')]: this.overlay }
             ]
         },
+        sceneClasses() {
+            return [
+                this.computedClass('sceneClass', 'o-car__scene')
+            ]
+        },
         itemsClasses() {
             return [
                 this.computedClass('itemsClass', 'o-car__items'),
@@ -235,11 +233,6 @@ export default {
             return [
                 ...this.arrowIconClasses,
                 this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
-            ]
-        },
-        pauseClasses() {
-            return [
-                this.computedClass('pauseClass', 'o-car__pause')
             ]
         },
         indicatorsClasses() {
@@ -269,10 +262,11 @@ export default {
         total() {
             return this.childItems.length - this.settings.itemsToShow
         },
-        indicatorsCount() {
-            if (!this.childItems.length) return
-            const diff = this.settings.itemsToShow - this.settings.itemsToList
-            return Math.ceil(this.childItems.length / this.settings.itemsToList) - diff
+        indicatorCount() {
+            return Math.ceil(this.total / this.settings.itemsToList) + 1
+        },
+        indicatorIndex() {
+            return Math.ceil(this.scrollIndex / this.settings.itemsToList)
         },
         hasArrows() {
             return (this.settings.arrowHover && this.itemsHovered) || !this.settings.arrowHover
@@ -313,10 +307,8 @@ export default {
          * When v-model is changed set the new active item.
          */
         value(value) {
-            if (this.activeIndex !== value) {
-                this.activeIndex = value
-                this.switchTo(value * this.settings.itemsToList)
-            }
+            this.activeIndex = value
+            this.switchTo(value * this.settings.itemsToList, true)
         },
         /**
          *  When autoplay is changed, start or pause timer accordingly
@@ -341,7 +333,7 @@ export default {
         indicatorItemClasses(index) {
             return [
                 this.computedClass('indicatorItemClass', 'o-car__indicator__item'),
-                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: this.activeIndex === index },
+                { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: this.indicatorIndex === index },
                 { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
             ]
         },
@@ -380,7 +372,6 @@ export default {
                 this.pauseTimer()
             }
         },
-        // Indicator trigger when change active item.
         modeChange(trigger, value) {
             if (this.indicatorMode === trigger) {
                 return this.switchTo(value * this.settings.itemsToList)
@@ -395,6 +386,7 @@ export default {
             }
             newIndex = bound(newIndex, 0, this.total)
             this.scrollIndex = newIndex
+            this.$emit('scroll', this.indicatorIndex)
             if (!onlyMove) {
                 this.activeIndex = Math.ceil(newIndex / this.settings.itemsToList)
                 if (this.value !== this.activeIndex) {

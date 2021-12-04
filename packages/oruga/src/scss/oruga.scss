@@ -21,6 +21,23 @@ $whitelist: add-to-whitelist(
     'button-disabled-opacity'
 );
 
+// carousel
+$whitelist: add-to-whitelist(
+    'carousel-overlay-zindex',
+    'carousel-indicator-size',
+    'carousel-indicator-background',
+    'carousel-indicator-border',
+    'carousel-indicator-active-background',
+    'carousel-indicator-active-border',
+    'carousel-indicator-size',
+    'carousel-indicator-dots-border-radius',
+    'carousel-arrow-size',
+    'carousel-arrow-background',
+    'carousel-arrow-color',
+    'carousel-arrow-top',
+    'carousel-arrow-icon-spaced'
+);
+
 // checkbox
 $whitelist: add-to-whitelist(
     'checkbox-size',
@@ -29,7 +46,6 @@ $whitelist: add-to-whitelist(
     'checkbox-border-color',
     'checkbox-disabled-opacity'
 );
-
 
 // datepicker
 $whitelist: add-to-whitelist(

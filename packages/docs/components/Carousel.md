@@ -161,7 +161,7 @@ title: Carousel
     </o-carousel-item>
 
     <template #indicators="{ active, switchTo }">
-      <o-carousel v-model="active" v-bind="al" @switch="switchTo($event)" as-indicator>
+      <o-carousel :value="active" @input="switchTo($event)" v-bind="al" as-indicator>
         <o-carousel-item v-for="(item, i) in items" :key="i" item-class="img-indicator" item-active-class="img-indicator-active">
           <img :src="item.image" />
         </o-carousel-item>
@@ -357,7 +357,6 @@ title: Carousel
 | overlay           |                  | boolean | -      |                                                                                                                                                   |
 | override          | Override classes | boolean | -      | false                                                                                                                                             |
 | pauseHover        |                  | boolean | -      | false                                                                                                                                             |
-| pauseText         |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;pauseText: 'Pause'<br>}</code>        |
 | progress          |                  | boolean | -      |                                                                                                                                                   |
 | repeat            |                  | boolean | -      | false                                                                                                                                             |
 | value             |                  | number  | -      | 0                                                                                                                                                 |
@@ -366,30 +365,47 @@ title: Carousel
 
 | Event name | Properties | Description |
 | ---------- | ---------- | ----------- |
+| scroll     |            |
 | input      |            |
 
 ## Slots
 
-| Name       | Description | Bindings |
-| ---------- | ----------- | -------- |
-| default    |             |          |
-| pause      |             |          |
-| indicators |             | <br>     |
-| indicator  |             |          |
-| overlay    |             |          |
+| Name       | Description | Bindings     |
+| ---------- | ----------- | ------------ |
+| default    |             |              |
+| arrow      |             | <br><br><br> |
+| indicators |             | <br>         |
+| indicator  |             |              |
+| overlay    |             |              |
 
 ## Style
 
-| CSS Variable                          | SASS Variable                   | Default              |
-| ------------------------------------- | ------------------------------- | -------------------- |
-| --oruga-carousel-arrow-background     | \$carousel-arrow-background     | \$white              |
-| --oruga-carousel-arrow-color          | \$carousel-arrow-color          | \$primary            |
-| --oruga-carousel-arrow-icon-spaced    | \$carousel-arrow-icon-spaced    | 1.5rem               |
-| --oruga-carousel-arrow-top            | \$carousel-arrow-top            | 50%                  |
-| --oruga-carousel-arrow-size           | \$carousel-arrow-size           | 1.5rem               |
-| --oruga-carousel-indicator-background | \$carousel-indicator-background | rgba(\$white , 0.50) |
-| --oruga-carousel-indicator-border     | \$carousel-indicator-border     | \$white              |
-| --oruga-carousel-indicator-color      | \$carousel-indicator-color      | \$primary            |
-| --oruga-carousel-indicator-spaced     | \$carousel-indicator-spaced     | .5rem                |
-| --oruga-carousel-overlay-background   | \$carousel-overlay-background   | rgba(\$white , 0.86) |
-| --oruga-carousel-overlay-z            | \$carousel-overlay-z            | 40                   |
+| CSS Variable                                  | SASS Variable                           | Default                               |
+| --------------------------------------------- | --------------------------------------- | ------------------------------------- |
+| --oruga-carousel-arrow-background             | \$carousel-arrow-background             | \$white                               |
+| --oruga-carousel-arrow-color                  | \$carousel-arrow-color                  | \$primary                             |
+| --oruga-carousel-arrow-icon-spaced            | \$carousel-arrow-icon-spaced            | 1.5rem                                |
+| --oruga-carousel-arrow-top                    | \$carousel-arrow-top                    | 50%                                   |
+| --oruga-carousel-arrow-size                   | \$carousel-arrow-size                   | 1.5rem                                |
+| --oruga-carousel-arrow-border-radius          | \$carousel-arrow-border-radius          | \$base-rounded-border-radius          |
+| --oruga-carousel-arrow-border                 | \$carousel-arrow-border                 | 1px solid \$carousel-arrow-background |
+| --oruga-carousel-arrow-transition             | \$carousel-arrow-transition             | $speed-slow $easing                   |
+| --oruga-carousel-indicators-background        | \$carousel-indicators-background        | rgba(\$white , 0.50)                  |
+| --oruga-carousel-indicators-padding           | \$carousel-indicators-padding           | .5rem                                 |
+| --oruga-carousel-indicator-margin             | \$carousel-indicator-margin             | 0 .5rem 0 0                           |
+| --oruga-carousel-indicator-color              | \$carousel-indicator-color              | \$primary                             |
+| --oruga-carousel-indicator-background         | \$carousel-indicator-background         | \$white                               |
+| --oruga-carousel-indicator-border             | \$carousel-indicator-border             | 1px solid \$carousel-indicator-color  |
+| --oruga-carousel-indicator-active-background  | \$carousel-indicator-active-background  | \$carousel-indicator-color            |
+| --oruga-carousel-indicator-active-border      | \$carousel-indicator-active-border      | 1px solid \$carousel-indicator-color  |
+| --oruga-carousel-indicator-transition         | \$carousel-indicator-transition         | $speed-slow $easing                   |
+| --oruga-carousel-indicator-size               | \$carousel-indicator-size               | 10px                                  |
+| --oruga-carousel-indicator-dots-border-radius | \$carousel-indicator-dots-border-radius | \$base-border-radius                  |
+| --oruga-carousel-indicator-lines-height       | \$carousel-indicator-lines-height       | 5px                                   |
+| --oruga-carousel-indicator-lines-width        | \$carousel-indicator-lines-width        | 25px                                  |
+| --oruga-carousel-items-transition             | \$carousel-items-transition             | all \$speed-slower ease-out 0s        |
+| --oruga-carousel-item-border                  | \$carousel-item-border                  | 2px solid transparent                 |
+| --oruga-carousel-overlay-background           | \$carousel-overlay-background           | rgba(\$white , 0.86)                  |
+| --oruga-carousel-overlay-zindex               | \$carousel-overlay-zindex               | 40                                    |
+| --oruga-carousel-progress-border-radius       | \$carousel-progress-border-radius       | \$base-border-radius                  |
+| --oruga-carousel-progress-height              | \$carousel-progress-height              | 0.25rem                               |
