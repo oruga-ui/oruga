@@ -7,14 +7,15 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@vue/runtime-core'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMixin'
 
 /**
  * @displayName Carousel Item
  */
-export default {
+export default defineComponent({
     name: 'OCarouselItem',
     config: 'carousel',
     mixins: [InjectedChildMixin('carousel', Sorted), BaseComponentMixin],
@@ -43,9 +44,9 @@ export default {
             }
             if (this.parent.asIndicator) {
                 this.parent.activeIndex = this.index
-                this.parent.$emit('input', this.index)
+                this.parent.$emit('update:modelValue', this.index)
             }
         }
     }
-}
+})
 </script>

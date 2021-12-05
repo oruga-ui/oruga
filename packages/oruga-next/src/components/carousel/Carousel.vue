@@ -22,7 +22,7 @@
                     <o-icon
                         v-show="hasPrev"
                         :class="arrowIconPrevClasses"
-                        @click.native="prev"
+                        @click="prev"
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
@@ -30,7 +30,7 @@
                     <o-icon
                         v-show="hasNext"
                         :class="arrowIconNextClasses"
-                        @click.native="next"
+                        @click="next"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"
@@ -68,11 +68,13 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@vue/runtime-core'
+
 import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
-import Icon from '../icon/Icon'
+import Icon from '../icon/Icon.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParentMixin'
 
@@ -82,7 +84,7 @@ import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParent
  * @example ./examples/Carousel.md
  * @style _carousel.scss
  */
-export default {
+export default defineComponent({
     name: 'OCarousel',
     components: {
         [Icon.name]: Icon
@@ -90,7 +92,7 @@ export default {
     configField: 'carousel',
     mixins: [ProviderParentMixin('carousel', Sorted), BaseComponentMixin],
     props: {
-        value: {
+        modelValue: {
             type: Number,
             default: 0
         },
@@ -182,8 +184,8 @@ export default {
     },
     data() {
         return {
-            activeIndex: this.value,
-            scrollIndex: this.value,
+            activeIndex: this.modelValue,
+            scrollIndex: this.modelValue,
             delta: 0,
             dragX: false,
             hold: 0,
@@ -302,7 +304,7 @@ export default {
         /**
          * When v-model is changed set the new active item.
          */
-        value(value) {
+        modelValue(value) {
             if (value <= this.childItems.length - 1) {
                 this.activeIndex = value
                 this.switchTo(value * this.settings.itemsToList, true)
@@ -387,8 +389,8 @@ export default {
             this.$emit('scroll', this.indicatorIndex)
             if (!onlyMove) {
                 this.activeIndex = Math.ceil(newIndex / this.settings.itemsToList)
-                if (this.value !== this.activeIndex) {
-                    this.$emit('input', this.activeIndex)
+                if (this.modelValue !== this.activeIndex) {
+                    this.$emit('update:modelValue', this.activeIndex)
                 }
             }
         },
@@ -470,5 +472,5 @@ export default {
             this.pauseTimer()
         }
     }
-}
+})
 </script>

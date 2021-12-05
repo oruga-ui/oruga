@@ -79,9 +79,6 @@ title: Carousel
         </div>
       </o-field>
       <o-field grouped group-multiline>
-        <o-field label="Value">
-          <o-input type="number" v-model.number="values" min="0" :max="items.length - 1" />
-        </o-field>
         <o-field label="Items to Show">
           <o-input type="number" v-model.number="perList" min="1" :max="items.length" />
         </o-field>
@@ -332,6 +329,127 @@ title: Carousel
 
 :::
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_carousel.scss)
+
+<br />
+<template>
+  <div class="field">
+    <doc-wrapper>
+      <template v-slot:default="s">
+        <o-carousel>
+            <o-carousel-item v-bind="s" v-for="(carousel, i) in carousels" :key="i">
+                <section class="ex-slide" :style="{'background-color': carousel.color }">
+                    <h1>{{carousel.text}}</h1>
+                </section>
+            </o-carousel-item>
+        </o-carousel>
+      </template>
+    </doc-wrapper>
+    <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
+  </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            carousels: [
+                { text: 'Slide 1', color: '#445e00' },
+                { text: 'Slide 2', color: '#006724' },
+                { text: 'Slide 3', color: '#b60000' },
+                { text: 'Slide 4', color: '#f4c300' },
+                { text: 'Slide 5', color: '#005c98' }
+            ],
+            subitem: 'carousel-item',
+            inspectData: [
+                {
+                    class: "rootClass",
+                    description: "Class of the root element",
+                },
+                {
+                    class: "overlayClass",
+                    properties: ['overlay'],
+                    description: "Class of the root element in overlay",
+                    action: (cmp) => {
+                        cmp.data.overlay = true;
+                    },
+                },
+                {
+                    class: "sceneClass",
+                    description: "Class of the wrapper element of carousel items",
+                },
+                {
+                    class: "itemsClass",
+                    description: "Class of slider element",
+                },
+                {
+                    class: "arrowIconClass",
+                    description: "Class of arrow elements",
+                },
+                {
+                    class: "arrowIconPrevClass",
+                    description: "Class of prev arrow element",
+                },
+                {
+                    class: "arrowIconNextClass",
+                    description: "Class of next arrow element",
+                },
+                {
+                    class: "indicatorsClass",
+                    description: "Class of indicators element",
+                },
+                {
+                    class: "indicatorsInsideClass",
+                    properties: ['indicatorInside'],
+                    description: "Class of indicators element when inside",
+                    action: (cmp) => {
+                        cmp.data.indicatorInside = true;
+                    }
+                },
+                {
+                    class: "indicatorsInsidePositionClass",
+                    properties: ['indicatorInside', 'indicatorPosition'],
+                    description: "Class of indicators element when inside and position",
+                    action: (cmp) => {
+                        cmp.data.indicatorInside = true;
+                        cmp.data.indicatorPosition = 'top';
+                    }
+                },
+                {
+                    class: "indicatorItemClass",
+                    description: "Class of indicator item element",
+                },
+                {
+                    class: "indicatorItemActiveClass",
+                    description: "Class of indicator element when is active",
+                },
+                {
+                    class: "indicatorItemStyleClass",
+                    properties: ['indicatorStyle'],
+                    description: "Class of indicator element to separate different styles",
+                    action: (cmp) => {
+                        cmp.data.indicatorStyle = 'lines';
+                    }
+                },
+                {
+                    class: "itemClass",
+                    description: "Class of carousel item",
+                },
+                {
+                    class: "itemActiveClass",
+                    description: "Class of carousel item when is active",
+                },
+            ],
+        };
+    }
+}
+</script>
+
+<br />
+<br />
+
 ## Props
 
 | Prop name         | Description      | Type    | Values | Default                                                                                                                                           |
@@ -347,7 +465,7 @@ title: Carousel
 | iconPrev          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
 | iconSize          |                  | string  | -      |                                                                                                                                                   |
 | indicator         |                  | boolean | -      | true                                                                                                                                              |
-| indicatorInside   |                  | boolean | -      | true                                                                                                                                              |
+| indicatorInside   |                  | boolean | -      | false                                                                                                                                             |
 | indicatorMode     |                  | string  | -      | 'click'                                                                                                                                           |
 | indicatorPosition |                  | string  | -      | 'bottom'                                                                                                                                          |
 | indicatorStyle    |                  | string  | -      | 'dots'                                                                                                                                            |
@@ -357,7 +475,6 @@ title: Carousel
 | overlay           |                  | boolean | -      |                                                                                                                                                   |
 | override          | Override classes | boolean | -      | false                                                                                                                                             |
 | pauseHover        |                  | boolean | -      | false                                                                                                                                             |
-| progress          |                  | boolean | -      |                                                                                                                                                   |
 | repeat            |                  | boolean | -      | false                                                                                                                                             |
 | value             |                  | number  | -      | 0                                                                                                                                                 |
 
@@ -374,7 +491,7 @@ title: Carousel
 | ---------- | ----------- | ------------ |
 | default    |             |              |
 | arrow      |             | <br><br><br> |
-| indicators |             | <br>         |
+| indicators |             | <br><br>     |
 | indicator  |             |              |
 | overlay    |             |              |
 
@@ -407,5 +524,3 @@ title: Carousel
 | --oruga-carousel-item-border                  | \$carousel-item-border                  | 2px solid transparent                 |
 | --oruga-carousel-overlay-background           | \$carousel-overlay-background           | rgba(\$white , 0.86)                  |
 | --oruga-carousel-overlay-zindex               | \$carousel-overlay-zindex               | 40                                    |
-| --oruga-carousel-progress-border-radius       | \$carousel-progress-border-radius       | \$base-border-radius                  |
-| --oruga-carousel-progress-height              | \$carousel-progress-height              | 0.25rem                               |
