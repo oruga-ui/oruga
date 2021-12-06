@@ -8,7 +8,7 @@ const IGNORE = [
   'TableMobileSort.vue', 'TablePagination.vue', 'TableColumn.vue', 'PaginationButton.vue',
   'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue',
   'DatepickerTable.vue', 'DatepickerTableRow.vue', 'NotificationNotice.vue',
-  'CarouselList.vue', 'CarouselItem.vue'
+  'CarouselItem.vue'
 ];
 
 const IGNORE_CLASSES = {

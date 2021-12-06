@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="slideClasses"
+        :class="itemClasses"
         @click="onClick"
         :style="itemStyle">
         <slot />
@@ -23,7 +23,7 @@ export default {
         itemActiveClass: [String, Function, Array]
     },
     computed: {
-        slideClasses() {
+        itemClasses() {
             return [
                 this.computedClass('itemClass', 'o-car__item'),
                 {[this.computedClass('itemActiveClass', 'o-car__item--active')]: this.isActive}

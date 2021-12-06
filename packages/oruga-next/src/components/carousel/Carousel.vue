@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent } from 'vue'
 
 import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
@@ -91,6 +91,7 @@ export default defineComponent({
     },
     configField: 'carousel',
     mixins: [ProviderParentMixin('carousel', Sorted), BaseComponentMixin],
+    emits: ['update:modelValue', 'scroll', 'click'],
     props: {
         modelValue: {
             type: Number,
@@ -276,7 +277,11 @@ export default defineComponent({
             return (this.settings.repeat || this.scrollIndex < this.total) && this.hasArrows
         },
         breakpointKeys() {
-            return Object.keys(this.breakpoints).sort((a, b) => b - a)
+            return Object.keys(this.breakpoints).sort((a, b) => {
+                if (!a && a !== 0) return 1
+                    if (!b && b !== 0) return -1
+                    if (a === b) return 0
+            })
         },
         settings() {
             let breakpoint = this.breakpointKeys.filter((breakpoint) => {

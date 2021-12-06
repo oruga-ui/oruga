@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="slideClasses"
+        :class="itemClasses"
         @click="onClick"
         :style="itemStyle">
         <slot />
@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent } from 'vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMixin'
 
@@ -24,7 +24,7 @@ export default defineComponent({
         itemActiveClass: [String, Function, Array]
     },
     computed: {
-        slideClasses() {
+        itemClasses() {
             return [
                 this.computedClass('itemClass', 'o-car__item'),
                 {[this.computedClass('itemActiveClass', 'o-car__item--active')]: this.isActive}
