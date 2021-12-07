@@ -2,8 +2,8 @@
   <div class="field">
     <doc-wrapper>
       <template v-slot:default="s">
-        <o-carousel>
-            <o-carousel-item v-bind="s" v-for="(carousel, i) in carousels" :key="i">
+        <o-carousel v-bind="s">
+            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
                 <section class="ex-slide" :style="{'background-color': carousel.color }">
                     <h1>{{carousel.text}}</h1>
                 </section>

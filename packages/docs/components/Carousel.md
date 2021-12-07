@@ -338,8 +338,8 @@ title: Carousel
   <div class="field">
     <doc-wrapper>
       <template v-slot:default="s">
-        <o-carousel>
-            <o-carousel-item v-bind="s" v-for="(carousel, i) in carousels" :key="i">
+        <o-carousel v-bind="s">
+            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
                 <section class="ex-slide" :style="{'background-color': carousel.color }">
                     <h1>{{carousel.text}}</h1>
                 </section>
@@ -522,5 +522,5 @@ export default {
 | --oruga-carousel-indicator-lines-width        | \$carousel-indicator-lines-width        | 25px                                  |
 | --oruga-carousel-items-transition             | \$carousel-items-transition             | all \$speed-slower ease-out 0s        |
 | --oruga-carousel-item-border                  | \$carousel-item-border                  | 2px solid transparent                 |
-| --oruga-carousel-overlay-background           | \$carousel-overlay-background           | rgba(\$white , 0.86)                  |
+| --oruga-carousel-overlay-background           | \$carousel-overlay-background           | hsla(0,0%,4%,.86)                     |
 | --oruga-carousel-overlay-zindex               | \$carousel-overlay-zindex               | 40                                    |
