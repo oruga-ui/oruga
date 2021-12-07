@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
@@ -277,11 +277,8 @@ export default defineComponent({
             return (this.settings.repeat || this.scrollIndex < this.total) && this.hasArrows
         },
         breakpointKeys() {
-            return Object.keys(this.breakpoints).sort((a, b) => {
-                if (!a && a !== 0) return 1
-                    if (!b && b !== 0) return -1
-                    if (a === b) return 0
-            })
+            const keys: number[] = Object.keys(this.breakpoints).map(Number)
+            return keys.sort((a, b) => b - a)
         },
         settings() {
             let breakpoint = this.breakpointKeys.filter((breakpoint) => {
@@ -449,8 +446,8 @@ export default defineComponent({
     },
     mounted() {
         if (typeof window !== 'undefined') {
-            if (window.ResizeObserver) {
-                this.observer = new ResizeObserver(this.refresh)
+            if ((window as any).ResizeObserver) {
+                this.observer = new (window as any).ResizeObserver(this.refresh)
                 this.observer.observe(this.$el)
             }
             window.addEventListener('resize', this.resized)
@@ -466,7 +463,7 @@ export default defineComponent({
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
-            if (window.ResizeObserver) {
+            if ((window as any).ResizeObserver) {
                 this.observer.disconnect()
             }
             window.removeEventListener('resize', this.resized)
