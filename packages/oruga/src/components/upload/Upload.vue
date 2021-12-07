@@ -136,8 +136,15 @@ export default {
                 else {
                     const file = value[0]
                     if (this.checkType(file)) this.newValue = file
-                    else if (this.newValue) this.newValue = null
-                    else return
+                    else if (this.newValue) {
+                        this.newValue = null
+                        this.clearInput()
+                    } else {
+                        // Force input back to empty state and recheck validity
+                        this.clearInput()
+                        this.checkHtml5Validity()
+                        return
+                    }
                 }
             } else {
                 // always new values if native or undefined local
@@ -157,6 +164,13 @@ export default {
             }
             this.$emit('input', this.newValue)
             !this.dragDrop && this.checkHtml5Validity()
+        },
+
+        /*
+        * Reset file input value
+        */
+        clearInput() {
+            this.$refs.input.value = null
         },
 
         /**
@@ -179,11 +193,8 @@ export default {
                 const type = types[i].trim()
                 if (type) {
                     if (type.substring(0, 1) === '.') {
-                        // check extension
-                        const extIndex = file.name.lastIndexOf('.')
-                        const extension = extIndex >= 0
-                            ? file.name.substring(extIndex) : ''
-                        if (extension.toLowerCase() === type.toLowerCase()) {
+                        const extension = file.name.toLowerCase().slice(-type.length)
+                        if (extension === type.toLowerCase()) {
                             return true
                         }
                     } else {
