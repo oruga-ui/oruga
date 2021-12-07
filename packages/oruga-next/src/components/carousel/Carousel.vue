@@ -461,7 +461,7 @@ export default defineComponent({
             throw new Error('The config prop was removed, you need to use v-bind instead')
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (typeof window !== 'undefined') {
             if ((window as any).ResizeObserver) {
                 this.observer.disconnect()
