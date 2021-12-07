@@ -322,7 +322,7 @@ import TablePagination from './TablePagination.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
+import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars, removeDiacriticsFromString } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 /**
@@ -1225,7 +1225,8 @@ export default defineComponent({
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
-                        if (!re.test(value)) return false
+                        const valueWithoutDiacritics = removeDiacriticsFromString(value)
+                        return re.test(valueWithoutDiacritics) || re.test(value)
                     }
                 }
             }
