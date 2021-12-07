@@ -363,6 +363,30 @@ title: Datepicker
 
 :::
 
+### Month picker
+
+::: demo
+
+```html
+<template>
+  <o-field label="Select a month">
+    <o-datepicker placeholder="Click to select..." icon="calendar" type="month" v-model="dates"> </o-datepicker>
+  </o-field>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        dates: undefined
+      }
+    }
+  }
+</script>
+```
+
+:::
+
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datepicker.scss)
