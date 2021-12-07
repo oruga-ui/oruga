@@ -311,3 +311,13 @@ export function debounce(func: Function, wait: number, immediate?: boolean) {
 export function endsWith(str: string, suffix: string) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
+
+/**
+ * Remove accents/diacritics in a string in JavaScript
+ * https://stackoverflow.com/a/37511463
+ */
+ export function removeDiacriticsFromString(value: string) {
+    if (!value) return value
+
+    return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}

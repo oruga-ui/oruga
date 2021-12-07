@@ -83,6 +83,8 @@ export default defineComponent({
     props: {
         /** @model */
         modelValue: [Number, String],
+        /** Native options to use in HTML5 validation */
+		autocomplete: String,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -150,7 +152,7 @@ export default defineComponent({
             newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
-            newAutocomplete: (this as any).autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
+            newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
             isPasswordVisible: false,
             height: 'auto'
         }

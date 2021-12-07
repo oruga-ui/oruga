@@ -1,5 +1,6 @@
 import Autocomplete from './autocomplete'
 import Button from './button'
+import Carousel from './carousel'
 import Checkbox from './checkbox'
 import Collapse from './collapse'
 import Datepicker from './datepicker'
@@ -30,6 +31,7 @@ import Upload from './upload'
 export {
     Autocomplete,
     Button,
+    Carousel,
     Checkbox,
     Collapse,
     Datepicker,

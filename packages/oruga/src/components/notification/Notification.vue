@@ -12,8 +12,10 @@
             >
                 <o-icon
                     clickable
+                    :pack="iconPack"
+                    both
                     :icon="closeIcon"
-                    size="small"/>
+                    :size="closeIconSize"/>
             </button>
             <component
                 v-if="component"
@@ -75,6 +77,13 @@ export default {
          * Label for the close button, to be read by accessibility screenreaders.
          */
         ariaCloseLabel: String,
+        /**
+         * Size of close icon
+         */
+        closeIconSize: {
+            type: String,
+            default: 'small'
+        },
         /**
          * Custom animation (transition name).
          */

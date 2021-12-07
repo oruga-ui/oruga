@@ -72,12 +72,13 @@ export default (parentCmp: string) => defineComponent({
         if (this.parent.destroyOnHide) {
             if (!this.isActive || !this.visible) return
         }
+        const content = this.$slots.default ? this.$slots.default() : []
         const vnode = withDirectives(
             h('div',
                 {
                     class: this.elementClasses
                 },
-                this.$slots.default()
+                content
             ),
             [ [vShow, this.isActive && this.visible] ]
         )

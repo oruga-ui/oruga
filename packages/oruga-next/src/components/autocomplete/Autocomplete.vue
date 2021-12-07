@@ -36,7 +36,7 @@
                     v-if="$slots.header"
                     ref="header"
                     role="button"
-                    tabindex="0"
+                    :tabindex="0"
                     @click="selectHeaderOrFoterByClick($event, 'header')"
                     :class="itemHeaderClasses">
                     <slot name="header"/>
@@ -67,7 +67,7 @@
                             :option="option"
                             :index="index" />
                         <span v-else>
-                            {{ getValue(option, true) }}
+                            {{ getValue(option) }}
                         </span>
                     </div>
                 </template>
@@ -80,7 +80,7 @@
                     v-if="$slots.footer"
                     ref="footer"
                     role="button"
-                    tabindex="0"
+                    :tabindex="0"
                     @click="selectHeaderOrFoterByClick($event, 'footer')"
                     :class="itemFooterClasses">
                     <slot name="footer"/>
@@ -99,7 +99,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
-import { getOptions } from '../../../../oruga/src/utils/config'
+import { getOptions } from '../../utils/config'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -124,6 +124,8 @@ export default defineComponent({
             type: Array,
             default: () => []
         },
+        /** Native options to use in HTML5 validation */
+		autocomplete: String,
         /**
          * Vertical size of input, optional
          * @values small, medium, large
@@ -219,8 +221,7 @@ export default defineComponent({
             isActive: false,
             newValue: this.modelValue,
             ariaAutocomplete: this.keepFirst ? 'both' : 'list',
-            // from mixin (ts workaround)
-            newAutocomplete: (this as any).autocomplete || 'off',
+            newAutocomplete: this.autocomplete || 'off',
             isListInViewportVertically: true,
             hasFocus: false,
             itemRefs: [],
@@ -639,7 +640,7 @@ export default defineComponent({
                 }
 
                 const list = this.$refs.dropdown
-                let items = this.$refs.items || []
+                let items = this.itemRefs || []
 
                 if (this.$slots.header && this.selectableHeader) {
                     items = [this.$refs.header, ...items]

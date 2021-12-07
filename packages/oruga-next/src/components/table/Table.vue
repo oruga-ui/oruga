@@ -18,7 +18,6 @@
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             @sort="(column, event) => sort(column, null, event)"
-            @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
@@ -86,7 +85,7 @@
                                 {{ column.label }}
                                 <span
                                     v-show="column.sortable && currentSortColumn === column"
-                                    :class="thSortIconClasses(column)">
+                                    :class="thSortIconClasses()">
                                     <o-icon
                                         :icon="sortIcon"
                                         :pack="iconPack"
@@ -168,7 +167,7 @@
                     :key="this.customRowKey ? row[this.customRowKey] : index">
                     <tr
                         :class="rowClasses(row, index)"
-                        @click="selectRow(row)"
+                        @click="selectRow(row, index)"
                         @dblclick="$emit('dblclick', row)"
                         @mouseenter="emitEventForRow('mouseenter', $event, row)"
                         @mouseleave="emitEventForRow('mouseleave', $event, row)"
@@ -236,7 +235,7 @@
                     <transition :name="detailTransition">
                         <tr
                             v-if="isActiveDetailRow(row)"
-                            :key="(this.customRowKey ? row[this.customRowKey] : index) + 'detail'"
+                            :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
                             :class="detailedClasses">
                             <td :colspan="columnCount">
                                 <slot
@@ -323,7 +322,7 @@ import TablePagination from './TablePagination.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
+import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars, removeDiacriticsFromString } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 /**
@@ -988,7 +987,7 @@ export default defineComponent({
 
                     // sort boolean type
                     if (typeof newA === 'boolean' && typeof newB === 'boolean') {
-                        return isAsc ? (newA as any) - (newB as any) : (newB as any) - (newA as any)
+                        return isAsc ? newA > newB ? 1 : -1: newA > newB ? -1 : 1
                     }
 
                     if (!newA && newA !== 0) return 1
@@ -1214,11 +1213,7 @@ export default defineComponent({
 
         isRowFiltered(row) {
             for (const key in this.filters) {
-                // remove key if empty
-                if (!this.filters[key]) {
-                    delete this.filters[key]
-                    return true
-                }
+                if (!this.filters[key]) continue
                 const input = this.filters[key]
                 const column = this.newColumns.filter((c) => c.field === key)[0]
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
@@ -1230,7 +1225,8 @@ export default defineComponent({
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
-                        if (!re.test(value)) return false
+                        const valueWithoutDiacritics = removeDiacriticsFromString(value)
+                        return re.test(valueWithoutDiacritics) || re.test(value)
                     }
                 }
             }

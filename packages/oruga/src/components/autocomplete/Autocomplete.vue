@@ -67,7 +67,7 @@
                             :option="option"
                             :index="index" />
                         <span v-else>
-                            {{ getValue(option, true) }}
+                            {{ getValue(option) }}
                         </span>
                     </div>
                 </template>
