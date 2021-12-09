@@ -7,7 +7,7 @@ const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
   'TableMobileSort.vue', 'TablePagination.vue', 'TableColumn.vue', 'PaginationButton.vue',
   'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue',
-  'DatepickerTable.vue', 'DatepickerTableRow.vue', 'NotificationNotice.vue',
+  'DatepickerTable.vue', 'DatepickerTableRow.vue', 'DatepickerMonth.vue', 'NotificationNotice.vue',
   'CarouselItem.vue'
 ];
 

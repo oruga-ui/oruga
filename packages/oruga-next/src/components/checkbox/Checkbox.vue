@@ -4,13 +4,6 @@
         ref="label"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
-        <o-icon
-             v-if="iconCheck"
-            :icon="iconCheck"
-            :pack="iconPack"
-            :size="size"
-            :class="iconCheckClasses"
-        />
         <input
             v-model="computedValue"
             :indeterminate.prop="indeterminate"
@@ -37,13 +30,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import Icon from '../icon/Icon.vue'
-
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
-
-import { getOptions } from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
 
 /**
  * Select a single or grouped options
@@ -53,9 +41,6 @@ import { getValueByPath } from '../../utils/helpers'
  */
 export default defineComponent({
     name: 'OCheckbox',
-    components: {
-        [Icon.name]: Icon
-    },
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'checkbox',
     emits: [
@@ -83,19 +68,6 @@ export default defineComponent({
             type: [String, Number, Boolean],
             default: false
         },
-        /**
-		 * Icon pack to use
-		 * @values mdi, fa, fas and any other custom icon pack
-		 */
-        iconPack: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'checkbox.iconPack', undefined) }
-        },
-        /** Icon for checkbox (optional)  */
-        iconCheck: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'checkbox.iconCheck', undefined) }
-        },
         /** Accessibility label to establish relationship between the checkbox and control label */
         ariaLabelledby: String,
         /* Same as native autocomplete */
@@ -107,9 +79,7 @@ export default defineComponent({
         checkIndeterminateClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
-        iconCheckClass: [String, Function, Array],
-        iconCheckCheckedClass: [String, Function, Array]
+        variantClass: [String, Function, Array]
     },
     watch: {
         indeterminate: {
@@ -143,12 +113,6 @@ export default defineComponent({
         labelClasses() {
             return [
                 this.computedClass('labelClass', 'o-chk__label')
-            ]
-        },
-        iconCheckClasses() {
-            return [
-                this.computedClass('iconCheckClass', 'o-chk__icon'),
-                { [this.computedClass('iconCheckCheckedClass', 'o-chk__icon--checked')] : this.isChecked },
             ]
         }
     }
