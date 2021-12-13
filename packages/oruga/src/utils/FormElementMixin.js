@@ -3,9 +3,8 @@ import { getValueByPath } from './helpers'
 
 export default {
 	inject: {
-		$field: { name: "$field", default: false },
-		$elementRef: { name: "$elementRef", default: false },
-	},
+        $field: { from: "$field", default: false }
+    },
 	props: {
 		/**
 		 * Makes input full width when inside a grouped or addon field
@@ -51,7 +50,7 @@ export default {
 		return {
 			isValid: true,
 			isFocused: false,
-			newIconPack: this.iconPack,
+			newIconPack: this.iconPack
 		};
 	},
 	computed: {

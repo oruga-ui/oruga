@@ -1,0 +1,138 @@
+/* @docs */
+$carousel-arrow-background: $white !default;
+$carousel-arrow-color: $primary !default;
+$carousel-arrow-icon-spaced: 1.5rem !default;
+$carousel-arrow-top: 50% !default;
+$carousel-arrow-size: 1.5rem !default;
+$carousel-arrow-border-radius: $base-rounded-border-radius !default;
+$carousel-arrow-border: 1px solid $carousel-arrow-background !default;
+$carousel-arrow-transition: $speed-slow $easing !default;
+$carousel-indicators-background: rgba($white , 0.50) !default;
+$carousel-indicators-padding: .5rem !default;
+$carousel-indicator-margin: 0 .5rem 0 0 !default;
+$carousel-indicator-color: $primary !default;
+$carousel-indicator-background: $white !default;
+$carousel-indicator-border: 1px solid $carousel-indicator-color !default;
+$carousel-indicator-active-background: $carousel-indicator-color !default;
+$carousel-indicator-active-border: 1px solid $carousel-indicator-color !default;
+$carousel-indicator-transition: $speed-slow $easing !default;
+$carousel-indicator-size: 10px !default;
+$carousel-indicator-dots-border-radius: $base-border-radius !default;
+$carousel-indicator-lines-height: 5px !default;
+$carousel-indicator-lines-width: 25px !default;
+$carousel-items-transition: all $speed-slower ease-out 0s !default;
+$carousel-item-border: 2px solid transparent !default;
+$carousel-overlay-background: hsla(0,0%,4%,.86) !default;
+$carousel-overlay-zindex: 40 !default;
+/* @docs */
+
+.o-car {
+    @include unselectable;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    &__overlay {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        display: flex;
+        max-height: 100vh;
+        position: fixed;
+        @include avariable('background-color', 'carousel-overlay-background', $carousel-overlay-background);
+        @include avariable('z-index', 'carousel-overlay-zindex', $carousel-overlay-zindex);
+    }
+    &__scene {
+        position: relative;
+        width: 100%;
+    }
+    &__items {
+        display: flex;
+        width: 100%;
+        &:not(&--dragging) {
+            @include avariable('transition', 'carousel-items-transition', $carousel-items-transition);
+        }
+    }
+    &__item {
+        @include avariable('border', 'carousel-item-border', $carousel-item-border);
+        flex-shrink: 0;
+    }
+    &__indicators {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include avariable('padding', 'carousel-indicators-padding', $carousel-indicators-padding);
+        @include avariable('background', 'carousel-indicators-background', $carousel-indicators-background);
+        &--inside {
+            position: absolute;
+            &--bottom {
+                bottom: 0;
+            }
+            &--top {
+                top: 0;
+            }
+        }
+    }
+    &__indicator {
+        &:not(:last-child) {
+            @include avariable('margin', 'carousel-indicator-margin', $carousel-indicator-margin);
+        }
+        &__item {
+            display: block;
+            outline: none;
+            @include avariable('border', 'carousel-indicator-border', $carousel-indicator-border);
+            @include avariable('background', 'carousel-indicator-background', $carousel-indicator-background);
+            @include avariable('transition', 'carousel-indicator-transition', $carousel-indicator-transition);
+            &--active, :hover {
+                @include avariable('background', 'carousel-indicator-active-background', $carousel-indicator-active-background);
+                @include avariable('border', 'carousel-indicator-active-border', $carousel-indicator-active-border);
+            }
+            &--boxes {
+                @include avariable('width', 'carousel-indicator-size', $carousel-indicator-size);
+                @include avariable('height', 'carousel-indicator-size', $carousel-indicator-size);
+            }
+            &--dots {
+                @include avariable('border-radius', 'carousel-indicator-dots-border-radius', $carousel-indicator-dots-border-radius);
+                @include avariable('width', 'carousel-indicator-size', $carousel-indicator-size);
+                @include avariable('height', 'carousel-indicator-size', $carousel-indicator-size);
+            }
+            &---lines {
+                @include avariable('width', 'carousel-indicator-lines-height', $carousel-indicator-lines-height);
+                @include avariable('height', 'carousel-indicator-lines-width', $carousel-indicator-lines-width);
+            }
+        }
+    }
+
+    &__arrow__icon {
+        cursor: pointer;
+        outline: 0;
+        @include avariable('background', 'carousel-arrow-background', $carousel-arrow-background);
+        @include avariable('color', 'carousel-arrow-color', $carousel-arrow-color);
+        @include avariable('width', 'carousel-arrow-size', $carousel-arrow-size);
+        @include avariable('height', 'carousel-arrow-size', $carousel-arrow-size);
+        @include avariable('border-radius', 'carousel-arrow-border-radius', $carousel-arrow-border-radius);
+        @include avariable('border', 'carousel-arrow-border', $carousel-arrow-border);
+        @include avariable('transition', 'carousel-arrow-transition', $carousel-arrow-transition);
+    }
+    &__arrow__icon-left,
+    &__arrow__icon-right {
+        position: absolute;
+        @include avariable('top', 'carousel-arrow-top', $carousel-arrow-top);
+        @include evariable(
+            'transform', 'translateY($length)',
+            eparam('$length', variable('carousel-arrow-top', -$carousel-arrow-top))
+        );
+        z-index: 1;
+    }
+    &__arrow__icon-left {
+        @include avariable('left', 'carousel-arrow-icon-spaced', $carousel-arrow-icon-spaced);
+    }
+    &__arrow__icon-right {
+        @include avariable('right', 'carousel-arrow-icon-spaced', $carousel-arrow-icon-spaced);
+    }
+
+}

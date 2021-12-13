@@ -23,7 +23,7 @@ $notification-notices-zindex: 1000 !default;
     @include avariable('border-radius', 'notification-border-radius', $notification-border-radius);
     @include avariable('padding', 'notification-padding', $notification-padding);
     @include avariable('margin-bottom', 'notification-margin-bottom', $notification-margin-bottom);
-    @include avariable('animation', 'notification-animantion', $notification-animantion);
+
     position: relative;
     transform-origin: 50% 0;
     &__content {
@@ -52,7 +52,9 @@ $notification-notices-zindex: 1000 !default;
         border: none;
         cursor: pointer;
         pointer-events: auto;
-        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         flex-grow: 0;
         flex-shrink: 0;
         outline: none;
@@ -95,6 +97,7 @@ $notification-notices-zindex: 1000 !default;
     .o-notification {
         pointer-events: stroke;
         max-width: 600px;
+        @include avariable('animation', 'notification-animantion', $notification-animantion);
         &--top, &--bottom {
             align-self: center;
         }

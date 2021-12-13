@@ -155,19 +155,19 @@ export default defineComponent({
             ]
         },
         iconClasses() {
-          return [
-            this.computedClass('iconClass', 'o-btn__icon'),
-          ]
+            return [
+                this.computedClass('iconClass', 'o-btn__icon'),
+            ]
         },
         iconLeftClasses() {
             return [
-                this.computedClass('iconClass', 'o-btn__icon'),
+                ...this.iconClasses,
                 this.computedClass('iconLeftClass', 'o-btn__icon-left')
             ]
         },
         iconRightClasses() {
             return [
-                this.computedClass('iconClass', 'o-btn__icon'),
+                ...this.iconClasses,
                 this.computedClass('iconRightClass', 'o-btn__icon-right')
             ]
         },

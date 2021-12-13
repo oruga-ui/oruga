@@ -17,7 +17,6 @@
             :sort-icon-size="sortIconSize"
             :is-asc="isAsc"
             @sort="(column, event) => sort(column, null, event)"
-            @remove-priority="(column) => removeSortingPriority(column)"
         />
 
         <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
@@ -166,7 +165,7 @@
                     <tr
                         :key="customRowKey ? row[customRowKey] : index"
                         :class="rowClasses(row, index)"
-                        @click="selectRow(row)"
+                        @click="selectRow(row, index)"
                         @dblclick="$emit('dblclick', row)"
                         @mouseenter="emitEventForRow('mouseenter', $event, row)"
                         @mouseleave="emitEventForRow('mouseleave', $event, row)"
@@ -324,7 +323,7 @@ import TablePagination from './TablePagination'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars } from '../../utils/helpers'
+import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars, removeDiacriticsFromString } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 import { VueInstance } from '../../utils/config'
 
@@ -1214,11 +1213,7 @@ export default {
 
         isRowFiltered(row) {
             for (const key in this.filters) {
-                // remove key if empty
-                if (!this.filters[key]) {
-                    delete this.filters[key]
-                    return true
-                }
+                if (!this.filters[key]) continue
                 const input = this.filters[key]
                 const column = this.newColumns.filter((c) => c.field === key)[0]
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
@@ -1230,7 +1225,8 @@ export default {
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
-                        if (!re.test(value)) return false
+                        const valueWithoutDiacritics = removeDiacriticsFromString(value)
+                        return re.test(valueWithoutDiacritics) || re.test(value)
                     }
                 }
             }

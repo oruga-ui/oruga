@@ -118,6 +118,7 @@
                     </div>
                 </header>
                 <o-datepicker-table
+                    v-if="!isTypeMonth"
                     v-model="computedValue"
                     :day-names="newDayNames"
                     :month-names="newMonthNames"
@@ -167,7 +168,43 @@
                     @range-end="date => $emit('range-end', date)"
                     @close="togglePicker(false)"
                     @update:focused="focusedDateData = $event" />
-
+                <o-datepicker-month
+                    v-if="isTypeMonth"
+                    v-model="computedValue"
+                    :month-names="newMonthNames"
+                    :min-date="minDate"
+                    :max-date="maxDate"
+                    :focused="focusedDateData"
+                    :disabled="disabled"
+                    :unselectable-dates="unselectableDates"
+                    :unselectable-days-of-week="unselectableDaysOfWeek"
+                    :selectable-dates="selectableDates"
+                    :events="events"
+                    :indicators="indicators"
+                    :date-creator="dateCreator"
+                    :range="range"
+                    :multiple="multiple"
+                    :month-class="monthClass"
+                    :month-body-class="monthBodyClass"
+                    :month-table-class="monthTableClass"
+                    :month-cell-class="monthCellClass"
+                    :month-cell-selected-class="monthCellSelectedClass"
+                    :month-cell-first-selected-class="monthCellFirstSelectedClass"
+                    :month-cell-within-selected-class="monthCellWithinSelectedClass"
+                    :month-cell-last-selected-class="monthCellLastSelectedClass"
+                    :month-cell-within-hovered-range-class="monthCellWithinHoveredRangeClass"
+                    :month-cell-first-hovered-class="monthCellFirstHoveredClass"
+                    :month-cell-within-hovered-class="monthCellWithinHoveredClass"
+                    :month-cell-last-hovered-class="monthCellLastHoveredClass"
+                    :month-cell-today-class="monthCellTodayClass"
+                    :month-cell-selectable-class="monthCellSelectableClass"
+                    :month-cell-unselectable-class="monthCellUnselectableClass"
+                    :month-cell-events-class="monthCellEventsClass"
+                    @range-start="date => $emit('range-start', date)"
+                    @range-end="date => $emit('range-end', date)"
+                    @close="togglePicker(false)"
+                    @change-focus="changeFocus"
+                    @update:focused="focusedDateData = $event" />
                 <footer
                     v-if="$slots.default !== undefined"
                     :class="footerClasses">
@@ -200,7 +237,7 @@
 </template>
 
 <script lang="ts">
-import { App, defineComponent } from 'vue'
+import { App, defineComponent, PropType } from 'vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -217,6 +254,7 @@ import Select from '../select/Select.vue'
 import Icon from '../icon/Icon.vue'
 
 import DatepickerTable from './DatepickerTable.vue'
+import DatepickerMonth from './DatepickerMonth.vue'
 
 const defaultDateFormatter = (date, vm) => {
     const targetDates = Array.isArray(date) ? date : [date]
@@ -289,7 +327,7 @@ export default defineComponent({
             $datepicker: this
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end'],
+    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change', 'icon-right-click'],
     props: {
         modelValue: {
             type: [Date, Array]
@@ -318,9 +356,9 @@ export default defineComponent({
          */
         size: String,
         inline: Boolean,
-        minDate: Date,
-        maxDate: Date,
-        focusedDate: Date,
+        minDate: Date as PropType<Date>,
+        maxDate: Date as PropType<Date>,
+        focusedDate: Date as PropType<Date>,
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
@@ -501,6 +539,23 @@ export default defineComponent({
         tableEventClass: [String, Function, Array],
         tableEventIndicatorsClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        /* datapickermonth classes */
+        monthClass: [String, Function, Array],
+        monthBodyClass: [String, Function, Array],
+        monthTableClass: [String, Function, Array],
+        monthCellClass: [String, Function, Array],
+        monthCellSelectedClass: [String, Function, Array],
+        monthCellFirstSelectedClass: [String, Function, Array],
+        monthCellWithinSelectedClass: [String, Function, Array],
+        monthCellLastSelectedClass: [String, Function, Array],
+        monthCellWithinHoveredRangeClass: [String, Function, Array],
+        monthCellFirstHoveredClass: [String, Function, Array],
+        monthCellWithinHoveredClass: [String, Function, Array],
+        monthCellLastHoveredClass: [String, Function, Array],
+        monthCellTodayClass: [String, Function, Array],
+        monthCellSelectableClass: [String, Function, Array],
+        monthCellUnselectableClass: [String, Function, Array],
+        monthCellEventsClass: [String, Function, Array],
         inputClasses: {
             type: Object,
             default: () => {
@@ -518,8 +573,8 @@ export default defineComponent({
         const focusedDate = (Array.isArray(this.modelValue) ? this.modelValue[0] : (this.modelValue)) ||
             this.focusedDate || this.dateCreator()
 
-        if (!this.modelValue && this.maxDate && (this.maxDate as any).getFullYear() < focusedDate.getFullYear()) {
-            focusedDate.setFullYear((this.maxDate as any).getFullYear())
+        if (!this.modelValue && this.maxDate && this.maxDate.getFullYear() < focusedDate.getFullYear()) {
+            focusedDate.setFullYear(this.maxDate.getFullYear())
         }
 
         return {
@@ -528,8 +583,7 @@ export default defineComponent({
                 day: focusedDate.getDate(),
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
-            },
-            $elementRef: 'input'
+            }
         }
     },
     computed: {
@@ -705,6 +759,10 @@ export default defineComponent({
 
         ariaRole() {
             return !this.inline ? 'dialog' : undefined
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

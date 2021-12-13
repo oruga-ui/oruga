@@ -79,7 +79,7 @@ describe('OTable', () => {
     describe('Searchable', () => {
         const data = [
             { id: 1, name: 'Jesse' },
-            { id: 2, name: 'John' },
+            { id: 2, name: 'João' },
             { id: 3, name: 'Tina' },
             { id: 4, name: 'Anne' },
             { id: 5, name: 'Clarence' }
@@ -123,7 +123,7 @@ describe('OTable', () => {
             await wrapper.vm.$nextTick()
 
             bodyRows = wrapper.findAll('tbody tr')
-            expect(bodyRows).toHaveLength(2) // Jesse and John
+            expect(bodyRows).toHaveLength(2) // Jesse and João
         })
 
         it('displays filtered data when searching and updating data', async () => {
@@ -137,7 +137,21 @@ describe('OTable', () => {
             await wrapper.vm.$nextTick()
 
             bodyRows = wrapper.findAll('tbody tr')
-            expect(bodyRows).toHaveLength(3) // Jesse, John and Justin
+            expect(bodyRows).toHaveLength(3) // Jesse, João and Justin
+        })
+
+        it('displays filtered data when searching by name without accent', async () => {
+            searchInput.vm.$emit('input', 'Joao')
+            await wrapper.vm.$nextTick()
+            bodyRows = wrapper.findAll('tbody tr')
+            expect(bodyRows).toHaveLength(1) // João
+        })
+
+        it('displays filtered data when searching by name with accent', async () => {
+            searchInput.vm.$emit('input', 'João')
+            await wrapper.vm.$nextTick()
+            bodyRows = wrapper.findAll('tbody tr')
+            expect(bodyRows).toHaveLength(1) // João
         })
 
         it('debounce search filtering when debounce-search is defined', () => {

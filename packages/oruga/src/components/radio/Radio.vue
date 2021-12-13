@@ -5,13 +5,6 @@
         :disabled="disabled"
         @click.stop="focus"
         @keydown.prevent.enter="$refs.label.click()">
-        <o-icon
-             v-if="iconCheck"
-            :icon="iconCheck"
-            :pack="iconPack"
-            :size="size"
-            :class="iconCheckClasses"
-        />
         <input
             v-model="computedValue"
             type="radio"
@@ -30,11 +23,6 @@
 import CheckRadioMixin from '../../utils/CheckRadioMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
-import Icon from '../icon/Icon.vue'
-
-import { getValueByPath } from '../../utils/helpers'
-import { getOptions } from '../../utils/config'
-
 /**
  * Select an option from a set
  * @displayName Radio
@@ -43,24 +31,9 @@ import { getOptions } from '../../utils/config'
  */
 export default {
     name: 'ORadio',
-    components: {
-        [Icon.name]: Icon
-    },
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: 'radio',
     props: {
-        /**
-		 * Icon pack to use
-		 * @values mdi, fa, fas and any other custom icon pack
-		 */
-        iconPack: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'radio.iconPack', undefined) }
-        },
-        iconCheck: {
-            type: String,
-            default: () => { return getValueByPath(getOptions(), 'radio.iconCheck', undefined) }
-        },
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkedClass: [String, Function, Array],
@@ -68,9 +41,7 @@ export default {
         checkClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
-        iconCheckClass: [String, Function, Array],
-        iconCheckCheckedClass: [String, Function, Array]
+        variantClass: [String, Function, Array]
     },
     computed: {
         isChecked() {
@@ -94,12 +65,6 @@ export default {
         labelClasses() {
             return [
                 this.computedClass('labelClass', 'o-radio__label')
-            ]
-        },
-        iconCheckClasses() {
-            return [
-                this.computedClass('iconCheckClass', 'o-radio__icon'),
-                { [this.computedClass('iconCheckCheckedClass', 'o-radio__icon--checked')]: this.isChecked },
             ]
         }
     }

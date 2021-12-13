@@ -4,8 +4,7 @@ import { getValueByPath } from './helpers'
 
 export default defineComponent({
 	inject: {
-        $field: { from: "$field", default: false },
-        $elementRef: { from: "$elementRef", default: false },
+        $field: { from: "$field", default: false }
     },
 	emits: ['blur', 'focus'],
 	props: {
@@ -106,7 +105,7 @@ export default defineComponent({
 		 */
 		focus() {
 			const el = this.getElement();
-			if (el === undefined) return;
+			if (!el) return;
 
 			this.$nextTick(() => {
 				if (el) el.focus();
@@ -168,7 +167,7 @@ export default defineComponent({
 			if (!this.useHtml5Validation) return;
 
 			const el = this.getElement();
-			if (el === undefined) return;
+			if (!el) return;
 
 			if (!el.checkValidity()) {
 				this.setInvalid();

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, resolveComponent } from "vue"
+import {defineComponent, h, resolveComponent, Comment, Text} from "vue"
 
 export default defineComponent({
     name: 'OFieldBody',
@@ -19,6 +19,9 @@ export default defineComponent({
             { class: this.parent.bodyHorizontalClasses },
             children.map((element) => {
                 let message
+                if (element.type === Comment || element.type === Text) {
+                    return element
+                }
                 if (first) {
                     message = this.parent.newMessage
                     first = false

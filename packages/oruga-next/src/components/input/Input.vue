@@ -79,17 +79,12 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'input',
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
-        }
-    },
     emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],
+        /** Native options to use in HTML5 validation */
+		autocomplete: String,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
@@ -157,7 +152,7 @@ export default defineComponent({
             newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
-            newAutocomplete: (this as any).autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
+            newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
             isPasswordVisible: false,
             height: 'auto'
         }
@@ -264,6 +259,12 @@ export default defineComponent({
                 overflow: 'hidden'
             }
         },
+
+        $elementRef() {
+            return this.type === 'textarea'
+                ? 'textarea'
+                : 'input'
+        }
     },
     watch: {
         /**

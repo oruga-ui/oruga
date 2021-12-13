@@ -1,4 +1,5 @@
 /* @docs */
+$inputitems-background-color: $input-background-color !default;
 $inputitems-height: calc(2em - 1px) !default;
 $inputitems-padding: calc(.275em - 1px) 0 0 !default;
 $inputitems-border-color: $grey-lighter !default;
@@ -32,6 +33,7 @@ $inputitems-margin-icon-to-text: .1875em !default;
         @include avariable('max-width', 'inputitems-max-width', $inputitems-max-width);
         @include avariable('width', 'inputitems-width', $inputitems-width);
         @include avariable('padding', 'inputitems-padding', $inputitems-padding);
+        @include avariable('background-color', 'inputitems-background-color', $inputitems-background-color);
         @include avariable('border-color', 'inputitems-border-color', $inputitems-border-color);
         @include avariable('border-style', 'inputitems-border-style', $inputitems-border-style);
         @include avariable('border-width', 'inputitems-border-width', $inputitems-border-width);
@@ -82,5 +84,10 @@ $inputitems-margin-icon-to-text: .1875em !default;
         float: right;
         @include avariable('font-size', 'inputitems-counter-font-size', $inputitems-counter-font-size);
         @include avariable('margin', 'inputitems-counter-margin', $inputitems-counter-margin);
+    }
+    &--expanded {
+        width: 100%;
+        flex-grow: 1;
+        flex-shrink: 1;
     }
 }

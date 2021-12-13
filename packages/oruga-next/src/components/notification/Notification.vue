@@ -12,8 +12,10 @@
             >
                 <o-icon
                     clickable
+                    :pack="iconPack"
+                    both
                     :icon="closeIcon"
-                    size="small"/>
+                    :size="closeIconSize"/>
             </button>
             <component
                 v-if="component"
@@ -43,7 +45,7 @@
     </transition>
 </template>
 
-<script>
+<script lang="ts">
 import MessageMixin from '../../utils/MessageMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
@@ -60,6 +62,7 @@ export default {
     name: 'ONotification',
     configField: 'notification',
     mixins: [BaseComponentMixin, MessageMixin],
+    emits: ['update:active', 'close'],
     props: {
         /**
         * Which position the notification will appear when programmatically
@@ -75,6 +78,13 @@ export default {
          * Label for the close button, to be read by accessibility screenreaders.
          */
         ariaCloseLabel: String,
+        /**
+         * Size of close icon
+         */
+        closeIconSize: {
+            type: String,
+            default: 'small'
+        },
         /**
          * Custom animation (transition name).
          */

@@ -471,6 +471,7 @@ export default {
 
 | CSS Variable                             | SASS Variable                      | Default                          |
 | ---------------------------------------- | ---------------------------------- | -------------------------------- |
+| --oruga-inputitems-background-color      | \$inputitems-background-color      | \$input-background-color         |
 | --oruga-inputitems-height                | \$inputitems-height                | calc(2em - 1px)                  |
 | --oruga-inputitems-padding               | \$inputitems-padding               | calc(.275em - 1px) 0 0           |
 | --oruga-inputitems-border-color          | \$inputitems-border-color          | \$grey-lighter                   |

@@ -252,8 +252,7 @@ export default defineComponent({
         return {
             items: Array.isArray(this.modelValue) ? this.modelValue.slice(0) : (this.modelValue || []),
             newItem: '',
-            isComposing: false,
-            $elementRef: 'autocomplete'
+            isComposing: false
         }
     },
     computed: {
@@ -342,6 +341,10 @@ export default defineComponent({
             return sep.length ? new RegExp(sep.map((s) => {
                 return s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') : null
             }).join('|'), 'g') : null
+        },
+
+        $elementRef() {
+            return 'autocomplete'
         }
     },
     watch: {

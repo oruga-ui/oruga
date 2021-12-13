@@ -75,8 +75,12 @@ module.exports = {
       { text: 'Home', link: '/' },
       { text: 'Documentation', link: '/documentation/' },
       { text: 'Expo', link: '/expo/' },
-      { text: '☕️ Donate', link: 'https://ko-fi.com/orugaui' },
-      { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
+      { text: 'Donate ☕️', items: [
+          {text:'Ko-fi', link: 'https://ko-fi.com/orugaui' },
+          {text:'Liberapay', link: 'https://liberapay.com/oruga-ui' }
+        ]
+      },
+      // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
       { text: 'Discord', link: 'https://discord.gg/RuKuBYN' },
       { text: 'Twitter', link: 'https://twitter.com/oruga_ui' },
     ],

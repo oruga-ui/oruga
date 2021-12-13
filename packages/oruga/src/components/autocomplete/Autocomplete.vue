@@ -67,7 +67,7 @@
                             :option="option"
                             :index="index" />
                         <span v-else>
-                            {{ getValue(option, true) }}
+                            {{ getValue(option) }}
                         </span>
                     </div>
                 </template>
@@ -112,11 +112,6 @@ export default {
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    provide() {
-        return {
-            $elementRef: 'input'
-        }
-    },
     props: {
         /** @model */
         value: [Number, String],
@@ -351,6 +346,10 @@ export default {
                 maxHeight: toCssDimension(this.maxHeight),
                 width: toCssDimension(this.width),
             }
+        },
+
+        $elementRef() {
+            return 'input'
         }
     },
     watch: {

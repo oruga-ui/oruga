@@ -417,19 +417,19 @@ export default {
 
 ## Props
 
-| Prop name        | Description                                                                                                      | Type           | Values                                                                          | Default |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------- |
-| addons           | Field automatically attach controls together                                                                     | boolean        | -                                                                               | true    |
-| groupMultiline   | Allow controls to fill up multiple lines, making it responsive                                                   | boolean        | -                                                                               |         |
-| grouped          | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean        | -                                                                               |         |
-| horizontal       | Group label and control on the same line for horizontal forms                                                    | boolean        | -                                                                               |         |
-| label            | Field label                                                                                                      | string         | -                                                                               |         |
-| labelFor         | Same as native for set on the label                                                                              | string         | -                                                                               |         |
-| labelSize        | Vertical size of input, optional                                                                                 | string         | `small`, `medium`, `large`                                                      |         |
-| message          | Help message text                                                                                                | string         | -                                                                               |         |
-| mobileBreakpoint | Mobile breakpoint as max-width value                                                                             | string         | -                                                                               |         |
-| override         | Override classes                                                                                                 | boolean        | -                                                                               | false   |
-| variant          | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| Prop name        | Description                                                                                                      | Type    | Values                                                                          | Default |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- | ------- |
+| addons           | Field automatically attach controls together                                                                     | boolean | -                                                                               | true    |
+| groupMultiline   | Allow controls to fill up multiple lines, making it responsive                                                   | boolean | -                                                                               |         |
+| grouped          | Direct child components/elements of Field will be grouped horizontally (see which ones at the top of the page)   | boolean | -                                                                               |         |
+| horizontal       | Group label and control on the same line for horizontal forms                                                    | boolean | -                                                                               |         |
+| label            | Field label                                                                                                      | string  | -                                                                               |         |
+| labelFor         | Same as native for set on the label                                                                              | string  | -                                                                               |         |
+| labelSize        | Vertical size of input, optional                                                                                 | string  | `small`, `medium`, `large`                                                      |         |
+| message          | Help message text                                                                                                | string  | -                                                                               |         |
+| mobileBreakpoint | Mobile breakpoint as max-width value                                                                             | string  | -                                                                               |         |
+| override         | Override classes                                                                                                 | boolean | -                                                                               | false   |
+| variant          | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Slots
 
