@@ -3,7 +3,7 @@
 $button-background-color: $primary !default;
 $button-color: $primary-invert !default;
 $button-border-radius: $base-border-radius !default;
-$button-border: 1px solid $button-color !default;
+$button-border: 1px solid $button-background-color !default;
 $button-box-shadow: none !default;
 $button-font-weight: 400 !default;
 $button-line-height: $base-line-height !default;
