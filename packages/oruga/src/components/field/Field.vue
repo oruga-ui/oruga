@@ -24,11 +24,9 @@
             <slot/>
         </o-field-body>
         <div v-else-if="hasInnerField" :class="bodyClasses">
-            <o-field
-                :addons="false"
-                :class="innerFieldClasses">
+            <div :class="innerFieldClasses">
                 <slot/>
-            </o-field>
+            </div>
         </div>
         <template v-else>
             <slot />
@@ -175,6 +173,7 @@ export default {
         },
         innerFieldClasses() {
             return [
+                this.computedClass('rootClass', 'o-field'),
                 { [this.computedClass('groupMultilineClass', 'o-field--grouped-multiline')]: this.groupMultiline },
                 { [this.computedClass('groupedClass', 'o-field--grouped')]: this.grouped },
                 { [this.computedClass('addonsClass', 'o-field--addons')]: !this.grouped && this.hasAddons() },

@@ -88,29 +88,12 @@
         </o-field>
 
         <o-field>
-            <o-button>
-                <o-icon icon="bold"></o-icon>
-            </o-button>
-        
-            <o-button>
-                <o-icon icon="italic"></o-icon>
-            </o-button>
-        
-            <o-button>
-                <o-icon icon="underline"></o-icon>
-            </o-button>
-        
-            <o-button>
-                <o-icon icon="align-left"></o-icon>
-            </o-button>
-    
-            <o-button>
-                <o-icon icon="align-center"></o-icon>
-            </o-button>
-
-            <o-button>
-                <o-icon icon="align-right"></o-icon>
-            </o-button>
+            <o-button icon-left="bold"></o-button>
+            <o-button icon-left="italic"></o-button>
+            <o-button icon-left="underline"></o-button>
+            <o-button icon-left="align-left"></o-button>
+            <o-button icon-left="align-center"></o-button>
+            <o-button icon-left="align-right"></o-button>
             
             <o-input placeholder="Search..." type="search" icon="search"></o-input>
         </o-field>
@@ -120,8 +103,10 @@
                 Button
             </o-button>
              <o-dropdown>
-                <o-button variant="primary" slot="trigger">
-                    <o-icon icon="caret-down"></o-icon>
+                <o-button
+                    variant="primary"
+                    icon-right="caret-down"
+                    slot="trigger">
                 </o-button>
 
                 <o-dropdown-item>Action</o-dropdown-item>
@@ -132,9 +117,8 @@
 
         <o-field>
             <o-dropdown>
-                <o-button slot="trigger">
-                    <span>Filters</span>
-                    <o-icon icon="caret-down"></o-icon>
+                <o-button icon-right="caret-down" slot="trigger">
+                    Filters
                 </o-button>
 
                 <o-dropdown-item value="open_issues">Open Issues and Pull Requests</o-dropdown-item>
