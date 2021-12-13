@@ -100,6 +100,7 @@ import FormElementMixin from '../../utils/FormElementMixin'
 
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+import { HTMLElement } from '../../utils/ssr'
 
 /**
  * Extended input that provide suggestions while the user types
@@ -210,7 +211,12 @@ export default defineComponent({
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.inputClasses', {})
             }
-        }
+        },
+        /**
+        * Optional prop if input width is not always the same as the desired width of the dropdown
+        * @ignore
+        */
+        elementToMatchDropdownWidth: HTMLElement
     },
     data() {
         return {
@@ -733,7 +739,7 @@ export default defineComponent({
         },
         updateAppendToBody() {
             const dropdownMenu = this.$refs.dropdown
-            const trigger = this.$refs.input.$el
+            const trigger = this.elementToMatchDropdownWidth || this.$refs.input.$el
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const root = this.$data.bodyEl
@@ -782,7 +788,7 @@ export default defineComponent({
         }
     },
     beforeUpdate() {
-        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
+        this.width = this.$refs.input ? (this.elementToMatchDropdownWidth || this.$refs.input.$el).clientWidth : undefined
         this.itemRefs = []
     },
     beforeUnmount() {

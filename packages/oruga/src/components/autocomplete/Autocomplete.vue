@@ -96,6 +96,7 @@ import Input from '../input/Input'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { HTMLElement } from '../../utils/ssr'
 import { getOptions } from '../../utils/config'
 
 /**
@@ -204,7 +205,12 @@ export default {
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.inputClasses', {})
             }
-        }
+        },
+        /**
+        * Optional prop if input width is not always the same as the desired width of the dropdown
+        * @ignore
+        */
+        elementToMatchDropdownWidth: HTMLElement
     },
     data() {
         return {
@@ -220,6 +226,7 @@ export default {
             hasFocus: false,
             width: undefined,
             bodyEl: undefined, // Used to append to body
+            container: null
         }
     },
     computed: {
@@ -722,7 +729,7 @@ export default {
         },
         updateAppendToBody() {
             const dropdownMenu = this.$refs.dropdown
-            const trigger = this.$refs.input.$el
+            const trigger = this.elementToMatchDropdownWidth || this.$refs.input.$el
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
                 const root = this.$data.bodyEl
@@ -761,6 +768,7 @@ export default {
         }
     },
     mounted() {
+        this.container = this.$refs.container
         const list = this.$refs.dropdown
         if (this.checkInfiniteScroll && list) {
             list.addEventListener('scroll', this.checkIfReachedTheEndOfScroll)
@@ -771,7 +779,7 @@ export default {
         }
     },
     beforeUpdate() {
-        this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
+        this.width = this.$refs.input ? (this.elementToMatchDropdownWidth || this.$refs.input.$el).clientWidth : undefined
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {

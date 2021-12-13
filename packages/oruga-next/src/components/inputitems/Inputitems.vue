@@ -1,6 +1,7 @@
 <template>
     <div :class="rootClasses">
         <div
+            ref="container"
             :class="containerClasses"
             @click="hasInput && focus($event)">
             <slot name="selected" :items="items">
@@ -44,7 +45,8 @@
                 :use-html5-validation="useHtml5Validation"
                 :check-infinite-scroll="checkInfiniteScroll"
                 :append-to-body="appendToBody"
-                :confirm-keys="confirmKeys"
+                :confirm-keys="confirmKeys" 
+                :element-to-match-dropdown-width="container"
                 @typing="onTyping"
                 @focus="onFocus"
                 @blur="customOnBlur"
@@ -252,7 +254,8 @@ export default defineComponent({
         return {
             items: Array.isArray(this.modelValue) ? this.modelValue.slice(0) : (this.modelValue || []),
             newItem: '',
-            isComposing: false
+            isComposing: false,
+            container: null
         }
     },
     computed: {
@@ -450,6 +453,9 @@ export default defineComponent({
         onTyping(event) {
             this.$emit('typing', event.trim())
         }
+    },
+    mounted() {
+        this.container = this.$refs.container
     }
 })
 </script>
