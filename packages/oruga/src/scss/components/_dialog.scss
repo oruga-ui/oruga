@@ -1,0 +1,154 @@
+// .dialog {
+//     .modal-card {
+//         max-width: 460px;
+//         width: auto;
+//         .modal-card-head {
+//             font-size: 12px;//$size-5; // undefined
+//             font-weight: bolder;//$weight-semibold; // undefined
+//         }
+//         .modal-card-body {
+//             .field {
+//                 margin-top: 16px;
+//             }
+//             &.is-titleless {
+//                 border-top-left-radius: 3px;//$card-radius; // undefined
+//                 border-top-right-radius: 3px;//$card-radius; // undefined
+//             }
+//         }
+//         .modal-card-foot {
+//             justify-content: flex-end;
+//             .button {
+//                 display: inline; // Fix Safari centering
+//                 min-width: 5em;
+//                 font-weight: bolder;//$weight-semibold; // undefined
+//             }
+//         }
+//         // @include tablet {
+//         //     min-width: 320px;
+//         // }
+//     }
+//     &.is-small {
+//         .modal-card,
+//         .input,
+//         .button {
+//             // @include control-small;
+//         }
+//     }
+//     &.is-medium {
+//         .modal-card,
+//         .input,
+//         .button {
+//             // @include control-medium;
+//         }
+//     }
+//     &.is-large {
+//         .modal-card,
+//         .input,
+//         .button {
+//             // @include control-large;
+//         }
+//     }
+//     &.has-custom-container {
+//         position: absolute;
+//     }
+// }
+
+
+
+// // see: https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.css
+// // .modal {
+// //   align-items: center;
+// //   display: none;
+// //   flex-direction: column;
+// //   justify-content: center;
+// //   overflow: hidden;
+// //   position: fixed;
+// //   z-index: 40;
+// // }
+
+// // .modal.is-active {
+// //   display: flex;
+// // }
+
+// // .modal-background {
+// //   background-color: rgba(10, 10, 10, 0.86);
+// // }
+
+// // .modal-content,
+// // .modal-card {
+// //   margin: 0 20px;
+// //   max-height: calc(100vh - 160px);
+// //   overflow: auto;
+// //   position: relative;
+// //   width: 100%;
+// // }
+
+// // @media screen and (min-width: 769px) {
+// //   .modal-content,
+// //   .modal-card {
+// //     margin: 0 auto;
+// //     max-height: calc(100vh - 40px);
+// //     width: 640px;
+// //   }
+// // }
+
+// // .modal-close {
+// //   background: none;
+// //   height: 40px;
+// //   position: fixed;
+// //   right: 20px;
+// //   top: 20px;
+// //   width: 40px;
+// // }
+
+// // .modal-card {
+// //   display: flex;
+// //   flex-direction: column;
+// //   max-height: calc(100vh - 40px);
+// //   overflow: hidden;
+// //   -ms-overflow-y: visible;
+// // }
+
+// // .modal-card-head,
+// // .modal-card-foot {
+// //   align-items: center;
+// //   background-color: whitesmoke;
+// //   display: flex;
+// //   flex-shrink: 0;
+// //   justify-content: flex-start;
+// //   padding: 20px;
+// //   position: relative;
+// // }
+
+// // .modal-card-head {
+// //   border-bottom: 1px solid #dbdbdb;
+// //   border-top-left-radius: 6px;
+// //   border-top-right-radius: 6px;
+// // }
+
+// // .modal-card-title {
+// //   color: #363636;
+// //   flex-grow: 1;
+// //   flex-shrink: 0;
+// //   font-size: 1.5rem;
+// //   line-height: 1;
+// // }
+
+// // .modal-card-foot {
+// //   border-bottom-left-radius: 6px;
+// //   border-bottom-right-radius: 6px;
+// //   border-top: 1px solid #dbdbdb;
+// // }
+
+// // .modal-card-foot .button:not(:last-child) {
+// //   margin-right: 0.5em;
+// // }
+
+// // .modal-card-body {
+// //   -webkit-overflow-scrolling: touch;
+// //   background-color: white;
+// //   flex-grow: 1;
+// //   flex-shrink: 1;
+// //   overflow: auto;
+// //   padding: 20px;
+// // }
