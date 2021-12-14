@@ -76,7 +76,6 @@
 import trapFocus from '../../directives/trapFocus'
 import Icon from '../icon/Icon'
 import Modal from '../modal/Modal'
-import config from '../../utils/config'
 import { removeElement } from '../../utils/helpers'
 
 export default {
@@ -102,20 +101,20 @@ export default {
         confirmText: {
             type: String,
             default: () => {
-                return config.defaultDialogConfirmText
-                    ? config.defaultDialogConfirmText
+                return null
+                    ? null
                     : 'OK'
             }
         },
         cancelText: {
             type: String,
             default: () => {
-                return config.defaultDialogCancelText
-                    ? config.defaultDialogCancelText
+                return null
+                    ? null
                     : 'Cancel'
             }
         },
-        hasInput: Boolean, // Used internally to know if it's prompt
+        hasInput: Boolean, // Used internally to know if it's prompt.
         inputAttrs: {
             type: Object,
             default: () => ({})
@@ -131,7 +130,7 @@ export default {
         container: {
             type: String,
             default: () => {
-                return config.defaultContainerElement
+                return null
             }
         },
         focusOn: {
@@ -141,7 +140,7 @@ export default {
         trapFocus: {
             type: Boolean,
             default: () => {
-                return config.defaultTrapFocus
+                return null
             }
         },
         ariaRole: {

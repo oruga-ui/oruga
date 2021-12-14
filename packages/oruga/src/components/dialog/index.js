@@ -1,7 +1,9 @@
 import Dialog from './Dialog'
 
-import config, { VueInstance } from '../../utils/config'
+import { getOptions } from '../../utils/config'
+import { getValueByPath } from '../../utils/helpers'
 import { merge } from '../../utils/helpers'
+import { VueInstance } from '../../utils/config'
 import { use, registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
 
 let localVueInstance
@@ -22,14 +24,14 @@ function open(propsData) {
         component.$slots.default = slot
         component.$forceUpdate()
     }
-    if (!config.defaultProgrammaticPromise) {
-        return component
-    } else {
-        return new Promise((resolve) => {
-            component.$on('confirm', (event) => resolve({ result: event || true, dialog: component }))
-            component.$on('cancel', () => resolve({ result: false, dialog: component }))
-        })
-    }
+    // if (!config.defaultProgrammaticPromise) {
+    //     return component
+    // } else {
+    //     return new Promise((resolve) => {
+    //         component.$on('confirm', (event) => resolve({ result: event || true, dialog: component }))
+    //         component.$on('cancel', () => resolve({ result: false, dialog: component }))
+    //     })
+    // }
 }
 
 const DialogProgrammatic = {
@@ -73,5 +75,5 @@ export default Plugin
 
 export {
     DialogProgrammatic,
-    Dialog as ODialog
+    Dialog as BDialog
 }

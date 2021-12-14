@@ -20,96 +20,80 @@ title: Dialog
 
 ```html
 <template>
-  <section>
-    <div class="buttons">
-      <o-button size="medium" variant="primary" @click="imageModal()">
-        Open modal (HTML)
-      </o-button>
-      <o-button size="medium" variant="primary" @click="cardModal()">
-        Open modal (Alert)
-      </o-button>
-    </div>
-  </section>
+    <section>
+        <div class="buttons">
+            <o-button
+                label="Launch confirm (default)"
+                type="is-info"
+                size="is-medium"
+                @click="confirm" />
+
+            <o-button
+                label="Launch confirm (custom)"
+                type="is-info"
+                size="is-medium"
+                @click="confirmCustom" />
+
+            <o-button
+                label="Launch confirm (custom)"
+                type="is-danger"
+                size="is-medium"
+                @click="confirmCustomDelete" />
+        </div>
+    </section>
 </template>
 
 <script>
-  export default {
-    methods: {
-      imageModal() {
-        const h = this.$createElement
-        const vnode = h('p', { style: { 'text-align': 'center' } }, [h('img', { attrs: { src: 'https://avatars2.githubusercontent.com/u/66300512?s=200&v=4' } })])
-        this.$oruga.dialog.open({
-          content: [vnode]
-        })
-      },
-      cardModal() {
-        this.$oruga.dialog.open('Everything looks fine!')
-      }
+    export default {
+        methods: {
+            confirm() {
+                this.$oruga.dialog.confirm({
+                    message: 'Continue on this task?',
+                    onConfirm: () => this.$oruga.toast.open('User confirmed')
+                })
+            },
+            confirmCustom() {
+                this.$oruga.dialog.confirm({
+                    title: 'Privacy Politics',
+                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Fusce id fermentum quam. Proin sagittis,
+                        nibh id hendrerit imperdiet, elit sapien laoreet elit,
+                        ac scelerisque diam velit in nisl. Nunc maximus ex non
+                        laoreet semper. Nunc scelerisque, libero sit amet pretium dignissim,
+                        augue purus placerat justo,
+                        sit amet porttitor dui metus in nisl.
+                        Nulla non leo placerat, porta metus eu, laoreet risus.
+                        Etiam lacinia, purus eu luctus maximus, elit ex viverra tellus,
+                        sit amet sodales quam dui nec odio.
+                        Nullam porta mollis est. Quisque aliquet malesuada fringilla.
+                        Pellentesque volutpat lacus at ante posuere,
+                        non pulvinar ante porta. Proin viverra eu massa nec porta.
+                        Aliquam rhoncus velit quis sem hendrerit,
+                        ut dictum nisl accumsan. Maecenas erat enim, scelerisque non ligula ac,
+                        eleifend venenatis ligula.
+                        Praesent molestie mauris sed elit posuere, non malesuada libero gravida.
+                        In hac habitasse platea dictumst.
+                        Pellentesque habitant morbi tristique senectus
+                        et netus et malesuada fames ac turpis egestas.`,
+                    cancelText: 'Disagree',
+                    confirmText: 'Agree',
+                    type: 'is-success',
+                    onConfirm: () => this.$oruga.toast.open('User agreed')
+                })
+            },
+            confirmCustomDelete() {
+                this.$oruga.dialog.confirm({
+                    title: 'Deleting account',
+                    message: 'Are you sure you want to <b>delete</b> your account? This action cannot be undone.',
+                    confirmText: 'Delete Account',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    onConfirm: () => this.$oruga.toast.open('Account deleted!')
+                })
+            }
+        }
     }
-  }
 </script>
-
-<style>
-  .modal-card {
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100vh - 40px);
-    overflow: hidden;
-  }
-  @media screen and (min-width: 769px) {
-    .modal-card {
-      margin: 0 auto;
-      max-height: calc(100vh - 40px);
-      width: 640px;
-    }
-  }
-  .modal-card {
-    margin: 0 20px;
-    max-height: calc(100vh - 160px);
-    overflow: auto;
-    position: relative;
-    width: 100%;
-  }
-  .modal-card-foot,
-  .modal-card-head {
-    align-items: center;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: flex-start;
-    padding: 20px;
-    position: relative;
-  }
-  .modal-card-head {
-    border-bottom: 1px solid #dbdbdb;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-  }
-  .modal-card-body {
-    -webkit-overflow-scrolling: touch;
-    background-color: #fff;
-    flex-grow: 1;
-    flex-shrink: 1;
-    overflow: auto;
-    padding: 20px;
-  }
-  .modal-card-foot {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-top: 1px solid #dbdbdb;
-  }
-  .modal-card-title {
-    color: #363636;
-    flex-grow: 1;
-    flex-shrink: 0;
-    font-size: 1.5rem;
-    line-height: 1;
-    margin: 0;
-  }
-  .modal-card-foot .o-button:not(:last-child) {
-    margin-right: 0.5em;
-  }
-</style>
 ```
 
 :::

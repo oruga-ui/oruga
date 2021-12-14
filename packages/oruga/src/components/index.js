@@ -5,6 +5,7 @@ import Checkbox from './checkbox'
 import Collapse from './collapse'
 import Datepicker from './datepicker'
 import Datetimepicker from './datetimepicker'
+import Dialog from './dialog'
 import Dropdown from './dropdown'
 import Field from './field'
 import Icon from './icon'
@@ -36,6 +37,7 @@ export {
     Collapse,
     Datepicker,
     Datetimepicker,
+    Dialog,
     Dropdown,
     Field,
     Icon,
