@@ -1676,6 +1676,10 @@ export default {
         ],
         inspectData: [
             {
+                class: "rootClass",
+                description: "Class of Table root element"
+            },
+            {
                 class: "tableClass",
                 description: "Class of the Table"
             },

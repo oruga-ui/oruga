@@ -1,8 +1,5 @@
 <template>
-    <div
-        :class="tableWrapperClasses"
-        :style="tableWrapperStyle"
-    >
+    <div :class="rootClasses">
 
         <div ref="slot" style="display:none">
             <slot />
@@ -43,233 +40,237 @@
             </slot>
         </template>
 
-        <table
-            :class="tableClasses"
-            :tabindex="!focusable ? false : 0"
-            @keydown.self.prevent.up="pressedArrow(-1)"
-            @keydown.self.prevent.down="pressedArrow(1)">
-            <caption v-if="$slots.caption">
-                <slot name="caption" />
-            </caption>
-            <thead v-if="newColumns.length && showHeader">
-                <tr>
-                    <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
-                    <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
-                        <template v-if="headerCheckable">
-                            <o-checkbox
-                                autocomplete="off"
-                                :modelValue="isAllChecked"
-                                :disabled="isAllUncheckable"
-                                @change="checkAll"/>
-                        </template>
-                    </th>
-                    <th
-                        v-for="(column, index) in visibleColumns"
-                        :key="column.newKey + ':' + index + 'header'"
-                        v-bind="column.thAttrs && column.thAttrs(column)"
-                        :class="thClasses(column)"
-                        :style="column.style"
-                        @click.stop="sort(column, null, $event)">
+        <div
+            :class="tableWrapperClasses"
+            :style="tableWrapperStyle">
+            <table
+                :class="tableClasses"
+                :tabindex="!focusable ? false : 0"
+                @keydown.self.prevent.up="pressedArrow(-1)"
+                @keydown.self.prevent.down="pressedArrow(1)">
+                <caption v-if="$slots.caption">
+                    <slot name="caption" />
+                </caption>
+                <thead v-if="newColumns.length && showHeader">
+                    <tr>
+                        <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
+                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
+                            <template v-if="headerCheckable">
+                                <o-checkbox
+                                    autocomplete="off"
+                                    :modelValue="isAllChecked"
+                                    :disabled="isAllUncheckable"
+                                    @change="checkAll"/>
+                            </template>
+                        </th>
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'header'"
+                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            :class="thClasses(column)"
+                            :style="column.style"
+                            @click.stop="sort(column, null, $event)">
 
-                        <template v-if="column.hasHeaderSlot">
-                            <o-slot-component
-                                :component="column"
-                                scoped
-                                name="header"
-                                tag="span"
-                                :props="{ column, index }"
-                            />
-                        </template>
-                        <template v-else>
-                            <span>
-                                {{ column.label }}
-                                <span
-                                    v-show="column.sortable && currentSortColumn === column"
-                                    :class="thSortIconClasses()">
-                                    <o-icon
-                                        :icon="sortIcon"
-                                        :pack="iconPack"
-                                        both
-                                        :size="sortIconSize"
-                                        :rotation="!isAsc ? 180 : 0" />
-                                </span>
-                            </span>
-                        </template>
-                    </th>
-                    <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
-                        <template v-if="headerCheckable">
-                            <o-checkbox
-                                autocomplete="off"
-                                :modelValue="isAllChecked"
-                                :disabled="isAllUncheckable"
-                                @change="checkAll"/>
-                        </template>
-                    </th>
-                </tr>
-                <tr v-if="hasSearchablenewColumns">
-                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                    <th v-if="checkable && checkboxPosition === 'left'" />
-                    <th
-                        v-for="(column, index) in visibleColumns"
-                        :key="column.newKey + ':' + index + 'searchable'"
-                        v-bind="column.thAttrs && column.thAttrs(column)"
-                        :class="thClasses(column)"
-                        :style="column.style">
-                        <template v-if="column.searchable">
-                            <template v-if="column.hasSearchableSlot">
+                            <template v-if="column.hasHeaderSlot">
                                 <o-slot-component
                                     :component="column"
                                     scoped
-                                    name="searchable"
+                                    name="header"
                                     tag="span"
-                                    :props="{ column, filters }"
+                                    :props="{ column, index }"
                                 />
                             </template>
-                            <o-input
-                                v-else
-                                @[filtersEvent]="onFiltersEvent"
-                                v-model="filters[column.field]"
-                                :type="column.numeric ? 'number' : 'text'" />
-                        </template>
-                    </th>
-                    <th v-if="checkable && checkboxPosition === 'right'" />
-                </tr>
-                <tr v-if="hasCustomSubheadings">
-                    <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                    <th v-if="checkable && checkboxPosition === 'left'" />
-                    <th
-                        v-for="(column, index) in visibleColumns"
-                        :key="column.newKey + ':' + index + 'subheading'"
-                        :style="column.style"
-                        :class="thSubheadingClasses"
-                    >
-                        <template
-                            v-if="
-                                column.$slots &&
-                                column.$slots.subheading
-                            ">
+                            <template v-else>
+                                <span>
+                                    {{ column.label }}
+                                    <span
+                                        v-show="column.sortable && currentSortColumn === column"
+                                        :class="thSortIconClasses()">
+                                        <o-icon
+                                            :icon="sortIcon"
+                                            :pack="iconPack"
+                                            both
+                                            :size="sortIconSize"
+                                            :rotation="!isAsc ? 180 : 0" />
+                                    </span>
+                                </span>
+                            </template>
+                        </th>
+                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
+                            <template v-if="headerCheckable">
+                                <o-checkbox
+                                    autocomplete="off"
+                                    :modelValue="isAllChecked"
+                                    :disabled="isAllUncheckable"
+                                    @change="checkAll"/>
+                            </template>
+                        </th>
+                    </tr>
+                    <tr v-if="hasSearchablenewColumns">
+                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
+                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'searchable'"
+                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            :class="thClasses(column)"
+                            :style="column.style">
+                            <template v-if="column.searchable">
+                                <template v-if="column.hasSearchableSlot">
+                                    <o-slot-component
+                                        :component="column"
+                                        scoped
+                                        name="searchable"
+                                        tag="span"
+                                        :props="{ column, filters }"
+                                    />
+                                </template>
+                                <o-input
+                                    v-else
+                                    @[filtersEvent]="onFiltersEvent"
+                                    v-model="filters[column.field]"
+                                    :type="column.numeric ? 'number' : 'text'" />
+                            </template>
+                        </th>
+                        <th v-if="checkable && checkboxPosition === 'right'" />
+                    </tr>
+                    <tr v-if="hasCustomSubheadings">
+                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
+                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'subheading'"
+                            :style="column.style"
+                            :class="thSubheadingClasses"
+                        >
+                            <template
+                                v-if="
+                                    column.$slots &&
+                                    column.$slots.subheading
+                                ">
+                                <o-slot-component
+                                    :component="column"
+                                    scoped
+                                    name="subheading"
+                                    tag="span"
+                                    :props="{ column, index }"
+                                />
+                            </template>
+                            <template v-else>{{ column.subheading }}</template>
+                        </th>
+                        <th v-if="checkable && checkboxPosition === 'right'" />
+                    </tr>
+                </thead>
+                <tbody>
+                    <template
+                        v-for="(row, index) in visibleData"
+                        :key="this.customRowKey ? row[this.customRowKey] : index">
+                        <tr
+                            :class="rowClasses(row, index)"
+                            @click="selectRow(row, index)"
+                            @dblclick="$emit('dblclick', row)"
+                            @mouseenter="emitEventForRow('mouseenter', $event, row)"
+                            @mouseleave="emitEventForRow('mouseleave', $event, row)"
+                            @contextmenu="$emit('contextmenu', row, $event)"
+                            :draggable="draggable"
+                            @dragstart="handleDragStart($event, row, index)"
+                            @dragend="handleDragEnd($event, row, index)"
+                            @drop="handleDrop($event, row, index)"
+                            @dragover="handleDragOver($event, row, index)"
+                            @dragleave="handleDragLeave($event, row, index)">
+
+                            <td
+                                v-if="showDetailRowIcon"
+                                :class="tdDetailedChevronClasses"
+                            >
+
+                                <o-icon
+                                    v-if="hasDetailedVisible(row)"
+                                    :icon="detailIcon"
+                                    :pack="iconPack"
+                                    :rotation="isVisibleDetailRow(row) ? 90 : 0"
+                                    role="button"
+                                    @click.stop="toggleDetails(row)"
+                                    clickable
+                                    both />
+                            </td>
+
+                            <td
+                                :class="tdCheckboxClasses"
+                                v-if="checkable && checkboxPosition === 'left'">
+                                <o-checkbox
+                                    autocomplete="off"
+                                    :disabled="!isRowCheckable(row)"
+                                    :modelValue="isRowChecked(row)"
+                                    @update:modelValue="checkRow(row, index, $event)"
+                                />
+                            </td>
+
                             <o-slot-component
+                                v-for="(column, colindex) in visibleColumns"
+                                :key="column.newKey + index + ':' + colindex"
+                                v-bind="column.tdAttrs && column.tdAttrs(row, column)"
                                 :component="column"
                                 scoped
-                                name="subheading"
-                                tag="span"
-                                :props="{ column, index }"
+                                name="default"
+                                tag="td"
+                                :class="tdClasses(row, column)"
+                                :data-label="column.label"
+                                :props="{ row, column, index, colindex, toggleDetails }"
+                                @click="$emit('cell-click', row, column, index, colindex, $event)"
                             />
-                        </template>
-                        <template v-else>{{ column.subheading }}</template>
-                    </th>
-                    <th v-if="checkable && checkboxPosition === 'right'" />
-                </tr>
-            </thead>
-            <tbody>
-                <template
-                    v-for="(row, index) in visibleData"
-                    :key="this.customRowKey ? row[this.customRowKey] : index">
-                    <tr
-                        :class="rowClasses(row, index)"
-                        @click="selectRow(row, index)"
-                        @dblclick="$emit('dblclick', row)"
-                        @mouseenter="emitEventForRow('mouseenter', $event, row)"
-                        @mouseleave="emitEventForRow('mouseleave', $event, row)"
-                        @contextmenu="$emit('contextmenu', row, $event)"
-                        :draggable="draggable"
-                        @dragstart="handleDragStart($event, row, index)"
-                        @dragend="handleDragEnd($event, row, index)"
-                        @drop="handleDrop($event, row, index)"
-                        @dragover="handleDragOver($event, row, index)"
-                        @dragleave="handleDragLeave($event, row, index)">
 
-                        <td
-                            v-if="showDetailRowIcon"
-                            :class="tdDetailedChevronClasses"
-                        >
+                            <td
+                                :class="tdCheckboxClasses"
+                                v-if="checkable && checkboxPosition === 'right'">
+                                <o-checkbox
+                                    autocomplete="off"
+                                    :disabled="!isRowCheckable(row)"
+                                    :modelValue="isRowChecked(row)"
+                                    @update:modelvalue="checkRow(row, index, $event)"
+                                />
+                            </td>
+                        </tr>
 
-                            <o-icon
-                                v-if="hasDetailedVisible(row)"
-                                :icon="detailIcon"
-                                :pack="iconPack"
-                                :rotation="isVisibleDetailRow(row) ? 90 : 0"
-                                role="button"
-                                @click.stop="toggleDetails(row)"
-                                clickable
-                                both />
-                        </td>
-
-                        <td
-                            :class="tdCheckboxClasses"
-                            v-if="checkable && checkboxPosition === 'left'">
-                            <o-checkbox
-                                autocomplete="off"
-                                :disabled="!isRowCheckable(row)"
-                                :modelValue="isRowChecked(row)"
-                                @update:modelValue="checkRow(row, index, $event)"
-                            />
-                        </td>
-
-                        <o-slot-component
-                            v-for="(column, colindex) in visibleColumns"
-                            :key="column.newKey + index + ':' + colindex"
-                            v-bind="column.tdAttrs && column.tdAttrs(row, column)"
-                            :component="column"
-                            scoped
-                            name="default"
-                            tag="td"
-                            :class="tdClasses(row, column)"
-                            :data-label="column.label"
-                            :props="{ row, column, index, colindex, toggleDetails }"
-                            @click="$emit('cell-click', row, column, index, colindex, $event)"
+                        <transition :name="detailTransition">
+                            <tr
+                                v-if="isActiveDetailRow(row)"
+                                :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
+                                :class="detailedClasses">
+                                <td :colspan="columnCount">
+                                    <slot
+                                        name="detail"
+                                        :row="row"
+                                        :index="index"/>
+                                </td>
+                            </tr>
+                        </transition>
+                        <slot
+                            v-if="isActiveCustomDetailRow(row)"
+                            name="detail"
+                            :row="row"
+                            :index="index"
                         />
+                    </template>
 
-                        <td
-                            :class="tdCheckboxClasses"
-                            v-if="checkable && checkboxPosition === 'right'">
-                            <o-checkbox
-                                autocomplete="off"
-                                :disabled="!isRowCheckable(row)"
-                                :modelValue="isRowChecked(row)"
-                                @update:modelvalue="checkRow(row, index, $event)"
-                            />
+                    <tr v-if="!visibleData.length">
+                        <td :colspan="columnCount">
+                            <slot name="empty"/>
                         </td>
                     </tr>
 
-                    <transition :name="detailTransition">
-                        <tr
-                            v-if="isActiveDetailRow(row)"
-                            :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                            :class="detailedClasses">
-                            <td :colspan="columnCount">
-                                <slot
-                                    name="detail"
-                                    :row="row"
-                                    :index="index"/>
-                            </td>
-                        </tr>
-                    </transition>
-                    <slot
-                        v-if="isActiveCustomDetailRow(row)"
-                        name="detail"
-                        :row="row"
-                        :index="index"
-                    />
-                </template>
+                </tbody>
 
-                <tr v-if="!visibleData.length">
-                    <td :colspan="columnCount">
-                        <slot name="empty"/>
-                    </td>
-                </tr>
-
-            </tbody>
-
-            <tfoot v-if="$slots.footer">
-                <tr :class="footerClasses">
-                    <slot name="footer" v-if="hasCustomFooterSlot()"/>
-                    <th :colspan="columnCount" v-else>
-                        <slot name="footer"/>
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
+                <tfoot v-if="$slots.footer">
+                    <tr :class="footerClasses">
+                        <slot name="footer" v-if="hasCustomFooterSlot()"/>
+                        <th :colspan="columnCount" v-else>
+                            <slot name="footer"/>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
         <template v-if="loading">
             <slot name="loading">
@@ -573,6 +574,7 @@ export default defineComponent({
         },
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
+        rootClass: [String, Function, Array],
         tableClass: [String, Function, Array],
         wrapperClass: [String, Function, Array],
         footerClass: [String, Function, Array],
@@ -606,7 +608,6 @@ export default defineComponent({
     },
     data() {
         return {
-            getValueByPath,
             visibleDetailRows: this.openedDetailed,
             newData: this.data,
             newDataTotal: this.backendPagination ? this.total : this.data.length,
@@ -627,6 +628,12 @@ export default defineComponent({
         })
     },
     computed: {
+        rootClasses() {
+            return [
+                this.computedClass('rootClass', 'o-table__root'),
+                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.isMobile }
+            ]
+        },
         tableClasses() {
             return [
                 this.computedClass('tableClass', 'o-table'),
@@ -1219,7 +1226,7 @@ export default defineComponent({
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
                     if (!column.customSearch(row, input)) return false
                 } else {
-                    let value = this.getValueByPath(row, key)
+                    let value = getValueByPath(row, key)
                     if (value == null) return false
                     if (Number.isInteger(value)) {
                         if (value !== Number(input)) return false
