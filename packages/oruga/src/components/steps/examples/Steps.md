@@ -113,7 +113,7 @@
     export default {
         data() {
             return {
-                activeStep: 0,
+                activeStep: 1,
 
                 showSocial: false,
                 isAnimated: true,
