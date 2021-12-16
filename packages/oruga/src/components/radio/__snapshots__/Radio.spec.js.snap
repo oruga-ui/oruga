@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ORadio render correctly 1`] = `
-<label class="o-radio o-radio--checked">
-    <!----> <input type="radio" class="o-radio__check o-radio__check--checked" value="false"> <span class="o-radio__label"></span>
-</label>
-`;
+exports[`ORadio render correctly 1`] = `<label class="o-radio o-radio--checked"><input type="radio" class="o-radio__check o-radio__check--checked" value="false"> <span class="o-radio__label"></span></label>`;

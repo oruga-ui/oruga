@@ -1,31 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTableMobileSort render correctly 1`] = `
-<div class="o-table__wrapper">
+<div class="o-table__root">
     <div style="display: none;"></div>
     <!---->
     <!---->
-    <table class="o-table o-table--table__empty">
-        <!---->
-        <thead>
-            <tr>
-                <!---->
-                <!---->
-                <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;"><span>
-                            ID
-                            <span class="o-table__th__sort-icon" style="display: none;"><o-icon-stub icon="arrow-up" size="small" rotation="0" both="true"></o-icon-stub></span></span></th>
-                <!---->
-            </tr>
+    <div class="o-table__wrapper">
+        <table class="o-table o-table--table__empty">
             <!---->
+            <thead>
+                <tr>
+                    <!---->
+                    <!---->
+                    <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;"><span>
+                                ID
+                                <span class="o-table__th__sort-icon" style="display: none;"><o-icon-stub icon="arrow-up" size="small" rotation="0" both="true"></o-icon-stub></span></span></th>
+                    <!---->
+                </tr>
+                <!---->
+                <!---->
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="1"></td>
+                </tr>
+            </tbody>
             <!---->
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="1"></td>
-            </tr>
-        </tbody>
-        <!---->
-    </table>
+        </table>
+    </div>
     <!---->
     <!---->
 </div>

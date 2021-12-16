@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ODatepickerMonth render correctly 1`] = `
+<section class="o-dpck__month">
+    <div class="o-dpck__month__body">
+        <div class="o-dpck__month__table"><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                January
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                February
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                March
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                April
+                <!---->
+            </a><a role="button" href="#" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                May
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                June
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                July
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                August
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                September
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                October
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                November
+                <!---->
+            </a><a role="button" href="#" tabindex="-1" class="o-dpck__month__cell o-dpck__month__cell--selectable">
+                December
+                <!---->
+            </a></div>
+    </div>
+</section>
+`;

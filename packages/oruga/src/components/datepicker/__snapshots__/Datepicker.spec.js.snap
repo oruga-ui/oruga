@@ -394,23 +394,24 @@ exports[`ODatepicker render correctly 1`] = `
           cov_2ixbwayxy.f[13]++;
           const dateCreator =
           /* istanbul ignore next */
-          (cov_2ixbwayxy.s[57]++, (0, _helpers.getValueByPath)((0, _config.getOptions)(), 'datepicker.dateCreator', undefined));
+          (cov_2ixbwayxy.s[58]++, (0, _helpers.getValueByPath)((0, _config.getOptions)(), 'datepicker.dateCreator', undefined));
 
           /* istanbul ignore next */
-          cov_2ixbwayxy.s[58]++;
+          cov_2ixbwayxy.s[59]++;
 
           if (typeof dateCreator === 'function') {
             /* istanbul ignore next */
             cov_2ixbwayxy.b[22][0]++;
-            cov_2ixbwayxy.s[59]++;
+            cov_2ixbwayxy.s[60]++;
             return dateCreator();
           } else {
             /* istanbul ignore next */
             cov_2ixbwayxy.b[22][1]++;
-            cov_2ixbwayxy.s[60]++;
+            cov_2ixbwayxy.s[61]++;
             return new Date();
           }
         }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>
+            <!---->
             <!---->
         </o-dropdown-item-stub>
     </o-dropdown-stub>

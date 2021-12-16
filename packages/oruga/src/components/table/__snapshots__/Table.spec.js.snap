@@ -1,20 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OTable render correctly 1`] = `
-<div class="o-table__wrapper">
+<div class="o-table__root">
     <div style="display: none;"></div>
     <!---->
     <!---->
-    <table class="o-table o-table--table__empty">
-        <!---->
-        <!---->
-        <tbody>
-            <tr>
-                <td colspan="0"></td>
-            </tr>
-        </tbody>
-        <!---->
-    </table>
+    <div class="o-table__wrapper">
+        <table class="o-table o-table--table__empty">
+            <!---->
+            <!---->
+            <tbody>
+                <tr>
+                    <td colspan="0"></td>
+                </tr>
+            </tbody>
+            <!---->
+        </table>
+    </div>
     <!---->
     <!---->
 </div>
