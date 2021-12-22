@@ -49,46 +49,41 @@
                 :clickable="false">
 
                 <header :class="headerClasses">
-                    <template v-if="$slots.header !== undefined && $slots.header.length">
-                        <slot name="header" />
-                    </template>
-                    <div
-                        v-else
-                        :class="headerButtonsClasses">
-                        <a
-                            v-show="!showPrev && !disabled"
-                            :class="prevBtnClasses"
-                            role="button"
-                            href="#"
-                            :aria-label="ariaPreviousLabel"
-                            @click.prevent="prev"
-                            @keydown.enter.prevent="prev"
-                            @keydown.space.prevent="prev">
+                    <slot name="header">
+                        <div :class="headerButtonsClasses">
+                            <a
+                                v-show="!showPrev && !disabled"
+                                :class="prevBtnClasses"
+                                role="button"
+                                href="#"
+                                :aria-label="ariaPreviousLabel"
+                                @click.prevent="prev"
+                                @keydown.enter.prevent="prev"
+                                @keydown.space.prevent="prev">
 
-                            <o-icon
-                                :icon="iconPrev"
-                                :pack="iconPack"
-                                both
-                                clickable />
-                        </a>
-                        <a
-                            v-show="!showNext && !disabled"
-                            :class="nextBtnClasses"
-                            role="button"
-                            href="#"
-                            :aria-label="ariaNextLabel"
-                            @click.prevent="next"
-                            @keydown.enter.prevent="next"
-                            @keydown.space.prevent="next">
+                                <o-icon
+                                    :icon="iconPrev"
+                                    :pack="iconPack"
+                                    both
+                                    clickable />
+                            </a>
+                            <a
+                                v-show="!showNext && !disabled"
+                                :class="nextBtnClasses"
+                                role="button"
+                                href="#"
+                                :aria-label="ariaNextLabel"
+                                @click.prevent="next"
+                                @keydown.enter.prevent="next"
+                                @keydown.space.prevent="next">
 
-                            <o-icon
-                                :icon="iconNext"
-                                :pack="iconPack"
-                                both
-                                clickable />
-                        </a>
-                        <div :class="listsClasses">
-                            <o-field>
+                                <o-icon
+                                    :icon="iconNext"
+                                    :pack="iconPack"
+                                    both
+                                    clickable />
+                            </a>
+                            <div :class="listsClasses">
                                 <o-select
                                     v-if="!isTypeMonth"
                                     v-model="focusedDateData.month"
@@ -113,102 +108,106 @@
                                         {{ year }}
                                     </option>
                                 </o-select>
-                            </o-field>
+                            </div>
                         </div>
-                    </div>
+                    </slot>
                 </header>
-                <o-datepicker-table
-                    v-if="!isTypeMonth"
-                    v-model="computedValue"
-                    :day-names="newDayNames"
-                    :month-names="newMonthNames"
-                    :first-day-of-week="firstDayOfWeek"
-                    :rules-for-first-week="rulesForFirstWeek"
-                    :min-date="minDate"
-                    :max-date="maxDate"
-                    :focused="focusedDateData"
-                    :disabled="disabled"
-                    :unselectable-dates="unselectableDates"
-                    :unselectable-days-of-week="unselectableDaysOfWeek"
-                    :selectable-dates="selectableDates"
-                    :events="events"
-                    :indicators="indicators"
-                    :date-creator="dateCreator"
-                    :type-month="isTypeMonth"
-                    :nearby-month-days="nearbyMonthDays"
-                    :nearby-selectable-month-days="nearbySelectableMonthDays"
-                    :show-week-number="showWeekNumber"
-                    :week-number-clickable="weekNumberClickable"
-                    :range="range"
-                    :multiple="multiple"
-                    :table-class="tableClass"
-                    :table-head-class="tableHeadClass"
-                    :table-head-cell-class="tableHeadCellClass"
-                    :table-body-class="tableBodyClass"
-                    :table-row-class="tableRowClass"
-                    :table-cell-class="tableCellClass"
-                    :table-cell-selected-class="tableCellSelectedClass"
-                    :table-cell-first-selected-class="tableCellFirstSelectedClass"
-                    :table-cell-invisible-class="tableCellInvisibleClass"
-                    :table-cell-within-selected-class="tableCellWithinSelectedClass"
-                    :table-cell-last-selected-class="tableCellLastSelectedClass"
-                    :table-cell-first-hovered-class="tableCellFirstHoveredClass"
-                    :table-cell-within-hovered-class="tableCellWithinHoveredClass"
-                    :table-cell-last-hovered-class="tableCellLastHoveredClass"
-                    :table-cell-today-class="tableCellTodayClass"
-                    :table-cell-selectable-class="tableCellSelectableClass"
-                    :table-cell-unselectable-class="tableCellUnselectableClass"
-                    :table-cell-nearby-class="tableCellNearbyClass"
-                    :table-cell-events-class="tableCellEventsClass"
-                    :table-events-class="tableEventsClass"
-                    :table-event-variant-class="tableEventVariantClass"
-                    :table-event-class="tableEventClass"
-                    :table-event-indicators-class="tableEventIndicatorsClass"
-                    @range-start="date => $emit('range-start', date)"
-                    @range-end="date => $emit('range-end', date)"
-                    @close="togglePicker(false)"
-                    @update:focused="focusedDateData = $event" />
-                <o-datepicker-month
-                    v-if="isTypeMonth"
-                    v-model="computedValue"
-                    :month-names="newMonthNames"
-                    :min-date="minDate"
-                    :max-date="maxDate"
-                    :focused="focusedDateData"
-                    :disabled="disabled"
-                    :unselectable-dates="unselectableDates"
-                    :unselectable-days-of-week="unselectableDaysOfWeek"
-                    :selectable-dates="selectableDates"
-                    :events="events"
-                    :indicators="indicators"
-                    :date-creator="dateCreator"
-                    :range="range"
-                    :multiple="multiple"
-                    :month-class="monthClass"
-                    :month-body-class="monthBodyClass"
-                    :month-table-class="monthTableClass"
-                    :month-cell-class="monthCellClass"
-                    :month-cell-selected-class="monthCellSelectedClass"
-                    :month-cell-first-selected-class="monthCellFirstSelectedClass"
-                    :month-cell-within-selected-class="monthCellWithinSelectedClass"
-                    :month-cell-last-selected-class="monthCellLastSelectedClass"
-                    :month-cell-within-hovered-range-class="monthCellWithinHoveredRangeClass"
-                    :month-cell-first-hovered-class="monthCellFirstHoveredClass"
-                    :month-cell-within-hovered-class="monthCellWithinHoveredClass"
-                    :month-cell-last-hovered-class="monthCellLastHoveredClass"
-                    :month-cell-today-class="monthCellTodayClass"
-                    :month-cell-selectable-class="monthCellSelectableClass"
-                    :month-cell-unselectable-class="monthCellUnselectableClass"
-                    :month-cell-events-class="monthCellEventsClass"
-                    @range-start="date => $emit('range-start', date)"
-                    @range-end="date => $emit('range-end', date)"
-                    @close="togglePicker(false)"
-                    @change-focus="changeFocus"
-                    @update:focused="focusedDateData = $event" />
+                <slot name="table">
+                    <o-datepicker-table
+                        v-if="!isTypeMonth"
+                        v-model="computedValue"
+                        :day-names="newDayNames"
+                        :month-names="newMonthNames"
+                        :first-day-of-week="firstDayOfWeek"
+                        :rules-for-first-week="rulesForFirstWeek"
+                        :min-date="minDate"
+                        :max-date="maxDate"
+                        :focused="focusedDateData"
+                        :disabled="disabled"
+                        :unselectable-dates="unselectableDates"
+                        :unselectable-days-of-week="unselectableDaysOfWeek"
+                        :selectable-dates="selectableDates"
+                        :events="events"
+                        :indicators="indicators"
+                        :date-creator="dateCreator"
+                        :type-month="isTypeMonth"
+                        :nearby-month-days="nearbyMonthDays"
+                        :nearby-selectable-month-days="nearbySelectableMonthDays"
+                        :show-week-number="showWeekNumber"
+                        :week-number-clickable="weekNumberClickable"
+                        :range="range"
+                        :multiple="multiple"
+                        :table-class="tableClass"
+                        :table-head-class="tableHeadClass"
+                        :table-head-cell-class="tableHeadCellClass"
+                        :table-body-class="tableBodyClass"
+                        :table-row-class="tableRowClass"
+                        :table-cell-class="tableCellClass"
+                        :table-cell-selected-class="tableCellSelectedClass"
+                        :table-cell-first-selected-class="tableCellFirstSelectedClass"
+                        :table-cell-invisible-class="tableCellInvisibleClass"
+                        :table-cell-within-selected-class="tableCellWithinSelectedClass"
+                        :table-cell-last-selected-class="tableCellLastSelectedClass"
+                        :table-cell-first-hovered-class="tableCellFirstHoveredClass"
+                        :table-cell-within-hovered-class="tableCellWithinHoveredClass"
+                        :table-cell-last-hovered-class="tableCellLastHoveredClass"
+                        :table-cell-today-class="tableCellTodayClass"
+                        :table-cell-selectable-class="tableCellSelectableClass"
+                        :table-cell-unselectable-class="tableCellUnselectableClass"
+                        :table-cell-nearby-class="tableCellNearbyClass"
+                        :table-cell-events-class="tableCellEventsClass"
+                        :table-events-class="tableEventsClass"
+                        :table-event-variant-class="tableEventVariantClass"
+                        :table-event-class="tableEventClass"
+                        :table-event-indicators-class="tableEventIndicatorsClass"
+                        @range-start="date => $emit('range-start', date)"
+                        @range-end="date => $emit('range-end', date)"
+                        @close="togglePicker(false)"
+                        @update:focused="focusedDateData = $event"
+                    />
+                    <o-datepicker-month
+                        v-if="isTypeMonth"
+                        v-model="computedValue"
+                        :month-names="newMonthNames"
+                        :min-date="minDate"
+                        :max-date="maxDate"
+                        :focused="focusedDateData"
+                        :disabled="disabled"
+                        :unselectable-dates="unselectableDates"
+                        :unselectable-days-of-week="unselectableDaysOfWeek"
+                        :selectable-dates="selectableDates"
+                        :events="events"
+                        :indicators="indicators"
+                        :date-creator="dateCreator"
+                        :range="range"
+                        :multiple="multiple"
+                        :month-class="monthClass"
+                        :month-body-class="monthBodyClass"
+                        :month-table-class="monthTableClass"
+                        :month-cell-class="monthCellClass"
+                        :month-cell-selected-class="monthCellSelectedClass"
+                        :month-cell-first-selected-class="monthCellFirstSelectedClass"
+                        :month-cell-within-selected-class="monthCellWithinSelectedClass"
+                        :month-cell-last-selected-class="monthCellLastSelectedClass"
+                        :month-cell-within-hovered-range-class="monthCellWithinHoveredRangeClass"
+                        :month-cell-first-hovered-class="monthCellFirstHoveredClass"
+                        :month-cell-within-hovered-class="monthCellWithinHoveredClass"
+                        :month-cell-last-hovered-class="monthCellLastHoveredClass"
+                        :month-cell-today-class="monthCellTodayClass"
+                        :month-cell-selectable-class="monthCellSelectableClass"
+                        :month-cell-unselectable-class="monthCellUnselectableClass"
+                        :month-cell-events-class="monthCellEventsClass"
+                        @range-start="date => $emit('range-start', date)"
+                        @range-end="date => $emit('range-end', date)"
+                        @close="togglePicker(false)"
+                        @change-focus="changeFocus"
+                        @update:focused="focusedDateData = $event"
+                    />
+                </slot>
                 <footer
-                    v-if="$slots.default !== undefined"
+                    v-if="$slots.footer !== undefined"
                     :class="footerClasses">
-                    <slot/>
+                    <slot name="footer"/>
                 </footer>
             </o-dropdown-item>
         </o-dropdown>
