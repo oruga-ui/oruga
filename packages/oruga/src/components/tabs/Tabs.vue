@@ -1,6 +1,6 @@
 <template>
     <div :class="rootClasses">
-        <nav :class="navClasses">
+        <nav :class="navClasses" role="tablist">
             <div
                 v-for="childItem in items"
                 :key="childItem.newValue"
@@ -11,6 +11,7 @@
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
+                    role="tab"
                     @click.native="childClick(childItem)"
                     @keydown.native.left.prevent="leftPressed"
                     @keydown.native.right.prevent="rightPressed"
@@ -23,6 +24,7 @@
                 <component
                     v-else
                     :is="childItem.tag"
+                    role="tab"
                     @click="childClick(childItem)"
                     @keydown.left.prevent="leftPressed"
                     @keydown.right.prevent="rightPressed"
@@ -41,7 +43,7 @@
                 </component>
             </div>
         </nav>
-        <section :class="contentClasses">
+        <section :class="contentClasses" role="tabpanel">
             <slot/>
         </section>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div :class="rootClasses">
-        <nav :class="navClasses">
+        <nav :class="navClasses" role="tablist">
             <div
                 v-for="childItem in items"
                 :key="childItem.newValue"
@@ -17,6 +17,7 @@
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
+                    role="tab"
                     @click="childClick(childItem)"
                     @keydown.left.prevent="leftPressed"
                     @keydown.right.prevent="rightPressed"
@@ -29,6 +30,7 @@
                 <component
                     v-else
                     :is="childItem.tag"
+                    role="tab"
                     @click="childClick(childItem)"
                     :class="childItem.headerClasses">
                     <o-icon
