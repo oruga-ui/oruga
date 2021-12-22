@@ -5,6 +5,12 @@
                 v-for="childItem in items"
                 :key="childItem.newValue"
                 v-show="childItem.visible"
+                @keydown.left.prevent="leftPressed"
+                @keydown.right.prevent="rightPressed"
+                @keydown.up.prevent="upPressed"
+                @keydown.down.prevent="downPressed"
+                @keydown.home.prevent="homePressed"
+                @keydown.end.prevent="endPressed"
                 :class="itemWrapperClasses">
                 <o-slot-component
                     v-if="childItem.$slots.header"
@@ -12,6 +18,12 @@
                     :tag="childItem.tag"
                     name="header"
                     @click="childClick(childItem)"
+                    @keydown.left.prevent="leftPressed"
+                    @keydown.right.prevent="rightPressed"
+                    @keydown.up.prevent="upPressed"
+                    @keydown.down.prevent="downPressed"
+                    @keydown.home.prevent="homePressed"
+                    @keydown.end.prevent="endPressed"
                     :class="childItem.headerClasses"
                 />
                 <component
