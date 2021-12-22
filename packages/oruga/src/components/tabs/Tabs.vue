@@ -12,12 +12,24 @@
                     :tag="childItem.tag"
                     name="header"
                     @click.native="childClick(childItem)"
+                    @keydown.native.left.prevent="leftPressed"
+                    @keydown.native.right.prevent="rightPressed"
+                    @keydown.native.up.prevent="upPressed"
+                    @keydown.native.down.prevent="downPressed"
+                    @keydown.native.home.prevent="homePressed"
+                    @keydown.native.end.prevent="endPressed"
                     :class="childItem.headerClasses"
                 />
                 <component
                     v-else
                     :is="childItem.tag"
                     @click="childClick(childItem)"
+                    @keydown.left.prevent="leftPressed"
+                    @keydown.right.prevent="rightPressed"
+                    @keydown.up.prevent="upPressed"
+                    @keydown.down.prevent="downPressed"
+                    @keydown.home.prevent="homePressed"
+                    @keydown.end.prevent="endPressed"
                     :class="childItem.headerClasses">
                     <o-icon
                         v-if="childItem.icon"
