@@ -116,34 +116,6 @@ export default (cmp: string) => defineComponent({
             this.clickFirstViableChild(newIndex, false)
         },
         /**
-         * Up keypress handler
-        */
-        upPressed() {
-            if(this.vertical)
-                this.prev()
-        },
-        /**
-         * Down keypress handler
-        */
-        downPressed() {
-            if(this.vertical)
-                this.next()
-        },
-        /**
-         * Right keypress handler
-        */
-        rightPressed() {
-            if(!this.vertical)
-                this.next()
-        },
-        /**
-         * Left keypress handler
-        */
-        leftPressed() {
-            if(!this.vertical)
-                this.prev()
-        },
-        /**
          * Go to the first viable item
         */
         homePressed() {
