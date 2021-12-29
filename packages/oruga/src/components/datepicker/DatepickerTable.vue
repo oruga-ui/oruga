@@ -154,14 +154,6 @@ export default {
                 this.computedClass('tableCellClass', 'o-dpck__table__cell'),
             ]
         },
-        multipleSelectedDates: {
-            get() {
-                return this.multiple && this.value ? this.value : []
-            },
-            set(value) {
-                this.$emit('input', value)
-            }
-        },
         visibleDayNames() {
             const visibleDayNames = []
             let index = this.firstDayOfWeek
@@ -274,20 +266,22 @@ export default {
         * Otherwise, add date to list of selected dates
         */
         handleSelectMultipleDates(date) {
-            const multipleSelect = this.multipleSelectedDates.filter((selectedDate) =>
+            let multipleSelectedDates = this.value
+            const multipleSelect = multipleSelectedDates.filter((selectedDate) =>
                 selectedDate.getDate() === date.getDate() &&
                 selectedDate.getFullYear() === date.getFullYear() &&
                 selectedDate.getMonth() === date.getMonth()
             )
             if (multipleSelect.length) {
-                this.multipleSelectedDates = this.multipleSelectedDates.filter((selectedDate) =>
+                multipleSelectedDates = multipleSelectedDates.filter((selectedDate) =>
                     selectedDate.getDate() !== date.getDate() ||
                     selectedDate.getFullYear() !== date.getFullYear() ||
                     selectedDate.getMonth() !== date.getMonth()
                 )
             } else {
-                this.multipleSelectedDates = [...this.multipleSelectedDates, date]
+                multipleSelectedDates = [...multipleSelectedDates, date]
             }
+            this.$emit('input', multipleSelectedDates)
         },
 
         /*

@@ -41,7 +41,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -303,7 +303,7 @@ export default defineComponent({
                 ...this.tableCellClasses,
                 {
                     [this.computedClass('tableCellSelectedClass', 'o-dpck__table__cell--selected')] :
-                        dateMatch(day, this.selectedDate) || dateWithin(day, this.selectedDate, this.multiple)
+                        dateMatch(day, this.selectedDate, this.multiple) || dateWithin(day, this.selectedDate, this.multiple)
                 },
                 {
                     [this.computedClass('tableCellFirstSelectedClass', 'o-dpck__table__cell--first-selected')] :
@@ -329,23 +329,25 @@ export default defineComponent({
                     [this.computedClass('tableCellFirstHoveredClass', 'o-dpck__table__cell--first-hovered')] :
                         dateMatch(
                             day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0],
+                            this.multiple
                         ),
                 },
                 {
                     [this.computedClass('tableCellWithinHoveredClass', 'o-dpck__table__cell--within-hovered')] :
-                        dateWithin(day, this.hoveredDateRange)
+                        dateWithin(day, this.hoveredDateRange, this.multiple)
                 },
                 {
                     [this.computedClass('tableCellLastHoveredClass', 'o-dpck__table__cell--last-hovered')] :
                         dateMatch(
                             day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1],
+                            this.multiple
                         )
                 },
                 {
                     [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator())
+                        dateMatch(day, this.dateCreator(), this.multiple)
                 },
                 {
                     [this.computedClass('tableCellSelectableClass', 'o-dpck__table__cell--selectable')] :
@@ -369,7 +371,7 @@ export default defineComponent({
                 },
                 {
                     [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator())
+                        dateMatch(day, this.dateCreator(), this.multiple)
                 }
             ]
         },

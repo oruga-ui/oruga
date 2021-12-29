@@ -311,6 +311,7 @@ export default defineComponent({
     name: 'ODatepicker',
     components: {
         [DatepickerTable.name]: DatepickerTable,
+        [DatepickerMonth.name]: DatepickerMonth,
         [Field.name]: Field,
         [Input.name]: Input,
         [Select.name]: Select,
