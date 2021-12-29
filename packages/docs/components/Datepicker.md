@@ -829,7 +829,8 @@ export default {
 | ------- | ----------- | -------- |
 | trigger |             |          |
 | header  |             |          |
-| default |             |          |
+| table   |             |          |
+| footer  |             |          |
 
 ## Style
 

@@ -271,7 +271,7 @@ export default {
         * Build cellClasses for cell using validations
         */
         cellClasses(day) {
-            function dateMatch(dateOne, dateTwo, multiple) {
+            function dateMatch(dateOne, dateTwo, multiple = false) {
                 // if either date is null or undefined, return false
                 // if using multiple flag, return false
                 if (!dateOne || !dateTwo || multiple) {
@@ -290,7 +290,7 @@ export default {
                     dateOne.getMonth() === dateTwo.getMonth())
             }
 
-            function dateWithin(dateOne, dates, multiple) {
+            function dateWithin(dateOne, dates, multiple = false) {
                 if (!Array.isArray(dates) || multiple) { return false }
 
                 return dateOne > dates[0] && dateOne < dates[1]
@@ -300,7 +300,7 @@ export default {
                 ...this.tableCellClasses,
                 {
                     [this.computedClass('tableCellSelectedClass', 'o-dpck__table__cell--selected')] :
-                        dateMatch(day, this.selectedDate, this.multiple) || dateWithin(day, this.selectedDate, this.multiple)
+                        dateMatch(day, this.selectedDate) || dateWithin(day, this.selectedDate, this.multiple)
                 },
                 {
                     [this.computedClass('tableCellFirstSelectedClass', 'o-dpck__table__cell--first-selected')] :
@@ -326,25 +326,23 @@ export default {
                     [this.computedClass('tableCellFirstHoveredClass', 'o-dpck__table__cell--first-hovered')] :
                         dateMatch(
                             day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0],
-                            this.multiple
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
                         ),
                 },
                 {
                     [this.computedClass('tableCellWithinHoveredClass', 'o-dpck__table__cell--within-hovered')] :
-                        dateWithin(day, this.hoveredDateRange, this.multiple)
+                        dateWithin(day, this.hoveredDateRange)
                 },
                 {
                     [this.computedClass('tableCellLastHoveredClass', 'o-dpck__table__cell--last-hovered')] :
                         dateMatch(
                             day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1],
-                            this.multiple
+                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
                         )
                 },
                 {
                     [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator(), this.multiple)
+                        dateMatch(day, this.dateCreator())
                 },
                 {
                     [this.computedClass('tableCellSelectableClass', 'o-dpck__table__cell--selectable')] :
@@ -368,7 +366,7 @@ export default {
                 },
                 {
                     [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator(), this.multiple)
+                        dateMatch(day, this.dateCreator())
                 }
             ]
         },
