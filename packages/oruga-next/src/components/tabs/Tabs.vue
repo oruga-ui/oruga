@@ -58,7 +58,6 @@ import TabbedMixin from '../../utils/TabbedMixin'
 import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 
-
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
  * @displayName Tabs
@@ -100,6 +99,7 @@ export default defineComponent({
         navTabsClass: [String, Function, Array],
         navSizeClass: [String, Function, Array],
         navPositionClass: [String, Function, Array],
+        navTypeClass: [String, Function, Array],
         contentClass: [String, Function, Array],
         transitioningClass: [String, Function, Array],
         tabItemWrapperClass: [String, Function, Array],
@@ -124,6 +124,7 @@ export default defineComponent({
                 this.computedClass('navTabsClass', 'o-tabs__nav'),
                 { [this.computedClass('navSizeClass', 'o-tabs__nav--', this.size)]: this.size },
                 { [this.computedClass('navPositionClass', 'o-tabs__nav--', this.position)]: this.position && !this.vertical },
+                { [this.computedClass('navTypeClass', 'o-tabs__nav--', this.type)]: this.type }
             ]
         },
         contentClasses() {
