@@ -331,6 +331,13 @@ export default {
                     }
                 },
                 {
+                    class: "navTypeClass",
+                    description: "Type of the navigation",
+                    properties: ["type"],
+                    suffixes: ['default', 'boxed', 'toggle'],
+                    action: () => {}
+                },
+                {
                     class: "verticalClass",
                     description: "Class of Tabs component when vertical",
                     properties: ['vertical'],
@@ -404,8 +411,7 @@ export default {
                     description: "Class of the tab item header type",
                     subitem: true,
                     suffixes: ['default', 'boxed', 'toggle'],
-                    action: () => {
-                    }
+                    action: () => {}
                 },
                 {
                     class: "itemHeaderIconClass",
@@ -471,6 +477,8 @@ export default {
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
+| start   |             |          |
+| end     |             |          |
 | default |             |          |
 
 ---

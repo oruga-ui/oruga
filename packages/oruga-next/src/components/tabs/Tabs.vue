@@ -1,6 +1,7 @@
 <template>
     <div :class="rootClasses">
         <nav :class="navClasses" role="tablist">
+            <slot name="start" />
             <div
                 v-for="childItem in items"
                 :key="childItem.newValue"
@@ -42,6 +43,7 @@
                     <span :class="childItem.headerTextClasses">{{ childItem.label }}</span>
                 </component>
             </div>
+            <slot name="end" />
         </nav>
         <section :class="contentClasses">
             <slot/>
