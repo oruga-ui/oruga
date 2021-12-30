@@ -1,22 +1,36 @@
 <template>
     <div :class="rootClasses">
-        <nav :class="navClasses">
+        <nav :class="navClasses" role="tablist">
             <div
                 v-for="childItem in items"
                 :key="childItem.newValue"
                 v-show="childItem.visible"
+                @keydown.left.prevent="prev"
+                @keydown.right.prevent="next"
+                @keydown.up.prevent="prev"
+                @keydown.down.prevent="next"
+                @keydown.home.prevent="homePressed"
+                @keydown.end.prevent="endPressed"
                 :class="itemWrapperClasses">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
+                    role="tab"
                     @click="childClick(childItem)"
+                    @keydown.left.prevent="prev"
+                    @keydown.right.prevent="next"
+                    @keydown.up.prevent="prev"
+                    @keydown.down.prevent="next"
+                    @keydown.home.prevent="homePressed"
+                    @keydown.end.prevent="endPressed"
                     :class="childItem.headerClasses"
                 />
                 <component
                     v-else
                     :is="childItem.tag"
+                    role="tab"
                     @click="childClick(childItem)"
                     :class="childItem.headerClasses">
                     <o-icon
