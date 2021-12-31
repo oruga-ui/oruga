@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-import { getOptions } from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
+import { defineComponent } from 'vue'
+
 import NoticeMixin from '../../utils/NoticeMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
 /**
  * @displayName Notification Notice
  */
-export default {
+export default defineComponent({
     name: 'ONotificationNotice',
     configField: 'notification',
     mixins: [BaseComponentMixin, NoticeMixin],
@@ -26,11 +26,6 @@ export default {
         noticePositionClass: [String, Function, Array]
     },
     emits: ['update:active', 'close'],
-    data() {
-        return {
-            newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000)
-        }
-    },
     methods: {
         rootClasses() {
             return [
@@ -46,5 +41,5 @@ export default {
             return this.$refs.notification.close()
         }
     }
-}
+})
 </script>

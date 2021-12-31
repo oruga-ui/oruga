@@ -52,6 +52,7 @@ export default {
             isActive: false,
             parentTop: null,
             parentBottom: null,
+            newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000),
             newContainer: this.container || getValueByPath(getOptions(), 'notification.defaultContainerElement', undefined)
         }
     },

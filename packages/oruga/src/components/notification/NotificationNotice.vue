@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { getOptions } from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
 import NoticeMixin from '../../utils/NoticeMixin.js'
 import BaseComponentMixin from '../../utils/BaseComponentMixin.js'
 
@@ -23,11 +21,6 @@ export default {
     props: {
         noticeClass: [String, Function, Array],
         noticePositionClass: [String, Function, Array]
-    },
-    data() {
-        return {
-            newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000)
-        }
     },
     methods: {
         rootClasses() {
