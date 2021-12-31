@@ -123,7 +123,8 @@ export default defineComponent({
         bodyHorizontalClass: [String, Function, Array],
         addonsClass: [String, Function, Array],
         messageClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
+        variantMessageClass: [String, Function, Array],
+        variantLabelClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
         focusedClass: [String, Function, Array],
         filledClass: [String, Function, Array]
@@ -149,13 +150,14 @@ export default defineComponent({
         messageClasses() {
             return [
                 this.computedClass('messageClass', 'o-field__message'),
-                { [this.computedClass('variantClass', 'o-field__message-', this.newVariant)]: this.newVariant }
+                { [this.computedClass('variantMessageClass', 'o-field__message-', this.newVariant)]: this.newVariant }
             ]
         },
         labelClasses() {
             return [
                 this.computedClass('labelClass', 'o-field__label'),
-                { [this.computedClass('labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize }
+                { [this.computedClass('labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize },
+                { [this.computedClass('variantLabelClass', 'o-field__label-', this.newVariant)]: this.newVariant }
             ]
         },
         labelHorizontalClasses() {

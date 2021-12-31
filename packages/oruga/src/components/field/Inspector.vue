@@ -104,13 +104,22 @@ export default {
                     }
                 },
                 {
-                    class: "variantClass",
-                    description: "Class of the field variant",
+                    class: "variantMessageClass",
+                    description: "Class of the message field variant",
                     properties: ["variant"],
                     suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
                         cmp.data.variant = "info";
                         cmp.data.message = 'This is a message for the field';
+                    }
+                },
+                {
+                    class: "variantLabelClass",
+                    description: "Class of the label field variant",
+                    properties: ["variant"],
+                    suffixes: ['primary', 'info', 'warning', 'danger'],
+                    action: (cmp) => {
+                        cmp.data.variant = "info";
                     }
                 },
                 {
