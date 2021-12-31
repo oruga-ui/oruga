@@ -20,6 +20,10 @@ export default {
                     description: "Root class of the element",
                 },
                 {
+                    class: "inputClass",
+                    description: "Root class of the native input checkbox",
+                },
+                {
                     class: "checkClass",
                     description: "Class of the switch check",
                     action: () => {
@@ -57,11 +61,11 @@ export default {
                     description: "Class of the switch label"
                 },
                 {
-                    class: "leftLabelClass",
-                    description: "Class of switch elements wrapper when label is positioned on left",
-                    properties: ["leftLabel"],
+                    class: "positionClass",
+                    description: "Class of switch label position",
+                    properties: ["position"],
                     action: (cmp) => {
-                        cmp.data.leftLabel = true;
+                        cmp.data.position = 'left';
                     }
                 },
                 {
@@ -82,10 +86,6 @@ export default {
                         cmp.data.variant = 'warning';
                         this.checkValue = true;
                     }
-                },
-                {
-                    class: "elementsWrapperClass",
-                    description: "Class of switch elements wrapper",
                 },
                 {
                     class: "passiveVariantClass",

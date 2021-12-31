@@ -134,7 +134,7 @@ title: Switch
   <section>
     <o-field grouped>
       <o-switch v-model="isRounded">Rounded</o-switch>
-      <o-switch v-model="isLabelLeft">Label on left</o-switch>
+      <o-switch v-model="position" true-value="left" false-value="right">Label on left</o-switch>
     </o-field>
     <o-field label="Variant">
       <o-select expanded v-model="variant" placeholder="Variant">
@@ -162,7 +162,7 @@ title: Switch
         <option value="large">large</option>
       </o-select>
     </o-field>
-    <o-switch :rounded="isRounded" :leftLabel="isLabelLeft" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
+    <o-switch :rounded="isRounded" :position="position" :size="size" :variant="variant" :passive-variant="passive">Sample</o-switch>
   </section>
 </template>
 
@@ -174,7 +174,7 @@ title: Switch
         variant: null,
         passive: null,
         isRounded: false,
-        isLabelLeft: false
+        position: 'right'
       }
     }
   }
@@ -208,6 +208,10 @@ export default {
                 {
                     class: "rootClass",
                     description: "Root class of the element",
+                },
+                {
+                    class: "inputClass",
+                    description: "Root class of the native input checkbox",
                 },
                 {
                     class: "checkClass",
@@ -247,11 +251,11 @@ export default {
                     description: "Class of the switch label"
                 },
                 {
-                    class: "leftLabelClass",
-                    description: "Class of switch elements wrapper when label is positioned on left",
-                    properties: ["leftLabel"],
+                    class: "positionClass",
+                    description: "Class of switch label position",
+                    properties: ["position"],
                     action: (cmp) => {
-                        cmp.data.leftLabel = true;
+                        cmp.data.position = 'left';
                     }
                 },
                 {
@@ -272,10 +276,6 @@ export default {
                         cmp.data.variant = 'warning';
                         this.checkValue = true;
                     }
-                },
-                {
-                    class: "elementsWrapperClass",
-                    description: "Class of switch elements wrapper",
                 },
                 {
                     class: "passiveVariantClass",
@@ -303,11 +303,11 @@ export default {
 | ariaLabelledby | Accessibility label to establish relationship between the switch and control label' | string                  | -                                                                               |         |
 | disabled       |                                                                                     | boolean                 | -                                                                               |         |
 | falseValue     | Overrides the returned value when it's not checked                                  | string\|number\|boolean | -                                                                               | false   |
-| leftLabel      | Show label on left                                                                  | boolean                 | -                                                                               | false   |
 | name           | Name attribute on native checkbox                                                   | string                  | -                                                                               |         |
 | nativeValue    | Same as native value                                                                | string\|number\|boolean | -                                                                               |         |
 | override       | Override classes                                                                    | boolean                 | -                                                                               | false   |
 | passiveVariant | Color of the switch when is passive, optional                                       | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| position       | Label position                                                                      | string                  | -                                                                               | 'right' |
 | required       |                                                                                     | boolean                 | -                                                                               |         |
 | rounded        | Rounded style                                                                       | boolean                 | -                                                                               | true    |
 | size           | Vertical size of switch, optional                                                   | string                  | `small`, `medium`, `large`                                                      |         |

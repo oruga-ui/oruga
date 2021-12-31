@@ -27,7 +27,6 @@
         checkCheckedClass="navbar-switch__check--checked"
         checkClass="navbar-switch__check"
         checkSwitchClass="navbar-switch__check-switch"
-        elementsWrapperClass="navbar-switch__wrapper"
         roundedClass="navbar-switch--rounded"
         :value="lite"
         @input="toggleOrugaStyle"
@@ -132,6 +131,12 @@ function css (el, property) {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  margin-left: -0.25em;
+  margin-right: -0.25em;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
 }
 .navbar-switch--primary .navbar-switch__check--checked {
   background: #445e00;
@@ -172,18 +177,11 @@ function css (el, property) {
 .navbar-switch--large {
   font-size: 1.5rem;
 }
-.navbar-switch__wrapper {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-}
-.navbar-switch__wrapper > * {
+.navbar-switch > * {
   margin-left: 0.25em;
   margin-right: 0.25em;
 }
-.navbar-switch__wrapper--left {
+.navbar-switch--left {
   flex-direction: row-reverse;
 }
 .navbar-switch__check-switch {
