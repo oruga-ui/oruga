@@ -60,12 +60,11 @@ describe('OSwitch', () => {
         expect(wrapper.classes()).not.toContain('o-switch--left')
     })
 
-    it('has label at left is left-label prop has been sent', async () => {
-        const leftLabel = true
+    it('has label at left', async () => {
         const value = false
-        wrapper.setProps({ leftLabel, value })
+        wrapper.setProps({ position: 'left', value })
         await wrapper.vm.$nextTick()
-        const wrapperElement = wrapper.find('.o-switch__wrapper')
-        expect(wrapperElement.classes()).toContain('o-switch__wrapper--left')
+        const rootElement = wrapper.find('.o-switch')
+        expect(rootElement.classes()).toContain('o-switch--left')
     })
 })
