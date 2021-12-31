@@ -99,6 +99,11 @@ export default defineComponent({
          */
         size: String,
         /**
+        * Color of the control, optional
+        * @values primary, info, success, warning, danger, and any other custom color
+        */
+        variant: String,
+        /**
          * 	Adds the reveal password functionality
          */
         passwordReveal: Boolean,
@@ -169,7 +174,7 @@ export default defineComponent({
                 this.computedClass('inputClass', 'o-input'),
                 { [this.computedClass('roundedClass', 'o-input--rounded')]: this.rounded },
                 { [this.computedClass('sizeClass', 'o-input--', this.size)]: this.size },
-                { [this.computedClass('variantClass', 'o-input--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('variantClass', 'o-input--', (this.statusVariant || this.variant))]: (this.statusVariant || this.variant) },
                 { [this.computedClass('textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
                 { [this.computedClass('iconLeftSpaceClass', 'o-input-iconspace-left')]: this.icon },
                 { [this.computedClass('iconRightSpaceClass', 'o-input-iconspace-right')]: this.hasIconRight }
@@ -219,7 +224,7 @@ export default defineComponent({
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return this.iconRightVariant || null
+                return this.iconRightVariant || this.variant || null
             }
             return this.statusVariant
         },

@@ -74,6 +74,11 @@ export default {
          */
         size: String,
         /**
+        * Color of the control, optional
+        * @values primary, info, success, warning, danger, and any other custom color
+        */
+        variant: String,
+        /**
 		 * Icon pack to use
 		 * @values mdi, fa, fas and any other custom icon pack
 		 */
@@ -125,7 +130,7 @@ export default {
                 { [this.computedClass('roundedClass', 'o-sel--rounded')]: this.rounded },
                 { [this.computedClass('multipleClass', 'o-sel--multiple')]: this.multiple },
                 { [this.computedClass('sizeClass', 'o-sel--', this.size)]: this.size },
-                { [this.computedClass('variantClass', 'o-sel--', this.statusVariant)]: this.statusVariant },
+                { [this.computedClass('variantClass', 'o-sel--', (this.statusVariant || this.variant))]: (this.statusVariant || this.variant) },
                 { [this.computedClass('iconLeftSpaceClass', 'o-sel-iconspace-left')]: this.icon },
                 { [this.computedClass('iconRightSpaceClass', 'o-sel-iconspace-right')]: this.iconRight },
                 { [this.computedClass('placeholderClass', 'o-sel--placeholder')]: this.placeholderVisible },

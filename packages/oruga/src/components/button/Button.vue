@@ -58,7 +58,7 @@ export default {
         * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
         */
-        variant: [String, Object],
+        variant: String,
         /**
          * Size of button, optional
          * @values small, medium, large
