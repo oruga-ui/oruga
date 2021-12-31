@@ -155,7 +155,7 @@ export default defineComponent({
             return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
         },
         getSetDayOfYear(input) {
-            return Math.round((input - new Date(input.getFullYear(), 0, 1)) / 864e5) + 1
+            return Math.round((input.getTime() - new Date(input.getFullYear(), 0, 1).getTime()) / 864e5) + 1
         },
         weeksInYear(year, dow, doy) {
             const weekOffset = this.firstWeekOffset(year, dow, doy)
