@@ -2,11 +2,12 @@
     <section :class="monthClasses">
         <div :class="monthBodyClasses">
             <div :class="monthTableClasses">
-            <template v-for="(date, index) in monthDates">
+            <template
+                v-for="(date, index) in monthDates"
+                :key="index">
                 <a
                     :ref="`month-${date.getMonth()}`"
                     v-if="selectableDate(date) && !disabled"
-                    :key="index"
                     :class="cellClasses(date)"
                     role="button"
                     href="#"
@@ -26,7 +27,6 @@
                 </a>
                 <div
                     v-else
-                    :key="index"
                     :class="cellClasses(date)">
                     {{ monthNames[date.getMonth()] }}
                 </div>
@@ -36,7 +36,7 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
 import { isDefined } from '../../utils/helpers'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -275,7 +275,7 @@ export default {
         * Build cellClasses for cell using validations
         */
         cellClasses(day) {
-            function dateMatch(dateOne, dateTwo, multiple) {
+            function dateMatch(dateOne, dateTwo, multiple = false) {
                 // if either date is null or undefined, return false
                 if (!dateOne || !dateTwo || multiple) {
                     return false
@@ -289,12 +289,12 @@ export default {
                 return (dateOne.getFullYear() === dateTwo.getFullYear() &&
                     dateOne.getMonth() === dateTwo.getMonth())
             }
-            function dateWithin(dateOne, dates, multiple) {
+            function dateWithin(dateOne, dates, multiple = false) {
                 if (!Array.isArray(dates) || multiple) { return false }
 
                 return dateOne > dates[0] && dateOne < dates[1]
             }
-            function dateMultipleSelected(dateOne, dates, multiple) {
+            function dateMultipleSelected(dateOne, dates, multiple = false) {
                 if (!Array.isArray(dates) || !multiple) { return false }
                 return dates.some((date) => (
                     dateOne.getDate() === date.getDate() &&

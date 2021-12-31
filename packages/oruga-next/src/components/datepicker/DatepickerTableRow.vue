@@ -51,7 +51,7 @@ export default defineComponent({
     mixins: [BaseComponentMixin],
     configField: 'datepicker',
     inject: {
-        $datepicker: { name: '$datepicker', default: false }
+        $datepicker: { from: '$datepicker', default: false }
     },
     emits: ['select', 'rangeHoverEndDate', 'change-focus'],
     props: {

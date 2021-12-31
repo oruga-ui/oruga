@@ -312,6 +312,8 @@ export function endsWith(str: string, suffix: string) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
+export const isDefined = (d: any) => d !== undefined
+
 /**
  * Remove accents/diacritics in a string in JavaScript
  * https://stackoverflow.com/a/37511463

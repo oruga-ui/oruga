@@ -121,6 +121,7 @@ $datepicker-btn-padding: .5em .5em !default;
             flex-wrap: wrap;
             margin: 0;
             padding: 0;
+            @include side-flex-gap($datepicker-btn-margin * 0.5);
         }
     }
     &__footer {
