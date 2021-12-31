@@ -7,7 +7,7 @@
     </o-notification>
 </template>
 
-<script>
+<script lang="ts">
 import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
 import NoticeMixin from '../../utils/NoticeMixin'
@@ -23,6 +23,8 @@ export default {
     emits: ['update:active', 'close'],
     props: {
         propsNotification: Object,
+        noticeClass: [String, Function, Array],
+        noticePositionClass: [String, Function, Array]
     },
     data() {
         return {

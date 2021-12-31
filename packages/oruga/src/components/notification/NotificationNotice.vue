@@ -20,6 +20,10 @@ export default {
     name: 'ONotificationNotice',
     configField: 'notification',
     mixins: [BaseComponentMixin, NoticeMixin],
+    props: {
+        noticeClass: [String, Function, Array],
+        noticePositionClass: [String, Function, Array]
+    },
     data() {
         return {
             newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000)

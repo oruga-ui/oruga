@@ -10,7 +10,6 @@ let localVueInstance: App
 
 const ModalProgrammatic = {
     open(params: OModal | string) {
-        let parent
         let newParams
         if (typeof params === 'string') {
             newParams = {
@@ -23,10 +22,6 @@ const ModalProgrammatic = {
         const defaultParam = {
             programmatic: true
         }
-        if (newParams.parent) {
-            parent = newParams.parent
-            delete newParams.parent
-        }
         let slot
         if (Array.isArray(newParams.content)) {
             slot = newParams.content
@@ -35,17 +30,6 @@ const ModalProgrammatic = {
         const propsData = merge(defaultParam, newParams)
 
         const app = localVueInstance || VueInstance
-        /*
-        const instance = new ModalComponent({
-            parent,
-            el: document.createElement('div'),
-            propsData
-        })
-        if (slot) {
-            instance.$slots.default = slot
-        }
-        return instance
-        */
         const vnode = createVNode(Modal, propsData)
         vnode.appContext = app._context
         return render(vnode, document.createElement('div'))
@@ -66,6 +50,5 @@ export {
 }
 
 export interface OModal {
-    parent: any | undefined;
     content: string | DefineComponent[] | undefined;
 }

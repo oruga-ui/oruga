@@ -14,7 +14,6 @@ let localVueInstance: App
 
 const NotificationProgrammatic = {
     open(params) {
-        let parent
         let newParams
         if (typeof params === 'string') {
             newParams = {
@@ -28,10 +27,6 @@ const NotificationProgrammatic = {
             programmatic: true,
             position: getValueByPath(getOptions(), 'notification.position', 'top-right'),
             closable: params.closable || getValueByPath(getOptions(), 'notification.closable', false)
-        }
-        if (newParams.parent) {
-            parent = params.parent
-            delete params.parent
         }
         let slot
         if (Array.isArray(newParams.message)) {
@@ -66,6 +61,5 @@ export {
 }
 
 export interface ONotification {
-    parent: any | undefined;
     content: string | DefineComponent[] | undefined;
 }
