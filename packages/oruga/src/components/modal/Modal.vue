@@ -74,11 +74,6 @@ export default {
         component: [Object, Function],
         /** Text content */
         content: String,
-        /** Close button text content */
-        closeButtonContent: {
-            type: String,
-            default: '✕'
-        },
         programmatic: Boolean,
         /** Props to be binded to the injected component */
         props: Object,
