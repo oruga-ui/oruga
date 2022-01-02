@@ -13,6 +13,9 @@ $switch-width: 2.75 * 1em !default;
 
 .o-switch {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
     @include unselectable;
 
     @each $name, $pair in $colors {
