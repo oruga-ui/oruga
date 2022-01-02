@@ -337,7 +337,7 @@ export default {
 | --oruga-switch-border-radius           | \$switch-border-radius           | \$base-border-radius                                                                             |
 | --oruga-switch-box-shadow              | \$switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
 | --oruga-switch-disabled-opacity        | \$switch-disabled-opacity        | \$base-disabled-opacity                                                                          |
-| --oruga-switch-margin-separator        | \$switch-margin-separator        | .25em                                                                                            |
+| --oruga-switch-margin-label            | \$switch-margin-label            | .5em                                                                                             |
 | --oruga-switch-padding                 | \$switch-padding                 | 0.2em                                                                                            |
 | --oruga-switch-rounded-border-radius   | \$switch-rounded-border-radius   | \$base-rounded-border-radius                                                                     |
 | --oruga-switch-width                   | \$switch-width                   | 2.75 \* 1em                                                                                      |

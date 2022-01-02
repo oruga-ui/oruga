@@ -15,9 +15,10 @@
                 :both="iconBoth"
                 :class="iconLeftClasses"
             />
-            <span v-if="label">{{ label }}</span>
-            <span v-else-if="$slots.default">
-                <slot />
+            <span
+                :class="labelClasses"
+                v-if="label || $slots.default">
+                <slot>{{ label }}</slot>
             </span>
             <o-icon
                 v-if="iconRight"
@@ -136,6 +137,7 @@ export default defineComponent({
         iconClass: [String, Function, Array],
         iconLeftClass: [String, Function, Array],
         iconRightClass: [String, Function, Array],
+        labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         variantClass: [String, Function, Array]
     },
@@ -152,6 +154,11 @@ export default defineComponent({
                 { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
                 { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
                 { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
+            ]
+        },
+        labelClasses() {
+            return [
+                this.computedClass('labelClass', 'o-btn__label'),
             ]
         },
         iconClasses() {
