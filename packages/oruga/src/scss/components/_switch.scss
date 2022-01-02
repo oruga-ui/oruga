@@ -5,7 +5,7 @@ $switch-background: $grey-light !default;
 $switch-border-radius: $base-border-radius !default;
 $switch-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default;
 $switch-disabled-opacity: $base-disabled-opacity !default;
-$switch-margin-separator: .25em !default;
+$switch-margin-label: .5em !default;
 $switch-padding: 0.2em !default;
 $switch-rounded-border-radius: $base-rounded-border-radius !default;
 $switch-width: 2.75 * 1em !default;
@@ -14,11 +14,6 @@ $switch-width: 2.75 * 1em !default;
 .o-switch {
     cursor: pointer;
     @include unselectable;
-    @include side-flex-gap($switch-margin-separator);
-    @include avariable('padding-right', 'switch-margin-separator', $switch-margin-separator * 2);
-    display: inline-flex;
-    align-items: center;
-    position: relative;
 
     @each $name, $pair in $colors {
         $color: nth($pair, 1);
@@ -40,8 +35,16 @@ $switch-width: 2.75 * 1em !default;
         }
     }
 
+    &__label {
+        @include avariable('margin-left', 'switch-margin-label', $switch-margin-label);
+    }
+
     &--left {
         flex-direction: row-reverse;
+        .o-switch__label {
+            margin-left: 0;
+            @include avariable('margin-right', 'switch-margin-label', $switch-margin-label);
+        }
     }
 
     &__check-switch {
