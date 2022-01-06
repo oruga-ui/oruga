@@ -269,7 +269,7 @@ export default defineComponent({
         * Otherwise, add date to list of selected dates
         */
         handleSelectMultipleDates(date) {
-            let multipleSelectedDates = this.value
+            let multipleSelectedDates = this.modelValue
             const multipleSelect = multipleSelectedDates.filter((selectedDate) =>
                 selectedDate.getDate() === date.getDate() &&
                 selectedDate.getFullYear() === date.getFullYear() &&
