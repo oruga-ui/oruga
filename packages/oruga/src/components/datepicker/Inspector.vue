@@ -52,6 +52,7 @@ export default {
                     class: "boxClass",
                     description: "Class of the Datepicker box where you choose the date",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -59,6 +60,7 @@ export default {
                     class: "headerClass",
                     description: "Class of the Datepicker header inside the box",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -66,6 +68,7 @@ export default {
                     class: "headerButtonsClass",
                     description: "Class of the Datepicker buttons inside the box",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -75,6 +78,7 @@ export default {
                     properties: ["size"],
                     suffixes: ['small', 'medium', 'large'],
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.size = 'large';
                         this.openDatePicker();
                     },
@@ -84,6 +88,7 @@ export default {
                     description: "Class of the prev. button inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -92,6 +97,7 @@ export default {
                     description: "Class of the next button inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -100,6 +106,7 @@ export default {
                     description: "Class of the month and year selects container inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -107,6 +114,7 @@ export default {
                     class: "footerClass",
                     description: "Class of the Datepicker footer",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -114,6 +122,7 @@ export default {
                     class: "tableClass",
                     description: "Class of the Datepicker table inside the box",
                     action: () => {
+                        cmp.data.type = ''
                         this.openDatePicker();
                     }
                 },
@@ -121,6 +130,7 @@ export default {
                     class: "tableHeadClass",
                     description: "Class of Datepicker header with days of the week inside the table",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -129,6 +139,7 @@ export default {
                     class: "tableHeadCellClass",
                     description: "Class of the cell inside the table header",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -137,6 +148,7 @@ export default {
                     class: "tableBodyClass",
                     description: "Class of the table body inside the box",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -145,6 +157,7 @@ export default {
                     class: "tableRowClass",
                     description: "Class of the table row",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -153,6 +166,7 @@ export default {
                     class: "tableCellClass",
                     description: "Class of the table cell",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -161,6 +175,7 @@ export default {
                     class: "tableCellInvisibleClass",
                     description: "Class of the table cell when nearby month days are hidden",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         cmp.data.nearbyMonthDays = false
                         this.openDatePicker();
@@ -170,6 +185,7 @@ export default {
                     class: "tableCellSelectedClass",
                     description: "Class of table cell when it's selected",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -179,6 +195,7 @@ export default {
                     description: "Class of the first selected table cell when in range",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         cmp.data.range = true
                         cmp.data.inline = true
@@ -190,6 +207,7 @@ export default {
                     description: "Class of the table cells within the range when the range is selected",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         cmp.data.range = true
                         cmp.data.inline = true
@@ -201,6 +219,7 @@ export default {
                     description: "Class of the last selected table cell during range selection",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.range = true
                         cmp.data.inline = true
                         cmp.data.tableClass = 'datepicker__table'
@@ -212,6 +231,7 @@ export default {
                     description: "Class of the first hovered table cell during range selection",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.range = true
                         cmp.data.inline = true
                         cmp.data.tableClass = 'datepicker__table'
@@ -223,6 +243,7 @@ export default {
                     description: "Class of the table cell when hovered during range selection",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.range = true
                         cmp.data.inline = true
                         cmp.data.tableClass = 'datepicker__table'
@@ -234,6 +255,7 @@ export default {
                     description: "Class of the last table cell hovered during range selection",
                     warning: "See it in action selecting a date range",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.range = true
                         cmp.data.inline = true
                         cmp.data.tableClass = 'datepicker__table'
@@ -244,6 +266,7 @@ export default {
                     class: "tableCellTodayClass",
                     description: "Class of the table cell of the current day",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -252,6 +275,7 @@ export default {
                     class: "tableCellSelectableClass",
                     description: "Class of the table cell that is selectable",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -260,6 +284,7 @@ export default {
                     class: "tableCellUnselectableClass",
                     description: "Class of the table cell that is unselectable",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -268,6 +293,7 @@ export default {
                     class: "tableCellNearbyClass",
                     description: "Class of the table cell when nearby days (prev/next month) are selectable",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         cmp.data.nearbySelectableMonthDays = true
                         this.openDatePicker();
@@ -277,6 +303,7 @@ export default {
                     class: "tableCellEventsClass",
                     description: "Class of the cell of a row when at least one event is present",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -285,6 +312,7 @@ export default {
                     class: "tableEventClass",
                     description: "Class of the event",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -293,6 +321,7 @@ export default {
                     class: "tableEventsClass",
                     description: "Class of the events container",
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -303,6 +332,7 @@ export default {
                     properties: ["variant in event"],
                     suffixes: ['primary', 'info', 'warning', 'danger'],
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         this.openDatePicker();
                     }
@@ -313,8 +343,181 @@ export default {
                     properties: ['indicator'],
                     suffixes: ['bars', 'dots', '*'],
                     action: (cmp) => {
+                        cmp.data.type = ''
                         cmp.data.tableClass = 'datepicker__table'
                         cmp.data.indicators = 'bars'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthClass",
+                    description: "Class of the Datepicker table inside the box when type is month",
+                    action: () => {
+                        cmp.data.type = 'month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthBodyClass",
+                    description: "Class of the table body inside the box when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthRowClass",
+                    description: "Class of the table row when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellClass",
+                    description: "Class of the table cell when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellInvisibleClass",
+                    description: "Class of the table cell when nearby month days are hidden when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        cmp.data.nearbyMonthDays = false
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellSelectedClass",
+                    description: "Class of table cell when it's selected when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellFirstSelectedClass",
+                    description: "Class of the first selected table cell when in range when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellWithinSelectedClass",
+                    description: "Class of the table cells within the range when the range is selected when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellLastSelectedClass",
+                    description: "Class of the last selected table cell during range selection when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellFirstHoveredClass",
+                    description: "Class of the first hovered table cell during range selection when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellWithinHoveredClass",
+                    description: "Class of the table cell when hovered during range selection when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellLastHoveredClass",
+                    description: "Class of the last table cell hovered during range selection when type is month",
+                    warning: "See it in action selecting a date range",
+                    action: (cmp) => {
+                        cmp.data.range = true
+                        cmp.data.inline = true
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellTodayClass",
+                    description: "Class of the table cell of the current day when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellSelectableClass",
+                    description: "Class of the table cell that is selectable when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellUnselectableClass",
+                    description: "Class of the table cell that is unselectable when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthCellNearbyClass",
+                    description: "Class of the table cell when nearby days (prev/next month) are selectable when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
+                        cmp.data.nearbySelectableMonthDays = true
+                        this.openDatePicker();
+                    }
+                },
+                {
+                    class: "monthEventsClass",
+                    description: "Class of the events container when type is month",
+                    action: (cmp) => {
+                        cmp.data.type = 'month'
+                        cmp.data.monthClass = 'datepicker__,table__month'
                         this.openDatePicker();
                     }
                 },

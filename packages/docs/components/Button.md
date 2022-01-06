@@ -233,6 +233,10 @@ export default {
                     },
                 },
                 {
+                    class: "labelClass",
+                    description: "Class of the button label"
+                },
+                {
                     class: "iconClass",
                     description: "Class of the button icon",
                     properties: ["iconLeft", "iconRight"],
