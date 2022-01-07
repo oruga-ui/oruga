@@ -26,7 +26,10 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     <div class="buttons">
       <o-button label="Launch notification (default)" size="medium" @click="simple" />
       <o-button label="Launch notification (custom)" variant="success" size="medium" @click="success" />
+      <hr />
       <o-button label="Launch toast" size="medium" @click="toast" />
+      <o-button label="Launch toast (queued)" variant="success" size="medium" @click="queueToast" />
+      <hr />
       <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
       <o-button label="Launch notification (component)" variant="warning" size="medium" @click="component" />
     </div>
@@ -91,6 +94,14 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
           message: 'Something happened correctly!',
           rootClass: 'toast-notification',
           position: 'top'
+        })
+      },
+      queueToast() {
+        this.$oruga.notification.open({
+          message: 'Something happened correctly!',
+          rootClass: 'toast-notification',
+          position: 'top',
+          queue: true
         })
       },
       danger() {
@@ -349,17 +360,17 @@ export default {
 
 ## Props
 
-| Prop name  | Description                                                                                                                                                         | Type          | Values                                                                  | Default                            |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ---------------------------------- |
-| container  | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       |                                    |
-| duration   | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       |                                    |
-| indefinite | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                              |
-| message    | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                    |
-| onClose    | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code) |
-| override   | Override classes                                                                                                                                                    | boolean       | -                                                                       | false                              |
-| position   | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                              |
-| queue      | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | undefined                          |
-| type       | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                    |
+| Prop name  | Description                                                                                                                                                         | Type          | Values                                                                  | Default                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| container  | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;containerElement: undefined<br>}</code> |
+| duration   | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;duration: 1000<br>}</code>              |
+| indefinite | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                                                                                                                                                   |
+| message    | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                                                                                                                                         |
+| onClose    | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code)                                                                                                                      |
+| override   | Override classes                                                                                                                                                    | boolean       | -                                                                       | false                                                                                                                                                   |
+| position   | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                                                                                                                                                   |
+| queue      | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;noticeQueue: false<br>}</code>          |
+| type       | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                                                                                                                                         |
 
 ### Events
 

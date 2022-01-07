@@ -12,12 +12,15 @@ export default {
         message: [String, Array],
         /** Visibility duration in miliseconds. */
         duration: {
-            type: Number
+            type: Number,
+            default: getValueByPath(getOptions(), 'notification.duration', 1000)
         },
         /** If should queue with others notices (snackbar/toast/notification). */
         queue: {
             type: Boolean,
-            default: undefined
+            default: () => {
+                return getValueByPath(getOptions(), 'notification.noticeQueue', false)
+            }
         },
         /** Show the Notification indefinitely until it is dismissed when programmatically. */
         indefinite: {
@@ -40,7 +43,10 @@ export default {
             }
         },
         /** DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. */
-        container: String,
+        container: {
+            type: String,
+            default: getValueByPath(getOptions(), 'notification.containerElement', undefined)
+        },
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,
@@ -52,8 +58,8 @@ export default {
             isActive: false,
             parentTop: null,
             parentBottom: null,
-            newDuration: this.duration || getValueByPath(getOptions(), 'notification.duration', 1000),
-            newContainer: this.container || getValueByPath(getOptions(), 'notification.defaultContainerElement', undefined)
+            newDuration: this.duration,
+            newContainer: this.container
         }
     },
     computed: {
@@ -91,12 +97,7 @@ export default {
     },
     methods: {
         shouldQueue() {
-            const queue = this.queue !== undefined
-                ? this.queue
-                : getValueByPath(getOptions(), 'notification.defaultNoticeQueue', undefined)
-
-            if (!queue) return false
-
+            if (!this.queue) return false
             return (
                 this.parentTop.childElementCount > 0 ||
                 this.parentBottom.childElementCount > 0
