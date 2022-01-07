@@ -51,7 +51,7 @@ export default {
                 {
                     class: "boxClass",
                     description: "Class of the Datepicker box where you choose the date",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -59,7 +59,7 @@ export default {
                 {
                     class: "headerClass",
                     description: "Class of the Datepicker header inside the box",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -67,7 +67,7 @@ export default {
                 {
                     class: "headerButtonsClass",
                     description: "Class of the Datepicker buttons inside the box",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -87,7 +87,7 @@ export default {
                     class: "prevBtnClass",
                     description: "Class of the prev. button inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -96,7 +96,7 @@ export default {
                     class: "nextBtnClass",
                     description: "Class of the next button inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -105,7 +105,7 @@ export default {
                     class: "listsClass",
                     description: "Class of the month and year selects container inside the Datepicker box",
                     specificity: "when <b>mobileClass</b> is applied",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -113,7 +113,7 @@ export default {
                 {
                     class: "footerClass",
                     description: "Class of the Datepicker footer",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -121,7 +121,7 @@ export default {
                 {
                     class: "tableClass",
                     description: "Class of the Datepicker table inside the box",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = ''
                         this.openDatePicker();
                     }
@@ -352,7 +352,7 @@ export default {
                 {
                     class: "monthClass",
                     description: "Class of the Datepicker table inside the box when type is month",
-                    action: () => {
+                    action: (cmp) => {
                         cmp.data.type = 'month'
                         this.openDatePicker();
                     }
