@@ -18,10 +18,17 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                 variant="success"
                 size="medium"
                 @click="success" />
+            <hr/>
             <o-button
                 label="Launch toast"
                 size="medium"
                 @click="toast" />
+            <o-button
+                label="Launch toast (queued)"
+                variant="success"
+                size="medium"
+                @click="queueToast" />
+            <hr/>
             <o-button
                 label="Launch notification (custom)"
                 variant="danger"
@@ -94,6 +101,14 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     message: 'Something happened correctly!',
                     rootClass: 'toast-notification',
                     position: 'top'
+                })
+            },
+            queueToast() {
+                this.$oruga.notification.open({
+                    message: 'Something happened correctly!',
+                    rootClass: 'toast-notification',
+                    position: 'top',
+                    queue: true
                 })
             },
             danger() {
