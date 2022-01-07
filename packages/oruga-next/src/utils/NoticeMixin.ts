@@ -18,7 +18,7 @@ export default {
         /** If should queue with others notices (snackbar/toast/notification). */
         queue: {
             type: Boolean,
-            default: getValueByPath(getOptions(), 'notification.defaultNoticeQueue', undefined)
+            default: getValueByPath(getOptions(), 'notification.noticeQueue', undefined)
         },
         /** Show the Notification indefinitely until it is dismissed when programmatically. */
         indefinite: {
@@ -43,7 +43,7 @@ export default {
         /** DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. */
         container: {
             type: String,
-            default: getValueByPath(getOptions(), 'notification.defaultContainerElement', undefined)
+            default: getValueByPath(getOptions(), 'notification.containerElement', undefined)
         },
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
