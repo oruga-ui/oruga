@@ -20,7 +20,6 @@
     <a href="https://circleci.com/gh/oruga-ui/oruga"><img src="https://img.shields.io/circleci/project/github/oruga-ui/oruga.svg?style=flat-square" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://img.shields.io/codecov/c/github/oruga-ui/oruga.svg?style=flat-square" /></a>
     <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
-    <a href="https://ko-fi.com/orugaui"><img src="https://img.shields.io/badge/donate-support%20us-00AA00.svg?logo=ko-fi" /></a>
 </p>
 
 *Oruga Next version for Vue 3.x*
@@ -28,6 +27,13 @@
 <p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
+</p>
+
+### Support us ✌🏻
+
+<p align="center">
+    <a href="https://ko-fi.com/orugaui"><img alt="Donate using Ko-fi"  src="https://img.shields.io/badge/donate-ko--fi-00AA00.svg?logo=ko-fi" /></a>
+    <a href="https://liberapay.com/oruga-ui/donate"><img alt="Donate using Liberapay" src="https://img.shields.io/badge/donate-liberapay-00AA00.svg?logo=liberapay"></a>
 </p>
 
 ## Features
