@@ -17,7 +17,7 @@ import {default as InjectedChildMixin, Sorted} from '../../utils/InjectedChildMi
  */
 export default defineComponent({
     name: 'OCarouselItem',
-    config: 'carousel',
+    configField: 'carousel',
     mixins: [InjectedChildMixin('carousel', Sorted), BaseComponentMixin],
     props: {
         itemClass: [String, Function, Array],
