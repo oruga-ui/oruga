@@ -106,12 +106,12 @@ export default {
 
         close() {
             clearTimeout(this.timer)
-            this.isActive = false
             this.$emit('close')
             this.onClose.apply(null, arguments)
 
             // Timeout for the animation complete before destroying
             setTimeout(() => {
+                this.isActive = false
                 this.$destroy()
                 removeElement(this.$el)
             }, 150)
