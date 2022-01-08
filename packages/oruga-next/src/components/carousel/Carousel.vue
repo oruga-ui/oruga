@@ -432,7 +432,7 @@ export default defineComponent({
             }
             this.delta = 0
             this.dragX = false
-            if (event.touches) {
+            if (event && event.touches) {
                 this.startTimer()
             }
             window.removeEventListener(this.touch ? 'touchmove' : 'mousemove', this.dragMove)
