@@ -48,8 +48,9 @@ describe('NoticeMixin', () => {
         expect(wrapper.vm.isActive).toBeTruthy()
     })
 
-    it('reset isActive on close', () => {
+    it('reset isActive on close', async () => {
         wrapper.vm.close()
+        await new Promise(resolve => setTimeout(resolve, 200));
         expect(wrapper.vm.isActive).toBeFalsy()
     })
 })
