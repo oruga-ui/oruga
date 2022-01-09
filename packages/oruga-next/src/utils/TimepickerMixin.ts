@@ -1,3 +1,4 @@
+import { App, defineComponent } from 'vue'
 import { getOptions } from './config'
 import FormElementMixin from './FormElementMixin'
 import { getValueByPath, isMobile, matchWithGroups } from './helpers'
@@ -92,9 +93,10 @@ const defaultTimeParser = (timeString, vm) => {
     return null
 }
 
-export default {
+export default defineComponent({
     mixins: [FormElementMixin],
     inheritAttrs: false,
+    emits: ['update:modelValue'],
     props: {
         /** @model */
         modelValue: Date,
@@ -110,10 +112,7 @@ export default {
          */
         size: String,
         hourFormat: {
-            type: String,
-            validator: (value) => {
-                return value === HOUR_FORMAT_24 || value === HOUR_FORMAT_12
-            }
+            type: String
         },
         incrementHours: {
             type: Number,
@@ -129,7 +128,7 @@ export default {
         },
         timeFormatter: {
             type: Function,
-            default: (date, vm) => {
+            default: (date: Date, vm: App) => {
                 const timeFormatter = getValueByPath(getOptions(), 'timepicker.timeFormatter', undefined)
                 if (typeof timeFormatter === 'function') {
                     return timeFormatter(date)
@@ -140,7 +139,7 @@ export default {
         },
         timeParser: {
             type: Function,
-            default: (date, vm) => {
+            default: (date: Date, vm: App) => {
                 const timeParser = getValueByPath(getOptions(), 'timepicker.timeParser', undefined)
                 if (typeof timeParser === 'function') {
                     return timeParser(date)
@@ -715,4 +714,4 @@ export default {
             document.removeEventListener('keyup', this.keyPress)
         }
     }
-}
+})

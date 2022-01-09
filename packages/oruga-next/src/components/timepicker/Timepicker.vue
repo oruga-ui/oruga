@@ -14,9 +14,8 @@
                 <slot name="trigger">
                     <o-input
                         ref="input"
-                        v-bind="inputBind"
+                        :model-value="formatValue(computedValue)"
                         autocomplete="off"
-                        :value="formatValue(computedValue)"
                         :placeholder="placeholder"
                         :size="size"
                         :icon="icon"
@@ -24,6 +23,7 @@
                         :disabled="disabled"
                         :readonly="!editable"
                         :rounded="rounded"
+                        v-bind="inputBind"
                         :use-html5-validation="useHtml5Validation"
                         @keyup.enter="toggle(true)"
                         @change="onChange($event.target.value)"
