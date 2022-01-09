@@ -6,6 +6,8 @@ packages/storybook/*
 packages/oruga/coverage/*
 packages/oruga/README.md
 
+.changelogs
+
 *.json.lerna_backup
 .idea
 packages/demo-vue3/*

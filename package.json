@@ -18,9 +18,11 @@
     "build:lib:watch:oruga-next": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga-next",
     "publish:lib:oruga": "lerna run publish:lib --scope @oruga-ui/oruga",
     "publish:lib:oruga-next": "lerna run publish:lib --scope @oruga-ui/oruga-next",
+    "release": "node .scripts/gh_release.js",
     "test:all": "lerna run test --stream"
   },
   "devDependencies": {
-    "lerna": "3.21.0"
+    "lerna": "3.21.0",
+    "simple-git": "^2.48.0"
   }
 }
