@@ -118,8 +118,8 @@ $carousel-overlay-zindex: 40 !default;
         @include avariable('border', 'carousel-arrow-border', $carousel-arrow-border);
         @include avariable('transition', 'carousel-arrow-transition', $carousel-arrow-transition);
     }
-    &__arrow__icon-left,
-    &__arrow__icon-right {
+    &__arrow__icon-prev,
+    &__arrow__icon-next {
         position: absolute;
         @include avariable('top', 'carousel-arrow-top', $carousel-arrow-top);
         @include evariable(
@@ -128,10 +128,10 @@ $carousel-overlay-zindex: 40 !default;
         );
         z-index: 1;
     }
-    &__arrow__icon-left {
+    &__arrow__icon-prev {
         @include avariable('left', 'carousel-arrow-icon-spaced', $carousel-arrow-icon-spaced);
     }
-    &__arrow__icon-right {
+    &__arrow__icon-next {
         @include avariable('right', 'carousel-arrow-icon-spaced', $carousel-arrow-icon-spaced);
     }
 

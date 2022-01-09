@@ -7,8 +7,8 @@ exports[`OCarousel render correctly 1`] = `
             <div></div>
             <div></div>
         </div>
-        <o-icon-stub icon="chevron-left" both="true" class="o-car__arrow__icon o-car__arrow__icon-left" style="display: none;"></o-icon-stub>
-        <o-icon-stub icon="chevron-right" both="true" class="o-car__arrow__icon o-car__arrow__icon-right" style="display: none;"></o-icon-stub>
+        <o-icon-stub icon="chevron-left" both="true" class="o-car__arrow__icon o-car__arrow__icon-prev" style="display: none;"></o-icon-stub>
+        <o-icon-stub icon="chevron-right" both="true" class="o-car__arrow__icon o-car__arrow__icon-next" style="display: none;"></o-icon-stub>
     </div>
     <div class="o-car__indicators"><a class="o-car__indicator"><span class="o-car__indicator__item o-car__indicator__item--active o-car__indicator__item--dots"></span></a><a class="o-car__indicator"><span class="o-car__indicator__item o-car__indicator__item--dots"></span></a></div>
     <!---->

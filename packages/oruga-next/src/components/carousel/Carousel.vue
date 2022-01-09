@@ -225,13 +225,13 @@ export default defineComponent({
         arrowIconPrevClasses() {
             return [
                 ...this.arrowIconClasses,
-                this.computedClass('arrowIconLeftClass', 'o-car__arrow__icon-left')
+                this.computedClass('arrowIconPrevClass', 'o-car__arrow__icon-prev')
             ]
         },
         arrowIconNextClasses() {
             return [
                 ...this.arrowIconClasses,
-                this.computedClass('arrowIconRightClass', 'o-car__arrow__icon-right')
+                this.computedClass('arrowIconNextClass', 'o-car__arrow__icon-next')
             ]
         },
         indicatorsClasses() {
