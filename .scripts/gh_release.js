@@ -22,7 +22,6 @@ const generateChanges = (type, changes) => {
 
 const searchAndModifyVersions = (currentRepoGit, startPath, filter, version) => {
     if (!fs.existsSync(startPath)){
-        console.log("no dir ",startPath);
         return;
     }
     const files = fs.readdirSync(startPath);
