@@ -170,6 +170,7 @@ export default {
         overlayClass: [String, Function, Array],
         sceneClass: [String, Function, Array],
         itemsClass: [String, Function, Array],
+        itemsDraggingClass: [String, Function, Array],
         arrowIconClass: [String, Function, Array],
         arrowIconPrevClass: [String, Function, Array],
         arrowIconNextClass: [String, Function, Array],

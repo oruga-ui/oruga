@@ -49,6 +49,10 @@ export default {
                     description: "Class of slider element",
                 },
                 {
+                    class: "itemsDraggingClass",
+                    description: "Class of slider element on drag",
+                },
+                {
                     class: "arrowIconClass",
                     description: "Class of arrow elements",
                 },

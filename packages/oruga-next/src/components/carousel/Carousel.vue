@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import {sign, mod, bound, getValueByPath} from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
@@ -173,6 +173,7 @@ export default defineComponent({
         overlayClass: [String, Function, Array],
         sceneClass: [String, Function, Array],
         itemsClass: [String, Function, Array],
+        itemsDraggingClass: [String, Function, Array],
         arrowIconClass: [String, Function, Array],
         arrowIconPrevClass: [String, Function, Array],
         arrowIconNextClass: [String, Function, Array],
