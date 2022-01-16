@@ -27,6 +27,7 @@
     "url": "https://github.com/oruga-ui/oruga/issues"
   },
   "scripts": {
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck --declarationDir types",
     "build:vue": "rollup -c && rollup -c --environment MINIFY",
     "build:vue:watch": "rollup -c --watch",
     "build:style": "npm run build:scss && npm run build:scss-vars && npm run build:scss-full",
@@ -36,7 +37,8 @@
     "build:style:watch": "concurrently \"sass ../oruga/src/scss/oruga-full-vars.scss dist/oruga-full-vars.css --watch\" \"sass ../oruga/src/scss/oruga.scss dist/oruga.css --watch\"",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
-    "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish"
+    "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish",
+    "lint:typings": "vue-tsc --noEmit --skipLibCheck"
   },
   "keywords": [
     "oruga",
@@ -81,6 +83,7 @@
     "sass": "1.27.0",
     "sinon": "9.0.3",
     "typescript": "3.8.3",
-    "vue": "3.0.0"
+    "vue": "3.0.0",
+    "vue-tsc": "^0.30.2"
   }
 }
