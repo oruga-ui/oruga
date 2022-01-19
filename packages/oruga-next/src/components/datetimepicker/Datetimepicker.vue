@@ -33,23 +33,25 @@
         @icon-right-click="$emit('icon-right-click')"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)">
-        <div :class="timepickerWrapperClasses">
-            <o-timepicker
-                ref="timepicker"
-                v-bind="timepicker"
-                v-model="computedValue"
-                inline
-                :editable="editable"
-                :min-time="minTime"
-                :max-time="maxTime"
-                :size="timepickerSize"
-                :disabled="timepickerDisabled"
-                :mobile-native="isMobileNative"
-                :locale="locale"
-            />
-        </div>
-        <template v-if="$slots.default !== undefined">
-            <slot/>
+        <template #footer>
+            <div :class="timepickerWrapperClasses">
+                <o-timepicker
+                    ref="timepicker"
+                    v-bind="timepicker"
+                    v-model="computedValue"
+                    inline
+                    :editable="editable"
+                    :min-time="minTime"
+                    :max-time="maxTime"
+                    :size="timepickerSize"
+                    :disabled="timepickerDisabled"
+                    :mobile-native="isMobileNative"
+                    :locale="locale"
+                />
+            </div>
+            <template v-if="$slots.footer !== undefined">
+                <slot name="footer" />
+            </template>
         </template>
     </o-datepicker>
     <o-input
@@ -59,7 +61,7 @@
         autocomplete="off"
         :value="formatNative(computedValue)"
         :placeholder="placeholder"
-        :size="size"
+        :size="datepickerSize"
         :icon="icon"
         :icon-pack="iconPack"
         :rounded="rounded"
@@ -101,7 +103,7 @@ export default defineComponent({
     configField: 'datetimepicker',
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'change-year', 'change-month', 'icon-right-click', 'active-change'],
     props: {
         modelValue: {
             type: Date
