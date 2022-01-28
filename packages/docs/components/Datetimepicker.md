@@ -248,6 +248,6 @@ export default {
 
 ## Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name   | Description | Bindings |
+| ------ | ----------- | -------- |
+| footer |             |          |
