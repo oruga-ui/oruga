@@ -62,7 +62,7 @@ export default defineComponent({
         position: {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'tooltip.position', 'top') },
-            validator(value: string) {
+            validator: (value: string) => {
                 return [
                     'top',
                     'bottom',
