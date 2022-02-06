@@ -48,6 +48,9 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         position: relative;
         width: 100%;
     }
+    &__label {
+        width: 100%;
+    }
     &--expanded {
         width: 100%;
     }
