@@ -1011,6 +1011,7 @@ export default {
 | validationMessage         | The message which is shown when a validation error occurs              | string         | -                                                 |                                                                                                                                                             |
 | weekNumberClickable       |                                                                        | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;weekNumberClickable: false<br>}</code>        |
 | yearsRange                |                                                                        | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;yearsRange: [-100, 10]<br>}</code>            |
+| overrideNavBtnUnit        | Override button unit, optional                                         | boolean, string| `month`, `year`                                   | false                                                                                                                                                       |
 
 ## Events
 
