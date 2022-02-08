@@ -44,7 +44,12 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         @include side-flex-gap($button-margin-icon-to-text);
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         position: relative;
+        width: 100%;
+    }
+    &__label {
+        width: 100%;
     }
     &--expanded {
         width: 100%;
