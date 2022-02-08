@@ -567,6 +567,11 @@ export default defineComponent({
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.dropdownClasses', {})
             }
+        },
+        /* Force next/prev icons to use a specific unit - month or year */
+        overrideNavBtnUnit: {
+            type: [Boolean, String],
+            default: false
         }
     },
     data() {
@@ -831,8 +836,17 @@ export default defineComponent({
          */
         prev() {
             if (this.disabled) return
-
-            if (this.isTypeMonth) {
+            let forceMonth = false
+            let forceYear = false
+            if (this.overrideNavBtnUnit) {
+                if (this.overrideNavBtnUnit === 'month') {
+                    forceMonth = true
+                } else if (this.overrideNavBtnUnit === 'year') {
+                    forceYear = true
+                }
+            }
+            
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 this.focusedDateData.year -= 1
             } else {
                 if (this.focusedDateData.month > 0) {
@@ -850,8 +864,17 @@ export default defineComponent({
          */
         next() {
             if (this.disabled) return
-
-            if (this.isTypeMonth) {
+            let forceMonth = false
+            let forceYear = false
+            if (this.overrideNavBtnUnit) {
+                if (this.overrideNavBtnUnit === 'month') {
+                    forceMonth = true
+                } else if (this.overrideNavBtnUnit === 'year') {
+                    forceYear = true
+                }
+            }
+            
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 this.focusedDateData.year += 1
             } else {
                 if (this.focusedDateData.month < 11) {
