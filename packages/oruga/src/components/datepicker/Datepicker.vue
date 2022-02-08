@@ -783,7 +783,17 @@ export default {
 
         showPrev() {
             if (!this.minDate) return false
-            if (this.isTypeMonth) {
+            let forceMonth = false
+            let forceYear = false
+            if (this.overrideNavBtnUnit) {
+                if (this.overrideNavBtnUnit === 'month') {
+                    forceMonth = true
+                } else if (this.overrideNavBtnUnit === 'year') {
+                    forceYear = true
+                }
+            }
+            
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 return this.focusedDateData.year <= this.minDate.getFullYear()
             }
             const dateToCheck = new Date(this.focusedDateData.year, this.focusedDateData.month)
@@ -793,7 +803,17 @@ export default {
 
         showNext() {
             if (!this.maxDate) return false
-            if (this.isTypeMonth) {
+            let forceMonth = false
+            let forceYear = false
+            if (this.overrideNavBtnUnit) {
+                if (this.overrideNavBtnUnit === 'month') {
+                    forceMonth = true
+                } else if (this.overrideNavBtnUnit === 'year') {
+                    forceYear = true
+                }
+            }
+            
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 return this.focusedDateData.year >= this.maxDate.getFullYear()
             }
             const dateToCheck = new Date(this.focusedDateData.year, this.focusedDateData.month)
