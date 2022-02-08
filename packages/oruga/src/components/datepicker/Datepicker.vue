@@ -893,7 +893,7 @@ export default {
                 }
             }
             
-            if ((this.isTypeMonth && !forceYear) || forceMonth) {
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 this.focusedDateData.year -= 1
             } else {
                 if (this.focusedDateData.month > 0) {
@@ -921,7 +921,7 @@ export default {
                 }
             }
             
-            if ((this.isTypeMonth && !forceYear) || forceMonth) {
+            if ((this.isTypeMonth && !forceMonth) || forceYear) {
                 this.focusedDateData.year += 1
             } else {
                 if (this.focusedDateData.month < 11) {
