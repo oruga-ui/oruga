@@ -405,7 +405,7 @@ export default {
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
-                            Object.keys(item).filter(key => item[key]).forEach(
+                            Object.keys(item).filter(key => key && item[key]).forEach(
                                 key => dropdown.classList.add(key))
                         } else {
                             dropdown.classList.add(...item.split(' '))

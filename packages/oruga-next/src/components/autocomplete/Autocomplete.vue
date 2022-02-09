@@ -750,7 +750,7 @@ export default defineComponent({
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
-                            Object.keys(item).filter(key => item[key]).forEach(
+                            Object.keys(item).filter(key => key && item[key]).forEach(
                                 key => root.classList.add(key))
                         } else {
                             root.classList.add(...item.split(' '))
