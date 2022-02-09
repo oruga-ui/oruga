@@ -160,7 +160,7 @@ export default {
         closeIcon: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'modal.closeIcon', 'times')
+                return getValueByPath(getOptions(), 'modal.closeIcon', 'close')
             }
         },
         closeIconSize: {

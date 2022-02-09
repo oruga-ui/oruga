@@ -105,7 +105,7 @@ export default {
         closeIcon: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'notification.closeIcon', 'times')
+                return getValueByPath(getOptions(), 'notification.closeIcon', 'close')
             }
         },
         rootClass: [String, Function, Array],
