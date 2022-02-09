@@ -1253,8 +1253,12 @@ export default defineComponent({
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
-                        const valueWithoutDiacritics = removeDiacriticsFromString(value)
-                        return re.test(valueWithoutDiacritics) || re.test(value)
+                        if (Array.isArray(value)) {
+                            return value.some((val) =>
+                                re.test(removeDiacriticsFromString(val)) || re.test(val)
+                            )
+                        }
+                        return re.test(removeDiacriticsFromString(value)) || re.test(value)
                     }
                 }
             }
