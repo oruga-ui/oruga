@@ -1502,6 +1502,10 @@ title: Table
 ```html
 <template>
   <div>
+    <p>
+      Use <code>draggable</code>/<code>draggable-column</code> prop to allow rows and columns to be draggable. Manage dragging using
+      <code>dragstart</code>/<code>columndragstart</code>,<code>dragover</code>/<code>columndragover</code> and <code>drop</code>/<code>columndrop</code> events
+    </p>
     <o-table
       :data="data"
       :columns="columns"
