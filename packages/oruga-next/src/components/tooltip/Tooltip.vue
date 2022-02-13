@@ -1,5 +1,5 @@
 <template>
-    <span
+    <div
         ref="tooltip"
         :class="rootClasses">
         <transition :name="newAnimation">
@@ -26,7 +26,7 @@
             @mouseleave="close">
             <slot ref="slot" />
         </div>
-    </span>
+    </div>
 </template>
 
 <script lang="ts">
