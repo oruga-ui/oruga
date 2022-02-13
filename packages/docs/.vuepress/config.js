@@ -43,7 +43,7 @@ module.exports = {
                 'https://oruga-documentation-preview.netlify.app/cdn/oruga.min.css',
                 'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
             ],
-            vue: 'https://cdn.jsdelivr.net/npm/vue',
+            vue: 'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
             jsfiddle: false,
             codepen: true
         }
