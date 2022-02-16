@@ -30,6 +30,7 @@
             <div
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
+                :is="menuTag"
                 :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
@@ -184,6 +185,15 @@ export default {
         triggers: {
             type: Array,
             default: () => ['click']
+        },
+        /**
+         * Dropdown menu tag name
+         */
+        menuTag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
+            }
         },
         /**
          * Append dropdown content to body
