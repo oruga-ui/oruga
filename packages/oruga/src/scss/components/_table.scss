@@ -48,6 +48,9 @@ $table-th-padding: 0.5em 0.75em !default;
     @include avariable('border-radius', 'table-border-radius', $table-border-radius);
     @include avariable('background-color', 'table-background-color', $table-background-color);
     @include avariable('color', 'table-color', $table-color);
+    &__root {
+        position: relative;
+    }
     &__wrapper {
         transition: opacity $speed $easing;
         position: relative;
