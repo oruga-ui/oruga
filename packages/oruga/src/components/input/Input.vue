@@ -202,7 +202,7 @@ export default {
         hasIconRight() {
             return this.passwordReveal
                 || (this.statusIcon && this.statusVariantIcon)
-                || this.clearable
+                || (this.clearable && this.newValue)
                 || this.iconRight
         },
         rightIcon() {
