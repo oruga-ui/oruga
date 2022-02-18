@@ -1247,7 +1247,7 @@ export default defineComponent({
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
                     if (!column.customSearch(row, input)) return false
                 } else {
-                    const value = this.getValueByPath(row, key)
+                    const value = getValueByPath(row, key)
                     if (value == null) return false
                     if (Number.isInteger(value)) {
                         if (value !== Number(input)) return false
