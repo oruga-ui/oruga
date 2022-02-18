@@ -1247,18 +1247,22 @@ export default defineComponent({
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
                     if (!column.customSearch(row, input)) return false
                 } else {
-                    let value = getValueByPath(row, key)
+                    const value = this.getValueByPath(row, key)
                     if (value == null) return false
                     if (Number.isInteger(value)) {
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
                         if (Array.isArray(value)) {
-                            return value.some((val) =>
+                            const valid = value.some((val) =>
                                 re.test(removeDiacriticsFromString(val)) || re.test(val)
                             )
+                            if (!valid) return false
+                        } else {
+                            if (!re.test(removeDiacriticsFromString(value)) && !re.test(value)) {
+                                return false
+                            }
                         }
-                        return re.test(removeDiacriticsFromString(value)) || re.test(value)
                     }
                 }
             }
