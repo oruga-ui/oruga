@@ -6,7 +6,7 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "module": "dist/esm/index.mjs",
   "unpkg": "dist/oruga.min.js",
   "typings": "types/index.d.ts",
   "files": [

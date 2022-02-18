@@ -56,7 +56,9 @@ export default () => {
             external: ['vue'],
             output: {
                 format: 'esm',
-                dir: `dist/esm`
+                dir: `dist/esm`,
+                entryFileNames: '[name].mjs',
+                chunkFileNames: '[name]-[hash].mjs',
             },
             plugins: [
                 node({
@@ -111,7 +113,7 @@ export default () => {
             external: ['vue'],
             output: {
                 format: 'esm',
-                file: 'dist/oruga.esm.js',
+                file: 'dist/oruga.mjs',
                 banner: bannerTxt
             },
             plugins: [
@@ -128,7 +130,7 @@ export default () => {
     if (process.env.MINIFY === 'true') {
         config = config.filter((c) => !!c.output.file)
         config.forEach((c) => {
-            c.output.file = c.output.file.replace(/\.js/g, '.min.js')
+            c.output.file = c.output.file.replace(/\.m?js/g, r => `.min${r}`)
             c.plugins.push(terser({
                 output: {
                     comments: '/^!/'
