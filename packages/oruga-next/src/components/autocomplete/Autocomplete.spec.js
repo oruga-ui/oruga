@@ -213,4 +213,10 @@ describe('OAutocomplete', () => {
 
         expect(subject).toBeFalsy()
     })
+
+    it('has configurable menu and item tags', () => {
+        wrapper.setProps({menuTag: 'ul', itemTag: 'li'})
+        wrapper.find('ul.o-acp__menu').exists()
+        wrapper.find('li.o-acp__item').exists()
+    })
 })

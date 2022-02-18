@@ -215,4 +215,9 @@ describe('ODropdown', () => {
         expect(document.removeEventListener).toBeCalledWith('click', expect.any(Function))
         expect(document.removeEventListener).toBeCalledWith('keyup', expect.any(Function))
     })
+
+    it('has configurable menu tag', () => {
+        wrapper.setProps({menuTag: 'ul'})
+        wrapper.find('ul.o-drop__menu').exists()
+    })
 })
