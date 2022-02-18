@@ -206,7 +206,6 @@ export default {
                 || this.iconRight
         },
         rightIcon() {
-            console.log(this.clearable)
             if (this.passwordReveal) {
                 return this.passwordVisibleIcon
             } else if (this.clearable && this.newValue) {
