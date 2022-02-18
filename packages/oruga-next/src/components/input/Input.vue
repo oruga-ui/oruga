@@ -38,7 +38,7 @@
         <o-icon
             v-if="hasIconRight"
             :class="iconRightClasses"
-            :clickable="passwordReveal || iconRightClickable"
+            :clickable="passwordReveal || clearable || iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
             :size="size"

@@ -38,7 +38,7 @@
         <o-icon
             v-if="hasIconRight"
             :class="iconRightClasses"
-            :clickable="passwordReveal || iconRightClickable"
+            :clickable="passwordReveal || clearable || iconRightClickable"
             :icon="rightIcon"
             :pack="iconPack"
             :size="size"
@@ -206,6 +206,7 @@ export default {
                 || this.iconRight
         },
         rightIcon() {
+            console.log(this.clearable)
             if (this.passwordReveal) {
                 return this.passwordVisibleIcon
             } else if (this.clearable && this.newValue) {
