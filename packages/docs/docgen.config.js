@@ -152,6 +152,7 @@ function renderStyleDocs(config, name) {
   | CSS Variable          | SASS Variable  | Default |
   | --------------------- | -------------- | ------- |
 ${variables
+      .filter(variable => variable.indexOf('@deprecated') < 0)
       .map(variable => {
         const keyValue = variable.split(':');
         const varName = keyValue[0].trim();
