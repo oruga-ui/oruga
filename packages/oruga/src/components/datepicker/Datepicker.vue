@@ -89,6 +89,7 @@
                                 <o-select
                                     v-if="!isTypeMonth"
                                     v-model="focusedDateData.month"
+                                    v-bind="selectListBind"
                                     :disabled="disabled"
                                     :size="size">
                                     <option
@@ -101,6 +102,7 @@
                                 </o-select>
                                 <o-select
                                     v-model="focusedDateData.year"
+                                    v-bind="selectListBind"
                                     :disabled="disabled"
                                     :size="size">
                                     <option
@@ -614,7 +616,8 @@ export default {
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.dropdownClasses', {})
             }
-        }
+        },
+        selectListClasses: Object
     },
     data() {
         const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
@@ -644,6 +647,11 @@ export default {
             return {
                 'root-class': this.computedClass('dropdownClasses.rootClass', 'o-dpck__dropdown'),
                 ...this.dropdownClasses
+            }
+        },
+        selectListBind() {
+            return {
+                ...this.selectListClasses
             }
         },
         rootClasses() {

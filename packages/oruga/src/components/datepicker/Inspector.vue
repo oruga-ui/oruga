@@ -545,6 +545,14 @@ export default {
                         this.openDatePicker();
                     }
                 },
+                {
+                    class: "selectListClasses",
+                    description: "Classes to apply on select list (month and year).",
+                    componentRef: "Select",
+                    action: () => {
+                        this.openDatePicker();
+                    }
+                },
             ],
         };
     }

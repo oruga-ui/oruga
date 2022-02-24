@@ -160,7 +160,7 @@ export default {
         closeIcon: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'modal.closeIcon', 'times')
+                return getValueByPath(getOptions(), 'modal.closeIcon', 'close')
             }
         },
         closeIconSize: {
@@ -198,7 +198,7 @@ export default {
         contentClasses() {
             return [
                 { [this.computedClass('contentClass', 'o-modal__content')]: !this.custom },
-                { [this.computedClass('fullScreenClass', 'o-modal__content--fullscreen')]: this.fullScreen }
+                { [this.computedClass('fullScreenClass', 'o-modal__content--full-screen')]: this.fullScreen }
             ]
         },
         closeClasses() {

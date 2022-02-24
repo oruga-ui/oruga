@@ -45,6 +45,7 @@ import DatepickerMixin from './DatepickerMixin'
 export default {
     name: 'ODatepickerMonth',
     mixins: [BaseComponentMixin, DatepickerMixin],
+    configField: 'datepicker',
     props: {
         value: {
             type: [Date, Array]

@@ -220,7 +220,7 @@ export default {
         closeIcon: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'inputitems.closeIcon', 'times')
+                return getValueByPath(getOptions(), 'inputitems.closeIcon', 'close')
             }
         },
         /** The first option will always be pre-selected (easier to just hit enter or tab) */

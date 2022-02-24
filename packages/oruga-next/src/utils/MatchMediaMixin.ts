@@ -11,7 +11,7 @@ export default defineComponent({
     },
     data() {
         return {
-            $matchMediaRef: undefined,
+            matchMediaRef: undefined,
             isMatchMedia: undefined
         }
     },
@@ -28,14 +28,14 @@ export default defineComponent({
                 const defaultWidth = getValueByPath(config, `mobileBreakpoint`, '1023px')
                 width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
             }
-            this.$matchMediaRef = window.matchMedia(`(max-width: ${width})`)
-            this.isMatchMedia = this.$matchMediaRef.matches
-            this.$matchMediaRef.addListener(this.onMatchMedia, false)
+            this.matchMediaRef = window.matchMedia(`(max-width: ${width})`)
+            this.isMatchMedia = this.matchMediaRef.matches
+            this.matchMediaRef.addListener(this.onMatchMedia, false)
         }
     },
     beforeUnmount() {
         if (typeof window !== 'undefined') {
-            this.$matchMediaRef.removeListener(this.checkMatchMedia)
+            this.matchMediaRef.removeListener(this.checkMatchMedia)
         }
     }
 })

@@ -30,6 +30,7 @@
             <div
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
+                :is="menuTag"
                 :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
@@ -184,6 +185,15 @@ export default {
         triggers: {
             type: Array,
             default: () => ['click']
+        },
+        /**
+         * Dropdown menu tag name
+         */
+        menuTag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
+            }
         },
         /**
          * Append dropdown content to body
@@ -405,7 +415,7 @@ export default {
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
-                            Object.keys(item).filter(key => item[key]).forEach(
+                            Object.keys(item).filter(key => key && item[key]).forEach(
                                 key => dropdown.classList.add(key))
                         } else {
                             dropdown.classList.add(...item.split(' '))

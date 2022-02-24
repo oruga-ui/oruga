@@ -1,5 +1,5 @@
 <template>
-    <span
+    <div
         ref="tooltip"
         :class="rootClasses">
         <transition :name="newAnimation">
@@ -26,7 +26,7 @@
             @mouseleave="close">
             <slot ref="slot" />
         </div>
-    </span>
+    </div>
 </template>
 
 <script lang="ts">
@@ -62,7 +62,7 @@ export default defineComponent({
         position: {
             type: String,
             default: () => { return getValueByPath(getOptions(), 'tooltip.position', 'top') },
-            validator(value: string) {
+            validator: (value: string) => {
                 return [
                     'top',
                     'bottom',
@@ -176,7 +176,7 @@ export default defineComponent({
                 }
                 this.rootClasses.forEach((item) => {
                     if (typeof item === 'object') {
-                        Object.keys(item).filter(key => !!item[key]).forEach(
+                        Object.keys(item).filter(key => key && item[key]).forEach(
                             key => tooltipEl.classList.add(key))
                     } else {
                         tooltipEl.classList.add(...item.split(' '))

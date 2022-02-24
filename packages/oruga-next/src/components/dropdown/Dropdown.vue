@@ -2,17 +2,17 @@
     <div
         ref="dropdown"
         :class="rootClasses"
+        @mouseleave="isHoverable = false"
     >
         <div
             v-if="!inline"
             role="button"
-            :tabindex="disabled ? false : 0"
+            :tabindex="disabled ? null : 0"
             ref="trigger"
             :class="triggerClasses"
             @click="onClick"
             @contextmenu.prevent="onContextMenu"
             @mouseenter="onHover"
-            @mouseleave="isHoverable = false"
             @focus.capture="onFocus"
             aria-haspopup="true">
             <slot name="trigger" :active="isActive"/>
@@ -30,12 +30,11 @@
             <div
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
+                :is="menuTag"
                 :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
                 :style="menuStyle"
-                @mouseenter="onHover"
-                @mouseleave="isHoverable = false"
                 v-trap-focus="trapFocus">
                 <slot/>
             </div>
@@ -43,7 +42,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -106,7 +105,7 @@ export default defineComponent({
          */
         position: {
             type: String,
-            validator(value) {
+            validator: (value: string) => {
                 return [
                     'top-right',
                     'top-left',
@@ -130,7 +129,7 @@ export default defineComponent({
          */
         ariaRole: {
             type: String,
-            validator(value) {
+            validator: (value: string) => {
                 return [
                     'menu',
                     'list',
@@ -192,6 +191,16 @@ export default defineComponent({
          * Append dropdown content to body
          */
         appendToBody: Boolean,
+        /**
+         * Dropdown menu tag name
+         */
+        menuTag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
+            }
+        },
+
         /**
         * @ignore
         */
@@ -411,7 +420,7 @@ export default defineComponent({
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
-                            Object.keys(item).filter(key => item[key]).forEach(
+                            Object.keys(item).filter(key => key && item[key]).forEach(
                                 key => dropdown.classList.add(key))
                         } else {
                             dropdown.classList.add(...item.split(' '))

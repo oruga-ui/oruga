@@ -1,5 +1,5 @@
 <template>
-    <span
+    <div
         ref="tooltip"
         :class="rootClasses">
         <transition :name="newAnimation">
@@ -26,7 +26,7 @@
             @mouseleave="close">
             <slot ref="slot" />
         </div>
-    </span>
+    </div>
 </template>
 
 <script>
@@ -175,7 +175,7 @@ export default {
                 }
                 this.rootClasses.forEach((item) => {
                     if (typeof item === 'object') {
-                        Object.keys(item).filter(key => !!item[key]).forEach(
+                        Object.keys(item).filter(key => key && item[key]).forEach(
                             key => tooltipEl.classList.add(key))
                     } else {
                         tooltipEl.classList.add(...item.split(' '))

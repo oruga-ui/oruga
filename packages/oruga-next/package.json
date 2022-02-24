@@ -1,12 +1,12 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "module": "dist/esm/index.mjs",
   "unpkg": "dist/oruga.min.js",
   "typings": "types/index.d.ts",
   "files": [
@@ -31,9 +31,9 @@
     "build:vue": "rollup -c && rollup -c --environment MINIFY",
     "build:vue:watch": "rollup -c --watch",
     "build:style": "npm run build:scss && npm run build:scss-vars && npm run build:scss-full",
-    "build:scss-vars": "sass ../oruga/src/scss/oruga-full-vars.scss | node ../oruga/build/banner.js > dist/oruga-full-vars.css && cleancss -o dist/oruga-full-vars.min.css dist/oruga-full-vars.css",
-    "build:scss-full": "sass ../oruga/src/scss/oruga-full.scss | node ../oruga/build/banner.js > dist/oruga-full.css && cleancss -o dist/oruga-full.min.css dist/oruga-full.css",
-    "build:scss": "sass ../oruga/src/scss/oruga.scss | node ../oruga/build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
+    "build:scss-vars": "sass --no-charset ../oruga/src/scss/oruga-full-vars.scss | node ../oruga/build/banner.js > dist/oruga-full-vars.css && cleancss -o dist/oruga-full-vars.min.css dist/oruga-full-vars.css",
+    "build:scss-full": "sass --no-charset ../oruga/src/scss/oruga-full.scss | node ../oruga/build/banner.js > dist/oruga-full.css && cleancss -o dist/oruga-full.min.css dist/oruga-full.css",
+    "build:scss": "sass --no-charset ../oruga/src/scss/oruga.scss | node ../oruga/build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
     "build:style:watch": "concurrently \"sass ../oruga/src/scss/oruga-full-vars.scss dist/oruga-full-vars.css --watch\" \"sass ../oruga/src/scss/oruga.scss dist/oruga.css --watch\"",
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
@@ -85,5 +85,8 @@
     "typescript": "3.8.3",
     "vue": "3.0.0",
     "vue-tsc": "^0.30.2"
+  },
+  "volta": {
+    "node": "12.22.10"
   }
 }

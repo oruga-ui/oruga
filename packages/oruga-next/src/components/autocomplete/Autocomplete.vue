@@ -29,11 +29,13 @@
         <transition :name="animation">
             <div
                 :class="menuClasses"
+                :is="menuTag"
                 v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
                 :style="menuStyle"
                 ref="dropdown">
                 <div
                     v-if="$slots.header"
+                    :is="itemTag"
                     ref="header"
                     role="button"
                     :tabindex="0"
@@ -44,6 +46,7 @@
                 <template v-for="(element, groupindex) in computedData">
                     <div
                         v-if="element.group"
+                        :is="itemTag"
                         :key="groupindex + 'group'"
                         :class="itemGroupClasses">
                         <slot
@@ -58,6 +61,7 @@
                     <div
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
+                        :is="itemTag"
                         :class="itemOptionClasses(option)"
                         @click.stop="setSelected(option, !keepOpen, $event)"
                         :ref="setItemRef"
@@ -73,11 +77,13 @@
                 </template>
                 <div
                     v-if="isEmpty && $slots.empty"
+                    :is="itemTag"
                     :class="itemEmptyClasses">
                     <slot name="empty" />
                 </div>
                 <div
                     v-if="$slots.footer"
+                    :is="itemTag"
                     ref="footer"
                     role="button"
                     :tabindex="0"
@@ -188,6 +194,24 @@ export default defineComponent({
         type: {
             type: String,
             default: 'text'
+        },
+        /**
+         * Menu tag name
+         */
+        menuTag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.menuTag', 'div')
+            }
+        },
+        /**
+         * Menu item tag name
+         */
+        itemTag: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.itemTag', 'div')
+            }
         },
         /** Trigger the select event for the first pre-selected option when clicking outside and <code>keep-first</code> is enabled */
         selectOnClickOutside: Boolean,
@@ -750,7 +774,7 @@ export default defineComponent({
                 this.rootClasses.forEach((item) => {
                     if (item) {
                         if (typeof item === 'object') {
-                            Object.keys(item).filter(key => item[key]).forEach(
+                            Object.keys(item).filter(key => key && item[key]).forEach(
                                 key => root.classList.add(key))
                         } else {
                             root.classList.add(...item.split(' '))

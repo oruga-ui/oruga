@@ -69,7 +69,13 @@
                             v-bind="column.thAttrs && column.thAttrs(column)"
                             :class="thClasses(column)"
                             :style="column.style"
-                            @click.stop="sort(column, null, $event)">
+                            @click.stop="sort(column, null, $event)"
+                            :draggable="canDragColumn"
+                            @dragstart="handleColumnDragStart($event, column, index)"
+                            @dragend="handleColumnDragEnd($event, column, index)"
+                            @drop="handleColumnDrop($event, column, index)"
+                            @dragover="handleColumnDragOver($event, column, index)"
+                            @dragleave="handleColumnDragLeave($event, column, index)">
 
                             <template v-if="column.hasHeaderSlot">
                                 <o-slot-component
@@ -172,7 +178,7 @@
                             @mouseenter="emitEventForRow('mouseenter', $event, row)"
                             @mouseleave="emitEventForRow('mouseleave', $event, row)"
                             @contextmenu="$emit('contextmenu', row, $event)"
-                            :draggable="draggable"
+                            :draggable="canDragRow"
                             @dragstart="handleDragStart($event, row, index)"
                             @dragend="handleDragEnd($event, row, index)"
                             @drop="handleDrop($event, row, index)"
@@ -359,7 +365,8 @@ export default defineComponent({
         'check', 'check-all', 'update:checkedRows',
         'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
         'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
-        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click'
+        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click',
+        'columndragstart', 'columndragend', 'columndrop', 'columndragleave', 'columndragover'
     ],
     props: {
         /** Table data */
@@ -545,6 +552,11 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        /** Allows columns to be draggable */
+        draggableColumn: {
+            type: Boolean,
+            default: false
+        },
         /** Add a horizontal scrollbar when table is too wide */
         scrollable: Boolean,
         ariaNextLabel: String,
@@ -619,7 +631,9 @@ export default defineComponent({
             filters: {},
             defaultSlots: [],
             firstTimeSort: true,
-            sequence: 1
+            sequence: 1,
+            isDraggingRow: false,
+            isDraggingColumn: false
         }
     },
     mounted() {
@@ -842,6 +856,13 @@ export default defineComponent({
                 return column.subheading || (column.$slots.subheading)
             })
         },
+
+        canDragRow() {
+            return this.draggable && !this.isDraggingColumn
+        },
+        canDragColumn() {
+            return this.draggableColumn && !this.isDraggingRow
+        }
     },
     watch: {
         /**
@@ -1226,14 +1247,22 @@ export default defineComponent({
                 if (column && column.customSearch && typeof column.customSearch === 'function') {
                     if (!column.customSearch(row, input)) return false
                 } else {
-                    let value = getValueByPath(row, key)
+                    const value = getValueByPath(row, key)
                     if (value == null) return false
                     if (Number.isInteger(value)) {
                         if (value !== Number(input)) return false
                     } else {
                         const re = new RegExp(escapeRegExpChars(input), 'i')
-                        const valueWithoutDiacritics = removeDiacriticsFromString(value)
-                        return re.test(valueWithoutDiacritics) || re.test(value)
+                        if (Array.isArray(value)) {
+                            const valid = value.some((val) =>
+                                re.test(removeDiacriticsFromString(val)) || re.test(val)
+                            )
+                            if (!valid) return false
+                        } else {
+                            if (!re.test(removeDiacriticsFromString(value)) && !re.test(value)) {
+                                return false
+                            }
+                        }
                     }
                 }
             }
@@ -1385,6 +1414,48 @@ export default defineComponent({
         handleDragLeave(event, row, index) {
             if (!this.draggable) return
             this.$emit('dragleave', {event, row, index})
+        },
+
+        /**
+        * Emits drag start event (column)
+        */
+        handleColumnDragStart(event, column, index) {
+            if (!this.canDragColumn) return
+            this.isDraggingColumn = true
+            this.$emit('columndragstart', {event, column, index})
+        },
+
+        /**
+        * Emits drag leave event (column)
+        */
+        handleColumnDragEnd(event, column, index) {
+            if (!this.canDragColumn) return
+            this.isDraggingColumn = false
+            this.$emit('columndragend', {event, column, index})
+        },
+
+        /**
+        * Emits drop event (column)
+        */
+        handleColumnDrop(event, column, index) {
+            if (!this.canDragColumn) return
+            this.$emit('columndrop', {event, column, index})
+        },
+
+        /**
+        * Emits drag over event (column)
+        */
+        handleColumnDragOver(event, column, index) {
+            if (!this.canDragColumn) return
+            this.$emit('columndragover', {event, column, index})
+        },
+
+        /**
+        * Emits drag leave event (column)
+        */
+        handleColumnDragLeave(event, column, index) {
+            if (!this.canDragColumn) return
+            this.$emit('columndragleave', {event, column, index})
         },
 
         emitEventForRow(eventName, event, row) {

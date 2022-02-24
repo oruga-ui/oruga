@@ -33,23 +33,25 @@
         @icon-right-click="$emit('icon-right-click')"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)">
-        <div :class="timepickerWrapperClasses">
-            <o-timepicker
-                ref="timepicker"
-                v-bind="timepicker"
-                v-model="computedValue"
-                inline
-                :editable="editable"
-                :min-time="minTime"
-                :max-time="maxTime"
-                :size="timepickerSize"
-                :disabled="timepickerDisabled"
-                :mobile-native="isMobileNative"
-                :locale="locale"
-            />
-        </div>
-        <template v-if="$slots.default !== undefined">
-            <slot/>
+        <template #footer>
+            <div :class="timepickerWrapperClasses">
+                <o-timepicker
+                    ref="timepicker"
+                    v-bind="timepicker"
+                    v-model="computedValue"
+                    inline
+                    :editable="editable"
+                    :min-time="minTime"
+                    :max-time="maxTime"
+                    :size="timepickerSize"
+                    :disabled="timepickerDisabled"
+                    :mobile-native="isMobileNative"
+                    :locale="locale"
+                />
+            </div>
+            <template v-if="$slots.footer !== undefined">
+                <slot name="footer" />
+            </template>
         </template>
     </o-datepicker>
     <o-input
@@ -59,7 +61,7 @@
         autocomplete="off"
         :value="formatNative(computedValue)"
         :placeholder="placeholder"
-        :size="size"
+        :size="datepickerSize"
         :icon="icon"
         :icon-pack="iconPack"
         :rounded="rounded"
@@ -356,7 +358,7 @@ export default {
                         datetimeGroups.hour < 24 &&
                         datetimeGroups.minute &&
                         datetimeGroups.minute >= 0 &&
-                        datetimeGroups.minute < 59
+                        datetimeGroups.minute <= 59
                     ) {
                         const d = new Date(
                             datetimeGroups.year,
