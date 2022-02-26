@@ -11,21 +11,14 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noImplicitThis": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "strictNullChecks": false,
     "baseUrl": ".",
     "types": [],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
@@ -34,7 +27,5 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

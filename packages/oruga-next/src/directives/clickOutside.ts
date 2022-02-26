@@ -1,10 +1,12 @@
+import { Directive, DirectiveHook } from "vue"
+
 const isTouch =
   typeof window !== 'undefined' && ('ontouchstart' in window || navigator.msMaxTouchPoints > 0)
 const events = isTouch ? ['touchstart', 'click'] : ['click']
 
-const instances = []
+const instances: unknown[] = []
 
-function processArgs(bindingValue) {
+function processArgs(bindingValue: unknown) {
     const isFunction = typeof bindingValue === 'function'
     if (!isFunction && typeof bindingValue !== 'object') {
         throw new Error(`v-click-outside: Binding value should be a function or an object, ${typeof bindingValue} given`)
@@ -33,7 +35,7 @@ function toggleEventListeners({ eventHandlers = [] } = {}, action = 'add') {
     })
 }
 
-function bind(el, { value }) {
+const bind: DirectiveHook = function (el, { value }) {
     const { handler, middleware, events } = processArgs(value)
 
     const instance = {
@@ -49,7 +51,7 @@ function bind(el, { value }) {
     instances.push(instance)
 }
 
-function update(el, { value }) {
+const update: DirectiveHook  = function (el, { value }) {
     const { handler, middleware, events } = processArgs(value)
     // `filter` instead of `find` for compat with IE
     const instance = instances.filter((instance) => instance.el === el)[0]
@@ -64,14 +66,14 @@ function update(el, { value }) {
     toggleEventListeners(instance, 'add')
 }
 
-function unbind(el) {
+const unbind: DirectiveHook = function (el) {
     // `filter` instead of `find` for compat with IE
     const instance = instances.filter((instance) => instance.el === el)[0]
 
     toggleEventListeners(instance, 'remove')
 }
 
-const directive = {
+const directive: Directive = {
     beforeMount: bind,
     beforeUpdate: update,
     beforeUnmount: unbind,
