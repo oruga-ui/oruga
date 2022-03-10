@@ -1,16 +1,15 @@
-
-import { App, DefineComponent, Plugin } from 'vue'
+import { App, Component, Plugin } from 'vue'
 import { useProgrammatic } from './useProgrammatic'
 
 export const registerPlugin = (app: App, plugin: Plugin) => {
     app.use(plugin)
 }
 
-export const registerComponent = (app: App, component: DefineComponent) => {
+export const registerComponent = (app: App, component: Component) => {
     app.component(component.name, component)
 }
 
-export const registerComponentProgrammatic = (app: App, property: string, component: any) => {
+export const registerComponentProgrammatic = (app: App, property: string, component: Component) => {
     // use composable for unified access to programmatic oruga object
     const { oruga, addProgrammatic } = useProgrammatic();
 

@@ -55,6 +55,8 @@
   "devDependencies": {
     "@babel/core": "7.10.2",
     "@babel/preset-env": "7.10.2",
+    "@cypress/vite-dev-server": "^2.2.2",
+    "@cypress/vue": "^3.1.1",
     "@rollup/plugin-babel": "5.0.2",
     "@rollup/plugin-commonjs": "12.0.0",
     "@rollup/plugin-node-resolve": "8.0.0",
@@ -63,12 +65,14 @@
     "@types/jest": "24.0.19",
     "@typescript-eslint/eslint-plugin": "2.26.0",
     "@typescript-eslint/parser": "2.26.0",
+    "@vitejs/plugin-vue": "^2.2.4",
     "@vue/compiler-sfc": "3.0.0-rc.10",
     "@vue/eslint-config-typescript": "5.0.2",
     "clean-css-cli": "4.3.0",
     "codecov": "3.7.2",
     "concurrently": "5.2.0",
     "core-js": "3.6.5",
+    "cypress": "^9.5.1",
     "eslint": "6.7.2",
     "eslint-plugin-vue": "7.1.0",
     "jest-serializer-vue": "0.3.0",
@@ -80,7 +84,9 @@
     "rollup-plugin-vue": "6.0.0",
     "sass": "1.27.0",
     "sinon": "9.0.3",
-    "typescript": "3.8.3",
-    "vue": "3.0.0"
+    "typescript": "^4.1.5",
+    "vite": "^2.8.6",
+    "vue": "^3.2.25",
+    "webpack-dev-server": "^4.7.4"
   }
 }
