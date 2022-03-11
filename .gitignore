@@ -12,3 +12,4 @@ packages/oruga/README.md
 .idea
 packages/demo-vue3/*
 packages/oruga-next/README.md
+.nyc_output
