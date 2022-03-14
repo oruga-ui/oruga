@@ -10,6 +10,7 @@ export default defineConfig({
         include: 'src/*',
         exclude: ["node_modules", "cypress/"],
         extension: [".ts", ".vue"],
+        cypress: true
       })
   ]
 })
