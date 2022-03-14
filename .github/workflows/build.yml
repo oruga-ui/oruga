@@ -23,5 +23,6 @@ jobs:
         run: npm run ci:oruga
       - name: Upload coverage 📈
         uses: codecov/codecov-action@v2
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: oruga
