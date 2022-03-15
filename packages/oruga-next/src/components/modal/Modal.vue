@@ -75,7 +75,10 @@ export default defineComponent({
         component: [Object, Function],
         /** Text content */
         content: String,
-        programmatic: Boolean,
+        /** Internal property for programmatic modal usage */
+        programmatic: [Object, Boolean],
+        /** A promise object that can be awaited on for programmatic Modal dialogs */
+        promise: undefined,
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
@@ -278,7 +281,7 @@ export default defineComponent({
             if (this.cancelOptions.indexOf(method) < 0) return
 
             this.onCancel.apply(null, arguments)
-            this.close()
+            this.close({action: 'cancel', method});
         },
 
         /**
@@ -295,6 +298,9 @@ export default defineComponent({
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
                 window.requestAnimationFrame(() => {
                     removeElement(this.$el)
                 })
