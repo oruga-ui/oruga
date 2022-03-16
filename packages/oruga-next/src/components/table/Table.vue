@@ -363,7 +363,7 @@ export default defineComponent({
     emits: [
         'page-change', 'click', 'dblclick', 'contextmenu',
         'check', 'check-all', 'update:checkedRows',
-        'select', 'update:selected', 'filters-change', 'details-close', 'update:openedDetailed',
+        'select', 'update:selected', 'filters-change', 'details-open', 'details-close', 'update:openedDetailed',
         'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
         'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click',
         'columndragstart', 'columndragend', 'columndrop', 'columndragleave', 'columndragover'
