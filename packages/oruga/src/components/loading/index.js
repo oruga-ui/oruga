@@ -18,7 +18,14 @@ const LoadingProgrammatic = {
             delete params.parent
         }
         const propsData = merge(defaultParam, params)
-
+        if (window.Promise) {
+            let resolve, reject;
+            propsData.promise = new Promise((p1, p2) => {
+                resolve = p1
+                reject = p2
+            })
+            propsData.programmatic = {resolve, reject}
+        }
         const vm = typeof window !== 'undefined' && window.Vue ? window.Vue : localVueInstance || VueInstance
         const LoadingComponent = vm.extend(Loading)
         return new LoadingComponent({
