@@ -2,7 +2,7 @@
 
 exports[`Timepicker render correctly 1`] = `
 <div class="o-tpck">
-    <o-dropdown-stub maxheight="200" mobilemodal="true" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" appendtobodycopyparent="true" rootclass="o-tpck__dropdown">
+    <o-dropdown-stub maxheight="200" mobilemodal="true" animation="fade" trapfocus="true" closeonclick="true" canclose="true" triggers="click" menutag="div" appendtobodycopyparent="true" rootclass="o-tpck__dropdown">
         <o-dropdown-item-stub override="true" tag="div" tabindex="0" ariarole="" itemclass="o-tpck__box">
             <o-select-stub override="true" usehtml5validation="true" statusicon="true" placeholder="00" selectclass="o-tpck__select" placeholderclass="o-tpck__select-placeholder">
                 <option value="0">

@@ -12,7 +12,7 @@ exports[`OTableMobileSort render correctly 1`] = `
                 <tr>
                     <!---->
                     <!---->
-                    <th class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;"><span>
+                    <th draggable="false" class="o-table__th o-table__th--sortable o-table__th--unselectable" style="width: 40px;"><span>
                                 ID
                                 <span class="o-table__th__sort-icon" style="display: none;"><o-icon-stub icon="arrow-up" size="small" rotation="0" both="true"></o-icon-stub></span></span></th>
                     <!---->

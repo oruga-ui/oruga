@@ -85,16 +85,18 @@ describe('OLoading', () => {
             expect(window.document.body.appendChild).toHaveBeenCalled()
         })
 
-        it('manage close', () => {
+        it('manage close', (done) => {
             jest.useFakeTimers()
 
             wrapper.vm.$destroy = jest.fn(() => wrapper.vm.$destroy)
             wrapper.vm.close()
 
             expect(wrapper.vm.isActive).toBeFalsy()
-            expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 150)
-            jest.advanceTimersByTime(150)
-            expect(wrapper.vm.$destroy).toHaveBeenCalled()
+
+            window.requestAnimationFrame(() => {
+                expect(wrapper.vm.$destroy).toHaveBeenCalled()
+                done()
+            }, 150)
         })
     })
 

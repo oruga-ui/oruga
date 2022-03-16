@@ -47,7 +47,7 @@ const ModalProgrammatic = {
         if (slot) {
             instance.$slots.default = slot
         }
-        return instance;
+        return instance
     }
 }
 
