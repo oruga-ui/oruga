@@ -51,6 +51,10 @@ export default {
                 return getValueByPath(getOptions(), 'notification.containerElement', undefined)
             }
         },
+        /** internal property for handling promise resolving */
+        programmatic: Object,
+        /** A promise object that can be awaited on for notification dismissal */
+        promise: undefined,
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,
@@ -113,6 +117,10 @@ export default {
             this.$emit('close')
             this.onClose.apply(null, arguments)
 
+            if (this.programmatic && this.programmatic.resolve) {
+                this.programmatic.resolve.apply(null, arguments)
+            }
+
             // Timeout for the animation complete before destroying
             setTimeout(() => {
                 this.isActive = false
@@ -158,7 +166,7 @@ export default {
         },
 
         timeoutCallback() {
-            return this.close()
+            return this.close({action: 'close', method: 'timeout'})
         }
     },
     beforeMount() {

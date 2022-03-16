@@ -36,6 +36,12 @@ const NotificationProgrammatic = {
 
         newParams.active = true
         const propsData = merge(defaultParam, newParams)
+        let resolve, reject;
+        propsData.promise = new Promise((p1, p2) => {
+            resolve = p1
+            reject = p2
+        })
+        propsData.programmatic = {resolve, reject}
 
         const app = localVueInstance || VueInstance
         propsData.propsNotification = Object.assign({},propsData)

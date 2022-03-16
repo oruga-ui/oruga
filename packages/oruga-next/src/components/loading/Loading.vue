@@ -5,7 +5,7 @@
             v-if="isActive">
             <div
                 :class="overlayClasses"
-                @click="cancel"
+                @click="cancel('outside')"
             />
             <slot>
                 <o-icon
@@ -48,7 +48,10 @@ export default defineComponent({
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
-        programmatic: Boolean,
+        /** internal property for handling promise resolving */
+        programmatic: Object,
+        /** A promise object that can be awaited on for notification dismissal */
+        promise: undefined,
         container: [Object, Function, HTMLElement],
         /** Loader will overlay the full page */
         fullPage: {
@@ -125,10 +128,10 @@ export default defineComponent({
         /**
         * Close the Modal if canCancel.
         */
-        cancel() {
+        cancel(method) {
             if (!this.canCancel || !this.isActive) return
 
-            this.close()
+            this.close({action: 'cancel', method})
         },
         /**
         * Emit events, and destroy modal if it's programmatic.
@@ -140,18 +143,20 @@ export default defineComponent({
 
             // Timeout for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
                 this.isActive = false
-                setTimeout(() => {
-                    this.$destroy()
+                window.requestAnimationFrame(() => {
                     removeElement(this.$el)
-                }, 150)
+                })
             }
         },
         /**
         * Keypress event that is bound to the document.
         */
         keyPress({ key }) {
-            if (key === 'Escape' || key === 'Esc') this.cancel()
+            if (key === 'Escape' || key === 'Esc') this.cancel('escape')
         }
     },
     created() {

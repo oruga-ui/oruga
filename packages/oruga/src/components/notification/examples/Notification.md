@@ -39,6 +39,11 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                 variant="warning"
                 size="medium"
                 @click="component" />
+            <hr/>
+            <o-button 
+                label="Lauch with promise"
+                size="medium"
+                @click="promise" />
         </div>
     </section>
 </template>
@@ -121,10 +126,11 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     onClose: () => {
                         this.$oruga.notification.open('Custom notification closed!')
                     }
-                }) 
+                })
             },
             component() {
                 this.$oruga.notification.open({
+                    // parent is only for Vue2. in Vue 3 omit this option
                     parent: this,
                     component: NotificationForm,
                     position: 'bottom-right',
@@ -132,6 +138,27 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     indefinite: true
                 })
             },
+            async promise() {
+                const instance = this.$oruga.notification.open({
+                    message: 'Notification with promise response. The promise returns how the notification was closed. (value from $emit(\'close\', value)',
+                    position: 'top',
+                    variant: 'info',
+                    duration: 5000,
+                    closable: true
+                })
+
+                // Note utilizing the promise requires Promise be supported by the browser
+                // If you are running Vue 2 on IE 11 this will not be the case unless you 
+                // add a polyfill in your build.
+                const ret = await instance.promise;
+
+                this.$oruga.notification.open({
+                    message: 'Notification was resolved with ' + JSON.stringify(ret),
+                    position: 'top',
+                    variant: 'success',
+                    duration: 2000,
+                })
+            }
         }
     }
 </script>

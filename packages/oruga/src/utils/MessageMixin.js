@@ -88,7 +88,7 @@ export default {
          */
         close() {
             this.isActive = false
-            this.$emit('close')
+            this.$emit('close', ...arguments)
             this.$emit('update:active', false)
         },
         /**
@@ -98,7 +98,7 @@ export default {
             if (this.autoClose) {
                 this.timer = setTimeout(() => {
                     if (this.isActive) {
-                        this.close()
+                        this.close({action: 'close', method: 'timeout'})
                     }
                 }, this.duration)
             }
