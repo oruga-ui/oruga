@@ -51,10 +51,10 @@ export default {
                 return getValueByPath(getOptions(), 'notification.containerElement', undefined)
             }
         },
-        /** internal property for handling promise resolving */
-        programmatic: Object,
-        /** A promise object that can be awaited on for notification dismissal */
-        promise: undefined,
+        /** @ignore */
+        programmatic: [Boolean, Object],
+        /** @ignore */
+        promise: Object,
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,

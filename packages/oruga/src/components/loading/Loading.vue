@@ -44,10 +44,10 @@ export default {
     props: {
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
-        /** internal property for handling promise resolving */
-        programmatic: Object,
-        /** A promise object that can be awaited on for notification dismissal */
-        promise: undefined,
+        /** @ignore */
+        programmatic: [Boolean, Object],
+        /** @ignore */
+        promise: Object,
         container: [Object, Function, HTMLElement],
         /** Loader will overlay the full page */
         fullPage: {

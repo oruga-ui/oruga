@@ -75,10 +75,10 @@ export default defineComponent({
         component: [Object, Function],
         /** Text content */
         content: String,
-        /** Internal property for programmatic modal usage */
-        programmatic: [Object, Boolean],
-        /** A promise object that can be awaited on for programmatic Modal dialogs */
-        promise: undefined,
+        /** @ignore */
+        programmatic: [Boolean, Object],
+        /** @ignore */
+        promise: Object,
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
