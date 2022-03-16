@@ -147,10 +147,9 @@ export default defineComponent({
                     this.programmatic.resolve.apply(null, arguments)
                 }
                 this.isActive = false
-                setTimeout(() => {
-                    this.$destroy()
+                window.requestAnimationFrame(() => {
                     removeElement(this.$el)
-                }, 150)
+                })
             }
         },
         /**
