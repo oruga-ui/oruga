@@ -5,6 +5,10 @@ export default (parentCmp: string) => defineComponent({
     mixins: [InjectedChildMixin(parentCmp, Sorted)],
     props: {
         /**
+         * Item value (it will be used as v-model of wrapper component)
+         */
+        value: [String, Number],
+        /**
          * Item label
          */
         label: String,
@@ -24,15 +28,9 @@ export default (parentCmp: string) => defineComponent({
             default: true
         },
         /**
-         * Item value (it will be used as v-model of wrapper component)
-         */
-        value: [String, Number],
-        /**
          * Header class of the item
          */
-        headerClass: {
-            type: [String, Array, Object]
-        }
+        headerClass: [String, Array, Object]
     },
     data() {
         return {
@@ -76,7 +74,8 @@ export default (parentCmp: string) => defineComponent({
         const vnode = withDirectives(
             h('div',
                 {
-                    class: this.elementClasses
+                    class: this.elementClasses,
+                    id: `${parentCmp}-${this.newValue}`
                 },
                 content
             ),
