@@ -276,13 +276,11 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
 
-        <template v-if="loading">
             <slot name="loading">
                 <o-loading :full-page="false" :active="loading" />
             </slot>
-        </template>
+        </div>
 
         <template v-if="(checkable && $slots['bottom-left']) ||
             (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
@@ -839,11 +837,7 @@ export default defineComponent({
                         .mount(document.createElement('div'))
                 })
             }
-            let defaultSlots = this.defaultSlots
-                .filter((vnode) =>
-                    vnode && vnode.$data && vnode.$data._isTableColumn
-                )
-            return defaultSlots
+            return this.defaultSlots
         },
 
         isMobile() {
@@ -1463,28 +1457,21 @@ export default defineComponent({
         },
 
         _addColumn(column) {
-            if (typeof window !== 'undefined') {
+            this.defaultSlots.push(column)
+            const slot = this.$refs['slot']
+            if (slot && slot.children) {
                 this.$nextTick(() => {
-                    this.defaultSlots.push(column)
-                    requestAnimationFrame(() => {
-                        const div = this.$refs['slot']
-                        if (div && div.children) {
-                            const position = [...div.children].map(c =>
-                                parseInt(c.getAttribute('data-id'), 10)).indexOf(column.newKey)
-                            if (position !== this.defaultSlots.length) {
-                                this.defaultSlots.splice(position, 0, column);
-                                this.defaultSlots = this.defaultSlots.slice(0, this.defaultSlots.length - 1)
-                            }
-                        }
-                    })
+                    const ids = this.defaultSlots.map(it => `[data-id="${it.newKey}"]`).join(',')
+                    const sortedIds = Array.from(slot.querySelectorAll(ids)).map(
+                        (el: any) => el.getAttribute('data-id'))
+                    this.defaultSlots = this.defaultSlots.sort((a, b) =>
+                        sortedIds.indexOf(`${a.newKey}`) - sortedIds.indexOf(`${b.newKey}`) )
                 })
             }
         },
 
         _removeColumn(column) {
-            this.$nextTick(() => {
-                this.defaultSlots = this.defaultSlots.filter(d => d.newKey !== column.newKey)
-            })
+            this.defaultSlots = this.defaultSlots.filter(d => d.newKey !== column.newKey)
         },
 
         _nextSequence() {
