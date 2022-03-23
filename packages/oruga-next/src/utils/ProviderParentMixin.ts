@@ -29,9 +29,9 @@ export default (itemName: string, flags: number = 0) => {
                 this.childItems.push(item)
                 if (this.$el) {
                     this.$nextTick(() => {
-                        const ids = this.childItems.map(it => `#${itemName}-${it.newValue}`).join(',')
-                        const sortedIds = Array.from(this.$el.querySelectorAll(ids))
-                            .map((el: any) => el.id.replace(`${itemName}-`, ''))
+                        const ids = this.childItems.map(it => `[data-id="${itemName}-${it.newValue}"]`).join(',')
+                        const sortedIds = Array.from(this.$el.querySelectorAll(ids)).map(
+                            (el: any) => el.getAttribute('data-id').replace(`${itemName}-`, ''))
                         this.childItems.forEach(it => it.index = sortedIds.indexOf(`${it.newValue}`))
                     })
                 }

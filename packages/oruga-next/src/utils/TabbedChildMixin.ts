@@ -75,7 +75,7 @@ export default (parentCmp: string) => defineComponent({
             h('div',
                 {
                     class: this.elementClasses,
-                    id: `${parentCmp}-${this.newValue}`
+                    'data-id': `${parentCmp}-${this.newValue}`
                 },
                 content
             ),
