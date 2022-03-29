@@ -1,0 +1,32 @@
+{
+  "name": "@oruga-ui/docs-next",
+  "version": "0.5.4",
+  "homepage": "https://oruga.io",
+  "description": "UI components for Vue.js and CSS framework agnostic",
+  "author": "Walter Tommasi <tommsi20@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:serve": "vitepress serve"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "1.2.28",
+    "@fortawesome/free-solid-svg-icons": "5.13.0",
+    "@fortawesome/vue-fontawesome": "0.1.9",
+    "@vue/repl": "^1.0.0",
+    "@vue/theme": "^1.0.1",
+    "concurrently": "5.2.0",
+    "dynamics.js": "^1.1.5",
+    "gsap": "^3.9.0",
+    "markdown-it-include": "1.1.1",
+    "vue-docgen-cli": "4.34.4",
+    "vitepress": "0.22.3",
+    "vue": "^3.2.31",
+    "vue-telescope-expo": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "^16.9.1"
+  }
+}
