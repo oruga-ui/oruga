@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "outDir": "dist",
@@ -9,9 +8,5 @@
     "allowJs": true,
     "strict": true,
     "baseUrl": ".",
-    "paths": {
-      "/@theme/*": [".vitepress/theme/*"]
-    }
-  },
-  "include": ["env.d.ts", "src/**/*", ".vitepress/**/*"]
+  }
 }

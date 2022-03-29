@@ -12,9 +12,11 @@ If you need a component library and want to easily apply your custom styles, Oru
 
 Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
+<!-- >
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
 </video>
+<--->
 
 If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
 
@@ -32,65 +34,6 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 ## Setup
 
-### Vue 2
-<br>
-<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
-<o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
-
-```bash
-yarn add @oruga-ui/oruga
-```
-
-</o-tab-item>
-<o-tab-item override label="Npm" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
-
-```bash
-npm install @oruga-ui/oruga --save
-```
-
-</o-tab-item>
-<o-tab-item override label="Cdn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
-
-```html
-<link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
-<script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
-```
-
-</o-tab-item>
-</o-tabs>
-
-#### Build from "develop" branch
-
-```html
-<link rel="stylesheet" href="https://preview.oruga.io/cdn/oruga.min.css" />
-<script src="https://preview.oruga.io/cdn/oruga.min.js"></script>
-```
-
-
-
-#### Full bundle
-
-```js
-import Vue from 'vue'
-import Oruga from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-
-Vue.use(Oruga)
-```
-
-#### Individual components (tree shaking)
-
-```js
-import Vue from 'vue'
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-
-Vue.use(Autocomplete)
-Vue.use(Sidebar)
-```
-
-### Vue 3
-<br>
 <o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
 <o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 

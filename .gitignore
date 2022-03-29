@@ -12,3 +12,5 @@ packages/oruga/README.md
 .idea
 packages/demo-vue3/*
 packages/oruga-next/README.md
+packages/docs-next/.vuepress/.cache/
+packages/docs-next/.vuepress/.temp/
