@@ -10,7 +10,7 @@ title: Radio
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/radio/examples/Radio.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/radio/examples/Radio.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -46,10 +46,10 @@ title: Radio
   export default {
     data() {
       return {
-        radio: 'Jack'
-      }
+        radio: "Jack"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -94,10 +94,10 @@ title: Radio
   export default {
     data() {
       return {
-        radio: 'default'
-      }
+        radio: "default"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -108,80 +108,6 @@ title: Radio
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_radio.scss)
 
 <br />
-<template>
-  <div class="field">
-    <doc-wrapper>
-      <template v-slot:default="s">
-        <o-radio v-model="s.checkbox" native-value="default" v-bind="s">Radio</o-radio>
-      </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-
-export default {
-  data() {
-    return {
-      inspectData: [
-        {
-          class: 'rootClass',
-          description : 'Class of the root element'
-        },
-        {
-          class: 'labelClass',
-          description : 'Class of the radio label'
-        },
-        {
-          class: 'checkClass',
-          description : 'Class of the native radio element'
-        },
-        {
-          class: 'checkedClass',
-          description : 'Class of the root element when checked',
-          action: (cmp) => {
-            cmp.data.checkbox = 'default';
-          }
-        },
-        {
-          class: 'checkCheckedClass',
-          description : 'Class of the native radio element when checked',
-          action: (cmp) => {
-            cmp.data.checkbox = 'default';
-          }
-        },
-        {
-          class: 'sizeClass',
-          description : 'Class of the radio size',
-          properties: ["size"],
-          suffixes: ['small', 'medium', 'large'],
-          action: (cmp) => {
-            cmp.data.size = 'large';
-          }
-        },
-        {
-          class: 'disabledClass',
-          description : 'Class when radio is disabled',
-          properties: ["disabled"],
-          action: (cmp) => {
-            cmp.data.disabled = true;
-          }
-        },
-        {
-          class: 'variantClass',
-          description : 'Class of the radio variant',
-          properties: ["variant"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.variant = 'warning';
-          }
-        }
-      ]
-    }
-  }
-}
-</script>
 
 <br />
 <br />
@@ -193,7 +119,7 @@ export default {
 | disabled    | Same as native disabled        | boolean                        | -                                                                               |         |
 | name        | Same as native name            | string                         | -                                                                               |         |
 | nativeValue | Same as native value           | string\|number\|boolean\|array | -                                                                               |         |
-| override    | Override classes               | boolean                        | -                                                                               | false   |
+| override    |                                | boolean                        | -                                                                               |         |
 | required    |                                | boolean                        | -                                                                               |         |
 | size        | Size of the control, optional  | string                         | `small`, `medium`, `large`                                                      |         |
 | v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |
@@ -201,9 +127,10 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| update:modelValue |            |
+| input             |            |
 
 ## Slots
 

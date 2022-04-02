@@ -10,7 +10,7 @@ title: Tooltip
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tooltip/examples/Tooltip.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/tooltip/examples/Tooltip.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -54,7 +54,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -67,13 +67,20 @@ title: Tooltip
 ```html
 <template>
   <section>
-    <o-tooltip label="Tooltip multiline, probably because it's too long for a casual tooltip" multiline>
+    <o-tooltip
+      label="Tooltip multiline, probably because it's too long for a casual tooltip"
+      multiline
+    >
       <o-button>
         Multiline (default)
       </o-button>
     </o-tooltip>
 
-    <o-tooltip label="It's not brief, but it's also not long" size="small" multiline>
+    <o-tooltip
+      label="It's not brief, but it's also not long"
+      size="small"
+      multiline
+    >
       <o-button>
         Multiline (small)
       </o-button>
@@ -93,7 +100,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -108,10 +115,17 @@ title: Tooltip
   <section>
     <o-tooltip position="bottom" multiline>
       <o-button>Html Content</o-button>
-      <template v-slot:content> <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit. <i>Fusce id fermentum quam</i>. </template>
+      <template v-slot:content>
+        <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
+        <i>Fusce id fermentum quam</i>.
+      </template>
     </o-tooltip>
 
-    <o-tooltip variant="primary" :triggers="['click']" :auto-close="['outside', 'escape']">
+    <o-tooltip
+      variant="primary"
+      :triggers="['click']"
+      :auto-close="['outside', 'escape']"
+    >
       <template v-slot:content>
         <o-icon icon="heart" variant="danger"></o-icon>
         <o-icon icon="thumbs-up" variant="info"></o-icon>
@@ -124,7 +138,7 @@ title: Tooltip
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -162,9 +176,9 @@ title: Tooltip
     data() {
       return {
         active: true
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -175,93 +189,6 @@ title: Tooltip
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tooltip.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-tooltip v-bind="s" label="Tooltip!" always>
-                    <o-button>
-                        Delayed
-                    </o-button>
-                </o-tooltip>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Root class of the element",
-                },
-                {
-                    class: "contentClass",
-                    description: "Class of the tooltip content",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "triggerClass",
-                    description: "Class of the tooltip trigger",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "multilineClass",
-                    description: "Class of the tooltip content when is multiline",
-                    action: (cmp) => {
-                        cmp.data.multiline = true
-                    }
-                },
-                {
-                    class: "arrowClass",
-                    description: "Class of the tooltip arrow",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "arrowOrderClass",
-                    description: "Class of the tooltip arrow when its position changes",
-                    properties: ['position'],
-                    suffixes: ['top', 'bottom', 'left', 'right'],
-                    action: (cmp) => {
-                        cmp.data.position = 'right'
-                    }
-                },
-                {
-                    class: "orderClass",
-                    description: "Class of the tooltip trigger when its position changes",
-                    properties: ['position'],
-                    suffixes: ['top', 'bottom', 'left', 'right'],
-                    action: (cmp) => {
-                        cmp.data.position = 'right'
-                    }
-                },
-                {
-                    class: "alwaysClass",
-                    description: "Class of the tooltip trigger when is always visible",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the tooltip variant',
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                    }
-                }
-            ]
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -279,7 +206,7 @@ export default {
 | delay        | Tooltip delay before it appears (number in ms)                                                                            | number              | -                                                                               |                                                                                                                                            |
 | label        | Tooltip text                                                                                                              | string              | -                                                                               |                                                                                                                                            |
 | multiline    | Tooltip will be multilined                                                                                                | boolean             | -                                                                               |                                                                                                                                            |
-| override     | Override classes                                                                                                          | boolean             | -                                                                               | false                                                                                                                                      |
+| override     |                                                                                                                           | boolean             | -                                                                               |                                                                                                                                            |
 | position     | Tooltip position in relation to the element                                                                               | string              | `top`, `bottom`, `left`, `right`                                                | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;position: 'top'<br>}</code>     |
 | triggers     | Tooltip trigger events                                                                                                    | array               | `hover`, `click`, `focus`, `contextmenu`                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;triggers: ['hover']<br>}</code> |
 | variant      | Color of the tooltip                                                                                                      | string\|func\|array | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                            |

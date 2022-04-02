@@ -99,7 +99,7 @@ export default {
         /** Events to be binded to the injected component */
         events: {
             type: Object,
-            default: {}
+            default: () => ({})
         },
         /** Close icon name */
         closeIcon: {

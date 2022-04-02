@@ -10,7 +10,7 @@ title: Dropdown
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -57,7 +57,13 @@ title: Dropdown
     <o-dropdown aria-role="list">
       <div slot="trigger">
         Custom
-        <o-icon variant="success" icon="caret-down" slot="trigger" role="button"> </o-icon>
+        <o-icon
+          variant="success"
+          icon="caret-down"
+          slot="trigger"
+          role="button"
+        >
+        </o-icon>
       </div>
 
       <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
@@ -78,7 +84,7 @@ title: Dropdown
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -118,9 +124,9 @@ title: Dropdown
     data() {
       return {
         selectedOptions: []
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -141,7 +147,12 @@ title: Dropdown
 
     <br />
 
-    <o-dropdown :scrollable="isScrollable" :max-height="maxHeight" v-model="currentMenu" aria-role="list">
+    <o-dropdown
+      :scrollable="isScrollable"
+      :max-height="maxHeight"
+      v-model="currentMenu"
+      aria-role="list"
+    >
       <o-button variant="primary" type="button" slot="trigger">
         <template>
           <o-icon :icon="currentMenu.icon"></o-icon>
@@ -150,7 +161,12 @@ title: Dropdown
         <o-icon icon="caret-down"></o-icon>
       </o-button>
 
-      <o-dropdown-item v-for="(menu, index) in menus" :key="index" :value="menu" aria-role="listitem">
+      <o-dropdown-item
+        v-for="(menu, index) in menus"
+        :key="index"
+        :value="menu"
+        aria-role="listitem"
+      >
         <div class="media">
           <o-icon class="media-left" :icon="menu.icon"></o-icon>
           <div class="media-content">
@@ -168,19 +184,19 @@ title: Dropdown
       return {
         isScrollable: true,
         maxHeight: 200,
-        currentMenu: { icon: 'users', text: 'People' },
+        currentMenu: { icon: "users", text: "People" },
         menus: [
-          { icon: 'users', text: 'People' },
-          { icon: 'box', text: 'Orders' },
-          { icon: 'credit-card', text: 'Payments' },
-          { icon: 'dolly', text: 'Logistics' },
-          { icon: 'business-time', text: 'Jobs' },
-          { icon: 'shopping-cart', text: 'Cart' },
-          { icon: 'cog', text: 'Configuration' }
+          { icon: "users", text: "People" },
+          { icon: "box", text: "Orders" },
+          { icon: "credit-card", text: "Payments" },
+          { icon: "dolly", text: "Logistics" },
+          { icon: "business-time", text: "Jobs" },
+          { icon: "shopping-cart", text: "Cart" },
+          { icon: "cog", text: "Configuration" }
         ]
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style>
@@ -213,154 +229,6 @@ title: Dropdown
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
 
 <br />
-<template>
-  <div>
-    <doc-wrapper>
-        <template v-slot:default="s">
-            <o-dropdown v-model="currentMenu" v-bind="s" aria-role="list">
-                <o-button variant="primary" slot="trigger" slot-scope="{ active }" ref="dropdownbtn">
-                    <span>Click me!</span>
-                    <o-icon :icon="active ? 'caret-up' : 'caret-down'"></o-icon>
-                </o-button>
-                <o-dropdown-item v-bind="s" value="ac1" aria-role="listitem">Action</o-dropdown-item>
-                <o-dropdown-item v-bind="s" value="ac2" aria-role="listitem">Another action</o-dropdown-item>
-                <o-dropdown-item v-bind="s" value="ac3" disabled aria-role="listitem">Something else</o-dropdown-item>
-            </o-dropdown>
-        </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-  </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            currentMenu: '',
-            subitem: 'dropdown-item',
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "triggerClass",
-                    description: "Class of the trigger element"
-                },
-                {
-                    class: "menuMobileOverlayClass",
-                    description: "Class of the overlay when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                    specificity: "when <b>mobileClass</b> is applied",
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "menuClass",
-                    description: "Class of the dropdown menu",
-                    specificity: "when <b>inlineClass</b> or <b>mobileClass</b> or <b>expandedClass</b> is applied",
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "disabledClass",
-                    description: "Class of dropdown when disabled",
-                    properties: ['disabled'],
-                    action: (cmp) => {
-                        cmp.data.disabled = true;
-                    }
-                },
-                {
-                    class: "menuActiveClass",
-                    description: "Class of dropdown menu when active",
-                    properties: ['inline'],
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "inlineClass",
-                    description: "Class of dropdown menu when inline",
-                    properties: ['inline'],
-                    action: (cmp) => {
-                        cmp.data.inline = true;
-                    }
-                },
-                {
-                    class: "menuPositionClass",
-                    description: "Class of dropdown menu position",
-                    properties: ['position'],
-                    suffixes: ['top-right', 'top-left', 'bottom-left'],
-                    action: (cmp) => {
-                        cmp.data.position = 'top-right';
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of dropdown when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "expandedClass",
-                    description: "Class of dropdown when expanded",
-                    properties: ['expanded'],
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    }
-                },
-                {
-                    class: "itemClass",
-                    description: "Class of the dropdown item",
-                    subitem: true,
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "itemActiveClass",
-                    description: "Class of the dropdown item when active",
-                    subitem: true,
-                    action: () => {
-                        setTimeout(() => {
-                            this.currentMenu = 'ac1'
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-                {
-                    class: "itemDisabledClass",
-                    subitem: true,
-                    description: "Class of the dropdown item when disabled",
-                    properties: ['disabled'],
-                    action: () => {
-                        setTimeout(() => {
-                            this.$refs.dropdownbtn.$el.click()
-                        }, 300);
-                    }
-                },
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -383,7 +251,7 @@ export default {
 | mobileBreakpoint       | Mobile breakpoint as max-width value                                                                                                                   | string                                 | -                                        |                                                                                                                                           |
 | mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;mobileModal: true<br>}</code> |
 | multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                                                                                                           |
-| override               | Override classes                                                                                                                                       | boolean                                | -                                        | false                                                                                                                                     |
+| override               |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                           |
 | position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                                                                                                           |
 | scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                                                                                                           |
 | trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>   |
@@ -392,11 +260,11 @@ export default {
 
 ### Events
 
-| Event name    | Properties | Description |
-| ------------- | ---------- | ----------- |
-| active-change |            |
-| change        |            |
-| input         |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| update:modelValue |            |
+| active-change     |            |
+| change            |            |
 
 ### Slots
 
@@ -411,6 +279,15 @@ export default {
 
 > <CarbonAds />
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown item.scss)
+
+<br />
+
+<br />
+<br />
+
 ## Props
 
 | Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                |
@@ -418,10 +295,10 @@ export default {
 | ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                     |
 | clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                   |
 | disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                        |
-| override  | Override classes                                      | boolean                                | -      | false                                                                                                                                  |
+| override  |                                                       | boolean                                | -      |                                                                                                                                        |
 | tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                      |
 | tag       | Dropdown item tag name                                | string                                 | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
-| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      | null                                                                                                                                   |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      |                                                                                                                                        |
 
 ### Events
 

@@ -10,7 +10,7 @@ title: Tabs
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -51,8 +51,9 @@ title: Tabs
       </o-tab-item>
 
       <o-tab-item value="3" label="Videos" icon="video" disabled>
-        Nunc nec velit nec libero vestibulum eleifend. Curabitur pulvinar congue luctus. Nullam hendrerit iaculis augue vitae ornare. Maecenas vehicula pulvinar tellus, id sodales
-        felis lobortis eget.
+        Nunc nec velit nec libero vestibulum eleifend. Curabitur pulvinar congue
+        luctus. Nullam hendrerit iaculis augue vitae ornare. Maecenas vehicula
+        pulvinar tellus, id sodales felis lobortis eget.
       </o-tab-item>
     </o-tabs>
   </section>
@@ -62,12 +63,12 @@ title: Tabs
   export default {
     data() {
       return {
-        activeTab: '0',
+        activeTab: "0",
         showBooks: false,
         multiline: false
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -100,14 +101,14 @@ title: Tabs
     data() {
       return {
         count: 1
-      }
+      };
     },
     mounted() {
       setTimeout(() => {
-        this.count++
-      }, 3 * 1000)
+        this.count++;
+      }, 3 * 1000);
     }
-  }
+  };
 </script>
 
 <style>
@@ -126,7 +127,10 @@ title: Tabs
 ```html
 <template>
   <o-tabs type="boxed">
-    <o-tab-item v-for="(item, index) in new Array(45)" :key="`longitem-${index}`">
+    <o-tab-item
+      v-for="(item, index) in new Array(45)"
+      :key="`longitem-${index}`"
+    >
       <template slot="header">
         <span>Head {{index}}</span>
       </template>
@@ -140,10 +144,10 @@ title: Tabs
         expanded: false,
         atRight: false,
         size: null,
-        type: 'default'
-      }
+        type: "default"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -180,7 +184,13 @@ title: Tabs
       </o-field>
     </o-field>
 
-    <o-tabs :position="atRight ? 'right' : ''" :size="size" :type="type" vertical :expanded="expanded">
+    <o-tabs
+      :position="atRight ? 'right' : ''"
+      :size="size"
+      :type="type"
+      vertical
+      :expanded="expanded"
+    >
       <o-tab-item label="Pictures" icon="images">
         Lorem ipsum dolor sit amet. <br />
         Lorem ipsum dolor sit amet. <br />
@@ -200,8 +210,9 @@ title: Tabs
       </o-tab-item>
 
       <o-tab-item label="Videos" icon="video" disabled>
-        Nunc nec velit nec libero vestibulum eleifend. Curabitur pulvinar congue luctus. Nullam hendrerit iaculis augue vitae ornare. Maecenas vehicula pulvinar tellus, id sodales
-        felis lobortis eget.
+        Nunc nec velit nec libero vestibulum eleifend. Curabitur pulvinar congue
+        luctus. Nullam hendrerit iaculis augue vitae ornare. Maecenas vehicula
+        pulvinar tellus, id sodales felis lobortis eget.
       </o-tab-item>
     </o-tabs>
   </section>
@@ -214,10 +225,10 @@ title: Tabs
         expanded: false,
         atRight: false,
         size: null,
-        type: 'default'
-      }
+        type: "default"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -245,7 +256,7 @@ title: Tabs
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -273,7 +284,7 @@ title: Tabs
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -284,194 +295,19 @@ title: Tabs
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tabs.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-tabs v-model="activeTab" v-bind="s">
-                    <o-tab-item v-bind="s" :value="1" label="Pictures" icon="images">
-                        Lorem ipsum dolor sit amet.
-                    </o-tab-item>
-                    <o-tab-item v-bind="s" :value="2" label="Music" icon="music">
-                        Lorem <br />
-                        ipsum <br />
-                        dolor <br />
-                        sit <br />
-                        amet.
-                    </o-tab-item>
-                    <o-tab-item v-bind="s" :value="3" label="Videos" icon="video">
-                        Nunc nec velit nec libero vestibulum eleifend. Curabitur pulvinar congue luctus. Nullam hendrerit iaculis augue vitae ornare. Maecenas vehicula pulvinar tellus, id sodales
-                        felis lobortis eget.
-                    </o-tab-item>
-                </o-tabs>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            activeTab: 1,
-            subitem: "tab-item",
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Root class of the element",
-                },
-                {
-                    class: "navSizeClass",
-                    description: "Size of the navigation",
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = 'large';
-                    }
-                },
-                {
-                    class: "navTypeClass",
-                    description: "Type of the navigation",
-                    properties: ["type"],
-                    suffixes: ['default', 'boxed', 'toggle'],
-                    action: () => {}
-                },
-                {
-                    class: "verticalClass",
-                    description: "Class of Tabs component when vertical",
-                    properties: ['vertical'],
-                    action: (cmp) => {
-                        cmp.data.vertical = true
-                    }
-                },
-                {
-                    class: "expandedClass",
-                    description: "Class of Tabs component when expanded",
-                    properties: ['expanded'],
-                    action: (cmp) => {
-                        cmp.data.expanded = true
-                    }
-                },
-                {
-                    class: "multilineClass",
-                    description: "Class of Tabs component when multiline",
-                    properties: ['multiline'],
-                    action: (cmp) => {
-                        cmp.data.multiline = true
-                    }
-                },
-                {
-                    class: "positionClass",
-                    description: "Class of Tabs component when when is vertical and its position changes",
-                    properties: ['position', 'vertical'],
-                    suffixes: ['bottom', 'left', 'right'],
-                    action: (cmp) => {
-                        cmp.data.vertical = true
-                        cmp.data.position = 'right'
-                    }
-                },
-                {
-                    class: "tabItemWrapperClass",
-                    description: "Class of the tab item wrapper",
-                    specificity: "when <b>expandedClass</b> is applied",
-                },
-                {
-                    class: "contentClass",
-                    description: "Class of the tab content",
-                },
-                {
-                    class: "itemClass",
-                    description: "Class of the tab item",
-                    subitem: true
-                },
-                {
-                    class: "itemHeaderClass",
-                    description: "Class of the tab item header",
-                    specificity: "when <b>verticalClass</b> or <b>expandedClass</b> or <b>positionClass</b> is applied",
-                    subitem: true,
-                },
-                {
-                    class: "itemHeaderActiveClass",
-                    description: "Class of the tab item header when active",
-                    subitem: true,
-                    suffixes: ['default', 'boxed', 'toggle'],
-                },
-                {
-                    class: "itemHeaderDisabledClass",
-                    description: "Class of the tab item header when disabled",
-                    subitem: true,
-                    suffixes: ['default', 'boxed', 'toggle'],
-                    action: (cmp) => {
-                        cmp.data.disabled = true;
-                    }
-                },
-                {
-                    class: "itemHeaderTypeClass",
-                    description: "Class of the tab item header type",
-                    subitem: true,
-                    suffixes: ['default', 'boxed', 'toggle'],
-                    action: () => {}
-                },
-                {
-                    class: "itemHeaderIconClass",
-                    description: "Class of the tab item header icon",
-                    subitem: true,
-                    action: () => {
-                    }
-                },
-                {
-                    class: "itemHeaderTextClass",
-                    description: "Class of the tab item header text",
-                    subitem: true,
-                    action: () => {
-                    }
-                },
-                {
-                    class: "navTabsClass",
-                    description: "Class of the Tabs component nav tabs",
-                    specificity: "when <b>positionClass</b> is applied",
-                },
-                {
-                    class: "navPositionClass",
-                    description: "Class of the Tabs component nav position",
-                    properties: ['position'],
-                    suffixes: ['bottom', 'left', 'right'],
-                    action: (cmp) => {
-                        cmp.data.vertical = false
-                        cmp.data.position = 'right'
-                    }
-                },
-            ]
-        };
-    },
-};
-</script>
 
 <br />
 <br />
 
 ## Props
 
-| Prop name     | Description                                     | Type           | Values                                                                          | Default                                                                                                                            |
-| ------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| animated      | Tab will have an animation                      | boolean        | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
-| destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | false                                                                                                                              |
-| expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               |                                                                                                                                    |
-| multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               |                                                                                                                                    |
-| override      | Override classes                                | boolean        | -                                                                               | false                                                                                                                              |
-| position      | Position of the tab, optional                   | string         | `centered`, `right`                                                             |                                                                                                                                    |
-| size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      |                                                                                                                                    |
-| type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | 'default'                                                                                                                          |
-| v-model       |                                                 | string\|number | -                                                                               |                                                                                                                                    |
-| variant       | Color of the control, optional                  | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                    |
-| vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | false                                                                                                                              |
-
-### Events
-
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Prop name | Description                                     | Type    | Values            | Default                                                                                                                            |
+| --------- | ----------------------------------------------- | ------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| animated  | Tab will have an animation                      | boolean | -                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
+| expanded  | Tabs will be expanded (full-width)              | boolean | -                 |                                                                                                                                    |
+| multiline | Show tab items multiline when there is no space | boolean | -                 |                                                                                                                                    |
+| override  |                                                 | boolean | -                 |                                                                                                                                    |
+| type      | Tab type                                        | string  | `boxed`, `toggle` | 'default'                                                                                                                          |
 
 ### Slots
 
@@ -487,24 +323,22 @@ export default {
 
 > <CarbonAds />
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tab item.scss)
+
+<br />
+
+<br />
+<br />
+
 ## Props
 
-| Prop name | Description                                                  | Type           | Values | Default                                                                                                                               |
-| --------- | ------------------------------------------------------------ | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| disabled  | Item will be disabled                                        | boolean        | -      |                                                                                                                                       |
-| icon      | Icon on the left                                             | string         | -      |                                                                                                                                       |
-| iconPack  | Icon pack                                                    | string         | -      |                                                                                                                                       |
-| label     | Item label                                                   | string         | -      |                                                                                                                                       |
-| override  | Override classes                                             | boolean        | -      | false                                                                                                                                 |
-| tag       | Tabs item tag name                                           | string         | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
-| value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |                                                                                                                                       |
-| visible   | Show/hide item                                               | boolean        | -      | true                                                                                                                                  |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Prop name | Description           | Type    | Values | Default                                                                                                                               |
+| --------- | --------------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled  | Item will be disabled | boolean | -      |                                                                                                                                       |
+| override  |                       | boolean | -      |                                                                                                                                       |
+| tag       | Tabs item tag name    | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
 
 ## Style
 

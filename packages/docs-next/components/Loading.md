@@ -10,7 +10,7 @@ title: Loading
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/loading/examples/Loading.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/loading/examples/Loading.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -30,8 +30,14 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-      <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></o-loading>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
+      <o-loading
+        :full-page="isFullPage"
+        :active.sync="isLoading"
+        :can-cancel="true"
+      ></o-loading>
     </p>
   </section>
 </template>
@@ -42,17 +48,17 @@ title: Loading
       return {
         isLoading: false,
         isFullPage: true
-      }
+      };
     },
     methods: {
       openLoading() {
-        this.isLoading = true
+        this.isLoading = true;
         setTimeout(() => {
-          this.isLoading = false
-        }, 10 * 1000)
+          this.isLoading = false;
+        }, 10 * 1000);
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -74,8 +80,14 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-      <o-loading :full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
+      <o-loading
+        :full-page="isFullPage"
+        :active.sync="isLoading"
+        :can-cancel="true"
+      >
         <o-icon pack="fas" icon="sync-alt" size="large" spin> </o-icon>
       </o-loading>
     </p>
@@ -88,17 +100,17 @@ title: Loading
       return {
         isLoading: false,
         isFullPage: true
-      }
+      };
     },
     methods: {
       openLoading() {
-        this.isLoading = true
+        this.isLoading = true;
         setTimeout(() => {
-          this.isLoading = false
-        }, 10 * 1000)
+          this.isLoading = false;
+        }, 10 * 1000);
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -120,7 +132,9 @@ title: Loading
       <o-switch v-model="isFullPage">Display loader over full page</o-switch>
     </o-field>
     <p style="position: relative" ref="element">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </p>
   </div>
 </template>
@@ -130,18 +144,18 @@ title: Loading
     data() {
       return {
         isFullPage: true
-      }
+      };
     },
     methods: {
       openLoading() {
         const loadingComponent = this.$oruga.loading.open({
           fullPage: this.isFullPage,
           container: this.isFullPage ? null : this.$refs.element
-        })
-        setTimeout(() => loadingComponent.close(), 3 * 1000)
+        });
+        setTimeout(() => loadingComponent.close(), 3 * 1000);
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -152,69 +166,6 @@ title: Loading
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <p style="position: relative">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-                    <o-loading v-bind="s" icon="sync-alt" :active.sync="loading" :iconSpin="true">
-                    </o-loading>
-                </p>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            loading: false,
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element",
-                    action: (cmp) => {
-                        cmp.data.canCancel = true;
-                        cmp.data.fullPage = false;
-                        this.loading = true;
-                    }
-                },
-                {
-                    class: "overlayClass",
-                    description: "Class of the loading overlay",
-                    action: (cmp) => {
-                        cmp.data.canCancel = true;
-                        cmp.data.fullPage = false;
-                        this.loading = true;
-                    }
-                },
-                {
-                    class: "iconClass",
-                    description: "Class for the loading icon",
-                    action: (cmp) => {
-                        cmp.data.canCancel = true;
-                        cmp.data.fullPage = false;
-                        this.loading = true;
-                    }
-                },
-                {
-                    class: "fullPageClass",
-                    description: "Class for the root element when fullpage",
-                    properties: ['fullPage'],
-                    action: (cmp) => {
-                        cmp.data.fullPage = true;
-                        cmp.data.canCancel = true;
-                        this.loading = true;
-                    }
-                }
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -232,16 +183,15 @@ export default {
 | iconSize     |                                                                                                                         | string                    | -      | 'medium'                                                                                                                                 |
 | iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                                                                                                     |
 | onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | Default function (see source code)                                                                                                       |
-| overlay      |                                                                                                                         | boolean                   | -      | true                                                                                                                                     |
-| override     | Override classes                                                                                                        | boolean                   | -      | false                                                                                                                                    |
+| override     |                                                                                                                         | boolean                   | -      |                                                                                                                                          |
 | programmatic |                                                                                                                         | boolean                   | -      |                                                                                                                                          |
 
 ## Events
 
 | Event name       | Properties | Description |
 | ---------------- | ---------- | ----------- |
-| close            |            |
 | update:active    |            |
+| close            |            |
 | update:full-page |            |
 
 ## Slots

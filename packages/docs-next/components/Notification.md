@@ -1,8 +1,8 @@
 ---
-title: Notification/Toast
+title: Notification
 ---
 
-# Notification/Toast
+# Notification
 
 > Bold notification blocks to alert your users of something
 
@@ -10,7 +10,7 @@ title: Notification/Toast
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/notification/examples/Notification.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/notification/examples/Notification.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -24,21 +24,45 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 <template>
   <section>
     <div class="buttons">
-      <o-button label="Launch notification (default)" size="medium" @click="simple" />
-      <o-button label="Launch notification (custom)" variant="success" size="medium" @click="success" />
+      <o-button
+        label="Launch notification (default)"
+        size="medium"
+        @click="simple"
+      />
+      <o-button
+        label="Launch notification (custom)"
+        variant="success"
+        size="medium"
+        @click="success"
+      />
       <hr />
       <o-button label="Launch toast" size="medium" @click="toast" />
-      <o-button label="Launch toast (queued)" variant="success" size="medium" @click="queueToast" />
+      <o-button
+        label="Launch toast (queued)"
+        variant="success"
+        size="medium"
+        @click="queueToast"
+      />
       <hr />
-      <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
-      <o-button label="Launch notification (component)" variant="warning" size="medium" @click="component" />
+      <o-button
+        label="Launch notification (custom)"
+        variant="danger"
+        size="medium"
+        @click="danger"
+      />
+      <o-button
+        label="Launch notification (component)"
+        variant="warning"
+        size="medium"
+        @click="component"
+      />
     </div>
   </section>
 </template>
 
 <script>
   const NotificationForm = {
-    props: ['email', 'password'],
+    props: ["email", "password"],
     template: `
                 <form action="">
                     <div class="modal-card" style="width: auto">
@@ -76,57 +100,57 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     </div>
                 </form>
             `
-  }
+  };
   export default {
     methods: {
       simple() {
-        this.$oruga.notification.open('Something happened')
+        this.$oruga.notification.open("Something happened");
       },
       success() {
         this.$oruga.notification.open({
-          message: 'Something happened correctly!',
-          variant: 'success',
+          message: "Something happened correctly!",
+          variant: "success",
           closable: true
-        })
+        });
       },
       toast() {
         this.$oruga.notification.open({
-          message: 'Something happened correctly!',
-          rootClass: 'toast-notification',
-          position: 'top'
-        })
+          message: "Something happened correctly!",
+          rootClass: "toast-notification",
+          position: "top"
+        });
       },
       queueToast() {
         this.$oruga.notification.open({
-          message: 'Something happened correctly!',
-          rootClass: 'toast-notification',
-          position: 'top',
+          message: "Something happened correctly!",
+          rootClass: "toast-notification",
+          position: "top",
           queue: true
-        })
+        });
       },
       danger() {
         const notif = this.$oruga.notification.open({
           duration: 5000,
           message: `Something's not good, also I'm on <b>bottom</b>`,
-          position: 'bottom-right',
-          variant: 'danger',
+          position: "bottom-right",
+          variant: "danger",
           closable: true,
           onClose: () => {
-            this.$oruga.notification.open('Custom notification closed!')
+            this.$oruga.notification.open("Custom notification closed!");
           }
-        })
+        });
       },
       component() {
         this.$oruga.notification.open({
           parent: this,
           component: NotificationForm,
-          position: 'bottom-right',
-          variant: 'warning',
+          position: "bottom-right",
+          variant: "warning",
           indefinite: true
-        })
+        });
       }
     }
-  }
+  };
 </script>
 <style>
   .toast-notification {
@@ -152,24 +176,52 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 <template>
   <section>
     <o-notification closable aria-close-label="Close notification">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
-    <o-notification closable variant="info" aria-close-label="Close notification">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    <o-notification
+      closable
+      variant="info"
+      aria-close-label="Close notification"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
-    <o-notification closable variant="success" aria-close-label="Close notification">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    <o-notification
+      closable
+      variant="success"
+      aria-close-label="Close notification"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
-    <o-notification closable variant="warning" aria-close-label="Close notification" role="alert">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    <o-notification
+      closable
+      variant="warning"
+      aria-close-label="Close notification"
+      role="alert"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
-    <o-notification closable variant="danger" aria-close-label="Close notification" role="alert">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    <o-notification
+      closable
+      variant="danger"
+      aria-close-label="Close notification"
+      role="alert"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
   </section>
 </template>
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -182,13 +234,20 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 ```html
 <template>
   <section>
-    <o-notification closable type="info" variant="info" aria-close-label="Close notification">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    <o-notification
+      closable
+      type="info"
+      variant="info"
+      aria-close-label="Close notification"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+      fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien
+      laoreet elit
     </o-notification>
   </section>
 </template>
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -201,16 +260,23 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 ```html
 <template>
   <section>
-    <o-notification aria-close-label="Close notification" v-slot="{closeNotification}">
+    <o-notification
+      aria-close-label="Close notification"
+      v-slot="{closeNotification}"
+    >
       <div class="notification-content">
-        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit</span>
+        <span
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
+          fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
+          sapien laoreet elit</span
+        >
         <o-button label="Cancel" size="small" @click="closeNotification" />
       </div>
     </o-notification>
   </section>
 </template>
 <script>
-  export default {}
+  export default {};
 </script>
 <style>
   .notification-content {
@@ -226,90 +292,6 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
 
 <br />
-<template>
-  <div>
-    <doc-wrapper>
-        <template v-slot:default="s">
-            <o-notification v-bind="s">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-            </o-notification>
-        </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "noticeClass",
-                    description: "Root class of the notice",
-                    nospec: true
-                },
-                {
-                    class: "noticePositionClass",
-                    description: "Class of the notice when positioned",
-                    properties: ["position"],
-                    suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
-                    action: (cmp) => {
-                        cmp.data.position = 'top-right';
-                    },
-                    nospec: true
-                },
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "closeClass",
-                    description: "Class of the close button container",
-                    properties: ["closable"],
-                    action: (cmp) => {
-                        cmp.data.closable = true;
-                    },
-                },
-                {
-                    class: "contentClass",
-                    description: "Class of the content element"
-                },
-                {
-                    class: "iconClass",
-                    description: "Class of the icon on the left",
-                    properties: ["type"],
-                    action: (cmp) => {
-                        cmp.data.type = 'info';
-                    },
-                },
-                {
-                    class: "positionClass",
-                    description: "Class of the element when positioned",
-                    properties: ["position"],
-                    suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
-                    action: (cmp) => {
-                        cmp.data.position = 'top-right';
-                    },
-                },
-                {
-                    class: "wrapperClass",
-                    description: "Class of the wrapper element"
-                },
-                {
-                    class: "variantClass",
-                    description: "Class of the notification variant",
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                    },
-                },
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -333,7 +315,7 @@ export default {
 | iconPack       | Icon pack to use.                                                                                                                                              | string         | -                                                                               |                                                                                                                                                |
 | iconSize       | Icon size                                                                                                                                                      | string         | -                                                                               | 'large'                                                                                                                                        |
 | message        | Message text (can contain HTML).                                                                                                                               | string         | -                                                                               |                                                                                                                                                |
-| override       | Override classes                                                                                                                                               | boolean        | -                                                                               | false                                                                                                                                          |
+| override       |                                                                                                                                                                | boolean        | -                                                                               |                                                                                                                                                |
 | position       | Which position the notification will appear when programmatically                                                                                              | string         | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left`         |                                                                                                                                                |
 | props          | Props to be binded to the injected component                                                                                                                   | object         | -                                                                               |                                                                                                                                                |
 | type           | Type (color) of the notification, optional.                                                                                                                    | string         | -                                                                               |                                                                                                                                                |
@@ -358,25 +340,36 @@ export default {
 
 > <CarbonAds />
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification notice.scss)
+
+<br />
+
+<br />
+<br />
+
 ## Props
 
-| Prop name  | Description                                                                                                                                                         | Type          | Values                                                                  | Default                                                                                                                                                 |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| container  | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;containerElement: undefined<br>}</code> |
-| duration   | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;duration: 1000<br>}</code>              |
-| indefinite | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                                                                                                                                                   |
-| message    | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                                                                                                                                         |
-| onClose    | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code)                                                                                                                      |
-| override   | Override classes                                                                                                                                                    | boolean       | -                                                                       | false                                                                                                                                                   |
-| position   | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                                                                                                                                                   |
-| queue      | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;noticeQueue: false<br>}</code>          |
-| type       | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                                                                                                                                         |
+| Prop name         | Description                                                                                                                                                         | Type          | Values                                                                  | Default                                                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| container         | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;containerElement: undefined<br>}</code> |
+| duration          | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;duration: 1000<br>}</code>              |
+| indefinite        | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                                                                                                                                                   |
+| message           | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                                                                                                                                         |
+| onClose           | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code)                                                                                                                      |
+| override          |                                                                                                                                                                     | boolean       | -                                                                       |                                                                                                                                                         |
+| position          | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                                                                                                                                                   |
+| propsNotification |                                                                                                                                                                     | object        | -                                                                       |                                                                                                                                                         |
+| queue             | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;noticeQueue: undefined<br>}</code>      |
+| type              | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                                                                                                                                         |
 
 ### Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| close      |            |
+| Event name    | Properties | Description |
+| ------------- | ---------- | ----------- |
+| close         |            |
+| update:active |            |
 
 ### Slots
 

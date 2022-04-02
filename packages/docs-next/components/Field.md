@@ -10,7 +10,7 @@ title: Field
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/field/examples/Field.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/field/examples/Field.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -29,7 +29,11 @@ title: Field
       <o-input type="email" value="john@" maxlength="30"> </o-input>
     </o-field>
 
-    <o-field label="Username" variant="success" message="This username is available">
+    <o-field
+      label="Username"
+      variant="success"
+      message="This username is available"
+    >
       <o-input value="johnsilver" maxlength="30"></o-input>
     </o-field>
 
@@ -44,7 +48,11 @@ title: Field
       </o-select>
     </o-field>
 
-    <o-field label="Wrong subject" variant="danger" message="Selected subject is wrong">
+    <o-field
+      label="Wrong subject"
+      variant="danger"
+      message="Selected subject is wrong"
+    >
       <o-select placeholder="Select a subject">
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
@@ -54,7 +62,7 @@ title: Field
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -105,7 +113,8 @@ title: Field
         Button
       </o-button>
       <o-dropdown>
-        <o-button variant="primary" icon-right="caret-down" slot="trigger"> </o-button>
+        <o-button variant="primary" icon-right="caret-down" slot="trigger">
+        </o-button>
 
         <o-dropdown-item>Action</o-dropdown-item>
         <o-dropdown-item>Another action</o-dropdown-item>
@@ -119,9 +128,13 @@ title: Field
           Filters
         </o-button>
 
-        <o-dropdown-item value="open_issues">Open Issues and Pull Requests</o-dropdown-item>
+        <o-dropdown-item value="open_issues"
+          >Open Issues and Pull Requests</o-dropdown-item
+        >
         <o-dropdown-item value="your_issues">Your Issues</o-dropdown-item>
-        <o-dropdown-item value="pull_requests">Your Pull Requests</o-dropdown-item>
+        <o-dropdown-item value="pull_requests"
+          >Your Pull Requests</o-dropdown-item
+        >
         <o-dropdown-item value="everything">Everything</o-dropdown-item>
       </o-dropdown>
       <o-input icon="search" type="search" placeholder="Search..."></o-input>
@@ -130,7 +143,7 @@ title: Field
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -168,7 +181,7 @@ title: Field
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -181,13 +194,23 @@ title: Field
 ```html
 <template>
   <section>
-    <o-field horizontal label="Subject" variant="danger" message="Please enter a subject">
+    <o-field
+      horizontal
+      label="Subject"
+      variant="danger"
+      message="Please enter a subject"
+    >
       <o-input name="subject" expanded></o-input>
     </o-field>
 
     <o-field horizontal label="From">
       <o-input name="name" placeholder="Name" expanded></o-input>
-      <o-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></o-input>
+      <o-input
+        name="email"
+        type="email"
+        placeholder="nobody@nowhere.com"
+        expanded
+      ></o-input>
     </o-field>
 
     <o-field horizontal label="Topic">
@@ -212,7 +235,7 @@ title: Field
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -244,7 +267,7 @@ title: Field
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -255,151 +278,6 @@ title: Field
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_field.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-field v-bind="s" label="Field">
-                    <o-input v-model="name" name="name" placeholder="Name" expanded></o-input>
-                    <o-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></o-input>
-                </o-field>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            name: '',
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of file component when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                },
-                {
-                    class: "horizontalClass",
-                    description: "Class to align label and control in horizontal forms",
-                    properties: ['horizontal'],
-                    specificity: "when <b>mobileClass</b> is applied",
-                    action: (cmp) => {
-                        cmp.data.horizontal = true;
-                    }
-                },
-                {
-                    class: "groupedClass",
-                    description: "Class when fields are grouped together",
-                    properties: ['grouped'],
-                    action: (cmp) => {
-                        cmp.data.grouped = true;
-                    }
-                },
-                {
-                    class: "groupMultilineClass",
-                    description: "Class when fields fill up multiple lines",
-                    properties: ['groupMultiline'],
-                    action: (cmp) => {
-                        cmp.data.groupMultiline = true;
-                    }
-                },
-                {
-                    class: "labelClass",
-                    description: "Class for field label"
-                },
-                {
-                    class: "labelSizeClass",
-                    description: "Class for field label size",
-                    properties: ['labelSize'],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.labelSize = "large";
-                    }
-                },
-                {
-                    class: "labelHorizontalClass",
-                    description: "Class for field label when horizontal",
-                    properties: ['horizontal'],
-                    specificity: "when <b>mobileClass</b> is applied",
-                    action: (cmp) => {
-                        cmp.data.horizontal = true;
-                    }
-                },
-                {
-                    class: "bodyClass",
-                    description: "Class for field body"
-                },
-                {
-                    class: "bodyHorizontalClass",
-                    description: "Class for field body when horizontal",
-                    specificity: "when <b>mobileClass</b> is applied",
-                    properties: ['horizontal'],
-                    action: (cmp) => {
-                        cmp.data.horizontal = true;
-                    }
-                },
-                {
-                    class: "addonsClass",
-                    description: "Class for components automatically attached together when inside a field",
-                    warning: "Use the <code>expanded</code> prop on the control to fill up the remaining space",
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    }
-                },
-                {
-                    class: "messageClass",
-                    description: "Class for the field message",
-                    properties: ["message"],
-                    action: (cmp) => {
-                        cmp.data.message = 'This is a message for the field';
-                    }
-                },
-                {
-                    class: "variantMessageClass",
-                    description: "Class of the message field variant",
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = "info";
-                        cmp.data.message = 'This is a message for the field';
-                    }
-                },
-                {
-                    class: "variantLabelClass",
-                    description: "Class of the label field variant",
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = "info";
-                    }
-                },
-                {
-                    class: "focusedClass",
-                    description: "Class for the focused field",
-                    warning: "focus event emitted by form elements",
-                    action: (cmp) => {
-                        cmp.$el.focus()
-                    }
-                },
-                {
-                    class: "filledClass",
-                    description: "Class for the filled field",
-                    warning: "when it contains a input",
-                    action: () => {
-                        this.name = 'Oruga'
-                    }
-                },
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -417,7 +295,7 @@ export default {
 | labelSize        | Vertical size of input, optional                                                                                 | string  | `small`, `medium`, `large`                                                      |         |
 | message          | Help message text                                                                                                | string  | -                                                                               |         |
 | mobileBreakpoint | Mobile breakpoint as max-width value                                                                             | string  | -                                                                               |         |
-| override         | Override classes                                                                                                 | boolean | -                                                                               | false   |
+| override         |                                                                                                                  | boolean | -                                                                               |         |
 | variant          | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
 ## Slots

@@ -10,7 +10,7 @@ title: Slider
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/slider/examples/Slider.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/slider/examples/Slider.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -18,7 +18,7 @@ title: Slider
 
 ::: demo
 
-```html
+```vue
 <template>
   <section>
     <o-field label="Simple">
@@ -40,13 +40,13 @@ title: Slider
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        value: 5
-      }
-    }
+export default {
+  data() {
+    return {
+      value: 5
+    };
   }
+};
 </script>
 ```
 
@@ -56,7 +56,7 @@ title: Slider
 
 ::: demo
 
-```html
+```vue
 <template>
   <section>
     <o-field label="Tooltip type">
@@ -78,23 +78,23 @@ title: Slider
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        sliderValue: 0
+export default {
+  data() {
+    return {
+      sliderValue: 0
+    };
+  },
+  computed: {
+    sliderType() {
+      if (this.sliderValue > 25 && this.sliderValue < 75) {
+        return "warning";
+      } else if (this.sliderValue >= 75) {
+        return "success";
       }
-    },
-    computed: {
-      sliderType() {
-        if (this.sliderValue > 25 && this.sliderValue < 75) {
-          return 'warning'
-        } else if (this.sliderValue >= 75) {
-          return 'success'
-        }
-        return 'danger'
-      }
+      return "danger";
     }
   }
+};
 </script>
 ```
 
@@ -104,7 +104,7 @@ title: Slider
 
 ::: demo
 
-```html
+```vue
 <template>
   <section>
     <o-field label="Show ticks">
@@ -113,8 +113,8 @@ title: Slider
 
     <o-field label="Custom tick and label">
       <o-slider size="medium" :min="0" :max="10">
-        <template v-for="val in [3, 5, 8]">
-          <o-slider-tick :value="val" :key="val">{{ val }}</o-slider-tick>
+        <template v-for="val in [3, 5, 8]" :key="val">
+          <o-slider-tick :value="val">{{ val }}</o-slider-tick>
         </template>
       </o-slider>
     </o-field>
@@ -131,7 +131,7 @@ title: Slider
 </template>
 
 <script>
-  export default {}
+export default {};
 </script>
 ```
 
@@ -141,28 +141,36 @@ title: Slider
 
 ::: demo
 
-```html
+```vue
 <template>
   <section>
     <o-field>
-      <o-slider v-model="numbers" :min="1" :max="15" :step="0.5" ticks> </o-slider>
+      <o-slider v-model="numbers" :min="1" :max="15" :step="0.5" ticks>
+      </o-slider>
     </o-field>
 
     <o-field>
-      <o-slider v-model="numbers2" variant="danger" :min="-2" :max="8" :step="2"> </o-slider>
+      <o-slider
+        v-model="numbers2"
+        variant="danger"
+        :min="-2"
+        :max="8"
+        :step="2"
+      >
+      </o-slider>
     </o-field>
   </section>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        numbers: [2, 5],
-        numbers2: [2, 6]
-      }
-    }
+export default {
+  data() {
+    return {
+      numbers: [2, 5],
+      numbers2: [2, 6]
+    };
   }
+};
 </script>
 ```
 
@@ -173,113 +181,6 @@ title: Slider
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-slider v-bind="s" :min="1" :max="10" :value="4">
-                    <template v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]">
-                        <o-slider-tick v-bind="s" :value="val" :key="val">{{ val }}</o-slider-tick>
-                    </template>
-                </o-slider>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            subitem: "slider-tick",
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Root class of the element",
-                },
-                {
-                    class: "trackClass",
-                    description: "Class of the slider track",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "fillClass",
-                    description: "Class of the filled part of the slider",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "thumbRoundedClass",
-                    description: "Class when the slider is rounded",
-                    properties: ["rounded"],
-                    action: (cmp) => {
-                        cmp.data.rounded = true
-                    }
-                },
-                {
-                    class: "thumbDraggingClass",
-                    description: "Class when the thumb gets dragged",
-                    warning: "Drag the thumb to see it in action!",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "disabledClass",
-                    description: "Class when slider is disabled",
-                    properties: ["disabled"],
-                    action: (cmp) => {
-                        cmp.data.disabled = true;
-                    }
-                },
-                {
-                    class: "thumbWrapperClass",
-                    description: "Class of the thumb wrapper",
-                    action: (cmp) => {
-                        cmp.data.fullScreen = true;
-                    }
-                },
-                {
-                    class: "thumbClass",
-                    description: "Class of the thumb",
-                    action: (cmp) => {
-                        cmp.data.fullScreen = true;
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the slider variant',
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        this.position = 'static';
-                        cmp.data.variant = 'warning';
-                    }
-                },
-                {
-                    class: "tickClass",
-                    description: "Class of slider tick",
-                    properties: ["ticks"],
-                    subitem: true,
-                },
-                {
-                    class: "tickHiddenClass",
-                    description: "Class when slider tick is hidden",
-                    properties: ["ticks"],
-                    subitem: true,
-                },
-                {
-                    class: "tickLabelClass",
-                    description: "Class of tick label",
-                    properties: ["ticks"],
-                    subitem: true,
-                }
-            ]
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -298,7 +199,7 @@ export default {
 | locale            |                                                  | string\|array | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; locale: undefined<br>}</code>      |
 | max               | Maximum value                                    | number        | -                                                                               | 100                                                                                                                                  |
 | min               | Minimum value                                    | number        | -                                                                               | 0                                                                                                                                    |
-| override          | Override classes                                 | boolean       | -                                                                               | false                                                                                                                                |
+| override          |                                                  | boolean       | -                                                                               |                                                                                                                                      |
 | rounded           | Rounded thumb                                    | boolean       | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code> |
 | size              | Vertical size of slider, optional                | string        | `small`, `medium`, `large`                                                      |                                                                                                                                      |
 | step              | Step interval of ticks                           | number        | -                                                                               | 1                                                                                                                                    |
@@ -311,10 +212,13 @@ export default {
 
 ### Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| dragstart  |            |
-| dragend    |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| update:modelValue |            |
+| change            |            |
+| dragging          |            |
+| dragstart         |            |
+| dragend           |            |
 
 ### Slots
 
@@ -328,11 +232,20 @@ export default {
 
 > <CarbonAds />
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider tick.scss)
+
+<br />
+
+<br />
+<br />
+
 ## Props
 
 | Prop name | Description          | Type    | Values | Default |
 | --------- | -------------------- | ------- | ------ | ------- |
-| override  | Override classes     | boolean | -      | false   |
+| override  |                      | boolean | -      |         |
 | value     | Value of single tick | number  | -      | 0       |
 
 ### Slots

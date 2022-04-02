@@ -10,7 +10,7 @@ title: Input
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/input/examples/Input.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/input/examples/Input.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -29,12 +29,17 @@ title: Input
       <o-input type="email" value="john@" maxlength="30"> </o-input>
     </o-field>
 
-    <o-field label="Username" variant="success" message="This username is available">
+    <o-field
+      label="Username"
+      variant="success"
+      message="This username is available"
+    >
       <o-input value="johnsilver" maxlength="30"></o-input>
     </o-field>
 
     <o-field label="Password">
-      <o-input type="password" value="iwantmytreasure" password-reveal> </o-input>
+      <o-input type="password" value="iwantmytreasure" password-reveal>
+      </o-input>
     </o-field>
 
     <o-field label="Message">
@@ -53,7 +58,11 @@ title: Input
       <o-input placeholder="Success"></o-input>
     </o-field>
 
-    <o-field label="Error" variant="danger" message="You can have a message too">
+    <o-field
+      label="Error"
+      variant="danger"
+      message="You can have a message too"
+    >
       <o-input placeholder="Error"></o-input>
     </o-field>
 
@@ -79,10 +88,10 @@ title: Input
   export default {
     data() {
       return {
-        name: 'John Silver'
-      }
+        name: "John Silver"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -97,11 +106,27 @@ title: Input
   <section>
     <h3 class="subtitle">With Icons</h3>
     <o-field>
-      <o-input placeholder="Search..." type="search" icon="search" icon-clickable @icon-click="searchIconClick"> </o-input>
+      <o-input
+        placeholder="Search..."
+        type="search"
+        icon="search"
+        icon-clickable
+        @icon-click="searchIconClick"
+      >
+      </o-input>
     </o-field>
 
     <o-field>
-      <o-input placeholder="Email" v-model="email" type="email" icon="envelope" icon-right="times-circle" icon-right-clickable @icon-right-click="clearIconClick"> </o-input>
+      <o-input
+        placeholder="Email"
+        v-model="email"
+        type="email"
+        icon="envelope"
+        icon-right="times-circle"
+        icon-right-clickable
+        @icon-right-click="clearIconClick"
+      >
+      </o-input>
     </o-field>
   </section>
 </template>
@@ -110,19 +135,19 @@ title: Input
   export default {
     data() {
       return {
-        email: ''
-      }
+        email: ""
+      };
     },
     methods: {
       searchIconClick() {
-        alert('You wanna make a search?')
+        alert("You wanna make a search?");
       },
       clearIconClick() {
-        this.email = ''
-        alert('Email cleared!')
+        this.email = "";
+        alert("Email cleared!");
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -133,115 +158,6 @@ title: Input
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_input.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-field :variant="s.fieldvariant">
-                    <o-input v-bind="s" placeholder="Input"></o-input>
-                </o-field>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "expandedClass",
-                    description: "Class of input when expanded",
-                    properties: ['expanded'],
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    }
-                },
-                {
-                    class: "iconLeftSpaceClass",
-                    description: "Class of the left icon space inside the input",
-                    properties: ['icon'],
-                    action: (cmp) => {
-                        cmp.data.icon = "envelope";
-                    }
-                },
-                {
-                    class: "iconRightSpaceClass",
-                    description: "Class of the right icon space inside the input",
-                    properties: ['iconRight'],
-                    action: (cmp) => {
-                        cmp.data.iconRight = "times-circle";
-                    }
-                },
-                {
-                    class: "inputClass",
-                    description: "Class of the native input element"
-                },
-                {
-                    class: "roundedClass",
-                    description: "Class of input when rounded",
-                    properties: ['rounded'],
-                    action: (cmp) => {
-                        cmp.data.rounded = true;
-                    }
-                },
-                {
-                    class: "iconLeftClass",
-                    description: "Class of the left icon",
-                    properties: ['icon'],
-                    action: (cmp) => {
-                        cmp.data.icon = "envelope";
-                    }
-                },
-                {
-                    class: "iconRightClass",
-                    description: "Class of the right icon",
-                    properties: ['iconRight'],
-                    action: (cmp) => {
-                        cmp.data.iconRight = "times-circle";
-                    }
-                },
-                {
-                    class: "counterClass",
-                    description: "Class of the counter element",
-                    properties: ['hasCounter', 'maxlength'],
-                    action: (cmp) => {
-                        cmp.data.hasCounter = true;
-                        cmp.data.maxlength = 10;
-                        let el = cmp.$el.querySelector('input')
-                        el.dispatchEvent(new Event('focus'));
-                    }
-                },
-               {
-                    class: "sizeClass",
-                    description : 'Class of the input size',
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = "large";
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the input variant',
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    warning: "Variant property should be applied to the wrapping field",
-                    action: (cmp) => {
-                        cmp.data.fieldvariant = "warning";
-                    }
-                },
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -262,7 +178,7 @@ export default {
 | iconRightClickable | Make the icon right clickable                               | boolean        | -                                                                               |                                                                                                                                          |
 | iconRightVariant   | Variant of right icon                                       | string         | -                                                                               |                                                                                                                                          |
 | maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                                               |                                                                                                                                          |
-| override           | Override classes                                            | boolean        | -                                                                               | false                                                                                                                                    |
+| override           |                                                             | boolean        | -                                                                               |                                                                                                                                          |
 | passwordReveal     | Adds the reveal password functionality                      | boolean        | -                                                                               |                                                                                                                                          |
 | rounded            | Makes the element rounded                                   | boolean        | -                                                                               |                                                                                                                                          |
 | size               | Vertical size of input, optional                            | string         | `small`, `medium`, `large`                                                      |                                                                                                                                          |
@@ -275,11 +191,13 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| blur       |            |
-| focus      |            |
-| input      |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| blur              |            |
+| focus             |            |
+| update:modelValue |            |
+| icon-click        |            |
+| icon-right-click  |            |
 
 ## Style
 

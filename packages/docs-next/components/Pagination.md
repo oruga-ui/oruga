@@ -10,7 +10,7 @@ title: Pagination
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/pagination/examples/Pagination.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/pagination/examples/Pagination.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -104,15 +104,15 @@ title: Pagination
         perPage: 10,
         rangeBefore: 3,
         rangeAfter: 1,
-        order: '',
-        size: '',
+        order: "",
+        size: "",
         isSimple: false,
         isRounded: false,
-        prevIcon: 'chevron-left',
-        nextIcon: 'chevron-right'
-      }
+        prevIcon: "chevron-left",
+        nextIcon: "chevron-right"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -126,11 +126,19 @@ title: Pagination
 <template>
   <section>
     <o-pagination :total="200" :current.sync="current" :per-page="10">
-      <o-pagination-button slot-scope="props" :page="props.page" :id="`page${props.page.number}`">
+      <o-pagination-button
+        slot-scope="props"
+        :page="props.page"
+        :id="`page${props.page.number}`"
+      >
         {{ convertToRoman(props.page.number) }}
       </o-pagination-button>
 
-      <o-pagination-button slot="previous" slot-scope="props" :page="props.page">
+      <o-pagination-button
+        slot="previous"
+        slot-scope="props"
+        :page="props.page"
+      >
         Previous
       </o-pagination-button>
 
@@ -147,55 +155,55 @@ title: Pagination
       return {
         current: 10,
         basicRomanNumeral: [
-          '',
-          'I',
-          'II',
-          'III',
-          'IV',
-          'V',
-          'VI',
-          'VII',
-          'VIII',
-          'IX',
-          '',
-          'X',
-          'XX',
-          'XXX',
-          'XL',
-          'L',
-          'LX',
-          'LXX',
-          'LXXX',
-          'XC',
-          '',
-          'C',
-          'CC',
-          'CCC',
-          'CD',
-          'D',
-          'DC',
-          'DCC',
-          'DCCC',
-          'CM',
-          '',
-          'M',
-          'MM',
-          'MMM'
+          "",
+          "I",
+          "II",
+          "III",
+          "IV",
+          "V",
+          "VI",
+          "VII",
+          "VIII",
+          "IX",
+          "",
+          "X",
+          "XX",
+          "XXX",
+          "XL",
+          "L",
+          "LX",
+          "LXX",
+          "LXXX",
+          "XC",
+          "",
+          "C",
+          "CC",
+          "CCC",
+          "CD",
+          "D",
+          "DC",
+          "DCC",
+          "DCCC",
+          "CM",
+          "",
+          "M",
+          "MM",
+          "MMM"
         ]
-      }
+      };
     },
     methods: {
       convertToRoman(num) {
-        const numArray = num.toString().split('')
-        const base = numArray.length
-        let count = base - 1
+        const numArray = num.toString().split("");
+        const base = numArray.length;
+        let count = base - 1;
         const convertedRoman = numArray.reduce((roman, digit) => {
-          const digitRoman = this.basicRomanNumeral[+digit + count * 10]
-          const result = roman + digitRoman
-          count -= 1
-          return result
-        }, '')
-        return convertedRoman
+          const digitRoman = this.basicRomanNumeral[+digit + count * 10];
+          const result = roman + digitRoman;
+          count -= 1;
+          return result;
+        }, "");
+        return convertedRoman;
       }
     }
     /*
@@ -210,7 +218,7 @@ title: Pagination
             },
         }
         */
-  }
+  };
 </script>
 ```
 
@@ -221,133 +229,6 @@ title: Pagination
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_pagination.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-pagination
-                    v-bind='s'
-                    :total="total"
-                    :current.sync="current"
-                    :range-before="rangeBefore"
-                    :range-after="rangeAfter"
-                    :per-page="perPage"
-                    aria-next-label="Next page"
-                    aria-previous-label="Previous page"
-                    aria-page-label="Page"
-                    aria-current-label="Current page"
-                    icon-prev='chevron-left'
-                    icon-next='chevron-right'
-                    >
-                </o-pagination>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            total: 200,
-            current: 10,
-            perPage: 10,
-            rangeBefore: 3,
-            rangeAfter: 1,
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element",
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of pagination component when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                },
-                {
-                    class: "prevBtnClass",
-                    description: "Class of the prev. button",
-                    specificity: "when <b>mobileClass</b> is applied",
-                },
-                {
-                    class: "nextBtnClass",
-                    description: "Class of the next button",
-                    specificity: "when <b>mobileClass</b> is applied",
-                },
-                {
-                    class: "listClass",
-                    description: "Class of the pagination list",
-                    specificity: "when <b>mobileClass</b> is applied",
-                },
-                {
-                    class: "linkClass",
-                    description: "Class of the link button",
-                    specificity: "when <b>mobileClass</b> is applied",
-                },
-                {
-                    class: "linkCurrentClass",
-                    description: "Class of the current link",
-                },
-                {
-                    class: "ellipsisClass",
-                    description: "Class of the pagination ellipsis ",
-                    specificity: "when <b>mobileClass</b> is applied",
-                },
-                {
-                    class: "infoClass",
-                    description: "Class of the info in `simple` mode",
-                    properties: ['simple'],
-                    action: (cmp) => {
-                        cmp.data.simple = true;
-                    }
-                },
-                {
-                    class: "orderClass",
-                    description: "Class of the pagination order",
-                    properties: ['order'],
-                    suffixes: ['centered', 'right', 'left'],
-                    action: (cmp) => {
-                        cmp.data.order = 'centered';
-                    }
-                },
-                {
-                    class: "simpleClass",
-                    description: "Class of the pagination in `simple` mode",
-                    properties: ['simple'],
-                    action: (cmp) => {
-                        cmp.data.simple = true;
-                    }
-                },
-                {
-                    class: "roundedClass",
-                    description: "Class of the pagination when rounded",
-                    properties: ['rounded'],
-                    action: (cmp) => {
-                        cmp.data.rounded = true;
-                    }
-                },
-                {
-                    class: "linkDisabledClass",
-                    description: "Class of the disabled link",
-                    action: () => {
-                        this.current = 20;
-                    }
-                },
-                {
-                    class: "sizeClass",
-                    description: "Class for the pagination size",
-                    properties: ['size'],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = 'small';
-                    }
-                }
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -366,7 +247,7 @@ export default {
 | iconPrev          | Icon to use for previous button                                                                               | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> pagination: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
 | mobileBreakpoint  | Mobile breakpoint as max-width value                                                                          | string         | -                                                 |                                                                                                                                                     |
 | order             | Buttons order, optional                                                                                       | string         | `centered`, `right`, `left`                       |                                                                                                                                                     |
-| override          | Override classes                                                                                              | boolean        | -                                                 | false                                                                                                                                               |
+| override          |                                                                                                               | boolean        | -                                                 |                                                                                                                                                     |
 | perPage           | Items count for each page                                                                                     | number\|string | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> pagination: {<br>&nbsp;&nbsp;perPage: 20<br>}</code>               |
 | rangeAfter        | Number of pagination items to show after current page                                                         | number\|string | -                                                 | 1                                                                                                                                                   |
 | rangeBefore       | Number of pagination items to show before current page                                                        | number\|string | -                                                 | 1                                                                                                                                                   |
@@ -379,16 +260,17 @@ export default {
 
 | Event name     | Properties | Description |
 | -------------- | ---------- | ----------- |
+| update:active  |            |
 | change         |            |
 | update:current |            |
 
 ## Slots
 
-| Name     | Description | Bindings |
-| -------- | ----------- | -------- |
-| previous |             | <br><br> |
-| next     |             | <br><br> |
-| default  |             | <br><br> |
+| Name     | Description | Bindings   |
+| -------- | ----------- | ---------- |
+| previous |             | <br/><br/> |
+| next     |             | <br/><br/> |
+| default  |             | <br/><br/> |
 
 ## Style
 

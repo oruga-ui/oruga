@@ -10,7 +10,7 @@ title: Modal
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/modal/examples/Modal.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/modal/examples/Modal.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -22,32 +22,53 @@ title: Modal
 <template>
   <section>
     <div class="buttons">
-      <o-button size="medium" variant="primary" @click="isImageModalActive = true">
+      <o-button
+        size="medium"
+        variant="primary"
+        @click="isImageModalActive = true"
+      >
         Open modal
       </o-button>
-      <o-button size="medium" variant="primary" @click="isCardModalActive = true">
+      <o-button
+        size="medium"
+        variant="primary"
+        @click="isCardModalActive = true"
+      >
         Open modal (clip scroll)
       </o-button>
     </div>
 
     <o-modal :active.sync="isImageModalActive">
       <p style="text-align: center">
-        <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
+        <img
+          src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+        />
       </p>
     </o-modal>
 
     <o-modal :active.sync="isCardModalActive" :width="640" scroll="clip">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum. Nulla faucibus leo eget enim
-        egestas, in tempus justo venenatis. Duis dictum suscipit erat, a dapibus eros lobortis ac. Praesent tempor rhoncus convallis. Nullam in ipsum convallis, rutrum elit eget,
-        dictum ipsum. Nunc sagittis aliquet massa. Etiam lacus sapien, eleifend non eros quis, finibus ornare nisl. Ut laoreet sit amet lacus non dignissim. Sed convallis mattis
-        enim, sed interdum risus molestie ut. Praesent vel ex hendrerit, cursus lectus a, blandit felis. Nam luctus orci nec varius commodo.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales
+        leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum.
+        Nulla faucibus leo eget enim egestas, in tempus justo venenatis. Duis
+        dictum suscipit erat, a dapibus eros lobortis ac. Praesent tempor
+        rhoncus convallis. Nullam in ipsum convallis, rutrum elit eget, dictum
+        ipsum. Nunc sagittis aliquet massa. Etiam lacus sapien, eleifend non
+        eros quis, finibus ornare nisl. Ut laoreet sit amet lacus non dignissim.
+        Sed convallis mattis enim, sed interdum risus molestie ut. Praesent vel
+        ex hendrerit, cursus lectus a, blandit felis. Nam luctus orci nec varius
+        commodo.
       </p>
       <p>
-        Sed vulputate metus purus, ut egestas erat congue et. Donec tellus orci, malesuada eget dolor sed, pellentesque bibendum nunc. In eu egestas diam. Integer sed congue massa.
-        Sed a urna quam. Morbi vulputate dolor eleifend ligula lobortis venenatis. Aenean pellentesque risus sit amet faucibus molestie. Aliquam eu lorem aliquet, aliquam nulla in,
-        vestibulum lorem. Donec mollis mi at sollicitudin tristique. Nullam id nibh pulvinar, dignissim nisl id, gravida risus. Nulla arcu elit, scelerisque in sollicitudin et,
-        laoreet et metus. Aenean placerat turpis nec tincidunt tempus.
+        Sed vulputate metus purus, ut egestas erat congue et. Donec tellus orci,
+        malesuada eget dolor sed, pellentesque bibendum nunc. In eu egestas
+        diam. Integer sed congue massa. Sed a urna quam. Morbi vulputate dolor
+        eleifend ligula lobortis venenatis. Aenean pellentesque risus sit amet
+        faucibus molestie. Aliquam eu lorem aliquet, aliquam nulla in,
+        vestibulum lorem. Donec mollis mi at sollicitudin tristique. Nullam id
+        nibh pulvinar, dignissim nisl id, gravida risus. Nulla arcu elit,
+        scelerisque in sollicitudin et, laoreet et metus. Aenean placerat turpis
+        nec tincidunt tempus.
       </p>
     </o-modal>
   </section>
@@ -59,9 +80,9 @@ title: Modal
       return {
         isImageModalActive: false,
         isCardModalActive: false
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -87,7 +108,7 @@ title: Modal
 
 <script>
   const ModalForm = {
-    props: ['email', 'password'],
+    props: ["email", "password"],
     template: `
             <form action="">
                 <div class="modal-card" style="width: auto">
@@ -130,26 +151,32 @@ title: Modal
                 </div>
             </form>
         `
-  }
+  };
 
   export default {
     methods: {
       imageModal() {
-        const h = this.$createElement
-        const vnode = h('p', { style: { 'text-align': 'center' } }, [h('img', { attrs: { src: 'https://avatars2.githubusercontent.com/u/66300512?s=200&v=4' } })])
+        const h = this.$createElement;
+        const vnode = h("p", { style: { "text-align": "center" } }, [
+          h("img", {
+            attrs: {
+              src: "https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+            }
+          })
+        ]);
         this.$oruga.modal.open({
           content: [vnode]
-        })
+        });
       },
       cardModal() {
         this.$oruga.modal.open({
           parent: this,
           component: ModalForm,
           trapFocus: true
-        })
+        });
       }
     }
-  }
+  };
 </script>
 
 <style>
@@ -222,75 +249,6 @@ title: Modal
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-modal v-bind="s" :active.sync="isImageModalActive">
-                    <p style="text-align: center">
-                        <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
-                    </p>
-                </o-modal>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            isImageModalActive: false,
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element",
-                    action: () => {
-                        this.isImageModalActive = true;
-                    }
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of modal component when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                },
-                {
-                    class: "overlayClass",
-                    description: "Class of the modal overlay",
-                    action: () => {
-                        this.isImageModalActive = true;
-                    }
-                },
-                {
-                    class: "contentClass",
-                    description: "Class of the modal content",
-                    specificity: "when <b>mobileClass</b> is applied",
-                    action: () => {
-                        this.isImageModalActive = true;
-                    }
-                },
-                {
-                    class: "closeClass",
-                    description: "Class of the close button",
-                    action: () => {
-                        this.isImageModalActive = true;
-                    }
-                },
-                {
-                    class: "fullScreenClass",
-                    description: "Class of the modal when fullscreen",
-                    properties: ['fullScreen'],
-                    action: (cmp) => {
-                        this.isImageModalActive = true;
-                        cmp.data.fullScreen = true;
-                    }
-                }
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -317,7 +275,7 @@ export default {
 | mobileBreakpoint | Mobile breakpoint as max-width value                                                                                                                                   | string         | -                                  |                                                                                                                                                                      |
 | onCancel         | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | Default function (see source code)                                                                                                                                   |
 | onClose          | Callback function to call after close (programmatically close or user canceled)                                                                                        | func           | -                                  | Default function (see source code)                                                                                                                                   |
-| override         | Override classes                                                                                                                                                       | boolean        | -                                  | false                                                                                                                                                                |
+| override         |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
 | programmatic     |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
 | props            | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                                                                                                                                                                      |
 | scroll           | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;scroll: 'keep'<br>}</code>                                  |
@@ -328,8 +286,8 @@ export default {
 
 | Event name    | Properties | Description |
 | ------------- | ---------- | ----------- |
-| close         |            |
 | update:active |            |
+| close         |            |
 
 ## Slots
 

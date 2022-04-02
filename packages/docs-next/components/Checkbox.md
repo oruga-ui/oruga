@@ -10,7 +10,7 @@ title: Checkbox
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/checkbox/examples/Checkbox.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/checkbox/examples/Checkbox.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -50,10 +50,10 @@ title: Checkbox
     data() {
       return {
         checkbox: false,
-        checkboxCustom: 'Yes'
-      }
+        checkboxCustom: "Yes"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -100,7 +100,7 @@ title: Checkbox
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -138,10 +138,10 @@ title: Checkbox
   export default {
     data() {
       return {
-        checkboxGroup: ['Flint']
-      }
+        checkboxGroup: ["Flint"]
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -152,88 +152,6 @@ title: Checkbox
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)
 
 <br />
-<template>
-  <div class="field">
-    <doc-wrapper>
-      <template v-slot:default="s">
-        <o-checkbox v-model="s.checkbox" v-bind="s">Checkbox</o-checkbox>
-      </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-
-export default {
-  data() {
-    return {
-      inspectData: [
-        {
-          class: 'rootClass',
-          description : 'Class of the root element'
-        },
-        {
-          class: 'labelClass',
-          description : 'Class of the checkbox label'
-        },
-        {
-          class: 'checkClass',
-          description : 'Class of the checkbox'
-        },
-        {
-          class: 'checkedClass',
-          description : 'Class of the root element when checked',
-          action: (cmp) => {
-            cmp.data.checkbox = true;
-          }
-        },
-        {
-          class: 'checkCheckedClass',
-          description : 'Class of the checkbox when checked',
-          action: (cmp) => {
-            cmp.data.checkbox = true;
-          }
-        },
-        {
-          class: 'checkIndeterminateClass',
-          description : 'Class when checkbox is indeterminate',
-          properties: ["indeterminate"],
-          action: (cmp) => {
-            cmp.data.indeterminate = true;
-          }
-        },
-        {
-          class: 'sizeClass',
-          description : 'Class of the checkbox size',
-          properties: ["size"],
-          suffixes: ['small', 'medium', 'large'],
-          action: (cmp) => {
-            cmp.data.size = 'large';
-          }
-        },
-        {
-          class: 'disabledClass',
-          description : 'Class when checkbox is disabled',
-          properties: ["disabled"],
-          action: (cmp) => {
-            cmp.data.disabled = true;
-          }
-        },
-        {
-          class: 'variantClass',
-          description : 'Class of the checkbox variant',
-          properties: ["variant"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.variant = 'warning';
-          }
-        }
-      ]
-    }
-  }
-}
-</script>
 
 <br />
 <br />
@@ -249,7 +167,7 @@ export default {
 | indeterminate  | Same as native indeterminate                                                         | boolean                        | -                                                                               | false   |
 | name           | Same as native name                                                                  | string                         | -                                                                               |         |
 | nativeValue    | Same as native value                                                                 | string\|number\|boolean\|array | -                                                                               |         |
-| override       | Override classes                                                                     | boolean                        | -                                                                               | false   |
+| override       |                                                                                      | boolean                        | -                                                                               |         |
 | required       |                                                                                      | boolean                        | -                                                                               |         |
 | size           | Size of the control, optional                                                        | string                         | `small`, `medium`, `large`                                                      |         |
 | trueValue      | Overrides the returned value when it's checked                                       | string\|number\|boolean        | -                                                                               | true    |
@@ -258,9 +176,10 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| update:modelValue |            |
+| input             |            |
 
 ## Slots
 

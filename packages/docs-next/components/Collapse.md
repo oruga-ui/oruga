@@ -10,7 +10,7 @@ title: Collapse
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/collapse/examples/Collapse.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/collapse/examples/Collapse.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -20,15 +20,22 @@ title: Collapse
 <template>
   <section>
     <o-collapse :open="false" aria-id="contentIdForA11y1">
-      <o-button variant="primary" slot="trigger" aria-controls="contentIdForA11y1">Click me!</o-button>
+      <o-button
+        variant="primary"
+        slot="trigger"
+        aria-controls="contentIdForA11y1"
+        >Click me!</o-button
+      >
       <div class="notification">
         <h3>
           Subtitle
         </h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-          Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />
-          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.
+          Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius
+          lectus, nec rutrum justo nibh eu lectus. <br />
+          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel,
+          interdum mattis neque.
         </p>
       </div>
     </o-collapse>
@@ -36,7 +43,7 @@ title: Collapse
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -49,7 +56,14 @@ title: Collapse
 ```html
 <template>
   <section>
-    <o-collapse class="card" animation="slide" v-for="(collapse, index) of collapses" :key="index" :open="isOpen == index" @open="isOpen = index">
+    <o-collapse
+      class="card"
+      animation="slide"
+      v-for="(collapse, index) of collapses"
+      :key="index"
+      :open="isOpen == index"
+      @open="isOpen = index"
+    >
       <div slot="trigger" slot-scope="props" class="card-header" role="button">
         <p class="card-header-title">
           {{ collapse.title }}
@@ -74,21 +88,21 @@ title: Collapse
         isOpen: 0,
         collapses: [
           {
-            title: 'Title 1',
-            text: 'Text 1'
+            title: "Title 1",
+            text: "Text 1"
           },
           {
-            title: 'Title 2',
-            text: 'Text 2'
+            title: "Title 2",
+            text: "Text 2"
           },
           {
-            title: 'Title 3',
-            text: 'Text 3'
+            title: "Title 3",
+            text: "Text 3"
           }
         ]
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style>
@@ -135,63 +149,6 @@ title: Collapse
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_collapse.scss)
 
 <br />
-<template>
-  <div>
-    <doc-wrapper>
-      <template v-slot:default="s">
-        <o-collapse
-          animation="slide"
-          v-bind="s"
-          :open="true"
-          style="border: 1px solid #dfe2e5"
-        >
-          <div
-            slot="trigger"
-            slot-scope="props"
-            class="card-header"
-            role="button"
-          >
-            <p class="card-header-title">
-              Collapse Title
-            </p>
-            <a class="card-header-icon">
-              <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
-            </a>
-          </div>
-          <div class="card-content">
-            <div class="content">
-              Collapse Content
-            </div>
-          </div>
-        </o-collapse>
-      </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      inspectData: [
-        {
-            class: "rootClass",
-            description: "Class of the root element"
-        },
-        {
-            class: "triggerClass",
-            description: "Class of the trigger element"
-        },
-        {
-            class: "contentClass",
-            description: "Class of the content"
-        }
-      ],
-    };
-  },
-};
-</script>
 
 <br />
 <br />
@@ -203,7 +160,7 @@ export default {
 | animation | Custom animation (transition name)                                                                                     | string  | -               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> collapse: {<br>&nbsp;&nbsp;animation: 'fade'<br>}</code> |
 | ariaId    |                                                                                                                        | string  | -               | ''                                                                                                                                        |
 | open      | Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding | boolean | -               | true                                                                                                                                      |
-| override  | Override classes                                                                                                       | boolean | -               | false                                                                                                                                     |
+| override  |                                                                                                                        | boolean | -               |                                                                                                                                           |
 | position  | Trigger position                                                                                                       | string  | `top`, `bottom` | 'top'                                                                                                                                     |
 
 ## Events
@@ -211,6 +168,8 @@ export default {
 | Event name  | Properties | Description |
 | ----------- | ---------- | ----------- |
 | update:open |            |
+| open        |            |
+| close       |            |
 
 ## Slots
 

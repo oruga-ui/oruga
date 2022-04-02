@@ -10,7 +10,7 @@ title: Timepicker
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/timepicker/examples/Timepicker.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/timepicker/examples/Timepicker.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -50,7 +50,15 @@ title: Timepicker
       </o-field>
     </o-field>
     <o-field label="Select time">
-      <o-timepicker rounded placeholder="Click to select..." icon="clock" :enable-seconds="enableSeconds" :hour-format="hourFormat" :locale="locale"> </o-timepicker>
+      <o-timepicker
+        rounded
+        placeholder="Click to select..."
+        icon="clock"
+        :enable-seconds="enableSeconds"
+        :hour-format="hourFormat"
+        :locale="locale"
+      >
+      </o-timepicker>
     </o-field>
   </section>
 </template>
@@ -62,9 +70,9 @@ title: Timepicker
         hourFormat: undefined, // Browser locale
         enableSeconds: false,
         locale: undefined // Browser locale
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -77,25 +85,30 @@ title: Timepicker
 ```html
 <template>
   <o-field label="Select time">
-    <o-timepicker placeholder="Click to select..." :min-time="minTime" :max-time="maxTime"> </o-timepicker>
+    <o-timepicker
+      placeholder="Click to select..."
+      :min-time="minTime"
+      :max-time="maxTime"
+    >
+    </o-timepicker>
   </o-field>
 </template>
 
 <script>
   export default {
     data() {
-      const min = new Date()
-      min.setHours(9)
-      min.setMinutes(0)
-      const max = new Date()
-      max.setHours(18)
-      max.setMinutes(0)
+      const min = new Date();
+      min.setHours(9);
+      min.setMinutes(0);
+      const max = new Date();
+      max.setHours(18);
+      max.setMinutes(0);
       return {
         minTime: min,
         maxTime: max
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -109,8 +122,19 @@ title: Timepicker
 <template>
   <o-field label="Select time">
     <o-timepicker v-model="time" placeholder="Click to select...">
-      <o-button label="Now" variant="primary" icon-left="clock" @click="time = new Date()" />
-      <o-button label="Clear" variant="danger" icon-left="times" outlined @click="time = null" />
+      <o-button
+        label="Now"
+        variant="primary"
+        icon-left="clock"
+        @click="time = new Date()"
+      />
+      <o-button
+        label="Clear"
+        variant="danger"
+        icon-left="times"
+        outlined
+        @click="time = null"
+      />
     </o-timepicker>
   </o-field>
 </template>
@@ -120,9 +144,9 @@ title: Timepicker
     data() {
       return {
         time: new Date()
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -135,7 +159,13 @@ title: Timepicker
 ```html
 <template>
   <o-field label="Select timepicker">
-    <o-timepicker placeholder="Click to select" icon="clock" :incrementMinutes="minutesGranularity" :incrementHours="hoursGranularity"> </o-timepicker>
+    <o-timepicker
+      placeholder="Click to select"
+      icon="clock"
+      :incrementMinutes="minutesGranularity"
+      :incrementHours="hoursGranularity"
+    >
+    </o-timepicker>
   </o-field>
 </template>
 <script>
@@ -144,9 +174,9 @@ title: Timepicker
       return {
         minutesGranularity: 15,
         hoursGranularity: 2
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -166,9 +196,9 @@ title: Timepicker
     data() {
       return {
         time: new Date()
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -179,107 +209,6 @@ title: Timepicker
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_timepicker.scss)
 
 <br />
-<template>
-    <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-field label="Select time">
-                    <o-timepicker v-bind="s" placeholder="Click to select..." ref="timepicker">
-                        <div>This is the footer</div>
-                    </o-timepicker>
-                </o-field>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    methods: {
-        openTimePicker() {
-            setTimeout(() => {
-                this.$refs.timepicker.$el.getElementsByClassName('o-drop__trigger')[0].click()
-            }, 500)
-        }
-    },
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element",
-                },
-                {
-                    class: "sizeClass",
-                    description: "Class of the Timepicker component size",
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = 'large';
-                        this.openTimePicker();
-                    },
-                },
-                {
-                    class: "boxClass",
-                    description: "Class of the Timepicker component box where you choose the date",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-                {
-                    class: "separatorClass",
-                    description: "Class of the Timepicker separator",
-                    action: () => {
-                        this.openTimePicker();
-                    },
-                },
-                {
-                    class: "footerClass",
-                    description: "Class of the Timepicker footer",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of the Table when on mobile",
-                    warning: "Switch to mobile view to see it in action!"
-                },
-                {
-                    class: "inputClasses",
-                    realClass: "inputClasses.rootClass",
-                    description: "Classes to apply on internal input.",
-                    componentRef: "Input"
-                },
-                {
-                    class: "dropdownClasses",
-                    realClass: "dropdownClasses.rootClass",
-                    description: "Classes to apply on dropdown.",
-                    componentRef: "Dropdown",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-                {
-                    class: "selectClasses",
-                    realClass: "selectClasses.selectClass",
-                    description: "Classes to apply on select.",
-                    componentRef: "Select",
-                    action: () => {
-                        this.openTimePicker();
-                    }
-                },
-            ],
-        };
-    }
-}
-</script>
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>
 
 <br />
 <br />
@@ -296,7 +225,7 @@ export default {
 | editable              |                                                             | boolean        | -                                                 |                                                                                                                                              |
 | enableSeconds         |                                                             | boolean        | -                                                 |                                                                                                                                              |
 | expanded              | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                                                                                              |
-| hourFormat            | Hour format for input and display                           | string         | `12`, `24`                                        |                                                                                                                                              |
+| hourFormat            |                                                             | string         | -                                                 |                                                                                                                                              |
 | icon                  | Icon name to be added                                       | string         | -                                                 |                                                                                                                                              |
 | iconPack              | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                              |
 | incrementHours        |                                                             | number         | -                                                 | 1                                                                                                                                            |
@@ -309,9 +238,9 @@ export default {
 | mobileBreakpoint      | Mobile breakpoint as max-width value                        | string         | -                                                 |                                                                                                                                              |
 | mobileNative          |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> timepicker: {<br>&nbsp;&nbsp;mobileNative: true<br>}</code> |
 | openOnFocus           |                                                             | boolean        | -                                                 |                                                                                                                                              |
-| override              | Override classes                                            | boolean        | -                                                 | false                                                                                                                                        |
+| override              |                                                             | boolean        | -                                                 |                                                                                                                                              |
 | placeholder           |                                                             | string         | -                                                 |                                                                                                                                              |
-| position              | Optional, position of the datepicker relative to the input  | string         | `top-right`, `top-left`, `bottom-left`            |                                                                                                                                              |
+| position              |                                                             | string         | -                                                 |                                                                                                                                              |
 | resetOnMeridianChange |                                                             | boolean        | -                                                 | false                                                                                                                                        |
 | rounded               | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                              |
 | size                  | Size of button, optional                                    | string         | `small`, `medium`, `large`                        |                                                                                                                                              |
@@ -321,16 +250,16 @@ export default {
 | timeParser            |                                                             | func           | -                                                 | Default function (see source code)                                                                                                           |
 | unselectableTimes     |                                                             | array          | -                                                 |                                                                                                                                              |
 | useHtml5Validation    | Enable html 5 native validation                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code>     |
+| v-model               |                                                             | date           | -                                                 |                                                                                                                                              |
 | validationMessage     | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                              |
-| value                 |                                                             | date           | -                                                 |                                                                                                                                              |
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| blur       |            |
-| focus      |            |
-| input      |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| blur              |            |
+| focus             |            |
+| update:modelValue |            |
 
 ## Slots
 

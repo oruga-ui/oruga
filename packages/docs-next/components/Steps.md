@@ -10,7 +10,7 @@ title: Steps
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -44,7 +44,9 @@ title: Steps
           <o-switch v-model="customNavigation"> Custom Navigation </o-switch>
         </div>
         <div class="control">
-          <o-switch v-model="isProfileSuccess"> Set <code>success</code> for profile </o-switch>
+          <o-switch v-model="isProfileSuccess">
+            Set <code>success</code> for profile
+          </o-switch>
         </div>
       </o-field>
       <o-field v-if="hasNavigation" grouped group-multiline>
@@ -83,26 +85,59 @@ title: Steps
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''">
+      <o-step-item
+        step="2"
+        label="Profile"
+        :clickable="isStepsClickable"
+        :variant="isProfileSuccess ? 'success': ''"
+      >
         <h1 class="title has-text-centered">Profile</h1>
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <o-step-item step="3" :visible="showSocial" label="Social" :clickable="isStepsClickable">
+      <o-step-item
+        step="3"
+        :visible="showSocial"
+        label="Social"
+        :clickable="isStepsClickable"
+      >
         <h1 class="title has-text-centered">Social</h1>
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <o-step-item :step="showSocial ? '4' : '3'" label="Finish" :clickable="isStepsClickable" disabled>
+      <o-step-item
+        :step="showSocial ? '4' : '3'"
+        label="Finish"
+        :clickable="isStepsClickable"
+        disabled
+      >
         <h1 class="title has-text-centered">Finish</h1>
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <template v-if="customNavigation" slot="navigation" slot-scope="{previous, next}">
-        <o-button outlined variant="danger" icon-pack="fas" icon-left="backward" :disabled="previous.disabled" @click.prevent="previous.action">
+      <template
+        v-if="customNavigation"
+        slot="navigation"
+        slot-scope="{previous, next}"
+      >
+        <o-button
+          outlined
+          variant="danger"
+          icon-pack="fas"
+          icon-left="backward"
+          :disabled="previous.disabled"
+          @click.prevent="previous.action"
+        >
           Previous
         </o-button>
-        <o-button outlined variant="success" icon-pack="fas" icon-right="forward" :disabled="next.disabled" @click.prevent="next.action">
+        <o-button
+          outlined
+          variant="success"
+          icon-pack="fas"
+          icon-right="forward"
+          :disabled="next.disabled"
+          @click.prevent="next.action"
+        >
           Next
         </o-button>
       </template>
@@ -125,12 +160,12 @@ title: Steps
         customNavigation: false,
         isProfileSuccess: false,
 
-        prevIcon: 'chevron-left',
-        nextIcon: 'chevron-right',
-        labelPosition: 'bottom'
-      }
+        prevIcon: "chevron-left",
+        nextIcon: "chevron-right",
+        labelPosition: "bottom"
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -167,7 +202,7 @@ title: Steps
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -182,7 +217,9 @@ title: Steps
   <section>
     <o-field grouped group-multiline>
       <div class="control">
-        <o-switch v-model="position" true-value="right"> Right position </o-switch>
+        <o-switch v-model="position" true-value="right">
+          Right position
+        </o-switch>
       </div>
       <o-field label="Size">
         <o-select v-model="size" placeholder="Size">
@@ -201,7 +238,12 @@ title: Steps
       </o-field>
     </o-field>
 
-    <o-steps :position="position" :label-position="labelPosition" :size="size" vertical>
+    <o-steps
+      :position="position"
+      :label-position="labelPosition"
+      :size="size"
+      vertical
+    >
       <o-step-item label="Account" icon="user-lock">
         Account: Lorem ipsum dolor sit amet. <br />
         Account: Lorem ipsum dolor sit amet. <br />
@@ -230,12 +272,12 @@ title: Steps
   export default {
     data() {
       return {
-        labelPosition: 'bottom',
+        labelPosition: "bottom",
         position: null,
         size: null
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -246,237 +288,32 @@ title: Steps
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-steps v-bind="s" v-model="activeStep">
-                    <o-step-item v-bind="s" label="Account" icon="user-lock" step="1">
-                        <h1 class="title has-text-centered">Account</h1>
-                        Lorem ipsum dolor sit amet.
-                    </o-step-item>
-                    <o-step-item v-bind="s" label="Profile" icon="user" clickable step="2">
-                        <h1 class="title has-text-centered">Profile</h1>
-                        Lorem ipsum dolor sit amet.
-                    </o-step-item>
-                    <o-step-item v-bind="s" label="Social" icon="user-plus" step="3">
-                        <h1 class="title has-text-centered">Social</h1>
-                        Lorem ipsum dolor sit amet.
-                    </o-step-item>
-                </o-steps>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData" :subitem="subitem"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            activeStep: 1,
-            subitem: 'step-item',
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Root class of the element",
-                },
-                {
-                    class: "mobileClass",
-                    description: "Class of steps component when on mobile",
-                    warning: "Switch to mobile view to see it in action!",
-                },
-                {
-                    class: "sizeClass",
-                    description: "Size of the steps",
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = 'large';
-                    }
-                },
-                {
-                    class: "verticalClass",
-                    description: "Class of the tooltip trigger",
-                    properties: ['vertical'],
-                    action: (cmp) => {
-                        cmp.data.vertical = true
-                    }
-                },
-                {
-                    class: "positionClass",
-                    description: "Class of the Steps component when is vertical and its position changes",
-                    properties: ['position', 'vertical'],
-                    suffixes: ['bottom', 'left', 'right'],
-                    action: (cmp) => {
-                        cmp.data.vertical = true
-                        cmp.data.position = 'right'
-                    }
-                },
-                {
-                    class: "itemClass",
-                    description: "Class of the content item",
-                    subitem: true
-                },
-                {
-                    class: "itemHeaderClass",
-                    description: "Class of the nav item",
-                    specificity: "when <b>positionClass</b> is applied",
-                    subitem: true
-                },
-                {
-                    class: "itemHeaderActiveClass",
-                    description: "Class of the nav item when active",
-                    subitem: true
-                },
-                {
-                    class: "itemHeaderPreviousClass",
-                    description: "Class of the nav item behind the active one",
-                    subitem: true,
-                    action: () => {
-                        this.activeStep = 2;
-                    }
-                },
-                {
-                    class: "itemHeaderVariantClass",
-                    description: "Class of the nav item with variant (default value by parent steps component)",
-                    subitem: true,
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                    }
-                },
-                {
-                    class: "stepsClass",
-                    description: "Class of the steps container",
-                    specificity: "when <b>positionClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "animatedClass",
-                    description: "Class of Steps component when animation gets triggered",
-                    properties: ['animated'],
-                    action: (cmp) => {
-                        cmp.data.animated = true
-                    }
-                },
-                {
-                    class: "stepMarkerRoundedClass",
-                    description: "Class of the Steps markers trigger when are rounded",
-                    properties: ['rounded'],
-                    action: (cmp) => {
-                        cmp.data.position = 'right'
-                    }
-                },
-                {
-                    class: "stepDividerClass",
-                    description: "Class of the Steps component dividers",
-                    specificity: "when <b>mobileClass</b> or <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> or <b>positionClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepMarkerClass",
-                    description: "Class of the Steps component marker",
-                    specificity: "when <b>itemHeaderActiveClass</b> or <b>itemHeaderPreviousClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepContentClass",
-                    description: "Class of the Steps component content",
-                    specificity: "when <b>positionClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepContentTransitioningClass",
-                    description: "Class of the Steps component content when transition is happening",
-                    warning: "Click on a marker to see it in action",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepNavigationClass",
-                    description: "Class of the Steps component navigation element",
-                    specificity: "when <b>positionClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepLinkLabelClass",
-                    description: "Class of the Step component link label",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepLinkClass",
-                    description: "Class of the Steps component link",
-                    specificity: "when <b>itemHeaderActiveClass</b> is applied",
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepLinkClickableClass",
-                    description: "Class of the Steps component link when clickable",
-                    properties: ["clickable"],
-                    action: () => {
-                    }
-                },
-                {
-                    class: "stepLinkLabelPositionClass",
-                    description: "Class of the Step component link label when positioned",
-                    properties: ['labelPosition'],
-                    suffixes: ['bottom', 'right', 'left'],
-                    action: (cmp) => {
-                        cmp.data.labelPosition = "right"
-                    }
-                }
-            ]
-        };
-    },
-};
-</script>
 
 <br />
 <br />
 
 ## Props
 
-| Prop name         | Description                                                                                                                   | Type           | Values                                                                          | Default                                                                                                                                        |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated          | Step navigation is animated                                                                                                   | boolean        | -                                                                               | true                                                                                                                                           |
-| ariaNextLabel     |                                                                                                                               | string         | -                                                                               |                                                                                                                                                |
-| ariaPreviousLabel |                                                                                                                               | string         | -                                                                               |                                                                                                                                                |
-| destroyOnHide     | Destroy tab on hide                                                                                                           | boolean        | -                                                                               | false                                                                                                                                          |
-| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean        | -                                                                               | true                                                                                                                                           |
-| iconNext          | Icon to use for navigation button                                                                                             | string         | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
-| iconPack          | Icon pack to use for the navigation                                                                                           | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               |                                                                                                                                                |
-| iconPrev          | Icon to use for navigation button                                                                                             | string         | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
-| labelPosition     | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | 'bottom'                                                                                                                                       |
-| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string         | -                                                                               |                                                                                                                                                |
-| override          | Override classes                                                                                                              | boolean        | -                                                                               | false                                                                                                                                          |
-| position          | Position of the tab, optional                                                                                                 | string         | `centered`, `right`                                                             |                                                                                                                                                |
-| rounded           | Rounded step markers                                                                                                          | boolean        | -                                                                               | true                                                                                                                                           |
-| size              | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      |                                                                                                                                                |
-| v-model           |                                                                                                                               | string\|number | -                                                                               |                                                                                                                                                |
-| variant           | Color of the control, optional                                                                                                | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                                |
-| vertical          | Show tab in vertical layout                                                                                                   | boolean        | -                                                                               | false                                                                                                                                          |
-
-### Events
-
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| input      |            |
+| Prop name         | Description                                                                                                                   | Type    | Values                                            | Default                                                                                                                                        |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated          | Step navigation is animated                                                                                                   | boolean | -                                                 | true                                                                                                                                           |
+| ariaNextLabel     |                                                                                                                               | string  | -                                                 |                                                                                                                                                |
+| ariaPreviousLabel |                                                                                                                               | string  | -                                                 |                                                                                                                                                |
+| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean | -                                                 | true                                                                                                                                           |
+| iconNext          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
+| iconPack          | Icon pack to use for the navigation                                                                                           | string  | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                |
+| iconPrev          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
+| labelPosition     | Position of the marker label, optional                                                                                        | string  | `bottom`, `right`, `left`                         | 'bottom'                                                                                                                                       |
+| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string  | -                                                 |                                                                                                                                                |
+| override          |                                                                                                                               | boolean | -                                                 |                                                                                                                                                |
+| rounded           | Rounded step markers                                                                                                          | boolean | -                                                 | true                                                                                                                                           |
 
 ### Slots
 
 | Name       | Description | Bindings |
 | ---------- | ----------- | -------- |
 | default    |             |          |
-| navigation |             | <br>     |
+| navigation |             | <br/>    |
 
 ---
 
@@ -484,25 +321,23 @@ export default {
 
 > <CarbonAds />
 
+## Class props
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_step item.scss)
+
+<br />
+
+<br />
+<br />
+
 ## Props
 
 | Prop name | Description                                                                                                                         | Type           | Values | Default   |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
 | clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
-| icon      | Icon on the left                                                                                                                    | string         | -      |           |
-| iconPack  | Icon pack                                                                                                                           | string         | -      |           |
-| label     | Item label                                                                                                                          | string         | -      |           |
-| override  | Override classes                                                                                                                    | boolean        | -      | false     |
+| override  |                                                                                                                                     | boolean        | -      |           |
 | step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
-| value     | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number | -      |           |
 | variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
-| visible   | Show/hide item                                                                                                                      | boolean        | -      | true      |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
 
 ## Style
 

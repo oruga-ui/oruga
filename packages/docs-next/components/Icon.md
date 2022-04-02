@@ -10,7 +10,7 @@ title: Icon
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/icon/examples/Icon.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/icon/examples/Icon.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -45,7 +45,8 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     <div class="block">
       <o-icon pack="fas" icon="user" size="large" variant="success"> </o-icon>
       <o-icon pack="fas" icon="home" size="large" variant="info"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt" size="large" variant="primary"> </o-icon>
+      <o-icon pack="fas" icon="tachometer-alt" size="large" variant="primary">
+      </o-icon>
     </div>
 
     <o-button variant="success">
@@ -66,7 +67,7 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -106,9 +107,11 @@ Take a look at below example code (click on "Show code") to know all internal ic
     </div>
 
     <div class="block">
-      <o-icon pack="ionicons" icon="person" size="large" variant="success"> </o-icon>
+      <o-icon pack="ionicons" icon="person" size="large" variant="success">
+      </o-icon>
       <o-icon pack="ionicons" icon="home" size="large" variant="info"> </o-icon>
-      <o-icon pack="ionicons" icon="apps" size="large" variant="primary"> </o-icon>
+      <o-icon pack="ionicons" icon="apps" size="large" variant="primary">
+      </o-icon>
     </div>
 
     <o-button variant="primary">
@@ -134,57 +137,57 @@ Take a look at below example code (click on "Show code") to know all internal ic
     customIconPacks: {
       ionicons: {
         sizes: {
-          default: 'is-size-5',
-          small: '',
-          medium: 'is-size-3',
-          large: 'is-size-1'
+          default: "is-size-5",
+          small: "",
+          medium: "is-size-3",
+          large: "is-size-1"
         },
-        iconPrefix: 'ion-md-',
+        iconPrefix: "ion-md-",
         internalIcons: {
-          check: 'checkmark',
-          information: 'information',
-          alert: 'alert',
-          'alert-circle': 'alert',
-          'arrow-up': 'arrow-up',
-          'chevron-right': 'arrow-forward',
-          'chevron-left': 'arrow-back',
-          'chevron-down': 'arrow-down',
-          eye: 'eye',
-          'eye-off': 'eye-off',
-          'caret-down': 'arrow-dropdown',
-          'caret-up': 'arrow-dropup',
-          loading: 'reload-outline',
-          times: 'close-outline',
-          'close-circle': 'close-circle-outline'
+          check: "checkmark",
+          information: "information",
+          alert: "alert",
+          "alert-circle": "alert",
+          "arrow-up": "arrow-up",
+          "chevron-right": "arrow-forward",
+          "chevron-left": "arrow-back",
+          "chevron-down": "arrow-down",
+          eye: "eye",
+          "eye-off": "eye-off",
+          "caret-down": "arrow-dropdown",
+          "caret-up": "arrow-dropup",
+          loading: "reload-outline",
+          times: "close-outline",
+          "close-circle": "close-circle-outline"
         }
       }
     }
-  }
+  };
   export default {
     data() {
       return {
         docsIcon: undefined
-      }
+      };
     },
     created() {
-      this.$oruga.config.setOptions(customIconConfig)
+      this.$oruga.config.setOptions(customIconConfig);
     },
     beforeCreate() {
       // only for docs purpose
-      const docsIcon = this.$oruga.config.getOptions().iconComponent
-      if (typeof window !== 'undefined') {
+      const docsIcon = this.$oruga.config.getOptions().iconComponent;
+      if (typeof window !== "undefined") {
         window.requestAnimationFrame(() => {
           this.$oruga.config.setOptions({
             iconComponent: docsIcon
-          })
-        })
+          });
+        });
       }
     }
-  }
+  };
 </script>
 
 <style>
-  @import 'https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css';
+  @import "https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css";
 </style>
 ```
 
@@ -203,18 +206,18 @@ const customIconConfig = {
       sizes: {
         default: null,
         small: null,
-        medium: 'fa-lg',
-        large: 'fa-2x'
+        medium: "fa-lg",
+        large: "fa-2x"
       }
     }
   }
-}
+};
 export default {
   created() {
     // only for docs purpose, you can set in globally
-    this.$oruga.config.setOptions(customIconConfig)
+    this.$oruga.config.setOptions(customIconConfig);
   }
-}
+};
 ```
 
 ### Custom icon component
@@ -224,7 +227,7 @@ You can set the `iconComponent` config option to render icons with the vue-fonta
 :::
 
 ```js
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {
   faCheck,
@@ -240,8 +243,8 @@ import {
   faEyeSlash,
   faCaretDown,
   faCaretUp
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(
   faCheck,
@@ -257,16 +260,16 @@ library.add(
   faEyeSlash,
   faCaretDown,
   faCaretUp
-)
-Vue.component('vue-fontawesome', FontAwesomeIcon)
+);
+Vue.component("vue-fontawesome", FontAwesomeIcon);
 
 // ...
 
-import Oruga from '@oruga-ui/oruga'
+import Oruga from "@oruga-ui/oruga";
 Vue.use(Oruga, {
-  iconComponent: 'vue-fontawesome',
-  iconPack: 'fas'
-})
+  iconComponent: "vue-fontawesome",
+  iconPack: "fas"
+});
 ```
 
 ## Class props
@@ -274,65 +277,6 @@ Vue.use(Oruga, {
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_icon.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-icon v-bind="s" pack="fas" icon="home"></o-icon>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element"
-                },
-                {
-                    class: "clickableClass",
-                    description: "Class of the icon when clickable",
-                    properties: ['clickable'],
-                    action: (cmp) => {
-                        cmp.data.clickable = true;
-                    }
-                },
-                {
-                    class: "spinClass",
-                    description: "Class of the element when spin",
-                    properties: ['spin'],
-                    action: (cmp) => {
-                        cmp.data.spin = true;
-                    }
-                },
-                {
-                    class: "sizeClass",
-                    description : 'Class of the icon size',
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = "large";
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the icon variant',
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = "warning";
-                    }
-                },
-            ],
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -347,7 +291,7 @@ export default {
 | customClass | Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes | string         | -                                                                                                                                  |         |
 | customSize  | Overrides icon font size, optional                                                                                   | string         | `Depends on library: null (smallest)`, `fa-lg`, `fa-2x`, `fa-3x`, `fa-4x`, `fa-5x`, `mdi-18px`, `mdi-24px`, `mdi-36px`, `mdi-48px` |         |
 | icon        | Icon name                                                                                                            | string         | -                                                                                                                                  |         |
-| override    | Override classes                                                                                                     | boolean        | -                                                                                                                                  | false   |
+| override    |                                                                                                                      | boolean        | -                                                                                                                                  |         |
 | pack        | Icon pack to use                                                                                                     | string         | `mdi`, `fa`, `fas and any other custom icon pack`                                                                                  |         |
 | rotation    | Rotation 0-360                                                                                                       | number\|string | -                                                                                                                                  |         |
 | size        | Icon size, optional                                                                                                  | string         | `small`, `medium`, `large`                                                                                                         |         |

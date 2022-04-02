@@ -10,7 +10,7 @@ title: Button
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/button/examples/Button.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/button/examples/Button.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -29,10 +29,10 @@ title: Button
   export default {
     methods: {
       clickMe() {
-        alert('Clicked!')
+        alert("Clicked!");
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -67,7 +67,7 @@ title: Button
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -115,7 +115,7 @@ title: Button
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -150,7 +150,7 @@ title: Button
 </template>
 
 <script>
-  export default {}
+  export default {};
 </script>
 ```
 
@@ -161,128 +161,6 @@ title: Button
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_button.scss)
 
 <br />
-<template>
-  <div>
-    <doc-wrapper>
-      <template v-slot:default="s">
-      <o-button v-bind="s">Button</o-button>
-      </template>
-    </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Class of the root element",
-                },
-                {
-                    class: "outlinedClass",
-                    description: "Class of the button outlined",
-                    properties: ["outlined"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'primary';
-                        cmp.data.outlined = true;
-                    },
-                },
-                {
-                    class: "invertedClass",
-                    description: "Class of the button when inverted",
-                    properties: ["inverted"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'primary';
-                        cmp.data.inverted = true;
-                    },
-                },
-                {
-                    class: "expandedClass",
-                    description: "Class of the button when expanded",
-                    properties: ["expanded"],
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    },
-                },
-                {
-                    class: "elementsWrapperClass",
-                    description: "Class of the button elements wrapper",
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    },
-                },
-                {
-                    class: "roundedClass",
-                    description: "Class of the button when rounded",
-                    properties: ["rounded"],
-                    action: (cmp) => {
-                        cmp.data.rounded = true;
-                    },
-                },
-                {
-                    class: "disabledClass",
-                    description: "Class of the button when disabled",
-                    properties: ["disabled"],
-                    action: (cmp) => {
-                        cmp.data.disabled = true;
-                    },
-                },
-                {
-                    class: "labelClass",
-                    description: "Class of the button label"
-                },
-                {
-                    class: "iconClass",
-                    description: "Class of the button icon",
-                    properties: ["iconLeft", "iconRight"],
-                    action: (cmp) => {
-                        cmp.data['icon-left'] = "plus"
-                    },
-                },
-                {
-                    class: "iconLeftClass",
-                    description: "Class of the button icon on the left",
-                    properties: ["iconLeft"],
-                    action: (cmp) => {
-                        cmp.data['icon-left'] = "plus"
-                    },
-                },
-                {
-                    class: "iconRightClass",
-                    description: "Class of the button icon on the right",
-                    properties: ["iconRight"],
-                    action: (cmp) => {
-                        cmp.data['icon-right'] = "plus"
-                    },
-                },
-                {
-                    class: "sizeClass",
-                    description: "Class of the button size",
-                    properties: ["size"],
-                    suffixes: ['small', 'medium', 'large'],
-                    action: (cmp) => {
-                        cmp.data.size = 'large';
-                    },
-                },
-                {
-                    class: "variantClass",
-                    description: "Class of the button variant",
-                    properties: ["variant"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                    },
-                },
-            ],
-        };
-    }
-}
-</script>
 
 <br />
 <br />
@@ -301,7 +179,7 @@ export default {
 | label      | Button label, optional when default slot | string  | -                                                                               |                                                                                                                                      |
 | nativeType | Button type, like native                 | string  | -                                                                               | 'button'                                                                                                                             |
 | outlined   | Outlined style                           | boolean | -                                                                               |                                                                                                                                      |
-| override   | Override classes                         | boolean | -                                                                               | false                                                                                                                                |
+| override   |                                          | boolean | -                                                                               |                                                                                                                                      |
 | rounded    | Rounded style                            | boolean | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> button: {<br>&nbsp;&nbsp;rounded: false<br>}</code> |
 | size       | Size of button, optional                 | string  | `small`, `medium`, `large`                                                      |                                                                                                                                      |
 | tag        | Button tag name                          | string  | `button`, `a`, `input`, `router-link`, `nuxt-link (or other nuxt alias)`        | 'button'                                                                                                                             |

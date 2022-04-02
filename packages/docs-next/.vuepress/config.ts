@@ -9,7 +9,7 @@ const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''
 const sidebarComponents = components.map(c => `/components/${c}`)
 
 export default defineUserConfig<DefaultThemeOptions>({
-  theme: '@vuepress/theme-default',
+  theme: path.resolve(__dirname, './theme/index.ts'),
   title: `Oruga`,
   description: 'UI components for Vue.js and CSS framework agnostic',
   head: [
@@ -31,7 +31,18 @@ export default defineUserConfig<DefaultThemeOptions>({
     ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
     ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png?v=3' }]
   ],
- // plugins: ['demo-code'],
+  plugins: [
+    [
+        "vuepress-plugin-demoblock-plus", {
+            '/': {
+                'hide-text': 'Hide',
+                'show-text': 'Expand',
+                'copy-button-text': 'Copy',
+                'copy-success-text': 'Code Copied'
+            }
+        }
+    ]
+  ],
   themeConfig: {
     logo: '/logo.png',
     repo: 'oruga-ui/oruga',

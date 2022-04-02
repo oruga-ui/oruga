@@ -6,13 +6,17 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "vuepress dev",
+    "docs:dev": "concurrently \"vue-docgen --watch\" \"vuepress dev\"",
+    "docs:gen": "vue-docgen",
     "docs:build": "vuepress build"
   },
   "devDependencies": {
     "@oruga-ui/oruga-next": "^0.5.5",
-    "vue": "^3.2.31",
-    "vuepress": "^2.0.0-beta.36",
-    "vuepress-plugin-demo-code": "^1.0.0-0"
-  }
+    "concurrently": "7.1.0",
+    "vue-docgen-cli": "4.44.23",
+    "vuepress": "2.0.0-beta.37",
+    "vuepress-plugin-demo-code": "1.0.0-0",
+    "vuepress-plugin-demoblock-plus": "1.5.1"
+  },
+  "dependencies": {}
 }

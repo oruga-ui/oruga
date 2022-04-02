@@ -10,7 +10,7 @@ title: Upload
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/upload/examples/Upload.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/upload/examples/Upload.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -38,9 +38,9 @@ title: Upload
     data() {
       return {
         file: null
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -67,7 +67,13 @@ title: Upload
     <div class="tags">
       <span v-for="(file, index) in dropFiles" :key="index">
         {{file.name}}
-        <o-button icon-left="times" size="small" native-type="button" @click="deleteDropFile(index)"> </o-button>
+        <o-button
+          icon-left="times"
+          size="small"
+          native-type="button"
+          @click="deleteDropFile(index)"
+        >
+        </o-button>
       </span>
     </div>
   </section>
@@ -78,14 +84,14 @@ title: Upload
     data() {
       return {
         dropFiles: []
-      }
+      };
     },
     methods: {
       deleteDropFile(index) {
-        this.dropFiles.splice(index, 1)
+        this.dropFiles.splice(index, 1);
       }
     }
-  }
+  };
 </script>
 
 <style>
@@ -102,87 +108,6 @@ title: Upload
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_upload.scss)
 
 <br />
-<template>
-     <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <section>
-                    <o-field>
-                        <o-upload v-bind="s">
-                            <section class="ex-center">
-                                <p>
-                                    <o-icon icon="upload" size="is-large"> </o-icon>
-                                </p>
-                                <p v-if="s.dragDrop">Drop your files here or click to upload</p>
-                                <p v-if="!s.dragDrop">Click to upload</p>
-                            </section>
-                        </o-upload>
-                    </o-field>
-                </section>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "rootClass",
-                    description: "Root class of the element",
-                },
-                {
-                    class: "draggableClass",
-                    description: "Upload class when draggable",
-                    properties: ['dragDrop'],
-                    action: (cmp) => {
-                        cmp.data.dragDrop = true;
-                    }
-                },
-                {
-                    class: "expandedClass",
-                    description: "Upload class when expanded",
-                    properties: ['expanded'],
-                    action: (cmp) => {
-                        cmp.data.expanded = true;
-                    }
-                },
-                {
-                    class: "disabledClass",
-                    description: "Upload class when disabled",
-                    properties: ['disabled'],
-                    action: (cmp) => {
-                        cmp.data.disabled = true;
-                    }
-                },
-                {
-                    class: "hoveredClass",
-                    description: "Upload class on dragging",
-                    properties: ['dragDrop'],
-                    warning: 'Drag & drop a file to see it in action!',
-                    action: (cmp) => {
-                        cmp.data.dragDrop = true;
-                    }
-                },
-                {
-                    class: "variantClass",
-                    description : 'Class of the upload variant',
-                    properties: ["variant", "dragDrop"],
-                    suffixes: ['primary', 'info', 'warning', 'danger'],
-                    warning: 'Drag & drop a file to see it in action!',
-                    action: (cmp) => {
-                        cmp.data.variant = 'warning';
-                        cmp.data.dragDrop = true;
-                    }
-                }
-            ]
-        };
-    },
-};
-</script>
 
 <br />
 <br />
@@ -201,7 +126,7 @@ export default {
 | maxlength          | Same as native maxlength, plus character counter                      | number\|string      | -                                                                               |                                                                                                                                          |
 | multiple           | Same as native, also push new item to v-model instead of replacing    | boolean             | -                                                                               |                                                                                                                                          |
 | native             | Replace last chosen files every time (like native file input element) | boolean             | -                                                                               | false                                                                                                                                    |
-| override           | Override classes                                                      | boolean             | -                                                                               | false                                                                                                                                    |
+| override           |                                                                       | boolean             | -                                                                               |                                                                                                                                          |
 | rounded            | Makes the element rounded                                             | boolean             | -                                                                               |                                                                                                                                          |
 | statusIcon         | Show status icon using field and variant prop                         | boolean             | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "statusIcon": true<br>}</code>         |
 | useHtml5Validation | Enable html 5 native validation                                       | boolean             | -                                                                               | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code> |
@@ -211,11 +136,11 @@ export default {
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| blur       |            |
-| focus      |            |
-| input      |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| blur              |            |
+| focus             |            |
+| update:modelValue |            |
 
 ## Slots
 

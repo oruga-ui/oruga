@@ -10,7 +10,7 @@ title: Datetimepicker
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga/src/components/datetimepicker/examples/Datetimepicker.md" class="docgen-edit-link">edit on github</a>
+<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/datetimepicker/examples/Datetimepicker.md" class="docgen-edit-link">edit on github</a>
 
 ## Examples
 
@@ -53,7 +53,14 @@ title: Datetimepicker
       </o-field>
     </o-field>
     <o-field label="Select datetime">
-      <o-datetimepicker rounded placeholder="Click to select..." icon="calendar" :locale="locale" :datepicker="{ showWeekNumber }" :timepicker="{ enableSeconds, hourFormat }">
+      <o-datetimepicker
+        rounded
+        placeholder="Click to select..."
+        icon="calendar"
+        :locale="locale"
+        :datepicker="{ showWeekNumber }"
+        :timepicker="{ enableSeconds, hourFormat }"
+      >
       </o-datetimepicker>
     </o-field>
   </section>
@@ -67,9 +74,9 @@ title: Datetimepicker
         enableSeconds: false,
         hourFormat: undefined, // Browser locale
         locale: undefined // Browser locale
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -102,9 +109,9 @@ title: Datetimepicker
     data() {
       return {
         datetime: new Date()
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style>
@@ -130,9 +137,9 @@ title: Datetimepicker
     data() {
       return {
         datetime: new Date()
-      }
+      };
     }
-  }
+  };
 </script>
 ```
 
@@ -143,59 +150,6 @@ title: Datetimepicker
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datetimepicker.scss)
 
 <br />
-<template>
-    <div>
-        <doc-wrapper>
-            <template v-slot:default="s">
-                <o-field label="Select datetime">
-                    <o-datetimepicker
-                        v-bind="s"
-                        placeholder="Click to select..."
-                        icon="calendar"
-                        horizontal-time-picker
-                        ref="datetimepicker"
-                    >
-                    </o-datetimepicker>
-                </o-field>
-            </template>
-        </doc-wrapper>
-        <inspector :inspectData="inspectData"></inspector>
-    </div>
-</template>
-
-<script>
-export default {
-    methods: {
-        openDatetimePicker() {
-            setTimeout(() => {
-                this.$refs.datetimepicker.$el.getElementsByClassName('o-drop__trigger')[0].click()
-            }, 500)
-        }
-    },
-    data() {
-        return {
-            inspectData: [
-                {
-                    class: "datepickerWrapperClass",
-                    description: "Class of the Datepicker wrapper",
-                },
-                {
-                    class: "timepickerWrapperClass",
-                    description: "Class of the Timepicker wrapper",
-                    action: () => {
-                        this.openDatetimePicker();
-                    }
-                }
-            ],
-        };
-    }
-}
-</script>
-<style>
-.datepicker__table {
-    border-collapse: collapse;
-}
-</style>
 
 <br />
 <br />
@@ -206,7 +160,7 @@ export default {
 | ------------------ | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | appendToBody       |                                                             | boolean        | -                                                 |                                                                                                                                          |
 | autocomplete       | Native options to use in HTML5 validation                   | string         | -                                                 |                                                                                                                                          |
-| datepicker         | Properties and classes to bind to the internal DatePicker   | object         | -                                                 |                                                                                                                                          |
+| datepicker         |                                                             | object         | -                                                 |                                                                                                                                          |
 | datetimeCreator    |                                                             | func           | -                                                 | Default function (see source code)                                                                                                       |
 | datetimeFormatter  |                                                             | func           | -                                                 |                                                                                                                                          |
 | datetimeParser     |                                                             | func           | -                                                 |                                                                                                                                          |
@@ -215,36 +169,36 @@ export default {
 | expanded           | Makes input full width when inside a grouped or addon field | boolean        | -                                                 |                                                                                                                                          |
 | icon               | Icon name to be added                                       | string         | -                                                 |                                                                                                                                          |
 | iconPack           | Icon pack to use                                            | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                          |
-| iconRight          | Icon name to be added on the right side                     | string         | -                                                 |                                                                                                                                          |
-| iconRightClickable | Make the icon right clickable                               | boolean        | -                                                 |                                                                                                                                          |
+| iconRight          |                                                             | string         | -                                                 |                                                                                                                                          |
+| iconRightClickable |                                                             | boolean        | -                                                 |                                                                                                                                          |
 | inline             |                                                             | boolean        | -                                                 |                                                                                                                                          |
 | locale             |                                                             | string\|array  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; locale: undefined<br>}</code>          |
 | maxDatetime        |                                                             | date           | -                                                 |                                                                                                                                          |
 | maxlength          | Same as native maxlength, plus character counter            | number\|string | -                                                 |                                                                                                                                          |
 | minDatetime        |                                                             | date           | -                                                 |                                                                                                                                          |
 | mobileNative       |                                                             | boolean        | -                                                 | true                                                                                                                                     |
+| modelValue         |                                                             | date           | -                                                 |                                                                                                                                          |
 | openOnFocus        |                                                             | boolean        | -                                                 |                                                                                                                                          |
-| override           | Override classes                                            | boolean        | -                                                 | false                                                                                                                                    |
+| override           |                                                             | boolean        | -                                                 |                                                                                                                                          |
 | placeholder        |                                                             | string         | -                                                 |                                                                                                                                          |
-| position           | Optional, position of the datepicker relative to the input  | string         | `top-right`, `top-left`, `bottom-left`            |                                                                                                                                          |
+| position           |                                                             | string         | -                                                 |                                                                                                                                          |
 | rounded            | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                          |
 | statusIcon         | Show status icon using field and variant prop               | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "statusIcon": true<br>}</code>         |
-| timepicker         | Properties and classes to bind to the internal TimePicker   | object         | -                                                 |                                                                                                                                          |
+| timepicker         |                                                             | object         | -                                                 |                                                                                                                                          |
 | useHtml5Validation | Enable html 5 native validation                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code> |
 | validationMessage  | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                          |
-| value              |                                                             | date           | -                                                 |                                                                                                                                          |
 
 ## Events
 
-| Event name       | Properties | Description |
-| ---------------- | ---------- | ----------- |
-| active-change    |            |
-| icon-right-click |            |
-| change-month     |            |
-| change-year      |            |
-| blur             |            |
-| focus            |            |
-| input            |            |
+| Event name        | Properties | Description |
+| ----------------- | ---------- | ----------- |
+| active-change     |            |
+| icon-right-click  |            |
+| change-month      |            |
+| change-year       |            |
+| blur              |            |
+| focus             |            |
+| update:modelValue |            |
 
 ## Slots
 
