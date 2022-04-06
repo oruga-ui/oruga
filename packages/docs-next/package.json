@@ -14,9 +14,8 @@
     "@oruga-ui/oruga-next": "^0.5.5",
     "concurrently": "7.1.0",
     "vue-docgen-cli": "4.44.23",
-    "vuepress": "2.0.0-beta.37",
-    "vuepress-plugin-demo-code": "1.0.0-0",
-    "vuepress-plugin-demoblock-plus": "1.5.1"
+    "vuepress": "2.0.0-beta.38",
+    "vuepress-plugin-demo-code": "1.0.0-2"
   },
   "dependencies": {}
 }

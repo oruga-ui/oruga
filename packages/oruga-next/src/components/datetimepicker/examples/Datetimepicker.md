@@ -2,7 +2,6 @@
 ## Examples
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -63,13 +62,11 @@ export default {
     }
 }
 </script>
-```
 :::
 
 ### Footer slot
 
 ::: demo
-```html
 <template>
     <o-field label="Select datetime">
         <o-datetimepicker v-model="datetime"
@@ -105,14 +102,12 @@ export default {
     margin-top: 1rem;
 }
 </style>
-```
 :::
 
 ### Inline
 
 
 ::: demo
-```html
 <template>
     <o-datetimepicker v-model="datetime" inline></o-datetimepicker>
 </template>
@@ -126,5 +121,4 @@ export default {
         }
     }
 </script>
-```
 :::

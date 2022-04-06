@@ -4,7 +4,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-tooltip label="Tooltip right"
@@ -47,13 +46,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Multiline
 
 ::: demo
-```html
 <template>
     <section>
         <o-tooltip
@@ -89,13 +86,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Slot
 
 ::: demo
-```html
 <template>
     <section>
         <o-tooltip position="bottom" multiline>
@@ -121,14 +116,12 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Toggle
 
 ::: demo
-```html
-<template>
+::: demote>
     <section>
         <o-button
             @click="active = !active">
@@ -164,5 +157,4 @@
         }
     }
 </script>
-```
 :::

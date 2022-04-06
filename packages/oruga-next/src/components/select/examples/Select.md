@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Simple">
@@ -114,5 +113,4 @@
       }
     }
 </script>
-```
 :::

@@ -1,7 +1,6 @@
 ## Examples
 
 ::: demo
-```html
 <template>
     <section>
 
@@ -29,13 +28,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Accordion
 
 ::: demo
-```html
 <template>
     <section>
 
@@ -129,5 +126,4 @@
     background-color: transparent;
 }
 </style>
-```
 :::

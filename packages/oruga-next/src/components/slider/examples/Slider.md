@@ -33,7 +33,6 @@
         }
     }
 </script>
-```
 :::
 
 ### Customize
@@ -79,7 +78,6 @@
         }
     }
 </script>
-```
 :::
 
 ### Tick and label
@@ -115,7 +113,6 @@
     export default {
     }
 </script>
-```
 :::
 
 
@@ -148,5 +145,4 @@
         }
     }
 </script>
-```
 :::

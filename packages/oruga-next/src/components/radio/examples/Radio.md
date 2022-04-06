@@ -2,9 +2,7 @@
 
 ### Base
 
-::: demo
-```html
-<template>
+::: demote>
     <section>
         <div class="block">
             <o-radio v-model="radio"
@@ -45,15 +43,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Variants
 
-::: demo
-```html
-<template>
-    <section>
+::: demoction>
         <div class="field">
             <o-radio v-model="radio"
                 native-value="default">
@@ -100,5 +94,4 @@
         }
     }
 </script>
-```
 :::

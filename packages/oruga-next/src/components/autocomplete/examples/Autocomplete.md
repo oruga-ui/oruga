@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <p class="content"><b>Selected:</b> {{ selected }}</p>
@@ -57,13 +56,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Object array
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -169,13 +166,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Groups
 
 ::: demo
-```html
 <template>
     <section>
         <p class="content"><b>Selected:</b> {{ selected }}</p>
@@ -227,13 +222,11 @@ export default {
     }
 }
 </script>
-```
 :::
 
 ### Infinite Scroll
 
 ::: demo
-```html
 <template>
     <section>
         <p class="content"><b>Selected:</b> {{ selected }}</p>
@@ -248,7 +241,6 @@ export default {
                 @typing="getAsyncData"
                 @select="option => selected = option"
                 @infinite-scroll="getMoreAsyncData">
-
                 <template #default="props">
                     <div class="media">
                         <div class="media-left">
@@ -326,5 +318,4 @@ export default {
         }
     }
 </script>
-```
 :::

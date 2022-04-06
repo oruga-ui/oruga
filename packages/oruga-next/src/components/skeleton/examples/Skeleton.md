@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -34,5 +33,4 @@ export default {
     }
 }
 </script>
-```
 :::

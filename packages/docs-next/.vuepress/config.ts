@@ -33,15 +33,16 @@ export default defineUserConfig<DefaultThemeOptions>({
   ],
   plugins: [
     [
-        "vuepress-plugin-demoblock-plus", {
-            '/': {
-                'hide-text': 'Hide',
-                'show-text': 'Expand',
-                'copy-button-text': 'Copy',
-                'copy-success-text': 'Code Copied'
-            }
+        'demo-code',
+        {
+            jsLib: ['https://oruga-documentation-preview.netlify.app/cdn/oruga.min.js'],
+            cssLib: [
+                'https://oruga-documentation-preview.netlify.app/cdn/oruga.min.css',
+                'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
+            ],
+            onlineBtns: { codepen: true, jsfiddle: false, codesandbox: false }
         }
-    ]
+      ]
   ],
   themeConfig: {
     logo: '/logo.png',

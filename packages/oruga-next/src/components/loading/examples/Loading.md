@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -39,13 +38,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Slot
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -88,13 +85,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Programmatically
 
 ::: demo
-```html
 <template>
     <div>
         <o-field>
@@ -129,5 +124,4 @@
         }
     }
 </script>
-```
 :::

@@ -4,7 +4,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
 
@@ -75,13 +74,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Multiple
 
 ::: demo
-```html
 <template>
     <section>
         <p class="content"><b>selected</b>: {{ selectedOptions }}</p>
@@ -118,13 +115,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Scrollable
 
 ::: demo
-```html
 <template>
     <section>
         <div class="block">
@@ -206,5 +201,4 @@
         flex-shrink: 0;
     }
 </style>
-```
 :::

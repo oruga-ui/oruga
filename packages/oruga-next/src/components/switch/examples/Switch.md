@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -37,13 +36,11 @@ export default {
     }
 }
 </script>
-```
 :::
 
 ### Variants
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -82,13 +79,11 @@ export default {
 export default {
 }
 </script>
-```
 :::
 
 ### Sizes
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -110,13 +105,11 @@ export default {
 export default {
 }
 </script>
-```
 :::
 
 ### Style variants
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped>
@@ -173,5 +166,4 @@ export default {
         }
     }
 </script>
-```
 :::

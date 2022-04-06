@@ -4,7 +4,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Name">
@@ -86,13 +85,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <h3 class="subtitle">With Icons</h3>
@@ -136,5 +133,4 @@
         }
     }
 </script>
-```
 :::

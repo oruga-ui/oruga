@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <div class="field">
@@ -42,13 +41,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Variants
 
 ::: demo
-```html
 <template>
     <section>
         <div class="field">
@@ -93,13 +90,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Array
 
 ::: demo
-```html
 <template>
     <section>
         <div class="block">
@@ -136,5 +131,4 @@
         }
     }
 </script>
-```
 :::

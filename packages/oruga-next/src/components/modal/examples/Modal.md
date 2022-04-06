@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <div class="buttons">
@@ -44,13 +43,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Programmatically
 
 ::: demo
-```html
 <template>
     <section>
         <div class="buttons">
@@ -195,5 +192,4 @@
     margin-right: .5em;
 }
 </style>
-```
 :::

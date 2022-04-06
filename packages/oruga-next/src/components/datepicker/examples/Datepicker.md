@@ -1,7 +1,6 @@
 ## Examples
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -50,13 +49,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Min/Max date
 
 ::: demo
-```html
 <template>
     <o-field label="Select a date">
         <o-datepicker
@@ -81,13 +78,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Range
 
 ::: demo
-```html
 <template>
     <o-field label="Select a date">
         <o-datepicker
@@ -108,14 +103,12 @@ export default {
     }
 }
 </script>
-```
 :::
 
 ### Multiple
 
 ::: demo
-```html
-<template>
+::: demote>
     <o-field label="Select a date">
         <o-datepicker
             placeholder="Click to select..."
@@ -134,13 +127,10 @@ export default {
     }
 }
 </script>
-```
 :::
-
 ### Trigger
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Select a date" grouped>
@@ -170,13 +160,10 @@ export default {
     }
 }
 </script>
-```
 :::
-
 ### Programmatically
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -197,13 +184,10 @@ export default {
 export default {
 }
 </script>
-```
 :::
-
-### Footer slot
+::: Footer slot
 
 ::: demo
-```html
 <template>
     <o-field label="Select a date">
         <o-datepicker v-model="date"
@@ -234,13 +218,10 @@ export default {
         }
     }
 </script>
-```
 :::
 
-### Header slot
-
+:::
 ::: demo
-```html
 <template>
     <o-field label="Select a date">
         <o-datepicker :focused-date="date"
@@ -302,13 +283,10 @@ export default {
         }
     }
 </script>
-```
 :::
 
 ### Events
-
 ::: demo
-```html
 <template>
     <span>
         <o-field>
@@ -382,13 +360,11 @@ export default {
         }
     }
 </script>
-```
 :::
 
 ### Month picker
 
 ::: demo
-```html
 <template>
     <o-field label="Select a month">
         <o-datepicker
@@ -409,5 +385,4 @@ export default {
     }
 }
 </script>
-```
 :::

@@ -4,7 +4,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Name">
@@ -53,13 +52,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Addons
 
 ::: demo
-```html
 <template>
     <section>
         <o-field variant="danger">
@@ -135,13 +132,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Grouped
 
 ::: demo
-```html
 <template>
     <section>
 
@@ -173,15 +168,13 @@
     export default {
     }
 </script>
-```
 :::
 
 
 ### Horizontal
 
 ::: demo
-```html
-<template>
+::: demote>
     <section>
         <o-field horizontal label="Subject" variant="danger" message="Please enter a subject">
             <o-input name="subject" expanded></o-input>
@@ -217,13 +210,10 @@
     export default {
     }
 </script>
-```
 :::
-
 ### Slots
 
 ::: demo
-```html
 <template>
     <section>
         <o-field horizontal>
@@ -252,5 +242,4 @@
     export default {
     }
 </script>
-```
 :::

@@ -5,7 +5,6 @@
 Go to [Notification Notice](#notification-notice) section to see all the available options.
 
 ::: demo
-```html
 <template>
     <section>
         <div class="buttons">
@@ -147,13 +146,11 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     background: #ffdd57;
 }
 </style>
-```
 :::
 
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-notification closable aria-close-label="Close notification">
@@ -185,14 +182,12 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     export default {
     }
 </script>
-```
 :::
 
 ### Use types
 
 ::: demo
-```html
-<template>
+::: demote>
     <section>
         <o-notification
             closable
@@ -207,13 +202,11 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
     export default {
     }
 </script>
-```
 :::
 
 ### Add custom buttons
 
 ::: demo
-```html
 <template>
     <section>
         <o-notification aria-close-label="Close notification" v-slot="{closeNotification}">
@@ -236,5 +229,4 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
         display: flex;
     }
 </style>
-```
 :::

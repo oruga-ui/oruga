@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Add some items">
@@ -30,13 +29,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Autocomplete
 
 ::: demo
-```html
 <template>
     <section>
         <div class="block">
@@ -149,13 +146,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Custom selected
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Enter some items">
@@ -206,13 +201,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Limits
 
 ::: demo
-```html
 <template>
     <section>
         <o-field label="Limited to 10 characters">
@@ -243,5 +236,4 @@
     export default {
     }
 </script>
-```
 :::

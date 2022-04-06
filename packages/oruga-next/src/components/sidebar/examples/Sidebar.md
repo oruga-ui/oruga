@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-sidebar
@@ -50,13 +49,11 @@ export default {
   }
 }
 </script>
-```
 :::
 
 ### Static
 
 ::: demo
-```html
 <template>
     <div class="sidebar-page">
         <section class="sidebar-layout">
@@ -127,5 +124,4 @@ export default {
     min-height: 100%;
 }
 </style>
-```
 :::

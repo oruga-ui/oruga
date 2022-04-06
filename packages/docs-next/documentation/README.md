@@ -20,11 +20,11 @@ If you use the default stylesheet to browse documentation some examples won't wo
 
 ### Availability
 
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** and has been tested in all major browsers
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** and has been tested in all major browsers
 
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://raw.githubusercontent.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png)
---- | --- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)
+--- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 💅 For more info about components customization, go to the ["Customization section"](#customization).
 
@@ -81,56 +81,17 @@ createApp(...)
 
 ## Nuxt module
 
-Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
+Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 
-Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file.
-
-```js
-module.exports = {
-  modules: ['@oruga-ui/oruga/nuxt']
-}
-```
-
-You can also extend and/or override classes in this section (see how to [add new classes](#adding-new-classes) or [override existing classes](#overriding-classes) in Oruga)
+You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
 
 ```js
-module.exports = {
-  modules: [
-    [
-      '@oruga-ui/oruga/nuxt',
-      {
-        button: {
-          override: true
-        }
-      }
-    ]
-  ]
-}
-```
+import Oruga from '@oruga-ui/oruga-next'
+import '@oruga-ui/oruga-next/dist/oruga.css'
 
-By default Oruga Nuxt module includes `oruga.css` stylesheet. If you want to avoid including it you can set `includeCss` to `false` inside `nuxt.conf.js`
-
-```js
-  oruga: {
-    includeCss: false
-  },
-```
-
-`includeCss` accepts other 2 values: 
-
-- `full` to include `oruga-full.css`
-- `vars` to include `oruga-full-vars.css`
-
-See ["Customization section"](#customization) to understand the difference between these stylesheets.
-
-Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
-
-```js
-import Vue from 'vue'
-import Oruga from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-
-Vue.use(Oruga)
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(Oruga)
+})
 ```
 
 To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
@@ -139,7 +100,7 @@ To make this plugin available in your app, add this file to the `plugins` array 
 plugins: [{ src: '~plugins/oruga.js' }]
 ```
 
-To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://nuxtjs.org/guides/configuration-glossary/configuration-plugins).
+To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://v3.nuxtjs.org/guide/directory-structure/plugins/).
 
 ## Customization
 
@@ -161,7 +122,6 @@ Oruga provides other 2 different stylesheets:
 For more info read ["Differences between default and full css"](#differences-between-default-and-full-css).
 
 
-
 ### Adding new classes or override existing ones
 
 With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects using the `Class prop inspector`.
@@ -181,73 +141,77 @@ You can add classes to a component using class properties (see [Autocomplete cla
 Or globally 
 
 ```js
-import Vue from 'vue';
-import Oruga from '@oruga-ui/oruga';
-import '@oruga-ui/oruga/dist/oruga.css';
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next'
+import '@oruga-ui/oruga-next/dist/oruga.css'
 
-Vue.use(Oruga, {
-    autocomplete: {
-        rootClass: 'myautocomplete-root',
-        menuClass: 'myautocomplete-menu',
-        itemClass: 'myautocomplete-item',
-        ...
-    }
-});
+createApp(...)
+    .use(Oruga, {
+        autocomplete: {
+            rootClass: 'myautocomplete-root',
+            menuClass: 'myautocomplete-menu',
+            itemClass: 'myautocomplete-item',
+            ...
+        }
+    });
 ```
 
 If you use individual imports you can customize each compoment using `Config` plugin.
 
 ```js
-import Vue from 'vue';
-import { Autocomplete, Sidebar, Config } from '@oruga-ui/oruga';
+import { createApp } from 'vue'
+import { Autocomplete, Sidebar, Config } from '@oruga-ui/oruga-next';
 
-Vue.use(Autocomplete);
-Vue.use(Sidebar);
-Vue.use(Config, {
-    autocomplete: {
-        rootClass: 'myautocomplete-root',
-        menuClass: 'myautocomplete-menu',
-        itemClass: 'myautocomplete-item',
-        ...
-    }
-})
+createApp(...)
+    .use(Autocomplete);
+    .use(Sidebar);
+    .use(Config, {
+        autocomplete: {
+            rootClass: 'myautocomplete-root',
+            menuClass: 'myautocomplete-menu',
+            itemClass: 'myautocomplete-item',
+            ...
+        }
+    });
 ```
 
 You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a suffix is provided by the component and it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (top, bottom), in this case you may define a function and append the suffix to the base class name
 
 ```js
-Vue.use(Config, {
-    autocomplete: {
-        rootClass: 'myautocomplete-root',
-        menuClass: 'myautocomplete-menu',
-        menuPositionClass: {
-            class: (suffix) => {
-                return `myautocomplete-menu-${suffix}`
-            }
-        },
-        itemClass: 'myautocomplete-item',
-    }
-})
+createApp(...)
+    .use(Config, {
+        autocomplete: {
+            rootClass: 'myautocomplete-root',
+            menuClass: 'myautocomplete-menu',
+            menuPositionClass: {
+                class: (suffix) => {
+                    return `myautocomplete-menu-${suffix}`
+                }
+            },
+            itemClass: 'myautocomplete-item',
+        }
+    })
 ```
 
 For a better customization experience this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined
 
 ```js
-Vue.use(Config, {
-    input: {
-        rootClass: (_, context) => {
-            if (context.computed.hasIconRight) {
-                return 'has-icons-right')
+createApp(...)
+    .use(Config, {
+        input: {
+            rootClass: (_, context) => {
+                if (context.computed.hasIconRight) {
+                    return 'has-icons-right')
+                }
+            },
+            variantClass: (variant, context) => {
+                if (!context.props.outlined) {
+                    return `btn-${variant}`
+                }
             }
         },
-        variantClass: (variant, context) => {
-            if (!context.props.outlined) {
-                return `btn-${variant}`
-            }
-        }
-    },
-    ...
-}
+        ...
+    }
 ```
 
 #### Deal with specificity
@@ -311,14 +275,15 @@ If you want to change the color you can use `!important` or change variables val
 and then configure Oruga to use your custom classes
 
 ```js
-Vue.use(Oruga, {
-  steps: {
-    itemActiveClass: 'steps-nav-item-active',
-    itemPreviousClass: 'steps-nav-item-previous',
-    stepMarkerClass: 'step-marker',
-    stepDividerClass: 'step-divider',
-  }
-});
+createApp(...)
+    .use(Oruga, {
+        steps: {
+            itemActiveClass: 'steps-nav-item-active',
+            itemPreviousClass: 'steps-nav-item-previous',
+            stepMarkerClass: 'step-marker',
+            stepDividerClass: 'step-divider',
+        }
+    });
 ```
 
 You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
@@ -355,12 +320,13 @@ If you want to set height to 50% keeping the other attributes unchanged you can'
 and in your configuration
 
 ```js
-Vue.use(Oruga, {
-    steps: {
-      verticalClass: 'steps-vertical',
-      stepDividerClass: 'step-divider'
-    }
-});
+createApp(...)
+    .use(Oruga, {
+        steps: {
+            verticalClass: 'steps-vertical',
+            stepDividerClass: 'step-divider'
+        }
+    });
 ```
 
 In Oruga documentation you'll find a special note (🔍) in the `Class prop inspector` for classes with a higher specificity. 
@@ -370,18 +336,20 @@ In Oruga documentation you'll find a special note (🔍) in the `Class prop insp
 In case you want to override Oruga existing classes completely, you can act as above and set the field `override` to true.
 
 ```js
-import Vue from 'vue';
-import Oruga from '@oruga-ui/oruga';
+import { createApp } from 'vue'
+import Oruga from '@oruga-ui/oruga-next'
+import '@oruga-ui/oruga-next/dist/oruga.css'
 
-Vue.use(Oruga, {
-    autocomplete: {
-        override: true,
-        rootClass: 'myautocomplete-root',
-        menuClass: 'myautocomplete-menu',
-        itemClass: 'myautocomplete-item',
-        ...
-    }
-});
+createApp(...)
+    .use(Oruga, {
+        autocomplete: {
+            override: true,
+            rootClass: 'myautocomplete-root',
+            menuClass: 'myautocomplete-menu',
+            itemClass: 'myautocomplete-item',
+            ...
+        }
+    });
 ```
 
 or directly in your component 
@@ -399,17 +367,18 @@ In this case `override` property replaces Oruga existing classes completely, ign
 You can also specify the override behaviour for each class
 
 ```js
-Vue.use(Config, {
-    autocomplete: {
-        rootClass: {
-            class: 'myautocomplete-root',
-            override: true
-        },
-        menuClass: 'myautocomplete-menu',
-        itemClass: 'myautocomplete-item',
-        ...
-    }
-})
+createApp(...)
+    .use(Config, {
+        autocomplete: {
+            rootClass: {
+                class: 'myautocomplete-root',
+                override: true
+            },
+            menuClass: 'myautocomplete-menu',
+            itemClass: 'myautocomplete-item',
+            ...
+        }
+    });
 ```
 
 ### Transform classes
@@ -417,25 +386,27 @@ Vue.use(Config, {
 In case you want to transform applied classes' names you can use `transformClasses` function directly in your configuration.
 
 ```js
-Vue.use(Config, {
-    button: {
-        transformClasses: (appliedClasses) => {
-            return appliedClasses.replace(/-/g, '--')
+createApp(...)
+    .use(Config, {
+        button: {
+            transformClasses: (appliedClasses) => {
+                return appliedClasses.replace(/-/g, '--')
+            }
         }
-    }
-    ...
-})
+        ...
+    })
 ```
 
 You can also use `transformClasses` globally if you need to transform classes for any component.
 
 ```js
-Vue.use(Config, {
-    transformClasses: (appliedClasses) => {
-        return appliedClasses.replace(/-/g, '--')
-    }
-    ...
-})
+createApp(...)
+    .use(Config, {
+        transformClasses: (appliedClasses) => {
+            return appliedClasses.replace(/-/g, '--')
+        }
+        ...
+    })
 ```
 
 ### Using CSS or SASS/SCSS variables
@@ -445,7 +416,7 @@ You can easily customize Oruga using CSS or SASS/SCSS variables. Each component 
 To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
 
 ```js
-import '@oruga-ui/oruga/dist/oruga-full-vars.css'
+import '@oruga-ui/oruga-next/dist/oruga-full-vars.css'
 ```
 
 and redefine the variables you want to change. 
@@ -470,7 +441,7 @@ or a specific component variable, such as button icon width
 To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
 
 ```js
-import '@oruga-ui/oruga/src/scss/oruga-full-vars';
+import '@oruga-ui/oruga-next/src/scss/oruga-full-vars';
 ```
 
 ::: warning
@@ -515,7 +486,7 @@ The default stylesheet contains only the essantial rules for Oruga components su
 For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
 
 ```js
-import '@oruga-ui/oruga/dist/oruga.css'
+import '@oruga-ui/oruga-next/dist/oruga.css'
 ```
 
 ```css
@@ -535,7 +506,7 @@ import '@oruga-ui/oruga/dist/oruga.css'
 And here's how to style a dropdown using _oruga-full_ stylesheet
 
 ```js
-import '@oruga-ui/oruga/dist/oruga-full.css'
+import '@oruga-ui/oruga-next/dist/oruga-full.css'
 ```
 
 ```css

@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <p>
@@ -56,13 +55,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Custom header
 
 ::: demo
-```html
 <template>
     <o-tabs type="boxed">
         <o-tab-item>
@@ -100,13 +97,11 @@ export default {
   margin-right: 5px;
 }
 </style>
-```
 :::
 
 ### Long header
 
 ::: demo
-```html
 <template>
     <o-tabs type="boxed">
         <o-tab-item v-for="(item, index) in new Array(45)" :key="`longitem-${index}`">
@@ -128,13 +123,10 @@ export default {
         }
     }
 </script>
-```
 :::
-
 ### Vertical
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -206,14 +198,11 @@ export default {
         }
     }
 </script>
-```
 :::
-
 
 ### Types
 
 ::: demo
-```html
 <template>
     <section>
         <o-tabs type="boxed">
@@ -235,13 +224,11 @@ export default {
     export default {
     }
 </script>
-```
 :::
 
 ### Position
 
 ::: demo
-```html
 <template>
     <section>
         <o-tabs type="boxed" position="centered">
@@ -263,5 +250,4 @@ export default {
     export default {
     }
 </script>
-```
 :::

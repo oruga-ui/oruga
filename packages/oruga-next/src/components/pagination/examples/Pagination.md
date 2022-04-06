@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -98,13 +97,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Slots
 
 ::: demo
-```html
 <template>
     <section>
         <o-pagination
@@ -178,5 +175,4 @@
         */
     }
 </script>
-```
 :::

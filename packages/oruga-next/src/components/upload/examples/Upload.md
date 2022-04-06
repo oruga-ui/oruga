@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <o-field class="file">
         <o-upload v-model="file">
@@ -28,13 +27,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Drag&Drop
 
 ::: demo
-```html
 <template>
     <section>
         <o-field>
@@ -86,5 +83,4 @@
     text-align: center;
 }
 </style>
-```
 :::

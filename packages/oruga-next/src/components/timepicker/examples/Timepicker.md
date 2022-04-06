@@ -2,7 +2,6 @@
 ## Examples
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -59,13 +58,11 @@ export default {
     }
 }
 </script>
-```
 :::
 
 ### Min/Max date
 
 ::: demo
-```html
 <template>
     <o-field label="Select time">
         <o-timepicker
@@ -92,14 +89,11 @@ export default {
         }
     }
 </script>
-```
 :::
-
 
 ### Footer
 
 ::: demo
-```html
 <template>
     <o-field label="Select time">
         <o-timepicker v-model="time"
@@ -129,13 +123,11 @@ export default {
         }
     }
 </script>
-```
 :::
 
 ### Granularity
 
 ::: demo
-```html
 <template>
     <o-field label="Select timepicker">
         <o-timepicker
@@ -156,13 +148,10 @@ export default {
     }
 }
 </script>
-```
 :::
-
 ### Inline
 
 ::: demo
-```html
 <template>
     <o-timepicker v-model="time" inline></o-timepicker>
 </template>
@@ -176,5 +165,4 @@ export default {
         }
     }
 </script>
-```
 :::

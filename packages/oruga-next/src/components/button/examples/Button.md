@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <o-button @click="clickMe">Click Me</o-button>
@@ -19,13 +18,11 @@
         }
     }
 </script>
-```
 :::
 
 ### States and Styles
 
 ::: demo
-```html
 <template>
     <section>
 
@@ -54,13 +51,11 @@
 <script>
     export default {}
 </script>
-```
 :::
 
 ### Icons
 
 ::: demo
-```html
 <template>
     <section>
         <div class="buttons">
@@ -108,13 +103,11 @@
     export default {
     }
 </script>
-```
 :::
 
 ### Tags
 
 ::: demo
-```html
 <template>
     <section>
         <div class="buttons">
@@ -146,5 +139,4 @@
     export default {
     }
 </script>
-```
 :::

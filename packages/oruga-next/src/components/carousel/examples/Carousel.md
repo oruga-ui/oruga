@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <o-carousel>
         <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
@@ -29,7 +28,6 @@
         }
     }
 </script>
-```
 :::
 
 <style>
@@ -43,7 +41,6 @@
 ### Carousel List 
 
 ::: demo
-```html
 <template>
     <section>
         <div class="example-component">
@@ -130,14 +127,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Custom As indicators
 
-::: demo
-```html
-<template>
+::: demote>
     <o-carousel
         :autoplay="false"
         :overlay="gallery"
@@ -259,15 +253,12 @@
     z-index: 99;
 }
 </style>
-```
 :::
 
 ### Custom
 
 ::: demo
-```html
-<template>
-    <section>
+::: demoction>
 
         <div class="example-component">
             <o-field grouped group-multiline>
@@ -335,5 +326,4 @@
         }
     }
 </script>
-```
 :::

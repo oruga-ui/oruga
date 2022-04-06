@@ -7,7 +7,6 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <div class="block">
@@ -107,7 +106,6 @@ and <a href="https://fontawesome.com/" target="_blank">FontAwesome 5</a> but you
     export default {
     }
 </script>
-```
 :::
 
 ### Custom icon pack
@@ -121,7 +119,6 @@ Take a look at below example code (click on "Show code") to know all internal ic
 :::
 
 ::: demo
-```html
 <template>
     <section>
         <div class="block">
@@ -275,7 +272,6 @@ Take a look at below example code (click on "Show code") to know all internal ic
 <style>
     @import "https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css";
 </style>
-```
 :::
 
 ### Override icon pack

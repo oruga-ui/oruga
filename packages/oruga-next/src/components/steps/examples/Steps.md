@@ -3,7 +3,6 @@
 ### Base
 
 ::: demo
-```html
 <template>
     <section>
         <p>
@@ -131,13 +130,11 @@
         }
     }
 </script>
-```
 :::
 
 ### Variants
 
 ::: demo
-```html
 <template>
     <section>
         <h4>Warning</h4>
@@ -166,13 +163,11 @@
 <script>
     export default { }
 </script>
-```
 :::
 
 ### Vertical
 
 ::: demo
-```html
 <template>
     <section>
         <o-field grouped group-multiline>
@@ -236,5 +231,4 @@
         }
     }
 </script>
-```
 :::
