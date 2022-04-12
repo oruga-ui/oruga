@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <doc-wrapper>
+  <doc-wrapper :inspect-class="inspectClass">
       <template v-slot:default="s">
-      <o-button v-bind="s">Button</o-button>
+        <o-button v-bind="s">Button</o-button>
       </template>
     </doc-wrapper>
-    <inspector :inspectData="inspectData"></inspector>
-  </div>
+    <inspector
+        @inspect-class="inspectClass = $event"
+        :inspectData="inspectData">
+    </inspector>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     data() {
         return {
+            inspectClass: {},
             inspectData: [
                 {
                     class: "rootClass",

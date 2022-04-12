@@ -7,6 +7,7 @@
     </div>
   </client-only>
 </template>
+
 <script>
 // https://github.com/vuejs/vuefire/blob/master/packages/documentation/docs/.vuepress/components/CarbonAds.vue
 export default {

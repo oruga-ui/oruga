@@ -44,7 +44,6 @@ import { getValueByPath } from '../../utils/helpers'
 /**
  * The classic button, in different colors, sizes, and states
  * @displayName Button
- * @example ./examples/Button.md
  * @style _button.scss
  */
 export default defineComponent({

@@ -1,19 +1,20 @@
 <template>
     <div>
         <o-collapse class="inspector__summary" :open="false">
-            <div
-                slot="trigger"
-                slot-scope="props"
-                class="inspector__summary-trigger"
-                role="button"
-            >
-                <div>
-                    How does <i>Class props inspector</i> work?
+            <template v-slot:trigger="props">
+                <div
+                    class="inspector__summary-trigger"
+                    role="button"
+                >
+                    <div>
+                        How does <i>Class props inspector</i> work?
+                    </div>
+                    <a >
+                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
+                    </a>
                 </div>
-                <a >
-                    <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
-                </a>
-            </div>
+            </template>
+
             <div class="inspector__summary-content">
                 <div class="inspector__summary-intro"><i>Class props inspector</i> is useful to see class props you want to use to customize Oruga components and how they change a component. You can click on <b>Inspect</b> button to find the exact element where a specific class prop acts. <br><br>
                 In the <i>Class props inspector</i> there are other columns</div>
@@ -66,7 +67,7 @@
                 <td v-if="!data.subitem">{{data.class}}</td>
                 <td v-if="data.subitem">▷ <a :href="`#${subitem}`">{{data.class}}</a></td>
                 <td>
-                    <span>{{data.description | addDotToTheEnd}}</span>
+                    <span>{{ addDotToTheEnd(data.description) }}</span>
                     <span v-if="data.componentRef">
                         More detail <a target="_blank" :href="`/components/${data.componentRef}.html#class-props`">here</a>
                     </span>
@@ -98,33 +99,30 @@ export default defineComponent({
     },
     data () {
         return {
-            selectedElementIndex: Number
-        }
-    },
-    filters: {
-        addDotToTheEnd (value) {
-            if (!value.endsWith('.'))
-                return value + '.'
-            return value
+            selectedElementIndex: undefined
         }
     },
     computed: {
         classesToInspect() {
             this.inspectData.sort(function(propa, propb) {
                 return (propa.class < propb.class) ? -1 : (propa.class > propb.class) ? 1 : 0;
-            });
+            })
             return this.inspectData
         }
     },
-
     methods: {
+        addDotToTheEnd (value) {
+            if (!value.endsWith('.'))
+                return value + '.'
+            return value
+        },
         setByProperties(props) {
             return props ? props.join('<br>') : null
         },
         inspectClass(index, selectedData) {
             this.selectedElementIndex = index
             const selectedClass = selectedData.realClass || selectedData.class
-            this.$emit('inspect-class', selectedClass, selectedData.action)
+            this.$emit('inspect-class', { className: selectedClass, action: selectedData.action})
             document.getElementById("class-props").scrollIntoView();
         }
     }

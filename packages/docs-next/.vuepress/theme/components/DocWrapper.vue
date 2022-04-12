@@ -1,15 +1,17 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { setValueByPath } from '../../../oruga-next/src/utils/helpers'
+import { defineComponent, h } from 'vue'
+import { setValueByPath } from '../../../../oruga-next/src/utils/helpers'
 const UNDERLINE_CLASS = 'odocs-underline-element'
 
 export default defineComponent({
+    props: {
+        inspectClass: Object
+    },
     data() {
         return {
             classes: {},
             data: {},
-            classesApplied: null,
-            inspectClass: null
+            classesApplied: null
         }
     },
     beforeUnmount() {
@@ -44,16 +46,16 @@ export default defineComponent({
                 })
             }
         }
-    }
-    render (createElement) {
-        let el = createElement('span',
+    },
+    render () {
+        let el = h('span',
         {
             id: 'docs__element__to__inspect'
         },
         [
-            this.classesApplied ? createElement('div', {}, [
-                createElement('b', 'Classes applied to the element'),
-                createElement(
+            this.classesApplied ? h('div', {}, [
+                h('b', 'Classes applied to the element'),
+                h(
                     'div',
                     {
                         class: 'odocs-classes-applied',

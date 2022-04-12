@@ -31,19 +31,6 @@ export default defineUserConfig<DefaultThemeOptions>({
     ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
     ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png?v=3' }]
   ],
-  plugins: [
-    [
-        'demo-code',
-        {
-            jsLib: ['https://oruga-documentation-preview.netlify.app/cdn/oruga.min.js'],
-            cssLib: [
-                'https://oruga-documentation-preview.netlify.app/cdn/oruga.min.css',
-                'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
-            ],
-            onlineBtns: { codepen: true, jsfiddle: false, codesandbox: false }
-        }
-      ]
-  ],
   themeConfig: {
     logo: '/logo.png',
     repo: 'oruga-ui/oruga',

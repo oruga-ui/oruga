@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const src = '../oruga-next/src';
 const srcScss = '../oruga/src';
+const exampleSrc = '.vuepress/examples'
 
 const IGNORE = [
   'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
@@ -34,9 +35,11 @@ module.exports = {
     return path.join(config.outDir, component).replace(/\.vue$/, '.md');
   },
   templates: {
-    component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent }) => {
-      const { displayName, description, docsBlocks, tags, functional } = doc;
+    component: (renderedUsage, doc, config, _fileName, requiresMd, { isSubComponent }) => {
+      const { displayName, description, tags, functional } = doc;
       const { deprecated, author, since, version, see, link, style } = tags || {};
+      const examples = fs.readFileSync(path.resolve(config.cwd, `${exampleSrc}/${displayName.toLowerCase()}/index.md`), 'utf8');
+
       return `
 
 ${!isSubComponent ? `
@@ -54,7 +57,7 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 > <CarbonAds />
-${docsBlocks ? '---\n' + docsBlocks.join('\n---\n') : ''}
+${examples ? '---\n' + examples : ''}
 ${tmplClassProps(config, displayName.toLowerCase())}
 ${tmplProps(renderedUsage.props, config, displayName.toLowerCase())}
 ${renderedUsage.methods}
@@ -73,14 +76,13 @@ ${style ? renderStyleDocs(config, style[0].description) : ''}
 function tmplClassProps(config, name) {
     try {
         name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name
-        const inspectorVueFile = path.resolve(config.cwd, `${src}/components/${name}/Inspector.vue`)
         return `
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_${name}.scss)
-
 <br />
-${ "" /*fs.readFileSync(inspectorVueFile, 'utf8') */ }
+
+<inspector-viewer component="${name.toLowerCase()}" />
+
 <br />
 <br />
 `
@@ -149,6 +151,8 @@ function renderStyleDocs(config, name) {
   const variables = docs.split(/\r?\n/).filter(d => !!d);
   return `
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_${name}.scss)
 
   | CSS Variable          | SASS Variable  | Default |
   | --------------------- | -------------- | ------- |

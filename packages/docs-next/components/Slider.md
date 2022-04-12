@@ -163,6 +163,7 @@ title: Slider
 :::
 
 
+
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
@@ -231,6 +232,7 @@ title: Slider
 
 
 > <CarbonAds />
+
 
 
 ## Class props
