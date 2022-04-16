@@ -143,9 +143,146 @@ title: Modal
       },
       cardModal() {
         this.$oruga.modal.open({
+          // parent is only for Vue2. in Vue 3 omit this option
           parent: this,
           component: ModalForm,
           trapFocus: true
+        })
+      }
+    }
+  }
+</script>
+
+<style>
+  .modal-card {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+  }
+  @media screen and (min-width: 769px) {
+    .modal-card {
+      margin: 0 auto;
+      max-height: calc(100vh - 40px);
+      width: 640px;
+    }
+  }
+  .modal-card {
+    margin: 0 20px;
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    position: relative;
+    width: 100%;
+  }
+  .modal-card-foot,
+  .modal-card-head {
+    align-items: center;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative;
+  }
+  .modal-card-head {
+    border-bottom: 1px solid #dbdbdb;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .modal-card-body {
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: auto;
+    padding: 20px;
+  }
+  .modal-card-foot {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top: 1px solid #dbdbdb;
+  }
+  .modal-card-title {
+    color: #363636;
+    flex-grow: 1;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 0;
+  }
+  .modal-card-foot .o-button:not(:last-child) {
+    margin-right: 0.5em;
+  }
+</style>
+```
+
+:::
+
+### Programmatically (with promises and async/await)
+
+::: demo
+
+```html
+<template>
+  <section>
+    <div class="buttons">
+      <o-button size="medium" variant="primary" @click="promptModal()">
+        Open prompt
+      </o-button>
+    </div>
+  </section>
+</template>
+
+<script>
+  const ModalForm = {
+    props: ['message', 'title'],
+    template: `
+            <form action="">
+                <div class="modal-card" style="width: auto">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">{{ title }}</p>
+                        <o-icon
+                            clickable
+                            native-type="button"
+                            icon="times"
+                            @click.native="$emit('close', {action: 'cancel', method: 'x'})"/>
+                    </header>
+                    <section class="modal-card-body">
+                        <p>{{ message }}</p>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <o-button @click="$emit('close', {action: 'no'})">No</o-button>
+                        <o-button variant="primary" @click="$emit('close', {action: 'yes'})">Yes</o-button>
+                    </footer>
+                </div>
+            </form>
+        `
+  }
+
+  export default {
+    methods: {
+      async promptModal() {
+        const instance = this.$oruga.modal.open({
+          // parent is only for Vue2. in Vue 3 omit this option
+          parent: this,
+          component: ModalForm,
+          props: {
+            title: 'Ship sprockets?',
+            message: 'Do you really want me to ship the selected sprockets?'
+          },
+          trapFocus: true
+        })
+        // Note utilizing the promise requires Promise be supported by the browser
+        // If you are running Vue 2 on IE 11 this will not be the case unless you
+        // add a polyfill in your build.
+        const result = await instance.promise
+
+        this.$oruga.notification.open({
+          duration: 5000,
+          message: 'Modal dialog returned ' + JSON.stringify(result),
+          variant: 'info',
+          position: 'top',
+          closable: true
         })
       }
     }
@@ -297,32 +434,33 @@ export default {
 
 ## Props
 
-| Prop name        | Description                                                                                                                                                            | Type           | Values                             | Default                                                                                                                                                              |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active           | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding                                                | boolean        | -                                  |                                                                                                                                                                      |
-| animation        | Custom animation (transition name)                                                                                                                                     | string         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;animation: 'zoom-out'<br>}</code>                           |
-| ariaLabel        |                                                                                                                                                                        | string         | -                                  |                                                                                                                                                                      |
-| ariaModal        |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
-| ariaRole         |                                                                                                                                                                        | string         | -                                  |                                                                                                                                                                      |
-| autoFocus        | Automatically focus modal when active                                                                                                                                  | boolean        | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;autoFocus: true<br>}</code>                                 |
-| canCancel        | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean | `escape`, `x`, `outside`, `button` | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;canCancel: ['escape', 'x', 'outside', 'button']<br>}</code> |
-| closeIcon        | Icon name                                                                                                                                                              | string         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;closeIcon: 'close'<br>}</code>                              |
-| closeIconSize    |                                                                                                                                                                        | string         | -                                  | 'medium'                                                                                                                                                             |
-| component        | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                                                                                                                                                                      |
-| content          | Text content                                                                                                                                                           | string         | -                                  |                                                                                                                                                                      |
-| custom           | Enable custom style on modal content                                                                                                                                   | boolean        | -                                  |                                                                                                                                                                      |
-| destroyOnHide    | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;destroyOnHide: true<br>}</code>                             |
-| events           | Events to be binded to the injected component                                                                                                                          | object         | -                                  |                                                                                                                                                                      |
-| fullScreen       | Display modal as full screen                                                                                                                                           | boolean        | -                                  |                                                                                                                                                                      |
-| mobileBreakpoint | Mobile breakpoint as max-width value                                                                                                                                   | string         | -                                  |                                                                                                                                                                      |
-| onCancel         | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | Default function (see source code)                                                                                                                                   |
-| onClose          | Callback function to call after close (programmatically close or user canceled)                                                                                        | func           | -                                  | Default function (see source code)                                                                                                                                   |
-| override         | Override classes                                                                                                                                                       | boolean        | -                                  | false                                                                                                                                                                |
-| programmatic     |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
-| props            | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                                                                                                                                                                      |
-| scroll           | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;scroll: 'keep'<br>}</code>                                  |
-| trapFocus        | Trap focus inside the modal.                                                                                                                                           | boolean        | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                                 |
-| width            | Width of the Modal                                                                                                                                                     | string\|number | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;width: 960<br>}</code>                                      |
+| Prop name        | Description                                                                                                                                                            | Type            | Values                             | Default                                                                                                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active           | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding                                                | boolean         | -                                  |                                                                                                                                                                      |
+| animation        | Custom animation (transition name)                                                                                                                                     | string          | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;animation: 'zoom-out'<br>}</code>                           |
+| ariaLabel        |                                                                                                                                                                        | string          | -                                  |                                                                                                                                                                      |
+| ariaModal        |                                                                                                                                                                        | boolean         | -                                  |                                                                                                                                                                      |
+| ariaRole         |                                                                                                                                                                        | string          | -                                  |                                                                                                                                                                      |
+| autoFocus        | Automatically focus modal when active                                                                                                                                  | boolean         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;autoFocus: true<br>}</code>                                 |
+| canCancel        | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean  | `escape`, `x`, `outside`, `button` | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;canCancel: ['escape', 'x', 'outside', 'button']<br>}</code> |
+| closeIcon        | Icon name                                                                                                                                                              | string          | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;closeIcon: 'close'<br>}</code>                              |
+| closeIconSize    |                                                                                                                                                                        | string          | -                                  | 'medium'                                                                                                                                                             |
+| component        | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func    | -                                  |                                                                                                                                                                      |
+| content          | Text content                                                                                                                                                           | string          | -                                  |                                                                                                                                                                      |
+| custom           | Enable custom style on modal content                                                                                                                                   | boolean         | -                                  |                                                                                                                                                                      |
+| destroyOnHide    | Destroy modal on hide                                                                                                                                                  | boolean         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;destroyOnHide: true<br>}</code>                             |
+| events           | Events to be binded to the injected component                                                                                                                          | object          | -                                  |                                                                                                                                                                      |
+| fullScreen       | Display modal as full screen                                                                                                                                           | boolean         | -                                  |                                                                                                                                                                      |
+| mobileBreakpoint | Mobile breakpoint as max-width value                                                                                                                                   | string          | -                                  |                                                                                                                                                                      |
+| onCancel         | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func            | -                                  | Default function (see source code)                                                                                                                                   |
+| onClose          | Callback function to call after close (programmatically close or user canceled)                                                                                        | func            | -                                  | Default function (see source code)                                                                                                                                   |
+| override         | Override classes                                                                                                                                                       | boolean         | -                                  | false                                                                                                                                                                |
+| programmatic     |                                                                                                                                                                        | boolean\|object | -                                  |                                                                                                                                                                      |
+| promise          |                                                                                                                                                                        | object          | -                                  |                                                                                                                                                                      |
+| props            | Props to be binded to the injected component                                                                                                                           | object          | -                                  |                                                                                                                                                                      |
+| scroll           | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string          | `keep`, `clip`                     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;scroll: 'keep'<br>}</code>                                  |
+| trapFocus        | Trap focus inside the modal.                                                                                                                                           | boolean         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                                 |
+| width            | Width of the Modal                                                                                                                                                     | string\|number  | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;width: 960<br>}</code>                                      |
 
 ## Events
 

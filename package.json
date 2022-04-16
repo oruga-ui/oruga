@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "lerna": "^3.21.0",
-    "simple-git": "^2.48.0"
+    "simple-git": "^3.3.0"
   }
 }

@@ -44,15 +44,6 @@ describe('OTabItem', () => {
         expect(wrapper.vm.index).toBe(1)
     })
 
-    it('will recompute indexes when a sibling gets removed', async () => {
-        expect(wrapper.vm.index).toBe(1)
-        wrapperParent.vm.show1 = false
-
-        await wrapper.vm.$nextTick()
-
-        expect(wrapper.vm.index).toBe(0)
-    })
-
     it('transition correctly when activate is called', () => {
         wrapper.vm.activate(0)
         expect(wrapper.vm.transitionName).toBe('slide-prev')

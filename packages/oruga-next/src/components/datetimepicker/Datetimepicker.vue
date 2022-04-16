@@ -112,6 +112,7 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        size: String,
         placeholder: String,
         disabled: Boolean,
         iconRight: String,

@@ -1,4 +1,4 @@
-import { hasFlag } from './helpers'
+import { defaultIfUndefined, hasFlag } from './helpers'
 
 const sorted = 1
 const optional = 2
@@ -12,17 +12,17 @@ export default (parentItemName, flags = 0) => {
             parent: { from: 'o' + parentItemName }
         },
         created() {
-            this.newValue = typeof this.value === 'undefined' ? this.parent._nextSequence() : this.value
+            this.newValue = defaultIfUndefined(this.value, this.parent._nextSequence())
             if (!this.parent) {
                 if (!hasFlag(flags, optional)) {
                     throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName)
                 }
-            } else if (this.parent._registerItem) {
+            } else {
                 this.parent._registerItem(this)
             }
         },
         beforeDestroy() {
-            if (this.parent && this.parent._unregisterItem) {
+            if (this.parent) {
                 this.parent._unregisterItem(this)
             }
         }

@@ -13,7 +13,7 @@ import { App, createVNode, DefineComponent, Plugin, render } from 'vue'
 let localVueInstance: App
 
 const NotificationProgrammatic = {
-    open(params) {
+    open(params) : InstanceType<typeof NotificationNotice>{
         let newParams
         if (typeof params === 'string') {
             newParams = {
@@ -36,6 +36,12 @@ const NotificationProgrammatic = {
 
         newParams.active = true
         const propsData = merge(defaultParam, newParams)
+        let resolve, reject;
+        propsData.promise = new Promise((p1, p2) => {
+            resolve = p1
+            reject = p2
+        })
+        propsData.programmatic = {resolve, reject}
 
         const app = localVueInstance || VueInstance
         propsData.propsNotification = Object.assign({},propsData)
@@ -43,7 +49,8 @@ const NotificationProgrammatic = {
         const defaultSlot = () => { return newParams.message }
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot)
         vnode.appContext = app._context
-        return render(vnode, document.createElement('div'))
+        render(vnode, document.createElement('div'))
+        return vnode.component.proxy as InstanceType<typeof NotificationNotice>
     }
 }
 

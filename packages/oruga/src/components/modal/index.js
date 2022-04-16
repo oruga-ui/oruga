@@ -28,6 +28,14 @@ const ModalProgrammatic = {
             delete params.content
         }
         const propsData = merge(defaultParam, params)
+        let resolve, reject;
+        if (window.Promise) {
+            propsData.promise = new Promise((p1, p2) => {
+                resolve = p1
+                reject = p2
+            })
+            propsData.programmatic = {resolve, reject}
+        }
 
         const vm = typeof window !== 'undefined' && window.Vue ? window.Vue : localVueInstance || VueInstance
         const ModalComponent = vm.extend(Modal)

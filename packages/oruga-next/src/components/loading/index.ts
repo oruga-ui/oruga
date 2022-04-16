@@ -9,16 +9,22 @@ import { registerComponent, registerComponentProgrammatic } from '../../utils/pl
 let localVueInstance: App
 
 const LoadingProgrammatic = {
-    open(params: Readonly<ComponentPropsOptions>) {
+    open(params: Readonly<ComponentPropsOptions>) : InstanceType<typeof Loading> {
         const defaultParam = {
             programmatic: true
         }
         const propsData = merge(defaultParam, params)
-
+        let resolve, reject;
+        propsData.promise = new Promise((p1, p2) => {
+            resolve = p1
+            reject = p2
+        })
+        propsData.programmatic = {resolve, reject}
         const app = localVueInstance || VueInstance
         const vnode = createVNode(Loading, propsData)
         vnode.appContext = app._context
-        return render(vnode, document.createElement('div'))
+        render(vnode, document.createElement('div'))
+        return vnode.component.proxy as InstanceType<typeof Loading>
     }
 }
 

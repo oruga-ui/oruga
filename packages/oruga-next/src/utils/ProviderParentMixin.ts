@@ -25,19 +25,19 @@ export default (itemName: string, flags: number = 0) => {
         }
         mixin.methods = {
             _registerItem(item) {
-                this.$nextTick(() => {
-                    item.index = this.childItems.length
-                    this.childItems.push(item)
-                })
+                item.index = this.childItems.length
+                this.childItems.push(item)
+                if (this.$el) {
+                    this.$nextTick(() => {
+                        const ids = this.childItems.map(it => `[data-id="${itemName}-${it.newValue}"]`).join(',')
+                        const sortedIds = Array.from(this.$el.querySelectorAll(ids)).map(
+                            (el: any) => el.getAttribute('data-id').replace(`${itemName}-`, ''))
+                        this.childItems.forEach(it => it.index = sortedIds.indexOf(`${it.newValue}`))
+                    })
+                }
             },
             _unregisterItem(item) {
-                this.$nextTick(() => {
-                    this.childItems = this.childItems.filter((i) => i !== item)
-                    let index = 0
-                    this.childItems.forEach(it => {
-                        it.index = index++
-                    })
-                })
+                this.childItems = this.childItems.filter((i) => i !== item)
             },
             _nextSequence() {
                 return this.sequence++

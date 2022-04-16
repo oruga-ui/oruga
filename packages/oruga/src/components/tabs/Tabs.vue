@@ -1,18 +1,24 @@
 <template>
     <div :class="rootClasses">
-        <nav :class="navClasses" role="tablist">
+        <nav
+            :class="navClasses"
+            role="tablist"
+            :aria-orientation="vertical ? 'vertical' : 'horizontal'"
+        >
             <slot name="start" />
             <div
                 v-for="childItem in items"
                 :key="childItem.newValue"
                 v-show="childItem.visible"
-                :class="itemWrapperClasses">
+                :class="itemWrapperClasses"
+                role="tab"
+                :aria-controls="`${childItem.value}-content`"
+                :aria-selected="`${childItem.isActive}`">
                 <o-slot-component
                     v-if="childItem.$scopedSlots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    role="tab"
                     @click.native="childClick(childItem)"
                     @keydown.native.left.prevent="prev"
                     @keydown.native.right.prevent="next"
@@ -25,7 +31,6 @@
                 <component
                     v-else
                     :is="childItem.tag"
-                    role="tab"
                     @click="childClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"

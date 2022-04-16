@@ -20,7 +20,9 @@ title: Collapse
 <template>
   <section>
     <o-collapse :open="false" aria-id="contentIdForA11y1">
-      <o-button variant="primary" slot="trigger" aria-controls="contentIdForA11y1">Click me!</o-button>
+      <template #trigger="props">
+        <o-button variant="primary" aria-controls="contentIdForA11y1" :aria-expanded="props.open">Click me!</o-button>
+      </template>
       <div class="notification">
         <h3>
           Subtitle
@@ -50,14 +52,16 @@ title: Collapse
 <template>
   <section>
     <o-collapse class="card" animation="slide" v-for="(collapse, index) of collapses" :key="index" :open="isOpen == index" @open="isOpen = index">
-      <div slot="trigger" slot-scope="props" class="card-header" role="button">
-        <p class="card-header-title">
-          {{ collapse.title }}
-        </p>
-        <a class="card-header-icon">
-          <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
-        </a>
-      </div>
+      <template #trigger="props">
+        <div class="card-header" role="button" :aria-controls="'contentIdForA11y5-' + index" :aria-expanded="isOpen">
+          <p class="card-header-title">
+            {{ collapse.title }}
+          </p>
+          <a class="card-header-icon">
+            <o-icon :icon="props.open ? 'caret-up' : 'caret-down'"> </o-icon>
+          </a>
+        </div>
+      </template>
       <div class="card-content">
         <div class="content">
           {{ collapse.text }}

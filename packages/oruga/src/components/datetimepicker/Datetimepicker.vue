@@ -112,6 +112,11 @@ export default {
             type: Boolean,
             default: false
         },
+        /**
+         * Size of button, optional
+         * @values small, medium, large
+         */
+        size: String,
         placeholder: String,
         disabled: Boolean,
         /**

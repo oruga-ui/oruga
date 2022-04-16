@@ -6,7 +6,6 @@
     >
         <div
             v-if="!inline"
-            role="button"
             :tabindex="disabled ? null : 0"
             ref="trigger"
             :class="triggerClasses"
@@ -34,6 +33,7 @@
                 :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
+                :aria-modal="!inline"
                 :style="menuStyle"
                 v-trap-focus="trapFocus">
                 <slot/>

@@ -14,7 +14,7 @@ export default {
         duration: {
             type: Number,
             default: () => {
-                getValueByPath(getOptions(), 'notification.duration', 1000)
+                return getValueByPath(getOptions(), 'notification.duration', 1000)
             }
         },
         /** If should queue with others notices (snackbar/toast/notification). */
@@ -48,9 +48,13 @@ export default {
         container: {
             type: String,
             default: () => {
-                getValueByPath(getOptions(), 'notification.containerElement', undefined)
+                return getValueByPath(getOptions(), 'notification.containerElement', undefined)
             }
         },
+        /** @ignore */
+        programmatic: [Boolean, Object],
+        /** @ignore */
+        promise: Object,
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,
@@ -113,6 +117,10 @@ export default {
             this.$emit('close')
             this.onClose.apply(null, arguments)
 
+            if (this.programmatic && this.programmatic.resolve) {
+                this.programmatic.resolve.apply(null, arguments)
+            }
+
             // Timeout for the animation complete before destroying
             setTimeout(() => {
                 this.isActive = false
@@ -159,7 +167,7 @@ export default {
         },
 
         timeoutCallback() {
-            return this.close()
+            return this.close({action: 'close', method: 'timeout'})
         }
     },
     beforeMount() {

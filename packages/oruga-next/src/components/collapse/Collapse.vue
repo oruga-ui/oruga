@@ -84,8 +84,7 @@ export default defineComponent({
             withDirectives(
                 h('div', {
                     class: this.computedClass('contentClass', 'o-clps__content'),
-                    'id': this.ariaId,
-                    'aria-expanded': this.isOpen
+                    'id': this.ariaId
                 }, this.$slots.default()),
                 [ [vShow, this.isOpen] ]
             )
