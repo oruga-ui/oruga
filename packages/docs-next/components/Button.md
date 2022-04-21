@@ -28,10 +28,6 @@ title: Button
 
 <ExampleViewer example="button/tags" />
 
-```vue
-aaa
-```
-
 ## Class props
 
 <br />
