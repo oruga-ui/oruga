@@ -1,10 +1,8 @@
 <template>
   <section>
     <o-field label="Select a date" grouped>
-      <o-datepicker v-model="selected" :mobile-native="false">
-        <template v-slot:trigger>
-          <o-button icon-left="calendar" type="primary" />
-        </template>
+      <o-datepicker #trigger>
+        <o-button icon-left="calendar" type="primary" />
       </o-datepicker>
       <o-input readonly :value="selectedString" />
     </o-field>
