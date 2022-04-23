@@ -10,8 +10,6 @@ title: Table
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/table/examples/Table.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -56,9 +54,9 @@ title: Table
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
-
 <br />
+
+<inspector-viewer component="table" />
 
 <br />
 <br />
@@ -174,42 +172,9 @@ title: Table
 
 ---
 
-# Table Column
-
-> <CarbonAds />
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table column.scss)
-
-<br />
-
-<br />
-<br />
-
-## Props
-
-| Prop name        | Description                                                     | Type                                         | Values              | Default                            |
-| ---------------- | --------------------------------------------------------------- | -------------------------------------------- | ------------------- | ---------------------------------- |
-| customKey        |                                                                 | string\|number                               | -                   |                                    |
-| customSearch     |                                                                 | func                                         | -                   |                                    |
-| customSort       |                                                                 | func                                         | -                   |                                    |
-| field            |                                                                 | string                                       | -                   |                                    |
-| headerSelectable |                                                                 | boolean                                      | -                   |                                    |
-| label            |                                                                 | string                                       | -                   |                                    |
-| meta             |                                                                 | string\|number\|boolean\|func\|object\|array | -                   |                                    |
-| numeric          |                                                                 | boolean                                      | -                   |                                    |
-| position         | Optional, position of column content                            | string                                       | `centered`, `right` |                                    |
-| searchable       |                                                                 | boolean                                      | -                   |                                    |
-| sortable         |                                                                 | boolean                                      | -                   |                                    |
-| sticky           |                                                                 | boolean                                      | -                   |                                    |
-| subheading       |                                                                 | string                                       | -                   |                                    |
-| tdAttrs          | Adds native attributes to td :td-attrs="(row, column)" => ({})" | func                                         | -                   | Default function (see source code) |
-| thAttrs          | Adds native attributes to th :th-attrs="(column)" => ({})"      | func                                         | -                   | Default function (see source code) |
-| visible          |                                                                 | boolean                                      | -                   | true                               |
-| width            |                                                                 | number\|string                               | -                   |                                    |
-
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__table.scss.scss)
 
 | CSS Variable                                  | SASS Variable                           | Default                                                  |
 | --------------------------------------------- | --------------------------------------- | -------------------------------------------------------- |

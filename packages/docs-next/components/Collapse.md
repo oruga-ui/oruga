@@ -10,8 +10,6 @@ title: Collapse
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/collapse/examples/Collapse.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Collapse
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_collapse.scss)
-
 <br />
+
+<inspector-viewer component="collapse" />
 
 <br />
 <br />
@@ -57,6 +55,8 @@ title: Collapse
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__collapse.scss.scss)
 
 | CSS Variable | SASS Variable | Default |
 | ------------ | ------------- | ------- |

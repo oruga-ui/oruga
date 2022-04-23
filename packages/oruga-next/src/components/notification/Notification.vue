@@ -55,7 +55,6 @@ import { getOptions } from '../../utils/config'
  * Bold notification blocks to alert your users of something
  * @displayName Notification
  * @requires ./NotificationNotice.vue
- * @example ./examples/Notification.md
  * @style _notification.scss
  */
 export default {

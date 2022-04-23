@@ -10,8 +10,6 @@ title: Notification
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/notification/examples/Notification.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Programmatically opening
@@ -34,9 +32,9 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
-
 <br />
+
+<inspector-viewer component="notification" />
 
 <br />
 <br />
@@ -81,48 +79,9 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
 
 ---
 
-# Notification Notice
-
-> <CarbonAds />
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification notice.scss)
-
-<br />
-
-<br />
-<br />
-
-## Props
-
-| Prop name         | Description                                                                                                                                                         | Type          | Values                                                                  | Default                                                                                                                                                 |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| container         | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;containerElement: undefined<br>}</code> |
-| duration          | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;duration: 1000<br>}</code>              |
-| indefinite        | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                                                                                                                                                   |
-| message           | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                                                                                                                                         |
-| onClose           | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code)                                                                                                                      |
-| override          |                                                                                                                                                                     | boolean       | -                                                                       |                                                                                                                                                         |
-| position          | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                                                                                                                                                   |
-| propsNotification |                                                                                                                                                                     | object        | -                                                                       |                                                                                                                                                         |
-| queue             | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;noticeQueue: undefined<br>}</code>      |
-| type              | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                                                                                                                                         |
-
-### Events
-
-| Event name    | Properties | Description |
-| ------------- | ---------- | ----------- |
-| close         |            |
-| update:active |            |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
-
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__notification.scss.scss)
 
 | CSS Variable                                | SASS Variable                         | Default                      |
 | ------------------------------------------- | ------------------------------------- | ---------------------------- |

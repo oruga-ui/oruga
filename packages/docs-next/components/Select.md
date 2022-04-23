@@ -10,8 +10,6 @@ title: Select
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/select/examples/Select.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -20,9 +18,9 @@ title: Select
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_select.scss)
-
 <br />
+
+<inspector-viewer component="select" />
 
 <br />
 <br />
@@ -64,6 +62,8 @@ title: Select
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__select.scss.scss)
 
 | CSS Variable                         | SASS Variable                  | Default                                               |
 | ------------------------------------ | ------------------------------ | ----------------------------------------------------- |

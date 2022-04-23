@@ -10,8 +10,6 @@ title: Icon
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/icon/examples/Icon.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 Oruga is compatible with both <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a>
@@ -114,9 +112,9 @@ Vue.use(Oruga, {
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_icon.scss)
-
 <br />
+
+<inspector-viewer component="icon" />
 
 <br />
 <br />
@@ -139,6 +137,8 @@ Vue.use(Oruga, {
 | variant     | Color of the icon, optional                                                                                          | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                    |         |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__icon.scss.scss)
 
 | CSS Variable               | SASS Variable        | Default |
 | -------------------------- | -------------------- | ------- |

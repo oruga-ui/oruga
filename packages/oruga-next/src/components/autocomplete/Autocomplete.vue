@@ -110,7 +110,6 @@ import { getOptions } from '../../utils/config'
 /**
  * Extended input that provide suggestions while the user types
  * @displayName Autocomplete
- * @example ./examples/Autocomplete.md
  * @style _autocomplete.scss
  */
 export default defineComponent({

@@ -71,7 +71,6 @@ import { defineComponent } from 'vue'
  * A slider to select a value or range from a given range
  * @displayName Slider
  * @requires ./SliderTick.vue
- * @example ./examples/Slider.md
  * @style _slider.scss
  */
 export default defineComponent({

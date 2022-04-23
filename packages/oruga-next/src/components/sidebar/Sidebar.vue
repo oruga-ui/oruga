@@ -31,7 +31,6 @@ import { defineComponent } from 'vue'
 /**
  * A sidebar to use as left/right overlay or static
  * @displayName Sidebar
- * @example ./examples/Sidebar.md
  * @style _sidebar.scss
  */
 export default defineComponent({

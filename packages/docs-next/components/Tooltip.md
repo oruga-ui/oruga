@@ -10,8 +10,6 @@ title: Tooltip
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/tooltip/examples/Tooltip.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -32,9 +30,9 @@ title: Tooltip
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tooltip.scss)
-
 <br />
+
+<inspector-viewer component="tooltip" />
 
 <br />
 <br />
@@ -65,6 +63,8 @@ title: Tooltip
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__tooltip.scss.scss)
 
 | CSS Variable                            | SASS Variable                     | Default                            |
 | --------------------------------------- | --------------------------------- | ---------------------------------- |

@@ -10,8 +10,6 @@ title: Checkbox
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/checkbox/examples/Checkbox.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -28,9 +26,9 @@ title: Checkbox
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)
-
 <br />
+
+<inspector-viewer component="checkbox" />
 
 <br />
 <br />
@@ -67,6 +65,8 @@ title: Checkbox
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__checkbox.scss.scss)
 
 | CSS Variable                                | SASS Variable                         | Default                 |
 | ------------------------------------------- | ------------------------------------- | ----------------------- |

@@ -129,7 +129,6 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
- * @example ./examples/Pagination.md
  * @style _pagination.scss
  */
 export default defineComponent({

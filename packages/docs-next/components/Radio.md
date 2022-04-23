@@ -10,8 +10,6 @@ title: Radio
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/radio/examples/Radio.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Radio
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_radio.scss)
-
 <br />
+
+<inspector-viewer component="radio" />
 
 <br />
 <br />
@@ -58,6 +56,8 @@ title: Radio
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__radio.scss.scss)
 
 | CSS Variable                             | SASS Variable                      | Default                 |
 | ---------------------------------------- | ---------------------------------- | ----------------------- |

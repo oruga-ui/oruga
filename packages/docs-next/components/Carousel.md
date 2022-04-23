@@ -10,8 +10,6 @@ title: Carousel
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/carousel/examples/Carousel.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -32,12 +30,12 @@ title: Carousel
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_carousel.scss)
-
-<ExampleViewer example="carousel/inspector" />
-
 <br />
 
+<inspector-viewer component="carousel" />
+
+<br />
+<br />
 
 ## Props
 
@@ -87,6 +85,8 @@ title: Carousel
 
 ## Style
 
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__carousel.scss.scss)
+
 | CSS Variable                                  | SASS Variable                           | Default                               |
 | --------------------------------------------- | --------------------------------------- | ------------------------------------- |
 | --oruga-carousel-arrow-background             | \$carousel-arrow-background             | \$white                               |
@@ -114,22 +114,3 @@ title: Carousel
 | --oruga-carousel-item-border                  | \$carousel-item-border                  | 2px solid transparent                 |
 | --oruga-carousel-overlay-background           | \$carousel-overlay-background           | hsla(0,0%,4%,.86)                     |
 | --oruga-carousel-overlay-zindex               | \$carousel-overlay-zindex               | 40                                    |
-
-<!-- 
-
-
-
-
-::: demo
-::: demo
-
-
-:::
-
-
-<br />
-
-<br />
-<br />
-
- -->

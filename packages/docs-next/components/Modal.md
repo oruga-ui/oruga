@@ -10,8 +10,6 @@ title: Modal
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/modal/examples/Modal.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Modal
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)
-
 <br />
+
+<inspector-viewer component="modal" />
 
 <br />
 <br />
@@ -74,6 +72,8 @@ title: Modal
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__modal.scss.scss)
 
 | CSS Variable                                      | SASS Variable                               | Default                      |
 | ------------------------------------------------- | ------------------------------------------- | ---------------------------- |

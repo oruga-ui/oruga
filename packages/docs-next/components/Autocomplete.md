@@ -10,8 +10,6 @@ title: Autocomplete
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/autocomplete/examples/Autocomplete.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -32,10 +30,11 @@ title: Autocomplete
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_autocomplete.scss)
+<br />
 
-<ExampleViewer example="autocomplete/inspector" :showCode="false" />
+<inspector-viewer component="autocomplete" />
 
+<br />
 <br />
 
 ## Props
@@ -80,10 +79,6 @@ title: Autocomplete
 | v-model              |                                                                                                                                                        | number\|string | -                                                 |                                                                                                                                               |
 | validationMessage    | The message which is shown when a validation error occurs                                                                                              | string         | -                                                 |                                                                                                                                               |
 
-<br />
-<br />
-<br />
-
 ## Events
 
 | Event name        | Properties                                                                   | Description |
@@ -110,6 +105,8 @@ title: Autocomplete
 | footer  |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__autocomplete.scss.scss)
 
 | CSS Variable                                     | SASS Variable                              | Default                                                              |
 | ------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------- |

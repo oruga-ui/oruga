@@ -10,8 +10,6 @@ title: Tabs
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/tabs/examples/Tabs.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -40,9 +38,9 @@ title: Tabs
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tabs.scss)
-
 <br />
+
+<inspector-viewer component="tabs" />
 
 <br />
 <br />
@@ -67,28 +65,9 @@ title: Tabs
 
 ---
 
-# Tab Item
-
-> <CarbonAds />
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tab item.scss)
-
-<br />
-
-<br />
-<br />
-
-## Props
-
-| Prop name | Description           | Type    | Values | Default                                                                                                                               |
-| --------- | --------------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| disabled  | Item will be disabled | boolean | -      |                                                                                                                                       |
-| override  |                       | boolean | -      |                                                                                                                                       |
-| tag       | Tabs item tag name    | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
-
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__tabs.scss.scss)
 
 | CSS Variable                                       | SASS Variable                                | Default                 |
 | -------------------------------------------------- | -------------------------------------------- | ----------------------- |

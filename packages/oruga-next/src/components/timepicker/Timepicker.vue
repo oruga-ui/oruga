@@ -154,7 +154,6 @@ import { getOptions } from '../../utils/config'
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
  * @displayName Timepicker
- * @example ./examples/Timepicker.md
  * @style _timepicker.scss
  */
 export default defineComponent({

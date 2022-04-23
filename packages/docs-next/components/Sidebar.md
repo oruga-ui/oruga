@@ -10,8 +10,6 @@ title: Sidebar
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/sidebar/examples/Sidebar.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Sidebar
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
-
 <br />
+
+<inspector-viewer component="sidebar" />
 
 <br />
 <br />
@@ -66,6 +64,8 @@ title: Sidebar
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__sidebar.scss.scss)
 
 | CSS Variable                             | SASS Variable                      | Default                             |
 | ---------------------------------------- | ---------------------------------- | ----------------------------------- |

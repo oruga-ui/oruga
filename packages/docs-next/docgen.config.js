@@ -6,11 +6,11 @@ const srcScss = '../oruga/src';
 const exampleSrc = '.vuepress/examples'
 
 const IGNORE = [
-  'DropdownItem.vue', 'FieldBody.vue', 'SliderThumb.vue', 'SliderTick.vue',
-  'TableMobileSort.vue', 'TablePagination.vue', 'TableColumn.vue', 'PaginationButton.vue',
-  'TabItem.vue', 'StepItem.vue', 'MenuItem.vue', 'MenuList.vue', 'Inspector.vue',
-  'DatepickerTable.vue', 'DatepickerTableRow.vue', 'DatepickerMonth.vue', 'NotificationNotice.vue',
-  'CarouselItem.vue'
+  'DropdownItem', 'FieldBody', 'SliderThumb', 'SliderTick',
+  'TableMobileSort', 'TablePagination', 'TableColumn', 'PaginationButton',
+  'TabItem', 'StepItem', 'MenuItem', 'MenuList', 'Inspector',
+  'DatepickerTable', 'DatepickerTableRow', 'DatepickerMonth', 'NotificationNotice',
+  'CarouselItem'
 ];
 
 const IGNORE_CLASSES = {
@@ -19,6 +19,10 @@ const IGNORE_CLASSES = {
 
 const NAME_FOLDER_MAPPING = {
     'notification/toast' : 'notification'
+}
+
+const getComponent = (filename) => {
+    return path.basename(filename).replace(/\.vue$/, '');
 }
 
 module.exports = {
@@ -30,16 +34,17 @@ module.exports = {
   docsFolder: 'packages/docs',
   defaultExamples: false,
   getDestFile: (file, config) => {
-    const component = path.basename(file);
+    const component = getComponent(file);
     if (!component || IGNORE.indexOf(component) >= 0) return;
-    return path.join(config.outDir, component).replace(/\.vue$/, '.md');
+    return path.join(config.outDir, `${component}.md`);
   },
   templates: {
     component: (renderedUsage, doc, config, _fileName, requiresMd, { isSubComponent }) => {
       const { displayName, description, tags, functional } = doc;
       const { deprecated, author, since, version, see, link, style } = tags || {};
-      const examples = fs.readFileSync(path.resolve(config.cwd, `${exampleSrc}/${displayName.toLowerCase()}/index.md`), 'utf8');
-
+      const component = getComponent(_fileName);
+      if (!component || IGNORE.indexOf(component) >= 0) return;
+      const examples = fs.readFileSync(path.resolve(config.cwd, `${exampleSrc}/${component.toLowerCase()}/index.md`), 'utf8');
       return `
 
 ${!isSubComponent ? `
@@ -58,8 +63,8 @@ ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 > <CarbonAds />
 ${examples ? '---\n' + examples : ''}
-${tmplClassProps(config, displayName.toLowerCase())}
-${tmplProps(renderedUsage.props, config, displayName.toLowerCase())}
+${tmplClassProps(config, component.toLowerCase())}
+${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}

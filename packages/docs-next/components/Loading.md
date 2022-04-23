@@ -10,8 +10,6 @@ title: Loading
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/loading/examples/Loading.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -28,9 +26,9 @@ title: Loading
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
-
 <br />
+
+<inspector-viewer component="loading" />
 
 <br />
 <br />
@@ -66,6 +64,8 @@ title: Loading
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__loading.scss.scss)
 
 | CSS Variable                    | SASS Variable             | Default               |
 | ------------------------------- | ------------------------- | --------------------- |

@@ -10,8 +10,6 @@ title: Steps
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/steps/examples/Steps.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -28,9 +26,9 @@ title: Steps
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
-
 <br />
+
+<inspector-viewer component="steps" />
 
 <br />
 <br />
@@ -60,29 +58,9 @@ title: Steps
 
 ---
 
-# Step Item
-
-> <CarbonAds />
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_step item.scss)
-
-<br />
-
-<br />
-<br />
-
-## Props
-
-| Prop name | Description                                                                                                                         | Type           | Values | Default   |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
-| clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
-| override  |                                                                                                                                     | boolean        | -      |           |
-| step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
-| variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
-
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__steps.scss.scss)
 
 | CSS Variable                               | SASS Variable                        | Default                      |
 | ------------------------------------------ | ------------------------------------ | ---------------------------- |

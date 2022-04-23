@@ -10,8 +10,6 @@ title: Datetimepicker
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/datetimepicker/examples/Datetimepicker.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -28,9 +26,9 @@ title: Datetimepicker
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datetimepicker.scss)
-
 <br />
+
+<inspector-viewer component="datetimepicker" />
 
 <br />
 <br />
@@ -86,3 +84,11 @@ title: Datetimepicker
 | Name   | Description | Bindings |
 | ------ | ----------- | -------- |
 | footer |             |          |
+
+## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__datetimepicker.scss.scss)
+
+| CSS Variable | SASS Variable | Default |
+| ------------ | ------------- | ------- |
+

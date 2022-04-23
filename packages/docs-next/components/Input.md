@@ -10,8 +10,6 @@ title: Input
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/input/examples/Input.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Input
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_input.scss)
-
 <br />
+
+<inspector-viewer component="input" />
 
 <br />
 <br />
@@ -69,6 +67,8 @@ title: Input
 | icon-right-click  |            |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__input.scss.scss)
 
 | CSS Variable                        | SASS Variable                 | Default                                               |
 | ----------------------------------- | ----------------------------- | ----------------------------------------------------- |

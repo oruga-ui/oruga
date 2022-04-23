@@ -336,7 +336,6 @@ import { getOptions } from '../../utils/config'
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
  * @requires ./TableColumn.vue
- * @example ./examples/Table.md
  * @style _table.scss
  */
 export default defineComponent({

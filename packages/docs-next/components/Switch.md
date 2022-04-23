@@ -10,8 +10,6 @@ title: Switch
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/switch/examples/Switch.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -32,9 +30,9 @@ title: Switch
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_switch.scss)
-
 <br />
+
+<inspector-viewer component="switch" />
 
 <br />
 <br />
@@ -71,6 +69,8 @@ title: Switch
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__switch.scss.scss)
 
 | CSS Variable                           | SASS Variable                    | Default                                                                                          |
 | -------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |

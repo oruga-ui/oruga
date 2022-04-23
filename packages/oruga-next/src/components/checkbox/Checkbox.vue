@@ -36,7 +36,6 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
 /**
  * Select a single or grouped options
  * @displayName Checkbox
- * @example ./examples/Checkbox.md
  * @style _checkbox.scss
  */
 export default defineComponent({

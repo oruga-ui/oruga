@@ -10,31 +10,29 @@ title: Inputitems
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/inputitems/examples/Inputitems.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
 
-<ExampleViewer example="input-items/base" />
+<ExampleViewer example="inputitems/base" />
 
 ### Autocomplete
 
-<ExampleViewer example="input-items/autocomplete" />
+<ExampleViewer example="inputitems/autocomplete" />
 
 ### Custom selected
 
-<ExampleViewer example="input-items/custom-selected" />
+<ExampleViewer example="inputitems/custom-selected" />
 
 ### Limits
 
-<ExampleViewer example="input-items/limits" />
+<ExampleViewer example="inputitems/inputitemslimits" />
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_inputitems.scss)
-
 <br />
+
+<inspector-viewer component="inputitems" />
 
 <br />
 <br />
@@ -103,6 +101,8 @@ title: Inputitems
 | footer   |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__inputItems.scss.scss)
 
 | CSS Variable                             | SASS Variable                      | Default                          |
 | ---------------------------------------- | ---------------------------------- | -------------------------------- |

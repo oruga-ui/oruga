@@ -10,8 +10,6 @@ title: Upload
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/upload/examples/Upload.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Upload
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_upload.scss)
-
 <br />
+
+<inspector-viewer component="upload" />
 
 <br />
 <br />
@@ -68,6 +66,8 @@ title: Upload
 | default |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__upload.scss.scss)
 
 | CSS Variable                                | SASS Variable                         | Default                 |
 | ------------------------------------------- | ------------------------------------- | ----------------------- |

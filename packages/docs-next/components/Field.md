@@ -10,8 +10,6 @@ title: Field
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/field/examples/Field.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -36,9 +34,9 @@ title: Field
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_field.scss)
-
 <br />
+
+<inspector-viewer component="field" />
 
 <br />
 <br />
@@ -68,6 +66,8 @@ title: Field
 | message |             |          |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__field.scss.scss)
 
 | CSS Variable                          | SASS Variable                   | Default      |
 | ------------------------------------- | ------------------------------- | ------------ |

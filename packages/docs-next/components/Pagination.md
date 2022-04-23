@@ -10,8 +10,6 @@ title: Pagination
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/pagination/examples/Pagination.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -24,9 +22,9 @@ title: Pagination
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_pagination.scss)
-
 <br />
+
+<inspector-viewer component="pagination" />
 
 <br />
 <br />
@@ -71,6 +69,8 @@ title: Pagination
 | default  |             | <br/><br/> |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__pagination.scss.scss)
 
 | CSS Variable                                     | SASS Variable                              | Default                      |
 | ------------------------------------------------ | ------------------------------------------ | ---------------------------- |

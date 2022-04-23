@@ -10,8 +10,6 @@ title: Dropdown
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/dropdown/examples/Dropdown.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -28,9 +26,9 @@ title: Dropdown
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
-
 <br />
+
+<inspector-viewer component="dropdown" />
 
 <br />
 <br />
@@ -77,44 +75,9 @@ title: Dropdown
 
 ---
 
-# Dropdown Item
-
-> <CarbonAds />
-
-## Class props
-
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown item.scss)
-
-<br />
-
-<br />
-<br />
-
-## Props
-
-| Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                |
-| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                     |
-| clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                   |
-| disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                        |
-| override  |                                                       | boolean                                | -      |                                                                                                                                        |
-| tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                      |
-| tag       | Dropdown item tag name                                | string                                 | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
-| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      |                                                                                                                                        |
-
-### Events
-
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| click      |            |
-
-### Slots
-
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
-
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__dropdown.scss.scss)
 
 | CSS Variable                                  | SASS Variable                           | Default                                                              |
 | --------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------- |

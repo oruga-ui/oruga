@@ -27,28 +27,33 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isOpen: 0,
-      collapses: [
-        {
-          title: 'Title 1',
-          text: 'Text 1',
-        },
-        {
-          title: 'Title 2',
-          text: 'Text 2',
-        },
-        {
-          title: 'Title 3',
-          text: 'Text 3',
-        },
-      ],
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const isOpen = ref(0)
+        const collapses = ref(
+            [
+                {
+                    title: 'Title 1',
+                    text: 'Text 1',
+                },
+                {
+                    title: 'Title 2',
+                    text: 'Text 2',
+                },
+                {
+                    title: 'Title 3',
+                    text: 'Text 3',
+                }
+            ]
+        )
+        return {
+            isOpen, collapses
+        }
+    }
+})
 </script>
 
 <style>

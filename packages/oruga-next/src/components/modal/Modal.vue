@@ -54,7 +54,6 @@ import Icon from '../icon/Icon.vue'
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Modal
- * @example ./examples/Modal.md
  * @style _modal.scss
  */
 export default defineComponent({

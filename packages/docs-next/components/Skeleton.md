@@ -10,8 +10,6 @@ title: Skeleton
 
 ---
 
-<a href="https://github.com/oruga-ui/oruga/edit/develop/packages/docs/../oruga-next/src/components/skeleton/examples/Skeleton.md" class="docgen-edit-link">edit on github</a>
-
 ## Examples
 
 ### Base
@@ -20,9 +18,9 @@ title: Skeleton
 
 ## Class props
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_skeleton.scss)
-
 <br />
+
+<inspector-viewer component="skeleton" />
 
 <br />
 <br />
@@ -43,6 +41,8 @@ title: Skeleton
 | width     | Custom width                                 | number\|string | -                           |         |
 
 ## Style
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__skeleton.scss.scss)
 
 | CSS Variable                   | SASS Variable            | Default                                                                                     |
 | ------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------- |

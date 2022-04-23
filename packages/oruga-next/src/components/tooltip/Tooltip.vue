@@ -38,7 +38,6 @@ import { defineComponent } from 'vue'
 /**
  * Display a brief helper text to your user
  * @displayName Tooltip
- * @example ./examples/Tooltip.md
  * @style _tooltip.scss
  */
 export default defineComponent({
