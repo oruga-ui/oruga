@@ -1,7 +1,7 @@
 
 <template>
     <doc-wrapper :inspect-class="inspectClass">
-      <template v-slot:default="s">
+      <template #default="s">
         <o-checkbox v-model="s.checkbox" v-bind="s">Checkbox</o-checkbox>
       </template>
     </doc-wrapper>

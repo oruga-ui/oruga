@@ -2,7 +2,7 @@
   <section>
     <o-tooltip position="bottom" multiline>
       <o-button>Html Content</o-button>
-      <template v-slot:content>
+      <template #content>
         <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
         <i>Fusce id fermentum quam</i>.
       </template>
@@ -13,7 +13,7 @@
       :triggers="['click']"
       :auto-close="['outside', 'escape']"
     >
-      <template v-slot:content>
+      <template #content>
         <o-icon icon="heart" variant="danger"></o-icon>
         <o-icon icon="thumbs-up" variant="info"></o-icon>
         <o-icon icon="thumbs-down" variant="warning"></o-icon>

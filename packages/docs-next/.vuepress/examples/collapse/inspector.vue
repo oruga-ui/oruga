@@ -1,14 +1,14 @@
 
 <template>
     <doc-wrapper :inspect-class="inspectClass">
-      <template v-slot:default="s">
+      <template #default="s">
         <o-collapse
           animation="slide"
           v-bind="s"
           :open="true"
           style="border: 1px solid #dfe2e5"
         >
-            <template v-slot:trigger="props">
+            <template #trigger="props">
                 <div
                     class="card-header"
                     role="button"

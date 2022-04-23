@@ -1,6 +1,6 @@
 <template>
     <doc-wrapper :inspect-class="inspectClass">
-        <template v-slot:default="s">
+        <template  #default="s">
             <o-field label="Select a date">
                 <o-datepicker v-bind="s" :events="events" locale="en-GB" placeholder="Click to select a date..." icon="calendar" ref="datepicker">
                     Footer

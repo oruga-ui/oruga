@@ -14,7 +14,7 @@
 <script>
 import { h } from 'vue';
 
-const ModalForm = defineComponent({
+const ModalForm = {
   props: ['email', 'password'],
   template: `
             <form action="">
@@ -58,7 +58,7 @@ const ModalForm = defineComponent({
                 </div>
             </form>
         `,
-});
+};
 
 export default {
   methods: {
@@ -92,6 +92,7 @@ export default {
   max-height: calc(100vh - 40px);
   overflow: hidden;
 }
+
 @media screen and (min-width: 769px) {
   .modal-card {
     margin: 0 auto;
@@ -99,6 +100,7 @@ export default {
     width: 640px;
   }
 }
+
 .modal-card {
   margin: 0 20px;
   max-height: calc(100vh - 160px);
@@ -106,6 +108,7 @@ export default {
   position: relative;
   width: 100%;
 }
+
 .modal-card-foot,
 .modal-card-head {
   align-items: center;
@@ -116,11 +119,13 @@ export default {
   padding: 20px;
   position: relative;
 }
+
 .modal-card-head {
   border-bottom: 1px solid #dbdbdb;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+
 .modal-card-body {
   -webkit-overflow-scrolling: touch;
   background-color: #fff;
@@ -129,11 +134,13 @@ export default {
   overflow: auto;
   padding: 20px;
 }
+
 .modal-card-foot {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   border-top: 1px solid #dbdbdb;
 }
+
 .modal-card-title {
   color: #363636;
   flex-grow: 1;
@@ -142,6 +149,7 @@ export default {
   line-height: 1;
   margin: 0;
 }
+
 .modal-card-foot .o-button:not(:last-child) {
   margin-right: 0.5em;
 }

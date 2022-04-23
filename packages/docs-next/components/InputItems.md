@@ -26,7 +26,7 @@ title: Inputitems
 
 ### Limits
 
-<ExampleViewer example="inputitems/inputitemslimits" />
+<ExampleViewer example="inputitems/limits" />
 
 ## Class props
 
