@@ -3,18 +3,18 @@
     <div class="example-component">
       <o-field grouped group-multiline>
         <div class="control">
-          <o-switch v-model="autoPlay">Autoplay</o-switch>
+          <o-switch v-model="settings.autoplay">Autoplay</o-switch>
         </div>
         <div class="control">
-          <o-switch v-model="pauseHover" :disabled="!autoPlay"
+          <o-switch v-model="settings.pauseHover" :disabled="!settings.autoplay"
             >Pause on hover</o-switch
           >
         </div>
         <div class="control">
-          <o-switch v-model="drag">Drag event</o-switch>
+          <o-switch v-model="settings.hasDrag">Drag event</o-switch>
         </div>
         <div class="control">
-          <o-switch v-model="repeat" :disabled="!autoPlay">Repeat</o-switch>
+          <o-switch v-model="settings.repeat" :disabled="!settings.autoplay">Repeat</o-switch>
         </div>
       </o-field>
       <o-field grouped group-multiline>
@@ -29,10 +29,10 @@
         <o-field label="Interval">
           <o-input
             type="number"
-            v-model.number="interval"
+            v-model.number="settings.interval"
             min="0"
             step="1000"
-            :disabled="!autoPlay"
+            :disabled="!settings.autoplay"
           />
         </o-field>
       </o-field>
@@ -40,11 +40,7 @@
 
     <o-carousel
       v-model="carousel"
-      :has-drag="drag"
-      :autoplay="autoPlay"
-      :pause-hover="pauseHover"
-      :interval="interval"
-      :repeat="repeat"
+      v-bind="settings"
     >
       <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
         <section
@@ -59,26 +55,32 @@
     </o-carousel>
   </section>
 </template>
-
 <script>
+import { defineComponent, ref, reactive } from 'vue';
+
+const carousels = [
+  { text: "Slide 1", color: "#445e00" },
+  { text: "Slide 2", color: "#006724" },
+  { text: "Slide 3", color: "#b60000" },
+  { text: "Slide 4", color: "#f4c300" },
+  { text: "Slide 5", color: "#005c98" },
+];
+
 export default {
-  data() {
-    return {
-      carousel: 0,
-      animated: "slide",
-      drag: false,
-      autoPlay: false,
+  setup() {
+    const carousel = ref(0);
+    const settings = reactive({
+      hasDrag: false,
+      autoplay: false,
       pauseHover: false,
-      pauseInfo: false,
-      repeat: false,
       interval: 3000,
-      carousels: [
-        { text: "Slide 1", color: "#445e00" },
-        { text: "Slide 2", color: "#006724" },
-        { text: "Slide 3", color: "#b60000" },
-        { text: "Slide 4", color: "#f4c300" },
-        { text: "Slide 5", color: "#005c98" },
-      ],
+      repeat: false,
+    });
+
+    return {
+      carousel,
+      settings,
+      carousels,
     };
   },
 };
