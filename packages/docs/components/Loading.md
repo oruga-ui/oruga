@@ -288,8 +288,6 @@ export default {
 | onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | Default function (see source code)                                                                                                       |
 | overlay      |                                                                                                                         | boolean                   | -      | true                                                                                                                                     |
 | override     | Override classes                                                                                                        | boolean                   | -      | false                                                                                                                                    |
-| programmatic |                                                                                                                         | boolean\|object           | -      |                                                                                                                                          |
-| promise      |                                                                                                                         | object                    | -      |                                                                                                                                          |
 
 ## Events
 

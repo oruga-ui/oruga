@@ -326,6 +326,17 @@ export function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
+/**
+ * Returns the "promise" object.
+ *
+ * This is to handle browsers that do not have Promise support (IE 11) which are still supported
+ * by Vue 2
+ */
+export function promiseObject() {
+    // the typedef window is to that vuepress won't break when it tries to run this method
+    return ((typeof window !== "undefined") && window.Promise) ? window.Promise : Object;
+}
+
 
 export const isDefined = (d) => d !== undefined
 

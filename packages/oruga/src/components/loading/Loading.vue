@@ -25,7 +25,7 @@ import Icon from '../icon/Icon'
 
 import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { removeElement, getValueByPath } from '../../utils/helpers'
+import { removeElement, getValueByPath, promiseObject } from '../../utils/helpers'
 import { HTMLElement } from '../../utils/ssr'
 
 /**
@@ -47,7 +47,7 @@ export default {
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: promiseObject(),
         container: [Object, Function, HTMLElement],
         /** Loader will overlay the full page */
         fullPage: {

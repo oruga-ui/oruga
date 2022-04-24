@@ -45,11 +45,10 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import trapFocus from '../../directives/trapFocus'
-import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
+import { removeElement, getValueByPath, toCssDimension, promiseObject } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
-
 
 /**
  * Classic modal overlay to include any content you may need
@@ -77,7 +76,7 @@ export default {
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: promiseObject(),
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */

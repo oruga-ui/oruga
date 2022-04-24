@@ -78,7 +78,7 @@ export default defineComponent({
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: Promise,
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
