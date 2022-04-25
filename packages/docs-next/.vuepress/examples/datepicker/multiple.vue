@@ -1,16 +1,23 @@
 <template>
   <o-field label="Select a date">
-    <o-datepicker placeholder="Click to select..." v-model="dates" multiple>
+    <o-datepicker
+      v-model="dates"
+      multiple
+      placeholder="Click to select..."
+    >
     </o-datepicker>
   </o-field>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dates = ref([]);
+
     return {
-      dates: [],
+      dates,
     };
   },
-};
+});
 </script>

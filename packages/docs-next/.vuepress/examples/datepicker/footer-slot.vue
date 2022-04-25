@@ -17,13 +17,16 @@
     </o-datepicker>
   </o-field>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const date = ref(new Date());
+
     return {
-      date: new Date(),
+      date,
     };
   },
-};
+});
 </script>

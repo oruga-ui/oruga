@@ -9,25 +9,27 @@
     </o-datepicker>
   </o-field>
 </template>
-
 <script>
-export default {
-  data() {
-    const today = new Date();
+import { defineComponent } from 'vue';
 
+const today = new Date();
+const minDate = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - 7,
+);
+const maxDate = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() + 7,
+);
+
+export default defineComponent({
+  setup() {
     return {
-      date: new Date(),
-      minDate: new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - 7,
-      ),
-      maxDate: new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + 7,
-      ),
+      minDate,
+      maxDate,
     };
   },
-};
+});
 </script>

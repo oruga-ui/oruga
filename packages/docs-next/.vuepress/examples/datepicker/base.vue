@@ -35,15 +35,20 @@
     </o-field>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const selected = ref(new Date());
+    const showWeekNumber = ref(false);
+    const locale = ref(); // Browser locale
+
     return {
-      selected: new Date(),
-      showWeekNumber: false,
-      locale: undefined, // Browser locale
+      selected,
+      showWeekNumber,
+      locale,
     };
   },
-};
+});
 </script>

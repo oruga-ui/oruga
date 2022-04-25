@@ -12,19 +12,22 @@
     </o-datepicker>
   </span>
 </template>
-
 <script>
+import { defineComponent, ref, computed } from 'vue';
+
 const thisMonth = new Date().getMonth();
 
-export default {
-  computed: {
-    indicators() {
-      return this.bars ? 'bars' : 'dots';
-    },
-  },
-  data() {
+
+export default defineComponent({
+  setup() {
+    const bars = ref(false);
+    const date = ref(new Date(2017, thisMonth, 1));
+    const indicators = computed(() => bars ? 'bars' : 'dots'); 
+
     return {
-      date: new Date(2017, thisMonth, 1),
+      bars,
+      date,
+      indicators,
       events: [
         new Date(2017, thisMonth, 2),
         new Date(2017, thisMonth, 6),
@@ -67,8 +70,7 @@ export default {
           type: 'info',
         },
       ],
-      bars: false,
     };
   },
-};
+});
 </script>
