@@ -9,7 +9,7 @@
       <o-carousel
         :value="active"
         @input="switchTo($event)"
-        v-bind="al"
+        v-bind="settings"
         as-indicator
       >
         <o-carousel-item
@@ -36,24 +36,26 @@
     </template>
   </o-carousel>
 </template>
-
 <script>
-export default {
-  data() {
-    return {
-      gallery: false,
-      al: {
-        itemsToShow: 2,
-        breakpoints: {
-          768: {
-            itemsToShow: 4,
-          },
-          960: {
-            itemsToShow: 6,
-          },
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const gallery = ref(false);
+    const settings = {
+      itemsToShow: 2,
+      breakpoints: {
+        768: {
+          itemsToShow: 4,
+        },
+        960: {
+          itemsToShow: 6,
         },
       },
-      items: [
+    };
+
+    const items = ref(
+      [
         {
           title: "Slide 1",
           image: "https://picsum.photos/id/1/1230/500",
@@ -82,20 +84,33 @@ export default {
           title: "Slide 7",
           image: "https://picsum.photos/id/7/1230/500",
         },
-      ],
-    };
-  },
-  methods: {
-    switchGallery(value) {
-      this.gallery = value;
+      ]
+    );
+
+    function switchGallery(value) {
+      gallery.value = value;
+
       if (value) {
         document.documentElement.classList.add("o-clipped");
       } else {
         document.documentElement.classList.remove("o-clipped");
       }
-    },
+    };
+
+    return {
+      gallery,
+      settings,
+      items,
+      switchGallery,
+    };
   },
-};
+  data() {
+    return {
+    };
+  },
+  methods: {
+  },
+});
 </script>
 
 <style>
