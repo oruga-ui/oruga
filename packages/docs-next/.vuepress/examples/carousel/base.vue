@@ -18,11 +18,11 @@ const carousels = [
   { text: "Slide 5", color: "#005c98" },
 ];
 
-export default {
+export default defineComponent({
   setup() {
     return { carousels };
   }
-};
+});
 </script>
 <style>
 .ex-slide {
