@@ -67,6 +67,7 @@ const carousels = [
 ];
 
 export default defineComponent({
+
   setup() {
     const carousel = ref(0);
     const settings = reactive({
