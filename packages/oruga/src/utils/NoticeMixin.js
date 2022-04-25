@@ -1,6 +1,5 @@
 import { getOptions } from './config'
-import { getValueByPath} from './helpers'
-import { removeElement } from './helpers'
+import { getValueByPath, removeElement, promiseObject } from './helpers'
 
 export default {
     props: {
@@ -54,7 +53,7 @@ export default {
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: promiseObject(),
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,

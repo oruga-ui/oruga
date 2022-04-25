@@ -54,7 +54,7 @@ export default {
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: Promise,
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,

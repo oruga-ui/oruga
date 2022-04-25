@@ -51,7 +51,7 @@ export default defineComponent({
         /** @ignore */
         programmatic: [Boolean, Object],
         /** @ignore */
-        promise: Object,
+        promise: Promise,
         container: [Object, Function, HTMLElement],
         /** Loader will overlay the full page */
         fullPage: {
