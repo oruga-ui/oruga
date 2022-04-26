@@ -4,13 +4,13 @@ import istanbul from 'vite-plugin-istanbul'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-      vue(),
-      istanbul({
-        include: 'src/*',
-        exclude: ["node_modules", "cypress/"],
-        extension: [".ts", ".vue"],
-        cypress: true
-      })
-  ]
+    plugins: [
+        vue(),
+        istanbul({
+            include: 'src/*',
+            exclude: ["node_modules", "cypress/", "**/tests/*"],
+            extension: [".ts", ".vue"],
+            cypress: true
+        })
+    ]
 })
