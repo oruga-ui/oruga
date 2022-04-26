@@ -23,7 +23,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue"
 import Pagination from '../pagination/Pagination.vue'
 
