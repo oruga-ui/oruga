@@ -76,7 +76,7 @@ export default defineComponent({
         /** Text content */
         content: String,
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
         promise: Promise,
         /** Props to be binded to the injected component */
@@ -298,6 +298,9 @@ export default defineComponent({
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
                 if (this.programmatic.resolve) {
                     this.programmatic.resolve.apply(null, arguments)
                 }
@@ -334,9 +337,13 @@ export default defineComponent({
         }
     },
     mounted() {
-        // Insert the Modal component in body tag
-        // only if it's programmatic
         if (this.programmatic) {
+            if (this.programmatic.instances) {
+                console.log('registering');
+                this.programmatic.instances.add(this)
+            }
+            // Insert the Modal component in body tag
+            // only if it's programmatic
             document.body.appendChild(this.$el)
             this.isActive = true
         }

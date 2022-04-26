@@ -74,7 +74,7 @@ export default {
         /** Text content */
         content: String,
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
         promise: promiseObject(),
         /** Props to be binded to the injected component */
@@ -294,6 +294,9 @@ export default {
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
                 if (this.programmatic.resolve) {
                     this.programmatic.resolve.apply(null, arguments)
                 }
@@ -346,7 +349,12 @@ export default {
         this.programmatic && document.body.appendChild(this.$el)
     },
     mounted() {
-        if (this.programmatic) this.isActive = true
+        if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            this.isActive = true
+        }
         else if (this.isActive) this.handleScroll()
     },
     beforeDestroy() {
