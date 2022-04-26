@@ -21,14 +21,18 @@
     </div>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const checkbox = ref(false);
+    const checkboxCustom = ref('Yes');
+
     return {
-      checkbox: false,
-      checkboxCustom: 'Yes',
+      checkbox,
+      checkboxCustom,
     };
   },
-};
+});
 </script>

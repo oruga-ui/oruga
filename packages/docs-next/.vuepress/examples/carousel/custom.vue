@@ -66,7 +66,8 @@ const carousels = [
   { text: "Slide 5", color: "#005c98" },
 ];
 
-export default {
+export default defineComponent({
+
   setup() {
     const carousel = ref(0);
     const settings = reactive({
@@ -83,5 +84,5 @@ export default {
       carousels,
     };
   },
-};
+});
 </script>

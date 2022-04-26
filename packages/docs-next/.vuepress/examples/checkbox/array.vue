@@ -20,13 +20,16 @@
     </p>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const checkboxGroup = ref(['Flint']);
+
     return {
-      checkboxGroup: ['Flint'],
+      checkboxGroup,
     };
   },
-};
+});
 </script>
