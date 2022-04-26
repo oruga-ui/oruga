@@ -49,7 +49,7 @@ export default defineComponent({
         /** Whether modal is active or not,  use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: Boolean,
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
         promise: Promise,
         container: [Object, Function, HTMLElement],
@@ -143,6 +143,9 @@ export default defineComponent({
 
             // Timeout for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
                 if (this.programmatic.resolve) {
                     this.programmatic.resolve.apply(null, arguments)
                 }
@@ -165,9 +168,12 @@ export default defineComponent({
         }
     },
     mounted() {
-        // Insert the Loading component in body tag
-        // only if it's programmatic
         if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            // Insert the Loading component in body tag
+            // only if it's programmatic
             if (!this.container) {
                 document.body.appendChild(this.$el)
             } else {
