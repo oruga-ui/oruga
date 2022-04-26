@@ -1,4 +1,4 @@
-name: build-next
+name: Build Oruga (next)
 on:
   push:
     branches: [ develop ]

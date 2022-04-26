@@ -38,6 +38,7 @@
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
     "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run-ct",
+    "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open-ct"
   },
   "keywords": [
@@ -91,6 +92,7 @@
     "vite": "^2.8.6",
     "vite-plugin-istanbul": "^2.5.1",
     "vue": "^3.2.25",
+    "vue-tsc": "^0.34.10",
     "webpack-dev-server": "^4.7.4"
   }
 }

@@ -5,6 +5,7 @@
     "bootstrap": "lerna bootstrap",
     "test:oruga": "lerna run test --scope @oruga-ui/oruga",
     "test:oruga-next": "lerna run test --scope @oruga-ui/oruga-next",
+    "test:ts:oruga-next": "lerna run test:ts --scope @oruga-ui/oruga-next",
     "test:watch:oruga-next": "lerna run test:watch --scope @oruga-ui/oruga-next",
     "ci:oruga": "lerna run ci --scope @oruga-ui/oruga",
     "lint:oruga": "lerna run lint --scope @oruga-ui/oruga",
