@@ -62,13 +62,16 @@
     </o-field>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const name = ref('John Silver');
+
     return {
-      name: 'John Silver',
+      name,
     };
   },
-};
+});
 </script>
