@@ -23,13 +23,16 @@
     </o-dropdown>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const selectedOptions = ref([]);
+
     return {
-      selectedOptions: [],
+      selectedOptions,
     };
   },
-};
+});
 </script>
