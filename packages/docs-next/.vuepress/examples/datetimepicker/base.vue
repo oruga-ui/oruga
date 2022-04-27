@@ -46,16 +46,22 @@
     </o-field>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const showWeekNumber = ref(false);
+    const enableSeconds = ref(false);
+    const hourFormat = ref(); // Browser locale
+    const locale = ref(); // Browser locale
+
     return {
-      showWeekNumber: false,
-      enableSeconds: false,
-      hourFormat: undefined, // Browser locale
-      locale: undefined, // Browser locale
+      showWeekNumber,
+      enableSeconds,
+      hourFormat, 
+      locale,
     };
   },
-};
+});
 </script>
