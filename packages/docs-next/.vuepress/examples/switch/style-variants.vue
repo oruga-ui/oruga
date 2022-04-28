@@ -43,16 +43,24 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const size = ref('')
+    const variant = ref(null)
+    const passive = ref(null)
+    const isRounded = ref(false)
+    const position = ref('right')
+
     return {
-      size: '',
-      variant: null,
-      passive: null,
-      isRounded: false,
-      position: 'right',
-    };
-  },
-};
+      size,
+      variant,
+      passive,
+      isRounded,
+      position
+    }
+  }
+})
 </script>

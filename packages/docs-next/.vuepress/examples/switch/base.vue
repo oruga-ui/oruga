@@ -19,13 +19,18 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const isSwitched = ref(false)
+    const isSwitchedCustom = ref('Yes')
+
     return {
-      isSwitched: false,
-      isSwitchedCustom: 'Yes',
-    };
-  },
-};
+      isSwitched,
+      isSwitchedCustom
+    }
+  }
+})
 </script>
