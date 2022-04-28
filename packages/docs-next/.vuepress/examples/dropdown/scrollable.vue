@@ -38,26 +38,33 @@
     </o-dropdown>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+const maxHeight = 200;
+const menus = [
+  { icon: 'users', text: 'People' },
+  { icon: 'box', text: 'Orders' },
+  { icon: 'credit-card', text: 'Payments' },
+  { icon: 'dolly', text: 'Logistics' },
+  { icon: 'business-time', text: 'Jobs' },
+  { icon: 'shopping-cart', text: 'Cart' },
+  { icon: 'cog', text: 'Configuration' },
+];
+
+export default defineComponent({
+  setup() {
+    const isScrollable = ref(true);
+    const currentMenu = ref({ icon: 'users', text: 'People' });
+
     return {
-      isScrollable: true,
-      maxHeight: 200,
-      currentMenu: { icon: 'users', text: 'People' },
-      menus: [
-        { icon: 'users', text: 'People' },
-        { icon: 'box', text: 'Orders' },
-        { icon: 'credit-card', text: 'Payments' },
-        { icon: 'dolly', text: 'Logistics' },
-        { icon: 'business-time', text: 'Jobs' },
-        { icon: 'shopping-cart', text: 'Cart' },
-        { icon: 'cog', text: 'Configuration' },
-      ],
+      isScrollable,
+      maxHeight,
+      currentMenu,
+      menus,
     };
   },
-};
+});
 </script>
 
 <style>

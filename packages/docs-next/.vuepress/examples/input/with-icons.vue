@@ -25,22 +25,27 @@
     </o-field>
   </section>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const email = ref('');
+    
+    function searchIconClick() {
+      alert('You wanna make a search?');
+    }
+    
+    function clearIconClick() {
+      email.value = '';
+      alert('Email cleared!');
+    }
+
     return {
-      email: '',
+      email,
+      searchIconClick,
+      clearIconClick,
     };
   },
-  methods: {
-    searchIconClick() {
-      alert('You wanna make a search?');
-    },
-    clearIconClick() {
-      this.email = '';
-      alert('Email cleared!');
-    },
-  },
-};
+});
 </script>

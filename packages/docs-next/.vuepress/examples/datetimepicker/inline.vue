@@ -1,13 +1,16 @@
 <template>
   <o-datetimepicker v-model="datetime" inline></o-datetimepicker>
 </template>
-
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datetime = ref(new Date());
+
     return {
-      datetime: new Date(),
+      datetime,
     };
   },
-};
+});
 </script>
