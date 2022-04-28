@@ -10,13 +10,14 @@
   </o-field>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      minutesGranularity: 15,
-      hoursGranularity: 2,
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const minutesGranularity = ref(5)
+        const hoursGranularity = ref(2)
+        return { minutesGranularity, hoursGranularity }
+    }
+})
 </script>

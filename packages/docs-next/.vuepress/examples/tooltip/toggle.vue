@@ -14,12 +14,13 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      active: true,
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const active = ref(true)
+        return { active }
+    }
+})
 </script>

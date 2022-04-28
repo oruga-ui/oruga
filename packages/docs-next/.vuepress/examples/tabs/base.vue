@@ -38,14 +38,16 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      activeTab: '0',
-      showBooks: false,
-      multiline: false,
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const activeTab = ref('0')
+        const showBooks = ref(false)
+        const multiline = ref(false)
+        return { activeTab, showBooks, multiline }
+    }
+})
 </script>
+

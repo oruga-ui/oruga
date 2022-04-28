@@ -58,15 +58,16 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      expanded: false,
-      atRight: false,
-      size: null,
-      type: 'default',
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const expanded = ref(false)
+        const atRight = ref(false)
+        const size = ref(null)
+        const type = ref('default')
+        return { expanded, atRight, size, type }
+    }
+})
 </script>

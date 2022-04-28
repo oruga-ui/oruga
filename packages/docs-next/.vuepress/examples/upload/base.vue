@@ -12,12 +12,13 @@
   </o-field>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      file: null,
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const file = ref(null)
+        return { file }
+    }
+})
 </script>

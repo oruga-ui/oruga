@@ -23,10 +23,11 @@
   </section>
 </template>
 
+
 <script>
-export default {
-  data() {
-    const data = [
+import { defineComponent, ref } from 'vue'
+
+const tableData = [
       {
         id: 1,
         first_name: 'Jesse',
@@ -62,37 +63,44 @@ export default {
         date: '2016-12-06 14:38:38',
         gender: 'Female',
       },
-    ];
+]
+
+export default defineComponent({
+  setup() {
+    const data = ref(tableData)
+    const selected = ref(tableData[1])
+
+    const columns = ref([
+      {
+        field: 'id',
+        label: 'ID',
+        width: '40',
+        numeric: true
+      },
+      {
+        field: 'first_name',
+        label: 'First Name'
+      },
+      {
+        field: 'last_name',
+        label: 'Last Name'
+      },
+      {
+        field: 'date',
+        label: 'Date',
+        position: 'centered'
+      },
+      {
+        field: 'gender',
+        label: 'Gender'
+      }
+    ])
 
     return {
       data,
-      selected: data[1],
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          width: '40',
-          numeric: true,
-        },
-        {
-          field: 'first_name',
-          label: 'First Name',
-        },
-        {
-          field: 'last_name',
-          label: 'Last Name',
-        },
-        {
-          field: 'date',
-          label: 'Date',
-          position: 'centered',
-        },
-        {
-          field: 'gender',
-          label: 'Gender',
-        },
-      ],
-    };
-  },
-};
+      selected,
+      columns
+    }
+  }
+})
 </script>

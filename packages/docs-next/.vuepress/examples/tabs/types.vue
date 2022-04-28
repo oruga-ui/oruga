@@ -13,7 +13,3 @@
     </o-tabs>
   </section>
 </template>
-
-<script>
-export default {};
-</script>

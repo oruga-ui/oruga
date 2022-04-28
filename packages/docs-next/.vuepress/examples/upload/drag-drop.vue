@@ -23,19 +23,18 @@
 
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      dropFiles: []
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const dropFiles = ref([])
+        const deleteDropFile = (index) => {
+            dropFiles.value.splice(index, 1)
+        }
+        return { dropFiles, deleteDropFile }
     }
-  },
-  methods: {
-    deleteDropFile(index) {
-      this.dropFiles.splice(index, 1)
-    }
-  }
-}
+})
 </script>
 
 <style>

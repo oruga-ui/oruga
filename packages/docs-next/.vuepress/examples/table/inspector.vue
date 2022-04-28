@@ -2,11 +2,13 @@
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
       <o-table v-bind="s" :data="s.isEmpty ? [] : data" :selected.sync="selected" detailed>
-        <template #default="{ row }">
-          <o-table-column v-for="(column, index) in columns" :key="index" v-bind="column">
+          <o-table-column
+            v-for="(column, index) in columns"
+            :key="index"
+            v-bind="column"
+            #default="{ row }">
             {{ row[column.field] }}
           </o-table-column>
-        </template>
         <template #footer> This is the footer </template>
         <template #detail>DETAILS</template>
       </o-table>

@@ -44,14 +44,15 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      hourFormat: undefined, // Browser locale
-      enableSeconds: false,
-      locale: undefined, // Browser locale
-    };
-  },
-};
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const hourFormat = ref() // Browser locale
+        const enableSeconds = ref(false)
+        const locale = ref() // Browser locale
+        return { hourFormat, enableSeconds, locale }
+    }
+})
 </script>

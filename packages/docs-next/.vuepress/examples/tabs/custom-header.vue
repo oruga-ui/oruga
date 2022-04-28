@@ -15,19 +15,20 @@
   </o-tabs>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      count: 1,
-    };
-  },
-  mounted() {
-    setTimeout(() => {
-      this.count++;
-    }, 3 * 1000);
-  },
-};
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const count = ref(1)
+        onMounted(() => {
+            setTimeout(() => {
+                this.count++;
+            }, 3 * 1000);
+        })
+        return { count }
+    }
+})
 </script>
 
 <style>

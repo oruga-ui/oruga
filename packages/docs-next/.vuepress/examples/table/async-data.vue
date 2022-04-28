@@ -62,90 +62,96 @@
     </o-table>
   </section>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      data: [],
-      total: 0,
-      loading: false,
-      sortField: 'vote_count',
-      sortOrder: 'desc',
-      defaultSortOrder: 'desc',
-      page: 1,
-      perPage: 20,
-    };
-  },
-  methods: {
-    /*
-     * Load async data
-     */
-    loadAsyncData() {
-      const params = [
-        'api_key=bb6f51bef07465653c3e553d6ab161a8',
-        'language=en-US',
-        'include_adult=false',
-        'include_video=false',
-        `sort_by=${this.sortField}.${this.sortOrder}`,
-        `page=${this.page}`,
-      ].join('&');
-      this.loading = true;
-      fetch(`https://api.themoviedb.org/3/discover/movie?${params}`)
-        .then((response) => response.json())
-        .then((data) => {
-          // api.themoviedb.org manage max 1000 pages
-          this.data = [];
-          let currentTotal = data.total_results;
-          if (data.total_results / this.perPage > 1000) {
-            currentTotal = this.perPage * 1000;
-          }
-          this.total = currentTotal;
-          data.results.forEach((item) => {
-            item.release_date = item.release_date
-              ? item.release_date.replace(/-/g, '/')
-              : null;
-            this.data.push(item);
-          });
-          this.loading = false;
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue'
+
+export default defineComponent({
+    setup() {
+        const data = ref([])
+        const total = ref(0)
+        const loading = ref(false)
+        const sortField = ref('vote_count')
+        const sortOrder = ref('desc')
+        const defaultSortOrder = ref('desc')
+        const page = ref(1)
+        const perPage = ref(20)
+
+        const loadAsyncData = () => {
+            const params = [
+                'api_key=bb6f51bef07465653c3e553d6ab161a8',
+                'language=en-US',
+                'include_adult=false',
+                'include_video=false',
+                `sort_by=${sortField.value}.${sortOrder.value}`,
+                `page=${page.value}`,
+            ].join('&');
+            loading.value = true
+            fetch(`https://api.themoviedb.org/3/discover/movie?${params}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    // api.themoviedb.org manage max 1000 pages
+                    let currentTotal = data.total_results
+                    if (data.total_results / perPage.value > 1000) {
+                        currentTotal = perPage.value * 1000
+                    }
+                    total.value = currentTotal;
+                    data.value = data.results.map((item) => {
+                        item.release_date = item.release_date
+                            ? item.release_date.replace(/-/g, '/') : null;
+                        return item
+                    });
+                    loading.value = false
+                })
+                .catch((error) => {
+                    data.value = []
+                    total.value = 0
+                    loading.value = false
+                    throw error
+                })
+        }
+
+        /*
+        * Handle page-change event
+        */
+        const onPageChange = (page) => {
+            page.value = page
+            loadAsyncData()
+        }
+
+        /*
+        * Handle sort event
+        */
+        const onSort = (field, order) => {
+            sortField.value = field
+            sortOrder.value = order
+            loadAsyncData()
+        }
+
+        /*
+        * Type style in relation to the value
+        */
+        const type = (value) => {
+            const number = parseFloat(value);
+            if (number < 6) {
+                return 'is-danger';
+            } else if (number >= 6 && number < 8) {
+                return 'is-warning';
+            } else if (number >= 8) {
+                return 'is-success';
+            }
+        }
+
+        onMounted(() => {
+            loadAsyncData()
         })
-        .catch((error) => {
-          this.data = [];
-          this.total = 0;
-          this.loading = false;
-          throw error;
-        });
-    },
-    /*
-     * Handle page-change event
-     */
-    onPageChange(page) {
-      this.page = page;
-      this.loadAsyncData();
-    },
-    /*
-     * Handle sort event
-     */
-    onSort(field, order) {
-      this.sortField = field;
-      this.sortOrder = order;
-      this.loadAsyncData();
-    },
-    /*
-     * Type style in relation to the value
-     */
-    type(value) {
-      const number = parseFloat(value);
-      if (number < 6) {
-        return 'is-danger';
-      } else if (number >= 6 && number < 8) {
-        return 'is-warning';
-      } else if (number >= 8) {
-        return 'is-success';
-      }
-    },
-  },
-  mounted() {
-    this.loadAsyncData();
-  },
-};
+
+        return {
+            data, total, loading,
+            sortField, sortOrder, defaultSortOrder,
+            page, perPage,
+            loadAsyncData, onPageChange, onSort, type
+        }
+    }
+})
 </script>

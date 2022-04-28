@@ -23,16 +23,15 @@
       :focusable="isFocusable"
       :mobile-cards="hasMobileCards"
     >
-      <template #default="props">
-        <o-table-column field="id" label="ID" width="40" numeric>
+        <o-table-column field="id" label="ID" width="40" numeric v-slot:default="props">
           {{ props.row.id }}
         </o-table-column>
 
-        <o-table-column field="first_name" label="First Name">
+        <o-table-column field="first_name" label="First Name" v-slot:default="props">
           {{ props.row.first_name }}
         </o-table-column>
 
-        <o-table-column field="last_name" label="Last Name">
+        <o-table-column field="last_name" label="Last Name" v-slot:default="props">
           {{ props.row.last_name }}
         </o-table-column>
 
@@ -40,11 +39,12 @@
           field="date"
           label="Date"
           position="centered"
+          v-slot:default="props"
         >
           {{ new Date(props.row.date).toLocaleDateString() }}
         </o-table-column>
 
-        <o-table-column label="Gender">
+        <o-table-column label="Gender" v-slot:default="props">
           <span>
             <o-icon
               pack="fas"
@@ -54,63 +54,74 @@
             {{ props.row.gender }}
           </span>
         </o-table-column>
-      </template>
     </o-table>
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    const data = [
-      {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+const tableData = [
+    {
         id: 1,
         first_name: 'Jesse',
         last_name: 'Simmons',
         date: '2016/10/15 13:43:27',
         gender: 'Male',
-      },
-      {
+    },
+    {
         id: 2,
         first_name: 'John',
         last_name: 'Jacobs',
         date: '2016/12/15 06:00:53',
         gender: 'Male',
-      },
-      {
+    },
+    {
         id: 3,
         first_name: 'Tina',
         last_name: 'Gilbert',
         date: '2016/04/26 06:26:28',
         gender: 'Female',
-      },
-      {
+    },
+    {
         id: 4,
         first_name: 'Clarence',
         last_name: 'Flores',
         date: '2016/04/10 10:28:46',
         gender: 'Male',
-      },
-      {
+    },
+    {
         id: 5,
         first_name: 'Anne',
         last_name: 'Lee',
         date: '2016/12/06 14:38:38',
         gender: 'Female',
-      },
-    ];
+    },
+]
+
+export default defineComponent({
+  setup() {
+    const isEmpty = ref(false)
+    const isBordered = ref(false)
+    const isStriped = ref(false)
+    const isNarrowed = ref(false)
+    const isHoverable = ref(false)
+    const isFocusable = ref(false)
+    const isLoading = ref(false)
+    const data = ref(tableData)
+    const hasMobileCards = ref(true)
 
     return {
       data,
-      isEmpty: false,
-      isBordered: false,
-      isStriped: false,
-      isNarrowed: false,
-      isHoverable: false,
-      isFocusable: false,
-      isLoading: false,
-      hasMobileCards: true,
-    };
-  },
-};
+      isEmpty,
+      isBordered,
+      isStriped,
+      isNarrowed,
+      isHoverable,
+      isFocusable,
+      isLoading,
+      hasMobileCards
+    }
+  }
+})
 </script>
