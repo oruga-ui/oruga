@@ -210,6 +210,10 @@
                 @click="promptModal()">
                 Open prompt
             </o-button>
+            <o-button size="medium" variant="primary"
+                @click="promptModalCloseAll()">
+                Open prompt (closeAll timeout)
+            </o-button>
         </div>
     </section>
 </template>
@@ -237,7 +241,7 @@
                     </footer>
                 </div>
             </form>
-        `
+        `,
     }
 
     export default {
@@ -256,7 +260,7 @@
                 // Note utilizing the promise requires Promise be supported by the browser
                 // If you are running Vue 2 on IE 11 this will not be the case unless you 
                 // add a polyfill in your build.
-                const result = await instance.promise;
+                const result = await instance.promise
 
                 this.$oruga.notification.open({
                     duration: 5000,
@@ -265,7 +269,34 @@
                     position: 'top',
                     closable: true
                 })
-            }
+            },
+            async promptModalCloseAll() {
+                const instance = this.$oruga.modal.open({
+                    // parent is only for Vue2. in Vue 3 omit this option
+                    parent: this,
+                    component: ModalForm,
+                    props: {
+                        title: 'Close All test',
+                        message: 'There is a 3 second timeout that will close all programmatic modals'
+                    },
+                    trapFocus: true
+                })
+
+                setTimeout(() => this.$oruga.modal.closeAll({action:'closeAll'}), 3 * 1000)
+
+                // Note utilizing the promise requires Promise be supported by the browser
+                // If you are running Vue 2 on IE 11 this will not be the case unless you 
+                // add a polyfill in your build.
+                const result = await instance.promise
+
+                this.$oruga.notification.open({
+                    duration: 5000,
+                    message: 'Modal dialog returned ' + JSON.stringify(result),
+                    variant: 'info',
+                    position: 'top',
+                    closable: true
+                })
+            },
         }
     }
 </script>

@@ -51,7 +51,7 @@ export default {
             }
         },
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
         promise: promiseObject(),
         /** Callback function to call after close (programmatically close or user canceled) */
@@ -116,8 +116,13 @@ export default {
             this.$emit('close')
             this.onClose.apply(null, arguments)
 
-            if (this.programmatic && this.programmatic.resolve) {
-                this.programmatic.resolve.apply(null, arguments)
+            if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
             }
 
             // Timeout for the animation complete before destroying
@@ -173,6 +178,9 @@ export default {
         this.setupContainer()
     },
     mounted() {
+        if (this.programmatic && this.programmatic.instances) {
+            this.programmatic.instances.add(this)
+        }
         this.showNotice()
     }
 }
