@@ -1301,8 +1301,12 @@ export default defineComponent({
                 const footer = this.$slots.footer()
                 if (footer.length > 1) return true
 
-                const tag = footer[0].tag
-                if (tag !== 'th' && tag !== 'td') return false
+                let type = footer[0].type
+                if (type.toString() === Symbol('Fragment').toString()) {
+                    if (footer[0].children.length > 1) return true
+                    type = footer[0].children[0].type
+                }
+                if (type !== 'th' && type !== 'td') return false
             }
             return true
         },
