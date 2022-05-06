@@ -15,7 +15,7 @@
 
     <o-dropdown :triggers="['hover']" aria-role="list">
       <template #trigger="{ active }">
-        <o-button variant="info">>
+        <o-button variant="info">
           <span>Hover me!</span>
           <o-icon icon="caret-down"></o-icon>
         </o-button>

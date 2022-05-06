@@ -18,12 +18,16 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const value = ref(5)
+
     return {
-      value: 5,
-    };
-  },
-};
+      value
+    }
+  }
+})
 </script>

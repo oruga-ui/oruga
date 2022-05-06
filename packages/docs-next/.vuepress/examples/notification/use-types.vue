@@ -6,7 +6,3 @@
     </o-notification>
   </section>
 </template>
-
-<script>
-export default {}
-</script>

@@ -37,7 +37,9 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+
 const NotificationForm = {
   props: ['email', 'password'],
   template: `
@@ -76,36 +78,42 @@ const NotificationForm = {
                         </footer>
                     </div>
                 </form>
-            `,
-};
-export default {
-  methods: {
-    simple() {
-      this.$oruga.notification.open('Something happened');
-    },
-    success() {
+            `
+}
+
+export default defineComponent({
+  setup() {
+
+    function toast() {
+      this.$oruga.notification.open({
+        message: 'Something happened correctly!',
+        rootClass: 'toast-notification',
+        position: 'top'
+      })
+    }
+
+    function queueToast() {
+      this.$oruga.notification.open({
+        message: 'Something happened correctly!',
+        rootClass: 'toast-notification',
+        position: 'top',
+        queue: true
+      })
+    }
+
+    function simple() {
+      this.$oruga.notification.open('Something happened')
+    }
+
+    function success() {
       this.$oruga.notification.open({
         message: 'Something happened correctly!',
         variant: 'success',
-        closable: true,
-      });
-    },
-    toast() {
-      this.$oruga.notification.open({
-        message: 'Something happened correctly!',
-        rootClass: 'toast-notification',
-        position: 'top',
-      });
-    },
-    queueToast() {
-      this.$oruga.notification.open({
-        message: 'Something happened correctly!',
-        rootClass: 'toast-notification',
-        position: 'top',
-        queue: true,
-      });
-    },
-    danger() {
+        closable: true
+      })
+    }
+
+    function danger() {
       const notif = this.$oruga.notification.open({
         duration: 5000,
         message: `Something's not good, also I'm on <b>bottom</b>`,
@@ -113,22 +121,32 @@ export default {
         variant: 'danger',
         closable: true,
         onClose: () => {
-          this.$oruga.notification.open('Custom notification closed!');
-        },
-      });
-    },
-    component() {
+          this.$oruga.notification.open('Custom notification closed!')
+        }
+      })
+    }
+
+    function component() {
       this.$oruga.notification.open({
-        parent: this,
         component: NotificationForm,
         position: 'bottom-right',
         variant: 'warning',
-        indefinite: true,
-      });
-    },
-  },
-};
+        indefinite: true
+      })
+    }
+
+    return {
+      simple,
+      success,
+      toast,
+      queueToast,
+      danger,
+      component
+    }
+  }
+})
 </script>
+
 <style>
 .toast-notification {
   margin: 0.5em 0;

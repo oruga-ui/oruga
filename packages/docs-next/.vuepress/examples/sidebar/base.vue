@@ -35,16 +35,24 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const open = ref(false)
+    const overlay = ref(true)
+    const fullheight = ref(true)
+    const fullwidth = ref(false)
+    const right = ref(false)
+
     return {
-      open: false,
-      overlay: true,
-      fullheight: true,
-      fullwidth: false,
-      right: false,
-    };
-  },
-};
+      open,
+      overlay,
+      fullheight,
+      fullwidth,
+      right
+    }
+  }
+})
 </script>

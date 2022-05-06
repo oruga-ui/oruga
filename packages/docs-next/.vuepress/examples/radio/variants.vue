@@ -26,12 +26,16 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const radio = ref('default')
+
     return {
-      radio: 'default',
-    };
-  },
-};
+      radio
+    }
+  }
+})
 </script>

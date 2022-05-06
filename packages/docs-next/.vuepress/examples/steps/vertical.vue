@@ -53,14 +53,19 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const labelPosition = ref('bottom')
+    const position = ref(null)
+    const size = ref(null)
     return {
-      labelPosition: 'bottom',
-      position: null,
-      size: null,
-    };
-  },
-};
+      labelPosition,
+      position,
+      size
+    }
+  }
+})
 </script>

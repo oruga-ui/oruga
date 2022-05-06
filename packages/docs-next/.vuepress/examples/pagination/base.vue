@@ -75,21 +75,35 @@
 </template>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const rangeBefore = ref(3)
+    const rangeAfter = ref(1)
+    const isSimple = ref(false)
+    const isRounded = ref(false)
+    const prevIcon = ref('chevron-left')
+    const nextIcon = ref('chevron-right')
+    const total = ref(200)
+    const current = ref(10)
+    const perPage = ref(10)
+    const order = ref('')
+    const size = ref('')
+
     return {
-      total: 200,
-      current: 10,
-      perPage: 10,
-      rangeBefore: 3,
-      rangeAfter: 1,
-      order: '',
-      size: '',
-      isSimple: false,
-      isRounded: false,
-      prevIcon: 'chevron-left',
-      nextIcon: 'chevron-right',
-    };
-  },
-};
+      total,
+      current,
+      perPage,
+      rangeBefore,
+      rangeAfter,
+      order,
+      size,
+      isSimple,
+      isRounded,
+      prevIcon,
+      nextIcon
+    }
+  }
+})
 </script>

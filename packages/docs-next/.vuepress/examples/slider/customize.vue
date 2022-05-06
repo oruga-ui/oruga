@@ -18,22 +18,26 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      sliderValue: 0,
-    };
-  },
-  computed: {
-    sliderType() {
-      if (this.sliderValue > 25 && this.sliderValue < 75) {
-        return 'warning';
-      } else if (this.sliderValue >= 75) {
-        return 'success';
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const sliderValue = ref(0)
+
+    const sliderType = computed(() => {
+      if (sliderValue.value > 25 && sliderValue.value < 75) {
+        return 'warning'
+      } else if (sliderValue.value >= 75) {
+        return 'success'
       }
-      return 'danger';
-    },
-  },
-};
+      return 'danger'
+    })
+
+    return {
+      sliderValue,
+      sliderType
+    }
+  }
+})
 </script>

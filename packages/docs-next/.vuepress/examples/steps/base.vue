@@ -123,25 +123,40 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    // Is
+    const activeStep = ref(1)
+    const isStepsClickable = ref(false)
+    const isAnimated = ref(true)
+    const isProfileSuccess = ref(false)
+    const isRounded = ref(true)
+    // Navigation
+    const hasNavigation = ref(true)
+    const customNavigation = ref(false)
+    // Icon
+    const prevIcon = ref('chevron-left')
+    const nextIcon = ref('chevron-right')
+    // Misc
+    const showSocial = ref(false)
+    const labelPosition = ref('bottom')
+
     return {
-      activeStep: 1,
-
-      showSocial: false,
-      isAnimated: true,
-      isRounded: true,
-      isStepsClickable: false,
-
-      hasNavigation: true,
-      customNavigation: false,
-      isProfileSuccess: false,
-
-      prevIcon: 'chevron-left',
-      nextIcon: 'chevron-right',
-      labelPosition: 'bottom',
-    };
-  },
-};
+      activeStep,
+      showSocial,
+      isAnimated,
+      isRounded,
+      isStepsClickable,
+      hasNavigation,
+      customNavigation,
+      isProfileSuccess,
+      prevIcon,
+      nextIcon,
+      labelPosition
+    }
+  }
+})
 </script>

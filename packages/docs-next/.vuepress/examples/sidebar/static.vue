@@ -43,16 +43,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const expandOnHover = ref(false)
+    const mobile = ref('reduced')
+    const reduce = ref(false)
+
     return {
-      expandOnHover: false,
-      mobile: 'reduced',
-      reduce: false,
-    };
-  },
-};
+      expandOnHover,
+      mobile,
+      reduce
+    }
+  }
+})
 </script>
 
 <style>
