@@ -1,5 +1,6 @@
-import { defineUserConfig } from 'vuepress'
-import type { DefaultThemeOptions } from 'vuepress'
+import { defineUserConfig, defaultTheme } from 'vuepress'
+import { searchPlugin } from '@vuepress/plugin-search'
+import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 
 import path from 'path'
 import fs from 'fs'
@@ -8,8 +9,7 @@ const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
 const sidebarComponents = components.map(c => `/components/${c}`)
 
-export default defineUserConfig<DefaultThemeOptions>({
-  theme: path.resolve(__dirname, './theme/index.ts'),
+export default defineUserConfig({
   title: `Oruga`,
   description: 'UI components for Vue.js and CSS framework agnostic',
   head: [
@@ -31,7 +31,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     ['meta', { name: 'twitter:description', content: "Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly" }],
     ['meta', { name: 'twitter:image', content: 'https://oruga.io/logo-banner.png?v=3' }]
   ],
-  themeConfig: {
+  theme: defaultTheme({
     logo: '/logo.png',
     repo: 'oruga-ui/oruga',
     editLinks: true,
@@ -62,5 +62,17 @@ export default defineUserConfig<DefaultThemeOptions>({
             children: sidebarComponents
         }
     ]
-  }
+  }),
+  plugins: [
+    searchPlugin({
+        locales: {
+            '/': {
+                placeholder: 'Search',
+            }
+        }
+    }),
+    googleAnalyticsPlugin({
+        id: 'UA-171490794-1'
+    })
+  ]
 })
