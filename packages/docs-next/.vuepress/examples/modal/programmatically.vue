@@ -12,7 +12,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, h } from 'vue';
+import { defineComponent, h } from 'vue'
+import { useProgrammatic } from '@oruga-ui/oruga-next'
 
 const ModalForm = {
   props: ['email', 'password'],
@@ -63,7 +64,7 @@ const ModalForm = {
 export default defineComponent({
   setup() {
 
-    const oruga = useProgrammatic()
+    const { oruga } = useProgrammatic()
 
     function imageModal() {
       const vnode = h('p', { style: { 'text-align': 'center' } }, [

@@ -85,7 +85,7 @@ const NotificationForm = {
 export default defineComponent({
   setup() {
 
-    const oruga = useProgrammatic()
+    const { oruga } = useProgrammatic()
 
     function toast() {
       oruga.notification.open({

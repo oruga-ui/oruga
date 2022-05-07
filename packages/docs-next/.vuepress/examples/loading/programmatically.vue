@@ -17,15 +17,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponet, ref } from 'vue'
-import { useProgrammatic } from '@oruga/oruga-next'
+import { defineComponent, ref } from 'vue'
+import { useProgrammatic } from '@oruga-ui/oruga-next'
 
-export default defineComponet({
+export default defineComponent({
   setup() {
     const isFullPage = ref(true)
 
+    const { oruga } = useProgrammatic()
+
     function openLoading() {
-      const oruga = useProgrammatic()
       const loadingComponent = oruga.loading.open({
         fullPage: isFullPage.value,
         container: isFullPage.value ? null : this.$refs.element
