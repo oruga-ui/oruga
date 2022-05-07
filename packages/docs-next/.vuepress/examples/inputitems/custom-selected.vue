@@ -25,28 +25,32 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      items: [],
-    };
-  },
-  methods: {
-    getType(item) {
-      const random = 'Z'.charCodeAt(0) - item.toUpperCase().charCodeAt(0);
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const items = ref([])
+
+    function getType(item) {
+      const random = 'Z'.charCodeAt(0) - item.toUpperCase().charCodeAt(0)
       if (random >= 1 && random < 5) {
-        return 'primary';
+        return 'primary'
       } else if (random >= 6 && random < 10) {
-        return 'danger';
+        return 'danger'
       } else if (random >= 11 && random < 15) {
-        return 'warning';
+        return 'warning'
       } else if (random >= 15 && random < 20) {
-        return 'success';
+        return 'success'
       } else if (random >= 20 && random < 25) {
-        return 'info';
+        return 'info'
       }
-    },
-  },
-};
+    }
+
+    return {
+      items,
+      getType
+    }
+  }
+})
 </script>

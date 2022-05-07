@@ -11,8 +11,8 @@
   </section>
 </template>
 
-<script>
-import { h } from 'vue';
+<script lang="ts">
+import { defineComponent, h } from 'vue';
 
 const ModalForm = {
   props: ['email', 'password'],
@@ -57,32 +57,40 @@ const ModalForm = {
                     </footer>
                 </div>
             </form>
-        `,
-};
+        `
+}
 
-export default {
-  methods: {
-    imageModal() {
+export default defineComponent({
+  setup() {
+
+    const oruga = useProgrammatic()
+
+    function imageModal() {
       const vnode = h('p', { style: { 'text-align': 'center' } }, [
         h('img', {
           attrs: {
-            src: 'https://avatars2.githubusercontent.com/u/66300512?s=200&v=4',
-          },
-        }),
-      ]);
-      this.$oruga.modal.open({
-        content: [vnode],
-      });
-    },
-    cardModal() {
-      this.$oruga.modal.open({
-        parent: this,
+            src: 'https://avatars2.githubusercontent.com/u/66300512?s=200&v=4'
+          }
+        })
+      ])
+      oruga.modal.open({
+        content: [vnode]
+      })
+    }
+
+    function cardModal() {
+      oruga.modal.open({
         component: ModalForm,
-        trapFocus: true,
-      });
-    },
-  },
-};
+        trapFocus: true
+      })
+    }
+
+    return {
+      imageModal,
+      cardModal
+    }
+  }
+})
 </script>
 
 <style>

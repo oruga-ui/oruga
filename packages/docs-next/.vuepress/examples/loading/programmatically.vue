@@ -16,21 +16,27 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { defineComponet, ref } from 'vue'
+import { useProgrammatic } from '@oruga/oruga-next'
+
+export default defineComponet({
+  setup() {
+    const isFullPage = ref(true)
+
+    function openLoading() {
+      const oruga = useProgrammatic()
+      const loadingComponent = oruga.loading.open({
+        fullPage: isFullPage.value,
+        container: isFullPage.value ? null : this.$refs.element
+      })
+      setTimeout(() => loadingComponent.close(), 3 * 1000)
+    }
+
     return {
-      isFullPage: true,
-    };
-  },
-  methods: {
-    openLoading() {
-      const loadingComponent = this.$oruga.loading.open({
-        fullPage: this.isFullPage,
-        container: this.isFullPage ? null : this.$refs.element,
-      });
-      setTimeout(() => loadingComponent.close(), 3 * 1000);
-    },
-  },
-};
+      isFullPage,
+      openLoading
+    }
+  }
+})
 </script>

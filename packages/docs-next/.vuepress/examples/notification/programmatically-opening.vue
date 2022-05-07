@@ -39,6 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useProgrammatic } from '@oruga-ui/oruga-next'
 
 const NotificationForm = {
   props: ['email', 'password'],
@@ -84,8 +85,10 @@ const NotificationForm = {
 export default defineComponent({
   setup() {
 
+    const oruga = useProgrammatic()
+
     function toast() {
-      this.$oruga.notification.open({
+      oruga.notification.open({
         message: 'Something happened correctly!',
         rootClass: 'toast-notification',
         position: 'top'
@@ -93,7 +96,7 @@ export default defineComponent({
     }
 
     function queueToast() {
-      this.$oruga.notification.open({
+      oruga.notification.open({
         message: 'Something happened correctly!',
         rootClass: 'toast-notification',
         position: 'top',
@@ -102,11 +105,11 @@ export default defineComponent({
     }
 
     function simple() {
-      this.$oruga.notification.open('Something happened')
+      oruga.notification.open('Something happened')
     }
 
     function success() {
-      this.$oruga.notification.open({
+      oruga.notification.open({
         message: 'Something happened correctly!',
         variant: 'success',
         closable: true
@@ -114,20 +117,20 @@ export default defineComponent({
     }
 
     function danger() {
-      const notif = this.$oruga.notification.open({
+      const notif = oruga.notification.open({
         duration: 5000,
         message: `Something's not good, also I'm on <b>bottom</b>`,
         position: 'bottom-right',
         variant: 'danger',
         closable: true,
         onClose: () => {
-          this.$oruga.notification.open('Custom notification closed!')
+          oruga.notification.open('Custom notification closed!')
         }
       })
     }
 
     function component() {
-      this.$oruga.notification.open({
+      oruga.notification.open({
         component: NotificationForm,
         position: 'bottom-right',
         variant: 'warning',

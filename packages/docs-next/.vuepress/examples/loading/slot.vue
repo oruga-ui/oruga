@@ -23,21 +23,26 @@
   </section>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isLoading: false,
-      isFullPage: true,
-    };
-  },
-  methods: {
-    openLoading() {
-      this.isLoading = true;
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const isLoading = ref(false)
+    const isFullPage = ref(true)
+
+    function openLoading() {
+      isLoading.value = true
       setTimeout(() => {
-        this.isLoading = false;
-      }, 10 * 1000);
-    },
-  },
-};
+        isLoading.value = false
+      }, 10 * 1000)
+    }
+
+    return {
+      isLoading,
+      isFullPage,
+      openLoading
+    }
+  }
+})
 </script>
