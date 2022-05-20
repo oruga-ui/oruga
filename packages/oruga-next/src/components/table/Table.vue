@@ -233,7 +233,7 @@
                                     autocomplete="off"
                                     :disabled="!isRowCheckable(row)"
                                     :modelValue="isRowChecked(row)"
-                                    @update:modelvalue="checkRow(row, index, $event)"
+                                    @update:modelValue="checkRow(row, index, $event)"
                                 />
                             </td>
                         </tr>
