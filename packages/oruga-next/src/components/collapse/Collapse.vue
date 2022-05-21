@@ -17,7 +17,7 @@ export default defineComponent({
     emits: ['update:open', 'open', 'close'],
     props: {
         /**
-         * Whether collapse is open or not, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding
+         * Whether collapse is open or not, v-model:open to make it two-way binding
          */
         open: {
             type: Boolean,

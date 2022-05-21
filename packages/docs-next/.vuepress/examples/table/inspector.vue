@@ -1,7 +1,7 @@
 <template>
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
-      <o-table v-bind="s" :data="s.isEmpty ? [] : data" :selected.sync="selected" detailed>
+      <o-table v-bind="s" :data="s.isEmpty ? [] : data" v-model:selected="selected" detailed>
           <o-table-column
             v-for="(column, index) in columns"
             :key="index"

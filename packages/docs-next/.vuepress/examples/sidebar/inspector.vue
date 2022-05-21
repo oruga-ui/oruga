@@ -17,7 +17,7 @@
           </o-sidebar>
         </section>
         <section class="sidebar-layout" v-if="position !== 'static'">
-          <o-sidebar v-bind="s" :position="position" :open.sync="open" variant="primary"
+          <o-sidebar v-bind="s" :position="position" v-model:open="open" variant="primary"
             style="--oruga-sidebar-zindex: 50">
             <img width="128" src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
               alt="Lightweight UI components for Vue.js" />

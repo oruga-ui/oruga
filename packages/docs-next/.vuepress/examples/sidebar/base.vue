@@ -5,7 +5,7 @@
       :fullwidth="fullwidth"
       :overlay="overlay"
       :right="right"
-      :open.sync="open"
+      v-model:open="open"
     >
       <o-button
         v-if="fullwidth"

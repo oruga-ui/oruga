@@ -4,7 +4,7 @@
       <p style="position: relative">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id
         hendrerit imperdiet, elit sapien laoreet elit
-        <o-loading v-bind="s" icon="sync-alt" :active.sync="loading" :iconSpin="true">
+        <o-loading v-bind="s" icon="sync-alt" v-model:active="loading" :iconSpin="true">
         </o-loading>
       </p>
     </template>

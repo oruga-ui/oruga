@@ -17,7 +17,7 @@
       </o-button>
     </div>
 
-    <o-modal :active.sync="isImageModalActive">
+    <o-modal v-model:active="isImageModalActive">
       <p style="text-align: center">
         <img
           src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
@@ -25,7 +25,7 @@
       </p>
     </o-modal>
 
-    <o-modal :active.sync="isCardModalActive" :width="640" scroll="clip">
+    <o-modal v-model:active="isCardModalActive" :width="640" scroll="clip">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales
         leo nec convallis rutrum. Vivamus pharetra molestie arcu at dictum.

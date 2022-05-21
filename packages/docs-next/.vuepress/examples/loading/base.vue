@@ -14,7 +14,7 @@
       laoreet elit
       <o-loading
         :full-page="isFullPage"
-        :active.sync="isLoading"
+        v-model:active="isLoading"
         :can-cancel="true"
       ></o-loading>
     </p>

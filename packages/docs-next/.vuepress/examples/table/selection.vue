@@ -16,7 +16,7 @@
     <o-table
       :data="data"
       :columns="columns"
-      :selected.sync="selected"
+      v-model:selected="selected"
       focusable
     >
     </o-table>

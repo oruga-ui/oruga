@@ -1,4 +1,4 @@
-import { defineClientAppEnhance } from '@vuepress/client'
+import { defineClientConfig } from '@vuepress/client'
 
 // THEME
 import './theme/styles/index.scss'
@@ -12,14 +12,18 @@ import ExampleViewer from './theme/components/ExampleViewer.vue'
 import Oruga from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
 
-export default defineClientAppEnhance(({ app }) => {
+export default defineClientConfig({
+    enhance({ app, router, siteData }){
 
-    app.component('CarbonAds', CarbonAds)
-    app.component('DocWrapper', DocWrapper)
-    app.component('HFRepos', HFRepos)
-    app.component('Inspector', Inspector)
-    app.component('InspectorViewer', InspectorViewer)
-    app.component('ExampleViewer', ExampleViewer)
+        app.component('CarbonAds', CarbonAds)
+        app.component('DocWrapper', DocWrapper)
+        app.component('HFRepos', HFRepos)
+        app.component('Inspector', Inspector)
+        app.component('InspectorViewer', InspectorViewer)
+        app.component('ExampleViewer', ExampleViewer)
 
-    app.use(Oruga)
+        app.use(Oruga)
+    },
+    setup(){},
+    rootComponents: [],
 })

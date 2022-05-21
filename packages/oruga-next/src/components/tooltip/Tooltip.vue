@@ -45,7 +45,7 @@ export default defineComponent({
     mixins: [BaseComponentMixin],
     configField: 'tooltip',
     props: {
-        /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
         active: {
             type: Boolean,
             default: true

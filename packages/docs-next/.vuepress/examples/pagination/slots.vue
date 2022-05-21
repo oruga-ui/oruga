@@ -1,6 +1,6 @@
 <template>
   <section>
-    <o-pagination :total="200" :current.sync="current" :per-page="10">
+    <o-pagination :total="200" v-model:current="current" :per-page="10">
       <template #default="props">
         <o-pagination-button
           :page="props.page"

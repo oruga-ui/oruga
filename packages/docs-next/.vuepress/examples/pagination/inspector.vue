@@ -1,7 +1,7 @@
 <template>
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
-      <o-pagination v-bind='s' :total="total" :current.sync="current" :range-before="rangeBefore"
+      <o-pagination v-bind='s' :total="total" v-model:current="current" :range-before="rangeBefore"
         :range-after="rangeAfter" :per-page="perPage" aria-next-label="Next page" aria-previous-label="Previous page"
         aria-page-label="Page" aria-current-label="Current page" icon-prev='chevron-left' icon-next='chevron-right'>
       </o-pagination>

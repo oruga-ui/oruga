@@ -411,7 +411,7 @@ export default defineComponent({
                 ].indexOf(value) >= 0
             }
         },
-        /** Set which row is selected, use the .sync modifier (Vue 2.x) or v-model:selected (Vue 3.x) to make it two-way binding */
+        /** Set which row is selected, use v-model:selected to make it two-way binding */
         selected: Object,
         /** Custom method to verify if a row is selectable, works when is selected. */
         isRowSelectable: {
@@ -427,7 +427,7 @@ export default defineComponent({
             type: Function,
             default: () => true
         },
-        /** Set which rows are checked, use the .sync modifier (Vue 2.x) or v-model:checkedRows (Vue 3.x) to make it two-way binding */
+        /** Set which rows are checked, use v-model:checkedRows to make it two-way binding */
         checkedRows: {
             type: Array,
             default: () => []
@@ -464,7 +464,7 @@ export default defineComponent({
         },
         /** Adds pagination to the table */
         paginated: Boolean,
-        /** Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding */
+        /** Current page of table data (if paginated), use v-model:currentPage to make it two-way binding */
         currentPage: {
             type: Number,
             default: 1

@@ -1,7 +1,7 @@
 <template>
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
-      <o-modal v-bind="s" :active.sync="isImageModalActive">
+      <o-modal v-bind="s" v-model:active="isImageModalActive">
         <p style="text-align: center">
           <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
         </p>
