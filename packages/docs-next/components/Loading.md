@@ -47,7 +47,8 @@ title: Loading
 | iconSpin     | Enable spin effect on icon                                                       | boolean                   | -      | true                                                                                                                                     |
 | onCancel     | Callback function to call after user canceled (pressed escape / clicked outside) | func                      | -      | Default function (see source code)                                                                                                       |
 | override     |                                                                                  | boolean                   | -      |                                                                                                                                          |
-| programmatic |                                                                                  | boolean                   | -      |                                                                                                                                          |
+| programmatic |                                                                                  | object                    | -      |                                                                                                                                          |
+| promise      |                                                                                  | Promise                   | -      |                                                                                                                                          |
 
 ## Events
 

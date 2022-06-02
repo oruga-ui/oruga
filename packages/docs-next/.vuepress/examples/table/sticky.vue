@@ -7,9 +7,15 @@
     </o-field>
     <o-table
       :data="data"
-      :columns="columns"
       :sticky-header="stickyHeaders"
-    ></o-table>
+    >
+        <o-table-column
+            v-for="column in columns"
+            v-bind="column"
+            #default="{ row }">
+            {{ row[column.field]}}
+        </o-table-column>
+    </o-table>
   </section>
 </template>
 

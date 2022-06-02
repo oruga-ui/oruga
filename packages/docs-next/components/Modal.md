@@ -20,6 +20,10 @@ title: Modal
 
 <ExampleViewer example="modal/programmatically" />
 
+### Programmatically (with promises and async/await)
+
+<ExampleViewer example="modal/programmatically-async" />
+
 ## Class props
 
 <br />
@@ -52,7 +56,8 @@ title: Modal
 | onCancel         | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                         | func           | -                                  | Default function (see source code)                                                                                                                                   |
 | onClose          | Callback function to call after close (programmatically close or user canceled)                                                                                        | func           | -                                  | Default function (see source code)                                                                                                                                   |
 | override         |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
-| programmatic     |                                                                                                                                                                        | boolean        | -                                  |                                                                                                                                                                      |
+| programmatic     |                                                                                                                                                                        | object         | -                                  |                                                                                                                                                                      |
+| promise          |                                                                                                                                                                        | Promise        | -                                  |                                                                                                                                                                      |
 | props            | Props to be binded to the injected component                                                                                                                           | object         | -                                  |                                                                                                                                                                      |
 | scroll           | clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts | string         | `keep`, `clip`                     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;scroll: 'keep'<br>}</code>                                  |
 | trapFocus        | Trap focus inside the modal.                                                                                                                                           | boolean        | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                                 |

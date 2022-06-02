@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="buttons">
+    <div class="odocs-spaced">
       <o-button
         size="medium"
         variant="primary"

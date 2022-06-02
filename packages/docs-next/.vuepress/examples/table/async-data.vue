@@ -17,11 +17,11 @@
       :default-sort="[sortField, sortOrder]"
       @sort="onSort"
     >
-      <template #default="props">
         <o-table-column
           field="original_title"
           label="Title"
           sortable
+          #default="props"
         >
           {{ props.row.original_title }}
         </o-table-column>
@@ -30,6 +30,7 @@
           label="Vote Average"
           numeric
           sortable
+          #default="props"
         >
           <span class="tag" :class="type(props.row.vote_average)">
             {{ props.row.vote_average }}
@@ -40,6 +41,7 @@
           label="Vote Count"
           numeric
           sortable
+          #default="props"
         >
           {{ props.row.vote_count }}
         </o-table-column>
@@ -48,6 +50,7 @@
           label="Release Date"
           sortable
           centered
+          #default="props"
         >
           {{
             props.row.release_date
@@ -55,10 +58,9 @@
               : 'unknown'
           }}
         </o-table-column>
-        <o-table-column label="Overview" width="500">
+        <o-table-column label="Overview" width="500" #default="props">
           {{ props.row.overview }}
         </o-table-column>
-      </template>
     </o-table>
   </section>
 </template>
@@ -89,14 +91,14 @@ export default defineComponent({
             loading.value = true
             fetch(`https://api.themoviedb.org/3/discover/movie?${params}`)
                 .then((response) => response.json())
-                .then((data) => {
+                .then((result) => {
                     // api.themoviedb.org manage max 1000 pages
-                    let currentTotal = data.total_results
-                    if (data.total_results / perPage.value > 1000) {
+                    let currentTotal = result.total_results
+                    if (result.total_results / perPage.value > 1000) {
                         currentTotal = perPage.value * 1000
                     }
                     total.value = currentTotal;
-                    data.value = data.results.map((item) => {
+                    data.value = result.results.map((item) => {
                         item.release_date = item.release_date
                             ? item.release_date.replace(/-/g, '/') : null;
                         return item
@@ -114,8 +116,8 @@ export default defineComponent({
         /*
         * Handle page-change event
         */
-        const onPageChange = (page) => {
-            page.value = page
+        const onPageChange = (p) => {
+            page.value = p
             loadAsyncData()
         }
 

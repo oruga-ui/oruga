@@ -1,26 +1,39 @@
 <template>
   <section>
-    <o-table :data="data" :columns="columns"> </o-table>
+    <o-table :data="data">
+        <o-table-column
+            v-for="column in columns"
+            v-bind="column"
+            #default="{ row }">
+            {{ row[column.field]}}
+        </o-table-column>
+    </o-table>
     <hr />
     <p>
       You can debounce search filter to avoid multiple filtering when typing.
     </p>
-    <o-table :data="data" :columns="columns" :debounce-search="1000"> </o-table>
+    <o-table :data="data" :debounce-search="1000">
+        <o-table-column
+            v-for="column in columns"
+            v-bind="column"
+            #default="{ row }">
+            {{ row[column.field]}}
+        </o-table-column>
+    </o-table>
     <p>You can also customize the search input using a scoped slot.</p>
     <o-table :data="data">
         <o-table-column
             v-for="column in columns"
-            :key="column.id"
             v-bind="column">
             <template
                 v-if="column.searchable && !column.numeric"
                 #searchable="props"
             >
                 <o-input
-                v-model="props.filters[props.column.field]"
-                placeholder="Search..."
-                icon="search"
-                size="small"
+                    v-model="props.filters[props.column.field]"
+                    placeholder="Search..."
+                    icon="search"
+                    size="small"
                 />
             </template>
             <template #default="props">

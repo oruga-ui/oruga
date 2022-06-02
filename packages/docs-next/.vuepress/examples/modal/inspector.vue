@@ -6,6 +6,7 @@
           <img src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
         </p>
       </o-modal>
+      <b>Click on "Inspect" button to open the modal</b>
     </template>
   </doc-wrapper>
   <inspector :inspectData="inspectData" @inspect-class="inspectClass = $event"></inspector>

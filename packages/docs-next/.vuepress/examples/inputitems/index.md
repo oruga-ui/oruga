@@ -14,5 +14,5 @@
 
 ### Limits
 
-<ExampleViewer example="inputitems/inputitemslimits" />
+<ExampleViewer example="inputitems/limits" />
 

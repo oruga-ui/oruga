@@ -40,6 +40,9 @@ const ModalProgrammatic = {
         const vnode = createVNode(Modal, propsData)
         vnode.appContext = app._context
         render(vnode, document.createElement('div'))
+        if (slot) {
+            vnode.component.slots.default = slot
+        }
         return vnode.component.proxy as InstanceType<typeof Modal>
     },
     closeAll() {

@@ -4,28 +4,6 @@
     float: right;
 }
 
-/* Vuepress demo-block plugin */
-.vuepress-plugin-demo-block__display {
-    overflow: visible !important;
-    max-height: none !important;
-}
-.vuepress-plugin-demo-block__wrapper:hover {
-    box-shadow: none !important;
-}
-.vuepress-plugin-demo-block__expand::after {
-    content: 'Show code';
-}
-.vuepress-plugin-demo-block__expand::before {
-    display: none !important;
-}
-.vuepress-plugin-demo-block__wrapper .vuepress-plugin-demo-block__footer .vuepress-plugin-demo-block__expand {
-    color: #445e00;
-}
-.vuepress-plugin-demo-block__wrapper .vuepress-plugin-demo-block__footer:hover svg {
-    fill: #445e00 !important;
-}
-
-
 /* Vuepress */
 .home {
     .hero {
@@ -42,13 +20,13 @@
 
 // Override Vuepress Theme
 .theme-default-content:not(.custom)  {
-  .vuepress-plugin-demo-block__display {
+  .odocs-example {
     a:hover {
       text-decoration: none;
     }
   }
 }
-.vuepress-plugin-demo-block__display {
+.odocs-example {
   tr:nth-child(2n) {
     background-color: transparent;
   }

@@ -8,6 +8,7 @@ import HFRepos from './theme/components/HFRepos.vue'
 import Inspector from './theme/components/Inspector.vue'
 import InspectorViewer from './theme/components/InspectorViewer.vue'
 import ExampleViewer from './theme/components/ExampleViewer.vue'
+import Expo from './theme/components/Expo.vue'
 
 import Oruga from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
@@ -25,6 +26,7 @@ export default defineClientConfig({
         app.component('Inspector', Inspector)
         app.component('InspectorViewer', InspectorViewer)
         app.component('ExampleViewer', ExampleViewer)
+        app.component('Expo', Expo)
 
         library.add(fas)
 

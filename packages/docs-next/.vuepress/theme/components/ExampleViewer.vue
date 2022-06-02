@@ -1,5 +1,5 @@
 <template>
-    <div class="odocs-mt">
+    <div class="odocs-example odocs-mt">
         <component :is="cmp"></component>
     </div>
     <div

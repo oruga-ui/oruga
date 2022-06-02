@@ -15,10 +15,15 @@
 
     <o-table
       :data="data"
-      :columns="columns"
       v-model:selected="selected"
       focusable
     >
+        <o-table-column
+            v-for="column in columns"
+            v-bind="column"
+            #default="{ row }">
+            {{ row[column.field]}}
+        </o-table-column>
     </o-table>
   </section>
 </template>

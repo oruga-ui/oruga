@@ -17,12 +17,17 @@
 
     <o-table
       :data="data"
-      :columns="columns"
       v-model:checked-rows="checkedRows"
       :is-row-checkable="(row) => row.id !== 3 && row.id !== 4"
       checkable
       :checkbox-position="checkboxPosition"
     >
+      <o-table-column
+        v-for="column in columns"
+        v-bind="column"
+        #default="{ row }">
+        {{ row[column.field]}}
+      </o-table-column>
       <template #bottom-left>
         <b>Total checked</b>: {{ checkedRows.length }}
       </template>

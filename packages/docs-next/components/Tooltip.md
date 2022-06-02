@@ -55,6 +55,13 @@ title: Tooltip
 | triggers     | Tooltip trigger events                                                          | array               | `hover`, `click`, `focus`, `contextmenu`                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;triggers: ['hover']<br>}</code> |
 | variant      | Color of the tooltip                                                            | string\|func\|array | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                            |
 
+## Events
+
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| open       |            |
+| close      |            |
+
 ## Slots
 
 | Name    | Description | Bindings |

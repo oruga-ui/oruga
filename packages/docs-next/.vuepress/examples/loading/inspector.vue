@@ -7,6 +7,7 @@
         <o-loading v-bind="s" icon="sync-alt" v-model:active="loading" :iconSpin="true">
         </o-loading>
       </p>
+       <b>Click on "Inspect" button to open the loading</b>
     </template>
   </doc-wrapper>
   <inspector :inspectData="inspectData" @inspect-class="inspectClass = $event"></inspector>

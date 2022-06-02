@@ -1,5 +1,12 @@
 <template>
-  <o-table :data="data" :columns="columns"></o-table>
+  <o-table :data="data">
+    <o-table-column
+        v-for="column in columns"
+        v-bind="column"
+        #default="{ row }">
+        {{ row[column.field]}}
+    </o-table-column>
+  </o-table>
 </template>
 
 <script lang="ts">

@@ -137,6 +137,7 @@ title: Table
 | select                   | **row** `Object` - selected row<br/>**selected** `Array<Object>` - selected rows                                     |
 | update:selected          |                                                                                                                      |
 | filters-change           |                                                                                                                      |
+| details-open             |                                                                                                                      |
 | details-close            |                                                                                                                      |
 | update:openedDetailed    |                                                                                                                      |
 | mouseenter               |                                                                                                                      |
@@ -154,7 +155,6 @@ title: Table
 | columndragleave          |                                                                                                                      |
 | columndragover           |                                                                                                                      |
 | update:currentPage       |                                                                                                                      |
-| details-open             |                                                                                                                      |
 
 ### Slots
 

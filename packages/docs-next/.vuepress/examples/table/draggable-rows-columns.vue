@@ -11,7 +11,6 @@
     </p>
     <o-table
       :data="data"
-      :columns="columns"
       draggable
       draggable-column
       @dragstart="dragstart"
@@ -23,6 +22,12 @@
       @columndragover="columndragover"
       @columndragleave="columndragleave"
     >
+       <o-table-column
+            v-for="column in columns"
+            v-bind="column"
+            #default="{ row }">
+            {{ row[column.field]}}
+        </o-table-column>
     </o-table>
   </div>
 </template>

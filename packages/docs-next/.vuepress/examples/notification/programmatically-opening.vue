@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="buttons">
+    <div class="odocs-spaced">
       <o-button
         label="Launch notification (default)"
         size="medium"
@@ -40,47 +40,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useProgrammatic } from '@oruga-ui/oruga-next'
-
-const NotificationForm = {
-  props: ['email', 'password'],
-  template: `
-                <form action="">
-                    <div class="modal-card" style="width: auto">
-                        <header class="modal-card-head">
-                            <p class="modal-card-title">Login</p>
-                        </header>
-                        <section class="modal-card-body">
-                            <o-field label="Email">
-                                <o-input
-                                    type="email"
-                                    :value="email"
-                                    placeholder="Your email"
-                                    required>
-                                </o-input>
-                            </o-field>
-
-                            <o-field label="Password">
-                                <o-input
-                                    type="password"
-                                    :value="password"
-                                    password-reveal
-                                    placeholder="Your password"
-                                    required>
-                                </o-input>
-                            </o-field>
-
-                            <o-field>
-                                <o-checkbox>Remember me</o-checkbox>
-                            </o-field>
-                        </section>
-                        <footer class="modal-card-foot">
-                            <o-button type="button" @click="$emit('close')">Close</o-button>
-                            <o-button variant="primary">Login</o-button>
-                        </footer>
-                    </div>
-                </form>
-            `
-}
+import NotificationForm from './_notification-form.vue'
 
 export default defineComponent({
   setup() {
