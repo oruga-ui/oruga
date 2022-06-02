@@ -9,7 +9,7 @@
             v-show="isActive"
             :class="rootClasses"
             v-trap-focus="trapFocus"
-            tabindex="-1"
+            :tabindex="-1"
             :role="ariaRole"
             :aria-label="ariaLabel"
             :aria-modal="ariaModal">

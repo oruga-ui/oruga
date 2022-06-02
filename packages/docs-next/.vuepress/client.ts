@@ -12,6 +12,10 @@ import ExampleViewer from './theme/components/ExampleViewer.vue'
 import Oruga from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 export default defineClientConfig({
     enhance({ app, router, siteData }){
 
@@ -22,7 +26,14 @@ export default defineClientConfig({
         app.component('InspectorViewer', InspectorViewer)
         app.component('ExampleViewer', ExampleViewer)
 
-        app.use(Oruga)
+        library.add(fas)
+
+        app.component('vue-fontawesome', FontAwesomeIcon)
+
+        app.use(Oruga, {
+            iconPack: 'fas',
+            iconComponent: 'vue-fontawesome'
+        })
     },
     setup(){},
     rootComponents: [],
