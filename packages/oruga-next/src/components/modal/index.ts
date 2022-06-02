@@ -5,11 +5,14 @@ import Modal from './Modal.vue'
 import { VueInstance } from '../../utils/config'
 import { merge } from '../../utils/helpers'
 import { registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
+import InstanceRegistry from "../../utils/InstanceRegistry"
 
 let localVueInstance: App
 
+let instances = new InstanceRegistry()
+
 const ModalProgrammatic = {
-    open(params: OModal | string) {
+    open(params: OModal | string) : InstanceType<typeof Modal> {
         let newParams
         if (typeof params === 'string') {
             newParams = {
@@ -20,7 +23,7 @@ const ModalProgrammatic = {
         }
 
         const defaultParam = {
-            programmatic: true
+            programmatic: { instances }
         }
         let slot
         if (Array.isArray(newParams.content)) {
@@ -28,11 +31,22 @@ const ModalProgrammatic = {
             delete newParams.content
         }
         const propsData = merge(defaultParam, newParams)
+        propsData.promise = new Promise((p1, p2) => {
+            propsData.programmatic.resolve = p1
+            propsData.programmatic.reject = p2
+        })
 
         const app = localVueInstance || VueInstance
         const vnode = createVNode(Modal, propsData)
         vnode.appContext = app._context
-        return render(vnode, document.createElement('div'))
+        render(vnode, document.createElement('div'))
+        return vnode.component.proxy as InstanceType<typeof Modal>
+    },
+    closeAll() {
+        console.log(instances);
+        instances.walk((entry) => {
+            entry.close(...arguments)
+        })
     }
 }
 

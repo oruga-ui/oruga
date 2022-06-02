@@ -5,7 +5,7 @@
             v-if="isActive">
             <div
                 :class="overlayClasses"
-                @click="cancel"
+                @click="cancel('outside')"
             />
             <slot>
                 <o-icon
@@ -47,7 +47,10 @@ export default defineComponent({
     props: {
         /** Whether loading is active or not, use v-model:active to make it two-way binding */
         active: Boolean,
-        programmatic: Boolean,
+        /** @ignore */
+        programmatic: Object,
+        /** @ignore */
+        promise: Promise,
         container: [Object, Function, HTMLElement],
         /** Loader will overlay the full page */
         fullPage: {
@@ -124,10 +127,10 @@ export default defineComponent({
         /**
         * Close the Modal if canCancel.
         */
-        cancel() {
+        cancel(method) {
             if (!this.canCancel || !this.isActive) return
 
-            this.close()
+            this.close({action: 'cancel', method})
         },
         /**
         * Emit events, and destroy modal if it's programmatic.
@@ -139,18 +142,23 @@ export default defineComponent({
 
             // Timeout for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
                 this.isActive = false
-                setTimeout(() => {
-                    this.$destroy()
+                window.requestAnimationFrame(() => {
                     removeElement(this.$el)
-                }, 150)
+                })
             }
         },
         /**
         * Keypress event that is bound to the document.
         */
         keyPress({ key }) {
-            if (key === 'Escape' || key === 'Esc') this.cancel()
+            if (key === 'Escape' || key === 'Esc') this.cancel('escape')
         }
     },
     created() {
@@ -159,9 +167,12 @@ export default defineComponent({
         }
     },
     mounted() {
-        // Insert the Loading component in body tag
-        // only if it's programmatic
         if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            // Insert the Loading component in body tag
+            // only if it's programmatic
             if (!this.container) {
                 document.body.appendChild(this.$el)
             } else {

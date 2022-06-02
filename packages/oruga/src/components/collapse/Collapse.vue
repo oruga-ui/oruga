@@ -80,7 +80,7 @@ export default {
         const content = h('transition', { props: { name: this.animation } }, [
             h('div', {
                 staticClass: this.computedClass('contentClass', 'o-clps__content'),
-                attrs: { 'id': this.ariaId, 'aria-expanded': this.isOpen },
+                attrs: { 'id': this.ariaId },
                 directives: [{
                     name: 'show',
                     value: this.isOpen

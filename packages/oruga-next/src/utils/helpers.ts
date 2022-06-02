@@ -180,22 +180,7 @@ export function createAbsoluteElement(el: Element) {
  */
 export function escapeRegExpChars(value: string) {
     if (!value) return value
-    // eslint-disable-next-line
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
-}
-
-export function multiColumnSort(inputArray, sortingPriority) {
-    // clone it to prevent the any watchers from triggering every sorting iteration
-    const array = JSON.parse(JSON.stringify(inputArray))
-    const fieldSorter = (fields) => (a, b) => fields.map((o) => {
-        let dir = 1
-        if (o[0] === '-') { dir = -1; o = o.substring(1) }
-        const aValue = getValueByPath(a, o)
-        const bValue = getValueByPath(b, o)
-        return aValue > bValue ? dir : aValue < bValue ? -(dir) : 0
-    }).reduce((p, n) => p || n, 0)
-
-    return array.sort(fieldSorter(sortingPriority))
 }
 
 export function createNewEvent(eventName: string) {
@@ -217,7 +202,7 @@ export function blankIfUndefined(value: string) {
     return typeof value !== 'undefined' && value !== null ? value : ''
 }
 
-export function defaultIfUndefined(value, defaultValue) {
+export function defaultIfUndefined(value: any, defaultValue: any) {
     return typeof value !== 'undefined' && value !== null ? value : defaultValue
 }
 
@@ -227,7 +212,10 @@ export function defaultIfUndefined(value, defaultValue) {
  * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
  * @return {Array<String>} An array of month names
  */
-export function getMonthNames(locale: string = undefined, format: string = 'long'): string[] {
+
+type monthType = "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined
+
+export function getMonthNames(locale: string = undefined, format: monthType = 'long'): string[] {
     const dates = []
     for (let i = 0; i < 12; i++) {
         dates.push(new Date(2000, i, 15))
@@ -246,7 +234,10 @@ export function getMonthNames(locale: string = undefined, format: string = 'long
  * @param  {String} format long (ex. Thursday), short (ex. Thu) or narrow (T)
  * @return {Array<String>} An array of weekday names
  */
-export function getWeekdayNames(locale: string = undefined, firstDayOfWeek: number = 0, format: string = 'narrow'): string[] {
+
+type weekdayType = "long" | "short" | "narrow" | undefined;
+
+export function getWeekdayNames(locale: string = undefined, firstDayOfWeek: number = 0, format: weekdayType = 'narrow'): string[] {
     const dates = []
     for (let i = 1, j = 0; j < 7; i++) {
         const d = new Date(2000, 0, i)
@@ -337,4 +328,8 @@ export const isDefined = (d: any) => d !== undefined
     if (!value) return value
 
     return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+export function isClient() {
+    return typeof window !== 'undefined'
 }

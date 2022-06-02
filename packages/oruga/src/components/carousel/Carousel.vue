@@ -96,7 +96,7 @@ export default {
         },
         interval: {
             type: Number,
-            default: () => { getValueByPath(getOptions(), 'carousel.interval', 3500) }
+            default: () => { return getValueByPath(getOptions(), 'carousel.interval', 3500) }
         },
         hasDrag: {
             type: Boolean,

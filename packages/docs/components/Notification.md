@@ -32,6 +32,10 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
       <hr />
       <o-button label="Launch notification (custom)" variant="danger" size="medium" @click="danger" />
       <o-button label="Launch notification (component)" variant="warning" size="medium" @click="component" />
+      <hr />
+      <o-button label="Launch with promise" size="medium" @click="promise" />
+      <o-button label="Launch indefinite" size="medium" @click="indefinite" />
+      <o-button label="Close all open" size="medium" @click="closeAll" />
     </div>
   </section>
 </template>
@@ -118,12 +122,46 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
       },
       component() {
         this.$oruga.notification.open({
+          // parent is only for Vue2. in Vue 3 omit this option
           parent: this,
           component: NotificationForm,
           position: 'bottom-right',
           variant: 'warning',
           indefinite: true
         })
+      },
+      async promise() {
+        const instance = this.$oruga.notification.open({
+          message: "Notification with promise response. The promise returns how the notification was closed. (value from $emit('close', value)",
+          position: 'top',
+          variant: 'info',
+          duration: 5000,
+          closable: true
+        })
+
+        // Note utilizing the promise requires Promise be supported by the browser
+        // If you are running Vue 2 on IE 11 this will not be the case unless you
+        // add a polyfill in your build.
+        const ret = await instance.promise
+
+        this.$oruga.notification.open({
+          message: 'Notification was resolved with ' + JSON.stringify(ret),
+          position: 'top',
+          variant: 'success',
+          duration: 2000
+        })
+      },
+      indefinite() {
+        this.$oruga.notification.open({
+          message: 'Indefinite sticky notification',
+          closable: true,
+          indefinite: true
+        })
+      },
+      closeAll() {
+        // any parameter here is passed to the onClose handler and resolved to the promise
+        // for each open notification
+        this.$oruga.notification.closeAll({ action: 'closeAll' })
       }
     }
   }

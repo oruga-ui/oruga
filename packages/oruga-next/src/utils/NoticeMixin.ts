@@ -14,14 +14,14 @@ export default {
         duration: {
             type: Number,
             default: () => {
-                getValueByPath(getOptions(), 'notification.duration', 1000)
+                return getValueByPath(getOptions(), 'notification.duration', 1000)
             }
         },
         /** If should queue with others notices (snackbar/toast/notification). */
         queue: {
             type: Boolean,
             default: () => {
-                getValueByPath(getOptions(), 'notification.noticeQueue', undefined)
+                return getValueByPath(getOptions(), 'notification.noticeQueue', undefined)
             }
         },
         /** Show the Notification indefinitely until it is dismissed when programmatically. */
@@ -48,9 +48,13 @@ export default {
         container: {
             type: String,
             default: () => {
-                getValueByPath(getOptions(), 'notification.containerElement', undefined)
+                return getValueByPath(getOptions(), 'notification.containerElement', undefined)
             }
         },
+        /** @ignore */
+        programmatic: Object,
+        /** @ignore */
+        promise: Promise,
         /** Callback function to call after close (programmatically close or user canceled) */
         onClose: {
             type: Function,
@@ -113,6 +117,15 @@ export default {
             this.$emit('close')
             this.onClose.apply(null, arguments)
 
+            if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
+            }
+
             // Timeout for the animation complete before destroying
             setTimeout(() => {
                 this.isActive = false
@@ -158,13 +171,16 @@ export default {
         },
 
         timeoutCallback() {
-            return this.close()
+            return this.close({action: 'close', method: 'timeout'})
         }
     },
     beforeMount() {
         this.setupContainer()
     },
     mounted() {
+        if (this.programmatic && this.programmatic.instances) {
+            this.programmatic.instances.add(this)
+        }
         this.showNotice()
     }
 }

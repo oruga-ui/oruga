@@ -44,6 +44,7 @@ export default defineComponent({
     name: 'OTooltip',
     mixins: [BaseComponentMixin],
     configField: 'tooltip',
+    emits: ['open', 'close'],
     props: {
         /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
         active: {
@@ -157,6 +158,7 @@ export default defineComponent({
     },
     watch: {
         isActive(value) {
+            this.$emit(this.isActive ? 'open' : 'close')
             if (value && this.appendToBody) {
                 this.updateAppendToBody()
             }

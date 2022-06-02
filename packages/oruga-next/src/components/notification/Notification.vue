@@ -7,7 +7,7 @@
                 v-if="closable"
                 :class="closeClasses"
                 type="button"
-                @click="close"
+                @click="close({action: 'close', method: 'x'})"
                 :aria-label="ariaCloseLabel"
             >
                 <o-icon

@@ -147,6 +147,83 @@ title: Loading
 
 :::
 
+### Programmatically (with promise)
+
+::: demo
+
+```html
+<template>
+  <div>
+    <o-field>
+      <div class="buttons">
+        <o-button size="medium" variant="primary" @click="openLoading">
+          Launch loading
+        </o-button>
+        <o-button size="medium" variant="primary" @click="openLoadingCloseAll">
+          Launch loading (closeAll)
+        </o-button>
+      </div>
+    </o-field>
+    <o-field>
+      <o-switch v-model="isFullPage">Display loader over full page</o-switch>
+    </o-field>
+    <p style="position: relative" ref="element">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+    </p>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        isFullPage: true
+      }
+    },
+    methods: {
+      async openLoading() {
+        const loadingComponent = this.$oruga.loading.open({
+          fullPage: this.isFullPage,
+          container: this.isFullPage ? null : this.$refs.element,
+          canCancel: true
+        })
+        setTimeout(() => loadingComponent.close({ action: 'cancel', method: 'timeout' }), 3 * 1000)
+        // Note utilizing the promise requires Promise be supported by the browser
+        // If you are running Vue 2 on IE 11 this will not be the case unless you
+        // add a polyfill in your build.
+        const ret = await loadingComponent.promise
+        this.$oruga.notification.open({
+          duration: 2000,
+          message: 'Loading returned ' + JSON.stringify(ret),
+          variant: 'info',
+          position: 'top'
+        })
+      },
+      async openLoadingCloseAll() {
+        const loadingComponent = this.$oruga.loading.open({
+          fullPage: this.isFullPage,
+          container: this.isFullPage ? null : this.$refs.element,
+          canCancel: true
+        })
+        setTimeout(() => this.$oruga.loading.closeAll({ action: 'cancel', method: 'closeAll' }), 3 * 1000)
+        // Note utilizing the promise requires Promise be supported by the browser
+        // If you are running Vue 2 on IE 11 this will not be the case unless you
+        // add a polyfill in your build.
+        const ret = await loadingComponent.promise
+        this.$oruga.notification.open({
+          duration: 2000,
+          message: 'Loading returned ' + JSON.stringify(ret),
+          variant: 'info',
+          position: 'top'
+        })
+      }
+    }
+  }
+</script>
+```
+
+:::
+
 ## Class props
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
@@ -221,20 +298,19 @@ export default {
 
 ## Props
 
-| Prop name    | Description                                                                                                             | Type                      | Values | Default                                                                                                                                  |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| active       | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                                                                                                          |
-| animation    |                                                                                                                         | string                    | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> loading: {<br>&nbsp;&nbsp;animation: 'fade'<br>}</code> |
-| canCancel    | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                                                                                                                    |
-| container    |                                                                                                                         | object\|func\|HTMLElement | -      |                                                                                                                                          |
-| fullPage     | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                                                                                                     |
-| icon         | Icon name                                                                                                               | string                    | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> loading: {<br>&nbsp;&nbsp;icon: 'loading'<br>}</code>   |
-| iconSize     |                                                                                                                         | string                    | -      | 'medium'                                                                                                                                 |
-| iconSpin     | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                                                                                                     |
-| onCancel     | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | Default function (see source code)                                                                                                       |
-| overlay      |                                                                                                                         | boolean                   | -      | true                                                                                                                                     |
-| override     | Override classes                                                                                                        | boolean                   | -      | false                                                                                                                                    |
-| programmatic |                                                                                                                         | boolean                   | -      |                                                                                                                                          |
+| Prop name | Description                                                                                                             | Type                      | Values | Default                                                                                                                                  |
+| --------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding | boolean                   | -      |                                                                                                                                          |
+| animation |                                                                                                                         | string                    | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> loading: {<br>&nbsp;&nbsp;animation: 'fade'<br>}</code> |
+| canCancel | Can close Loading by pressing escape or clicking outside                                                                | boolean                   | -      | false                                                                                                                                    |
+| container |                                                                                                                         | object\|func\|HTMLElement | -      |                                                                                                                                          |
+| fullPage  | Loader will overlay the full page                                                                                       | boolean                   | -      | true                                                                                                                                     |
+| icon      | Icon name                                                                                                               | string                    | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> loading: {<br>&nbsp;&nbsp;icon: 'loading'<br>}</code>   |
+| iconSize  |                                                                                                                         | string                    | -      | 'medium'                                                                                                                                 |
+| iconSpin  | Enable spin effect on icon                                                                                              | boolean                   | -      | true                                                                                                                                     |
+| onCancel  | Callback function to call after user canceled (pressed escape / clicked outside)                                        | func                      | -      | Default function (see source code)                                                                                                       |
+| overlay   |                                                                                                                         | boolean                   | -      | true                                                                                                                                     |
+| override  | Override classes                                                                                                        | boolean                   | -      | false                                                                                                                                    |
 
 ## Events
 

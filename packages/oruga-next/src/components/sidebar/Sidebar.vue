@@ -202,22 +202,6 @@ export default defineComponent({
     },
     methods: {
         /**
-         * White-listed items to not close when clicked.
-         * Add sidebar content and all children.
-         */
-        whiteList() {
-            const whiteList = []
-            whiteList.push(this.$refs.sidebarContent)
-            // Add all chidren from dropdown
-            if (this.$refs.sidebarContent !== undefined) {
-                const children = this.$refs.sidebarContent.querySelectorAll('*')
-                for (const child of children) {
-                    whiteList.push(child)
-                }
-            }
-            return whiteList
-        },
-        /**
         * Keypress event that is bound to the document.
         */
         keyPress({ key }) {
@@ -250,12 +234,9 @@ export default defineComponent({
          * Close fixed sidebar if clicked outside.
          */
         clickedOutside(event) {
-            if (this.isFixed) {
-                if (this.isOpen && !this.animating) {
-                    if (this.whiteList().indexOf(event.target) < 0) {
-                        this.cancel('outside')
-                    }
-                }
+            if (!this.isFixed || !this.isOpen || this.animating) { return }
+            if (!event.composedPath().includes(this.$refs.sidebarContent)) {
+                this.cancel('outside')
             }
         },
 

@@ -38,7 +38,7 @@ export default defineComponent({
             ]
         },
         timeoutCallback() {
-            return this.$refs.notification.close()
+            return this.$refs.notification.close({action: 'close', method: 'timeout'})
         }
     }
 })

@@ -45,11 +45,10 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import trapFocus from '../../directives/trapFocus'
-import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
+import { removeElement, getValueByPath, toCssDimension, promiseObject } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
-
 
 /**
  * Classic modal overlay to include any content you may need
@@ -74,7 +73,10 @@ export default {
         component: [Object, Function],
         /** Text content */
         content: String,
-        programmatic: Boolean,
+        /** @ignore */
+        programmatic: Object,
+        /** @ignore */
+        promise: promiseObject(),
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
@@ -277,7 +279,7 @@ export default {
             if (this.cancelOptions.indexOf(method) < 0) return
 
             this.onCancel.apply(null, arguments)
-            this.close()
+            this.close({action: 'cancel', method});
         },
 
         /**
@@ -292,6 +294,13 @@ export default {
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
+                if (this.programmatic.resolve) {
+                    this.programmatic.resolve.apply(null, arguments)
+                }
+
                 window.requestAnimationFrame(() => {
                     this.$destroy()
                     removeElement(this.$el)
@@ -340,7 +349,12 @@ export default {
         this.programmatic && document.body.appendChild(this.$el)
     },
     mounted() {
-        if (this.programmatic) this.isActive = true
+        if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            this.isActive = true
+        }
         else if (this.isActive) this.handleScroll()
     },
     beforeDestroy() {
