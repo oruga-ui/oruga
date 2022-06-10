@@ -9,6 +9,10 @@
     .hero {
         .description {
             max-width: 39.5rem !important;
+            &:after {
+                content: "(🐛) => 🦋";
+                display: block;
+            }
         }
         .action {
             .action-button {
@@ -16,6 +20,9 @@
             }
         }
     }
+}
+.toggle-dark-button {
+    display: none;
 }
 
 // Override Vuepress Theme

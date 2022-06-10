@@ -1,6 +1,8 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 import { searchPlugin } from '@vuepress/plugin-search'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
+// import { version } from '../../oruga-next/package.json'
+const { version } = require('@oruga-ui/oruga-next/package.json')
 
 import path from 'path'
 import fs from 'fs'
@@ -49,6 +51,19 @@ export default defineUserConfig({
       // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
       { text: 'Discord', link: 'https://discord.gg/RuKuBYN' },
       { text: 'Twitter', link: 'https://twitter.com/oruga_ui' },
+      {
+        text: `v${version}`,
+        children: [
+          {
+            text: 'Changelog',
+            link: 'https://github.com/oruga-ui/oruga/releases',
+          },
+          {
+            text: 'Vue 2',
+            link: 'https://oruga.io',
+          },
+        ],
+      }
     ],
     sidebar: [
         {
