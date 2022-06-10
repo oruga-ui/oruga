@@ -55,7 +55,6 @@ import { getOptions } from '../../utils/config'
  * Bold notification blocks to alert your users of something
  * @displayName Notification
  * @requires ./NotificationNotice.vue
- * @example ./examples/Notification.md
  * @style _notification.scss
  */
 export default {
@@ -99,7 +98,7 @@ export default {
         /** Events to be binded to the injected component */
         events: {
             type: Object,
-            default: {}
+            default: () => ({})
         },
         /** Close icon name */
         closeIcon: {

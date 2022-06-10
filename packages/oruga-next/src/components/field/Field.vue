@@ -52,7 +52,6 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
  * @displayName Field
- * @example ./examples/Field.md
  * @style _field.scss
  */
 export default defineComponent({

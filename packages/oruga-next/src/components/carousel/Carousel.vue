@@ -81,7 +81,6 @@ import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParent
 /**
  * A Slideshow for cycling images in confined spaces
  * @displayName Carousel
- * @example ./examples/Carousel.md
  * @style _carousel.scss
  */
 export default defineComponent({

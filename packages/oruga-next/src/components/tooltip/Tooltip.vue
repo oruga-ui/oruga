@@ -38,7 +38,6 @@ import { defineComponent } from 'vue'
 /**
  * Display a brief helper text to your user
  * @displayName Tooltip
- * @example ./examples/Tooltip.md
  * @style _tooltip.scss
  */
 export default defineComponent({
@@ -47,7 +46,7 @@ export default defineComponent({
     configField: 'tooltip',
     emits: ['open', 'close'],
     props: {
-        /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
         active: {
             type: Boolean,
             default: true

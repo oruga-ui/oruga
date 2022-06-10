@@ -129,7 +129,6 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
- * @example ./examples/Pagination.md
  * @style _pagination.scss
  */
 export default defineComponent({
@@ -154,7 +153,7 @@ export default defineComponent({
             type: [Number, String],
             default: () => { return getValueByPath(getOptions(), 'pagination.perPage', 20) }
         },
-        /** Current page number, use the .sync modifier (Vue 2.x) or v-model:current (Vue 3.x) to make it two-way binding */
+        /** Current page number, use v-model:current to make it two-way binding */
         current: {
             type: [Number, String],
             default: 1

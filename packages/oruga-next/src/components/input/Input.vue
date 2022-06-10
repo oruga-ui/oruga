@@ -68,7 +68,6 @@ import { getValueByPath } from '../../utils/helpers'
 /**
  * Get user Input. Use with Field to access all functionalities
  * @displayName Input
- * @example ./examples/Input.md
  * @style _input.scss
  */
 export default defineComponent({

@@ -48,6 +48,21 @@ export function getValueByPath(obj: any, path: string, defaultValue = undefined)
     return typeof value !== 'undefined' ? value : defaultValue
 }
 
+
+/**
+ * Set value of an object property/path even if it's nested
+ */
+ export function setValueByPath(obj: any, path: string, value: any) {
+    const p = path.split('.')
+    if (p.length === 1) {
+        obj[path] = value
+        return
+    }
+    const field = p[0]
+    if (typeof obj[field] === 'undefined') obj[field] = {}
+    return setValueByPath(obj[field], p.slice(1).join('.'), value)
+}
+
 /**
  * Extension of indexOf method by equality function if specified
  */

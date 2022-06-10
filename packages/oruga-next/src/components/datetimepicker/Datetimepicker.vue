@@ -92,7 +92,7 @@ const PM = 'PM'
 /**
  * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
  * @displayName Datetimepicker
- * @example ./examples/Datetimepicker.md
+ * @style _datetimepicker.scss
  */
 export default defineComponent({
     name: 'ODatetimepicker',

@@ -9,7 +9,7 @@
             v-show="isActive"
             :class="rootClasses"
             v-trap-focus="trapFocus"
-            tabindex="-1"
+            :tabindex="-1"
             :role="ariaRole"
             :aria-label="ariaLabel"
             :aria-modal="ariaModal">
@@ -54,7 +54,6 @@ import Icon from '../icon/Icon.vue'
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Modal
- * @example ./examples/Modal.md
  * @style _modal.scss
  */
 export default defineComponent({
@@ -69,7 +68,7 @@ export default defineComponent({
     mixins: [BaseComponentMixin, MatchMediaMixin],
     emits: ['update:active', 'close'],
     props: {
-        /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        /** Whether modal is active or not, use v-model:active to make it two-way binding */
         active: Boolean,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],

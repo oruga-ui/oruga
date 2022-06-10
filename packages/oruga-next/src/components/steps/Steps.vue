@@ -74,7 +74,6 @@ import { getValueByPath } from '../../utils/helpers'
  * Responsive horizontal process steps
  * @displayName Steps
  * @requires ./StepItem.vue
- * @example ./examples/Steps.md
  * @style _steps.scss
  */
 export default defineComponent({
