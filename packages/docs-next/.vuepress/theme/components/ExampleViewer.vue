@@ -11,7 +11,7 @@
             content-class="odocs-panel-content"
             v-model:open="isOpen">
             <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-            <highlightjs :code="code" />
+            <component :is="highlightjs" :code="code" />
         </o-collapse>
     </div>
 </template>
@@ -20,12 +20,8 @@
 import { defineComponent, ref, markRaw, onBeforeMount } from 'vue'
 import 'highlight.js/lib/common';
 import 'highlight.js/styles/github-dark.css'
-import hljsVuePlugin from "@highlightjs/vue-plugin";
 
 export default defineComponent({
-    components: {
-        highlightjs: hljsVuePlugin.component
-    },
     props: {
         example: {
             required: true,
@@ -40,8 +36,15 @@ export default defineComponent({
         const isOpen = ref(false);
         const cmp = ref(null);
         const code = ref('');
+        const highlightjs = ref(null)
 
         onBeforeMount(() => {
+
+            // due to esm build (probably better write a new viewer from scratch)
+            import('@highlightjs/vue-plugin').then((val) => {
+                highlightjs.value = <any>val.default.component
+            })
+
             import(`../../examples/${props.example}.vue`).then(val => {
                 cmp.value = markRaw(val.default);
             })
@@ -54,6 +57,7 @@ export default defineComponent({
             code,
             cmp,
             isOpen,
+            highlightjs
         };
     }
 })

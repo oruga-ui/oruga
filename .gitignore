@@ -5,12 +5,14 @@ packages/storybook/.dist/
 packages/storybook/*
 packages/oruga/coverage/*
 packages/oruga/README.md
+packages/demo-vue3/*
+packages/oruga-next/README.md
+packages/docs-next/.vuepress/.cache/
+packages/docs-next/.vuepress/.temp/
+packages/docs-next/.vuepress/dist/
 
 .changelogs
 
 *.json.lerna_backup
 .idea
-packages/demo-vue3/*
-packages/oruga-next/README.md
-packages/docs-next/.vuepress/.cache/
-packages/docs-next/.vuepress/.temp/
+
