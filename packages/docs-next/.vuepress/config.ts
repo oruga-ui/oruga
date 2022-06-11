@@ -1,11 +1,10 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 import { searchPlugin } from '@vuepress/plugin-search'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
-// import { version } from '../../oruga-next/package.json'
-const { version } = require('@oruga-ui/oruga-next/package.json')
-
 import path from 'path'
 import fs from 'fs'
+
+const { version } = require('../../oruga-next/package.json')
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
