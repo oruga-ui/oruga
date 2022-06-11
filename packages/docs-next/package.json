@@ -6,7 +6,7 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "concurrently \"vue-docgen --watch\" \"vuepress dev\"",
+    "docs:dev": "npm link @oruga-ui/oruga-next && concurrently \"vue-docgen --watch\" \"vuepress dev\"",
     "docs:gen": "vue-docgen",
     "docs:build": "vuepress build"
   },
@@ -15,7 +15,6 @@
     "@fortawesome/free-solid-svg-icons": "5.13.0",
     "@fortawesome/vue-fontawesome": "3.0.0-5",
     "@highlightjs/vue-plugin": "2.1.0",
-    "@oruga-ui/oruga-next": "^0.5.5",
     "@vuepress/plugin-google-analytics": "2.0.0-beta.46",
     "@vuepress/plugin-search": "2.0.0-beta.46",
     "concurrently": "7.1.0",

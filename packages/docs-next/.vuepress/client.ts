@@ -10,8 +10,8 @@ import InspectorViewer from './theme/components/InspectorViewer.vue'
 import ExampleViewer from './theme/components/ExampleViewer.vue'
 import Expo from './theme/components/Expo.vue'
 
-import Oruga from '@oruga-ui/oruga-next'
-import '@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
+import Oruga from '../../oruga-next/dist/oruga';
+import '../../oruga-next/dist/oruga-full-vars.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
