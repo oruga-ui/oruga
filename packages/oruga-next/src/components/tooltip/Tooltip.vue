@@ -41,10 +41,37 @@ import { defineComponent } from 'vue'
 
 type Position = 'top' | 'bottom' | 'left' | 'right'
 
+const opposites: Record<Position, Position> = {
+    top: 'bottom',
+    bottom: 'top',
+    right: 'left',
+    left: 'right',
+}
+
 type TooltipMetrics = {
     content: DOMRect,
     trigger: DOMRect,
 }
+
+function intersectionArea(a: DOMRect, b: DOMRect): number {
+  const left = Math.max(a.left, b.left)
+  const right = Math.min(a.right, b.right)
+  const top = Math.max(a.top, b.top)
+  const bottom = Math.min(a.bottom, b.bottom)
+  return Math.max(right - left, 0) * Math.max(bottom - top, 0)
+}
+
+type Point = { x: number, y: number }
+/**
+ * @param rect the bounding rectangle of the trigger element
+ * @return the "anchor points" (points where the arrow attaches) for each side of the tooltip
+ */
+const anchors = (rect: DOMRect): Record<Position, Point> => ({
+  top: { x: (rect.left + rect.right) * 0.5, y: rect.top },
+  bottom: { x: (rect.left + rect.right) * 0.5, y: rect.bottom },
+  left: { x: rect.left, y: (rect.top + rect.bottom) * 0.5 },
+  right: { x: rect.right, y: (rect.top + rect.bottom) * 0.5 },
+})
 
 /**
  * Display a brief helper text to your user
@@ -174,6 +201,44 @@ export default defineComponent({
             }
             const defaultPosition = getValueByPath(getOptions(), 'tooltip.position', 'top')
             let bestPosition = defaultPosition
+            if (this.metrics != null) {
+                let viewRect: DOMRect;
+                const viewport = (window as any).visualViewport; // Not available with our current types package
+                if (viewport != undefined) {
+                    viewRect = new DOMRect(viewport.offsetLeft, viewport.offsetTop, viewport.width, viewport.height);
+                } else {
+                    viewRect = new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
+                }
+                const triggerAnchors = anchors(this.metrics.trigger)
+                const contentRect = this.metrics.content
+                const contentAnchors = anchors(contentRect)
+                const contentRectAtAnchor = (pos: Position) => {
+                    const triggerAnchor = triggerAnchors[pos]
+                    const contentAnchor = contentAnchors[opposites[pos]]
+                    // Translates contentRect so contentAnchor is on top of triggerAnchor
+                    // NOTE: this doesn't account for the extra offset that the tooltip arrow provides.
+                    // That offset should be small, and it's tricky to get it from the CSS.
+                    return new DOMRect(
+                    contentRect.x + (triggerAnchor.x - contentAnchor.x),
+                    contentRect.y + (triggerAnchor.y - contentAnchor.y),
+                    contentRect.width,
+                    contentRect.height,
+                    )
+                }
+                const defaultOpposite = opposites[defaultPosition]
+                const crossPosition = (defaultPosition === 'top' || defaultPosition === 'bottom') ? 'left' : 'top'
+                const crossOpposite = opposites[crossPosition]
+                // In descending order of priority
+                const positions = [defaultPosition, defaultOpposite, crossPosition, crossOpposite]
+                let maxOverlap = 0
+                for (const position of positions) {
+                    const overlap = intersectionArea(viewRect, contentRectAtAnchor(position as Position))
+                    if (overlap > maxOverlap) {
+                        maxOverlap = overlap
+                        bestPosition = position
+                    }
+                }
+            }
             return bestPosition
         },
     },
