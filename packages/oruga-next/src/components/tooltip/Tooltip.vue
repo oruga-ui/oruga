@@ -2,7 +2,10 @@
     <div
         ref="tooltip"
         :class="rootClasses">
-        <transition :name="newAnimation">
+        <transition
+            :name="newAnimation"
+            @after-leave="metrics = null"
+            @enter-cancelled="metrics = null">
             <div
                 v-show="active && (isActive || always)"
                 ref="content"
@@ -33,7 +36,15 @@
 import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
+import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
+
+type Position = 'top' | 'bottom' | 'left' | 'right'
+
+type TooltipMetrics = {
+    content: DOMRect,
+    trigger: DOMRect,
+}
 
 /**
  * Display a brief helper text to your user
@@ -60,14 +71,15 @@ export default defineComponent({
          * @values top, bottom, left, right
          */
         position: {
-            type: String,
+            type: String as PropType<Position | 'auto'>,
             default: () => { return getValueByPath(getOptions(), 'tooltip.position', 'top') },
             validator: (value: string) => {
                 return [
                     'top',
                     'bottom',
                     'left',
-                    'right'
+                    'right',
+                    'auto',
                 ].indexOf(value) > -1
             }
         },
@@ -122,7 +134,8 @@ export default defineComponent({
         return {
             isActive: false,
             triggerStyle: {},
-            bodyEl: undefined // Used to append to body
+            bodyEl: undefined, // Used to append to body
+            metrics: null as TooltipMetrics | null, // Used for automatic tooltip positioning
         }
     },
     computed: {
@@ -139,14 +152,14 @@ export default defineComponent({
         arrowClasses() {
             return [
                 this.computedClass('arrowClass', 'o-tip__arrow'),
-                { [this.computedClass('arrowOrderClass', 'o-tip__arrow--', this.position)]: this.position },
+                { [this.computedClass('arrowOrderClass', 'o-tip__arrow--', this.newPosition)]: this.newPosition },
                 { [this.computedClass('variantArrowClass', 'o-tip__arrow--', this.variant)]: this.variant },
             ]
         },
         contentClasses() {
             return [
                 this.computedClass('contentClass', 'o-tip__content'),
-                { [this.computedClass('orderClass', 'o-tip__content--', this.position)]: this.position },
+                { [this.computedClass('orderClass', 'o-tip__content--', this.newPosition)]: this.newPosition },
                 { [this.computedClass('variantClass', 'o-tip__content--', this.variant)]: this.variant },
                 { [this.computedClass('multilineClass', 'o-tip__content--multiline')]: this.multiline },
                 { [this.computedClass('alwaysClass', 'o-tip__content--always')]: this.always }
@@ -154,11 +167,27 @@ export default defineComponent({
         },
         newAnimation() {
             return this.animated ? this.animation : undefined
-        }
+        },
+        newPosition(): Position {
+            if (this.position !== 'auto') {
+                return this.position
+            }
+            const defaultPosition = getValueByPath(getOptions(), 'tooltip.position', 'top')
+            let bestPosition = defaultPosition
+            return bestPosition
+        },
     },
     watch: {
         isActive(value) {
-            this.$emit(this.isActive ? 'open' : 'close')
+            this.$emit(value ? 'open' : 'close')
+            if (value && this.position === 'auto') {
+                this.$nextTick(() => {
+                    this.metrics = {
+                        content: this.$refs.content.getBoundingClientRect(),
+                        trigger: this.$refs.trigger.getBoundingClientRect(),
+                    }
+                })
+            }
             if (value && this.appendToBody) {
                 this.updateAppendToBody()
             }
