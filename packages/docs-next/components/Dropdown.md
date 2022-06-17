@@ -12,23 +12,13 @@ title: Dropdown
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="dropdown/base" />
-
-### Multiple
-
-<ExampleViewer example="dropdown/multiple" />
-
-### Scrollable
-
-<ExampleViewer example="dropdown/scrollable" />
+ <example-dropdown />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="dropdown" />
+<inspector-dropdown-viewer />
 
 <br />
 <br />

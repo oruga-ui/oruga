@@ -12,19 +12,13 @@ title: Radio
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="radio/base" />
-
-### Variants
-
-<ExampleViewer example="radio/variants" />
+ <example-radio />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="radio" />
+<inspector-radio-viewer />
 
 <br />
 <br />

@@ -1,4 +1,5 @@
 import { defineClientConfig } from '@vuepress/client'
+import { markRaw } from 'vue'
 
 // THEME
 import './theme/styles/index.scss'
@@ -36,7 +37,21 @@ export default defineClientConfig({
             iconPack: 'fas',
             iconComponent: 'vue-fontawesome'
         })
+
+        // @ts-ignore
+        const examples = import.meta.globEager('./examples/**/index.vue')
+        for (const path in examples) {
+            const v = path.split('/')
+            app.component('example-' + v[2], markRaw(examples[path].default))
+        }
+
+         // @ts-ignore
+         const inspectors = import.meta.globEager('./examples/**/inspector.vue')
+         for (const path in inspectors) {
+             const v = path.split('/')
+             app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
+         }
     },
-    setup(){},
+    setup() {},
     rootComponents: [],
 })

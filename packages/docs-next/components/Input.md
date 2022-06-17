@@ -12,19 +12,13 @@ title: Input
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="input/base" />
-
-### With Icons
-
-<ExampleViewer example="input/with-icons" />
+ <example-input />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="input" />
+<inspector-input-viewer />
 
 <br />
 <br />

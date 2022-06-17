@@ -12,27 +12,13 @@ title: Inputitems
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="inputitems/base" />
-
-### Autocomplete
-
-<ExampleViewer example="inputitems/autocomplete" />
-
-### Custom selected
-
-<ExampleViewer example="inputitems/custom-selected" />
-
-### Limits
-
-<ExampleViewer example="inputitems/limits" />
+ <example-inputitems />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="inputitems" />
+<inspector-inputitems-viewer />
 
 <br />
 <br />

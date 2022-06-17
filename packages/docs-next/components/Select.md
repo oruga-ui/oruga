@@ -12,15 +12,13 @@ title: Select
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="select/base" />
+ <example-select />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="select" />
+<inspector-select-viewer />
 
 <br />
 <br />

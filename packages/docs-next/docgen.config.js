@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const src = '../oruga-next/src';
 const srcScss = '../oruga/src';
-const exampleSrc = '.vuepress/examples'
 
 const IGNORE = [
   'DropdownItem', 'FieldBody', 'SliderThumb', 'SliderTick',
@@ -44,7 +43,6 @@ module.exports = {
       const { deprecated, author, since, version, see, link, style } = tags || {};
       const component = getComponent(_fileName);
       if (!component || IGNORE.indexOf(component) >= 0) return;
-      const examples = fs.readFileSync(path.resolve(config.cwd, `${exampleSrc}/${component.toLowerCase()}/index.md`), 'utf8');
       return `
 
 ${!isSubComponent ? `
@@ -62,7 +60,7 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 > <CarbonAds />
-${examples ? '---\n' + examples : ''}
+${'---\n ## Examples\n ' + '<example-' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
 ${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}
@@ -86,7 +84,7 @@ function tmplClassProps(config, name) {
 
 <br />
 
-<inspector-viewer component="${name.toLowerCase()}" />
+<inspector-${name.toLowerCase()}-viewer />
 
 <br />
 <br />

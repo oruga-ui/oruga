@@ -12,27 +12,13 @@ title: Autocomplete
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="autocomplete/base" />
-
-### Objects array
-
-<ExampleViewer example="autocomplete/objects-array" />
-
-### Groups
-
-<ExampleViewer example="autocomplete/groups" />
-
-### Infinite Scroll
-
-<ExampleViewer example="autocomplete/infinite-scroll" />
+ <example-autocomplete />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="autocomplete" />
+<inspector-autocomplete-viewer />
 
 <br />
 <br />

@@ -12,19 +12,13 @@ title: Pagination
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="pagination/base" />
-
-### Slots
-
-<ExampleViewer example="pagination/slots" />
+ <example-pagination />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="pagination" />
+<inspector-pagination-viewer />
 
 <br />
 <br />

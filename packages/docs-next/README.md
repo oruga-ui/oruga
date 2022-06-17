@@ -17,5 +17,5 @@ features:
     details: Most of the components aren't a simple wrapper of native elements but they add new and custom features
   - title: Lightweight
     details: No other internal dependency (except for Vue.js) and import only components that you need
-footer: MIT Licensed - Copyright © 2020 - Walter Tommasi
+footer: MIT Licensed - Copyright © 2022 - Walter Tommasi
 ---

@@ -12,15 +12,13 @@ title: Skeleton
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="skeleton/base" />
+ <example-skeleton />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="skeleton" />
+<inspector-skeleton-viewer />
 
 <br />
 <br />

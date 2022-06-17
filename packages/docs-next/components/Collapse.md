@@ -12,19 +12,13 @@ title: Collapse
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="collapse/base" />
-
-### Accordion
-
-<ExampleViewer example="collapse/accordion" />
+ <example-collapse />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="collapse" />
+<inspector-collapse-viewer />
 
 <br />
 <br />

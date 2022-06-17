@@ -1,6 +1,6 @@
 <template>
     <div class="odocs-example odocs-mt">
-        <component :is="cmp"></component>
+        <component :is="component"></component>
     </div>
     <div
         v-if="showCode"
@@ -17,45 +17,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, markRaw, onBeforeMount } from 'vue'
+import { defineComponent, ref, onBeforeMount, markRaw } from 'vue'
 import 'highlight.js/lib/common';
 import 'highlight.js/styles/github-dark.css'
 
 export default defineComponent({
     props: {
-        example: {
-            required: true,
-            type: String
+        component: {
+            type: Object,
+            default: () => {}
         },
+        code: String,
         showCode: {
             type: Boolean,
             default: () => true
         },
     },
     setup(props) {
+
         const isOpen = ref(false);
-        const cmp = ref(null);
-        const code = ref('');
-        const highlightjs = ref(null)
+        const highlightjs = ref(null);
 
         onBeforeMount(() => {
-
             // due to esm build (probably better write a new viewer from scratch)
             import('@highlightjs/vue-plugin').then((val) => {
-                highlightjs.value = <any>val.default.component
-            })
-
-            import(`../../examples/${props.example}.vue`).then(val => {
-                cmp.value = markRaw(val.default);
-            })
-            import(`../../examples/${props.example}.vue?raw`).then(val => {
-                code.value = val.default
-            })
+                highlightjs.value = markRaw(<any>val.default.component);
+            });
         });
 
         return {
-            code,
-            cmp,
             isOpen,
             highlightjs
         };

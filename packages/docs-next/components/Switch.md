@@ -12,27 +12,13 @@ title: Switch
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="switch/base" />
-
-### Variants
-
-<ExampleViewer example="switch/variants" />
-
-### Sizes
-
-<ExampleViewer example="switch/sizes" />
-
-### Style variants
-
-<ExampleViewer example="switch/style-variants" />
+ <example-switch />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="switch" />
+<inspector-switch-viewer />
 
 <br />
 <br />

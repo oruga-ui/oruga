@@ -12,23 +12,13 @@ title: Modal
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="modal/base" />
-
-### Programmatically
-
-<ExampleViewer example="modal/programmatically" />
-
-### Programmatically (with promises and async/await)
-
-<ExampleViewer example="modal/programmatically-async" />
+ <example-modal />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="modal" />
+<inspector-modal-viewer />
 
 <br />
 <br />

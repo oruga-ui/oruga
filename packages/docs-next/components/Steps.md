@@ -12,23 +12,13 @@ title: Steps
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="steps/base" />
-
-### Variants
-
-<ExampleViewer example="steps/variants" />
-
-### Vertical
-
-<ExampleViewer example="steps/vertical" />
+ <example-steps />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="steps" />
+<inspector-steps-viewer />
 
 <br />
 <br />

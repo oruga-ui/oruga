@@ -1,6 +1,7 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 import { searchPlugin } from '@vuepress/plugin-search'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
+
 import path from 'path'
 import fs from 'fs'
 
@@ -35,9 +36,11 @@ export default defineUserConfig({
   theme: defaultTheme({
     logo: '/logo.png',
     repo: 'oruga-ui/oruga',
-    editLinks: true,
+    editLink: true,
     docsDir: 'packages/docs-next',
     docsBranch: 'develop',
+    colorModeSwitch: false,
+    colorMode: 'light',
     navbar: [
         { text: 'Home', link: '/' },
         { text: 'Documentation', link: '/documentation/' },

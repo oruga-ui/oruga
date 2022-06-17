@@ -12,31 +12,13 @@ title: Timepicker
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="timepicker/base" />
-
-### Min/Max date
-
-<ExampleViewer example="timepicker/min-max-date" />
-
-### Footer
-
-<ExampleViewer example="timepicker/footer" />
-
-### Granularity
-
-<ExampleViewer example="timepicker/granularity" />
-
-### Inline
-
-<ExampleViewer example="timepicker/inline" />
+ <example-timepicker />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="timepicker" />
+<inspector-timepicker-viewer />
 
 <br />
 <br />

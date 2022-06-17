@@ -12,19 +12,13 @@ title: Sidebar
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="sidebar/base" />
-
-### Static
-
-<ExampleViewer example="sidebar/static" />
+ <example-sidebar />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="sidebar" />
+<inspector-sidebar-viewer />
 
 <br />
 <br />

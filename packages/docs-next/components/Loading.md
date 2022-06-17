@@ -12,23 +12,13 @@ title: Loading
 
 ## Examples
 
-### Base
-
-<ExampleViewer example="loading/base" />
-
-### Slot
-
-<ExampleViewer example="loading/slot" />
-
-### Programmatically
-
-<ExampleViewer example="loading/programmatically" />
+ <example-loading />
 
 ## Class props
 
 <br />
 
-<inspector-viewer component="loading" />
+<inspector-loading-viewer />
 
 <br />
 <br />
