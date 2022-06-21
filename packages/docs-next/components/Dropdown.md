@@ -12,13 +12,13 @@ title: Dropdown
 
 ## Examples
 
- <example-dropdown />
+ <exampledropdown />
 
 ## Class props
 
 <br />
 
-<inspector-dropdown-viewer />
+<inspectordropdown />
 
 <br />
 <br />

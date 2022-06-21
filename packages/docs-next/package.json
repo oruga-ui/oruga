@@ -6,7 +6,7 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "npm link @oruga-ui/oruga-next && concurrently \"vue-docgen --watch\" \"vuepress dev\"",
+    "docs:dev": "concurrently \"vue-docgen --watch\" \"vuepress dev\"",
     "docs:gen": "vue-docgen",
     "docs:build": "vuepress build"
   },
@@ -22,5 +22,8 @@
     "highlight.js": "11.5.1",
     "vue-docgen-cli": "4.44.23",
     "vuepress": "2.0.0-beta.48"
+  },
+  "dependencies": {
+    "sass-loader": "^13.0.0"
   }
 }

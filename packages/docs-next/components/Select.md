@@ -12,13 +12,13 @@ title: Select
 
 ## Examples
 
- <example-select />
+ <exampleselect />
 
 ## Class props
 
 <br />
 
-<inspector-select-viewer />
+<inspectorselect />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Modal
 
 ## Examples
 
- <example-modal />
+ <examplemodal />
 
 ## Class props
 
 <br />
 
-<inspector-modal-viewer />
+<inspectormodal />
 
 <br />
 <br />

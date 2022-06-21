@@ -12,13 +12,13 @@ title: Radio
 
 ## Examples
 
- <example-radio />
+ <exampleradio />
 
 ## Class props
 
 <br />
 
-<inspector-radio-viewer />
+<inspectorradio />
 
 <br />
 <br />

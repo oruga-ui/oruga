@@ -12,13 +12,13 @@ title: Tabs
 
 ## Examples
 
- <example-tabs />
+ <exampletabs />
 
 ## Class props
 
 <br />
 
-<inspector-tabs-viewer />
+<inspectortabs />
 
 <br />
 <br />

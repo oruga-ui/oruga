@@ -12,13 +12,13 @@ title: Switch
 
 ## Examples
 
- <example-switch />
+ <exampleswitch />
 
 ## Class props
 
 <br />
 
-<inspector-switch-viewer />
+<inspectorswitch />
 
 <br />
 <br />

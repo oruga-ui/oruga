@@ -12,13 +12,13 @@ title: Table
 
 ## Examples
 
- <example-table />
+ <exampletable />
 
 ## Class props
 
 <br />
 
-<inspector-table-viewer />
+<inspectortable />
 
 <br />
 <br />

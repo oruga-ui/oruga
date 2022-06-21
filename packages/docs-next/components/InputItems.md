@@ -12,13 +12,13 @@ title: Inputitems
 
 ## Examples
 
- <example-inputitems />
+ <exampleinputitems />
 
 ## Class props
 
 <br />
 
-<inspector-inputitems-viewer />
+<inspectorinputitems />
 
 <br />
 <br />

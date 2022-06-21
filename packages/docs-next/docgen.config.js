@@ -60,7 +60,7 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 > <CarbonAds />
-${'---\n ## Examples\n ' + '<example-' + component.toLowerCase() + ' />'}
+${'---\n ## Examples\n ' + '<example' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
 ${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}
@@ -84,7 +84,7 @@ function tmplClassProps(config, name) {
 
 <br />
 
-<inspector-${name.toLowerCase()}-viewer />
+<inspector${name.toLowerCase()} />
 
 <br />
 <br />

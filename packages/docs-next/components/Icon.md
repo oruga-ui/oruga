@@ -12,13 +12,13 @@ title: Icon
 
 ## Examples
 
- <example-icon />
+ <exampleicon />
 
 ## Class props
 
 <br />
 
-<inspector-icon-viewer />
+<inspectoricon />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Datepicker
 
 ## Examples
 
- <example-datepicker />
+ <exampledatepicker />
 
 ## Class props
 
 <br />
 
-<inspector-datepicker-viewer />
+<inspectordatepicker />
 
 <br />
 <br />

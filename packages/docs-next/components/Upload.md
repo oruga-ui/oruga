@@ -12,13 +12,13 @@ title: Upload
 
 ## Examples
 
- <example-upload />
+ <exampleupload />
 
 ## Class props
 
 <br />
 
-<inspector-upload-viewer />
+<inspectorupload />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Sidebar
 
 ## Examples
 
- <example-sidebar />
+ <examplesidebar />
 
 ## Class props
 
 <br />
 
-<inspector-sidebar-viewer />
+<inspectorsidebar />
 
 <br />
 <br />

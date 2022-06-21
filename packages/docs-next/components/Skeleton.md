@@ -12,13 +12,13 @@ title: Skeleton
 
 ## Examples
 
- <example-skeleton />
+ <exampleskeleton />
 
 ## Class props
 
 <br />
 
-<inspector-skeleton-viewer />
+<inspectorskeleton />
 
 <br />
 <br />

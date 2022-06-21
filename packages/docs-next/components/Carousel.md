@@ -12,13 +12,13 @@ title: Carousel
 
 ## Examples
 
- <example-carousel />
+ <examplecarousel />
 
 ## Class props
 
 <br />
 
-<inspector-carousel-viewer />
+<inspectorcarousel />
 
 <br />
 <br />

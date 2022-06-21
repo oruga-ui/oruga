@@ -12,13 +12,13 @@ title: Field
 
 ## Examples
 
- <example-field />
+ <examplefield />
 
 ## Class props
 
 <br />
 
-<inspector-field-viewer />
+<inspectorfield />
 
 <br />
 <br />

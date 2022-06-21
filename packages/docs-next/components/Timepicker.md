@@ -12,13 +12,13 @@ title: Timepicker
 
 ## Examples
 
- <example-timepicker />
+ <exampletimepicker />
 
 ## Class props
 
 <br />
 
-<inspector-timepicker-viewer />
+<inspectortimepicker />
 
 <br />
 <br />

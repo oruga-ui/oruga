@@ -1,11 +1,11 @@
-import { defineUserConfig, defaultTheme } from 'vuepress'
+import { defineUserConfig, defaultTheme, viteBundler } from 'vuepress'
 import { searchPlugin } from '@vuepress/plugin-search'
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics'
 
 import path from 'path'
 import fs from 'fs'
 
-const { version } = require('../../oruga-next/package.json')
+const { version } = require('@oruga-ui/oruga-next/package.json')
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
@@ -91,5 +91,13 @@ export default defineUserConfig({
     googleAnalyticsPlugin({
         id: 'UA-171490794-1'
     })
-  ]
+  ],
+  bundler: viteBundler({
+    viteOptions: {
+      // @ts-ignore
+      ssr: {
+        noExternal: ['@oruga-ui/oruga-next'],
+      }
+    }
+  })
 })
