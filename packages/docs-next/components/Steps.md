@@ -12,13 +12,13 @@ title: Steps
 
 ## Examples
 
- <example-steps />
+ <examplesteps />
 
 ## Class props
 
 <br />
 
-<inspector-steps-viewer />
+<inspectorsteps />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Collapse
 
 ## Examples
 
- <example-collapse />
+ <examplecollapse />
 
 ## Class props
 
 <br />
 
-<inspector-collapse-viewer />
+<inspectorcollapse />
 
 <br />
 <br />

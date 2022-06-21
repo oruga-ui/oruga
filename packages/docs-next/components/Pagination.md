@@ -12,13 +12,13 @@ title: Pagination
 
 ## Examples
 
- <example-pagination />
+ <examplepagination />
 
 ## Class props
 
 <br />
 
-<inspector-pagination-viewer />
+<inspectorpagination />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Tooltip
 
 ## Examples
 
- <example-tooltip />
+ <exampletooltip />
 
 ## Class props
 
 <br />
 
-<inspector-tooltip-viewer />
+<inspectortooltip />
 
 <br />
 <br />

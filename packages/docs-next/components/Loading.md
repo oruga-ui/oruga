@@ -12,13 +12,13 @@ title: Loading
 
 ## Examples
 
- <example-loading />
+ <exampleloading />
 
 ## Class props
 
 <br />
 
-<inspector-loading-viewer />
+<inspectorloading />
 
 <br />
 <br />

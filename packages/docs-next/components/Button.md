@@ -12,13 +12,13 @@ title: Button
 
 ## Examples
 
- <example-button />
+ <examplebutton />
 
 ## Class props
 
 <br />
 
-<inspector-button-viewer />
+<inspectorbutton />
 
 <br />
 <br />

@@ -12,13 +12,13 @@ title: Input
 
 ## Examples
 
- <example-input />
+ <exampleinput />
 
 ## Class props
 
 <br />
 
-<inspector-input-viewer />
+<inspectorinput />
 
 <br />
 <br />

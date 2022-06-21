@@ -12,13 +12,13 @@ title: Slider
 
 ## Examples
 
- <example-slider />
+ <exampleslider />
 
 ## Class props
 
 <br />
 
-<inspector-slider-viewer />
+<inspectorslider />
 
 <br />
 <br />

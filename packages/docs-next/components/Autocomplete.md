@@ -12,13 +12,13 @@ title: Autocomplete
 
 ## Examples
 
- <example-autocomplete />
+ <exampleautocomplete />
 
 ## Class props
 
 <br />
 
-<inspector-autocomplete-viewer />
+<inspectorautocomplete />
 
 <br />
 <br />

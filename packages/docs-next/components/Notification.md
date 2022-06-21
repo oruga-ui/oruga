@@ -12,13 +12,13 @@ title: Notification
 
 ## Examples
 
- <example-notification />
+ <examplenotification />
 
 ## Class props
 
 <br />
 
-<inspector-notification-viewer />
+<inspectornotification />
 
 <br />
 <br />

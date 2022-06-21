@@ -12,13 +12,13 @@ title: Checkbox
 
 ## Examples
 
- <example-checkbox />
+ <examplecheckbox />
 
 ## Class props
 
 <br />
 
-<inspector-checkbox-viewer />
+<inspectorcheckbox />
 
 <br />
 <br />
