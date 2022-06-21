@@ -6,9 +6,9 @@
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "concurrently \"vue-docgen --watch\" \"vuepress dev\"",
+    "docs:dev": "concurrently \"vue-docgen --watch\" \"vitepress dev\"",
     "docs:gen": "vue-docgen",
-    "docs:build": "vuepress build"
+    "docs:build": "vitepress build"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",
@@ -16,14 +16,9 @@
     "@fortawesome/vue-fontawesome": "3.0.0-5",
     "@highlightjs/vue-plugin": "2.1.0",
     "@oruga-ui/oruga-next": "^0.5.5",
-    "@vuepress/plugin-google-analytics": "2.0.0-beta.48",
-    "@vuepress/plugin-search": "2.0.0-beta.48",
     "concurrently": "7.1.0",
     "highlight.js": "11.5.1",
-    "vue-docgen-cli": "4.44.23",
-    "vuepress": "2.0.0-beta.48"
-  },
-  "dependencies": {
-    "sass-loader": "^13.0.0"
+    "vitepress": "^1.0.0-alpha.2",
+    "vue-docgen-cli": "4.44.23"
   }
 }

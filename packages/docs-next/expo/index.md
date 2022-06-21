@@ -8,6 +8,5 @@ title: Expo
 
 ---
 
-<o-button>Ciao</o-button>
 <expo />
 
