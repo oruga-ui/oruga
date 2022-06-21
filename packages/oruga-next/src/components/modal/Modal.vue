@@ -338,7 +338,6 @@ export default defineComponent({
     mounted() {
         if (this.programmatic) {
             if (this.programmatic.instances) {
-                console.log('registering');
                 this.programmatic.instances.add(this)
             }
             // Insert the Modal component in body tag
