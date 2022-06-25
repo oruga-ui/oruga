@@ -6,19 +6,17 @@ title: Field
 
 > Fields are used to add functionality to controls and to attach/group components and elements together
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplefield />
+ <example-field />
 
 ## Class props
 
 <br />
 
-<inspectorfield />
+<inspector-field-viewer />
 
 <br />
 <br />

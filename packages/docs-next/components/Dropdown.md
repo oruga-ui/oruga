@@ -6,19 +6,17 @@ title: Dropdown
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampledropdown />
+ <example-dropdown />
 
 ## Class props
 
 <br />
 
-<inspectordropdown />
+<inspector-dropdown-viewer />
 
 <br />
 <br />

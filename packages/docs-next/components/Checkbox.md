@@ -6,19 +6,17 @@ title: Checkbox
 
 > Select a single or grouped options
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplecheckbox />
+ <example-checkbox />
 
 ## Class props
 
 <br />
 
-<inspectorcheckbox />
+<inspector-checkbox-viewer />
 
 <br />
 <br />

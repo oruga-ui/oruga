@@ -6,19 +6,17 @@ title: Button
 
 > The classic button, in different colors, sizes, and states
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplebutton />
+ <example-button />
 
 ## Class props
 
 <br />
 
-<inspectorbutton />
+<inspector-button-viewer />
 
 <br />
 <br />

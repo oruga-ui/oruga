@@ -6,19 +6,17 @@ title: Collapse
 
 > An easy way to toggle what you want
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplecollapse />
+ <example-collapse />
 
 ## Class props
 
 <br />
 
-<inspectorcollapse />
+<inspector-collapse-viewer />
 
 <br />
 <br />

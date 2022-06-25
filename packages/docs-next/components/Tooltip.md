@@ -6,19 +6,17 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampletooltip />
+ <example-tooltip />
 
 ## Class props
 
 <br />
 
-<inspectortooltip />
+<inspector-tooltip-viewer />
 
 <br />
 <br />

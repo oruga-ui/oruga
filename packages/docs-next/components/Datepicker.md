@@ -6,19 +6,17 @@ title: Datepicker
 
 > An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampledatepicker />
+ <example-datepicker />
 
 ## Class props
 
 <br />
 
-<inspectordatepicker />
+<inspector-datepicker-viewer />
 
 <br />
 <br />

@@ -6,19 +6,17 @@ title: Radio
 
 > Select an option from a set
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleradio />
+ <example-radio />
 
 ## Class props
 
 <br />
 
-<inspectorradio />
+<inspector-radio-viewer />
 
 <br />
 <br />

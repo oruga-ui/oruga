@@ -6,19 +6,17 @@ title: Tabs
 
 > Responsive horizontal navigation tabs, switch between contents with ease
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampletabs />
+ <example-tabs />
 
 ## Class props
 
 <br />
 
-<inspectortabs />
+<inspector-tabs-viewer />
 
 <br />
 <br />

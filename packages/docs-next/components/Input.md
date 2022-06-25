@@ -6,19 +6,17 @@ title: Input
 
 > Get user Input. Use with Field to access all functionalities
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleinput />
+ <example-input />
 
 ## Class props
 
 <br />
 
-<inspectorinput />
+<inspector-input-viewer />
 
 <br />
 <br />

@@ -6,19 +6,17 @@ title: Select
 
 > Select an item in a dropdown list. Use with Field to access all functionalities
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleselect />
+ <example-select />
 
 ## Class props
 
 <br />
 
-<inspectorselect />
+<inspector-select-viewer />
 
 <br />
 <br />

@@ -66,6 +66,30 @@ export default defineConfig({
         '/documentation/': [
             {
                 text: 'Get Started',
+                collapsible: true,
+                items: [
+                    {
+                        text: 'Introduction',
+                        link: '/documentation/#introduction'
+                    }
+                ]
+            },
+            {
+                text: 'Components',
+                collapsible: true,
+                items: sidebarComponents.map(c => {
+                    const name = c.split('/')[2]
+                    return {
+                        text: name,
+                        link: c
+                    }
+                })
+            }
+        ],
+        '/components/': [
+            {
+                text: 'Get Started',
+                collapsible: true,
                 items: [
                     {
                         text: 'Introduction',
@@ -83,23 +107,15 @@ export default defineConfig({
                     }
                 })
             }
-        ],
-        '/components/': [
-            {
-                text: 'Components',
-                items: sidebarComponents.map(c => {
-                    const name = c.split('/')[2]
-                    return {
-                        text: name,
-                        link: c
-                    }
-                })
-            }
         ]
       },
       footer: {
         message: "Released under the MIT License.",
         copyright: `Copyright © 2020-${new Date().getFullYear()} Walter Tommasi`,
       },
+      carbonAds: {
+        code: 'CESI42JW',
+        placement: 'orugaio'
+      }
     },
 })

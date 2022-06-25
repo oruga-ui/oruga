@@ -6,19 +6,17 @@ title: Sidebar
 
 > A sidebar to use as left/right overlay or static
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplesidebar />
+ <example-sidebar />
 
 ## Class props
 
 <br />
 
-<inspectorsidebar />
+<inspector-sidebar-viewer />
 
 <br />
 <br />

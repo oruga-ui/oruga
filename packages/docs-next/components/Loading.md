@@ -6,19 +6,17 @@ title: Loading
 
 > A simple loading overlay
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleloading />
+ <example-loading />
 
 ## Class props
 
 <br />
 
-<inspectorloading />
+<inspector-loading-viewer />
 
 <br />
 <br />

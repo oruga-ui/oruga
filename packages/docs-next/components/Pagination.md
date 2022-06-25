@@ -6,19 +6,17 @@ title: Pagination
 
 > A responsive and flexible pagination
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplepagination />
+ <example-pagination />
 
 ## Class props
 
 <br />
 
-<inspectorpagination />
+<inspector-pagination-viewer />
 
 <br />
 <br />

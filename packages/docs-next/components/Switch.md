@@ -6,19 +6,17 @@ title: Switch
 
 > Switch between two opposing states
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleswitch />
+ <example-switch />
 
 ## Class props
 
 <br />
 
-<inspectorswitch />
+<inspector-switch-viewer />
 
 <br />
 <br />

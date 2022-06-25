@@ -6,19 +6,17 @@ title: Notification
 
 > Bold notification blocks to alert your users of something
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplenotification />
+ <example-notification />
 
 ## Class props
 
 <br />
 
-<inspectornotification />
+<inspector-notification-viewer />
 
 <br />
 <br />

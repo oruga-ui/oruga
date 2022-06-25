@@ -6,19 +6,17 @@ title: Table
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampletable />
+ <example-table />
 
 ## Class props
 
 <br />
 
-<inspectortable />
+<inspector-table-viewer />
 
 <br />
 <br />

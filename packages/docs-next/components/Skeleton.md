@@ -6,19 +6,17 @@ title: Skeleton
 
 > A placeholder for content to load
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleskeleton />
+ <example-skeleton />
 
 ## Class props
 
 <br />
 
-<inspectorskeleton />
+<inspector-skeleton-viewer />
 
 <br />
 <br />

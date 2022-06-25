@@ -1,10 +1,11 @@
 ---
 layout: home
-
 title: Oruga
 hero:
   name: Oruga
-  text: 
+  image: 
+    src: logo.png
+  text: ''
   tagline: Oruga UI is like a caterpillar, minimal and yet functional. It's in your hands turning it into a butterfly
   actions:
     - theme: brand

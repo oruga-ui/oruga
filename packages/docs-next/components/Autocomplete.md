@@ -6,19 +6,17 @@ title: Autocomplete
 
 > Extended input that provide suggestions while the user types
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleautocomplete />
+ <example-autocomplete />
 
 ## Class props
 
 <br />
 
-<inspectorautocomplete />
+<inspector-autocomplete-viewer />
 
 <br />
 <br />

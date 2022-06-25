@@ -6,17 +6,13 @@ Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
-<CarbonAds />
-
 ### Oruga default stylesheet
 
 Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
-<!--
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
 </video>
--->
 
 If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
 
@@ -128,11 +124,9 @@ For more info read ["Differences between default and full css"](#differences-bet
 
 With Oruga you can easily override existing components style appending one or more classes. Each component has a `Class prop` section (for example see [Dropdown Class props](/components/Dropdown.html#class-props)) where you can inspect elements each class property affects using the `Class prop inspector`.
 
-<!-- 
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/inspectormov.mp4" type="video/mp4">
 </video>
--->
 
 ### Adding classes
 

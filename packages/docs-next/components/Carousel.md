@@ -6,19 +6,17 @@ title: Carousel
 
 > A Slideshow for cycling images in confined spaces
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplecarousel />
+ <example-carousel />
 
 ## Class props
 
 <br />
 
-<inspectorcarousel />
+<inspector-carousel-viewer />
 
 <br />
 <br />

@@ -6,19 +6,17 @@ title: Modal
 
 > Classic modal overlay to include any content you may need
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplemodal />
+ <example-modal />
 
 ## Class props
 
 <br />
 
-<inspectormodal />
+<inspector-modal-viewer />
 
 <br />
 <br />

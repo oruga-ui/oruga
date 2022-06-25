@@ -15,10 +15,11 @@
     "@fortawesome/free-solid-svg-icons": "5.13.0",
     "@fortawesome/vue-fontawesome": "3.0.0-5",
     "@highlightjs/vue-plugin": "2.1.0",
-    "@oruga-ui/oruga-next": "^0.5.5",
+    "@oruga-ui/oruga-next": "0.5.5",
     "concurrently": "7.1.0",
     "highlight.js": "11.5.1",
-    "vitepress": "^1.0.0-alpha.2",
+    "sass": "^1.53.0",
+    "vitepress": "1.0.0-alpha.4",
     "vue-docgen-cli": "4.44.23"
   }
 }

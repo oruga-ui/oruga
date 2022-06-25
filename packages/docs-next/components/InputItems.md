@@ -6,19 +6,17 @@ title: Inputitems
 
 > A simple item input field that can have autocomplete functionality
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleinputitems />
+ <example-inputitems />
 
 ## Class props
 
 <br />
 
-<inspectorinputitems />
+<inspector-inputitems-viewer />
 
 <br />
 <br />

@@ -6,19 +6,17 @@ title: Timepicker
 
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampletimepicker />
+ <example-timepicker />
 
 ## Class props
 
 <br />
 
-<inspectortimepicker />
+<inspector-timepicker-viewer />
 
 <br />
 <br />

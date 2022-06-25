@@ -6,19 +6,17 @@ title: Icon
 
 > Icons take an important role of any application
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleicon />
+ <example-icon />
 
 ## Class props
 
 <br />
 
-<inspectoricon />
+<inspector-icon-viewer />
 
 <br />
 <br />

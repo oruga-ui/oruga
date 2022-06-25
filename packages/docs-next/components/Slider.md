@@ -6,19 +6,17 @@ title: Slider
 
 > A slider to select a value or range from a given range
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleslider />
+ <example-slider />
 
 ## Class props
 
 <br />
 
-<inspectorslider />
+<inspector-slider-viewer />
 
 <br />
 <br />

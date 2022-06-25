@@ -6,19 +6,17 @@ title: Steps
 
 > Responsive horizontal process steps
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <examplesteps />
+ <example-steps />
 
 ## Class props
 
 <br />
 
-<inspectorsteps />
+<inspector-steps-viewer />
 
 <br />
 <br />

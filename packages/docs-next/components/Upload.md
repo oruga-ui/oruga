@@ -6,19 +6,17 @@ title: Upload
 
 > Upload one or more files
 
-> <CarbonAds />
-
 ---
 
 ## Examples
 
- <exampleupload />
+ <example-upload />
 
 ## Class props
 
 <br />
 
-<inspectorupload />
+<inspector-upload-viewer />
 
 <br />
 <br />
