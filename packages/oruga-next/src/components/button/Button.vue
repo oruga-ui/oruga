@@ -94,6 +94,10 @@ export default defineComponent({
          */
         outlined: Boolean,
         /**
+         * Loading style
+         */
+        loading: Boolean,
+        /**
          * Button will be expanded (full-width)
          */
         expanded: Boolean,
@@ -129,6 +133,7 @@ export default defineComponent({
         elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
         outlinedClass: [String, Function, Array],
+        loadingClass: [String, Function, Array],
         invertedClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
         roundedClass: [String, Function, Array],
@@ -151,6 +156,7 @@ export default defineComponent({
                 { [this.computedClass('outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
                 { [this.computedClass('invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
                 { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
+                { [this.computedClass('loadingClass', 'o-btn--loading')]: this.loading },
                 { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
                 { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
             ]
