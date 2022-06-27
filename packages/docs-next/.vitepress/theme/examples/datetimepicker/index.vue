@@ -12,6 +12,10 @@
 
 	<ExampleViewer :component="Inline" :code="InlineCode" />
 
+	<h2>Min/Max Datetime</h2>
+
+	<ExampleViewer :component="MinMax" :code="MinMaxCode" />
+
 </template>
 
 <script setup>
@@ -23,4 +27,7 @@
 
 	import Inline from './inline.vue';
 	import InlineCode from './inline.vue?raw';
+
+	import MinMax from './min-max.vue';
+	import MinMaxCode from './min-max.vue?raw';
 </script>

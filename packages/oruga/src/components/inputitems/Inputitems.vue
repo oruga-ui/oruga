@@ -107,7 +107,7 @@ import { getOptions } from '../../utils/config'
  * A simple item input field that can have autocomplete functionality
  * @displayName Inputitems
  * @example ./examples/InputItems.md
- * @style _inputItems.scss
+ * @style _inputitems.scss
  */
 export default {
     name: 'OInputitems',

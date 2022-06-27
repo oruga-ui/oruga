@@ -584,6 +584,16 @@ export default defineComponent({
             }
             return disabled
         },
+        
+        isMeridienDisabled(meridienString){
+            const offset = meridienString == "AM" ? 0 : 12;
+            for(let i = 0; i < 12; i++){
+                if(!this.isHourDisabled(i + offset)){
+                    return false;
+                }
+            }
+            return true;
+        },
 
         /*
          * Parse string into date
