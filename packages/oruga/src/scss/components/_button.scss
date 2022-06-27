@@ -15,6 +15,17 @@ $button-rounded-border-radius: $base-rounded-border-radius !default;
 $button-disabled-opacity: $base-disabled-opacity !default;
 /* @docs */
 
+
+@keyframes spinAround {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
 .o-btn {
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -104,6 +115,24 @@ $button-disabled-opacity: $base-disabled-opacity !default;
                 }
             }
         }
+    }
+    &--loading{
+        color: transparent!important;
+        pointer-events: none;
+    }
+    &--loading::after{
+        -webkit-animation: spinAround 500ms infinite linear;
+        left: calc(50% - 0.5em);
+        top: calc(50% - 0.5em);
+        position: absolute!important;
+        border: 2px solid #dbdbdb;
+        border-radius: 9999px;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        content: "";
+        display: block;
+        height: 1em;
+        width: 1em;
     }
     &--inverted {
         @include avariable('background-color', 'button-color', $button-color);
