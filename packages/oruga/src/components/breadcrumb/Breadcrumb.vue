@@ -1,5 +1,5 @@
 <template>
-    
+    <slot></slot>
 </template>
 
 <script>
@@ -10,10 +10,10 @@ import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 /**
- * The classic button, in different colors, sizes, and states
- * @displayName Button
- * @example ./examples/Button.md
- * @style _button.scss
+ * The classic breadcrumb, in different colors, sizes, and states
+ * @displayName Breadcrumb
+ * @example ./examples/Breadcrumb.md
+ * @style _breadcrumb.scss
  */
 export default {
     name: 'OBreadcrumb',
