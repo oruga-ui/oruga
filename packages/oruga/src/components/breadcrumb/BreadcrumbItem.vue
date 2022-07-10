@@ -1,5 +1,5 @@
 <template>
-	<li>Hello World</li>
+	<li class="breadcrumb-item chevron-separator"><slot /></li>
 </template>
 
 <script>

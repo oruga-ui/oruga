@@ -1,0 +1,32 @@
+.breadcrumb {
+	.breadcrumb-item {
+		// padding: 0 .2em;
+		display: inline;
+		list-style: none;
+		cursor: pointer;
+		color: $primary;
+		font-weight: 400;
+
+		&.active {
+			color: black;
+		}
+
+		&.slash-separator:not(:last-child):after {
+			content: " / ";
+		}
+		&.arrow-separator:not(:last-child):after {
+			content: " → ";
+		}
+		&.chevron-separator:not(:last-child):after {
+			content: " > ";
+		}
+		&.bullet-separator:not(:last-child):after {
+			content: " • ";
+		}
+		&.dot-separator:not(:last-child):after {
+			content: " ∙ ";
+		}
+	}
+
+}
+

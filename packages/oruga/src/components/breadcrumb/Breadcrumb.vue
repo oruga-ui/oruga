@@ -1,6 +1,11 @@
 <template>
     <!-- <slot></slot> -->
-    <div>sdcsdccds</div>
+    <section>
+        <ul class="breadcrumb">
+            <slot/>
+        </ul>
+    </section>
+    <!-- <div>sdcsdccds</div> -->
 </template>
 
 <script>
@@ -66,6 +71,8 @@ export default {
         elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
+        activeClass: [String, Function, Array],
+        separatorClass: [String, Function, Array],
         iconClass: [String, Function, Array],
         iconLeftClass: [String, Function, Array],
         iconRightClass: [String, Function, Array],
