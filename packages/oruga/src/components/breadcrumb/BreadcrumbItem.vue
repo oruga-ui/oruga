@@ -1,5 +1,5 @@
 <template>
-	<li class="breadcrumb-item slash-separator" :class="{ 'active': active }">
+	<li class="breadcrumb-item" :class="{ 'active': active }">
 		<component 
 			v-bind="$attrs"
             v-on="$listeners" 

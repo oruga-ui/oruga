@@ -1,7 +1,7 @@
 <template>
     <!-- <slot></slot> -->
     <section>
-        <ul class="breadcrumb">
+        <ul class="breadcrumb breadcrumb--large chevron-separator">
             <slot/>
         </ul>
     </section>

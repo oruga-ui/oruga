@@ -15,22 +15,55 @@
 			}
 		}
 
-		&.slash-separator:not(:last-child):after {
+	}
+
+	&.slash-separator {
+		.breadcrumb-item:not(:last-child):after {
 			content: " / ";
 		}
-		&.arrow-separator:not(:last-child):after {
+	}
+	&.arrow-separator {
+		.breadcrumb-item:not(:last-child):after {
 			content: " → ";
 		}
-		&.chevron-separator:not(:last-child):after {
+	}
+	&.chevron-separator {
+		.breadcrumb-item:not(:last-child):after {
 			content: " > ";
 		}
-		&.bullet-separator:not(:last-child):after {
+	}
+	&.bullet-separator {
+		.breadcrumb-item:not(:last-child):after {
 			content: " • ";
 		}
-		&.dot-separator:not(:last-child):after {
+	}
+	&.dot-separator {
+		.breadcrumb-item:not(:last-child):after {
 			content: " ∙ ";
 		}
 	}
+	@each $name, $value in $sizes {
+		&--#{$name} {
+			.breadcrumb-item {
+				font-size: $value;
+			}
+		}
+	}
+	// &--small {
+	// 	.breadcrumb-item {
+	// 		font-size: .5em;
+	// 	}
+	// }
+	// &--medium {
+	// 	.breadcrumb-item {
+	// 		font-size: 1em;
+	// 	}
+	// }
+	// &--large {
+	// 	.breadcrumb-item {
+	// 		font-size: 2em;
+	// 	}
+	// }
 
 }
 
