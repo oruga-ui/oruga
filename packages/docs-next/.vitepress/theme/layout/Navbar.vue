@@ -50,20 +50,15 @@ if (typeof window !== 'undefined') {
       <div class="content">
 
         <div class="theme-selector" v-if="hasSidebar">
-            <o-dropdown
+            Theme ->
+            <select
                 v-model="selected"
                 @update:modelValue="onThemeChange"
             >
-                <template #trigger>
-                    <a href="javascript:void(0)" class="VPLink link VPNavBarMenuLink">
-                        Theme {{ selectedOption.label }}
-                        <o-icon size="small" icon="chevron-down" />
-                    </a>
-                </template>
-                <o-dropdown-item v-for="item in themeOptions" :value="item.value">
+                <option v-for="item in themeOptions" :value="item.value">
                     {{ item.label }}
-                </o-dropdown-item>
-            </o-dropdown>
+                </option>
+            </select>
         </div>
 
         <VPNavBarSearch class="search" />
@@ -93,6 +88,10 @@ if (typeof window !== 'undefined') {
     font-weight: 500;
     color: var(--vp-c-text-1);
     transition: color 0.25s;
+}
+.theme-selector select {
+    cursor: pointer;
+    appearance: menulist;
 }
 .VPNavBar {
   position: relative;

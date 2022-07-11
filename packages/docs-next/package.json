@@ -19,7 +19,7 @@
     "@oruga-ui/theme-bulma": "0.2.6",
     "concurrently": "7.1.0",
     "highlight.js": "11.5.1",
-    "sass": "^1.53.0",
+    "sass": "1.53.0",
     "vitepress": "1.0.0-alpha.4",
     "vue-docgen-cli": "4.44.23"
   }

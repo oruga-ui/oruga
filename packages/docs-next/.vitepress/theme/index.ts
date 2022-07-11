@@ -38,8 +38,6 @@ export default {
     app.component('ExampleViewer', ExampleViewer)
     app.component('Expo', Expo)
 
-
-
     // @ts-ignore
     const examples = import.meta.globEager('./examples/**/index.vue')
     for (const path in examples) {
