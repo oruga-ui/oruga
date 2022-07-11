@@ -4,7 +4,7 @@ import { useSidebar, useCloseSidebarOnEscape } from 'vitepress/client/theme-defa
 import VPSkipLink from 'vitepress/client/theme-default/components/VPSkipLink.vue'
 import VPBackdrop from 'vitepress/client/theme-default/components/VPBackdrop.vue'
 // import VPNav from 'vitepress/client/theme-default/components/VPNav.vue'
-import Navbar from './Navbar.vue'
+import Nav from './Nav.vue'
 import VPLocalNav from 'vitepress/client/theme-default/components/VPLocalNav.vue'
 import VPSidebar from 'vitepress/client/theme-default/components/VPSidebar.vue'
 import VPContent from 'vitepress/client/theme-default/components/VPContent.vue'
@@ -27,7 +27,7 @@ provide('close-sidebar', closeSidebar)
     <VPSkipLink />
     <VPBackdrop class="backdrop" :show="isSidebarOpen" @click="closeSidebar" />
     <!--<VPNav />-->
-    <Navbar />
+    <Nav />
     <VPLocalNav :open="isSidebarOpen" @open-menu="openSidebar" />
     <VPSidebar :open="isSidebarOpen" />
 

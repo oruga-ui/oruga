@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "3.0.0-5",
     "@highlightjs/vue-plugin": "2.1.0",
     "@oruga-ui/oruga-next": "0.5.5",
+    "@oruga-ui/theme-bulma": "0.2.6",
     "concurrently": "7.1.0",
     "highlight.js": "11.5.1",
     "sass": "^1.53.0",
