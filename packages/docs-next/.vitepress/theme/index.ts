@@ -17,7 +17,7 @@ import Inspector from './components/Inspector.vue'
 import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
 
-
+import Oruga from '@oruga-ui/oruga-next'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -51,51 +51,50 @@ export default {
         app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
     }
 
-    import('@oruga-ui/oruga-next').then(r => {
-        const Oruga = r.default
-        if (typeof window !== 'undefined') {
-            const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
-            switch (theme) {
-                case 'fullcss': {
-                    app.use(Oruga, {
-                        iconPack: 'fas',
-                        iconComponent: 'vue-fontawesome'
-                    })
-                    const link = document.createElement('link')
-                    link.rel = 'stylesheet'
-                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
-                    document.head.appendChild(link)
-                    break
-                }
-                case 'basecss': {
-                    app.use(Oruga, {
-                        iconPack: 'fas',
-                        iconComponent: 'vue-fontawesome'
-                    })
-                    const link = document.createElement('link')
-                    link.rel = 'stylesheet'
-                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
-                    document.head.appendChild(link)
-                    break
-                }
-                case 'bulmacss': {
-                    import ('@oruga-ui/theme-bulma').then(ret => {
-                        const bulmaConf = ret.bulmaConfig
-                        bulmaConf.iconPack = 'fas'
-                        bulmaConf.iconComponent = 'vue-fontawesome'
-                        app.use(Oruga, bulmaConf)
-                    })
-                    const link = document.createElement('link')
-                    link.rel = 'stylesheet'
-                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
-                    document.head.appendChild(link)
-                    break
-                }
+
+    if (typeof window !== 'undefined') {
+        const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
+        switch (theme) {
+            case 'fullcss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
+                document.head.appendChild(link)
+                break
             }
-        } else {
-            app.use(Oruga)
+            case 'basecss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
+                document.head.appendChild(link)
+                break
+            }
+            case 'bulmacss': {
+                import ('@oruga-ui/theme-bulma').then(ret => {
+                    const bulmaConf = ret.bulmaConfig
+                    bulmaConf.iconPack = 'fas'
+                    bulmaConf.iconComponent = 'vue-fontawesome'
+                    app.use(Oruga, bulmaConf)
+                })
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
+                document.head.appendChild(link)
+                break
+            }
         }
-    })
+    } else {
+        app.use(Oruga)
+    }
+
 
 
 
