@@ -54,50 +54,48 @@ export default {
         app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
     }
 
-    const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
-    switch (theme) {
-        case 'fullcss': {
-            app.use(Oruga, {
-                iconPack: 'fas',
-                iconComponent: 'vue-fontawesome'
-            })
-            if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
+        const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
+        switch (theme) {
+            case 'fullcss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
-                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.css'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
                 document.head.appendChild(link)
+                break
             }
-            break
-        }
-        case 'basecss': {
-            app.use(Oruga, {
-                iconPack: 'fas',
-                iconComponent: 'vue-fontawesome'
-            })
-            if (typeof window !== 'undefined') {
+            case 'basecss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
                 document.head.appendChild(link)
+                break
             }
-            break
-        }
-        case 'bulmacss': {
-            import ('@oruga-ui/theme-bulma').then(ret => {
-                const bulmaConf = ret.bulmaConfig
-                console.log(bulmaConf)
-                bulmaConf.iconPack = 'fas'
-                bulmaConf.iconComponent = 'vue-fontawesome'
-                app.use(Oruga, bulmaConf)
-            })
-            if (typeof window !== 'undefined') {
+            case 'bulmacss': {
+                import ('@oruga-ui/theme-bulma').then(ret => {
+                    const bulmaConf = ret.bulmaConfig
+                    bulmaConf.iconPack = 'fas'
+                    bulmaConf.iconComponent = 'vue-fontawesome'
+                    app.use(Oruga, bulmaConf)
+                })
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
                 document.head.appendChild(link)
+                break
             }
-            break
         }
+    } else {
+        app.use(Oruga)
     }
+
   }
 }

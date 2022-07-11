@@ -20,7 +20,7 @@ defineEmits<{
 
 const { hasSidebar } = useSidebar()
 
-const selected = ref(localStorage.getItem('oruga.io_theme') || 'fullcss')
+const selected = ref('')
 
 const themeOptions = ref([
     { label: 'Base CSS', value: 'basecss' },
@@ -36,6 +36,10 @@ const onThemeChange = function () {
 const selectedOption = computed(() => {
     return themeOptions.value.filter(t => t.value === selected.value)[0]
 })
+
+if (typeof window !== 'undefined') {
+    selected.value = localStorage.getItem('oruga.io_theme') || 'fullcss'
+}
 </script>
 
 <template>
