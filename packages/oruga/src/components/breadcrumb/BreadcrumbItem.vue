@@ -1,5 +1,13 @@
 <template>
-	<li class="breadcrumb-item chevron-separator"><slot /></li>
+	<li class="breadcrumb-item slash-separator" :class="{ 'active': active }">
+		<component 
+			v-bind="$attrs"
+            v-on="$listeners" 
+            :is="tag"
+        >
+			<slot />
+		</component>
+	</li>
 </template>
 
 <script>
@@ -7,6 +15,10 @@ export default {
 
   name: 'OBreadcrumbItem',
 
+  props : {
+  	tag : { type: String, default: 'a' },
+  	active : { type: Boolean, default: false }
+  },
   inheritAttrs: false,
 
   data () {

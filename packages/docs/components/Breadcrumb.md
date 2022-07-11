@@ -22,9 +22,9 @@ title: Breadcrumb
 <template>
 	<section>
 		<o-breadcrumb>
-			<o-breadcrumb-item>Home</o-breadcrumb-item>
-			<o-breadcrumb-item>About</o-breadcrumb-item>
-			<o-breadcrumb-item>Contact</o-breadcrumb-item>
+			<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
+			<o-breadcrumb-item tag="a" href="/components">Components</o-breadcrumb-item>
+			<o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
 		</o-breadcrumb>
 	</section>
 </template>
@@ -58,6 +58,16 @@ title: Breadcrumb
 :::
 
 ### Tags
+
+::: demo
+
+```html
+<!-- code here -->
+```
+
+:::
+
+### Sizes
 
 ::: demo
 

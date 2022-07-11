@@ -5,10 +5,14 @@
 		list-style: none;
 		cursor: pointer;
 		color: $primary;
-		font-weight: 400;
+		a {
+			font-weight: 400;
+		}
 
 		&.active {
-			color: black;
+			a {
+				color: black;
+			}
 		}
 
 		&.slash-separator:not(:last-child):after {
