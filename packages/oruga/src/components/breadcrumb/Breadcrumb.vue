@@ -1,6 +1,6 @@
 <template>
     <section>
-        <ul class="o-breadcrumb o-breadcrumb--large o-breadcrumb__chevron-separator">
+        <ul class="o-breadcrumb o-breadcrumb--medium o-breadcrumb__slash-separator">
             <slot/>
         </ul>
     </section>
@@ -52,18 +52,6 @@ export default {
          */
         iconRight: String,
 
-        /**
-         * breadcrumb tag name
-         * @values a, router-link
-         */
-        tag: {
-            type: String,
-            default: 'button'
-        },
-        /**
-         * Button will be disabled
-         */
-        disabled: Boolean,
         /**  @ignore */
         iconBoth: Boolean, // This is used internally
         elementsWrapperClass: [String, Function, Array],

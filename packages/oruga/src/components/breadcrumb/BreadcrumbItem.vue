@@ -11,14 +11,38 @@
 </template>
 
 <script>
+
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+
 export default {
 
   name: 'OBreadcrumbItem',
 
   props : {
-  	tag : { type: String, default: 'a' },
-  	active : { type: Boolean, default: false },
-  	disabled : { type: Boolean, default: false }
+  	/**
+  	* HTML Tag of items, optional
+  	* @values a, router-link
+  	**/
+  	tag : { 
+  		type: String, 
+  		default: 'a' 
+  	},
+  	/**
+  	* item when it clicked, optional
+  	* @values false, true
+  	**/
+  	active : { 
+  		type: Boolean, 
+  		default: false 
+  	},
+  	/**
+  	* an item to be useless with no click events, optional
+  	* @values false, true
+  	**/
+  	disabled : { 
+  		type: Boolean, 
+  		default: false 
+  	}
   },
   inheritAttrs: false,
 
@@ -26,6 +50,14 @@ export default {
     return {
 
     }
+  },
+  computed: {
+
+
+  	rootClasses(){
+  		return []
+  	}
+
   }
 }
 </script>

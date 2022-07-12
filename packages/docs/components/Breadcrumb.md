@@ -20,18 +20,16 @@ title: Breadcrumb
 
 ```html
 <template>
-	<section>
-		<o-breadcrumb>
-			<o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
-			<o-breadcrumb-item tag="a" href="/components">Components</o-breadcrumb-item>
-			<o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
-		</o-breadcrumb>
-	</section>
+  <section>
+    <o-breadcrumb>
+      <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
+      <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
+      <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
+    </o-breadcrumb>
+  </section>
 </template>
 <script>
-	export default {
-
-	}
+  export default {}
 </script>
 ```
 
@@ -67,31 +65,29 @@ title: Breadcrumb
 
 :::
 
-### Sizes
-
-::: demo
-
-```html
-<!-- code here -->
-```
-
-:::
-
 ## Props
 
-| Prop name | Description                    | Type    | Values                                                                          | Default  |
-| --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | -------- |
-| disabled  | Button will be disabled        | boolean | -                                                                               |          |
-| iconLeft  | Icon name to show on the left  | string  | -                                                                               |          |
-| iconPack  | Icon pack to use               | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               |          |
-| iconRight | Icon name to show on the right | string  | -                                                                               |          |
-| override  | Override classes               | boolean | -                                                                               | false    |
-| size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      |          |
-| tag       | breadcrumb tag name            | string  | `a`, `router-link`                                                              | 'button' |
-| variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |          |
+| Prop name | Description                    | Type    | Values                                                                          | Default |
+| --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | ------- |
+| iconLeft  | Icon name to show on the left  | string  | -                                                                               |         |
+| iconPack  | Icon pack to use               | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               |         |
+| iconRight | Icon name to show on the right | string  | -                                                                               |         |
+| override  | Override classes               | boolean | -                                                                               | false   |
+| size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      |         |
+| variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+
+## Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 ## Style
 
-| CSS Variable | SASS Variable | Default |
-| ------------ | ------------- | ------- |
-
+| CSS Variable                        | SASS Variable                 | Default                 |
+| ----------------------------------- | ----------------------------- | ----------------------- |
+| --oruga-breadcrumb-color            | \$breadcrumb-color            | \$primary               |
+| --oruga-breadcrumb-cursor           | \$breadcrumb-cursor           | pointer                 |
+| --oruga-breadcrumb-font-weight      | \$breadcrumb-font-weight      | 400                     |
+| --oruga-breadcrumb-active           | \$breadcrumb-active           | black                   |
+| --oruga-breadcrumb-disabled-opacity | \$breadcrumb-disabled-opacity | \$base-disabled-opacity |
