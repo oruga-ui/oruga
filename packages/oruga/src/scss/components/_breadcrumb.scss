@@ -1,50 +1,63 @@
-.breadcrumb {
-	.breadcrumb-item {
+
+/* @docs */
+$breadcrumb-color: $primary !default; 
+$breadcrumb-cursor: pointer !default;
+$breadcrumb-font-weight: 400 !default;
+$breadcrumb-active: black !default; 
+$breadcrumb-disabled-opacity: $base-disabled-opacity !default;
+/* @docs */
+
+.o-breadcrumb {
+	.o-breadcrumb-item {
 		// padding: 0 .2em;
 		display: inline;
 		list-style: none;
-		cursor: pointer;
-		color: $primary;
+		cursor: $breadcrumb-cursor;
+		color: $breadcrumb-color;
 		a {
-			font-weight: 400;
+			font-weight: $breadcrumb-font-weight;
 		}
-
-		&.active {
+		&--active {
 			a {
-				color: black;
+				color: $breadcrumb-active;
 			}
 		}
-
+		&--disabled {
+			a {
+				opacity: $breadcrumb-disabled-opacity;
+				cursor: not-allowed;
+				pointer-events: none;
+			}
+		}
 	}
-
-	&.slash-separator {
-		.breadcrumb-item:not(:last-child):after {
+	&__slash-separator {
+		.o-breadcrumb-item:not(:last-child):after {
 			content: " / ";
 		}
 	}
-	&.arrow-separator {
-		.breadcrumb-item:not(:last-child):after {
+	&__arrow-separator {
+		.o-breadcrumb-item:not(:last-child):after {
 			content: " → ";
 		}
 	}
-	&.chevron-separator {
-		.breadcrumb-item:not(:last-child):after {
+	&__chevron-separator {
+		.o-breadcrumb-item:not(:last-child):after {
 			content: " > ";
 		}
 	}
-	&.bullet-separator {
-		.breadcrumb-item:not(:last-child):after {
+	&__bullet-separator {
+		.o-breadcrumb-item:not(:last-child):after {
 			content: " • ";
 		}
 	}
-	&.dot-separator {
-		.breadcrumb-item:not(:last-child):after {
+	&__dot-separator {
+		.o-breadcrumb-item:not(:last-child):after {
 			content: " ∙ ";
 		}
 	}
 	@each $name, $value in $sizes {
 		&--#{$name} {
-			.breadcrumb-item {
+			.o-breadcrumb-item {
 				font-size: $value;
 			}
 		}

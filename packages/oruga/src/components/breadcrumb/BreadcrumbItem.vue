@@ -1,5 +1,5 @@
 <template>
-	<li class="breadcrumb-item" :class="{ 'active': active }">
+	<li class="o-breadcrumb-item" :class="{ 'o-breadcrumb-item--active': active, 'o-breadcrumb-item--disabled': disabled}">
 		<component 
 			v-bind="$attrs"
             v-on="$listeners" 
@@ -17,7 +17,8 @@ export default {
 
   props : {
   	tag : { type: String, default: 'a' },
-  	active : { type: Boolean, default: false }
+  	active : { type: Boolean, default: false },
+  	disabled : { type: Boolean, default: false }
   },
   inheritAttrs: false,
 

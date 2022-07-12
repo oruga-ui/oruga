@@ -1,11 +1,9 @@
 <template>
-    <!-- <slot></slot> -->
     <section>
-        <ul class="breadcrumb breadcrumb--large chevron-separator">
+        <ul class="o-breadcrumb o-breadcrumb--large o-breadcrumb__chevron-separator">
             <slot/>
         </ul>
     </section>
-    <!-- <div>sdcsdccds</div> -->
 </template>
 
 <script>
