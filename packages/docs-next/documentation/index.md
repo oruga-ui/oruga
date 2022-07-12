@@ -567,6 +567,10 @@ Take a look at each component docs to know all customizable fields/props by conf
 | \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
 | \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
 
+## Themes
+
+- [Bulma CSS Theme](https://github.com/oruga-ui/theme-bulma)
+
 ## Examples
 
 ### TailwindCSS, Bootstrap 5, Bulma and Material demo 🧶
