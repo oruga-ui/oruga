@@ -1,9 +1,9 @@
 <template>
-	<li class="o-breadcrumb-item" :class="{ 'o-breadcrumb-item--active': active, 'o-breadcrumb-item--disabled': disabled}">
+	<li class="o-breadcrumb-item" :class="{ 'o-breadcrumb-item--active': active, 'o-breadcrumb-item--disabled': disabled }">
 		<component 
-			v-bind="$attrs"
-            v-on="$listeners" 
-            :is="tag"
+			    v-bind="$attrs"
+          v-on="$listeners" 
+          :is="tag"
         >
 			<slot />
 		</component>
@@ -42,7 +42,10 @@ export default {
   	disabled : { 
   		type: Boolean, 
   		default: false 
-  	}
+  	},
+  	itemClass: [String, Function, Array],
+    itemActiveClass: [String, Function, Array],
+    itemDisabledClass: [String, Function, Array],
   },
   inheritAttrs: false,
 
@@ -52,10 +55,15 @@ export default {
     }
   },
   computed: {
-
+  	isActive(){
+  		return active == true ? ' o-breadcrumb-item--active' : ''
+  	},
+  	isDisabled(){
+  		return disabled == true ? ' o-breadcrumb-item--disabled' : '';
+  	},
 
   	rootClasses(){
-  		return []
+  		return ['o-breadcrumb-item']
   	}
 
   }
