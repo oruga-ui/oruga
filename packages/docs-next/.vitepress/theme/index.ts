@@ -18,6 +18,7 @@ import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
 
 import Oruga from '@oruga-ui/oruga-next'
+import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -51,7 +52,6 @@ export default {
         app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
     }
 
-
     if (typeof window !== 'undefined') {
         const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
         switch (theme) {
@@ -78,12 +78,9 @@ export default {
                 break
             }
             case 'bulmacss': {
-                import ('@oruga-ui/theme-bulma').then(ret => {
-                    const bulmaConf = ret.bulmaConfig
-                    bulmaConf.iconPack = 'fas'
-                    bulmaConf.iconComponent = 'vue-fontawesome'
-                    app.use(Oruga, bulmaConf)
-                })
+                bulmaConfig.iconPack = 'fas'
+                bulmaConfig.iconComponent = 'vue-fontawesome'
+                app.use(Oruga, bulmaConfig)
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
