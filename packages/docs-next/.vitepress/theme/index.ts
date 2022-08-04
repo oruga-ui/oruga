@@ -2,6 +2,8 @@ import { markRaw } from 'vue'
 
 // THEME
 import Layout from './layout/Layout.vue'
+import Nav from './layout/Nav.vue'
+import NavBar from './layout/NavBar.vue'
 import './styles/fonts.css'
 import './styles/vars.css'
 import './styles/base.css'
@@ -38,6 +40,8 @@ export default {
     app.component('Inspector', Inspector)
     app.component('ExampleViewer', ExampleViewer)
     app.component('Expo', Expo)
+    app.component('Nav', Nav)
+    app.component('NavBar', NavBar)
 
     // @ts-ignore
     const examples = import.meta.globEager('./examples/**/index.vue')

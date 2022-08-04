@@ -3,7 +3,6 @@ import { provide } from 'vue'
 import { useNav } from 'vitepress/client/theme-default/composables/nav'
 import { useSidebar } from 'vitepress/client/theme-default/composables/sidebar'
 // import VPNavBar from 'vitepress/client/theme-default/components/VPNavBar.vue'
-import NavBar from './NavBar.vue'
 import VPNavScreen from 'vitepress/client/theme-default/components/VPNavScreen.vue'
 
 const { isScreenOpen, closeScreen, toggleScreen } = useNav()

@@ -92,6 +92,7 @@ if (typeof window !== 'undefined') {
 .theme-selector select {
     cursor: pointer;
     appearance: menulist;
+    background: transparent;
 }
 .VPNavBar {
   position: relative;
