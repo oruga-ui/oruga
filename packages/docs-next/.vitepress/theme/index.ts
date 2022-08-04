@@ -32,7 +32,7 @@ export default {
   enhanceApp({ app }) {
 
     app.component('Nav', Nav)
-    app.component('NavBar', NavBar)
+    app.component('NavBar', Nav)
 
     library.add(fas)
 
