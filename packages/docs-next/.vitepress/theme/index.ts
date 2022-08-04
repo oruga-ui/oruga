@@ -2,8 +2,8 @@ import { markRaw } from 'vue'
 
 // THEME
 import Layout from './layout/Layout.vue'
-//import Nav from './layout/Nav.vue'
-//import NavBar from './layout/NavBar.vue'
+import Nav from './layout/Nav.vue'
+import NavBar from './layout/NavBar.vue'
 import './styles/fonts.css'
 import './styles/vars.css'
 import './styles/base.css'
@@ -31,17 +31,18 @@ export default {
   Layout: Layout,
   enhanceApp({ app }) {
 
-    library.add(fas);
+    app.component('Nav', Nav)
+    app.component('NavBar', NavBar)
 
-    app.component('vue-fontawesome', FontAwesomeIcon);
+    library.add(fas)
+
+    app.component('vue-fontawesome', FontAwesomeIcon)
 
     app.component('DocWrapper', DocWrapper)
     app.component('HFRepos', HFRepos)
     app.component('Inspector', Inspector)
     app.component('ExampleViewer', ExampleViewer)
     app.component('Expo', Expo)
-    //app.component('Nav', Nav)
-    //app.component('NavBar', NavBar)
 
     // @ts-ignore
     const examples = import.meta.globEager('./examples/**/index.vue')
