@@ -1,9 +1,11 @@
 import { markRaw } from 'vue'
 
+import Theme from 'vitepress/theme'
+
 // THEME
-import Layout from './layout/Layout.vue'
-import Nav from './layout/Nav.vue'
-import NavBar from './layout/NavBar.vue'
+// import Layout from './layout/Layout.vue'
+// import Nav from './layout/Nav.vue'
+// import NavBar from './layout/NavBar.vue'
 import './styles/fonts.css'
 import './styles/vars.css'
 import './styles/base.css'
@@ -28,11 +30,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
-  Layout: Layout,
+  ...Theme,
   enhanceApp({ app }) {
 
-    app.component('Nav', Nav)
-    app.component('NavBar', Nav)
+    // app.component('Nav', Nav)
+    // app.component('NavBar', NavBar)
 
     library.add(fas)
 
