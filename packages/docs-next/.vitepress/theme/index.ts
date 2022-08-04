@@ -17,7 +17,8 @@ import Inspector from './components/Inspector.vue'
 import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
 
-import Oruga from '@oruga-ui/oruga-next'
+import Oruga from '../../../oruga-next/dist/oruga'
+
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
 import { library } from '@fortawesome/fontawesome-svg-core'

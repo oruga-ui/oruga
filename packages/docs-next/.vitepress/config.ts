@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 import path from 'path'
 import fs from 'fs'
 
-import { version } from '@oruga-ui/oruga-next/package.json'
+import { version } from '../../oruga-next/package.json'
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
