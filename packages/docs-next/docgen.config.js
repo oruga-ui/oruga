@@ -13,7 +13,8 @@ const IGNORE = [
 ];
 
 const IGNORE_CLASSES = {
-    'icon' : ['customClass']
+    'icon' : ['customClass'],
+    'table': ['rowClass']
 }
 
 const NAME_FOLDER_MAPPING = {
