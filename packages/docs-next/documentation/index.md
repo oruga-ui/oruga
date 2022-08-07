@@ -69,12 +69,12 @@ createApp(...).use(Oruga);
 
 ```js
 import { createApp } from 'vue'
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next'
+import { OAutocomplete, OSidebar } from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga.css'
 
 createApp(...)
-  .use(Autocomplete)
-  .use(Sidebar)
+  .component(OAutocomplete)
+  .component(OSidebar)
 ```
 
 ## Nuxt module
@@ -158,11 +158,11 @@ If you use individual imports you can customize each compoment using `Config` pl
 
 ```js
 import { createApp } from 'vue'
-import { Autocomplete, Sidebar, Config } from '@oruga-ui/oruga-next';
+import { OAutocomplete, OSidebar, Config } from '@oruga-ui/oruga-next';
 
 createApp(...)
-    .use(Autocomplete);
-    .use(Sidebar);
+    .component(OAutocomplete)
+    .component(OSidebar)
     .use(Config, {
         autocomplete: {
             rootClass: 'myautocomplete-root',

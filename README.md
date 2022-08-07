@@ -70,60 +70,69 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
 
 #### Vue 2
 
-Install Oruga
+1. Install Oruga.
 
 ```bash
 npm install @oruga-ui/oruga
 ```
 
-Then import the full bundle
+2. Import the components:
 
-```js
-import Vue from 'vue';
-import Oruga from '@oruga-ui/oruga';
-import '@oruga-ui/oruga/dist/oruga.css';
+ - To get started quickly, use `Oruga` to register all components:
 
-Vue.use(Oruga);
-```
-or individual components (tree shaking)
+    ```js
+    import Vue from 'vue';
+    import Oruga from '@oruga-ui/oruga';
+    import '@oruga-ui/oruga/dist/oruga.css';
+    
+    Vue.use(Oruga);
+    ```
 
-```js
-import Vue from 'vue';
-import { Field, Input } from '@oruga-ui/oruga';
-import '@oruga-ui/oruga/dist/oruga.css';
+ - To use tree shaking, either register component manually:
 
-Vue.use(Field);
-Vue.use(Input);
-```
+    ```js
+    import Vue from 'vue';
+    import { OField, OInput } from '@oruga-ui/oruga';
+    import '@oruga-ui/oruga/dist/oruga.css';
+    
+    Vue.component(OField);
+    Vue.component(OInput);
+    ```
+   
+ - or [import them in your SFC](https://v2.vuejs.org/v2/guide/components-registration.html#Local-Registration-in-a-Module-System).
 
 #### Vue 3
 
-Install Oruga
+1. Install Oruga.
 
 ```bash
 npm install @oruga-ui/oruga-next
 ```
 
-Then import the full bundle
+2. Import the components:
 
-```js
-import { createApp } from 'vue'
-import Oruga from '@oruga-ui/oruga-next';
-import '@oruga-ui/oruga-next/dist/oruga.css';
+- To get started quickly, use `Oruga` to register all components:
 
-createApp(...).use(Oruga);
-```
-or individual components (tree shaking)
+    ```js
+    import { createApp } from 'vue'
+    import Oruga from '@oruga-ui/oruga-next';
+    import '@oruga-ui/oruga-next/dist/oruga.css';
+    
+    createApp(...).use(Oruga);
+    ```
 
-```js
-import Vue from 'vue'
-import { Field, Input } from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
+ - To use tree shaking, either register component manually:
 
-createApp(...)
-  .use(Field)
-  .use(Input)
-```
+    ```js
+    import Vue from 'vue'
+    import { OField, OInput } from '@oruga-ui/oruga'
+    import '@oruga-ui/oruga/dist/oruga.css'
+    
+    createApp(...)
+      .component(OField)
+      .component(OInput)
+    ```
+ - or [import them in your SFC](https://vuejs.org/guide/components/registration.html#local-registration).
 
 ### Customization
 
