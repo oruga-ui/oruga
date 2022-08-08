@@ -221,6 +221,7 @@
                                 name="default"
                                 tag="td"
                                 :class="tdClasses(row, column)"
+                                :style="column.style"
                                 :data-label="column.label"
                                 :props="{ row, column, index, colindex, toggleDetails }"
                                 @click="$emit('cell-click', row, column, index, colindex, $event)"
