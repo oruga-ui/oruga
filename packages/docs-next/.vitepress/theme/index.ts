@@ -3,7 +3,7 @@ import { markRaw } from 'vue'
 import Theme from 'vitepress/theme'
 
 // THEME
-// import Layout from './layout/Layout.vue'
+import Layout from './layout/Layout.vue'
 // import Nav from './layout/Nav.vue'
 // import NavBar from './layout/NavBar.vue'
 import './styles/fonts.css'
@@ -31,6 +31,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
   ...Theme,
+  Layout: Layout,
   enhanceApp({ app }) {
 
     // app.component('Nav', Nav)
@@ -68,10 +69,15 @@ export default {
                     iconPack: 'fas',
                     iconComponent: 'vue-fontawesome'
                 })
-                const link = document.createElement('link')
-                link.rel = 'stylesheet'
-                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
-                document.head.appendChild(link)
+                if (process.env.NODE_ENV !== 'production') {
+                    // @ts-ignore
+                    import('../../../oruga-next/dist/oruga-full-vars.css').then(() => {})
+                } else {
+                    const link = document.createElement('link')
+                    link.rel = 'stylesheet'
+                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
+                    document.head.appendChild(link)
+                }
                 break
             }
             case 'basecss': {
