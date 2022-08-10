@@ -28,8 +28,8 @@ export default {
                 width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
             }
             this.matchMediaRef = window.matchMedia(`(max-width: ${width})`)
-            this.isMatchMedia = this.matchMediaRef.matches
-            this.matchMediaRef.addListener(this.onMatchMedia, false)
+            this.isMatchMedia = this.matchMediaRef?.matches
+            this.matchMediaRef?.addListener(this.onMatchMedia, false)
         }
     },
     beforeDestroy() {
