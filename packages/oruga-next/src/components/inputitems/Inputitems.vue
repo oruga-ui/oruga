@@ -106,7 +106,7 @@ import { defineComponent } from 'vue'
 /**
  * A simple item input field that can have autocomplete functionality
  * @displayName Inputitems
- * @style _inputItems.scss
+ * @style _inputitems.scss
  */
 export default defineComponent({
     name: 'OInputitems',
