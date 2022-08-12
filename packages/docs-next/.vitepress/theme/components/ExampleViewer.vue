@@ -81,6 +81,7 @@ export default defineComponent({
     pre {
         padding: 0;
         margin: 0;
+        width: 100%;
     }
 }
 </style>

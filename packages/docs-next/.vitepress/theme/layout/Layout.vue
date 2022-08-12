@@ -1,62 +1,80 @@
-<script setup lang="ts">
-import { provide } from 'vue'
-import { useSidebar, useCloseSidebarOnEscape } from 'vitepress/client/theme-default/composables/sidebar'
-import VPSkipLink from 'vitepress/client/theme-default/components/VPSkipLink.vue'
-import VPBackdrop from 'vitepress/client/theme-default/components/VPBackdrop.vue'
-// import VPNav from 'vitepress/client/theme-default/components/VPNav.vue'
-import Navbar from './Navbar.vue'
-import VPLocalNav from 'vitepress/client/theme-default/components/VPLocalNav.vue'
-import VPSidebar from 'vitepress/client/theme-default/components/VPSidebar.vue'
-import VPContent from 'vitepress/client/theme-default/components/VPContent.vue'
-import VPFooter from 'vitepress/client/theme-default/components/VPFooter.vue'
+<script setup>
+import DefaultTheme from 'vitepress/theme'
+import { ref, computed } from 'vue'
+import { useSidebar } from 'vitepress/client/theme-default/composables/sidebar'
 
-const {
-  isOpen: isSidebarOpen,
-  open: openSidebar,
-  close: closeSidebar
-} = useSidebar()
+const { Layout } = DefaultTheme
 
-useCloseSidebarOnEscape(isSidebarOpen, closeSidebar)
+const { hasSidebar } = useSidebar()
 
-provide('close-sidebar', closeSidebar)
+const selected = ref('')
+
+const themeOptions = ref([
+    { label: 'Base CSS', value: 'basecss' },
+    { label: 'Full CSS', value: 'fullcss' },
+    { label: 'Bulma CSS', value: 'bulmacss' }
+])
+
+const onThemeChange = function () {
+    localStorage.setItem('oruga.io_theme', selected.value)
+    location.reload()
+}
+
+const selectedOption = computed(() => {
+    return themeOptions.value.filter(t => t.value === selected.value)[0]
+})
+
+if (typeof window !== 'undefined') {
+    selected.value = localStorage.getItem('oruga.io_theme') || 'fullcss'
+}
 </script>
 
 <template>
-  <div class="Layout">
-    <slot name="layout-top" />
-    <VPSkipLink />
-    <VPBackdrop class="backdrop" :show="isSidebarOpen" @click="closeSidebar" />
-    <!--<VPNav />-->
-    <Navbar />
-    <VPLocalNav :open="isSidebarOpen" @open-menu="openSidebar" />
-    <VPSidebar :open="isSidebarOpen" />
-
-    <VPContent>
-      <template #home-hero-before><slot name="home-hero-before" /></template>
-      <template #home-hero-after><slot name="home-hero-after" /></template>
-      <template #home-features-before><slot name="home-features-before" /></template>
-      <template #home-features-after><slot name="home-features-after" /></template>
-
-      <template #doc-before><slot name="doc-before" /></template>
-      <template #doc-after><slot name="doc-after" /></template>
-
-      <template #aside-top><slot name="aside-top" /></template>
-      <template #aside-bottom><slot name="aside-bottom" /></template>
-      <template #aside-outline-before><slot name="aside-outline-before" /></template>
-      <template #aside-outline-after><slot name="aside-outline-after" /></template>
-      <template #aside-ads-before><slot name="aside-ads-before" /></template>
-      <template #aside-ads-after><slot name="aside-ads-after" /></template>
-    </VPContent>
-
-    <VPFooter />
-    <slot name="layout-bottom" />
-  </div>
+    <Layout>
+        <template #doc-before>
+            <client-only>
+                <Teleport to=".VPNavBar .container .content">
+                    <div class="theme-selector" v-if="hasSidebar">
+                        Theme ->
+                        <select
+                            v-model="selected"
+                            @update:modelValue="onThemeChange"
+                        >
+                            <option v-for="item in themeOptions" :value="item.value">
+                                {{ item.label }}
+                            </option>
+                        </select>
+                    </div>
+                </Teleport>
+            </client-only>
+        </template>
+    </Layout>
 </template>
 
 <style scoped>
-.Layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.theme-selector {
+    position: absolute;
+    left: 0;
+    flex: auto;
+    margin-left: 10px;
+    align-items: center;
+    padding: 0 12px;
+    line-height: var(--vp-nav-height-mobile);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vp-c-text-1);
+    transition: color 0.25s;
+}
+@media (max-width: 959px) {
+    .theme-selector {
+        /* hamburger width + margin */
+        right: calc(48px + 2rem);
+        left: auto;
+    }
+}
+.theme-selector select {
+    cursor: pointer;
+    appearance: menulist;
+    background: transparent;
 }
 </style>

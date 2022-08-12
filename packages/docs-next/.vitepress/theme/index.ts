@@ -1,7 +1,11 @@
 import { markRaw } from 'vue'
 
+import Theme from 'vitepress/theme'
+
 // THEME
 import Layout from './layout/Layout.vue'
+// import Nav from './layout/Nav.vue'
+// import NavBar from './layout/NavBar.vue'
 import './styles/fonts.css'
 import './styles/vars.css'
 import './styles/base.css'
@@ -17,31 +21,31 @@ import Inspector from './components/Inspector.vue'
 import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
 
-import Oruga from '@oruga-ui/oruga-next';
-import '@oruga-ui/oruga-next/dist/oruga-full-vars.css'
+import Oruga from '../../../oruga-next/dist/oruga'
+
+import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
+  ...Theme,
   Layout: Layout,
   enhanceApp({ app }) {
 
-    library.add(fas);
+    // app.component('Nav', Nav)
+    // app.component('NavBar', NavBar)
 
-    app.component('vue-fontawesome', FontAwesomeIcon);
+    library.add(fas)
+
+    app.component('vue-fontawesome', FontAwesomeIcon)
 
     app.component('DocWrapper', DocWrapper)
     app.component('HFRepos', HFRepos)
     app.component('Inspector', Inspector)
     app.component('ExampleViewer', ExampleViewer)
     app.component('Expo', Expo)
-
-    app.use(Oruga, {
-        iconPack: 'fas',
-        iconComponent: 'vue-fontawesome'
-    })
 
     // @ts-ignore
     const examples = import.meta.globEager('./examples/**/index.vue')
@@ -55,6 +59,51 @@ export default {
     for (const path in inspectors) {
         const v = path.split('/')
         app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
+    }
+
+    if (typeof window !== 'undefined') {
+        const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
+        switch (theme) {
+            case 'fullcss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
+                if (process.env.NODE_ENV !== 'production') {
+                    // @ts-ignore
+                    import('../../../oruga-next/dist/oruga-full-vars.css').then(() => {})
+                } else {
+                    const link = document.createElement('link')
+                    link.rel = 'stylesheet'
+                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
+                    document.head.appendChild(link)
+                }
+                break
+            }
+            case 'basecss': {
+                app.use(Oruga, {
+                    iconPack: 'fas',
+                    iconComponent: 'vue-fontawesome'
+                })
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
+                document.head.appendChild(link)
+                break
+            }
+            case 'bulmacss': {
+                bulmaConfig.iconPack = 'fas'
+                bulmaConfig.iconComponent = 'vue-fontawesome'
+                app.use(Oruga, bulmaConfig)
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
+                document.head.appendChild(link)
+                break
+            }
+        }
+    } else {
+        app.use(Oruga)
     }
   }
 }

@@ -409,7 +409,7 @@ createApp(...)
 
 ### Using CSS or SASS/SCSS variables
 
-You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](documentation/#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
+You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
 
 To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
 
@@ -566,6 +566,10 @@ Take a look at each component docs to know all customizable fields/props by conf
 | \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
 | \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
 | \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
+
+## Themes
+
+- [Bulma CSS Theme](https://github.com/oruga-ui/theme-bulma)
 
 ## Examples
 
