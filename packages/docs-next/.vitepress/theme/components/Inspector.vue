@@ -55,7 +55,7 @@
                 </p>
             </div>
         </o-collapse>
-        <table>
+        <table class="vp-doc-table">
             <tr>
                 <th>Class prop</th>
                 <th>Description</th>
