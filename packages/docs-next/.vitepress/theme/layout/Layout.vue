@@ -1,9 +1,7 @@
 <script setup>
-import DefaultTheme from 'vitepress/theme'
 import { ref, computed } from 'vue'
-import { useSidebar } from 'vitepress/client/theme-default/composables/sidebar'
-
-const { Layout } = DefaultTheme
+import Layout from 'vitepress/dist/client/theme-default/Layout.vue'
+import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
 
 const { hasSidebar } = useSidebar()
 
