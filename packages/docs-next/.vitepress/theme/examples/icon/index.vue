@@ -13,9 +13,12 @@
         You can also add it during Oruga import as default config.
     </p>
 
-    ::: tip
-    Take a look at below example code (click on "Show code") to know all internal icons to replace with the releated icons of your custom icon pack
-    :::
+    <div class="tip custom-block">
+        <p class="custom-block-title">TIP</p>
+        <p>
+            Take a look at below example code (click on "Show code") to know all internal icons to replace with the releated icons of your custom icon pack
+        </p>
+    </div>
 
     <ExampleViewer :component="CustomIconPack" :code="CustomIconPackCode" />
 
@@ -25,34 +28,59 @@
         You can also customize some properties of the default icon packs. In this example, default sizes for FontAwesome have been modified.
     </p>
 
-    <code>
-    const customIconConfig = {
-        customIconPacks: {
-            fas: {
-            sizes: {
-                default: null,
-                small: null,
-                medium: "fa-lg",
-                large: "fa-2x"
-            }
-            }
-        }
-    };
-    export default {
-        created() {
-            // only for docs purpose, you can set in globally
-            this.$oruga.config.setOptions(customIconConfig);
-        }
-    };
-    </code>
+    <component :is="highlightjs" :code="customIconConfigCode" />
 
     <h2>Custom icon component</h2>
 
-    ::: tip
-    You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should work with other Vue icon components as well).
-    :::
+    <div class="tip custom-block">
+        <p class="custom-block-title">TIP</p>
+        <p>
+            You can set the `iconComponent` config option to render icons with the vue-fontawesome component (it should work with other Vue icon components as well).
+        </p>
+    </div>
+
+    <component :is="highlightjs" :code="faIconConfigCode" />
 
     <code>
+
+    </code>
+
+</template>
+
+<script setup>
+	import Base from './base.vue';
+	import BaseCode from './base.vue?raw';
+
+	import CustomIconPack from './custom-icon-pack.vue';
+	import CustomIconPackCode from './custom-icon-pack.vue?raw';
+
+    import { ref, markRaw, onBeforeMount } from 'vue'
+    import 'highlight.js/lib/common';
+    import 'highlight.js/styles/github-dark.css'
+
+    const customIconConfigCode = ref(`
+    const customIconConfig = {
+        customIconPacks: {
+            fas: {
+                sizes: {
+                    default: null,
+                    small: null,
+                    medium: "fa-lg",
+                    large: "fa-2x"
+                }
+            }
+        }
+    }
+
+    import Oruga from "@oruga-ui/oruga";
+    app.use(Oruga, {
+        iconComponent: "vue-fontawesome",
+        iconPack: "fas",
+        ...customIconConfig
+    })
+    `)
+
+    const faIconConfigCode = ref(`
     import { library } from "@fortawesome/fontawesome-svg-core";
     // internal icons
     import {
@@ -95,15 +123,17 @@
     app.use(Oruga, {
         iconComponent: "vue-fontawesome",
         iconPack: "fas"
-    });
-    </code>
+    })
+    `)
 
-</template>
+    const highlightjs = ref(null)
 
-<script setup>
-	import Base from './base.vue';
-	import BaseCode from './base.vue?raw';
+    onBeforeMount(() => {
+        // due to esm build (probably better write a new viewer from scratch)
+        import('@highlightjs/vue-plugin').then((val) => {
+            highlightjs.value = markRaw(val.default.component)
+        })
+    })
 
-	import CustomIconPack from './custom-icon-pack.vue';
-	import CustomIconPackCode from './custom-icon-pack.vue?raw';
+
 </script>

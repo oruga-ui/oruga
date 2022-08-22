@@ -143,7 +143,6 @@ title: Table
 | --oruga-table-background                      | \$table-background                      | #f5f5f5                                                  |
 | --oruga-table-boder                           | \$table-boder                           | 1px solid transparent                                    |
 | --oruga-table-border-radius                   | \$table-border-radius                   | \$base-border-radius                                     |
-| --oruga-table-bordered-border-width           | \$table-bordered-border-width           | 1px                                                      |
 | --oruga-table-card-box-shadow                 | \$table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
 | --oruga-table-card-cell-font-weight           | \$table-card-cell-font-weight           | 600                                                      |
 | --oruga-table-card-cell-padding               | \$table-card-cell-padding               | 0 0.5em 0 0                                              |

@@ -22,7 +22,7 @@
   "devDependencies": {
     "concurrently": "7.1.0",
     "sass": "1.53.0",
-    "vitepress": "1.0.0-alpha.9",
+    "vitepress": "1.0.0-alpha.10",
     "vue-docgen-cli": "4.44.23"
   }
 }

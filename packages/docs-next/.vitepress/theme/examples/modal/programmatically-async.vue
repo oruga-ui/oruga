@@ -25,8 +25,6 @@ export default defineComponent({
 
         const promptModal = async () => {
             const instance = oruga.modal.open({
-                // parent is only for Vue2. in Vue 3 omit this option
-                parent: this,
                 component: ModalForm,
                 props: {
                     title: 'Ship sprockets?',
@@ -50,8 +48,6 @@ export default defineComponent({
 
         const promptModalCloseAll = async () => {
             const instance = oruga.modal.open({
-                // parent is only for Vue2. in Vue 3 omit this option
-                parent: this,
                 component: ModalForm,
                 props: {
                     title: 'Close All test',
