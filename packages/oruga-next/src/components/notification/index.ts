@@ -47,7 +47,7 @@ const NotificationProgrammatic = {
         const app = localVueInstance || VueInstance
         propsData.propsNotification = Object.assign({},propsData)
         propsData.propsNotification.isActive = true
-        const defaultSlot = () => { return newParams.message }
+        const defaultSlot = () => { return slot }
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot)
         vnode.appContext = app._context
         render(vnode, document.createElement('div'))
