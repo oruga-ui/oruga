@@ -4,7 +4,6 @@ $table-background-color: #fff !default;
 $table-background: #f5f5f5 !default;
 $table-boder: 1px solid transparent !default;
 $table-border-radius: $base-border-radius !default;
-$table-bordered-border-width: 1px !default;
 $table-card-box-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default;
 $table-card-cell-font-weight: 600 !default;
 $table-card-cell-padding: 0 0.5em 0 0 !default;
@@ -231,11 +230,11 @@ $table-th-padding: 0.5em 0.75em !default;
     &--bordered {
         tr:last-child {
             td, th {
-                @include avariable('border-bottom-width', 'table-bordered-border-width', $table-bordered-border-width);
+                @include avariable('border', 'table-td-border', $table-td-border);
             }
         }
         td, th {
-            @include avariable('border-width', 'table-bordered-border-width', $table-bordered-border-width);
+            @include avariable('border', 'table-td-border', $table-td-border);
         }
     }
 
