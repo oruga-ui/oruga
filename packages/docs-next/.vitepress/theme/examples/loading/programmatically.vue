@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useProgrammatic } from '@oruga-ui/oruga-next'
+import { useProgrammatic } from '../../../../../oruga-next/dist/oruga'
 
 export default defineComponent({
   setup() {

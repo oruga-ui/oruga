@@ -11,13 +11,13 @@
             content-class="odocs-panel-content"
             v-model:open="isOpen">
             <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-            <component :is="highlightjs" :code="code" />
+            <component :is="highlightjs" :code="codeComputed" />
         </o-collapse>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, markRaw } from 'vue'
+import { defineComponent, ref, onBeforeMount, computed, markRaw } from 'vue'
 import 'highlight.js/lib/common';
 import 'highlight.js/styles/github-dark.css'
 
@@ -42,12 +42,18 @@ export default defineComponent({
             // due to esm build (probably better write a new viewer from scratch)
             import('@highlightjs/vue-plugin').then((val) => {
                 highlightjs.value = markRaw(<any>val.default.component);
-            });
-        });
+            })
+        })
+
+        const codeComputed = computed(() => {
+            const code = props.code
+            return code.replaceAll('../','').replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
+        })
 
         return {
             isOpen,
-            highlightjs
+            highlightjs,
+            codeComputed
         };
     }
 })

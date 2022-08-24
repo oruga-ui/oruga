@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useProgrammatic } from '@oruga-ui/oruga-next'
+import { useProgrammatic } from '../../../../../oruga-next/dist/oruga'
 import NotificationForm from './_notification-form.vue'
 
 export default defineComponent({

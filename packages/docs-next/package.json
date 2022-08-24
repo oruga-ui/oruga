@@ -19,7 +19,6 @@
     "highlight.js": "11.5.1"
   },
   "devDependencies": {
-    "@oruga-ui/oruga-next": "*",
     "concurrently": "7.1.0",
     "sass": "1.53.0",
     "vitepress": "1.0.0-alpha.10",

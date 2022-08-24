@@ -47,8 +47,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
-import { useProgrammatic } from '@oruga-ui/oruga-next'
+import { defineComponent, ref, onBeforeMount, onBeforeUnmount } from 'vue'
+import { useProgrammatic } from '../../../../../oruga-next/dist/oruga'
 
 const customIconConfig = {
   iconComponent: undefined,
