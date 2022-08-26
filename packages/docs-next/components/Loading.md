@@ -6,11 +6,7 @@ title: Loading
 
 > A simple loading overlay
 
----
-
-## Examples
-
- <example-loading />
+<example-loading />
 
 ## Class props
 

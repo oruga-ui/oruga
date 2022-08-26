@@ -6,11 +6,7 @@ title: Switch
 
 > Switch between two opposing states
 
----
-
-## Examples
-
- <example-switch />
+<example-switch />
 
 ## Class props
 

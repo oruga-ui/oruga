@@ -6,11 +6,7 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
----
-
-## Examples
-
- <example-tooltip />
+<example-tooltip />
 
 ## Class props
 

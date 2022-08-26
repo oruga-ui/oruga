@@ -6,11 +6,7 @@ title: Autocomplete
 
 > Extended input that provide suggestions while the user types
 
----
-
-## Examples
-
- <example-autocomplete />
+<example-autocomplete />
 
 ## Class props
 

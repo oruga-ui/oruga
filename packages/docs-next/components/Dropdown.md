@@ -6,11 +6,7 @@ title: Dropdown
 
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
----
-
-## Examples
-
- <example-dropdown />
+<example-dropdown />
 
 ## Class props
 

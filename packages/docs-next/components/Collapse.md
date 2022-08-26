@@ -6,11 +6,7 @@ title: Collapse
 
 > An easy way to toggle what you want
 
----
-
-## Examples
-
- <example-collapse />
+<example-collapse />
 
 ## Class props
 

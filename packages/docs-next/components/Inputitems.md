@@ -6,11 +6,7 @@ title: Inputitems
 
 > A simple item input field that can have autocomplete functionality
 
----
-
-## Examples
-
- <example-inputitems />
+<example-inputitems />
 
 ## Class props
 

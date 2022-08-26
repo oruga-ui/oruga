@@ -6,11 +6,7 @@ title: Modal
 
 > Classic modal overlay to include any content you may need
 
----
-
-## Examples
-
- <example-modal />
+<example-modal />
 
 ## Class props
 

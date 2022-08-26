@@ -6,11 +6,7 @@ title: Icon
 
 > Icons take an important role of any application
 
----
-
-## Examples
-
- <example-icon />
+<example-icon />
 
 ## Class props
 

@@ -6,11 +6,7 @@ title: Button
 
 > The classic button, in different colors, sizes, and states
 
----
-
-## Examples
-
- <example-button />
+<example-button />
 
 ## Class props
 

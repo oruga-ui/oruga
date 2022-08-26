@@ -6,11 +6,7 @@ title: Input
 
 > Get user Input. Use with Field to access all functionalities
 
----
-
-## Examples
-
- <example-input />
+<example-input />
 
 ## Class props
 

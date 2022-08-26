@@ -6,11 +6,7 @@ title: Upload
 
 > Upload one or more files
 
----
-
-## Examples
-
- <example-upload />
+<example-upload />
 
 ## Class props
 

@@ -6,11 +6,7 @@ title: Notification
 
 > Bold notification blocks to alert your users of something
 
----
-
-## Examples
-
- <example-notification />
+<example-notification />
 
 ## Class props
 

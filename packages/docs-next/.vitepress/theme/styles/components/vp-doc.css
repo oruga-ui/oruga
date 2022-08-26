@@ -94,14 +94,14 @@
   transition: color 0.5s;
 }
 
-.vp-doc a {
+.vp-doc p > a {
   font-weight: 500;
   color: var(--vp-c-brand);
   text-decoration-style: dotted;
   transition: color 0.25s;
 }
 
-.vp-doc a:hover {
+.vp-doc p > a:hover {
   color: var(--vp-c-brand-dark);
 }
 
@@ -109,10 +109,12 @@
   font-weight: 600;
 }
 
+
 /**
  * Lists
  * -------------------------------------------------------------------------- */
 
+/*
 .vp-doc ul,
 .vp-doc ol {
   padding-left: 1.25rem;
@@ -135,6 +137,7 @@
 .vp-doc li > ul {
   margin: 8px 0 0;
 }
+*/
 
 /**
  * Table

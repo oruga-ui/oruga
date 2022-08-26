@@ -6,11 +6,7 @@ title: Carousel
 
 > A Slideshow for cycling images in confined spaces
 
----
-
-## Examples
-
- <example-carousel />
+<example-carousel />
 
 ## Class props
 
