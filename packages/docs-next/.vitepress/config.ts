@@ -7,7 +7,37 @@ import { version } from '../../oruga-next/package.json'
 
 const componentsFolder = path.join(__dirname, '../components/')
 const components = fs.readdirSync(componentsFolder).map(c => c.replace('.md', ''))
-const sidebarComponents = components.map(c => `/components/${c}`)
+
+const componentsItems = components.map(c => `/components/${c}`).map(c => {
+    const name = c.split('/')[2]
+    return {
+        text: name,
+        link: c
+    }
+})
+
+const getStartedItems = [
+    {
+        text: 'Introduction',
+        link: '/documentation/#introduction'
+    },
+    {
+        text: 'Setup',
+        link: '/documentation/#setup'
+    },
+    {
+        text: 'Customization',
+        link: '/documentation/#customization'
+    },
+    {
+        text: 'Themes',
+        link: '/documentation/#themes'
+    },
+    {
+        text: 'Examples',
+        link: '/documentation/#examples'
+    }
+]
 
 export default defineConfig({
     title: `Oruga`,
@@ -67,45 +97,23 @@ export default defineConfig({
             {
                 text: 'Get Started',
                 collapsible: true,
-                items: [
-                    {
-                        text: 'Introduction',
-                        link: '/documentation/#introduction'
-                    }
-                ]
+                items: getStartedItems
             },
             {
                 text: 'Components',
                 collapsible: true,
-                items: sidebarComponents.map(c => {
-                    const name = c.split('/')[2]
-                    return {
-                        text: name,
-                        link: c
-                    }
-                })
+                items: componentsItems
             }
         ],
         '/components/': [
             {
                 text: 'Get Started',
                 collapsible: true,
-                items: [
-                    {
-                        text: 'Introduction',
-                        link: '/documentation/#introduction'
-                    }
-                ]
+                items: getStartedItems
             },
             {
                 text: 'Components',
-                items: sidebarComponents.map(c => {
-                    const name = c.split('/')[2]
-                    return {
-                        text: name,
-                        link: c
-                    }
-                })
+                items: componentsItems
             }
         ]
       },

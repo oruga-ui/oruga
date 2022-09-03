@@ -114,14 +114,13 @@
  * Lists
  * -------------------------------------------------------------------------- */
 
-/*
-.vp-doc ul,
+.vp-doc ul:not([class]),
 .vp-doc ol {
   padding-left: 1.25rem;
   margin: 16px 0;
 }
 
-.vp-doc ul {
+.vp-doc ul:not([class]) {
   list-style: disc;
 }
 
@@ -129,15 +128,14 @@
   list-style: decimal;
 }
 
-.vp-doc li + li {
+.vp-doc ul:not([class]) li + li {
   margin-top: 8px;
 }
 
 .vp-doc li > ol,
-.vp-doc li > ul {
+.vp-doc ul:not([class]) li > ul {
   margin: 8px 0 0;
 }
-*/
 
 /**
  * Table
