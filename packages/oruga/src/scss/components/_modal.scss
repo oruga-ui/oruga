@@ -36,8 +36,6 @@ $modal-zindex: 40 !default;
         @include avariable('background-color', 'modal-overlay-background-color', $modal-overlay-background-color);
     }
     &__content {
-        position: relative;
-        max-height: calc(100vh - 160px);
         overflow: auto;
         @include avariable('margin', 'modal-content-margin', $modal-content-margin);
         @include avariable('max-height', 'modal-content-max-height', $modal-content-max-height);
