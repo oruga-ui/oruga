@@ -11,7 +11,7 @@
             content-class="odocs-panel-content"
             v-model:open="isOpen">
             <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-            <component :is="highlightjs" :code="codeComputed" />
+            <highlightjs :code="codeComputed" />
         </o-collapse>
     </div>
 </template>
@@ -20,8 +20,12 @@
 import { defineComponent, ref, onBeforeMount, computed, markRaw } from 'vue'
 import 'highlight.js/lib/common';
 import 'highlight.js/styles/github-dark.css'
+import hljsVuePlugin  from '@highlightjs/vue-plugin'
 
 export default defineComponent({
+    components: {
+        highlightjs: hljsVuePlugin.component
+    },
     props: {
         component: {
             type: Object,
@@ -35,24 +39,15 @@ export default defineComponent({
     },
     setup(props) {
 
-        const isOpen = ref(false);
-        const highlightjs = ref(null);
-
-        onBeforeMount(() => {
-            // due to esm build (probably better write a new viewer from scratch)
-            import('@highlightjs/vue-plugin').then((val) => {
-                highlightjs.value = markRaw(<any>val.default.component);
-            })
-        })
+        const isOpen = ref(false)
 
         const codeComputed = computed(() => {
             const code = props.code
-            return code.replaceAll('../','').replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
+            return code.replace(/\.\.\//g, '').replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
         })
 
         return {
             isOpen,
-            highlightjs,
             codeComputed
         };
     }
@@ -66,7 +61,7 @@ export default defineComponent({
 }
 
 .odocs-panel {
-    border: 1px solid #ebebeb;
+    border: 1px solid var(--vp-button-alt-bg);
 }
 
 .odocs-spaced > *:not(:last-child) {
@@ -78,7 +73,7 @@ export default defineComponent({
     cursor: pointer;
     text-align: center;
     padding: 0.5rem;
-    border-bottom: 1px solid #ebebeb;
+    background-color: var(--vp-button-alt-bg);
 }
 
 .odocs-panel-content {
