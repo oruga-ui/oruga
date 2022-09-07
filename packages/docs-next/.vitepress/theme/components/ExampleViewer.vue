@@ -2,18 +2,20 @@
     <div class="odocs-example odocs-mt">
         <component :is="component"></component>
     </div>
-    <div
-        v-if="showCode"
-        class="odocs-mt">
-        <o-collapse
-            root-class="odocs-panel"
-            trigger-class="odocs-panel-trigger"
-            content-class="odocs-panel-content"
-            v-model:open="isOpen">
-            <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-            <highlightjs :code="codeComputed" />
-        </o-collapse>
-    </div>
+    <ClientOnly>
+        <div
+            v-if="showCode"
+            class="odocs-mt">
+            <o-collapse
+                root-class="odocs-panel"
+                trigger-class="odocs-panel-trigger"
+                content-class="odocs-panel-content"
+                v-model:open="isOpen">
+                <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
+                <highlightjs :code="codeComputed" />
+            </o-collapse>
+        </div>
+    </ClientOnly>
 </template>
 
 <script lang="ts">
