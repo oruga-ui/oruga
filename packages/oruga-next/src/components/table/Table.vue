@@ -66,7 +66,7 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.newKey + ':' + index + 'header'"
-                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="column.style"
                             @click.stop="sort(column, null, $event)"
@@ -118,7 +118,7 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.newKey + ':' + index + 'searchable'"
-                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="column.style">
                             <template v-if="column.searchable">
@@ -215,7 +215,7 @@
                             <o-slot-component
                                 v-for="(column, colindex) in visibleColumns"
                                 :key="column.newKey + index + ':' + colindex"
-                                v-bind="column.tdAttrs && column.tdAttrs(row, column)"
+                                v-bind="column.tdAttrsData[index]"
                                 :component="column"
                                 scoped
                                 name="default"
@@ -883,6 +883,18 @@ export default defineComponent({
             deep: true,
         },
 
+        visibleColumns: {
+            handler() {
+                this.processTdAttrs()
+            }
+        },
+
+        visibleData: {
+            handler() {
+                this.processTdAttrs()
+            }
+        },
+
         /**
         * When Pagination total change, update internal total
         * only if it's backend-paginated.
@@ -943,7 +955,6 @@ export default defineComponent({
             return [
                 ...this.thBaseClasses,
                 ...this.thStickyClasses(column),
-                column.thAttrs && getValueByPath(column.thAttrs(column), 'class'),
                 { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
                 { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
                 { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
@@ -969,7 +980,6 @@ export default defineComponent({
         tdClasses(row, column) {
             return [
                 ...this.tdBaseClasses,
-                column.tdAttrs && getValueByPath(column.tdAttrs(row, column), 'class'),
                 { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
                 { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]
@@ -1455,6 +1465,19 @@ export default defineComponent({
 
         emitEventForRow(eventName, event, row) {
             return this.$attrs[eventName] ? this.$emit(eventName, row, event) : null
+        },
+
+        processTdAttrs() {
+            if (this.visibleColumns.length && this.visibleData.length) {
+                for (let i = 0; i < this.visibleColumns.length; i++) {
+                    const col = this.visibleColumns[i]
+                    if (typeof col.tdAttrs !== 'undefined') {
+                        this.visibleData.forEach((data, index) => {
+                            col.tdAttrsData[index] = col.tdAttrs(data, col)
+                        })
+                    }
+                }
+            }
         },
 
         _addColumn(column) {

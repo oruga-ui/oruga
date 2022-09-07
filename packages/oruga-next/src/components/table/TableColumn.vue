@@ -54,7 +54,9 @@ export default defineComponent({
     },
     data() {
         return {
-            newKey: undefined
+            newKey: undefined,
+            thAttrsData: {},
+            tdAttrsData: []
         }
     },
     computed: {
@@ -82,6 +84,11 @@ export default defineComponent({
         }
         this.newKey = this.$table._nextSequence()
         this.$table._addColumn(this)
+    },
+    beforeMount() {
+        if (typeof this.thAttrs !== 'undefined') {
+            this.thAttrsData = this.thAttrs(this)
+        }
     },
     beforeUnmount() {
         this.$table._removeColumn(this)
