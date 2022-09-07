@@ -12,7 +12,7 @@
                 content-class="odocs-panel-content"
                 v-model:open="isOpen">
                 <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-                <highlightjs :code="codeComputed" />
+                <highlightjs language="xml" :code="codeComputed" />
             </o-collapse>
         </div>
     </ClientOnly>
