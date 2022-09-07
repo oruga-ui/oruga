@@ -12,17 +12,22 @@
                 content-class="odocs-panel-content"
                 v-model:open="isOpen">
                 <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-                <highlightjs language="xml" :code="codeComputed" />
+                <highlightjs :code="codeComputed" />
             </o-collapse>
         </div>
     </ClientOnly>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, computed, markRaw } from 'vue'
-import 'highlight.js/lib/common';
+import { defineComponent, ref, computed } from 'vue'
 import 'highlight.js/styles/github-dark.css'
-import hljsVuePlugin  from '@highlightjs/vue-plugin'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import xml from 'highlight.js/lib/languages/xml'
+import hljsVuePlugin from "@highlightjs/vue-plugin"
+
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('javascript', javascript)
 
 export default defineComponent({
     components: {
@@ -37,7 +42,7 @@ export default defineComponent({
         showCode: {
             type: Boolean,
             default: () => true
-        },
+        }
     },
     setup(props) {
 
@@ -45,13 +50,14 @@ export default defineComponent({
 
         const codeComputed = computed(() => {
             const code = props.code
-            return code.replace(/\.\.\//g, '').replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
+            return code.replace(/\.\.\//g, '')
+                .replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
         })
 
         return {
             isOpen,
             codeComputed
-        };
+        }
     }
 })
 </script>
