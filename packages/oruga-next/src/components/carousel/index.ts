@@ -1,4 +1,4 @@
-import { App, Plugin } from 'vue'
+import type { App, Plugin } from 'vue'
 
 import Carousel from './Carousel.vue'
 import CarouselItem from './CarouselItem.vue'

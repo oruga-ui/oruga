@@ -1,4 +1,5 @@
-import { App, ComponentPropsOptions, createVNode, Plugin, render } from 'vue'
+import type { App, ComponentPropsOptions, Plugin } from 'vue'
+import { createVNode, render } from 'vue'
 
 import Loading from './Loading.vue'
 

@@ -1,4 +1,5 @@
-import { DefineComponent, defineComponent, h } from 'vue'
+import type { DefineComponent } from 'vue';
+import { defineComponent, h } from 'vue';
 
 export default defineComponent({
     name: 'OSlotComponent',

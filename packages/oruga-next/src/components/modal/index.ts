@@ -1,4 +1,5 @@
-import { App, createVNode, DefineComponent, Plugin, render } from 'vue'
+import type { App, DefineComponent, Plugin } from 'vue'
+import { createVNode, render } from 'vue'
 
 import Modal from './Modal.vue'
 

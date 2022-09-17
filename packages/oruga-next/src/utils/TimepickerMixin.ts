@@ -1,4 +1,6 @@
-import { App, defineComponent } from 'vue'
+import type { App } from 'vue'
+import { defineComponent } from 'vue';
+
 import { getOptions } from './config'
 import FormElementMixin from './FormElementMixin'
 import { getValueByPath, isMobile, matchWithGroups } from './helpers'
@@ -584,7 +586,7 @@ export default defineComponent({
             }
             return disabled
         },
-        
+
         isMeridienDisabled(meridienString){
             const offset = meridienString == "AM" ? 0 : 12;
             for(let i = 0; i < 12; i++){
