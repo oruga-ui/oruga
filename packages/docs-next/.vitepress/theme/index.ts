@@ -19,7 +19,7 @@ import Inspector from './components/Inspector.vue'
 import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
 
-import Oruga from '../../../oruga-next/dist/oruga'
+import Oruga, { useProgrammatic } from '../../../oruga-next/dist/oruga'
 
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
@@ -56,14 +56,15 @@ export default {
         app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
     }
 
+    app.use(Oruga, {
+        iconPack: 'fas',
+        iconComponent: 'vue-fontawesome'
+    })
+
     if (typeof window !== 'undefined') {
         const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
         switch (theme) {
             case 'fullcss': {
-                app.use(Oruga, {
-                    iconPack: 'fas',
-                    iconComponent: 'vue-fontawesome'
-                })
                 if (process.env.NODE_ENV !== 'production') {
                     // @ts-ignore
                     import('../../../oruga-next/dist/oruga-full-vars.css').then(() => {})
@@ -76,10 +77,6 @@ export default {
                 break
             }
             case 'basecss': {
-                app.use(Oruga, {
-                    iconPack: 'fas',
-                    iconComponent: 'vue-fontawesome'
-                })
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
@@ -89,7 +86,8 @@ export default {
             case 'bulmacss': {
                 bulmaConfig.iconPack = 'fas'
                 bulmaConfig.iconComponent = 'vue-fontawesome'
-                app.use(Oruga, bulmaConfig)
+                const { oruga } = useProgrammatic()
+                oruga.config.setOptions(bulmaConfig)
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
@@ -97,8 +95,6 @@ export default {
                 break
             }
         }
-    } else {
-        app.use(Oruga)
     }
   }
 }
