@@ -1,6 +1,6 @@
 <template>
     <form action="">
-        <div class="modal-card" style="width: auto">
+        <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Login</p>
                 <o-icon
@@ -49,7 +49,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .modal-card {
   display: flex;
   flex-direction: column;
@@ -66,10 +66,8 @@ export default defineComponent({
 }
 
 .modal-card {
-  margin: 0 20px;
   max-height: calc(100vh - 160px);
   overflow: auto;
-  position: relative;
   width: 100%;
 }
 
@@ -114,7 +112,7 @@ export default defineComponent({
   margin: 0;
 }
 
-.modal-card-foot .o-button:not(:last-child) {
-  margin-right: 0.5em;
+.modal-card-foot button:not(:last-child) {
+  margin-right: .5em;
 }
 </style>

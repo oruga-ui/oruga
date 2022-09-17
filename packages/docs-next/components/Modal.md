@@ -67,7 +67,6 @@ title: Modal
 | CSS Variable                                      | SASS Variable                               | Default                      |
 | ------------------------------------------------- | ------------------------------------------- | ---------------------------- |
 | --oruga-modal-content-background-color            | \$modal-content-background-color            | \$white                      |
-| --oruga-modal-content-padding                     | \$modal-content-padding                     | 10px                         |
 | --oruga-modal-content-border-radius               | \$modal-content-border-radius               | \$base-border-radius         |
 | --oruga-modal-overlay-background-color            | \$modal-overlay-background-color            | hsla(0,0%,4%,.86)            |
 | --oruga-modal-close-border-radius                 | \$modal-close-border-radius                 | \$base-rounded-border-radius |

@@ -1,7 +1,6 @@
 
 /* @docs */
 $modal-content-background-color: $white !default;
-$modal-content-padding: 10px !default;
 $modal-content-border-radius: $base-border-radius !default;
 $modal-overlay-background-color: hsla(0,0%,4%,.86) !default;
 $modal-close-border-radius: $base-rounded-border-radius !default;
@@ -37,10 +36,10 @@ $modal-zindex: 40 !default;
     }
     &__content {
         overflow: auto;
+        position: relative;
         @include avariable('margin', 'modal-content-margin', $modal-content-margin);
         @include avariable('max-height', 'modal-content-max-height', $modal-content-max-height);
         @include avariable('background-color', 'modal-content-background-color', $modal-content-background-color);
-        @include avariable('padding', 'modal-content-padding', $modal-content-padding);
         @include avariable('border-radius', 'modal-content-border-radius', $modal-content-border-radius);
         &--full-screen {
             width: 100%;
