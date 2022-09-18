@@ -238,7 +238,8 @@
 </template>
 
 <script lang="ts">
-import { App, defineComponent, PropType } from 'vue'
+import type { App, PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'

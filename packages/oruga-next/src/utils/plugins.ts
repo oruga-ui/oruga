@@ -1,5 +1,4 @@
-
-import { App, DefineComponent, Plugin } from 'vue'
+import type { App, DefineComponent, Plugin } from 'vue'
 import { useProgrammatic } from './useProgrammatic'
 
 export const registerPlugin = (app: App, plugin: Plugin) => {

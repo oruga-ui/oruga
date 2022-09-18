@@ -1,5 +1,5 @@
-import { defineComponent, DefineComponent } from 'vue'
-import { defaultIfUndefined, hasFlag } from './helpers'
+import type { DefineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 const sorted = 1
 const optional = 2

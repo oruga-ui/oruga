@@ -1,4 +1,6 @@
-import { defineComponent, DefineComponent } from 'vue'
+import type { DefineComponent } from 'vue';
+import { defineComponent } from 'vue';
+
 import { hasFlag } from './helpers'
 
 const items = 1

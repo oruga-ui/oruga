@@ -1,4 +1,5 @@
-import { ComponentOptions, defineComponent } from 'vue';
+import type { ComponentOptions } from 'vue';
+import { defineComponent } from 'vue';
 import { getOptions } from './config'
 import { getValueByPath, blankIfUndefined, endsWith } from './helpers'
 

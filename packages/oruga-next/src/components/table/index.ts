@@ -1,4 +1,4 @@
-import { App, Plugin } from 'vue'
+import type { App, Plugin } from 'vue'
 
 import Table from './Table.vue'
 import TableColumn from './TableColumn.vue'

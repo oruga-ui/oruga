@@ -1,5 +1,6 @@
-import { App } from "vue"
-import { merge } from "./helpers"
+import type { App } from 'vue'
+
+import { merge } from './helpers';
 
 let config = {
     iconPack: 'mdi',

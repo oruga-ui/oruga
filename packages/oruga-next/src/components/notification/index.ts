@@ -8,8 +8,8 @@ import { VueInstance } from '../../utils/config'
 import { registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
 import InstanceRegistry from "../..//utils/InstanceRegistry"
 
-import { App, createVNode, DefineComponent, Plugin, render } from 'vue'
-
+import type { App, DefineComponent, Plugin } from 'vue'
+import { createVNode, render } from 'vue'
 
 let localVueInstance: App
 
