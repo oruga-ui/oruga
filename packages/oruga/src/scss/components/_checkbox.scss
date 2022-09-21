@@ -51,7 +51,7 @@ $checkbox-line-height: 1.5 !default;
         -moz-appearance: none;
         appearance: none;
         -webkit-print-color-adjust: exact;
-        color-adjust: exact;
+        print-color-adjust: exact;
         flex-shrink: 0;
         cursor: pointer;
         background-repeat: no-repeat;
