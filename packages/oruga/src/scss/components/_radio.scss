@@ -48,7 +48,7 @@ $HALF_MARGIN_EXPRESSION: "calc($margin * 0.5)";
         -moz-appearance: none;
         appearance: none;
         -webkit-print-color-adjust: exact;
-        color-adjust: exact;
+        print-color-adjust: exact;
         border-radius: 50%;
         cursor: pointer;
         background-repeat: no-repeat;
