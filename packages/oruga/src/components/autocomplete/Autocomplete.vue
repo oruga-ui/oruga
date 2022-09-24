@@ -597,8 +597,10 @@ export default {
          */
         checkIfReachedTheEndOfScroll() {
             const list = this.$refs.dropdown
+            const footerHeight = this.$slots.footer ? this.$refs.footer.clientHeight : 0
             if (list.clientHeight !== list.scrollHeight &&
-                list.scrollTop + list.clientHeight >= list.scrollHeight) {
+                list.scrollTop + list.clientHeight + footerHeight >= list.scrollHeight
+            ) {
                 this.$emit('infinite-scroll')
             }
         },
