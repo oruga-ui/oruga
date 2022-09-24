@@ -1,5 +1,6 @@
 import type { DefineComponent } from 'vue';
 import { defineComponent } from 'vue';
+import { defaultIfUndefined, hasFlag } from './helpers';
 
 const sorted = 1
 const optional = 2
