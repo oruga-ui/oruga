@@ -112,7 +112,7 @@ export default defineComponent({
   margin: 0;
 }
 
-.modal-card-foot .o-button:not(:last-child) {
+.modal-card-foot button:not(:last-child) {
   margin-right: 0.5em;
 }
 </style>

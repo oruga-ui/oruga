@@ -144,29 +144,36 @@ export default {
         },
 
         setupContainer() {
-            this.parentTop = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('top').join('.')}`)
-            this.parentBottom = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('bottom').join('.')}`)
+            if (this.rootClasses() && this.positionClasses('top') && this.positionClasses('bottom')) {
+                this.parentTop = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('top').join('.')}`)
+                this.parentBottom = document.querySelector((this.newContainer ? this.newContainer : 'body') + `>.${this.rootClasses().join('.')}.${this.positionClasses('bottom').join('.')}`)
 
-            if (this.parentTop && this.parentBottom) return
+                if (this.parentTop && this.parentBottom) return
 
-            if (!this.parentTop) {
-                this.parentTop = document.createElement('div')
-                this.parentTop.className = `${this.rootClasses().join(' ')} ${this.positionClasses('top').join(' ')}`
-            }
+                if (!this.parentTop) {
+                    this.parentTop = document.createElement('div')
+                    this.parentTop.className = `${this.rootClasses().join(' ')} ${this.positionClasses('top').join(' ')}`
+                }
 
-            if (!this.parentBottom) {
-                this.parentBottom = document.createElement('div')
-                this.parentBottom.className = `${this.rootClasses().join(' ')} ${this.positionClasses('bottom').join(' ')}`
-            }
+                if (!this.parentBottom) {
+                    this.parentBottom = document.createElement('div')
+                    this.parentBottom.className = `${this.rootClasses().join(' ')} ${this.positionClasses('bottom').join(' ')}`
+                }
 
-            const container = document.querySelector(this.newContainer) || document.body
+                const container = document.querySelector(this.newContainer) || document.body
 
-            container.appendChild(this.parentTop)
-            container.appendChild(this.parentBottom)
+                container.appendChild(this.parentTop)
+                container.appendChild(this.parentBottom)
 
-            if (this.newContainer) {
-                this.parentTop.classList.add('has-custom-container')
-                this.parentBottom.classList.add('has-custom-container')
+                if (this.newContainer) {
+                    const classes = this.noticeCustomContainerClasses()
+                    if (classes && classes.length) {
+                        classes.filter(c => !!c).forEach(c => {
+                            this.parentTop.classList.add(c)
+                            this.parentBottom.classList.add(c)
+                        })
+                    }
+                }
             }
         },
 

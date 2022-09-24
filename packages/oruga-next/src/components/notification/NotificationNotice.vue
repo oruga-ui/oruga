@@ -23,7 +23,8 @@ export default defineComponent({
     props: {
         propsNotification: Object,
         noticeClass: [String, Function, Array],
-        noticePositionClass: [String, Function, Array]
+        noticePositionClass: [String, Function, Array],
+        noticeCustomContainerClasses: [String, Function, Array],
     },
     emits: ['update:active', 'close'],
     methods: {
@@ -35,6 +36,11 @@ export default defineComponent({
         positionClasses(position) {
             return [
                 this.computedClass('noticePositionClass', 'o-notices--', position),
+            ]
+        },
+        noticeCustomContainerClasses() {
+            return [
+                this.computedClass('noticeCustomContainerClasses', 'o-notices__custom-container')
             ]
         },
         timeoutCallback() {
