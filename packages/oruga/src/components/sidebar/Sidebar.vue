@@ -130,6 +130,8 @@ export default {
         expandOnHoverFixedClass: [String, Function, Array],
         variantClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        scrollClipClass: [String, Function, Array],
+        noScrollClass: [String, Function, Array]
     },
     data() {
         return {
@@ -165,6 +167,12 @@ export default {
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
                 { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') }
             ]
+        },
+        scrollClass() {
+            if (this.scroll === 'clip') {
+                return this.computedClass('scrollClipClass', 'o-clipped')
+            }
+            return this.computedClass('noScrollClass', 'o-noscroll')
         },
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
@@ -274,21 +282,26 @@ export default {
 
         handleScroll() {
             if (typeof window === 'undefined') return
+
             if (this.scroll === 'clip') {
-                if (this.open) {
-                    document.documentElement.classList.add('o-clipped')
-                } else {
-                    document.documentElement.classList.remove('o-clipped')
+                if (this.scrollClass) {
+                    if (this.open) {
+                        document.documentElement.classList.add(this.scrollClass)
+                    } else {
+                        document.documentElement.classList.remove(this.scrollClass)
+                    }
+                    return
                 }
-                return
             }
             this.savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
-            if (this.open) {
-                document.body.classList.add('o-noscroll')
-            } else {
-                document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                if (this.open) {
+                    document.body.classList.add(this.scrollClass)
+                } else {
+                    document.body.classList.remove(this.scrollClass)
+                }
             }
             if (this.open) {
                 document.body.style.top = `-${this.savedScrollTop}px`
@@ -321,11 +334,13 @@ export default {
             document.removeEventListener('click', this.clickedOutside)
             if (this.overlay) {
                 // reset scroll
-                document.documentElement.classList.remove('o-clipped')
                 const savedScrollTop = !this.savedScrollTop
                     ? document.documentElement.scrollTop
                     : this.savedScrollTop
-                document.body.classList.remove('o-noscroll')
+                if (this.scrollClass) {
+                    document.body.classList.remove(this.scrollClass)
+                    document.documentElement.classList.remove(this.scrollClass)
+                }
                 document.documentElement.scrollTop = savedScrollTop
                 document.body.style.top = null
             }
