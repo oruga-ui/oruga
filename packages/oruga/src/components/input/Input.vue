@@ -278,6 +278,9 @@ export default {
                     this.resize()
                 }
             }
+        },
+        type(type) {
+            this.newType = type
         }
     },
     methods: {
