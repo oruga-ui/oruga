@@ -6,7 +6,7 @@
     >
         <div
             v-if="!inline"
-            :tabindex="disabled ? null : 0"
+            :tabindex="disabled ? null : triggerTabindex"
             ref="trigger"
             :class="triggerClasses"
             @click="onClick"
@@ -187,10 +187,6 @@ export default defineComponent({
             default: () => ['click']
         },
         /**
-         * Append dropdown content to body
-         */
-        appendToBody: Boolean,
-        /**
          * Dropdown menu tag name
          */
         menuTag: {
@@ -199,7 +195,17 @@ export default defineComponent({
                 return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
             }
         },
-
+        /**
+         * Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)
+         */
+        triggerTabindex: {
+            type: Number,
+            default: 0
+        },
+        /**
+         * Append dropdown content to body
+         */
+        appendToBody: Boolean,
         /**
         * @ignore
         */

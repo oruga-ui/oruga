@@ -5,7 +5,7 @@
     >
         <div
             v-if="!inline"
-            :tabindex="disabled ? false : 0"
+            :tabindex="disabled ? null : triggerTabindex"
             ref="trigger"
             :class="triggerClasses"
             @click="onClick"
@@ -196,9 +196,19 @@ export default {
             }
         },
         /**
+         * Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)
+         */
+         triggerTabindex: {
+            type: Number,
+            default: 0
+        },
+        /**
          * Append dropdown content to body
          */
         appendToBody: Boolean,
+        /**
+        * @ignore
+        */
         appendToBodyCopyParent: Boolean,
         rootClass: [String, Function, Array],
         triggerClass: [String, Function, Array],

@@ -11,6 +11,7 @@
             :trap-focus="trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!inline"
+            :trigger-tabindex="-1"
             :append-to-body="appendToBody"
             append-to-body-copy-parent
             @active-change="onActiveChange">
