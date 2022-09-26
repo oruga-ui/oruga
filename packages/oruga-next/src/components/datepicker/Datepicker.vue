@@ -366,14 +366,14 @@ export default defineComponent({
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
-        unselectableDates: Array,
+        unselectableDates: [Array, Function],
         unselectableDaysOfWeek: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
-        selectableDates: Array,
+        selectableDates: [Array, Function],
         dateFormatter: {
             type: Function,
             default: (date: string, vm: App) => {
