@@ -1,30 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
-import BMenuItem from '@components/menu/MenuItem'
+import OMenuItem from './MenuItem'
 
 let wrapper
 
-describe('BMenuItem', () => {
+describe('OMenuItem', () => {
     beforeEach(() => {
-        wrapper = shallowMount(BMenuItem)
+        wrapper = shallowMount(OMenuItem)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BMenuItem')
+        expect(wrapper.name()).toBe('OMenuItem')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 
     it('render correctly', () => {
         expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    it('sets newActive when active is changed', () => {
-        wrapper.setProps({active: true})
-        expect(wrapper.vm.newActive).toBeTruthy()
-    })
-
-    it('sets newExpanded when expanded is changed', () => {
-        wrapper.setProps({expanded: true})
-        expect(wrapper.vm.newExpanded).toBeTruthy()
     })
 
     it('manage onClick', () => {

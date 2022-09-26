@@ -1,16 +1,16 @@
 import { mount } from '@vue/test-utils'
-import BMenuList from '@components/menu/MenuList'
+import OMenuList from './MenuList'
 
 let wrapper
 
-describe('BMenuList', () => {
+describe('OMenuList', () => {
     beforeEach(() => {
         const Menu = {
-            components: { BMenuList },
+            components: { OMenuList },
             template: `
             <div>
-                <b-menu-list label="Test">
-                </b-menu-list>
+                <o-menu-list label="Test">
+                </o-menu-list>
             </div>
             `
         }
@@ -18,7 +18,7 @@ describe('BMenuList', () => {
     })
 
     it('is called', () => {
-        expect(wrapper.findAll('.menu-label').at(0).text()).toBe('Test')
+        expect(wrapper.findAll('.o-menu-label').at(0).text()).toBe('Test')
     })
 
     it('render correctly', () => {
@@ -26,6 +26,6 @@ describe('BMenuList', () => {
     })
 
     it('slot label', () => {
-        expect(wrapper.findAll('.menu-label').at(0).text()).toBe('Test')
+        expect(wrapper.findAll('.o-menu-label').at(0).text()).toBe('Test')
     })
 })

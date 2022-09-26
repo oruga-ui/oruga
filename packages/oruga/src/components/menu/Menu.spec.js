@@ -1,15 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import BMenu from '@components/menu/Menu'
+import OMenu from './Menu'
 
 let wrapper
 
 describe('BMenu', () => {
     beforeEach(() => {
-        wrapper = shallowMount(BMenu)
+        wrapper = shallowMount(OMenu)
     })
 
     it('is called', () => {
-        expect(wrapper.name()).toBe('BMenu')
+        expect(wrapper.name()).toBe('OMenu')
         expect(wrapper.isVueInstance()).toBeTruthy()
     })
 

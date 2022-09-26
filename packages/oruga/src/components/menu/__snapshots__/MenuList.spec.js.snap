@@ -1,8 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BMenuList render correctly 1`] = `
+exports[`OMenuList render correctly 1`] = `
 <div>
-    <p class="menu-label">Test</p>
-    <ul class="menu-list"></ul>
+    <div>
+        <div class="o-menu-label">
+            <!----> <span>Test</span>
+        </div>
+        <ul class="o-menu-list"></ul>
+    </div>
 </div>
 `;
