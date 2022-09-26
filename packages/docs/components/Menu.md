@@ -118,17 +118,17 @@ export default {
 
 ### Menu Item
 
-| Prop name | Description                                                                                            | Type    | Values                                              | Default |
-|-----------|--------------------------------------------------------------------------------------------------------|---------|-----------------------------------------------------|---------|
-| label     | Menu item label                                                                                        | String  | -                                                   | -       |
-| icon      | Icon name                                                                                              | String  | -                                                   | -       |
-| icon-pack | Icon pack to use                                                                                       | String  | -                                                   | -       |
-| disabled  | Item is disabled                                                                                       | Boolean | -                                                   | false   |
-| active    | Item is active, use the .sync modifier to make it two-way binding                                      | Boolean | -                                                   | false   |
-| expanded  | Item is expanded when `default` contains menu items, use the .sync modifier to make it two-way binding | Boolean | -                                                   | false   |
-| animation | Custom animation (transition name)                                                                     | String  | -                                                   | `fade`  |
-| tag       | Item tag name                                                                                          | String  | `a`, `router-link`, `nuxt-link` or other nuxt alias | `a`     |
-| aria-role | Item is active, use the .sync modifier to make it two-way binding                                      | String  | `menu-item`                                         | -       |
+| Prop name | Description                                                                                             | Type    | Values                                              | Default |
+|-----------|---------------------------------------------------------------------------------------------------------|---------|-----------------------------------------------------|---------|
+| label     | Menu item label                                                                                         | String  | -                                                   | -       |
+| icon      | Icon name                                                                                               | String  | -                                                   | -       |
+| icon-pack | Icon pack to use                                                                                        | String  | -                                                   | -       |
+| disabled  | Item is disabled                                                                                        | Boolean | -                                                   | false   |
+| active    | Item is active, use the `.sync` modifier to make it two-way binding                                     | Boolean | -                                                   | false   |
+| expanded  | Item is expanded when `default` contains menu items, use the .sync modifier to make it two-way binding  | Boolean | -                                                   | false   |
+| animation | Custom animation (transition name)                                                                      | String  | -                                                   | `fade`  |
+| tag       | Item tag name                                                                                           | String  | `a`, `router-link`, `nuxt-link` or other nuxt alias | `a`     |
+| aria-role | Item is active, use the `.sync` modifier to make it two-way binding                                     | String  | `menu-item`                                         | -       |
 
 ## Slots
 
