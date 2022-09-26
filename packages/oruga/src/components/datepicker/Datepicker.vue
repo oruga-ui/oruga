@@ -375,8 +375,8 @@ export default {
         /* Enable input/typing. Note that you might have to set a custom date parser */
         editable: Boolean,
         disabled: Boolean,
-        /* Array of unselectable dates */
-        unselectableDates: Array,
+        /* Array or function of unselectable dates */
+        unselectableDates: [Array, Function],
         /* Array of unselectable days of week */
         unselectableDaysOfWeek: {
             type: Array,
@@ -384,8 +384,8 @@ export default {
                 return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
-        /* Array of selectable dates */
-        selectableDates: Array,
+        /* Array or function of selectable dates */
+        selectableDates: [Array, Function],
         /* Function to format date to a string for display in the input */
         dateFormatter: {
             type: Function,
