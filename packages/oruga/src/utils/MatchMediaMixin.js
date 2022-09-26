@@ -28,13 +28,19 @@ export default {
                 width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
             }
             this.matchMediaRef = window.matchMedia(`(max-width: ${width})`)
-            this.isMatchMedia = this.matchMediaRef?.matches
-            this.matchMediaRef?.addListener(this.onMatchMedia, false)
+            if (this.matchMediaRef) {
+                this.isMatchMedia = this.matchMediaRef.matches
+                this.matchMediaRef.addListener(this.onMatchMedia, false)
+            } else {
+                this.isMatchMedia = false
+            }
         }
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
-            this.matchMediaRef.removeListener(this.checkMatchMedia)
+            if (this.matchMediaRef) {
+                this.matchMediaRef.removeListener(this.checkMatchMedia)
+            }
         }
     }
 }
