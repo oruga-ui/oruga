@@ -14,9 +14,10 @@
             :trigger-tabindex="-1"
             :append-to-body="appendToBody"
             append-to-body-copy-parent
-            @active-change="onActiveChange"
-        >
-            <template #trigger v-if="!inline">
+            @active-change="onActiveChange">
+            <template
+                #trigger
+                v-if="!inline">
                 <slot name="trigger">
                     <o-input
                         ref="input"
@@ -38,8 +39,7 @@
                         @icon-right-click="$emit('icon-right-click')"
                         @keyup.native.enter="togglePicker(true)"
                         @change.native="onChange($event.target.value)"
-                        @focus="handleOnFocus"
-                    />
+                        @focus="handleOnFocus" />
                 </slot>
             </template>
             <o-dropdown-item
@@ -47,8 +47,8 @@
                 tag="div"
                 :item-class="boxClasses"
                 :disabled="disabled"
-                :clickable="false"
-            >
+                :clickable="false">
+
                 <header :class="headerClasses">
                     <slot name="header">
                         <div :class="headerButtonsClasses">
@@ -61,14 +61,13 @@
                                 :aria-label="ariaPreviousLabel"
                                 @click.prevent="prev"
                                 @keydown.enter.prevent="prev"
-                                @keydown.space.prevent="prev"
-                            >
+                                @keydown.space.prevent="prev">
+
                                 <o-icon
                                     :icon="iconPrev"
                                     :pack="iconPack"
                                     both
-                                    clickable
-                                />
+                                    clickable />
                             </a>
                             <a
                                 v-show="!showNext && !disabled"
@@ -79,14 +78,13 @@
                                 :aria-label="ariaNextLabel"
                                 @click.prevent="next"
                                 @keydown.enter.prevent="next"
-                                @keydown.space.prevent="next"
-                            >
+                                @keydown.space.prevent="next">
+
                                 <o-icon
                                     :icon="iconNext"
                                     :pack="iconPack"
                                     both
-                                    clickable
-                                />
+                                    clickable />
                             </a>
                             <div :class="listsClasses">
                                 <o-select
@@ -94,14 +92,12 @@
                                     v-model="focusedDateData.month"
                                     v-bind="selectListBind"
                                     :disabled="disabled"
-                                    :size="size"
-                                >
+                                    :size="size">
                                     <option
                                         v-for="month in listOfMonths"
                                         :value="month.index"
                                         :key="month.name"
-                                        :disabled="month.disabled"
-                                    >
+                                        :disabled="month.disabled">
                                         {{ month.name }}
                                     </option>
                                 </o-select>
@@ -109,13 +105,11 @@
                                     v-model="focusedDateData.year"
                                     v-bind="selectListBind"
                                     :disabled="disabled"
-                                    :size="size"
-                                >
+                                    :size="size">
                                     <option
                                         v-for="year in listOfYears"
                                         :value="year"
-                                        :key="year"
-                                    >
+                                        :key="year">
                                         {{ year }}
                                     </option>
                                 </o-select>
@@ -143,9 +137,7 @@
                         :date-creator="dateCreator"
                         :type-month="isTypeMonth"
                         :nearby-month-days="nearbyMonthDays"
-                        :nearby-selectable-month-days="
-                            nearbySelectableMonthDays
-                        "
+                        :nearby-selectable-month-days="nearbySelectableMonthDays"
                         :show-week-number="showWeekNumber"
                         :week-number-clickable="weekNumberClickable"
                         :range="range"
@@ -157,38 +149,22 @@
                         :table-row-class="tableRowClass"
                         :table-cell-class="tableCellClass"
                         :table-cell-selected-class="tableCellSelectedClass"
-                        :table-cell-first-selected-class="
-                            tableCellFirstSelectedClass
-                        "
+                        :table-cell-first-selected-class="tableCellFirstSelectedClass"
                         :table-cell-invisible-class="tableCellInvisibleClass"
-                        :table-cell-within-selected-class="
-                            tableCellWithinSelectedClass
-                        "
-                        :table-cell-last-selected-class="
-                            tableCellLastSelectedClass
-                        "
-                        :table-cell-first-hovered-class="
-                            tableCellFirstHoveredClass
-                        "
-                        :table-cell-within-hovered-class="
-                            tableCellWithinHoveredClass
-                        "
-                        :table-cell-last-hovered-class="
-                            tableCellLastHoveredClass
-                        "
+                        :table-cell-within-selected-class="tableCellWithinSelectedClass"
+                        :table-cell-last-selected-class="tableCellLastSelectedClass"
+                        :table-cell-first-hovered-class="tableCellFirstHoveredClass"
+                        :table-cell-within-hovered-class="tableCellWithinHoveredClass"
+                        :table-cell-last-hovered-class="tableCellLastHoveredClass"
                         :table-cell-today-class="tableCellTodayClass"
                         :table-cell-selectable-class="tableCellSelectableClass"
-                        :table-cell-unselectable-class="
-                            tableCellUnselectableClass
-                        "
+                        :table-cell-unselectable-class="tableCellUnselectableClass"
                         :table-cell-nearby-class="tableCellNearbyClass"
                         :table-cell-events-class="tableCellEventsClass"
                         :table-events-class="tableEventsClass"
                         :table-event-variant-class="tableEventVariantClass"
                         :table-event-class="tableEventClass"
-                        :table-event-indicators-class="
-                            tableEventIndicatorsClass
-                        "
+                        :table-event-indicators-class="tableEventIndicatorsClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
                         @close="togglePicker(false)"
@@ -215,32 +191,16 @@
                         :month-table-class="monthTableClass"
                         :month-cell-class="monthCellClass"
                         :month-cell-selected-class="monthCellSelectedClass"
-                        :month-cell-first-selected-class="
-                            monthCellFirstSelectedClass
-                        "
-                        :month-cell-within-selected-class="
-                            monthCellWithinSelectedClass
-                        "
-                        :month-cell-last-selected-class="
-                            monthCellLastSelectedClass
-                        "
-                        :month-cell-within-hovered-range-class="
-                            monthCellWithinHoveredRangeClass
-                        "
-                        :month-cell-first-hovered-class="
-                            monthCellFirstHoveredClass
-                        "
-                        :month-cell-within-hovered-class="
-                            monthCellWithinHoveredClass
-                        "
-                        :month-cell-last-hovered-class="
-                            monthCellLastHoveredClass
-                        "
+                        :month-cell-first-selected-class="monthCellFirstSelectedClass"
+                        :month-cell-within-selected-class="monthCellWithinSelectedClass"
+                        :month-cell-last-selected-class="monthCellLastSelectedClass"
+                        :month-cell-within-hovered-range-class="monthCellWithinHoveredRangeClass"
+                        :month-cell-first-hovered-class="monthCellFirstHoveredClass"
+                        :month-cell-within-hovered-class="monthCellWithinHoveredClass"
+                        :month-cell-last-hovered-class="monthCellLastHoveredClass"
                         :month-cell-today-class="monthCellTodayClass"
                         :month-cell-selectable-class="monthCellSelectableClass"
-                        :month-cell-unselectable-class="
-                            monthCellUnselectableClass
-                        "
+                        :month-cell-unselectable-class="monthCellUnselectableClass"
                         :month-cell-events-class="monthCellEventsClass"
                         @range-start="date => $emit('range-start', date)"
                         @range-end="date => $emit('range-end', date)"
@@ -251,8 +211,7 @@
                 </slot>
                 <footer
                     v-if="$slots.footer !== undefined"
-                    :class="footerClasses"
-                >
+                    :class="footerClasses">
                     <slot name="footer" />
                 </footer>
             </o-dropdown-item>
@@ -277,60 +236,46 @@
             :use-html5-validation="false"
             @change.native="onChangeNativePicker"
             @focus="onFocus"
-            @blur="onBlur"
-        />
+            @blur="onBlur"/>
     </div>
 </template>
 
 <script>
-import FormElementMixin from "../../utils/FormElementMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import FormElementMixin from '../../utils/FormElementMixin'
+import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
-import {
-    isMobile,
-    getMonthNames,
-    getWeekdayNames,
-    matchWithGroups,
-    getValueByPath
-} from "../../utils/helpers";
-import { getOptions } from "../../utils/config";
+import { isMobile, getMonthNames, getWeekdayNames, matchWithGroups, getValueByPath } from '../../utils/helpers'
+import { getOptions } from '../../utils/config'
 
-import Dropdown from "../dropdown/Dropdown";
-import DropdownItem from "../dropdown/DropdownItem";
-import Input from "../input/Input";
-import Select from "../select/Select";
-import Icon from "../icon/Icon";
+import Dropdown from '../dropdown/Dropdown'
+import DropdownItem from '../dropdown/DropdownItem'
+import Input from '../input/Input'
+import Select from '../select/Select'
+import Icon from '../icon/Icon'
 
-import DatepickerTable from "./DatepickerTable";
-import DatepickerMonth from "./DatepickerMonth";
+import DatepickerTable from './DatepickerTable'
+import DatepickerMonth from './DatepickerMonth'
 
 const defaultDateFormatter = (date, vm) => {
-    const targetDates = Array.isArray(date) ? date : [date];
-    const dates = targetDates.map(date => {
-        const d = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            12
-        );
-        return !vm.isTypeMonth ? vm.dtf.format(d) : vm.dtfMonth.format(d);
-    });
-    return !vm.multiple ? dates.join(" - ") : dates.join(", ");
-};
+    const targetDates = Array.isArray(date) ? date : [date]
+    const dates = targetDates.map((date) => {
+        const d = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12)
+        return !vm.isTypeMonth ? vm.dtf.format(d) : vm.dtfMonth.format(d)
+    })
+    return !vm.multiple ? dates.join(' - ') : dates.join(', ')
+}
 
 const defaultDateParser = (date, vm) => {
-    if (vm.dtf.formatToParts && typeof vm.dtf.formatToParts === "function") {
+    if (vm.dtf.formatToParts && typeof vm.dtf.formatToParts === 'function') {
         const formatRegex = (vm.isTypeMonth ? vm.dtfMonth : vm.dtf)
-            .formatToParts(new Date(2000, 11, 25))
-            .map(part => {
-                if (part.type === "literal") {
-                    return part.value;
+            .formatToParts(new Date(2000, 11, 25)).map((part) => {
+                if (part.type === 'literal') {
+                    return part.value
                 }
-                return `((?!=<${part.type}>)\\d+)`;
-            })
-            .join("");
-        const dateGroups = matchWithGroups(formatRegex, date);
+                return `((?!=<${part.type}>)\\d+)`
+            }).join('')
+        const dateGroups = matchWithGroups(formatRegex, date)
 
         // We do a simple validation for the group.
         // If it is not valid, it will fallback to Date.parse below
@@ -340,38 +285,24 @@ const defaultDateParser = (date, vm) => {
             dateGroups.month &&
             dateGroups.month <= 12
         ) {
-            if (vm.isTypeMonth)
-                return new Date(dateGroups.year, dateGroups.month - 1);
+            if (vm.isTypeMonth) return new Date(dateGroups.year, dateGroups.month - 1)
             else if (dateGroups.day && dateGroups.day <= 31) {
-                return new Date(
-                    dateGroups.year,
-                    dateGroups.month - 1,
-                    dateGroups.day,
-                    12
-                );
+                return new Date(dateGroups.year, dateGroups.month - 1, dateGroups.day, 12)
             }
         }
     }
     // Fallback if formatToParts is not supported or if we were not able to parse a valid date
-    if (!vm.isTypeMonth) return new Date(Date.parse(date));
+    if (!vm.isTypeMonth) return new Date(Date.parse(date))
     if (date) {
-        const s = date.split("/");
-        const year = s[0].length === 4 ? s[0] : s[1];
-        const month = s[0].length === 2 ? s[0] : s[1];
+        const s = date.split('/')
+        const year = s[0].length === 4 ? s[0] : s[1]
+        const month = s[0].length === 2 ? s[0] : s[1]
         if (year && month) {
-            return new Date(
-                parseInt(year, 10),
-                parseInt(month, 10) - 1,
-                1,
-                0,
-                0,
-                0,
-                0
-            );
+            return new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1, 0, 0, 0, 0)
         }
     }
-    return null;
-};
+    return null
+}
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -380,7 +311,7 @@ const defaultDateParser = (date, vm) => {
  * @style _datepicker.scss
  */
 export default {
-    name: "ODatepicker",
+    name: 'ODatepicker',
     components: {
         [DatepickerTable.name]: DatepickerTable,
         [DatepickerMonth.name]: DatepickerMonth,
@@ -390,13 +321,13 @@ export default {
         [Dropdown.name]: Dropdown,
         [DropdownItem.name]: DropdownItem
     },
-    configField: "datepicker",
+    configField: 'datepicker',
     mixins: [BaseComponentMixin, FormElementMixin, MatchMediaMixin],
     inheritAttrs: false,
     provide() {
         return {
             $datepicker: this
-        };
+        }
     },
     props: {
         /** @model */
@@ -407,22 +338,14 @@ export default {
         dayNames: {
             type: Array,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.dayNames",
-                    undefined
-                );
+                return getValueByPath(getOptions(), 'datepicker.dayNames', undefined)
             }
         },
         /* Names of months to display in table header */
         monthNames: {
             type: Array,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.monthNames",
-                    undefined
-                );
+                return getValueByPath(getOptions(), 'datepicker.monthNames', undefined)
             }
         },
         /**
@@ -432,11 +355,7 @@ export default {
         firstDayOfWeek: {
             type: Number,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.firstDayOfWeek",
-                    0
-                );
+                return getValueByPath(getOptions(), 'datepicker.firstDayOfWeek', 0)
             }
         },
         /**
@@ -462,11 +381,7 @@ export default {
         unselectableDaysOfWeek: {
             type: Array,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.unselectableDaysOfWeek",
-                    undefined
-                );
+                return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
         /* Array or function of selectable dates */
@@ -475,15 +390,11 @@ export default {
         dateFormatter: {
             type: Function,
             default: (date, vm) => {
-                const dateFormatter = getValueByPath(
-                    getOptions(),
-                    "datepicker.dateFormatter",
-                    undefined
-                );
-                if (typeof dateFormatter === "function") {
-                    return dateFormatter(date);
+                const dateFormatter = getValueByPath(getOptions(), 'datepicker.dateFormatter', undefined)
+                if (typeof dateFormatter === 'function') {
+                    return dateFormatter(date)
                 } else {
-                    return defaultDateFormatter(date, vm);
+                    return defaultDateFormatter(date, vm)
                 }
             }
         },
@@ -491,15 +402,11 @@ export default {
         dateParser: {
             type: Function,
             default: (date, vm) => {
-                const dateParser = getValueByPath(
-                    getOptions(),
-                    "datepicker.dateParser",
-                    undefined
-                );
-                if (typeof dateParser === "function") {
-                    return dateParser(date);
+                const dateParser = getValueByPath(getOptions(), 'datepicker.dateParser', undefined)
+                if (typeof dateParser === 'function') {
+                    return dateParser(date)
                 } else {
-                    return defaultDateParser(date, vm);
+                    return defaultDateParser(date, vm)
                 }
             }
         },
@@ -507,15 +414,11 @@ export default {
         dateCreator: {
             type: Function,
             default: () => {
-                const dateCreator = getValueByPath(
-                    getOptions(),
-                    "datepicker.dateCreator",
-                    undefined
-                );
-                if (typeof dateCreator === "function") {
-                    return dateCreator();
+                const dateCreator = getValueByPath(getOptions(), 'datepicker.dateCreator', undefined)
+                if (typeof dateCreator === 'function') {
+                    return dateCreator()
                 } else {
-                    return new Date();
+                    return new Date()
                 }
             }
         },
@@ -523,11 +426,7 @@ export default {
         mobileNative: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.mobileNative",
-                    true
-                );
+                return getValueByPath(getOptions(), 'datepicker.mobileNative', true)
             }
         },
         /**
@@ -548,7 +447,7 @@ export default {
         /* Shape to use when showing event indicators */
         indicators: {
             type: String,
-            default: "dots"
+            default: 'dots'
         },
         /* Open datepicker on input focus */
         openOnFocus: Boolean,
@@ -556,82 +455,57 @@ export default {
         iconPrev: {
             type: String,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.iconPrev",
-                    "chevron-left"
-                );
+                return getValueByPath(getOptions(), 'datepicker.iconPrev', 'chevron-left')
             }
         },
         /* Icon to use for next month */
         iconNext: {
             type: String,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.iconNext",
-                    "chevron-right"
-                );
+                return getValueByPath(getOptions(), 'datepicker.iconNext', 'chevron-right')
             }
         },
         /* Years range relative to selected year */
         yearsRange: {
             type: Array,
             default: () => {
-                return getValueByPath(getOptions(), "datepicker.yearsRange", [
-                    -100,
-                    10
-                ]);
+                return getValueByPath(getOptions(), 'datepicker.yearsRange', [-100, 10])
             }
         },
         type: {
             type: String,
-            validator: value => {
-                return ["month"].indexOf(value) >= 0;
+            validator: (value) => {
+                return [
+                    'month'
+                ].indexOf(value) >= 0
             }
         },
         /* Show/Hide nearby month days (prev and next month) */
         nearbyMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.nearbyMonthDays",
-                    true
-                );
+                return getValueByPath(getOptions(), 'datepicker.nearbyMonthDays', true)
             }
         },
         /* When nearby-month-days, it allows to select/unselect nearby month days */
         nearbySelectableMonthDays: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.nearbySelectableMonthDays",
-                    false
-                );
+                return getValueByPath(getOptions(), 'datepicker.nearbySelectableMonthDays', false)
             }
         },
         /* Display week number */
         showWeekNumber: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.showWeekNumber",
-                    false
-                );
+                return getValueByPath(getOptions(), 'datepicker.showWeekNumber', false)
             }
         },
         /* Enable click on week number */
         weekNumberClickable: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.weekNumberClickable",
-                    false
-                );
+                return getValueByPath(getOptions(), 'datepicker.weekNumberClickable', false)
             }
         },
         /* Choose the rule to determinate the first week of Year, 4 for ISO or 1 for other */
@@ -658,29 +532,21 @@ export default {
         mobileModal: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.mobileModal",
-                    true
-                );
+                return getValueByPath(getOptions(), 'datepicker.mobileModal', true)
             }
         },
         /* Trap focus inside the datepicker */
         trapFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.trapFocus",
-                    true
-                );
+                return getValueByPath(getOptions(), 'datepicker.trapFocus', true)
             }
         },
         /* Accept a string with a BCP 47 language tag, or an array of such strings. See Unicode BCP 47 locale identifier */
         locale: {
             type: [String, Array],
             default: () => {
-                return getValueByPath(getOptions(), "locale");
+                return getValueByPath(getOptions(), 'locale')
             }
         },
         /* Append datepicker calendar to body */
@@ -743,37 +609,23 @@ export default {
         inputClasses: {
             type: Object,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.inputClasses",
-                    {}
-                );
+                return getValueByPath(getOptions(), 'datepicker.inputClasses', {})
             }
         },
         dropdownClasses: {
             type: Object,
             default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "datepicker.dropdownClasses",
-                    {}
-                );
+                return getValueByPath(getOptions(), 'datepicker.dropdownClasses', {})
             }
         },
         selectListClasses: Object
     },
     data() {
-        const focusedDate =
-            (Array.isArray(this.value) ? this.value[0] : this.value) ||
-            this.focusedDate ||
-            this.dateCreator();
+        const focusedDate = (Array.isArray(this.value) ? this.value[0] : (this.value)) ||
+            this.focusedDate || this.dateCreator()
 
-        if (
-            !this.value &&
-            this.maxDate &&
-            this.maxDate.getFullYear() < focusedDate.getFullYear()
-        ) {
-            focusedDate.setFullYear(this.maxDate.getFullYear());
+        if (!this.value && this.maxDate && this.maxDate.getFullYear() < focusedDate.getFullYear()) {
+            focusedDate.setFullYear(this.maxDate.getFullYear())
         }
 
         return {
@@ -783,227 +635,190 @@ export default {
                 month: focusedDate.getMonth(),
                 year: focusedDate.getFullYear()
             }
-        };
+        }
     },
     computed: {
         inputBind() {
             return {
                 ...this.$attrs,
                 ...this.inputClasses
-            };
+            }
         },
         dropdownBind() {
             return {
-                "root-class": this.computedClass(
-                    "dropdownClasses.rootClass",
-                    "o-dpck__dropdown"
-                ),
+                'root-class': this.computedClass('dropdownClasses.rootClass', 'o-dpck__dropdown'),
                 ...this.dropdownClasses
-            };
+            }
         },
         selectListBind() {
             return {
                 ...this.selectListClasses
-            };
+            }
         },
         rootClasses() {
             return [
-                this.computedClass("rootClass", "o-dpck"),
-                {
-                    [this.computedClass(
-                        "sizeClass",
-                        "o-dpck--",
-                        this.size
-                    )]: this.size
-                },
-                {
-                    [this.computedClass("mobileClass", "o-dpck--mobile")]: this
-                        .isMatchMedia
-                }
-            ];
+                this.computedClass('rootClass', 'o-dpck'),
+                { [this.computedClass('sizeClass', 'o-dpck--', this.size)]: this.size },
+                 { [this.computedClass('mobileClass', 'o-dpck--mobile')]: this.isMatchMedia },
+            ]
         },
         boxClasses() {
-            return [this.computedClass("boxClass", "o-dpck__box")];
+            return [
+                this.computedClass('boxClass', 'o-dpck__box')
+            ]
         },
         headerClasses() {
-            return [this.computedClass("headerClass", "o-dpck__header")];
+            return [
+                this.computedClass('headerClass', 'o-dpck__header')
+            ]
         },
         headerButtonsClasses() {
             return [
-                this.computedClass(
-                    "headerButtonsClass",
-                    "o-dpck__header__buttons"
-                ),
-                {
-                    [this.computedClass(
-                        "headerButtonsSizeClass",
-                        "o-dpck__header__buttons--",
-                        this.size
-                    )]: this.size
-                }
-            ];
+                this.computedClass('headerButtonsClass', 'o-dpck__header__buttons'),
+                { [this.computedClass('headerButtonsSizeClass', 'o-dpck__header__buttons--', this.size)]: this.size },
+            ]
         },
         prevBtnClasses() {
             return [
-                this.computedClass("prevBtnClass", "o-dpck__header__previous")
-            ];
+                this.computedClass('prevBtnClass', 'o-dpck__header__previous')
+            ]
         },
         nextBtnClasses() {
-            return [this.computedClass("nextBtnClass", "o-dpck__header__next")];
+            return [
+                this.computedClass('nextBtnClass', 'o-dpck__header__next')
+            ]
         },
         listsClasses() {
-            return [this.computedClass("listsClass", "o-dpck__header__list")];
+            return [
+                this.computedClass('listsClass', 'o-dpck__header__list')
+            ]
         },
         footerClasses() {
-            return [this.computedClass("footerClass", "o-dpck__footer")];
+            return [
+                this.computedClass('footerClass', 'o-dpck__footer')
+            ]
         },
 
         computedValue: {
             get() {
-                return this.dateSelected;
+                return this.dateSelected
             },
             set(value) {
-                this.updateInternalState(value);
-                if (!this.multiple) this.togglePicker(false);
-                this.$emit("input", value);
+                this.updateInternalState(value)
+                if (!this.multiple) this.togglePicker(false)
+                this.$emit('input', value)
                 if (this.useHtml5Validation) {
                     this.$nextTick(() => {
-                        this.checkHtml5Validity();
-                    });
+                        this.checkHtml5Validity()
+                    })
                 }
             }
         },
         formattedValue() {
-            return this.formatValue(this.computedValue);
+            return this.formatValue(this.computedValue)
         },
         localeOptions() {
             return new Intl.DateTimeFormat(this.locale, {
-                year: "numeric",
-                month: "numeric"
-            }).resolvedOptions();
+                year: 'numeric',
+                month: 'numeric'
+            }).resolvedOptions()
         },
         dtf() {
-            return new Intl.DateTimeFormat(
-                this.locale /*, { timeZone: 'UTC' } */
-            );
+            return new Intl.DateTimeFormat(this.locale/*, { timeZone: 'UTC' } */)
         },
         dtfMonth() {
             return new Intl.DateTimeFormat(this.locale, {
-                year: this.localeOptions.year || "numeric",
-                month: this.localeOptions.month || "2-digit"
+                year: this.localeOptions.year || 'numeric',
+                month: this.localeOptions.month || '2-digit',
                 // timeZone: 'UTC'
-            });
+            })
         },
         newMonthNames() {
             if (Array.isArray(this.monthNames)) {
-                return this.monthNames;
+                return this.monthNames
             }
-            return getMonthNames(this.locale);
+            return getMonthNames(this.locale)
         },
         newDayNames() {
             if (Array.isArray(this.dayNames)) {
-                return this.dayNames;
+                return this.dayNames
             }
-            return getWeekdayNames(this.locale);
+            return getWeekdayNames(this.locale)
         },
         listOfMonths() {
-            let minMonth = 0;
-            let maxMonth = 12;
-            if (
-                this.minDate &&
-                this.focusedDateData.year === this.minDate.getFullYear()
-            ) {
-                minMonth = this.minDate.getMonth();
+            let minMonth = 0
+            let maxMonth = 12
+            if (this.minDate && this.focusedDateData.year === this.minDate.getFullYear()) {
+                minMonth = this.minDate.getMonth()
             }
-            if (
-                this.maxDate &&
-                this.focusedDateData.year === this.maxDate.getFullYear()
-            ) {
-                maxMonth = this.maxDate.getMonth();
+            if (this.maxDate && this.focusedDateData.year === this.maxDate.getFullYear()) {
+                maxMonth = this.maxDate.getMonth()
             }
             return this.newMonthNames.map((name, index) => {
                 return {
                     name: name,
                     index: index,
                     disabled: index < minMonth || index > maxMonth
-                };
-            });
+                }
+            })
         },
         /*
          * Returns an array of years for the year dropdown. If earliest/latest
          * dates are set by props, range of years will fall within those dates.
          */
         listOfYears() {
-            let latestYear = this.focusedDateData.year + this.yearsRange[1];
+            let latestYear = this.focusedDateData.year + this.yearsRange[1]
             if (this.maxDate && this.maxDate.getFullYear() < latestYear) {
-                latestYear = Math.max(
-                    this.maxDate.getFullYear(),
-                    this.focusedDateData.year
-                );
+                latestYear = Math.max(this.maxDate.getFullYear(), this.focusedDateData.year)
             }
 
-            let earliestYear = this.focusedDateData.year + this.yearsRange[0];
+            let earliestYear = this.focusedDateData.year + this.yearsRange[0]
             if (this.minDate && this.minDate.getFullYear() > earliestYear) {
-                earliestYear = Math.min(
-                    this.minDate.getFullYear(),
-                    this.focusedDateData.year
-                );
+                earliestYear = Math.min(this.minDate.getFullYear(), this.focusedDateData.year)
             }
 
-            const arrayOfYears = [];
+            const arrayOfYears = []
             for (let i = earliestYear; i <= latestYear; i++) {
-                arrayOfYears.push(i);
+                arrayOfYears.push(i)
             }
 
-            return arrayOfYears.reverse();
+            return arrayOfYears.reverse()
         },
 
         showPrev() {
-            if (!this.minDate) return false;
+            if (!this.minDate) return false
             if (this.isTypeMonth) {
-                return this.focusedDateData.year <= this.minDate.getFullYear();
+                return this.focusedDateData.year <= this.minDate.getFullYear()
             }
-            const dateToCheck = new Date(
-                this.focusedDateData.year,
-                this.focusedDateData.month
-            );
-            const date = new Date(
-                this.minDate.getFullYear(),
-                this.minDate.getMonth()
-            );
-            return dateToCheck <= date;
+            const dateToCheck = new Date(this.focusedDateData.year, this.focusedDateData.month)
+            const date = new Date(this.minDate.getFullYear(), this.minDate.getMonth())
+            return (dateToCheck <= date)
         },
 
         showNext() {
-            if (!this.maxDate) return false;
+            if (!this.maxDate) return false
             if (this.isTypeMonth) {
-                return this.focusedDateData.year >= this.maxDate.getFullYear();
+                return this.focusedDateData.year >= this.maxDate.getFullYear()
             }
-            const dateToCheck = new Date(
-                this.focusedDateData.year,
-                this.focusedDateData.month
-            );
-            const date = new Date(
-                this.maxDate.getFullYear(),
-                this.maxDate.getMonth()
-            );
-            return dateToCheck >= date;
+            const dateToCheck = new Date(this.focusedDateData.year, this.focusedDateData.month)
+            const date = new Date(this.maxDate.getFullYear(), this.maxDate.getMonth())
+            return (dateToCheck >= date)
         },
 
         isMobile() {
-            return this.mobileNative && isMobile.any();
+            return this.mobileNative && isMobile.any()
         },
 
         isTypeMonth() {
-            return this.type === "month";
+            return this.type === 'month'
         },
 
         ariaRole() {
-            return !this.inline ? "dialog" : undefined;
+            return !this.inline ? 'dialog' : undefined
         },
 
         $elementRef() {
-            return "input";
+            return 'input'
         }
     },
     watch: {
@@ -1013,8 +828,8 @@ export default {
          *   2. If it's invalid, validate again.
          */
         value(value) {
-            this.updateInternalState(value);
-            if (!this.multiple) this.togglePicker(false);
+            this.updateInternalState(value)
+            if (!this.multiple) this.togglePicker(false)
         },
 
         focusedDate(value) {
@@ -1023,18 +838,18 @@ export default {
                     day: value.getDate(),
                     month: value.getMonth(),
                     year: value.getFullYear()
-                };
+                }
             }
         },
 
         /*
          * Emit input event on month and/or year change
          */
-        "focusedDateData.month"(value) {
-            this.$emit("change-month", value);
+        'focusedDateData.month'(value) {
+            this.$emit('change-month', value)
         },
-        "focusedDateData.year"(value) {
-            this.$emit("change-year", value);
+        'focusedDateData.year'(value) {
+            this.$emit('change-year', value)
         }
     },
     methods: {
@@ -1042,21 +857,15 @@ export default {
          * Parse string into date
          */
         onChange(value) {
-            const date = this.dateParser(value, this);
-            if (
-                date &&
-                (!isNaN(date) ||
-                    (Array.isArray(date) &&
-                        date.length === 2 &&
-                        !isNaN(date[0]) &&
-                        !isNaN(date[1])))
-            ) {
-                this.computedValue = date;
+            const date = this.dateParser(value, this)
+            if (date && (!isNaN(date) ||
+                (Array.isArray(date) && date.length === 2 && !isNaN(date[0]) && !isNaN(date[1])))) {
+                this.computedValue = date
             } else {
                 // Force refresh input value when not valid date
-                this.computedValue = null;
+                this.computedValue = null
                 if (this.$refs.input) {
-                    this.$refs.input.newValue = this.computedValue;
+                    this.$refs.input.newValue = this.computedValue
                 }
             }
         },
@@ -1066,15 +875,10 @@ export default {
          */
         formatValue(value) {
             if (Array.isArray(value)) {
-                const isArrayWithValidDates =
-                    Array.isArray(value) && value.every(v => !isNaN(v));
-                return isArrayWithValidDates
-                    ? this.dateFormatter([...value], this)
-                    : null;
+                const isArrayWithValidDates = Array.isArray(value) && value.every((v) => !isNaN(v))
+                return isArrayWithValidDates ? this.dateFormatter([...value], this) : null
             }
-            return value && !isNaN(value)
-                ? this.dateFormatter(value, this)
-                : null;
+            return (value && !isNaN(value)) ? this.dateFormatter(value, this) : null
         },
 
         /*
@@ -1082,16 +886,16 @@ export default {
          * and set month to 11 (December) or decrement year when 'month'
          */
         prev() {
-            if (this.disabled) return;
+            if (this.disabled) return
 
             if (this.isTypeMonth) {
-                this.focusedDateData.year -= 1;
+                this.focusedDateData.year -= 1
             } else {
                 if (this.focusedDateData.month > 0) {
-                    this.focusedDateData.month -= 1;
+                    this.focusedDateData.month -= 1
                 } else {
-                    this.focusedDateData.month = 11;
-                    this.focusedDateData.year -= 1;
+                    this.focusedDateData.month = 11
+                    this.focusedDateData.year -= 1
                 }
             }
         },
@@ -1101,97 +905,84 @@ export default {
          * and set month to 0 (January) or increment year when 'month'
          */
         next() {
-            if (this.disabled) return;
+            if (this.disabled) return
 
             if (this.isTypeMonth) {
-                this.focusedDateData.year += 1;
+                this.focusedDateData.year += 1
             } else {
                 if (this.focusedDateData.month < 11) {
-                    this.focusedDateData.month += 1;
+                    this.focusedDateData.month += 1
                 } else {
-                    this.focusedDateData.month = 0;
-                    this.focusedDateData.year += 1;
+                    this.focusedDateData.month = 0
+                    this.focusedDateData.year += 1
                 }
             }
         },
 
         formatNative(value) {
             return this.isTypeMonth
-                ? this.formatYYYYMM(value)
-                : this.formatYYYYMMDD(value);
+                ? this.formatYYYYMM(value) : this.formatYYYYMMDD(value)
         },
 
         /*
          * Format date into string 'YYYY-MM-DD'
          */
         formatYYYYMMDD(value) {
-            const date = new Date(value);
+            const date = new Date(value)
             if (value && !isNaN(date.getTime())) {
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-                return (
-                    year +
-                    "-" +
-                    ((month < 10 ? "0" : "") + month) +
-                    "-" +
-                    ((day < 10 ? "0" : "") + day)
-                );
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                return year + '-' +
+                    ((month < 10 ? '0' : '') + month) + '-' +
+                    ((day < 10 ? '0' : '') + day)
             }
-            return "";
+            return ''
         },
 
         /*
          * Format date into string 'YYYY-MM'
          */
         formatYYYYMM(value) {
-            const date = new Date(value);
+            const date = new Date(value)
             if (value && !isNaN(date.getTime())) {
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                return year + "-" + ((month < 10 ? "0" : "") + month);
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                return year + '-' +
+                    ((month < 10 ? '0' : '') + month)
             }
-            return "";
+            return ''
         },
 
         /*
          * Parse date from string
          */
         onChangeNativePicker(event) {
-            const date = event.target.value;
-            const s = date ? date.split("-") : [];
+            const date = event.target.value
+            const s = date ? date.split('-') : []
             if (s.length === 3) {
-                const year = parseInt(s[0], 10);
-                const month = parseInt(s[1]) - 1;
-                const day = parseInt(s[2]);
-                this.computedValue = new Date(year, month, day);
+                const year = parseInt(s[0], 10)
+                const month = parseInt(s[1]) - 1
+                const day = parseInt(s[2])
+                this.computedValue = new Date(year, month, day)
             } else {
-                this.computedValue = null;
+                this.computedValue = null
             }
         },
         updateInternalState(value) {
-            if (this.dateSelected === value) return;
-            const isArray = Array.isArray(value);
+            if (this.dateSelected === value) return
+            const isArray = Array.isArray(value)
             const currentDate = isArray
-                ? !value.length
-                    ? this.dateCreator()
-                    : value[value.length - 1]
-                : !value
-                ? this.dateCreator()
-                : value;
-            if (
-                !isArray ||
-                (isArray &&
-                    this.dateSelected &&
-                    value.length > this.dateSelected.length)
-            ) {
+                ? (!value.length ? this.dateCreator() : value[value.length - 1])
+                : (!value ? this.dateCreator() : value)
+            if (!isArray || (isArray && this.dateSelected && value.length > this.dateSelected.length)) {
                 this.focusedDateData = {
                     day: currentDate.getDate(),
                     month: currentDate.getMonth(),
                     year: currentDate.getFullYear()
-                };
+                }
             }
-            this.dateSelected = value;
+            this.dateSelected = value
         },
 
         /*
@@ -1199,14 +990,13 @@ export default {
          */
         togglePicker(active) {
             if (this.$refs.dropdown) {
-                const isActive =
-                    typeof active === "boolean"
-                        ? active
-                        : !this.$refs.dropdown.isActive;
+                const isActive = typeof active === 'boolean'
+                    ? active
+                    : !this.$refs.dropdown.isActive
                 if (isActive) {
-                    this.$refs.dropdown.isActive = isActive;
+                    this.$refs.dropdown.isActive = isActive
                 } else if (this.closeOnClick) {
-                    this.$refs.dropdown.isActive = isActive;
+                    this.$refs.dropdown.isActive = isActive
                 }
             }
         },
@@ -1215,9 +1005,9 @@ export default {
          * Call default onFocus method and show datepicker
          */
         handleOnFocus(event) {
-            this.onFocus(event);
+            this.onFocus(event)
             if (this.openOnFocus) {
-                this.togglePicker(true);
+                this.togglePicker(true)
             }
         },
 
@@ -1226,12 +1016,12 @@ export default {
          */
         toggle() {
             if (this.mobileNative && this.isMobile) {
-                const input = this.$refs.input.$refs.input;
-                input.focus();
-                input.click();
-                return;
+                const input = this.$refs.input.$refs.input
+                input.focus()
+                input.click()
+                return
             }
-            this.$refs.dropdown.toggle();
+            this.$refs.dropdown.toggle()
         },
 
         /*
@@ -1239,7 +1029,7 @@ export default {
          */
         onInputClick(event) {
             if (this.$refs.dropdown.isActive) {
-                event.stopPropagation();
+                event.stopPropagation()
             }
         },
 
@@ -1247,12 +1037,8 @@ export default {
          * Keypress event that is bound to the document.
          */
         keyPress({ key }) {
-            if (
-                this.$refs.dropdown &&
-                this.$refs.dropdown.isActive &&
-                (key === "Escape" || key === "Esc")
-            ) {
-                this.togglePicker(false);
+            if (this.$refs.dropdown && this.$refs.dropdown.isActive && (key === 'Escape' || key === 'Esc')) {
+                this.togglePicker(false)
             }
         },
 
@@ -1261,9 +1047,9 @@ export default {
          */
         onActiveChange(value) {
             if (!value) {
-                this.onBlur();
+                this.onBlur()
             }
-            this.$emit("active-change", value);
+            this.$emit('active-change', value)
         },
 
         changeFocus(day) {
@@ -1271,18 +1057,18 @@ export default {
                 day: day.getDate(),
                 month: day.getMonth(),
                 year: day.getFullYear()
-            };
+            }
         }
     },
     created() {
-        if (typeof window !== "undefined") {
-            document.addEventListener("keyup", this.keyPress);
+        if (typeof window !== 'undefined') {
+            document.addEventListener('keyup', this.keyPress)
         }
     },
     beforeDestroy() {
-        if (typeof window !== "undefined") {
-            document.removeEventListener("keyup", this.keyPress);
+        if (typeof window !== 'undefined') {
+            document.removeEventListener('keyup', this.keyPress)
         }
     }
-};
+}
 </script>
