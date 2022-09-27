@@ -61,6 +61,8 @@ export default {
         iconComponent: 'vue-fontawesome'
     })
 
+    app.config.unwrapInjectedRef = true
+
     if (typeof window !== 'undefined') {
         const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
         switch (theme) {
