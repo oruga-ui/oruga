@@ -20,15 +20,16 @@
             :class="listClass"
             :role="computedAriaRole"
         >
-            <slot />
+            <slot/>
         </ul>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import BaseComponentMixin from '../../utils/BaseComponentMixin';
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
     name: 'OMenuList',
     configField: 'menu',
     mixins: [BaseComponentMixin],
@@ -54,5 +55,5 @@ export default {
             return this.ariaRole === 'menu' ? this.ariaRole : null;
         },
     },
-}
+})
 </script>

@@ -11,6 +11,7 @@ import Icon from './icon'
 import Input from './input'
 import Inputitems from './inputitems'
 import Loading from './loading'
+import Menu from './menu'
 import Modal from './modal'
 import Notification from './notification'
 import Pagination from './pagination'
@@ -41,6 +42,7 @@ export {
     Input,
     Inputitems,
     Loading,
+    Menu,
     Modal,
     Notification,
     Pagination,
