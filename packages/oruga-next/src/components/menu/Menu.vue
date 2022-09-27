@@ -24,13 +24,31 @@ export default defineComponent({
     },
     data() {
         return {
-            isMenu: true // Used by MenuItem
+            menuItems: [],
         }
     },
     computed: {
         rootClass() {
             return this.computedClass('rootClass', 'o-menu')
         },
+    },
+    methods: {
+        registerMenuItem(item) {
+            this.menuItems.push(item);
+        },
+        resetMenu(excludedItems = []) {
+            this.menuItems.forEach((item) => {
+                if (!excludedItems.includes(item)) item.reset();
+            });
+        },
+    },
+    provide() {
+        return {
+            registerMenuItem: this.registerMenuItem,
+            resetMenu: this.resetMenu,
+            accordion: () => this.accordion,
+            activable: () => this.activable,
+        }
     },
 })
 </script>

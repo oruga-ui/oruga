@@ -4,7 +4,7 @@
             :is="tag"
             v-bind="$attrs"
             :class="itemClasses"
-            @click="onClick($event)"
+            @click="handleClick($event)"
         >
             <o-icon
                 v-if="icon"
@@ -98,40 +98,51 @@ export default defineComponent({
         }
     },
     methods: {
-        onClick() {
+        handleClick() {
             if (this.disabled) return
-            const menu = this.getMenu()
-            this.reset(this.$parent, menu)
+            this.triggerReset()
             this.newExpanded = this.$props.expanded || !this.newExpanded
             this.$emit('update:expanded', this.newExpanded)
-            if (menu && menu.activable) {
+            if (this.activable) {
                 this.newActive = true
                 this.$emit('update:active', this.newActive)
             }
         },
-        reset(parent, menu) {
-            const items = parent.$children.filter((c) => c.name === this.name)
-            items.forEach((item) => {
-                if (item !== this) {
-                    this.reset(item, menu)
-                    if (!parent.$data.isMenu || (parent.$data.isMenu && parent.accordion)) {
-                        item.newExpanded = false
-                        item.$emit('update:expanded', item.newActive)
-                    }
-                    if (menu && menu.activable) {
-                        item.newActive = false
-                        item.$emit('update:active', item.newActive)
-                    }
-                }
-            })
-        },
-        getMenu() {
-            let parent = this.$parent
-            while (parent && !parent.$data.isMenu) {
-                parent = parent.$parent
+        triggerReset(child?) {
+            // The point of this method is to collect references to the clicked item and any parent, this way we can skip resetting those elements.
+            if (this.triggerParentReset) {
+                this.triggerParentReset(this)
+            } else if (this.resetMenu) {
+                this.resetMenu([this, child])
             }
-            return parent
+        },
+        reset() {
+            if (!this.$parent.$data.isMenu || (this.$parent.$data.isMenu && this.accordion)) {
+                this.newExpanded = false
+                this.$emit('update:expanded', this.newExpanded)
+            }
+            if (this.activable) {
+                this.newActive = false
+                this.$emit('update:active', this.newActive)
+            }
+        },
+    },
+    mounted() {
+        if (this.registerMenuItem) {
+            this.registerMenuItem(this)
         }
-    }
+    },
+    provide() {
+        return {
+            triggerParentReset: this.triggerReset,
+        }
+    },
+    inject: {
+        registerMenuItem: { default: false },
+        resetMenu: { default: false },
+        triggerParentReset: { default: false },
+        accordion: { default: false },
+        activable: { default: false },
+    },
 })
 </script>
