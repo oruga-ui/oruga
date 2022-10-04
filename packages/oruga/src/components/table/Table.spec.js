@@ -169,5 +169,72 @@ describe('OTable', () => {
             bodyRows = wrapper.findAll('tbody tr')
             expect(bodyRows).toHaveLength(5) // Filtering after debounce
         })
+
+        it('tests checkRow method',()=>{
+            const shiftCheckRow = jest.spyOn(wrapper.vm,'shiftCheckRow')
+            const isRowChecked = jest.spyOn(wrapper.vm,'isRowChecked')
+            const removeCheckedRow = jest.spyOn(wrapper.vm,'removeCheckedRow')
+            const checkRow = jest.spyOn(wrapper.vm,'checkRow')
+            shiftCheckRow.mockImplementationOnce(()=>{})
+            isRowChecked.mockImplementationOnce(()=>false)
+            removeCheckedRow.mockImplementationOnce(()=>{})
+            const index = 0
+            let event = {
+                shiftKey:true
+            }
+            wrapper.vm.lastCheckedRowIndex = 1
+            const row = {
+                id: 1,
+                first_name: 'Jesse',
+                last_name: 'Simmons',
+                date: '2016-10-15 13:43:27',
+                gender: 'Male'
+              }
+            wrapper.vm.checkRow(row,index,event)
+            expect(checkRow).toHaveBeenCalledWith(row, 0, event)
+            expect(wrapper.emitted().check[0]).toEqual([[],row])
+            expect(wrapper.emitted()["update:checkedRows"][0]).toEqual([[]])
+            event = {
+                shiftKey:false
+            }
+            wrapper.vm.checkRow(row,index,event)
+            expect(checkRow).toHaveBeenCalledWith(row, 0, event)
+            expect(wrapper.emitted().check[0]).toEqual([[row],row])
+            expect(wrapper.emitted()["update:checkedRows"][0]).toEqual([[row]])
+            isRowChecked.mockImplementationOnce(()=>true)
+            wrapper.vm.checkRow(row,index,event)
+            expect(removeCheckedRow).toHaveBeenCalledWith(row)
+        })
+
+        it('tests isAllUncheckable method',async()=>{
+            await wrapper.setProps({
+                paginated:false,
+                data:[{
+                    id: 1,
+                    first_name: 'Jesse',
+                    last_name: 'Simmons',
+                    date: '2016-10-15 13:43:27',
+                    gender: 'Male'
+                  }]
+            })
+            const isRowCheckable = jest.spyOn(wrapper.vm,'isRowCheckable')
+            isRowCheckable.mockImplementationOnce(()=>true)
+            expect(wrapper.vm.isAllUncheckable).toEqual(false)
+        })
+
+        it('tests total watcher ',async()=>{
+            await wrapper.setProps({
+                backendPagination:true,
+                total:100
+            })
+            expect(wrapper.vm.newDataTotal).toEqual(100)
+        })
+
+        it('tests currentPage watcher ',async()=>{
+            await wrapper.setProps({
+                currentPage:5
+            })
+            expect(wrapper.vm.newCurrentPage).toEqual(5)
+        })
     })
 })
