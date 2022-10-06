@@ -27,6 +27,11 @@
             Set <code>success</code> for profile
           </o-switch>
         </div>
+        <div class="control">
+          <o-switch v-model="enableProfileActivateEvent">
+            Enable profile activate event
+          </o-switch>
+        </div>
       </o-field>
       <o-field v-if="hasNavigation" grouped group-multiline>
         <o-field label="Prev icon">
@@ -69,6 +74,7 @@
         label="Profile"
         :clickable="isStepsClickable"
         :variant="isProfileSuccess ? 'success' : ''"
+        @activate="onProfileActivate"
       >
         <h1 class="title has-text-centered">Profile</h1>
         Lorem ipsum dolor sit amet.
@@ -134,6 +140,7 @@ export default defineComponent({
     const isAnimated = ref(true)
     const isProfileSuccess = ref(false)
     const isRounded = ref(true)
+    const enableProfileActivateEvent = ref(false)
     // Navigation
     const hasNavigation = ref(true)
     const customNavigation = ref(false)
@@ -144,18 +151,26 @@ export default defineComponent({
     const showSocial = ref(false)
     const labelPosition = ref('bottom')
 
+    const onProfileActivate = () => {
+        if(enableProfileActivateEvent.value) {
+          alert('Profile Activated')
+        }
+    }
+
     return {
       activeStep,
       showSocial,
       isAnimated,
       isRounded,
+      enableProfileActivateEvent,
       isStepsClickable,
       hasNavigation,
       customNavigation,
       isProfileSuccess,
       prevIcon,
       nextIcon,
-      labelPosition
+      labelPosition,
+      onProfileActivate
     }
   }
 })

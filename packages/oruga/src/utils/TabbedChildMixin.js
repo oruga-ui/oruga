@@ -53,6 +53,8 @@ export default (parentCmp) => ({
             this.transitionName = this.index < oldIndex
                 ? this.parent.vertical ? 'slide-down' : 'slide-next'
                 : this.parent.vertical ? 'slide-up' : 'slide-prev'
+
+            this.$emit("activate")
         },
 
         /**

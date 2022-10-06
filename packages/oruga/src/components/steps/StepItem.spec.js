@@ -49,6 +49,12 @@ describe('OStepItem', () => {
         expect(wrapper.vm.transitionName).toBe('slide-next')
     })
 
+    it('emits an activate event', async () => {
+        await wrapper.vm.activate(1)
+        const activateEmitted = wrapper.emitted()['activate']
+        expect(activateEmitted).toBeTruthy()
+    })
+
     /*
     it('doesn\'t mount when it has no parent', () => {
         const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
