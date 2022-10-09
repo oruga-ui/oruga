@@ -6,11 +6,7 @@ title: Checkbox
 
 > Select a single or grouped options
 
----
-
-## Examples
-
- <example-checkbox />
+<example-checkbox />
 
 ## Class props
 

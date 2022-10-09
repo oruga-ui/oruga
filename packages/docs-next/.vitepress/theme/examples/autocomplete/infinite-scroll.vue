@@ -31,8 +31,8 @@
             </div>
           </div>
         </template>
-        <template #footer>
-          <span v-show="page > totalPages" class="has-text-grey">
+        <template #footer v-if="page > totalPages">
+          <span class="ex-text-grey">
             Thats it! No more movies found.
           </span>
         </template>
@@ -81,7 +81,7 @@ export default defineComponent({
           `https://api.themoviedb.org/3/search/movie?api_key=bb6f51bef07465653c3e553d6ab161a8&query=${_name}&page=${page.value}`
         ).then((response) => response.json())
 
-        data.value = _data.results;
+        data.value = [...data.value, ..._data.results];
         page.value += 1;
         totalPages.value = _data.total_pages;
       } catch(error) {
@@ -108,3 +108,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.ex-text-grey {
+    color: grey
+}
+</style>

@@ -6,11 +6,7 @@ title: Sidebar
 
 > A sidebar to use as left/right overlay or static
 
----
-
-## Examples
-
- <example-sidebar />
+<example-sidebar />
 
 ## Class props
 

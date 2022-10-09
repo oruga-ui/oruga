@@ -6,8 +6,8 @@
         @keydown.prevent.enter="$refs.label.click()">
         <input
             v-model="computedValue"
-            :indeterminate.prop="indeterminate"
             type="checkbox"
+            v-bind="$attrs"
             ref="input"
             @click.stop
             :class="checkClasses"
@@ -16,6 +16,7 @@
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
+            :indeterminate.prop="indeterminate"
             :true-value="trueValue"
             :false-value="falseValue"
             :aria-labelledby="ariaLabelledby">

@@ -6,11 +6,7 @@ title: Tabs
 
 > Responsive horizontal navigation tabs, switch between contents with ease
 
----
-
-## Examples
-
- <example-tabs />
+<example-tabs />
 
 ## Class props
 

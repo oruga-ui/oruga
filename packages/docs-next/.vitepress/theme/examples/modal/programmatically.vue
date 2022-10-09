@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, h } from 'vue'
-import { useProgrammatic } from '@oruga-ui/oruga-next'
+import { useProgrammatic } from '../../../../../oruga-next/dist/oruga'
 import ModalForm from './_modal-form.vue'
 
 export default defineComponent({

@@ -6,11 +6,7 @@ title: Field
 
 > Fields are used to add functionality to controls and to attach/group components and elements together
 
----
-
-## Examples
-
- <example-field />
+<example-field />
 
 ## Class props
 

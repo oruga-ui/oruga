@@ -11,17 +11,26 @@
             content-class="odocs-panel-content"
             v-model:open="isOpen">
             <template #trigger>{{ isOpen ? 'Hide' : 'Show' }} code</template>
-            <component :is="highlightjs" :code="code" />
+            <highlightjs :code="codeComputed" />
         </o-collapse>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, markRaw } from 'vue'
-import 'highlight.js/lib/common';
+import { defineComponent, ref, computed } from 'vue'
 import 'highlight.js/styles/github-dark.css'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import xml from 'highlight.js/lib/languages/xml'
+import hljsVuePlugin from "@highlightjs/vue-plugin"
+
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('javascript', javascript)
 
 export default defineComponent({
+    components: {
+        highlightjs: hljsVuePlugin.component
+    },
     props: {
         component: {
             type: Object,
@@ -31,24 +40,22 @@ export default defineComponent({
         showCode: {
             type: Boolean,
             default: () => true
-        },
+        }
     },
     setup(props) {
 
-        const isOpen = ref(false);
-        const highlightjs = ref(null);
+        const isOpen = ref(false)
 
-        onBeforeMount(() => {
-            // due to esm build (probably better write a new viewer from scratch)
-            import('@highlightjs/vue-plugin').then((val) => {
-                highlightjs.value = markRaw(<any>val.default.component);
-            });
-        });
+        const codeComputed = computed(() => {
+            const code = props.code
+            return code.replace(/\.\.\//g, '')
+                .replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
+        })
 
         return {
             isOpen,
-            highlightjs
-        };
+            codeComputed
+        }
     }
 })
 </script>
@@ -60,7 +67,7 @@ export default defineComponent({
 }
 
 .odocs-panel {
-    border: 1px solid #ebebeb;
+    border: 1px solid var(--vp-button-alt-bg);
 }
 
 .odocs-spaced > *:not(:last-child) {
@@ -72,7 +79,7 @@ export default defineComponent({
     cursor: pointer;
     text-align: center;
     padding: 0.5rem;
-    border-bottom: 1px solid #ebebeb;
+    background-color: var(--vp-button-alt-bg);
 }
 
 .odocs-panel-content {

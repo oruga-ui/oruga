@@ -11,6 +11,7 @@
             :trap-focus="trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!inline"
+            :trigger-tabindex="-1"
             :append-to-body="appendToBody"
             append-to-body-copy-parent
             @active-change="onActiveChange">
@@ -238,7 +239,8 @@
 </template>
 
 <script lang="ts">
-import { App, defineComponent, PropType } from 'vue'
+import type { App, PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import FormElementMixin from '../../utils/FormElementMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -364,14 +366,14 @@ export default defineComponent({
         placeholder: String,
         editable: Boolean,
         disabled: Boolean,
-        unselectableDates: Array,
+        unselectableDates: [Array, Function],
         unselectableDaysOfWeek: {
             type: Array,
             default: () => {
                 return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
             }
         },
-        selectableDates: Array,
+        selectableDates: [Array, Function],
         dateFormatter: {
             type: Function,
             default: (date: string, vm: App) => {

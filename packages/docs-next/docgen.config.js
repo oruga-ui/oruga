@@ -13,7 +13,8 @@ const IGNORE = [
 ];
 
 const IGNORE_CLASSES = {
-    'icon' : ['customClass']
+    'icon' : ['customClass'],
+    'table': ['rowClass']
 }
 
 const NAME_FOLDER_MAPPING = {
@@ -59,7 +60,7 @@ ${since ? `Since: ${since[0].description}\n` : ''}
 ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
-${'---\n ## Examples\n ' + '<example-' + component.toLowerCase() + ' />'}
+${'<example-' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
 ${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}

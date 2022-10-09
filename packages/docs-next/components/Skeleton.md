@@ -6,11 +6,7 @@ title: Skeleton
 
 > A placeholder for content to load
 
----
-
-## Examples
-
- <example-skeleton />
+<example-skeleton />
 
 ## Class props
 

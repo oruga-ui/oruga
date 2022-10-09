@@ -6,11 +6,7 @@ title: Radio
 
 > Select an option from a set
 
----
-
-## Examples
-
- <example-radio />
+<example-radio />
 
 ## Class props
 

@@ -82,11 +82,11 @@ Vue.use(Oruga)
 
 ```js
 import Vue from 'vue'
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga'
+import { OAutocomplete, OSidebar } from '@oruga-ui/oruga'
 import '@oruga-ui/oruga/dist/oruga.css'
 
-Vue.use(Autocomplete)
-Vue.use(Sidebar)
+Vue.component(OAutocomplete)
+Vue.component(OSidebar)
 ```
 
 ### Vue 3
@@ -130,12 +130,12 @@ createApp(...).use(Oruga);
 
 ```js
 import { createApp } from 'vue'
-import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next'
+import { OAutocomplete, OSidebar } from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga.css'
 
 createApp(...)
-  .use(Autocomplete)
-  .use(Sidebar)
+  .use(OAutocomplete)
+  .use(OSidebar)
 ```
 
 ## Nuxt module
@@ -233,11 +233,13 @@ With Oruga you can easily override existing components style appending one or mo
 
 You can add classes to a component using class properties (see [Autocomplete class props](/components/Autocomplete.html#class-props) for example)
 
+#### Adding classes from props
+
 ```vue
 <o-autocomplete root-class="myautocomplete-root" menu-class="myautocomplete-menu" item-class="myautocomplete-item" />
 ```
 
-Or globally 
+#### Adding classes globally
 
 ```js
 import Vue from 'vue';
@@ -254,14 +256,14 @@ Vue.use(Oruga, {
 });
 ```
 
-If you use individual imports you can customize each compoment using `Config` plugin.
+If you use individual imports you can customize each component using `Config` plugin.
 
 ```js
 import Vue from 'vue';
-import { Autocomplete, Sidebar, Config } from '@oruga-ui/oruga';
+import { OAutocomplete, OSidebar, Config } from '@oruga-ui/oruga';
 
-Vue.use(Autocomplete);
-Vue.use(Sidebar);
+Vue.component(OAutocomplete);
+Vue.component(OSidebar);
 Vue.use(Config, {
     autocomplete: {
         rootClass: 'myautocomplete-root',

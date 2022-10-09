@@ -6,11 +6,7 @@ title: Table
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
----
-
-## Examples
-
- <example-table />
+<example-table />
 
 ## Class props
 
@@ -71,6 +67,7 @@ title: Table
 | paginationPosition    | Pagination position (if paginated)                                                                                        | string         | `bottom`, `top`, `bot`     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table: {<br>&nbsp;&nbsp;paginationPosition: 'bottom'<br>}</code> |
 | paginationRounded     | Rounded pagination if paginated                                                                                           | boolean        | -                          |                                                                                                                                                   |
 | perPage               | How many rows per page (if paginated)                                                                                     | number\|string | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table: {<br>&nbsp;&nbsp;perPage: 20<br>}</code>                  |
+| rowClass              | Add a class to row based on the return                                                                                    | func           | -                          | Default function (see source code)                                                                                                                |
 | scrollable            | Add a horizontal scrollbar when table is too wide                                                                         | boolean        | -                          |                                                                                                                                                   |
 | selected              | Set which row is selected, use v-model:selected to make it two-way binding                                                | object         | -                          |                                                                                                                                                   |
 | showDetailIcon        | Allow chevron icon and column to be visible                                                                               | boolean        | -                          | true                                                                                                                                              |
@@ -142,7 +139,6 @@ title: Table
 | --oruga-table-background                      | \$table-background                      | #f5f5f5                                                  |
 | --oruga-table-boder                           | \$table-boder                           | 1px solid transparent                                    |
 | --oruga-table-border-radius                   | \$table-border-radius                   | \$base-border-radius                                     |
-| --oruga-table-bordered-border-width           | \$table-bordered-border-width           | 1px                                                      |
 | --oruga-table-card-box-shadow                 | \$table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
 | --oruga-table-card-cell-font-weight           | \$table-card-cell-font-weight           | 600                                                      |
 | --oruga-table-card-cell-padding               | \$table-card-cell-padding               | 0 0.5em 0 0                                              |

@@ -46,6 +46,9 @@ title: Steps
         <div class="control">
           <o-switch v-model="isProfileSuccess"> Set <code>success</code> for profile </o-switch>
         </div>
+        <div class="control">
+          <o-switch v-model="enableProfileActivateEvent"> Enable profile activate event </o-switch>
+        </div>
       </o-field>
       <o-field v-if="hasNavigation" grouped group-multiline>
         <o-field label="Prev icon">
@@ -83,7 +86,7 @@ title: Steps
         Lorem ipsum dolor sit amet.
       </o-step-item>
 
-      <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''">
+      <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''" @activate="onProfileActivate">
         <h1 class="title has-text-centered">Profile</h1>
         Lorem ipsum dolor sit amet.
       </o-step-item>
@@ -124,10 +127,18 @@ title: Steps
         hasNavigation: true,
         customNavigation: false,
         isProfileSuccess: false,
+        enableProfileActivateEvent: false,
 
         prevIcon: 'chevron-left',
         nextIcon: 'chevron-right',
         labelPosition: 'bottom'
+      }
+    },
+    methods: {
+      onProfileActivate() {
+        if (this.enableProfileActivateEvent) {
+          alert('Profile Activated')
+        }
       }
     }
   }
@@ -497,6 +508,12 @@ export default {
 | value     | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number | -      |           |
 | variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
 | visible   | Show/hide item                                                                                                                      | boolean        | -      | true      |
+
+### Events
+
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| activate   |            |
 
 ### Slots
 

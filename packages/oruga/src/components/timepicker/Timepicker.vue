@@ -98,7 +98,8 @@
                     <option
                         v-for="meridien in meridiens"
                         :value="meridien"
-                        :key="meridien">
+                        :key="meridien"
+                        :disabled="isMeridienDisabled(meridien)">
                         {{ meridien }}
                     </option>
                 </o-select>

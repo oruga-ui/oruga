@@ -6,11 +6,7 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
----
-
-## Examples
-
- <example-tooltip />
+<example-tooltip />
 
 ## Class props
 
@@ -35,7 +31,7 @@ title: Tooltip
 | label        | Tooltip text                                                                    | string              | -                                                                               |                                                                                                                                            |
 | multiline    | Tooltip will be multilined                                                      | boolean             | -                                                                               |                                                                                                                                            |
 | override     |                                                                                 | boolean             | -                                                                               |                                                                                                                                            |
-| position     | Tooltip position in relation to the element                                     | string              | `top`, `bottom`, `left`, `right`                                                | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;position: 'top'<br>}</code>     |
+| position     | Tooltip position in relation to the element                                     | string              | `top`, `bottom`, `left`, `right`, `auto`                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;position: 'top'<br>}</code>     |
 | triggers     | Tooltip trigger events                                                          | array               | `hover`, `click`, `focus`, `contextmenu`                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tooltip: {<br>&nbsp;&nbsp;triggers: ['hover']<br>}</code> |
 | variant      | Color of the tooltip                                                            | string\|func\|array | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |                                                                                                                                            |
 

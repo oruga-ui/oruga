@@ -6,11 +6,7 @@ title: Datetimepicker
 
 > An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
 
----
-
-## Examples
-
- <example-datetimepicker />
+<example-datetimepicker />
 
 ## Class props
 

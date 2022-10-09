@@ -13,6 +13,7 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "importsNotUsedAsValues": "error",
     "baseUrl": ".",
     "types": [],
     "paths": {

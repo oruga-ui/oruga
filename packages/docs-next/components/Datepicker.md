@@ -6,11 +6,7 @@ title: Datepicker
 
 > An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
 
----
-
-## Examples
-
- <example-datepicker />
+<example-datepicker />
 
 ## Class props
 

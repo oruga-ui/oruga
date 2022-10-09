@@ -6,11 +6,7 @@ title: Pagination
 
 > A responsive and flexible pagination
 
----
-
-## Examples
-
- <example-pagination />
+<example-pagination />
 
 ## Class props
 

@@ -8,8 +8,8 @@ import { VueInstance } from '../../utils/config'
 import { registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
 import InstanceRegistry from "../..//utils/InstanceRegistry"
 
-import { App, createVNode, DefineComponent, Plugin, render } from 'vue'
-
+import type { App, DefineComponent, Plugin } from 'vue'
+import { createVNode, render } from 'vue'
 
 let localVueInstance: App
 
@@ -47,7 +47,7 @@ const NotificationProgrammatic = {
         const app = localVueInstance || VueInstance
         propsData.propsNotification = Object.assign({},propsData)
         propsData.propsNotification.isActive = true
-        const defaultSlot = () => { return newParams.message }
+        const defaultSlot = () => { return slot }
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot)
         vnode.appContext = app._context
         render(vnode, document.createElement('div'))

@@ -6,11 +6,7 @@ title: Timepicker
 
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
 
----
-
-## Examples
-
- <example-timepicker />
+<example-timepicker />
 
 ## Class props
 

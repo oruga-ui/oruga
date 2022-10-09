@@ -7,9 +7,9 @@ packages/oruga/coverage/*
 packages/oruga/README.md
 packages/demo-vue3/*
 packages/oruga-next/README.md
-packages/docs-next/.vuepress/.cache/
-packages/docs-next/.vuepress/.temp/
-packages/docs-next/.vuepress/dist/
+packages/docs-next/.vitepress/.cache/
+packages/docs-next/.vitepress/.temp/
+packages/docs-next/.vitepress/dist/
 packages/docs-next/.vitepress/dist/
 
 .changelogs

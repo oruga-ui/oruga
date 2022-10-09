@@ -1,4 +1,4 @@
-import { App, Plugin } from 'vue'
+import type { App, Plugin } from 'vue'
 
 import Tabs from './Tabs.vue'
 import TabItem from './TabItem.vue'

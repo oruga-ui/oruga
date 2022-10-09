@@ -6,11 +6,7 @@ title: Steps
 
 > Responsive horizontal process steps
 
----
-
-## Examples
-
- <example-steps />
+<example-steps />
 
 ## Class props
 

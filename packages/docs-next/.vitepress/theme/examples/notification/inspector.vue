@@ -34,7 +34,8 @@ export default {
         },
         {
           class: "rootClass",
-          description: "Class of the root element"
+          description: "Class of the root element",
+          warning: "You have to declare a class when override mode",
         },
         {
           class: "closeClass",
@@ -61,6 +62,7 @@ export default {
           description: "Class of the element when positioned",
           properties: ["position"],
           suffixes: ['top-right', 'top', 'top-left', 'bottom-right', 'bottom', 'bottom-left'],
+          warning: "You have to declare a class for top and bottom position when override mode",
           action: (cmp) => {
             cmp.data.position = 'top-right';
           },
@@ -77,6 +79,10 @@ export default {
           action: (cmp) => {
             cmp.data.variant = 'warning';
           },
+        },
+        {
+          class: "noticeCustomContainerClass",
+          description: "Class of the custom container element"
         },
       ],
     };

@@ -5,11 +5,11 @@
         @mouseleave="onMouseLeave">
         <div :class="sceneClasses">
             <div
-                @mousedown.prevent="dragStart"
+                @mousedown="dragStart"
                 @touchstart="dragStart"
                 :class="itemsClasses"
                 :style="'transform:translateX('+translation+'px)'">
-                <slot/>
+                <slot />
             </div>
             <slot
                 name="arrow"

@@ -6,11 +6,7 @@ title: Notification
 
 > Bold notification blocks to alert your users of something
 
----
-
-## Examples
-
- <example-notification />
+<example-notification />
 
 ## Class props
 
@@ -34,7 +30,7 @@ title: Notification
 | closeIconSize  | Size of close icon                                                                                                                                             | string         | -                                                                               | 'small'                                                                                                                                        |
 | component      | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close') | object\|func   | -                                                                               |                                                                                                                                                |
 | duration       | Visibility duration in miliseconds.                                                                                                                            | number         | -                                                                               | 2000                                                                                                                                           |
-| events         | Events to be binded to the injected component                                                                                                                  | object         | -                                                                               |                                                                                                                                                |
+| events         | Events to be binded to the injected component                                                                                                                  | object         | -                                                                               | {}                                                                                                                                             |
 | hasIcon        | Adds an icon on the left side depending on the type (or the icon prop if defined).                                                                             | boolean        | -                                                                               |                                                                                                                                                |
 | icon           | Icon name to use with has-icon.                                                                                                                                | string         | -                                                                               |                                                                                                                                                |
 | iconPack       | Icon pack to use.                                                                                                                                              | string         | -                                                                               |                                                                                                                                                |

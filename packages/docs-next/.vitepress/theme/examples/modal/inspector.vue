@@ -61,6 +61,24 @@ export default {
             this.isImageModalActive = true;
             cmp.data.fullScreen = true;
           }
+        },
+        {
+          class: "scrollClipClass",
+          description: "Class of the modal when scroll is clip",
+          properties: ['scroll'],
+          action: (cmp) => {
+            this.isImageModalActive = true;
+            cmp.data.scroll = "clip";
+          }
+        },
+        {
+          class: "noScrollClass",
+          description: "Class of the modal when scroll is not clip",
+          properties: ['scroll'],
+          action: (cmp) => {
+            this.isImageModalActive = true;
+            cmp.data.scroll = "";
+          }
         }
       ],
     };
