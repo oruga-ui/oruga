@@ -136,7 +136,7 @@ title: Steps
     },
     methods: {
       onProfileActivate() {
-        if(this.enableProfileActivateEvent) {
+        if (this.enableProfileActivateEvent) {
           alert('Profile Activated')
         }
       }
