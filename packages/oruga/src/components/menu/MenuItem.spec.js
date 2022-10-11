@@ -1,0 +1,33 @@
+import { shallowMount } from '@vue/test-utils'
+import OMenuItem from './MenuItem'
+
+let wrapper
+
+describe('OMenuItem', () => {
+    beforeEach(() => {
+        wrapper = shallowMount(OMenuItem)
+    })
+
+    it('is called', () => {
+        expect(wrapper.name()).toBe('OMenuItem')
+        expect(wrapper.isVueInstance()).toBeTruthy()
+    })
+
+    it('render correctly', () => {
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('manage onClick', () => {
+        wrapper.vm.reset = jest.fn()
+
+        wrapper.setProps({disabled: true})
+        wrapper.vm.onClick()
+
+        wrapper.setProps({disabled: false})
+        wrapper.vm.onClick()
+
+        expect(wrapper.vm.reset).toHaveBeenCalledTimes(1)
+        expect(wrapper.vm.newExpanded).toBeTruthy()
+        expect(wrapper.emitted()['update:expanded'][0]).toContainEqual(true)
+    })
+})
