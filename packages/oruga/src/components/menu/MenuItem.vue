@@ -23,7 +23,10 @@
         <!-- sub menu items -->
         <template v-if="$slots.default">
             <transition :name="animation">
-                <ul v-show="newExpanded">
+                <ul
+                    :class="submenuClass"
+                    v-show="newExpanded"
+                >
                     <slot />
                 </ul>
             </transition>
@@ -43,11 +46,6 @@ export default {
     mixins: [BaseComponentMixin],
     configField: 'menu',
     inheritAttrs: false,
-    // deprecated, to replace with default 'value' in the next breaking change
-    model: {
-        prop: 'active',
-        event: 'update:active'
-    },
     props: {
         label: String,
         active: Boolean,
@@ -90,6 +88,9 @@ export default {
                 [this.computedClass('itemDisabledClass', 'o-menu-item--disabled')]: this.disabled,
                 [this.computedClass('itemIconTextClass', 'o-menu-item--icon-text')]: this.icon,
             }
+        },
+        submenuClass() {
+            return this.computedClass('itemSubmenuClass', 'o-menu-item__submenu')
         },
     },
     watch: {

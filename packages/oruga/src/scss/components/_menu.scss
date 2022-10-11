@@ -28,11 +28,12 @@ $menu-label-spacing: 1em !default;
 .o-menu-list {
     @include avariable('line-height', ('menu-list-line-height'), $menu-list-line-height);
 
-    ul, li {
+    .o-menu-list,
+    .o-menu-item__wrapper {
         list-style: none;
     }
 
-    ul {
+    .o-menu-item__submenu {
         @include avariable('border-left', ('menu-list-border-left'), $menu-list-border-left);
         @include avariable('padding-left', ('menu-nested-list-padding-left'), $menu-nested-list-padding-left);
         @include avariable('margin', ('menu-nested-list-margin'), $menu-nested-list-margin);
