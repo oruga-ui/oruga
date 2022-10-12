@@ -9,11 +9,11 @@
     "lint:fix:oruga": "lerna run lint:fix --scope @oruga-ui/oruga",
     "lint:staged:oruga": "lerna run lint:staged --scope @oruga-ui/oruga",
     "unit:oruga": "lerna run unit --scope @oruga-ui/oruga",
-    "build:lib:oruga": "lerna run build:lib --parallel --scope @oruga-ui/oruga",
-    "build:lib:watch:oruga": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga",
     "build:docs:oruga": "lerna run docs:build --scope @oruga-ui/docs",
     "build:docs:hacktoberfest": "lerna run docs:hacktoberfest --scope @oruga-ui/docs",
     "build:docs:watch:oruga": "lerna run docs:dev --parallel --scope @oruga-ui/docs",
+    "build:lib:oruga": "lerna run build:lib --parallel --scope @oruga-ui/oruga",
+    "build:lib:watch:oruga": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga",
     "build:docs-next:oruga": "lerna run docs:build --parallel --scope @oruga-ui/docs-next",
     "build:docs-next:watch:oruga": "lerna run docs:dev --parallel --scope @oruga-ui/docs-next",
     "build:lib:oruga-next": "lerna run build:lib --parallel --scope @oruga-ui/oruga-next",
@@ -26,5 +26,8 @@
   "devDependencies": {
     "lerna": "^3.21.0",
     "simple-git": "^3.3.0"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.19"
   }
 }
