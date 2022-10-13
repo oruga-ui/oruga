@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section :class="elementsWrapperClasses">
         <ul class="o-breadcrumb o-breadcrumb--medium o-breadcrumb__slash-separator">
             <slot/>
         </ul>
@@ -44,6 +44,16 @@ export default defineComponent({
          * Icon pack to use
          * @values mdi, fa, fas and any other custom icon pack
          */
+        /**
+         * Available separators
+         * @values arrow, bullet, dot, succeeds
+        */
+        separator: String,
+        /**
+         * Alignement
+         * @values left, centered, right
+        */
+        align: String,
         iconPack: String,
         /**
          * Icon name to show on the left
@@ -55,12 +65,13 @@ export default defineComponent({
         iconRight: String,
 
         /**  @ignore */
-        iconBoth: Boolean, // This is used internally
+        // iconBoth: Boolean, // This is used internally
         elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
-        disabledClass: [String, Function, Array],
-        activeClass: [String, Function, Array],
+        // disabledClass: [String, Function, Array],
+        // activeClass: [String, Function, Array],
         separatorClass: [String, Function, Array],
+        alignClass: [String, Function, Array],
         iconClass: [String, Function, Array],
         iconLeftClass: [String, Function, Array],
         iconRightClass: [String, Function, Array],
@@ -70,46 +81,49 @@ export default defineComponent({
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-btn'),
-                { [this.computedClass('sizeClass', 'o-btn--', this.size)]: this.size },
-                { [this.computedClass('variantClass', 'o-btn--', this.variant)]: this.variant },
+                this.computedClass('rootClass', 'o-breadcrumb'),
+                this.computedClass('sizeClass', 'o-breadcrumb--', this.size),
+                this.computedClass('separatorClass', 'o-breadcrumb__', this.separator + "-separator"),
+                this.computedClass('alignClass', 'o-breadcrumb__', this.align),
+                this.computedClass('variantClass', 'o-breadcrumb--', this.variant),
+
                 // { [this.computedClass('outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
                 // { [this.computedClass('invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
                 // { [this.computedClass('outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
                 // { [this.computedClass('invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
                 // { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
                 // { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
-                { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
+                // { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
             ]
         },
-        iconClasses() {
-            return [
-                this.computedClass('iconClass', 'o-btn__icon'),
-            ]
-        },
-        iconLeftClasses() {
-            return [
-                ...this.iconClasses,
-                this.computedClass('iconLeftClass', 'o-btn__icon-left')
-            ]
-        },
-        iconRightClasses() {
-            return [
-                ...this.iconClasses,
-                this.computedClass('iconRightClass', 'o-btn__icon-right')
-            ]
-        },
-        elementsWrapperClasses() {
-            return [
-                this.computedClass('elementsWrapperClass', 'o-btn__wrapper'),
-            ]
-        },
-        computedTag() {
-            if (this.disabled !== undefined && this.disabled !== false) {
-                return 'button'
-            }
-            return this.tag
-        },
+        // iconClasses() {
+        //     return [
+        //         this.computedClass('iconClass', 'o-btn__icon'),
+        //     ]
+        // },
+        // iconLeftClasses() {
+        //     return [
+        //         ...this.iconClasses,
+        //         this.computedClass('iconLeftClass', 'o-btn__icon-left')
+        //     ]
+        // },
+        // iconRightClasses() {
+        //     return [
+        //         ...this.iconClasses,
+        //         this.computedClass('iconRightClass', 'o-btn__icon-right')
+        //     ]
+        // },
+        // elementsWrapperClasses() {
+        //     return [
+        //         this.computedClass('elementsWrapperClass', 'o-breadcrumb__wrapper'),
+        //     ]
+        // },
+        // computedTag() {
+        //     if (this.disabled !== undefined && this.disabled !== false) {
+        //         return 'button'
+        //     }
+        //     return this.tag
+        // },
     }
 })
 </script>

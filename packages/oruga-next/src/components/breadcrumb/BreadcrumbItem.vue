@@ -1,5 +1,5 @@
 <template>
-	<li class="o-breadcrumb-item" :class="{ 'o-breadcrumb-item--active': active, 'o-breadcrumb-item--disabled': disabled }">
+	<li  :class="rootClasses">
 		<component 
 			    v-bind="$attrs"
           v-on="$listeners" 
@@ -21,7 +21,7 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 export default defineComponent ({
 
   name: 'OBreadcrumbItem',
-
+  mixins: [BaseComponentMixin],
   props : {
     /**
     * HTML Tag of items, optional
@@ -60,16 +60,30 @@ export default defineComponent ({
   },
   computed: {
     isActive(){
-      return this.active == true ? ' o-breadcrumb-item--active' : ''
+      return this.active == true ? this.activeClass : ''
     },
     isDisabled(){
-      return this.disabled == true ? ' o-breadcrumb-item--disabled' : '';
+      return this.disabled == true ? this.disabledClass : '';
     },
 
-    rootClasses(){
-      return ['o-breadcrumb-item']
-    }
 
+    activeClass() {
+      return [
+        this.computedClass('itemActiveClass', 'o-breadcrumb-item--active')
+      ]
+    },
+    disabledClass() {
+      return [
+        this.computedClass('itemDisabledClass', 'o-breadcrumb-item--disabled')
+      ]
+    },
+    rootClasses(){
+      return [
+        this.computedClass('itemClass', 'o-breadcrumb-item'),
+        this.isActive,
+        this.isDisabled
+      ]
+    }
   }
 })
 </script>
