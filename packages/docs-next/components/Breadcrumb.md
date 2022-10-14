@@ -19,15 +19,16 @@ title: Breadcrumb
 
 ## Props
 
-| Prop name | Description                    | Type    | Values                                                                          | Default |
-| --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | ------- |
-| iconBoth  |                                | boolean | -                                                                               |         |
-| iconLeft  | Icon name to show on the left  | string  | -                                                                               |         |
-| iconPack  | Icon pack to use               | string  | `mdi`, `fa`, `fas and any other custom icon pack`                               |         |
-| iconRight | Icon name to show on the right | string  | -                                                                               |         |
-| override  |                                | boolean | -                                                                               |         |
-| size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      |         |
-| variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
+| Prop name | Description                    | Type    | Values                                                                          | Default   |
+| --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | --------- |
+| align     | Alignement                     | string  | `left`, `centered`, `right`                                                     | 'left'    |
+| iconLeft  | Icon name to show on the left  | string  | -                                                                               |           |
+| iconPack  |                                | string  | -                                                                               |           |
+| iconRight | Icon name to show on the right | string  | -                                                                               |           |
+| override  |                                | boolean | -                                                                               |           |
+| separator | Available separators           | string  | `slash`, `arrow`, `bullet`, `dot`, `succeeds`                                   | "slash"   |
+| size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      | "medium"  |
+| variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | "primary" |
 
 ### Slots
 
@@ -56,6 +57,7 @@ title: Breadcrumb
 | --------- | ---------------------------------------------------- | ------- | ------------------ | ------- |
 | active    | item when it clicked, optional                       | boolean | `false`, `true`    | false   |
 | disabled  | an item to be useless with no click events, optional | boolean | `false`, `true`    | false   |
+| override  |                                                      | boolean | -                  |         |
 | tag       | HTML Tag of items, optional                          | string  | `a`, `router-link` | 'a'     |
 
 ### Slots

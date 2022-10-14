@@ -1,6 +1,6 @@
 <template>
     <section :class="elementsWrapperClasses">
-        <ul class="o-breadcrumb o-breadcrumb--medium o-breadcrumb__slash-separator">
+        <ul :class="rootClasses">
             <slot/>
         </ul>
     </section>
@@ -34,26 +34,26 @@ export default defineComponent({
         * Color of the control, optional
         * @values primary, info, success, warning, danger, and any other custom color
         */
-        variant: String,
+        variant: { type: String, default: "primary"},
         /**
          * Size of button, optional
          * @values small, medium, large
          */
-        size: String,
+        size: { type: String, default: "medium"},
         /**
          * Icon pack to use
          * @values mdi, fa, fas and any other custom icon pack
          */
         /**
          * Available separators
-         * @values arrow, bullet, dot, succeeds
+         * @values slash, arrow, bullet, dot, succeeds
         */
-        separator: String,
+        separator: { type: String, default: "slash"},
         /**
          * Alignement
          * @values left, centered, right
         */
-        align: String,
+        align: { type: String, default: 'left'},
         iconPack: String,
         /**
          * Icon name to show on the left
@@ -83,8 +83,8 @@ export default defineComponent({
             return [
                 this.computedClass('rootClass', 'o-breadcrumb'),
                 this.computedClass('sizeClass', 'o-breadcrumb--', this.size),
-                this.computedClass('separatorClass', 'o-breadcrumb__', this.separator + "-separator"),
-                this.computedClass('alignClass', 'o-breadcrumb__', this.align),
+                this.computedClass('separatorClass', 'o-breadcrumb--', this.separator + "-separator"),
+                this.computedClass('alignClass', 'o-breadcrumb--', this.align),
                 this.computedClass('variantClass', 'o-breadcrumb--', this.variant),
 
                 // { [this.computedClass('outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
@@ -98,24 +98,24 @@ export default defineComponent({
         },
         // iconClasses() {
         //     return [
-        //         this.computedClass('iconClass', 'o-btn__icon'),
+        //         this.computedClass('iconClass', 'o-btn--icon'),
         //     ]
         // },
         // iconLeftClasses() {
         //     return [
         //         ...this.iconClasses,
-        //         this.computedClass('iconLeftClass', 'o-btn__icon-left')
+        //         this.computedClass('iconLeftClass', 'o-btn--icon-left')
         //     ]
         // },
         // iconRightClasses() {
         //     return [
         //         ...this.iconClasses,
-        //         this.computedClass('iconRightClass', 'o-btn__icon-right')
+        //         this.computedClass('iconRightClass', 'o-btn--icon-right')
         //     ]
         // },
         // elementsWrapperClasses() {
         //     return [
-        //         this.computedClass('elementsWrapperClass', 'o-breadcrumb__wrapper'),
+        //         this.computedClass('elementsWrapperClass', 'o-breadcrumb--wrapper'),
         //     ]
         // },
         // computedTag() {

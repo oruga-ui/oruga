@@ -17,12 +17,12 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 		a {
 			font-weight: $breadcrumb-font-weight;
 		}
-		&--active {
+		&__active {
 			a {
 				color: $breadcrumb-active;
 			}
 		}
-		&--disabled {
+		&__disabled {
 			a {
 				opacity: $breadcrumb-disabled-opacity;
 				cursor: not-allowed;
@@ -30,30 +30,48 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 			}
 		}
 	}
-	&__slash-separator {
+	&--slash-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " / ";
 		}
 	}
-	&__arrow-separator {
+	&--arrow-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " → ";
 		}
 	}
-	&__chevron-separator {
+	&--chevron-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " > ";
 		}
 	}
-	&__bullet-separator {
+	&--bullet-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " • ";
 		}
 	}
-	&__dot-separator {
+	&--dot-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " ∙ ";
 		}
+	}
+	&--left {
+		text-align: left;
+		// .breadcrumb-item {
+		// 	font-size: .5em;
+		// }
+	}
+	&--center {
+		text-align: center;
+		// .breadcrumb-item {
+		// 	font-size: 1em;
+		// }
+	}
+	&--right {
+		text-align: right;
+		// .breadcrumb-item {
+		// 	font-size: 2em;
+		// }
 	}
 	@each $name, $value in $sizes {
 		&--#{$name} {
@@ -62,21 +80,5 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 			}
 		}
 	}
-	// &--small {
-	// 	.breadcrumb-item {
-	// 		font-size: .5em;
-	// 	}
-	// }
-	// &--medium {
-	// 	.breadcrumb-item {
-	// 		font-size: 1em;
-	// 	}
-	// }
-	// &--large {
-	// 	.breadcrumb-item {
-	// 		font-size: 2em;
-	// 	}
-	// }
-
 }
 

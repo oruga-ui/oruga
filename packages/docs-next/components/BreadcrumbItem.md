@@ -21,6 +21,7 @@ title: Breadcrumb Item
 | --------- | ---------------------------------------------------- | ------- | ------------------ | ------- |
 | active    | item when it clicked, optional                       | boolean | `false`, `true`    | false   |
 | disabled  | an item to be useless with no click events, optional | boolean | `false`, `true`    | false   |
+| override  |                                                      | boolean | -                  |         |
 | tag       | HTML Tag of items, optional                          | string  | `a`, `router-link` | 'a'     |
 
 ## Slots

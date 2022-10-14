@@ -1,6 +1,6 @@
 <template>
 	<section>
-    <o-breadcrumb>
+    <o-breadcrumb separator='dot' align="left" size="medium">
       <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>

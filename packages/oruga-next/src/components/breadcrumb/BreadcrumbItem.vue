@@ -69,12 +69,12 @@ export default defineComponent ({
 
     activeClass() {
       return [
-        this.computedClass('itemActiveClass', 'o-breadcrumb-item--active')
+        this.computedClass('itemActiveClass', 'o-breadcrumb-item__active')
       ]
     },
     disabledClass() {
       return [
-        this.computedClass('itemDisabledClass', 'o-breadcrumb-item--disabled')
+        this.computedClass('itemDisabledClass', 'o-breadcrumb-item__disabled')
       ]
     },
     rootClasses(){
