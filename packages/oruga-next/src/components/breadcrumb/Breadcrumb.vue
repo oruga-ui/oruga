@@ -66,7 +66,6 @@ export default defineComponent({
 
         /**  @ignore */
         // iconBoth: Boolean, // This is used internally
-        elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
         // disabledClass: [String, Function, Array],
         // activeClass: [String, Function, Array],

@@ -57,26 +57,24 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 	}
 	&--left {
 		text-align: left;
-		// .breadcrumb-item {
-		// 	font-size: .5em;
-		// }
 	}
 	&--center {
 		text-align: center;
-		// .breadcrumb-item {
-		// 	font-size: 1em;
-		// }
 	}
 	&--right {
 		text-align: right;
-		// .breadcrumb-item {
-		// 	font-size: 2em;
-		// }
 	}
 	@each $name, $value in $sizes {
 		&--#{$name} {
 			.o-breadcrumb-item {
 				font-size: $value;
+			}
+		}
+	}
+	@each $name, $value in $colors {
+		&--#{$name} {
+			.o-breadcrumb-item {
+				color: $value; 
 			}
 		}
 	}
