@@ -1,9 +1,9 @@
 <template>
 	<section>
     <o-breadcrumb variant="danger" separator='dot' align="left" size="medium">
-      <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
-      <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
-      <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
+      <o-breadcrumb-item left-icon="plus" tag="a" href="/">Home</o-breadcrumb-item>
+      <o-breadcrumb-item left-icon="plus" tag="a" href="/components/">Components</o-breadcrumb-item>
+      <o-breadcrumb-item left-icon="plus" tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
     </o-breadcrumb>
     <!-- <o-button>Click Me</o-button> -->
   </section>

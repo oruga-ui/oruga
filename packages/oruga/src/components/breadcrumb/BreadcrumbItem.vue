@@ -65,9 +65,9 @@ export default {
 
   	rootClasses(){
   		return [
-        this.computedClass('itemClass', 'o-breadcrumb-item'),
-        this.computedClass('itemActiveClass', 'o-breadcrumb-item--active'),
-        this.computedClass('itemDisabledClass', 'o-breadcrumb-item--disabled')
+        // this.computedClass('itemClass', 'o-breadcrumb-item'),
+        // this.computedClass('itemActiveClass', 'o-breadcrumb-item--active'),
+        // this.computedClass('itemDisabledClass', 'o-breadcrumb-item--disabled')
       ]
   	}
 

@@ -1,5 +1,13 @@
 <template>
 	<li  :class="rootClasses">
+     <o-icon
+            v-if="iconLeft"
+            :pack="iconPack"
+            :icon="iconLeft"
+            :size="size"
+            :both="iconBoth"
+            :class="iconLeftClasses"
+        />
 		<component 
 			    v-bind="$attrs"
           v-on="$listeners" 
@@ -7,6 +15,14 @@
         >
 			<slot />
 		</component>
+    <o-icon
+        v-if="iconRight"
+        :pack="iconPack"
+        :icon="iconRight"
+        :size="size"
+        :both="iconBoth"
+        :class="iconRightClasses"
+    />
 	</li>
 </template>
 
@@ -14,6 +30,7 @@
 import { defineComponent } from 'vue';
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
+import Icon from '../icon/Icon.vue';
 /**
  * @displayName Breadcrumb Item
  */
@@ -22,6 +39,9 @@ export default defineComponent ({
 
   name: 'OBreadcrumbItem',
   mixins: [BaseComponentMixin],
+  components: {
+      [Icon.name]: Icon
+  },
   props : {
     /**
     * HTML Tag of items, optional
@@ -31,6 +51,19 @@ export default defineComponent ({
       type: String, 
       default: 'a' 
     },
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack: String,
+    /**
+     * Icon name to show on the left
+     */
+    iconLeft: String,
+    /**
+     * Icon name to show on the right
+     */
+    iconRight: String,
     /**
     * item when it clicked, optional
     * @values false, true
@@ -65,8 +98,6 @@ export default defineComponent ({
     isDisabled(){
       return this.disabled == true ? this.disabledClass : '';
     },
-
-
     activeClass() {
       return [
         this.computedClass('itemActiveClass', 'o-breadcrumb-item__active')
@@ -83,7 +114,25 @@ export default defineComponent ({
         this.isActive,
         this.isDisabled
       ]
-    }
+    },
+
+    iconClasses() {
+        return [
+            this.computedClass('iconClass', 'o-breadcrumb-item--icon'),
+        ]
+    },
+    iconLeftClasses() {
+        return [
+            ...this.iconClasses,
+            this.computedClass('iconLeftClass', 'o-breadcrumb-item--icon-left')
+        ]
+    },
+    iconRightClasses() {
+        return [
+            ...this.iconClasses,
+            this.computedClass('iconRightClass', 'o-breadcrumb-item--icon-right')
+        ]
+    },
   }
 })
 </script>

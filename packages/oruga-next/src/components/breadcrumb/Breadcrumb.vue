@@ -41,10 +41,6 @@ export default defineComponent({
          */
         size: { type: String, default: "medium"},
         /**
-         * Icon pack to use
-         * @values mdi, fa, fas and any other custom icon pack
-         */
-        /**
          * Available separators
          * @values slash, arrow, bullet, dot, succeeds
         */
@@ -54,26 +50,28 @@ export default defineComponent({
          * @values left, centered, right
         */
         align: { type: String, default: 'left'},
-        iconPack: String,
+        /**
+         * Icon pack to use
+         * @values mdi, fa, fas and any other custom icon pack
+         */
+        // iconPack: String,
         /**
          * Icon name to show on the left
          */
-        iconLeft: String,
+        // iconLeft: String,
         /**
          * Icon name to show on the right
          */
-        iconRight: String,
+        // iconRight: String,
 
         /**  @ignore */
         // iconBoth: Boolean, // This is used internally
         rootClass: [String, Function, Array],
-        // disabledClass: [String, Function, Array],
-        // activeClass: [String, Function, Array],
         separatorClass: [String, Function, Array],
         alignClass: [String, Function, Array],
-        iconClass: [String, Function, Array],
-        iconLeftClass: [String, Function, Array],
-        iconRightClass: [String, Function, Array],
+        // iconClass: [String, Function, Array],
+        // iconLeftClass: [String, Function, Array],
+        // iconRightClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
         variantClass: [String, Function, Array]
     },
@@ -85,14 +83,6 @@ export default defineComponent({
                 this.computedClass('separatorClass', 'o-breadcrumb--', this.separator + "-separator"),
                 this.computedClass('alignClass', 'o-breadcrumb--', this.align),
                 this.computedClass('variantClass', 'o-breadcrumb--', this.variant),
-
-                // { [this.computedClass('outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
-                // { [this.computedClass('invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
-                // { [this.computedClass('outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
-                // { [this.computedClass('invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
-                // { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
-                // { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
-                // { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
             ]
         },
         // iconClasses() {
@@ -111,17 +101,6 @@ export default defineComponent({
         //         ...this.iconClasses,
         //         this.computedClass('iconRightClass', 'o-btn--icon-right')
         //     ]
-        // },
-        // elementsWrapperClasses() {
-        //     return [
-        //         this.computedClass('elementsWrapperClass', 'o-breadcrumb--wrapper'),
-        //     ]
-        // },
-        // computedTag() {
-        //     if (this.disabled !== undefined && this.disabled !== false) {
-        //         return 'button'
-        //     }
-        //     return this.tag
         // },
     }
 })
