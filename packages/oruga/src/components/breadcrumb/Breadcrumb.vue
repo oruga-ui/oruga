@@ -96,18 +96,7 @@ export default {
                 ...this.iconClasses,
                 this.computedClass('iconRightClass', 'o-btn__icon-right')
             ]
-        },
-        elementsWrapperClasses() {
-            return [
-                this.computedClass('elementsWrapperClass', 'o-btn__wrapper'),
-            ]
-        },
-        computedTag() {
-            if (this.disabled !== undefined && this.disabled !== false) {
-                return 'button'
-            }
-            return this.tag
-        },
+        }
     }
 }
 </script>
