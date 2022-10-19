@@ -21,9 +21,19 @@ title: Breadcrumb
 
 | Prop name | Description                    | Type    | Values                                                                          | Default   |
 | --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | --------- |
-| align     | Alignement                     | string  | `left`, `centered`, `right`                                                     | 'left'    |
+| align     | Alignement                     | string  | `left`, `center`, `right`                                                     | 'left'    |
 | override  |                                | boolean | -                                                                               |           |
-| separator | Available separators           | string  | `slash`, `arrow`, `bullet`, `dot`, `succeeds`                                   | "slash"   |
+| separator | Available separators           | string  | `slash`, `arrow`, `bullet`, `dot`, `chevron`                                   | "slash"   |
+| size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      | "medium"  |
+| variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | "primary" |
+
+## Props Breadcrumb item
+
+| Prop name | Description                    | Type    | Values                                                                          | Default   |
+| --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | --------- |
+| align     | Alignement                     | string  | `left`, `center`, `right`                                                     | 'left'    |
+| override  |                                | boolean | -                                                                               |           |
+| separator | Available separators           | string  | `slash`, `arrow`, `bullet`, `dot`, `chevron`                                   | "slash"   |
 | size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      | "medium"  |
 | variant   | Color of the control, optional | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | "primary" |
 
@@ -57,6 +67,7 @@ title: Breadcrumb
 | iconLeft  | Icon name to show on the left                        | string  | -                                                 |         |
 | iconPack  | Icon pack to use                                     | string  | `mdi`, `fa`, `fas and any other custom icon pack` |         |
 | iconRight | Icon name to show on the right                       | string  | -                                                 |         |
+| iconSize  | Icon size to show                                    | string  | -                                                 |         |
 | override  |                                                      | boolean | -                                                 |         |
 | tag       | HTML Tag of items, optional                          | string  | `a`, `router-link`                                | 'a'     |
 

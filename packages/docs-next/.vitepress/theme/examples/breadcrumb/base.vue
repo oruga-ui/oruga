@@ -1,11 +1,10 @@
 <template>
 	<section>
-    <o-breadcrumb variant="danger" separator='dot' align="left" size="medium">
-      <o-breadcrumb-item left-icon="plus" tag="a" href="/">Home</o-breadcrumb-item>
-      <o-breadcrumb-item left-icon="plus" tag="a" href="/components/">Components</o-breadcrumb-item>
-      <o-breadcrumb-item left-icon="plus" tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
+    <o-breadcrumb variant="danger" separator='slash' align="left" size="small">
+      <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
+      <o-breadcrumb-item tag="a" href="/components/" disabled>Components</o-breadcrumb-item>
+      <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
     </o-breadcrumb>
-    <!-- <o-button>Click Me</o-button> -->
   </section>
 </template>
 
@@ -14,13 +13,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    // const isSwitched = ref(false)
-    // const isSwitchedCustom = ref('Yes')
-
-    // return {
-    //   isSwitched,
-    //   isSwitchedCustom
-    // }
+   
   }
 })
 </script>

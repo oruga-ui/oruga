@@ -42,7 +42,7 @@ export default defineComponent({
         size: { type: String, default: "medium"},
         /**
          * Available separators
-         * @values slash, arrow, bullet, dot, succeeds
+         * @values slash, arrow, bullet, dot, chevron
         */
         separator: { type: String, default: "slash"},
         /**

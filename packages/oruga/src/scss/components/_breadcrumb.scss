@@ -3,7 +3,7 @@
 $breadcrumb-color: $primary !default; 
 $breadcrumb-cursor: pointer !default;
 $breadcrumb-font-weight: 400 !default;
-$breadcrumb-active: black !default; 
+$breadcrumb-active: #2b292a !default; 
 $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 /* @docs */
 
@@ -18,18 +18,27 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 			font-weight: $breadcrumb-font-weight;
 		}
 		&__active {
-			a {
+			a, span {
 				color: $breadcrumb-active;
 			}
+			
 		}
 		&__disabled {
-			a {
+			a, span {
 				opacity: $breadcrumb-disabled-opacity;
 				cursor: not-allowed;
 				pointer-events: none;
 			}
 		}
+
+		&--icon-left {
+			margin-right: 5px;
+		} 
+		&--icon-right {
+			margin-left: 5px;
+		}
 	}
+
 	&--slash-separator {
 		.o-breadcrumb-item:not(:last-child):after {
 			content: " / ";
@@ -55,6 +64,7 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 			content: " ∙ ";
 		}
 	}
+
 	&--left {
 		text-align: left;
 	}
@@ -64,10 +74,14 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 	&--right {
 		text-align: right;
 	}
+
 	@each $name, $value in $sizes {
 		&--#{$name} {
 			.o-breadcrumb-item {
 				font-size: $value;
+				span {
+					font-size: $value
+				}
 			}
 		}
 	}
@@ -75,6 +89,9 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 		&--#{$name} {
 			.o-breadcrumb-item {
 				color: $value; 
+				// span {
+				// 		font-size: 
+				// }
 			}
 		}
 	}

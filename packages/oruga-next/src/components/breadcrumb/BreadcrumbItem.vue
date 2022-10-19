@@ -1,13 +1,12 @@
 <template>
 	<li  :class="rootClasses">
      <o-icon
-            v-if="iconLeft"
-            :pack="iconPack"
-            :icon="iconLeft"
-            :size="size"
-            :both="iconBoth"
-            :class="iconLeftClasses"
-        />
+          v-if="iconLeft"
+          :pack="iconPack"
+          :icon="iconLeft"
+          :both="iconBoth"
+          :class="iconLeftClasses"
+     />
 		<component 
 			    v-bind="$attrs"
           v-on="$listeners" 
@@ -19,10 +18,9 @@
         v-if="iconRight"
         :pack="iconPack"
         :icon="iconRight"
-        :size="size"
         :both="iconBoth"
         :class="iconRightClasses"
-    />
+     />
 	</li>
 </template>
 
@@ -64,6 +62,10 @@ export default defineComponent ({
      * Icon name to show on the right
      */
     iconRight: String,
+     /**
+     * Icon size to show
+     */
+    iconSize: String,
     /**
     * item when it clicked, optional
     * @values false, true
