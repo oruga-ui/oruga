@@ -41,7 +41,7 @@ export default defineComponent({
         */
         separator: { type: String, default: "slash"},
         /**
-         * Alignement
+         * Alignnement
          * @values left, center, right
         */
         align: { type: String, default: 'left'},

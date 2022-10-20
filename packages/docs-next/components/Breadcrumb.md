@@ -21,7 +21,7 @@ title: Breadcrumb
 
 | Prop name | Description                    | Type    | Values                                                                          | Default   |
 | --------- | ------------------------------ | ------- | ------------------------------------------------------------------------------- | --------- |
-| align     | Alignement                     | string  | `left`, `center`, `right`                                                       | 'left'    |
+| align     | Alignnement                    | string  | `left`, `center`, `right`                                                       | 'left'    |
 | override  |                                | boolean | -                                                                               |           |
 | separator | Available separators           | string  | `slash`, `arrow`, `bullet`, `dot`, `chevron`                                    | "slash"   |
 | size      | Size of button, optional       | string  | `small`, `medium`, `large`                                                      | "medium"  |
@@ -59,8 +59,7 @@ title: Breadcrumb
 | iconRight | Icon name to show on the right                       | string  | -                                                 |         |
 | iconSize  | Icon size to show                                    | string  | -                                                 |         |
 | override  |                                                      | boolean | -                                                 |         |
-| tag       | HTML Tag of items, optional                          | string  | `a`, `router-link`     
-                           | 'a'     |
+| tag       | HTML Tag of items, optional                          | string  | `a`, `router-link`                                | 'a'     |
 
 ### Slots
 

@@ -3,7 +3,7 @@
     <template #default="s">
       <o-breadcrumb>
         <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
-        <o-breadcrumb-item tag="a" href="/components/" disabled>Components</o-breadcrumb-item>
+        <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
         <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
       </o-breadcrumb>
     </template>
@@ -23,100 +23,39 @@ export default {
           description: "Class of the root element",
         },
         {
-          class: "outlinedClass",
-          description: "Class of the button outlined",
-          properties: ["outlined"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.variant = 'primary';
-            cmp.data.outlined = true;
-          },
-        },
-        {
-          class: "invertedClass",
-          description: "Class of the button when inverted",
-          properties: ["inverted"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.variant = 'primary';
-            cmp.data.inverted = true;
-          },
-        },
-        {
-          class: "expandedClass",
-          description: "Class of the button when expanded",
-          properties: ["expanded"],
-          action: (cmp) => {
-            cmp.data.expanded = true;
-          },
-        },
-        {
-          class: "elementsWrapperClass",
-          description: "Class of the button elements wrapper",
-          action: (cmp) => {
-            cmp.data.expanded = true;
-          },
-        },
-        {
-          class: "roundedClass",
-          description: "Class of the button when rounded",
-          properties: ["rounded"],
-          action: (cmp) => {
-            cmp.data.rounded = true;
-          },
-        },
-        {
-          class: "disabledClass",
-          description: "Class of the button when disabled",
-          properties: ["disabled"],
-          action: (cmp) => {
-            cmp.data.disabled = true;
-          },
-        },
-        {
-          class: "labelClass",
-          description: "Class of the button label"
-        },
-        {
-          class: "iconClass",
-          description: "Class of the button icon",
-          properties: ["iconLeft", "iconRight"],
-          action: (cmp) => {
-            cmp.data['icon-left'] = "plus"
-          },
-        },
-        {
-          class: "iconLeftClass",
-          description: "Class of the button icon on the left",
-          properties: ["iconLeft"],
-          action: (cmp) => {
-            cmp.data['icon-left'] = "plus"
-          },
-        },
-        {
-          class: "iconRightClass",
-          description: "Class of the button icon on the right",
-          properties: ["iconRight"],
-          action: (cmp) => {
-            cmp.data['icon-right'] = "plus"
-          },
-        },
-        {
           class: "sizeClass",
-          description: "Class of the button size",
+          description: "Class of the Breadcrumb size",
           properties: ["size"],
           suffixes: ['small', 'medium', 'large'],
           action: (cmp) => {
-            cmp.data.size = 'large';
+            cmp.data.size = 'medium';
           },
         },
         {
           class: "variantClass",
-          description: "Class of the button variant",
+          description: "Class of the Breadcrumb variant",
           properties: ["variant"],
           suffixes: ['primary', 'info', 'warning', 'danger'],
           action: (cmp) => {
-            cmp.data.variant = 'warning';
+            cmp.data.variant = 'primary';
+          },
+        },
+        {
+          class: "alignClass",
+          description: "Class of the Breadcrumb alignnement",
+          properties: ["align"],
+          suffixes: ['left', 'center', 'right'],
+          action: (cmp) => {
+            cmp.data.align = 'center';
+          },
+        },
+        {
+          class: "separatorClass",
+          description: "Class of the Breadcrumb separator",
+          properties: ["separator"],
+          suffixes: ['slash', 'arrow', 'bullet', 'dot', 'chevron'],
+          action: (cmp) => {
+            cmp.data.separator = 'slash';
           },
         },
       ],
