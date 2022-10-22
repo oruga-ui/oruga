@@ -75,6 +75,31 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 		text-align: right;
 	}
 
+	&--primary {
+		.o-breadcrumb-item {
+			color: $primary;
+		}
+	}
+	&--success {
+		.o-breadcrumb-item {
+			color: $success;
+		}
+	}
+	&--danger {
+		.o-breadcrumb-item {
+			color: $danger;
+		}
+	}
+	&--warning {
+		.o-breadcrumb-item {
+			color: $warning;
+		}
+	}
+	&--info {
+		.o-breadcrumb-item {
+			color: $info;
+		}
+	}
 	@each $name, $value in $sizes {
 		&--#{$name} {
 			.o-breadcrumb-item {
@@ -85,15 +110,17 @@ $breadcrumb-disabled-opacity: $base-disabled-opacity !default;
 			}
 		}
 	}
-	@each $name, $value in $colors {
-		&--#{$name} {
-			.o-breadcrumb-item {
-				color: $value; 
+	// @each $name, $value in $colors {
+	// 	&--#{$name} {
+	// 		.o-breadcrumb-item {
+	// 			color: $value; 
 				// span {
 				// 		font-size: 
 				// }
-			}
-		}
-	}
+	// 		}
+	// 	}
+	// }
+
 }
+
 

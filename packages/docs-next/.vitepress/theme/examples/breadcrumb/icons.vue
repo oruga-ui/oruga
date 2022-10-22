@@ -1,6 +1,6 @@
 <template>
 	<section>
-    <o-breadcrumb variant="danger" separator='slash' align="left">
+    <o-breadcrumb separator='slash' align="left">
       <o-breadcrumb-item icon-left="home" tag="a" href="/">Home</o-breadcrumb-item>
       <o-breadcrumb-item icon-left="search" tag="a" href="/components/" disabled>Components</o-breadcrumb-item>
       <o-breadcrumb-item icon-left="plus" tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>

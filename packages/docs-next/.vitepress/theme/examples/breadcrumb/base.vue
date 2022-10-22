@@ -1,8 +1,8 @@
 <template>
   <section>
-    <o-breadcrumb>
+    <o-breadcrumb variant='info'>
       <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
-      <o-breadcrumb-item tag="a" href="/components/" disabled>Components</o-breadcrumb-item>
+      <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
     </o-breadcrumb>
   </section>

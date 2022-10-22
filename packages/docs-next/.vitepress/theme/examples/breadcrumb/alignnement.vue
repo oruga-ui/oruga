@@ -7,14 +7,14 @@
     </o-breadcrumb>
     <br>
     <br>
-     <o-breadcrumb variant="danger" separator='slash' align="center" size="medium">
+     <o-breadcrumb variant="info" separator='slash' align="center" size="medium">
       <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
     </o-breadcrumb>
     <br>
     <br>
-     <o-breadcrumb variant="danger" separator='slash' align="right" size="medium">
+     <o-breadcrumb variant="success" separator='slash' align="right" size="medium">
       <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
       <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>

@@ -1,7 +1,7 @@
 <template>
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
-      <o-breadcrumb>
+      <o-breadcrumb v-bind="s">
         <o-breadcrumb-item tag="a" href="/">Home</o-breadcrumb-item>
         <o-breadcrumb-item tag="a" href="/components/">Components</o-breadcrumb-item>
         <o-breadcrumb-item tag="a" href="/components/Breadcrumb.html" active>Breadcrumb</o-breadcrumb-item>
@@ -28,7 +28,7 @@ export default {
           properties: ["size"],
           suffixes: ['small', 'medium', 'large'],
           action: (cmp) => {
-            cmp.data.size = 'medium';
+            cmp.data.size = 'large';
           },
         },
         {
@@ -37,7 +37,7 @@ export default {
           properties: ["variant"],
           suffixes: ['primary', 'info', 'warning', 'danger'],
           action: (cmp) => {
-            cmp.data.variant = 'primary';
+            cmp.data.variant = 'warning';
           },
         },
         {
@@ -55,7 +55,7 @@ export default {
           properties: ["separator"],
           suffixes: ['slash', 'arrow', 'bullet', 'dot', 'chevron'],
           action: (cmp) => {
-            cmp.data.separator = 'slash';
+            cmp.data.separator = 'arrow';
           },
         },
       ],
