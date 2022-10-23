@@ -16,15 +16,35 @@ describe('OBreadcrumb',()=>{
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 	it('centered breadcrumb', ()=>{
-		// expect()
+		wrapper = shallowMount(OBreadcrumb,{
+			propsData : {
+				align : "center"
+			}
+		})
+		expect(wrapper.contains('.o-breadcrumb--center')).toBeTruthy();
 	})
 	it('large breadcrumb', ()=>{
-		// expect()
+		wrapper = shallowMount(OBreadcrumb, {
+			propsData : {
+				size : 'large'
+			}
+		})
+		expect(wrapper.contains('.o-breadcrumb--large')).toBeTruthy();
 	})
 	it('colored breadcrumb', ()=>{
-		// expect()
+		wrapper = shallowMount(OBreadcrumb, {
+			propsData : {
+				variant : 'info'
+			}
+		})
+		expect(wrapper.contains('.o-breadcrumb--info')).toBeTruthy();
 	})
 	it('separator breadcrumb', ()=>{
-		// expect()
+		wrapper = shallowMount(OBreadcrumb, {
+			propsData : {
+				separator : "chevron"
+			}
+		})
+		expect(wrapper.contains('.o-breadcrumb--chevron-separator')).toBeTruthy();
 	})
 })
