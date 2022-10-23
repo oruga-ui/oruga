@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OBreadcrumbItem render correctly 1`] = `
+<li class="o-breadcrumb-item">
+    <!----> <a></a>
+    <!---->
+</li>
+`;

@@ -24,10 +24,10 @@ exports[`OSteps render correctly 1`] = `
                 <div class="o-steps__title"></div>
             </a></div>
     </nav>
-    <section class="o-steps__content o-steps__content-transitioning">
-        <div class="o-steps__item v-enter v-enter-active" style=""></div>
-        <div class="o-steps__item" style="display: none;"></div>
-        <div class="o-steps__item" style="display: none;"></div>
+    <section class="o-steps__content">
+        <div class="o-steps__item" id="step-1"></div>
+        <div class="o-steps__item" id="step-2" style="display: none;"></div>
+        <div class="o-steps__item" id="step-3" style="display: none;"></div>
     </section>
     <nav class="o-steps__navigation"><button type="button" disabled="disabled" role="button" class="o-btn o-btn--disabled"><span class="o-btn__wrapper"><span class="o-icon o-btn__icon o-btn__icon-left"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
             <!---->

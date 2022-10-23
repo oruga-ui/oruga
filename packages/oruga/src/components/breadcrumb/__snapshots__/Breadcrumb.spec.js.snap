@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OBreadcrumb render correctly 1`] = `
+<section>
+    <ul class="o-breadcrumb o-breadcrumb--medium o-breadcrumb--slash-separator o-breadcrumb--left o-breadcrumb--primary"></ul>
+</section>
+`;

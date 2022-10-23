@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OTabItem render correctly 1`] = `<div class="o-tab-item__content" style="display: none;"></div>`;
+exports[`OTabItem render correctly 1`] = `<div class="o-tab-item__content" id="tab-tab2" style="display: none;"></div>`;

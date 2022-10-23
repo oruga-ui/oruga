@@ -8,8 +8,8 @@
 
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath } from '../../utils/helpers'
-import { getOptions } from '../../utils/config'
+// import { getValueByPath } from '../../utils/helpers'
+// import { getOptions } from '../../utils/config'
 
 /**
  * The classic breadcrumb, in different colors, sizes, and states
