@@ -29,7 +29,7 @@ exports[`OTableMobileSort render correctly 1`] = `
         </table>
         <o-loading-stub animation="fade" oncancel="() => {
           /* istanbul ignore next */
-          cov_4p7cnp4rg.f[3]++;
+          cov_2jtz8vshvv.f[3]++;
         }" icon="loading" iconspin="true" iconsize="medium" overlay="true"></o-loading-stub>
     </div>
     <!---->

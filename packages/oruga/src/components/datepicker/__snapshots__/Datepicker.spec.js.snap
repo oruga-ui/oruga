@@ -389,23 +389,23 @@ exports[`ODatepicker render correctly 1`] = `
             </header>
             <o-datepicker-table-stub daynames="Su,M,Tu,W,Th,F,S" monthnames="January,February,March,April,May,June,July,August,September,October,November,December" firstdayofweek="0" indicators="dots" focused="[object Object]" datecreator="() => {
           /* istanbul ignore next */
-          cov_exaxsgv0l.f[13]++;
+          cov_2jc0oiltr0.f[13]++;
           const dateCreator =
           /* istanbul ignore next */
-          (cov_exaxsgv0l.s[57]++, (0, _helpers.getValueByPath)((0, _config.getOptions)(), 'datepicker.dateCreator', undefined));
+          (cov_2jc0oiltr0.s[57]++, (0, _helpers.getValueByPath)((0, _config.getOptions)(), 'datepicker.dateCreator', undefined));
 
           /* istanbul ignore next */
-          cov_exaxsgv0l.s[58]++;
+          cov_2jc0oiltr0.s[58]++;
 
           if (typeof dateCreator === 'function') {
             /* istanbul ignore next */
-            cov_exaxsgv0l.b[22][0]++;
-            cov_exaxsgv0l.s[59]++;
+            cov_2jc0oiltr0.b[22][0]++;
+            cov_2jc0oiltr0.s[59]++;
             return dateCreator();
           } else {
             /* istanbul ignore next */
-            cov_exaxsgv0l.b[22][1]++;
-            cov_exaxsgv0l.s[60]++;
+            cov_2jc0oiltr0.b[22][1]++;
+            cov_2jc0oiltr0.s[60]++;
             return new Date();
           }
         }" nearbymonthdays="true" rulesforfirstweek="4"></o-datepicker-table-stub>

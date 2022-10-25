@@ -14,6 +14,7 @@ import Loading from './loading'
 import Notification from './notification'
 import NotificationNotice from './notification'
 import Modal from './modal'
+import Menu from './menu'
 import Pagination from './pagination'
 import Radio from './radio'
 import Select from './select'
@@ -43,6 +44,7 @@ export {
     Inputitems,
     Loading,
     Modal,
+    Menu,
     Notification,
     NotificationNotice,
     Pagination,

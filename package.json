@@ -24,7 +24,7 @@
     "test:all": "lerna run test --stream"
   },
   "devDependencies": {
-    "lerna": "^3.21.0",
+    "lerna": "^3.22.1",
     "simple-git": "^3.3.0"
   },
   "dependencies": {
