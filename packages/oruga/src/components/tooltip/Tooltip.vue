@@ -35,7 +35,7 @@
 <script>
 import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
+import { createAbsoluteElement, removeElement, getValueByPath, isWebKit } from '../../utils/helpers'
 
 const opposites = {
     top: 'bottom',
@@ -62,13 +62,6 @@ const anchors = rect => ({
   left: { x: rect.left, y: (rect.top + rect.bottom) * 0.5 },
   right: { x: rect.right, y: (rect.top + rect.bottom) * 0.5 },
 })
-
-// Microsoft Edge "pretends" to be all other major browsers, so we need to filter it out.
-// It doesn't use a very consistent string to represent its own name ("Edge", "Edg", "EdgA", etc.),
-// but it looks like WebKit never pretends to be Chrome, Edge does, and Chrome doesn't have the bug
-// that this flag is used to work around.
-const isWebKit = navigator.userAgent.indexOf('AppleWebKit/') !== -1
-    && navigator.userAgent.indexOf('Chrome/') === -1;
 
 /**
  * Display a brief helper text to your user
@@ -202,7 +195,7 @@ export default {
                 let viewRect;
                 const viewport = window.visualViewport;
                 if (viewport != undefined) {
-                    if (isWebKit) {
+                    if (isWebKit()) {
                         // On WebKit, getBoundingClientRect offsets relative to the the visual viewport's origin, not the layout viewport's.
                         // See https://bugs.webkit.org/show_bug.cgi?id=170981
                         viewRect = new DOMRect(0, 0, viewport.width, viewport.height);

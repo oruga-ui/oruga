@@ -154,6 +154,16 @@ export const isMobile = {
     }
 }
 
+// Microsoft Edge "pretends" to be all other major browsers, so we need to filter it out.
+// It doesn't use a very consistent string to represent its own name ("Edge", "Edg", "EdgA", etc.),
+// but it looks like WebKit never pretends to be Chrome, Edge does, and Chrome doesn't have the bug
+// that this flag is used to work around.
+export function isWebKit() {
+    return typeof window !== 'undefined'
+        && window.navigator.userAgent.indexOf('AppleWebKit/') !== -1
+        && window.navigator.userAgent.indexOf('Chrome/') === -1
+}
+
 export function removeElement(el: Element) {
     if (typeof el.remove !== 'undefined') {
         el.remove()
