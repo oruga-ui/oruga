@@ -4,8 +4,11 @@ title: Modal
 
 # Modal
 
+<div class="vp-doc">
+
 > Classic modal overlay to include any content you may need
 
+</div>
 <example-modal />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Modal
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -77,3 +82,5 @@ title: Modal
 | --oruga-modal-content-max-height                  | \$modal-content-max-height                  | calc(100vh - 160px)          |
 | --oruga-modal-content-margin                      | \$modal-content-margin                      | 0 auto                       |
 | --oruga-modal-zindex                              | \$modal-zindex                              | 40                           |
+
+</div>

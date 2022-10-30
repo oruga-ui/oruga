@@ -4,8 +4,11 @@ title: Pagination
 
 # Pagination
 
+<div class="vp-doc">
+
 > A responsive and flexible pagination
 
+</div>
 <example-pagination />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Pagination
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -79,3 +84,5 @@ title: Pagination
 | --oruga-pagination-link-padding                  | \$pagination-link-padding                  | .5em .5em                    |
 | --oruga-pagination-margin                        | \$pagination-margin                        | -.25rem                      |
 | --oruga-pagination-rounded-border-radius         | \$pagination-rounded-border-radius         | \$base-rounded-border-radius |
+
+</div>

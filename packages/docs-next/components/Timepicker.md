@@ -4,8 +4,11 @@ title: Timepicker
 
 # Timepicker
 
+<div class="vp-doc">
+
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
 
+</div>
 <example-timepicker />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Timepicker
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -89,3 +94,5 @@ title: Timepicker
 | --oruga-timepicker-select-font-weight         | \$timepicker-select-font-weight         | 600                                                   |
 | --oruga-timepicker-select-placeholder-opacity | \$timepicker-select-placeholder-opacity | \$base-disabled-opacity                               |
 | --oruga-timepicker-separator-font-weight      | \$timepicker-separator-font-weight      | 600                                                   |
+
+</div>

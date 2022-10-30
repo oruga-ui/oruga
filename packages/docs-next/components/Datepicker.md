@@ -4,8 +4,11 @@ title: Datepicker
 
 # Datepicker
 
+<div class="vp-doc">
+
 > An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
 
+</div>
 <example-datepicker />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Datepicker
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -63,13 +68,13 @@ title: Datepicker
 | range                     |                                                             | boolean        | -                                                 | false                                                                                                                                                       |
 | rounded                   | Makes the element rounded                                   | boolean        | -                                                 |                                                                                                                                                             |
 | rulesForFirstWeek         |                                                             | number         | -                                                 | Default function (see source code)                                                                                                                          |
-| selectableDates           |                                                             | array          | -                                                 |                                                                                                                                                             |
+| selectableDates           |                                                             | array\|func    | -                                                 |                                                                                                                                                             |
 | showWeekNumber            |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;showWeekNumber: false<br>}</code>             |
 | size                      | Size of button, optional                                    | string         | `small`, `medium`, `large`                        |                                                                                                                                                             |
 | statusIcon                | Show status icon using field and variant prop               | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "statusIcon": true<br>}</code>                            |
 | trapFocus                 |                                                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>                   |
 | type                      |                                                             | string         | -                                                 |                                                                                                                                                             |
-| unselectableDates         |                                                             | array          | -                                                 |                                                                                                                                                             |
+| unselectableDates         |                                                             | array\|func    | -                                                 |                                                                                                                                                             |
 | unselectableDaysOfWeek    |                                                             | array          | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> datepicker: {<br>&nbsp;&nbsp;unselectableDaysOfWeek: undefined<br>}</code> |
 | useHtml5Validation        | Enable html 5 native validation                             | boolean        | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp; "useHtml5Validation": true<br>}</code>                    |
 | validationMessage         | The message which is shown when a validation error occurs   | string         | -                                                 |                                                                                                                                                             |
@@ -149,3 +154,5 @@ title: Datepicker
 | --oruga-datepicker-btn-margin                            | \$datepicker-btn-margin                            | .25rem                                                 |
 | --oruga-datepicker-btn-min-width                         | \$datepicker-btn-min-width                         | 2.25em                                                 |
 | --oruga-datepicker-btn-padding                           | \$datepicker-btn-padding                           | .5em .5em                                              |
+
+</div>

@@ -4,8 +4,11 @@ title: Slider
 
 # Slider
 
+<div class="vp-doc">
+
 > A slider to select a value or range from a given range
 
+</div>
 <example-slider />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Slider
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -88,3 +93,5 @@ title: Slider
 | --oruga-slider-track-disabled        | \$slider-track-disabled        | 0.5                          |
 | --oruga-slider-track-radius          | \$slider-track-radius          | \$base-border-radius         |
 | --oruga-slider-track-shadow          | \$slider-track-shadow          | 0px 0px 0px \$grey           |
+
+</div>

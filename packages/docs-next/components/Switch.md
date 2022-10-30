@@ -4,8 +4,11 @@ title: Switch
 
 # Switch
 
+<div class="vp-doc">
+
 > Switch between two opposing states
 
+</div>
 <example-switch />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Switch
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -64,3 +69,5 @@ title: Switch
 | --oruga-switch-padding                 | \$switch-padding                 | 0.2em                                                                                            |
 | --oruga-switch-rounded-border-radius   | \$switch-rounded-border-radius   | \$base-rounded-border-radius                                                                     |
 | --oruga-switch-width                   | \$switch-width                   | 2.75 \* 1em                                                                                      |
+
+</div>

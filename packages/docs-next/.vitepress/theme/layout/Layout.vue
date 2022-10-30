@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import Layout from 'vitepress/dist/client/theme-default/Layout.vue'
 import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
 
@@ -17,10 +17,6 @@ const onThemeChange = function () {
     localStorage.setItem('oruga.io_theme', selected.value)
     location.reload()
 }
-
-const selectedOption = computed(() => {
-    return themeOptions.value.filter(t => t.value === selected.value)[0]
-})
 
 if (typeof window !== 'undefined') {
     selected.value = localStorage.getItem('oruga.io_theme') || 'fullcss'

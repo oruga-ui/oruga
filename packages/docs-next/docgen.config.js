@@ -52,6 +52,7 @@ title: ${displayName}
 ---
 `: ''}
 # ${deprecated ? `~~${displayName}~~` : displayName}
+<div class="vp-doc">
 ${deprecated ? `> **Deprecated** ${deprecated[0].description}\n` : ''}
 ${description ? '> ' + description : ''}
 ${functional ? renderedUsage.functionalTag : ''}
@@ -60,15 +61,17 @@ ${since ? `Since: ${since[0].description}\n` : ''}
 ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
+</div>
 ${'<example-' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
+<div class="vp-doc">
 ${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
 ${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
 ${style ? renderStyleDocs(config, style[0].description) : ''}
-`;
+</div>`;
     },
     props: (props) => {
       return props

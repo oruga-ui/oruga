@@ -4,8 +4,11 @@ title: Select
 
 # Select
 
+<div class="vp-doc">
+
 > Select an item in a dropdown list. Use with Field to access all functionalities
 
+</div>
 <example-select />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Select
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -76,3 +81,5 @@ title: Select
 | --oruga-select-width                 | \$select-width                 | 100%                                                  |
 | --oruga-select-placeholder-opacity   | \$select-placeholder-opacity   | \$base-disabled-opacity                               |
 | --oruga-select-padding               | \$select-padding               | $control-padding-vertical $control-padding-horizontal |
+
+</div>

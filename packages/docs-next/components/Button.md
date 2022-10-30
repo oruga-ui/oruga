@@ -4,8 +4,11 @@ title: Button
 
 # Button
 
+<div class="vp-doc">
+
 > The classic button, in different colors, sizes, and states
 
+</div>
 <example-button />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Button
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -62,3 +67,5 @@ title: Button
 | --oruga-button-padding               | \$button-padding               | \$control-padding-vertical .75em    |
 | --oruga-button-rounded-border-radius | \$button-rounded-border-radius | \$base-rounded-border-radius        |
 | --oruga-button-disabled-opacity      | \$button-disabled-opacity      | \$base-disabled-opacity             |
+
+</div>

@@ -4,8 +4,11 @@ title: Steps
 
 # Steps
 
+<div class="vp-doc">
+
 > Responsive horizontal process steps
 
+</div>
 <example-steps />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Steps
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -65,3 +70,5 @@ title: Steps
 | --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
 | --oruga-steps-font-size                    | \$steps-font-size                    | \$base-font-size             |
 | --oruga-steps-details-title-font-weight    | \$steps-details-title-font-weight    | 600                          |
+
+</div>

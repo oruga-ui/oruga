@@ -4,8 +4,11 @@ title: Radio
 
 # Radio
 
+<div class="vp-doc">
+
 > Select an option from a set
 
+</div>
 <example-radio />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Radio
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -57,3 +62,5 @@ title: Radio
 | --oruga-radio-margin-sibiling            | \$radio-margin-sibiling            | 0.5em                   |
 | --oruga-radio-size                       | \$radio-size                       | 1rem                    |
 | --oruga-radio-line-height                | \$radio-line-height                | 1.25                    |
+
+</div>

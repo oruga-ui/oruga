@@ -4,8 +4,11 @@ title: Upload
 
 # Upload
 
+<div class="vp-doc">
+
 > Upload one or more files
 
+</div>
 <example-upload />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Upload
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -64,3 +69,5 @@ title: Upload
 | --oruga-upload-draggable-disabled-opacity   | \$upload-draggable-disabled-opacity   | \$base-disabled-opacity |
 | --oruga-upload-draggable-hover-border-color | \$upload-draggable-hover-border-color | \$grey                  |
 | --oruga-upload-draggable-padding            | \$upload-draggable-padding            | 0.25em                  |
+
+</div>

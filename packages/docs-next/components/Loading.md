@@ -4,8 +4,11 @@ title: Loading
 
 # Loading
 
+<div class="vp-doc">
+
 > A simple loading overlay
 
+</div>
 <example-loading />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Loading
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -58,3 +63,5 @@ title: Loading
 | --oruga-loading-overlay         | \$loading-overlay         | rgba(255,255,255,0.5) |
 | --oruga-loading-zindex          | \$loading-zindex          | 29                    |
 | --oruga-loading-fullpage-zindex | \$loading-fullpage-zindex | 999                   |
+
+</div>

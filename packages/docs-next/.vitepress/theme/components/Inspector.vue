@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="vp-doc">
         <o-collapse class="inspector__summary" :open="false">
             <template v-slot:trigger="props">
                 <div
@@ -55,7 +55,7 @@
                 </p>
             </div>
         </o-collapse>
-        <table class="vp-doc-table">
+        <table>
             <tr>
                 <th>Class prop</th>
                 <th>Description</th>

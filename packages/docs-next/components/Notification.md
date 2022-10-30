@@ -4,8 +4,11 @@ title: Notification
 
 # Notification
 
+<div class="vp-doc">
+
 > Bold notification blocks to alert your users of something
 
+</div>
 <example-notification />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Notification
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -78,3 +83,5 @@ title: Notification
 | --oruga-notification-icon-margin-right      | \$notification-icon-margin-right      | 1rem                         |
 | --oruga-notification-notices-padding        | \$notification-notices-padding        | 2em                          |
 | --oruga-notification-notices-zindex         | \$notification-notices-zindex         | 1000                         |
+
+</div>

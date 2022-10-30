@@ -4,6 +4,9 @@ title: OMenu
 
 # OMenu
 
+<div class="vp-doc">
+
+</div>
 <example-menu />
 
 ## Class props
@@ -14,6 +17,8 @@ title: OMenu
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -28,3 +33,5 @@ title: OMenu
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
+
+</div>

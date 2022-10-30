@@ -4,8 +4,11 @@ title: Table
 
 # Table
 
+<div class="vp-doc">
+
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
+</div>
 <example-table />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Table
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -171,3 +176,5 @@ title: Table
 | --oruga-table-th-detail-width                 | \$table-th-detail-width                 | 14px                                                     |
 | --oruga-table-th-font-weight                  | \$table-th-font-weight                  | 600                                                      |
 | --oruga-table-th-padding                      | \$table-th-padding                      | 0.5em 0.75em                                             |
+
+</div>

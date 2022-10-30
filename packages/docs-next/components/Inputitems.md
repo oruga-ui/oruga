@@ -4,8 +4,11 @@ title: Inputitems
 
 # Inputitems
 
+<div class="vp-doc">
+
 > A simple item input field that can have autocomplete functionality
 
+</div>
 <example-inputitems />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Inputitems
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -106,3 +111,5 @@ title: Inputitems
 | --oruga-inputitems-item-margin           | \$inputitems-item-margin           | 0 0 0 0.275em                    |
 | --oruga-inputitems-item-padding          | \$inputitems-item-padding          | 0 .75em 0 .75em                  |
 | --oruga-inputitems-margin-icon-to-text   | \$inputitems-margin-icon-to-text   | .1875em                          |
+
+</div>

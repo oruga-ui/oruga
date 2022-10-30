@@ -4,8 +4,11 @@ title: Datetimepicker
 
 # Datetimepicker
 
+<div class="vp-doc">
+
 > An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
 
+</div>
 <example-datetimepicker />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Datetimepicker
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -77,3 +82,5 @@ title: Datetimepicker
 | CSS Variable | SASS Variable | Default |
 | ------------ | ------------- | ------- |
 
+
+</div>

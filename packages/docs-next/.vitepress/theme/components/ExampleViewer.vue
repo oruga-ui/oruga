@@ -1,5 +1,7 @@
 <template>
-    <div class="odocs-example odocs-mt">
+    <div
+        ref="nodeRef"
+        class="odocs-example odocs-mt">
         <component :is="component"></component>
     </div>
     <div
@@ -17,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 import 'highlight.js/styles/github-dark.css'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
@@ -52,9 +54,25 @@ export default defineComponent({
                 .replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
         })
 
+        const nodeRef = ref(null)
+
+        onMounted(() => {
+            let node = nodeRef.value.parentNode
+            while (node) {
+                if (node && node.classList && node.classList.contains('vp-doc')) {
+                    if (node.parentNode && node.parentNode.classList.contains('main')) {
+                        node.classList.remove('vp-doc')
+                        break
+                    }
+                }
+                node = node.parentNode
+            }
+        })
+
         return {
             isOpen,
-            codeComputed
+            codeComputed,
+            nodeRef
         }
     }
 })

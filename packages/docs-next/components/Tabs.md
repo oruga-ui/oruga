@@ -4,8 +4,11 @@ title: Tabs
 
 # Tabs
 
+<div class="vp-doc">
+
 > Responsive horizontal navigation tabs, switch between contents with ease
 
+</div>
 <example-tabs />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Tabs
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -71,3 +76,5 @@ title: Tabs
 | --oruga-tabs-toggle-link-active-background-color   | \$tabs-toggle-link-active-background-color   | \$primary               |
 | --oruga-tabs-toggle-link-active-border-color       | \$tabs-toggle-link-active-border-color       | \$primary               |
 | --oruga-tabs-toggle-link-active-color              | \$tabs-toggle-link-active-color              | \$primary-invert        |
+
+</div>

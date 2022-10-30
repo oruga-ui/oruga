@@ -37,3 +37,53 @@
 }
 
 
+.Layout .VPDoc.has-aside .content-container {
+    max-width: none;
+}
+
+@media (min-width: 960px) {
+    .Layout .VPDoc .container > .content {
+        padding: 0px 0px 128px;
+    }
+}
+
+.main {
+    h1, h2 {
+        margin: 0;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    h1, h2 {
+        position: relative;
+        font-weight: 600;
+        outline: none;
+    }
+    h1 {
+        letter-spacing: -.02em;
+        line-height: 40px;
+        font-size: 32px;
+
+        .header-anchor {
+            float: left;
+            margin-left: -0.87em;
+            padding-right: 0.23em;
+            font-weight: 500;
+            opacity: 0;
+            transition: color .25s,opacity .25s;
+        }
+    }
+    h2 {
+        margin: 48px 0 16px;
+        border-top: 1px solid var(--vp-c-divider-light);
+        padding-top: 24px;
+        letter-spacing: -.02em;
+        line-height: 32px;
+        font-size: 24px;
+    }
+
+    h1:hover .header-anchor, h1 .header-anchor:focus,
+    h2:hover .header-anchor, h2 .header-anchor:focus {
+        opacity: 1;
+    }
+}

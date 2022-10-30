@@ -4,8 +4,11 @@ title: Input
 
 # Input
 
+<div class="vp-doc">
+
 > Get user Input. Use with Field to access all functionalities
 
+</div>
 <example-input />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Input
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -80,3 +85,5 @@ title: Input
 | --oruga-input-textarea-padding      | \$input-textarea-padding      | 0.625em                                               |
 | --oruga-input-width                 | \$input-width                 | 100%                                                  |
 | --oruga-input-max-width             | \$input-max-width             | 100%                                                  |
+
+</div>

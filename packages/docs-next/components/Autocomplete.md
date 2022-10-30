@@ -4,8 +4,11 @@ title: Autocomplete
 
 # Autocomplete
 
+<div class="vp-doc">
+
 > Extended input that provide suggestions while the user types
 
+</div>
 <example-autocomplete />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Autocomplete
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -104,3 +109,5 @@ title: Autocomplete
 | --oruga-autocomplete-menu-max-height             | \$autocomplete-menu-max-height             | 200px                                                                |
 | --oruga-autocomplete-menu-padding                | \$autocomplete-menu-padding                | .5rem 0 .5rem 0                                                      |
 | --oruga-autocomplete-menu-zindex                 | \$autocomplete-menu-zindex                 | 20                                                                   |
+
+</div>

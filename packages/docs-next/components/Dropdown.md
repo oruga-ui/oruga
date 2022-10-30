@@ -4,8 +4,11 @@ title: Dropdown
 
 # Dropdown
 
+<div class="vp-doc">
+
 > Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
 
+</div>
 <example-dropdown />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Dropdown
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -90,3 +95,5 @@ title: Dropdown
 | --oruga-dropdown-mobile-overlay-zindex        | \$dropdown-mobile-overlay-zindex        | 40                                                                   |
 | --oruga-dropdown-mobile-width                 | \$dropdown-mobile-width                 | calc(100vw - 40px)                                                   |
 | --oruga-dropdown-mobile-zindex                | \$dropdown-mobile-zindex                | 50                                                                   |
+
+</div>

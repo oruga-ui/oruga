@@ -4,8 +4,11 @@ title: Collapse
 
 # Collapse
 
+<div class="vp-doc">
+
 > An easy way to toggle what you want
 
+</div>
 <example-collapse />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Collapse
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -49,3 +54,5 @@ title: Collapse
 | CSS Variable | SASS Variable | Default |
 | ------------ | ------------- | ------- |
 
+
+</div>

@@ -4,8 +4,11 @@ title: Carousel
 
 # Carousel
 
+<div class="vp-doc">
+
 > A Slideshow for cycling images in confined spaces
 
+</div>
 <example-carousel />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Carousel
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -94,3 +99,5 @@ title: Carousel
 | --oruga-carousel-item-border                  | \$carousel-item-border                  | 2px solid transparent                 |
 | --oruga-carousel-overlay-background           | \$carousel-overlay-background           | hsla(0,0%,4%,.86)                     |
 | --oruga-carousel-overlay-zindex               | \$carousel-overlay-zindex               | 40                                    |
+
+</div>

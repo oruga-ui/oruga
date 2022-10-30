@@ -1,17 +1,9 @@
 import { markRaw } from 'vue'
 
 // THEME
+import DefaultTheme from 'vitepress/theme'
 import Layout from './layout/Layout.vue'
-import NotFound from 'vitepress/dist/client/theme-default/NotFound.vue'
-import './styles/fonts.css'
-import './styles/vars.css'
-import './styles/base.css'
-import './styles/utils.css'
 import './styles/index.scss'
-import './styles/components/custom-block.css'
-import './styles/components/vp-code.css'
-import './styles/components/vp-doc.css'
-import './styles/components/vp-sponsor.css'
 
 import DocWrapper from './components/DocWrapper.vue'
 import HFRepos from './components/HFRepos.vue'
@@ -28,8 +20,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
+  ...DefaultTheme,
   Layout,
-  NotFound,
   enhanceApp({ app }) {
 
     library.add(fas)

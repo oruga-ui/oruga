@@ -4,8 +4,11 @@ title: Skeleton
 
 # Skeleton
 
+<div class="vp-doc">
+
 > A placeholder for content to load
 
+</div>
 <example-skeleton />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Skeleton
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -42,3 +47,5 @@ title: Skeleton
 | --oruga-skeleton-border-radius | \$skeleton-border-radius | \$base-border-radius                                                                        |
 | --oruga-skeleton-duration      | \$skeleton-duration      | 1.5s                                                                                        |
 | --oruga-skeleton-margin        | \$skeleton-margin        | .5rem 0 0 0                                                                                 |
+
+</div>

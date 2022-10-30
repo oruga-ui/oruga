@@ -4,8 +4,11 @@ title: Icon
 
 # Icon
 
+<div class="vp-doc">
+
 > Icons take an important role of any application
 
+</div>
 <example-icon />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Icon
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -41,3 +46,5 @@ title: Icon
 | CSS Variable               | SASS Variable        | Default |
 | -------------------------- | -------------------- | ------- |
 | --oruga-icon-spin-duration | \$icon-spin-duration | 2s      |
+
+</div>

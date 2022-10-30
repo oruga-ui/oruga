@@ -4,8 +4,11 @@ title: Sidebar
 
 # Sidebar
 
+<div class="vp-doc">
+
 > A sidebar to use as left/right overlay or static
 
+</div>
 <example-sidebar />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Sidebar
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -63,3 +68,5 @@ title: Sidebar
 | --oruga-sidebar-mobile-width             | \$sidebar-mobile-width             | 80px                                |
 | --oruga-sidebar-width                    | \$sidebar-width                    | 260px                               |
 | --oruga-sidebar-zindex                   | \$sidebar-zindex                   | 38                                  |
+
+</div>

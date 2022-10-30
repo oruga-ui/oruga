@@ -4,8 +4,11 @@ title: Field
 
 # Field
 
+<div class="vp-doc">
+
 > Fields are used to add functionality to controls and to attach/group components and elements together
 
+</div>
 <example-field />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Field
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -54,3 +59,5 @@ title: Field
 | --oruga-field-message-margin-top      | \$field-message-margin-top      | .25rem       |
 | --oruga-field-margin-right            | \$field-margin-right            | .37rem       |
 | --oruga-field-horizontal-label-margin | \$field-horizontal-label-margin | 0 1.5rem 0 0 |
+
+</div>

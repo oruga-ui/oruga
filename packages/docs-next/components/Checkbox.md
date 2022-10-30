@@ -4,8 +4,11 @@ title: Checkbox
 
 # Checkbox
 
+<div class="vp-doc">
+
 > Select a single or grouped options
 
+</div>
 <example-checkbox />
 
 ## Class props
@@ -16,6 +19,8 @@ title: Checkbox
 
 <br />
 <br />
+
+<div class="vp-doc">
 
 ## Props
 
@@ -67,3 +72,5 @@ title: Checkbox
 | --oruga-checkbox-margin-sibiling            | \$checkbox-margin-sibiling            | 0.5em                   |
 | --oruga-checkbox-size                       | \$checkbox-size                       | 1rem                    |
 | --oruga-checkbox-line-height                | \$checkbox-line-height                | 1.5                     |
+
+</div>

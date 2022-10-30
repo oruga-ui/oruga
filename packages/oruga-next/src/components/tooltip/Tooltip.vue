@@ -102,7 +102,7 @@ export default defineComponent({
         delay: Number,
         /**
          * Tooltip position in relation to the element
-         * @values top, bottom, left, right
+         * @values top, bottom, left, right,
          */
         position: {
             type: String as PropType<Position | 'auto'>,
