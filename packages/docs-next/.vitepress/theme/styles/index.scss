@@ -63,15 +63,6 @@
         letter-spacing: -.02em;
         line-height: 40px;
         font-size: 32px;
-
-        .header-anchor {
-            float: left;
-            margin-left: -0.87em;
-            padding-right: 0.23em;
-            font-weight: 500;
-            opacity: 0;
-            transition: color .25s,opacity .25s;
-        }
     }
     h2 {
         margin: 48px 0 16px;
@@ -80,6 +71,15 @@
         letter-spacing: -.02em;
         line-height: 32px;
         font-size: 24px;
+    }
+
+    .header-anchor {
+        float: left;
+        margin-left: -0.87em;
+        padding-right: 0.23em;
+        font-weight: 500;
+        opacity: 0;
+        transition: color .25s,opacity .25s;
     }
 
     h1:hover .header-anchor, h1 .header-anchor:focus,
