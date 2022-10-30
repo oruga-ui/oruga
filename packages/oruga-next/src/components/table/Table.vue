@@ -60,7 +60,7 @@
                                     autocomplete="off"
                                     :modelValue="isAllChecked"
                                     :disabled="isAllUncheckable"
-                                    @change="checkAll"/>
+                                    @update:modelValue="checkAll"/>
                             </template>
                         </th>
                         <th
@@ -108,7 +108,7 @@
                                     autocomplete="off"
                                     :modelValue="isAllChecked"
                                     :disabled="isAllUncheckable"
-                                    @change="checkAll"/>
+                                    @update:modelValue="checkAll"/>
                             </template>
                         </th>
                     </tr>
