@@ -301,7 +301,6 @@ export default defineComponent({
             if (this.destroyOnHide) {
                 this.destroyed = true
             }
-            this.$emit('close')
             this.$emit('update:active', false)
             this.onClose.apply(null, arguments)
 
