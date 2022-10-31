@@ -316,15 +316,10 @@ export default {
 
         resize() {
             this.height = 'auto'
-            if (this.$refs.textarea) {
-                let scrollHeight = this.$refs.textarea.scrollHeight
+            this.$nextTick(() => {
+                const scrollHeight = this.$refs.textarea.scrollHeight
                 this.height = scrollHeight + 'px'
-            }
-        }
-    },
-    mounted() {
-        if (this.autosize) {
-            this.resize()
+            })
         }
     }
 }
