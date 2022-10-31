@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass">
+    <div :class="rootClasses">
         <slot />
     </div>
 </template>
@@ -8,6 +8,11 @@
 import BaseComponentMixin from '../../utils/BaseComponentMixin';
 import {defineComponent} from "vue";
 
+/**
+ * A simple menu
+ * @displayName Menu
+ * @style _menu.scss
+ */
 export default defineComponent({
     name: 'OMenu',
     configField: 'menu',
@@ -20,7 +25,8 @@ export default defineComponent({
         activable: {
             type: Boolean,
             default: true
-        }
+        },
+        rootClass: [String, Array, Function]
     },
     data() {
         return {
@@ -28,7 +34,7 @@ export default defineComponent({
         }
     },
     computed: {
-        rootClass() {
+        rootClasses() {
             return this.computedClass('rootClass', 'o-menu')
         },
     },
@@ -49,6 +55,6 @@ export default defineComponent({
             accordion: () => this.accordion,
             activable: () => this.activable,
         }
-    },
+    }
 })
 </script>

@@ -1,10 +1,13 @@
 <template>
-    <li :role="ariaRoleMenu">
+    <li
+        :role="ariaRoleMenu"
+        :class="wrapperClasses"
+    >
         <component
             :is="tag"
             v-bind="$attrs"
             :class="itemClasses"
-            @click="onClick($event)"
+            @click="onClick()"
             v-on="$listeners">
             <o-icon
                 v-if="icon"
@@ -24,7 +27,7 @@
         <template v-if="$slots.default">
             <transition :name="animation">
                 <ul
-                    :class="submenuClass"
+                    :class="submenuClasses"
                     v-show="newExpanded"
                 >
                     <slot />
@@ -70,6 +73,12 @@ export default {
          * @values small, medium, large
          */
         size: String,
+        itemClass: [String, Array, Function],
+        itemActiveClass: [String, Array, Function],
+        itemDisabledClass: [String, Array, Function],
+        itemIconTextClass: [String, Array, Function],
+        itemSubmenuClass: [String, Array, Function],
+        itemWrapperClass: [String, Array, Function],
     },
     data() {
         return {
@@ -89,8 +98,11 @@ export default {
                 [this.computedClass('itemIconTextClass', 'o-menu-item--icon-text')]: this.icon,
             }
         },
-        submenuClass() {
+        submenuClasses() {
             return this.computedClass('itemSubmenuClass', 'o-menu-item__submenu')
+        },
+        wrapperClasses() {
+            return this.computedClass('itemWrapperClass', 'o-menu-item__wrapper')
         },
     },
     watch: {

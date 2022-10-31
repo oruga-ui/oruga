@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass">
+    <div :class="rootClasses">
         <slot />
     </div>
 </template>
@@ -7,6 +7,11 @@
 <script>
 import BaseComponentMixin from '../../utils/BaseComponentMixin';
 
+/**
+ * A simple menu
+ * @displayName M
+ * @style _menu.scss
+ */
 export default {
     name: 'OMenu',
     configField: 'menu',
@@ -19,7 +24,8 @@ export default {
         activable: {
             type: Boolean,
             default: true
-        }
+        },
+        rootClass: [String, Array, Function]
     },
     data() {
         return {
@@ -27,9 +33,9 @@ export default {
         }
     },
     computed: {
-        rootClass() {
+        rootClasses() {
             return this.computedClass('rootClass', 'o-menu')
-        },
-    },
+        }
+    }
 }
 </script>

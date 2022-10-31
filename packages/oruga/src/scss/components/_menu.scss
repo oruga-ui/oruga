@@ -1,19 +1,19 @@
+/* @docs */
 $menu-item-color: $grey-dark !default;
 $menu-item-hover-color: $black !default;
 $menu-item-hover-background-color: $grey-light !default;
 $menu-item-active-color: $primary-invert !default;
 $menu-item-active-background-color: $primary !default;
 $menu-item-disabled-color: $grey-light !default;
-
 $menu-list-border-left: 1px solid $primary !default;
 $menu-list-line-height: 1.25em !default;
 $menu-item-padding: 0.5em 0.75em !default;
 $menu-nested-list-margin: 0.75em !default;
 $menu-nested-list-padding-left: 0.75em !default;
-
 $menu-label-color: $grey !default;
 $menu-label-font-size: 0.75em !default;
 $menu-label-spacing: 1em !default;
+/* @docs */
 
 .o-menu {
     @include avariable('font-size', 'base-font-size', $base-font-size);

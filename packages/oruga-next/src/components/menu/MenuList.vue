@@ -2,7 +2,7 @@
     <div>
         <div
             v-if="label || $slots.label"
-            :class="labelClass"
+            :class="labelClasses"
         >
             <o-icon
                 v-if="label && icon"
@@ -17,7 +17,7 @@
             />
         </div>
         <ul
-            :class="listClass"
+            :class="listClasses"
             :role="computedAriaRole"
         >
             <slot/>
@@ -43,17 +43,19 @@ export default defineComponent({
          * @values small, medium, large
          */
         size: String,
+        listClass: [String, Array, Function],
+        listLabelClass: [String, Array, Function],
     },
     computed: {
-        listClass() {
+        listClasses() {
             return this.computedClass('listClass', 'o-menu-list');
         },
-        labelClass() {
+        labelClasses() {
             return this.computedClass('listLabelClass', 'o-menu-label');
         },
         computedAriaRole() {
             return this.ariaRole === 'menu' ? this.ariaRole : null;
-        },
-    },
+        }
+    }
 })
 </script>
