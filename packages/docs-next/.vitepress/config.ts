@@ -73,10 +73,10 @@ export default defineConfig({
           { text: 'Home', link: '/' },
           { text: 'Documentation', link: '/documentation/' },
           { text: 'Expo', link: '/expo/' },
-          { text: 'Donate ☕️', items: [
-              { text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
-          ]
-        },
+          /*{ text: 'Donate ☕️', items: [
+                { text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
+            ]
+          },*/
         // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
         {
           text: `v${version}`,
@@ -121,9 +121,9 @@ export default defineConfig({
         message: "Released under the MIT License.",
         copyright: `Copyright © 2020-${new Date().getFullYear()} Walter Tommasi`,
       },
-      carbonAds: {
+      /*carbonAds: {
         code: 'CESI42JW',
         placement: 'orugaio'
-      }
+      }*/
     },
 })
