@@ -23,7 +23,7 @@ export default defineComponent({
         const count = ref(1)
         onMounted(() => {
             setTimeout(() => {
-                this.count++;
+                count.value++;
             }, 3 * 1000);
         })
         return { count }

@@ -13,7 +13,7 @@ const themeOptions = ref([
     { label: 'Bulma CSS', value: 'bulmacss' }
 ])
 
-const onThemeChange = function () {
+const onThemeChange = function (value) {
     localStorage.setItem('oruga.io_theme', selected.value)
     location.reload()
 }
@@ -32,7 +32,7 @@ if (typeof window !== 'undefined') {
                         Theme ->
                         <select
                             v-model="selected"
-                            @update:modelValue="onThemeChange"
+                            @change="onThemeChange"
                         >
                             <option v-for="item in themeOptions" :value="item.value">
                                 {{ item.label }}
