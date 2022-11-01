@@ -132,7 +132,9 @@ export default defineComponent({
         variantClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
         scrollClipClass: [String, Function, Array],
-        noScrollClass: [String, Function, Array]
+        noScrollClass: [String, Function, Array],
+        hiddenClass: [String, Function, Array],
+        visibleClass: [String, Function, Array]
     },
     data() {
         return {
@@ -166,7 +168,9 @@ export default defineComponent({
                 { [this.computedClass('rightClass', 'o-side__content--right')]: this.right },
                 { [this.computedClass('reduceClass', 'o-side__content--mini')]: this.reduce || (this.mobile === 'reduced' && this.isMatchMedia) },
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
-                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') }
+                { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') },
+                { [this.computedClass('visibleClass', 'o-side__content--visible')]: this.isOpen },
+                { [this.computedClass('hiddenClass', 'o-side__content--hidden')]: !this.isOpen },
             ]
         },
         scrollClass() {
