@@ -174,6 +174,14 @@ export default {
                         cmp.data.variant = 'warning';
                     }
                 },
+                {
+                    class: "visibleClass",
+                    description : 'Class of the sidebar when sidebar is visible',
+                },
+                {
+                    class: "hiddenClass",
+                    description : 'Class of the sidebar when sidebar is hidden',
+                },
             ],
         };
     },
