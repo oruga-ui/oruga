@@ -180,16 +180,13 @@ export default {
         {
             class: "visibleClass",
             description : 'Class of the sidebar when sidebar is visible',
-            action: (cmp) => {
+            action: () => {
                 this.position = 'static';
             }
         },
         {
             class: "hiddenClass",
-            description : 'Class of the sidebar  when sidebar is hidden',
-            action: (cmp) => {
-                this.position = 'static';
-            }
+            description : 'Class of the sidebar when sidebar is hidden',
         },
       ],
     };
