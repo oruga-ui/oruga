@@ -177,6 +177,20 @@ export default {
             cmp.data.variant = 'warning';
           }
         },
+        {
+            class: "visibleClass",
+            description : 'Class of the sidebar when sidebar is visible',
+            action: (cmp) => {
+                this.position = 'static';
+            }
+        },
+        {
+            class: "hiddenClass",
+            description : 'Class of the sidebar  when sidebar is hidden',
+            action: (cmp) => {
+                this.position = 'static';
+            }
+        },
       ],
     };
   },
