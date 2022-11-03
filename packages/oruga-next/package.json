@@ -39,7 +39,7 @@
     "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
-    "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open-ct"
+    "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component"
   },
   "keywords": [
     "oruga",
@@ -72,6 +72,7 @@
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "3.0.0-rc.10",
     "@vue/eslint-config-typescript": "5.0.2",
+    "babel-plugin-istanbul": "^6.1.1",
     "clean-css-cli": "4.3.0",
     "codecov": "3.7.2",
     "concurrently": "5.2.0",
@@ -94,5 +95,14 @@
     "vue": "^3.2.25",
     "vue-tsc": "^0.34.10",
     "webpack-dev-server": "^4.7.4"
+  },
+  "nyc": {
+    "all": true,
+    "include": "src/**/*.vue",
+    "reporter": [
+      "text",
+      "json",
+      "html"
+    ]
   }
 }
