@@ -4,7 +4,7 @@ exports[`OCollapse default render correctly 1`] = `
 <div class="o-clps">
     <div class="o-clps__trigger"></div>
     <transition-stub name="fade">
-        <div id="" aria-expanded="true" class="o-clps__content"></div>
+        <div id="" class="o-clps__content"></div>
     </transition-stub>
 </div>
 `;

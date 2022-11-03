@@ -2,7 +2,11 @@
 
 exports[`OField render correctly 1`] = `
 <div class="o-field">
-    <!---->
-    <!---->
+    <div class="">
+        <!---->
+    </div>
+    <div class="o-field__input-wrapper">
+        <!---->
+    </div>
 </div>
 `;

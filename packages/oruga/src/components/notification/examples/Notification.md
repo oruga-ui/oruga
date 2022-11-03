@@ -41,9 +41,17 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                 @click="component" />
             <hr/>
             <o-button 
-                label="Lauch with promise"
+                label="Launch with promise"
                 size="medium"
                 @click="promise" />
+            <o-button
+                label="Launch indefinite"
+                size="medium"
+                @click="indefinite" />
+            <o-button
+                label="Close all open"
+                size="medium"
+                @click="closeAll" />
         </div>
     </section>
 </template>
@@ -158,6 +166,18 @@ Go to [Notification Notice](#notification-notice) section to see all the availab
                     variant: 'success',
                     duration: 2000,
                 })
+            },
+            indefinite() {
+                this.$oruga.notification.open({
+                    message: 'Indefinite sticky notification',
+                    closable: true,
+                    indefinite: true
+                })
+            },
+            closeAll() {
+                // any parameter here is passed to the onClose handler and resolved to the promise
+                // for each open notification
+                this.$oruga.notification.closeAll({action: 'closeAll'});
             }
         }
     }

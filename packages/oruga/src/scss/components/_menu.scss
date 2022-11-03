@@ -1,0 +1,76 @@
+/* @docs */
+$menu-item-color: $grey-dark !default;
+$menu-item-hover-color: $black !default;
+$menu-item-hover-background-color: $grey-light !default;
+$menu-item-active-color: $primary-invert !default;
+$menu-item-active-background-color: $primary !default;
+$menu-item-disabled-color: $grey-light !default;
+$menu-list-border-left: 1px solid $primary !default;
+$menu-list-line-height: 1.25em !default;
+$menu-item-padding: 0.5em 0.75em !default;
+$menu-nested-list-margin: 0.75em !default;
+$menu-nested-list-padding-left: 0.75em !default;
+$menu-label-color: $grey !default;
+$menu-label-font-size: 0.75em !default;
+$menu-label-spacing: 1em !default;
+/* @docs */
+
+.o-menu {
+    @include avariable('font-size', 'base-font-size', $base-font-size);
+
+    @each $name, $value in $sizes {
+        &--#{$name} {
+            @include avariable('font-size', ('menu-font-size-' + #{$name}), $value);
+        }
+    }
+}
+
+.o-menu-list {
+    @include avariable('line-height', ('menu-list-line-height'), $menu-list-line-height);
+
+    .o-menu-list,
+    .o-menu-item__wrapper {
+        list-style: none;
+    }
+
+    .o-menu-item__submenu {
+        @include avariable('border-left', ('menu-list-border-left'), $menu-list-border-left);
+        @include avariable('padding-left', ('menu-nested-list-padding-left'), $menu-nested-list-padding-left);
+        @include avariable('margin', ('menu-nested-list-margin'), $menu-nested-list-margin);
+    }
+}
+
+.o-menu-label {
+    @include avariable('color', ('menu-label-color'), $menu-label-color);
+    @include avariable('font-size', ('menu-label-font-size'), $menu-label-font-size);
+    text-transform: uppercase;
+
+    &:not(:first-child) {
+        @include avariable('margin-top', ('menu-label-spacing'), $menu-label-spacing);
+    }
+
+    &:not(:last-child) {
+        @include avariable('margin-bottom', ('menu-label-spacing'), $menu-label-spacing);
+    }
+}
+
+.o-menu-item {
+    @include avariable('color', ('menu-item-color'), $menu-item-color);
+    @include avariable('padding', ('menu-item-padding'), $menu-item-padding);
+    display: block;
+    list-style: none;
+
+    &:hover:not(&--active):not(&--disabled) {
+        @include avariable('color', ('menu-item-hover-color'), $menu-item-hover-color);
+        @include avariable('background-color', ('menu-item-hover-background-color'), $menu-item-hover-background-color);
+    }
+
+    &--active {
+        @include avariable('color', ('menu-item-active-color'), $menu-item-active-color);
+        @include avariable('background-color', ('menu-item-active-background-color'), $menu-item-active-background-color);
+    }
+
+    &--disabled {
+        @include avariable('color', ('menu-item-disabled-color'), $menu-item-disabled-color);
+    }
+}

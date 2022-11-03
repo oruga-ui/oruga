@@ -278,6 +278,9 @@ export default {
                     this.resize()
                 }
             }
+        },
+        type(type) {
+            this.newType = type
         }
     },
     methods: {
@@ -314,7 +317,7 @@ export default {
         resize() {
             this.height = 'auto'
             this.$nextTick(() => {
-                let scrollHeight = this.$refs.textarea.scrollHeight
+                const scrollHeight = this.$refs.textarea.scrollHeight
                 this.height = scrollHeight + 'px'
             })
         }

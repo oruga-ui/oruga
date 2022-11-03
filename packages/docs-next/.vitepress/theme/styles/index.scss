@@ -1,0 +1,89 @@
+.oruga-doc-video {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
+
+.installation-tabs {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.installation-tabs-content {
+  background: #282c34;
+  overflow: hidden;
+  padding: 0!important;
+}
+
+.installation-tabs-nav-buttons {
+  display: flex;
+  background: #282c34;
+}
+
+.installation-tabs-nav-button-default {
+  outline: 0;
+  height: 3rem;
+  width: 4rem;
+  cursor: pointer;
+  color: white;
+  border: 1px solid transparent;
+  background-color: transparent;
+  align-items: center;
+}
+
+.installation-tabs-nav-button-active-default {
+  color: #f08d49;
+  border-bottom: 1px solid #f08d49;
+}
+
+
+.Layout .VPDoc.has-aside .content-container {
+    max-width: none;
+}
+
+@media (min-width: 960px) {
+    .Layout .VPDoc .container > .content {
+        padding: 0px 0px 128px;
+    }
+}
+
+.main {
+    h1, h2 {
+        margin: 0;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    h1, h2 {
+        position: relative;
+        font-weight: 600;
+        outline: none;
+    }
+    h1 {
+        letter-spacing: -.02em;
+        line-height: 40px;
+        font-size: 32px;
+    }
+    h2 {
+        margin: 48px 0 16px;
+        border-top: 1px solid var(--vp-c-divider-light);
+        padding-top: 24px;
+        letter-spacing: -.02em;
+        line-height: 32px;
+        font-size: 24px;
+    }
+
+    .header-anchor {
+        float: left;
+        margin-left: -0.87em;
+        padding-right: 0.23em;
+        font-weight: 500;
+        opacity: 0;
+        transition: color .25s,opacity .25s;
+    }
+
+    h1:hover .header-anchor, h1 .header-anchor:focus,
+    h2:hover .header-anchor, h2 .header-anchor:focus {
+        opacity: 1;
+    }
+}

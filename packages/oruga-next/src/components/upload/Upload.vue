@@ -37,7 +37,6 @@ import { File } from '../../utils/ssr'
 /**
  * Upload one or more files
  * @displayName Upload
- * @example ./examples/Upload.md
  * @style _upload.scss
  */
 export default defineComponent({

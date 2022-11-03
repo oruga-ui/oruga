@@ -31,6 +31,9 @@
                 <div class="control">
                     <o-switch v-model="isProfileSuccess"> Set <code>success</code> for profile </o-switch>
                 </div>
+                <div class="control">
+                <o-switch v-model="enableProfileActivateEvent"> Enable profile activate event </o-switch>
+                </div>
             </o-field>
             <o-field v-if="hasNavigation" grouped group-multiline>
                 <o-field label="Prev icon">
@@ -67,7 +70,7 @@
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 
-            <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''">
+            <o-step-item step="2" label="Profile" :clickable="isStepsClickable" :variant="isProfileSuccess ? 'success': ''" @activate="onProfileActivate">
                 <h1 class="title has-text-centered">Profile</h1>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
@@ -123,10 +126,18 @@
                 hasNavigation: true,
                 customNavigation: false,
                 isProfileSuccess: false,
+                enableProfileActivateEvent: false,
 
                 prevIcon: 'chevron-left',
                 nextIcon: 'chevron-right',
                 labelPosition: 'bottom'
+            }
+        },
+        methods: {
+            onProfileActivate() {
+                if (this.enableProfileActivateEvent) {
+                alert('Profile Activated')
+                }
             }
         }
     }

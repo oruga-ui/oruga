@@ -6,8 +6,8 @@
         @keydown.prevent.enter="$refs.label.click()">
         <input
             v-model="computedValue"
-            :indeterminate.prop="indeterminate"
             type="checkbox"
+            v-bind="$attrs"
             ref="input"
             @click.stop
             :class="checkClasses"
@@ -16,6 +16,7 @@
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
+            :indeterminate.prop="indeterminate"
             :true-value="trueValue"
             :false-value="falseValue"
             :aria-labelledby="ariaLabelledby">
@@ -36,7 +37,6 @@ import CheckRadioMixin from '../../utils/CheckRadioMixin'
 /**
  * Select a single or grouped options
  * @displayName Checkbox
- * @example ./examples/Checkbox.md
  * @style _checkbox.scss
  */
 export default defineComponent({

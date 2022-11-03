@@ -124,7 +124,7 @@ $notification-notices-zindex: 1000 !default;
             }
         }
     }
-    &.has-custom-container {
+    &__custom-container {
         position: absolute;
     }
 }

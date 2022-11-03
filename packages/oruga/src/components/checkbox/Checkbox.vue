@@ -16,6 +16,7 @@
             :required="required"
             :name="name"
             :autocomplete="autocomplete"
+            v-bind="$attrs"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue"

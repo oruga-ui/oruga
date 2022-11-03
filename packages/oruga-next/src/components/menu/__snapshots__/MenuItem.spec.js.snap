@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OMenuItem render correctly 1`] = `
+<li><a class="o-menu-item">
+        <!---->
+    </a>
+    <!---->
+</li>
+`;

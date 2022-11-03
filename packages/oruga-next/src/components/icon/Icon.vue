@@ -27,7 +27,6 @@ import { getValueByPath } from '../../utils/helpers'
 /**
  * Icons take an important role of any application
  * @displayName Icon
- * @example ./examples/Icon.md
  * @style _icon.scss
  */
 export default defineComponent({

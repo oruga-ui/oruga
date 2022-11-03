@@ -60,13 +60,13 @@
                                     autocomplete="off"
                                     :modelValue="isAllChecked"
                                     :disabled="isAllUncheckable"
-                                    @change="checkAll"/>
+                                    @update:modelValue="checkAll"/>
                             </template>
                         </th>
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.newKey + ':' + index + 'header'"
-                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="column.style"
                             @click.stop="sort(column, null, $event)"
@@ -108,7 +108,7 @@
                                     autocomplete="off"
                                     :modelValue="isAllChecked"
                                     :disabled="isAllUncheckable"
-                                    @change="checkAll"/>
+                                    @update:modelValue="checkAll"/>
                             </template>
                         </th>
                     </tr>
@@ -118,7 +118,7 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.newKey + ':' + index + 'searchable'"
-                            v-bind="column.thAttrs && column.thAttrs(column)"
+                            v-bind="column.thAttrsData"
                             :class="thClasses(column)"
                             :style="column.style">
                             <template v-if="column.searchable">
@@ -215,12 +215,13 @@
                             <o-slot-component
                                 v-for="(column, colindex) in visibleColumns"
                                 :key="column.newKey + index + ':' + colindex"
-                                v-bind="column.tdAttrs && column.tdAttrs(row, column)"
+                                v-bind="column.tdAttrsData[index]"
                                 :component="column"
                                 scoped
                                 name="default"
                                 tag="td"
                                 :class="tdClasses(row, column)"
+                                :style="column.style"
                                 :data-label="column.label"
                                 :props="{ row, column, index, colindex, toggleDetails }"
                                 @click="$emit('cell-click', row, column, index, colindex, $event)"
@@ -233,7 +234,7 @@
                                     autocomplete="off"
                                     :disabled="!isRowCheckable(row)"
                                     :modelValue="isRowChecked(row)"
-                                    @update:modelvalue="checkRow(row, index, $event)"
+                                    @update:modelValue="checkRow(row, index, $event)"
                                 />
                             </td>
                         </tr>
@@ -334,7 +335,6 @@ import { getOptions } from '../../utils/config'
  * Tabulated data are sometimes needed, it's even better when it's responsive
  * @displayName Table
  * @requires ./TableColumn.vue
- * @example ./examples/Table.md
  * @style _table.scss
  */
 export default defineComponent({
@@ -364,7 +364,8 @@ export default defineComponent({
         'select', 'update:selected', 'filters-change', 'details-open', 'details-close', 'update:openedDetailed',
         'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
         'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click',
-        'columndragstart', 'columndragend', 'columndrop', 'columndragleave', 'columndragover'
+        'columndragstart', 'columndragend', 'columndrop', 'columndragleave', 'columndragover',
+        'update:currentPage'
     ],
     props: {
         /** Table data */
@@ -410,7 +411,7 @@ export default defineComponent({
                 ].indexOf(value) >= 0
             }
         },
-        /** Set which row is selected, use the .sync modifier (Vue 2.x) or v-model:selected (Vue 3.x) to make it two-way binding */
+        /** Set which row is selected, use v-model:selected to make it two-way binding */
         selected: Object,
         /** Custom method to verify if a row is selectable, works when is selected. */
         isRowSelectable: {
@@ -426,7 +427,7 @@ export default defineComponent({
             type: Function,
             default: () => true
         },
-        /** Set which rows are checked, use the .sync modifier (Vue 2.x) or v-model:checkedRows (Vue 3.x) to make it two-way binding */
+        /** Set which rows are checked, use v-model:checkedRows to make it two-way binding */
         checkedRows: {
             type: Array,
             default: () => []
@@ -463,7 +464,7 @@ export default defineComponent({
         },
         /** Adds pagination to the table */
         paginated: Boolean,
-        /** Current page of table data (if paginated), use the .sync modifier (Vue 2.x) or v-model:currentPage (Vue 3.x) to make it two-way binding */
+        /** Current page of table data (if paginated), use v-model:currentPage to make it two-way binding */
         currentPage: {
             type: Number,
             default: 1
@@ -882,6 +883,18 @@ export default defineComponent({
             deep: true,
         },
 
+        visibleColumns: {
+            handler() {
+                this.processTdAttrs()
+            }
+        },
+
+        visibleData: {
+            handler() {
+                this.processTdAttrs()
+            }
+        },
+
         /**
         * When Pagination total change, update internal total
         * only if it's backend-paginated.
@@ -942,7 +955,6 @@ export default defineComponent({
             return [
                 ...this.thBaseClasses,
                 ...this.thStickyClasses(column),
-                column.thAttrs && getValueByPath(column.thAttrs(column), 'class'),
                 { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
                 { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
                 { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
@@ -968,7 +980,6 @@ export default defineComponent({
         tdClasses(row, column) {
             return [
                 ...this.tdBaseClasses,
-                column.tdAttrs && getValueByPath(column.tdAttrs(row, column), 'class'),
                 { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
                 { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
             ]
@@ -1454,6 +1465,19 @@ export default defineComponent({
 
         emitEventForRow(eventName, event, row) {
             return this.$attrs[eventName] ? this.$emit(eventName, row, event) : null
+        },
+
+        processTdAttrs() {
+            if (this.visibleColumns.length && this.visibleData.length) {
+                for (let i = 0; i < this.visibleColumns.length; i++) {
+                    const col = this.visibleColumns[i]
+                    if (typeof col.tdAttrs !== 'undefined') {
+                        this.visibleData.forEach((data, index) => {
+                            col.tdAttrsData[index] = col.tdAttrs(data, col)
+                        })
+                    }
+                }
+            }
         },
 
         _addColumn(column) {

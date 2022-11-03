@@ -1,5 +1,6 @@
-import { defineComponent, DefineComponent } from 'vue'
-import { defaultIfUndefined, hasFlag } from './helpers'
+import type { DefineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import { defaultIfUndefined, hasFlag } from './helpers';
 
 const sorted = 1
 const optional = 2
@@ -13,7 +14,7 @@ export default (parentItemName: string, flags: number = 0) => {
             parent: { from: 'o' + parentItemName }
         },
         created() {
-            this.newValue = defaultIfUndefined(this.value, this.parent._nextSequence())
+            this.newValue = defaultIfUndefined(this.value, this.parent && this.parent._nextSequence())
             if (!this.parent) {
                 if (!hasFlag(flags, optional)) {
                     throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName)

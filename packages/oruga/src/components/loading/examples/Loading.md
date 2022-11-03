@@ -139,9 +139,14 @@
 <template>
     <div>
         <o-field>
-            <o-button size="medium" variant="primary" @click="openLoading">
-                Launch loading
-            </o-button>
+            <div class="buttons">
+                <o-button size="medium" variant="primary" @click="openLoading">
+                    Launch loading
+                </o-button>
+                <o-button size="medium" variant="primary" @click="openLoadingCloseAll">
+                    Launch loading (closeAll)
+                </o-button>
+            </div>
         </o-field>
         <o-field>
             <o-switch v-model="isFullPage">Display loader over full page</o-switch>
@@ -177,7 +182,25 @@
                     variant: 'info',
                     position: 'top',
                 })
-            }
+            },
+            async openLoadingCloseAll() {
+                const loadingComponent = this.$oruga.loading.open({
+                    fullPage: this.isFullPage,
+                    container: this.isFullPage ? null : this.$refs.element,
+                    canCancel: true,
+                })
+                setTimeout(() => this.$oruga.loading.closeAll({action:'cancel', method: 'closeAll'}), 3 * 1000)
+                // Note utilizing the promise requires Promise be supported by the browser
+                // If you are running Vue 2 on IE 11 this will not be the case unless you 
+                // add a polyfill in your build.
+                const ret = await loadingComponent.promise
+                this.$oruga.notification.open({
+                    duration: 2000,
+                    message: 'Loading returned ' + JSON.stringify(ret),
+                    variant: 'info',
+                    position: 'top',
+                })
+            },
         }
     }
 </script>

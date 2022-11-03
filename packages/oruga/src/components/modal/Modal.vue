@@ -45,11 +45,10 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
 
 import trapFocus from '../../directives/trapFocus'
-import { removeElement, getValueByPath, toCssDimension } from '../../utils/helpers'
+import { removeElement, getValueByPath, toCssDimension, promiseObject } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
 
 import Icon from '../icon/Icon'
-
 
 /**
  * Classic modal overlay to include any content you may need
@@ -75,9 +74,9 @@ export default {
         /** Text content */
         content: String,
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
-        promise: Object,
+        promise: promiseObject(),
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
@@ -89,8 +88,6 @@ export default {
                 return getValueByPath(getOptions(), 'modal.width', 960)
             }
         },
-        /** Enable custom style on modal content */
-        custom: Boolean,
         /** Custom animation (transition name) */
         animation: {
             type: String,
@@ -176,6 +173,8 @@ export default {
         closeClass: [String, Function, Array],
         fullScreenClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        scrollClipClass: [String, Function, Array],
+        noScrollClass: [String, Function, Array]
     },
     data() {
         return {
@@ -200,7 +199,7 @@ export default {
         },
         contentClasses() {
             return [
-                { [this.computedClass('contentClass', 'o-modal__content')]: !this.custom },
+                this.computedClass('contentClass', 'o-modal__content'),
                 { [this.computedClass('fullScreenClass', 'o-modal__content--full-screen')]: this.fullScreen }
             ]
         },
@@ -208,6 +207,12 @@ export default {
             return [
                 this.computedClass('closeClass', 'o-modal__close')
             ]
+        },
+        scrollClass() {
+            if (this.scroll === 'clip') {
+                return this.computedClass('scrollClipClass', 'o-clipped')
+            }
+            return this.computedClass('noScrollClass', 'o-noscroll')
         },
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
@@ -245,22 +250,26 @@ export default {
             if (typeof window === 'undefined') return
 
             if (this.scroll === 'clip') {
-                if (this.isActive) {
-                    document.documentElement.classList.add('o-clipped')
-                } else {
-                    document.documentElement.classList.remove('o-clipped')
+                if (this.scrollClass) {
+                    if (this.isActive) {
+                        document.documentElement.classList.add(this.scrollClass)
+                    } else {
+                        document.documentElement.classList.remove(this.scrollClass)
+                    }
+                    return
                 }
-                return
             }
 
             this.savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
 
-            if (this.isActive) {
-                document.body.classList.add('o-noscroll')
-            } else {
-                document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                if (this.isActive) {
+                    document.body.classList.add(this.scrollClass)
+                } else {
+                    document.body.classList.remove(this.scrollClass)
+                }
             }
 
             if (this.isActive) {
@@ -295,6 +304,9 @@ export default {
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
                 if (this.programmatic.resolve) {
                     this.programmatic.resolve.apply(null, arguments)
                 }
@@ -347,18 +359,25 @@ export default {
         this.programmatic && document.body.appendChild(this.$el)
     },
     mounted() {
-        if (this.programmatic) this.isActive = true
+        if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            this.isActive = true
+        }
         else if (this.isActive) this.handleScroll()
     },
     beforeDestroy() {
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
             // reset scroll
-            document.documentElement.classList.remove('o-clipped')
             const savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
-            document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                document.body.classList.remove(this.scrollClass)
+                document.documentElement.classList.remove(this.scrollClass)
+            }
             document.documentElement.scrollTop = savedScrollTop
             document.body.style.top = null
         }

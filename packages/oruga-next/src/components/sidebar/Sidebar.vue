@@ -31,7 +31,6 @@ import { defineComponent } from 'vue'
 /**
  * A sidebar to use as left/right overlay or static
  * @displayName Sidebar
- * @example ./examples/Sidebar.md
  * @style _sidebar.scss
  */
 export default defineComponent({
@@ -40,7 +39,7 @@ export default defineComponent({
     configField: 'sidebar',
     emits: ['update:open', 'close'],
     props: {
-        /** To control the behaviour of the sidebar programmatically, use the .sync modifier (Vue 2.x) or v-model:open (Vue 3.x) to make it two-way binding */
+        /** To control the behaviour of the sidebar programmatically, use the v-model:open to make it two-way binding */
         open: Boolean,
         /**
         * Color of the sidebar, optional
@@ -132,6 +131,8 @@ export default defineComponent({
         expandOnHoverFixedClass: [String, Function, Array],
         variantClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        scrollClipClass: [String, Function, Array],
+        noScrollClass: [String, Function, Array]
     },
     data() {
         return {
@@ -167,6 +168,12 @@ export default defineComponent({
                 { [this.computedClass('expandOnHoverClass', 'o-side__content--mini-expand')]: (this.expandOnHover && this.mobile !== 'fullwidth') },
                 { [this.computedClass('expandOnHoverFixedClass', 'o-side__content--expand-mini-hover-fixed')]: (this.expandOnHover && this.expandOnHoverFixed  && this.mobile !== 'fullwidth') }
             ]
+        },
+        scrollClass() {
+            if (this.scroll === 'clip') {
+                return this.computedClass('scrollClipClass', 'o-clipped')
+            }
+            return this.computedClass('noScrollClass', 'o-noscroll')
         },
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
@@ -257,21 +264,26 @@ export default defineComponent({
 
         handleScroll() {
             if (typeof window === 'undefined') return
+
             if (this.scroll === 'clip') {
-                if (this.open) {
-                    document.documentElement.classList.add('o-clipped')
-                } else {
-                    document.documentElement.classList.remove('o-clipped')
+                if (this.scrollClass) {
+                    if (this.open) {
+                        document.documentElement.classList.add(this.scrollClass)
+                    } else {
+                        document.documentElement.classList.remove(this.scrollClass)
+                    }
+                    return
                 }
-                return
             }
             this.savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
-            if (this.open) {
-                document.body.classList.add('o-noscroll')
-            } else {
-                document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                if (this.open) {
+                    document.body.classList.add(this.scrollClass)
+                } else {
+                    document.body.classList.remove(this.scrollClass)
+                }
             }
             if (this.open) {
                 document.body.style.top = `-${this.savedScrollTop}px`
@@ -304,11 +316,13 @@ export default defineComponent({
             document.removeEventListener('click', this.clickedOutside)
             if (this.overlay) {
                 // reset scroll
-                document.documentElement.classList.remove('o-clipped')
                 const savedScrollTop = !this.savedScrollTop
                     ? document.documentElement.scrollTop
                     : this.savedScrollTop
-                document.body.classList.remove('o-noscroll')
+                if (this.scrollClass) {
+                    document.body.classList.remove(this.scrollClass)
+                    document.documentElement.classList.remove(this.scrollClass)
+                }
                 document.documentElement.scrollTop = savedScrollTop
                 document.body.style.top = null
             }

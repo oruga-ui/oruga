@@ -58,6 +58,52 @@ describe('OField', () => {
         })
     })
 
+    describe('Passing horizontal prop', () => {
+        const generateMountOptions = (props) => {
+            return {
+                propsData: props,
+                localVue,
+                slots: {
+                    default: [OInput, '<button class="button">Button</button>']
+                }
+            }
+        }
+
+        describe('when horizontal props is true', () => {
+            let wrapper
+
+            beforeEach(() => {
+                const mountOptions = generateMountOptions({ horizontal: true })
+                wrapper = shallowMount(OField, mountOptions)
+            })
+
+            it('sets horizontal classes correctly when horizontal is true', () => {
+                expect(wrapper.find('.o-field__horizontal-label').exists()).toBe(true)
+            })
+
+            it('renders OFieldBody component', () => {
+                expect(wrapper.find(OFieldBody).exists()).toBe(true)
+            })
+        })
+
+        describe('when horizontal props is false', () => {
+            let wrapper
+
+            beforeEach(() => {
+                const mountOptions = generateMountOptions({ horizontal: false })
+                wrapper = shallowMount(OField, mountOptions)
+            })
+
+            it('does not set horizontal classes when horizontal is false', () => {
+                expect(wrapper.find('.o-field__horizontal-label').exists()).toBe(false)
+            })
+
+            it('does not render OFieldBody component', () => {
+                expect(wrapper.find(OFieldBody).exists()).toBe(false)
+            })
+        })
+    })
+
     describe('managing groups', () => {
         const mountOptions = {
             propsData: {

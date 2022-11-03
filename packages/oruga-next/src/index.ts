@@ -1,6 +1,6 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 
-import * as components from './components'
+import * as plugins from './components/plugins'
 
 import { merge } from './utils/helpers'
 import { setOptions, setVueInstance, Programmatic as ConfigProgrammatic, getOptions } from './utils/config'
@@ -13,8 +13,8 @@ const Oruga = {
         const defaultConfig = getOptions()
         setOptions(merge(defaultConfig, options, true))
         // Components
-        for (const componentKey in components) {
-            registerPlugin(app, (components as any)[componentKey])
+        for (const componentKey in plugins) {
+            registerPlugin(app, (plugins as any)[componentKey])
         }
         // Config component
         registerComponentProgrammatic(app, 'config', ConfigProgrammatic)
@@ -23,8 +23,10 @@ const Oruga = {
 
 export default Oruga
 
-// export all components as vue plugin
+// export all vue components
 export * from './components'
+// export all components as vue plugin
+export * from './components/plugins'
 // export programmatic components
 export { LoadingProgrammatic } from './components/loading'
 export { ModalProgrammatic } from './components/modal'

@@ -20,7 +20,8 @@ export default {
     mixins: [BaseComponentMixin, NoticeMixin],
     props: {
         noticeClass: [String, Function, Array],
-        noticePositionClass: [String, Function, Array]
+        noticePositionClass: [String, Function, Array],
+        noticeCustomContainerClass: [String, Function, Array],
     },
     methods: {
         rootClasses() {
@@ -31,6 +32,11 @@ export default {
         positionClasses(position) {
             return [
                 this.computedClass('noticePositionClass', 'o-notices--', position),
+            ]
+        },
+        noticeCustomContainerClasses() {
+            return [
+                this.computedClass('noticeCustomContainerClass', 'o-notices__custom-container')
             ]
         },
         timeoutCallback() {

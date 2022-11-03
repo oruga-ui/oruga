@@ -6,8 +6,11 @@ import { getValueByPath } from '../../utils/helpers'
 import { merge } from '../../utils/helpers'
 import { VueInstance } from '../../utils/config'
 import { use, registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
+import InstanceRegistry from "../../utils/InstanceRegistry"
 
 let localVueInstance
+
+let instances = new InstanceRegistry()
 
 const NotificationProgrammatic = {
     open(params) {
@@ -19,6 +22,7 @@ const NotificationProgrammatic = {
         }
 
         const defaultParam = {
+            programmatic: { instances },
             position: getValueByPath(getOptions(), 'notification.position', 'top-right'),
             closable: params.closable || getValueByPath(getOptions(), 'notification.closable', false)
         }
@@ -35,12 +39,10 @@ const NotificationProgrammatic = {
         params.active = false
         const propsData = merge(defaultParam, params)
         if (window.Promise) {
-            let resolve, reject;
             propsData.promise = new Promise((p1, p2) => {
-                resolve = p1
-                reject = p2
+                propsData.programmatic.resolve = p1
+                propsData.programmatic.reject = p2
             })
-            propsData.programmatic = {resolve, reject}
         }
         const vm = typeof window !== 'undefined' && window.Vue ? window.Vue : localVueInstance || VueInstance
         const NotificationNoticeComponent = vm.extend(NotificationNotice)
@@ -56,6 +58,11 @@ const NotificationProgrammatic = {
         // fix animation
         component.$children[0].isActive = true
         return component
+    },
+    closeAll() {
+        instances.walk((entry) => {
+            entry.close(...arguments)
+        })
     }
 }
 

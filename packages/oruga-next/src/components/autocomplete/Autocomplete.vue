@@ -110,7 +110,6 @@ import { getOptions } from '../../utils/config'
 /**
  * Extended input that provide suggestions while the user types
  * @displayName Autocomplete
- * @example ./examples/Autocomplete.md
  * @style _autocomplete.scss
  */
 export default defineComponent({
@@ -603,8 +602,10 @@ export default defineComponent({
          */
         checkIfReachedTheEndOfScroll() {
             const list = this.$refs.dropdown
+            const footerHeight = this.$slots.footer ? this.$refs.footer.clientHeight : 0
             if (list.clientHeight !== list.scrollHeight &&
-                list.scrollTop + list.clientHeight >= list.scrollHeight) {
+                list.scrollTop + list.clientHeight + footerHeight >= list.scrollHeight
+            ) {
                 this.$emit('infinite-scroll')
             }
         },

@@ -2,7 +2,10 @@
     <div
         ref="tooltip"
         :class="rootClasses">
-        <transition :name="newAnimation">
+        <transition
+            :name="newAnimation"
+            @after-leave="metrics = null"
+            @enter-cancelled="metrics = null">
             <div
                 v-show="active && (isActive || always)"
                 ref="content"
@@ -32,13 +35,47 @@
 <script lang="ts">
 import { getOptions } from '../../utils/config'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { createAbsoluteElement, removeElement, getValueByPath } from '../../utils/helpers'
+import { createAbsoluteElement, removeElement, getValueByPath, isWebKit } from '../../utils/helpers'
+import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
+
+type Position = 'top' | 'bottom' | 'left' | 'right'
+
+const opposites: Record<Position, Position> = {
+    top: 'bottom',
+    bottom: 'top',
+    right: 'left',
+    left: 'right',
+}
+
+type TooltipMetrics = {
+    content: DOMRect,
+    trigger: DOMRect,
+}
+
+function intersectionArea(a: DOMRect, b: DOMRect): number {
+  const left = Math.max(a.left, b.left)
+  const right = Math.min(a.right, b.right)
+  const top = Math.max(a.top, b.top)
+  const bottom = Math.min(a.bottom, b.bottom)
+  return Math.max(right - left, 0) * Math.max(bottom - top, 0)
+}
+
+type Point = { x: number, y: number }
+/**
+ * @param rect the bounding rectangle of the trigger element
+ * @return the "anchor points" (points where the arrow attaches) for each side of the tooltip
+ */
+const anchors = (rect: DOMRect): Record<Position, Point> => ({
+  top: { x: (rect.left + rect.right) * 0.5, y: rect.top },
+  bottom: { x: (rect.left + rect.right) * 0.5, y: rect.bottom },
+  left: { x: rect.left, y: (rect.top + rect.bottom) * 0.5 },
+  right: { x: rect.right, y: (rect.top + rect.bottom) * 0.5 },
+})
 
 /**
  * Display a brief helper text to your user
  * @displayName Tooltip
- * @example ./examples/Tooltip.md
  * @style _tooltip.scss
  */
 export default defineComponent({
@@ -47,7 +84,7 @@ export default defineComponent({
     configField: 'tooltip',
     emits: ['open', 'close'],
     props: {
-        /** Whether tooltip is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
         active: {
             type: Boolean,
             default: true
@@ -58,17 +95,18 @@ export default defineComponent({
         delay: Number,
         /**
          * Tooltip position in relation to the element
-         * @values top, bottom, left, right
+         * @values top, bottom, left, right,
          */
         position: {
-            type: String,
+            type: String as PropType<Position | 'auto'>,
             default: () => { return getValueByPath(getOptions(), 'tooltip.position', 'top') },
             validator: (value: string) => {
                 return [
                     'top',
                     'bottom',
                     'left',
-                    'right'
+                    'right',
+                    'auto',
                 ].indexOf(value) > -1
             }
         },
@@ -123,7 +161,8 @@ export default defineComponent({
         return {
             isActive: false,
             triggerStyle: {},
-            bodyEl: undefined // Used to append to body
+            bodyEl: undefined, // Used to append to body
+            metrics: null as TooltipMetrics | null, // Used for automatic tooltip positioning
         }
     },
     computed: {
@@ -140,14 +179,14 @@ export default defineComponent({
         arrowClasses() {
             return [
                 this.computedClass('arrowClass', 'o-tip__arrow'),
-                { [this.computedClass('arrowOrderClass', 'o-tip__arrow--', this.position)]: this.position },
+                { [this.computedClass('arrowOrderClass', 'o-tip__arrow--', this.newPosition)]: this.newPosition },
                 { [this.computedClass('variantArrowClass', 'o-tip__arrow--', this.variant)]: this.variant },
             ]
         },
         contentClasses() {
             return [
                 this.computedClass('contentClass', 'o-tip__content'),
-                { [this.computedClass('orderClass', 'o-tip__content--', this.position)]: this.position },
+                { [this.computedClass('orderClass', 'o-tip__content--', this.newPosition)]: this.newPosition },
                 { [this.computedClass('variantClass', 'o-tip__content--', this.variant)]: this.variant },
                 { [this.computedClass('multilineClass', 'o-tip__content--multiline')]: this.multiline },
                 { [this.computedClass('alwaysClass', 'o-tip__content--always')]: this.always }
@@ -155,11 +194,71 @@ export default defineComponent({
         },
         newAnimation() {
             return this.animated ? this.animation : undefined
-        }
+        },
+        newPosition(): Position {
+            if (this.position !== 'auto') {
+                return this.position
+            }
+            const defaultPosition = getValueByPath(getOptions(), 'tooltip.position', 'top')
+            let bestPosition = defaultPosition
+            if (this.metrics != null) {
+                let viewRect: DOMRect;
+                const viewport = (window as any).visualViewport; // Not available with our current types package
+                if (viewport != undefined) {
+                    if (isWebKit()) {
+                        // On WebKit, getBoundingClientRect offsets relative to the the visual viewport's origin, not the layout viewport's.
+                        // See https://bugs.webkit.org/show_bug.cgi?id=170981
+                        viewRect = new DOMRect(0, 0, viewport.width, viewport.height);
+                    } else {
+                        viewRect = new DOMRect(viewport.offsetLeft, viewport.offsetTop, viewport.width, viewport.height);
+                    }
+                } else {
+                    viewRect = new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
+                }
+                const triggerAnchors = anchors(this.metrics.trigger)
+                const contentRect = this.metrics.content
+                const contentAnchors = anchors(contentRect)
+                const contentRectAtAnchor = (pos: Position) => {
+                    const triggerAnchor = triggerAnchors[pos]
+                    const contentAnchor = contentAnchors[opposites[pos]]
+                    // Translates contentRect so contentAnchor is on top of triggerAnchor
+                    // NOTE: this doesn't account for the extra offset that the tooltip arrow provides.
+                    // That offset should be small, and it's tricky to get it from the CSS.
+                    return new DOMRect(
+                    contentRect.x + (triggerAnchor.x - contentAnchor.x),
+                    contentRect.y + (triggerAnchor.y - contentAnchor.y),
+                    contentRect.width,
+                    contentRect.height,
+                    )
+                }
+                const defaultOpposite = opposites[defaultPosition]
+                const crossPosition = (defaultPosition === 'top' || defaultPosition === 'bottom') ? 'left' : 'top'
+                const crossOpposite = opposites[crossPosition]
+                // In descending order of priority
+                const positions = [defaultPosition, defaultOpposite, crossPosition, crossOpposite]
+                let maxOverlap = 0
+                for (const position of positions) {
+                    const overlap = intersectionArea(viewRect, contentRectAtAnchor(position as Position))
+                    if (overlap > maxOverlap) {
+                        maxOverlap = overlap
+                        bestPosition = position
+                    }
+                }
+            }
+            return bestPosition
+        },
     },
     watch: {
         isActive(value) {
-            this.$emit(this.isActive ? 'open' : 'close')
+            this.$emit(value ? 'open' : 'close')
+            if (value && this.position === 'auto') {
+                this.$nextTick(() => {
+                    this.metrics = {
+                        content: this.$refs.content.getBoundingClientRect(),
+                        trigger: this.$refs.trigger.getBoundingClientRect(),
+                    }
+                })
+            }
             if (value && this.appendToBody) {
                 this.updateAppendToBody()
             }

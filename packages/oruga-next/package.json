@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.5.5",
+  "version": "0.5.8",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -37,7 +37,7 @@
     "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
     "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish",
-    "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run-ct",
+    "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open-ct"
   },
@@ -76,7 +76,7 @@
     "codecov": "3.7.2",
     "concurrently": "5.2.0",
     "core-js": "3.6.5",
-    "cypress": "^9.5.1",
+    "cypress": "^10.11.0",
     "eslint": "6.7.2",
     "eslint-plugin-vue": "7.1.0",
     "jest-serializer-vue": "0.3.0",

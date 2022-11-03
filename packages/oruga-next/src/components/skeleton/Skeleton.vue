@@ -7,7 +7,6 @@ import { toCssDimension } from '../../utils/helpers'
 /**
  * A placeholder for content to load
  * @displayName Skeleton
- * @example ./examples/Skeleton.md
  * @style _skeleton.scss
  */
 export default defineComponent({

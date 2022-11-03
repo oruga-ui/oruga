@@ -1,30 +1,37 @@
-import { App, ComponentPropsOptions, createVNode, Plugin, render } from 'vue'
+import type { App, ComponentPropsOptions, Plugin } from 'vue'
+import { createVNode, render } from 'vue'
 
 import Loading from './Loading.vue'
 
 import { VueInstance } from '../../utils/config'
 import { merge } from '../../utils/helpers'
 import { registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
+import InstanceRegistry from "../../utils/InstanceRegistry"
 
 let localVueInstance: App
+
+let instances = new InstanceRegistry()
 
 const LoadingProgrammatic = {
     open(params: Readonly<ComponentPropsOptions>) : InstanceType<typeof Loading> {
         const defaultParam = {
-            programmatic: true
+            programmatic: { instances }
         }
         const propsData = merge(defaultParam, params)
-        let resolve, reject;
         propsData.promise = new Promise((p1, p2) => {
-            resolve = p1
-            reject = p2
+            propsData.programmatic.resolve = p1
+            propsData.programmatic.reject = p2
         })
-        propsData.programmatic = {resolve, reject}
         const app = localVueInstance || VueInstance
         const vnode = createVNode(Loading, propsData)
         vnode.appContext = app._context
         render(vnode, document.createElement('div'))
         return vnode.component.proxy as InstanceType<typeof Loading>
+    },
+    closeAll() {
+        instances.walk((entry) => {
+            entry.close(...arguments)
+        })
     }
 }
 

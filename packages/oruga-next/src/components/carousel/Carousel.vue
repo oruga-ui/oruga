@@ -5,11 +5,11 @@
         @mouseleave="onMouseLeave">
         <div :class="sceneClasses">
             <div
-                @mousedown.prevent="dragStart"
+                @mousedown="dragStart"
                 @touchstart="dragStart"
                 :class="itemsClasses"
                 :style="'transform:translateX('+translation+'px)'">
-                <slot/>
+                <slot />
             </div>
             <slot
                 name="arrow"
@@ -81,7 +81,6 @@ import {default as ProviderParentMixin, Sorted} from '../../utils/ProviderParent
 /**
  * A Slideshow for cycling images in confined spaces
  * @displayName Carousel
- * @example ./examples/Carousel.md
  * @style _carousel.scss
  */
 export default defineComponent({

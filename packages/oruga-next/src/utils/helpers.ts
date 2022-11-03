@@ -48,6 +48,21 @@ export function getValueByPath(obj: any, path: string, defaultValue = undefined)
     return typeof value !== 'undefined' ? value : defaultValue
 }
 
+
+/**
+ * Set value of an object property/path even if it's nested
+ */
+ export function setValueByPath(obj: any, path: string, value: any) {
+    const p = path.split('.')
+    if (p.length === 1) {
+        obj[path] = value
+        return
+    }
+    const field = p[0]
+    if (typeof obj[field] === 'undefined') obj[field] = {}
+    return setValueByPath(obj[field], p.slice(1).join('.'), value)
+}
+
 /**
  * Extension of indexOf method by equality function if specified
  */
@@ -137,6 +152,16 @@ export const isMobile = {
             isMobile.Windows()
         )
     }
+}
+
+// Microsoft Edge "pretends" to be all other major browsers, so we need to filter it out.
+// It doesn't use a very consistent string to represent its own name ("Edge", "Edg", "EdgA", etc.),
+// but it looks like WebKit never pretends to be Chrome, Edge does, and Chrome doesn't have the bug
+// that this flag is used to work around.
+export function isWebKit() {
+    return typeof window !== 'undefined'
+        && window.navigator.userAgent.indexOf('AppleWebKit/') !== -1
+        && window.navigator.userAgent.indexOf('Chrome/') === -1
 }
 
 export function removeElement(el: Element) {

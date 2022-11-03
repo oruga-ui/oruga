@@ -3,15 +3,18 @@ import Loading from './Loading'
 import { VueInstance } from '../../utils/config'
 import { merge } from '../../utils/helpers'
 import { use, registerComponent, registerComponentProgrammatic } from '../../utils/plugins'
+import InstanceRegistry from "../../utils/InstanceRegistry"
 
 let localVueInstance
+
+let instances = new InstanceRegistry()
 
 const LoadingProgrammatic = {
     open(params) {
         let parent
 
         const defaultParam = {
-            programmatic: true
+            programmatic: { instances }
         }
         if (params.parent) {
             parent = params.parent
@@ -19,12 +22,10 @@ const LoadingProgrammatic = {
         }
         const propsData = merge(defaultParam, params)
         if (window.Promise) {
-            let resolve, reject;
             propsData.promise = new Promise((p1, p2) => {
-                resolve = p1
-                reject = p2
+                propsData.programmatic.resolve = p1
+                propsData.programmatic.reject = p2
             })
-            propsData.programmatic = {resolve, reject}
         }
         const vm = typeof window !== 'undefined' && window.Vue ? window.Vue : localVueInstance || VueInstance
         const LoadingComponent = vm.extend(Loading)
@@ -32,6 +33,11 @@ const LoadingProgrammatic = {
             parent,
             el: document.createElement('div'),
             propsData
+        })
+    },
+    closeAll() {
+        instances.walk((entry) => {
+            entry.close(...arguments)
         })
     }
 }

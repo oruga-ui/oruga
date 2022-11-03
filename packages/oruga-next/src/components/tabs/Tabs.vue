@@ -69,7 +69,6 @@ import { getValueByPath } from '../../utils/helpers'
  * Responsive horizontal navigation tabs, switch between contents with ease
  * @displayName Tabs
  * @requires ./TabItem.vue
- * @example ./examples/Tabs.md
  * @style _tabs.scss
  */
 export default defineComponent({

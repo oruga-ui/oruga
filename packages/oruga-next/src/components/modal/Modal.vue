@@ -9,7 +9,7 @@
             v-show="isActive"
             :class="rootClasses"
             v-trap-focus="trapFocus"
-            tabindex="-1"
+            :tabindex="-1"
             :role="ariaRole"
             :aria-label="ariaLabel"
             :aria-modal="ariaModal">
@@ -54,7 +54,6 @@ import Icon from '../icon/Icon.vue'
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Modal
- * @example ./examples/Modal.md
  * @style _modal.scss
  */
 export default defineComponent({
@@ -69,16 +68,16 @@ export default defineComponent({
     mixins: [BaseComponentMixin, MatchMediaMixin],
     emits: ['update:active', 'close'],
     props: {
-        /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
+        /** Whether modal is active or not, use v-model:active to make it two-way binding */
         active: Boolean,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
         component: [Object, Function],
         /** Text content */
         content: String,
         /** @ignore */
-        programmatic: [Boolean, Object],
+        programmatic: Object,
         /** @ignore */
-        promise: Object,
+        promise: Promise,
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
@@ -90,8 +89,6 @@ export default defineComponent({
                 return getValueByPath(getOptions(), 'modal.width', 960)
             }
         },
-        /** Enable custom style on modal content */
-        custom: Boolean,
         /** Custom animation (transition name) */
         animation: {
             type: String,
@@ -177,6 +174,8 @@ export default defineComponent({
         closeClass: [String, Function, Array],
         fullScreenClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
+        scrollClipClass: [String, Function, Array],
+        noScrollClass: [String, Function, Array]
     },
     data() {
         return {
@@ -201,7 +200,7 @@ export default defineComponent({
         },
         contentClasses() {
             return [
-                { [this.computedClass('contentClass', 'o-modal__content')]: !this.custom },
+                this.computedClass('contentClass', 'o-modal__content'),
                 { [this.computedClass('fullScreenClass', 'o-modal__content--full-screen')]: this.fullScreen }
             ]
         },
@@ -209,6 +208,12 @@ export default defineComponent({
             return [
                 this.computedClass('closeClass', 'o-modal__close')
             ]
+        },
+        scrollClass() {
+            if (this.scroll === 'clip') {
+                return this.computedClass('scrollClipClass', 'o-clipped')
+            }
+            return this.computedClass('noScrollClass', 'o-noscroll')
         },
         cancelOptions() {
             return typeof this.canCancel === 'boolean'
@@ -246,22 +251,26 @@ export default defineComponent({
             if (typeof window === 'undefined') return
 
             if (this.scroll === 'clip') {
-                if (this.isActive) {
-                    document.documentElement.classList.add('o-clipped')
-                } else {
-                    document.documentElement.classList.remove('o-clipped')
+                if (this.scrollClass) {
+                    if (this.isActive) {
+                        document.documentElement.classList.add(this.scrollClass)
+                    } else {
+                        document.documentElement.classList.remove(this.scrollClass)
+                    }
+                    return
                 }
-                return
             }
 
             this.savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
 
-            if (this.isActive) {
-                document.body.classList.add('o-noscroll')
-            } else {
-                document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                if (this.isActive) {
+                    document.body.classList.add(this.scrollClass)
+                } else {
+                    document.body.classList.remove(this.scrollClass)
+                }
             }
 
             if (this.isActive) {
@@ -292,12 +301,14 @@ export default defineComponent({
             if (this.destroyOnHide) {
                 this.destroyed = true
             }
-            this.$emit('close')
             this.$emit('update:active', false)
             this.onClose.apply(null, arguments)
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
+                if (this.programmatic.instances) {
+                    this.programmatic.instances.remove(this)
+                }
                 if (this.programmatic.resolve) {
                     this.programmatic.resolve.apply(null, arguments)
                 }
@@ -334,9 +345,12 @@ export default defineComponent({
         }
     },
     mounted() {
-        // Insert the Modal component in body tag
-        // only if it's programmatic
         if (this.programmatic) {
+            if (this.programmatic.instances) {
+                this.programmatic.instances.add(this)
+            }
+            // Insert the Modal component in body tag
+            // only if it's programmatic
             document.body.appendChild(this.$el)
             this.isActive = true
         }
@@ -346,11 +360,13 @@ export default defineComponent({
         if (typeof window !== 'undefined') {
             document.removeEventListener('keyup', this.keyPress)
             // reset scroll
-            document.documentElement.classList.remove('o-clipped')
             const savedScrollTop = !this.savedScrollTop
                 ? document.documentElement.scrollTop
                 : this.savedScrollTop
-            document.body.classList.remove('o-noscroll')
+            if (this.scrollClass) {
+                document.body.classList.remove(this.scrollClass)
+                document.documentElement.classList.remove(this.scrollClass)
+            }
             document.documentElement.scrollTop = savedScrollTop
             document.body.style.top = null
         }

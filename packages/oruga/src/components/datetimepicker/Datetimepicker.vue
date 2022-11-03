@@ -280,13 +280,19 @@ export default {
                 this.maxDatetime.getDate(), 0, 0, 0, 0)
         },
         minTime() {
-            if (!this.minDatetime || (this.newValue === null || typeof this.newValue === 'undefined')) {
+            if (!this.minDatetime || (this.newValue === null || typeof this.newValue === 'undefined')
+                || this.newValue.getFullYear() != this.minDatetime.getFullYear()
+                || this.newValue.getMonth() != this.minDatetime.getMonth()
+                || this.newValue.getDate() != this.minDatetime.getDate() ) {
                 return this.timepicker ? this.timepicker.minTime : null
             }
             return this.minDatetime
         },
         maxTime() {
-            if (!this.maxDatetime || (this.newValue === null || typeof this.newValue === 'undefined')) {
+            if (!this.maxDatetime || (this.newValue === null || typeof this.newValue === 'undefined')
+                || this.newValue.getFullYear() != this.maxDatetime.getFullYear()
+                || this.newValue.getMonth() != this.maxDatetime.getMonth()
+                || this.newValue.getDate() != this.maxDatetime.getDate() ) {
                 return this.timepicker ? this.timepicker.maxTime : null
             }
             return this.maxDatetime

@@ -153,6 +153,16 @@ export const isMobile = {
     }
 }
 
+// Microsoft Edge "pretends" to be all other major browsers, so we need to filter it out.
+// It doesn't use a very consistent string to represent its own name ("Edge", "Edg", "EdgA", etc.),
+// but it looks like WebKit never pretends to be Chrome, Edge does, and Chrome doesn't have the bug
+// that this flag is used to work around.
+export function isWebKit() {
+    return typeof window !== 'undefined'
+        && window.navigator.userAgent.indexOf('AppleWebKit/') !== -1
+        && window.navigator.userAgent.indexOf('Chrome/') === -1
+}
+
 export function removeElement(el) {
     if (typeof el.remove !== 'undefined') {
         el.remove()
@@ -324,6 +334,17 @@ export function debounce(func, wait, immediate) {
 
 export function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/**
+ * Returns the "promise" object.
+ *
+ * This is to handle browsers that do not have Promise support (IE 11) which are still supported
+ * by Vue 2
+ */
+export function promiseObject() {
+    // the typedef window is to that vuepress won't break when it tries to run this method
+    return ((typeof window !== "undefined") && window.Promise) ? window.Promise : Object;
 }
 
 

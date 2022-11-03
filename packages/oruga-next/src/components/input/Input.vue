@@ -68,7 +68,6 @@ import { getValueByPath } from '../../utils/helpers'
 /**
  * Get user Input. Use with Field to access all functionalities
  * @displayName Input
- * @example ./examples/Input.md
  * @style _input.scss
  */
 export default defineComponent({
@@ -285,6 +284,9 @@ export default defineComponent({
                     this.resize()
                 }
             }
+        },
+        type(type) {
+            this.newType = type
         }
     },
     methods: {
@@ -321,7 +323,7 @@ export default defineComponent({
         resize() {
             this.height = 'auto'
             this.$nextTick(() => {
-                let scrollHeight = this.$refs.textarea.scrollHeight
+                const scrollHeight = this.$refs.textarea.scrollHeight
                 this.height = scrollHeight + 'px'
             })
         }
