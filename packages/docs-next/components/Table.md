@@ -161,7 +161,7 @@ title: Table
 | bottom-left |             |          |
 | caption     |             |          |
 | default     |             |          |
-| detail      |             |          |
+| detail      |             | <code style='white-space: nowrap; padding: 0;'> { row, index } </code> |
 | empty       |             |          |
 | footer      |             |          |
 | loading     |             |          |
