@@ -101,7 +101,7 @@ title: Table
 | label            |                                                                 | string                                       | -                   |                                    |
 | meta             |                                                                 | string\|number\|boolean\|func\|object\|array | -                   |                                    |
 | numeric          |                                                                 | boolean                                      | -                   |                                    |
-| position         | Optional, position of column content                            | string                                       | `centered`, `right` |                                    |
+| position         | Optional, position of column content                            | string                                       | `left`, `centered`, `right` |                                    |
 | searchable       |                                                                 | boolean                                      | -                   |                                    |
 | sortable         |                                                                 | boolean                                      | -                   |                                    |
 | sticky           |                                                                 | boolean                                      | -                   |                                    |
@@ -175,7 +175,7 @@ title: Table
 | ----------- | ----------- | -------- |
 | default     |             | <code style='white-space: nowrap; padding: 0;'> { row, column, index, colindex, toggleDetails } </code> |      
 | header      |             | <code style='white-space: nowrap; padding: 0;'> { column, index } </code> |
-| searchable  |             | <code style='white-space: nowrap; padding: 0;'> { column, filters </code> |
+| searchable  |             | <code style='white-space: nowrap; padding: 0;'> { column, filters } </code> |
 | subheading  |             | <code style='white-space: nowrap; padding: 0;'> { column, index } </code> |
 
 ---
