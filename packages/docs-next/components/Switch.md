@@ -55,7 +55,7 @@ title: Switch
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__switch.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_switch.scss)
 
 | CSS Variable                           | SASS Variable                    | Default                                                                                          |
 | -------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |

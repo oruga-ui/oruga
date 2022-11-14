@@ -41,7 +41,7 @@ title: Icon
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__icon.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_icon.scss)
 
 | CSS Variable               | SASS Variable        | Default |
 | -------------------------- | -------------------- | ------- |

@@ -66,7 +66,7 @@ title: Modal
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__modal.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)
 
 | CSS Variable                                      | SASS Variable                               | Default                      |
 | ------------------------------------------------- | ------------------------------------------- | ---------------------------- |

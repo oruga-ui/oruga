@@ -50,7 +50,7 @@ title: Radio
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__radio.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_radio.scss)
 
 | CSS Variable                             | SASS Variable                      | Default                 |
 | ---------------------------------------- | ---------------------------------- | ----------------------- |

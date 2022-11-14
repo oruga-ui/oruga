@@ -50,7 +50,7 @@ title: Button
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__button.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_button.scss)
 
 | CSS Variable                         | SASS Variable                  | Default                             |
 | ------------------------------------ | ------------------------------ | ----------------------------------- |

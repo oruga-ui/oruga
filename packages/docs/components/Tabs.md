@@ -500,6 +500,12 @@ export default {
 | value     | Item value (it will be used as v-model of wrapper component) | string\|number | -      |                                                                                                                                       |
 | visible   | Show/hide item                                               | boolean        | -      | true                                                                                                                                  |
 
+### Events
+
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| activate   |            |
+
 ### Slots
 
 | Name    | Description | Bindings |
