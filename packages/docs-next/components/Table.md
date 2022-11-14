@@ -9,6 +9,9 @@ title: Table
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
 </div>
+
+## Examples
+
 <example-table />
 
 ## Class props
@@ -18,11 +21,12 @@ title: Table
 <inspector-table-viewer />
 
 <br />
-<br />
 
 <div class="vp-doc">
 
 ## Props
+
+### Table 
 
 | Prop name             | Description                                                                                                               | Type           | Values                     | Default                                                                                                                                           |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -84,7 +88,34 @@ title: Table
 | striped               | Whether table is striped                                                                                                  | boolean        | -                          |                                                                                                                                                   |
 | total                 | Total number of table data if backend-pagination is enabled                                                               | number\|string | -                          | 0                                                                                                                                                 |
 
-### Events
+
+### Column 
+
+| Prop name        | Description                                                     | Type                                         | Values              | Default                            |
+| ---------------- | --------------------------------------------------------------- | -------------------------------------------- | ------------------- | ---------------------------------- |
+| customKey        |                                                                 | string\|number                               | -                   |                                    |
+| customSearch     |                                                                 | func                                         | -                   |                                    |
+| customSort       |                                                                 | func                                         | -                   |                                    |
+| field            |                                                                 | string                                       | -                   |                                    |
+| headerSelectable |                                                                 | boolean                                      | -                   |                                    |
+| label            |                                                                 | string                                       | -                   |                                    |
+| meta             |                                                                 | string\|number\|boolean\|func\|object\|array | -                   |                                    |
+| numeric          |                                                                 | boolean                                      | -                   |                                    |
+| position         | Optional, position of column content                            | string                                       | `left`, `centered`, `right` |                                    |
+| searchable       |                                                                 | boolean                                      | -                   |                                    |
+| sortable         |                                                                 | boolean                                      | -                   |                                    |
+| sticky           |                                                                 | boolean                                      | -                   |                                    |
+| subheading       |                                                                 | string                                       | -                   |                                    |
+| tdAttrs          | Adds native attributes to td :td-attrs="(row, column)" => ({})" | func                                         | -                   | Default function (see source code) |
+| thAttrs          | Adds native attributes to th :th-attrs="(column)" => ({})"      | func                                         | -                   | Default function (see source code) |
+| visible          |                                                                 | boolean                                      | -                   | true                               |
+| width            |                                                                 | number\|string                               | -                   |                                    |
+
+---
+
+## Events
+
+### Table
 
 | Event name               | Properties                                                                                                           | Description |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------- | ----------- |
@@ -118,19 +149,34 @@ title: Table
 | columndragover           |                                                                                                                      |
 | update:currentPage       |                                                                                                                      |
 
-### Slots
+
+---
+
+## Slots
+
+### Table
 
 | Name        | Description | Bindings |
 | ----------- | ----------- | -------- |
-| default     |             |          |
-| pagination  |             |          |
-| top-left    |             |          |
+| bottom-left |             |          |
 | caption     |             |          |
-| detail      |             | <br/>    |
+| default     |             |          |
+| detail      |             | <code style='white-space: nowrap; padding: 0;'> { row, index } </code> |
 | empty       |             |          |
 | footer      |             |          |
 | loading     |             |          |
-| bottom-left |             |          |
+| pagination  |             |          |
+| top-left    |             |          |
+
+
+### Column
+
+| Name        | Description | Bindings |
+| ----------- | ----------- | -------- |
+| default     |             | <code style='white-space: nowrap; padding: 0;'> { row, column, index, colindex, toggleDetails } </code> |      
+| header      |             | <code style='white-space: nowrap; padding: 0;'> { column, index } </code> |
+| searchable  |             | <code style='white-space: nowrap; padding: 0;'> { column, filters } </code> |
+| subheading  |             | <code style='white-space: nowrap; padding: 0;'> { column, index } </code> |
 
 ---
 

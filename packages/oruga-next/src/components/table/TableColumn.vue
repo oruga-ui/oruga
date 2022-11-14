@@ -18,7 +18,7 @@ export default defineComponent({
         numeric: Boolean,
         /**
          * Optional, position of column content
-         * @values centered, right
+         * @values left, centered, right
          */
         position: {
             type: String,
