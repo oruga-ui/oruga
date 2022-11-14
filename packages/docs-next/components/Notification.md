@@ -62,6 +62,42 @@ title: Notification
 
 ---
 
+# Notification Notice
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name         | Description                                                                                                                                                         | Type          | Values                                                                  | Default                                                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| container         | DOM element the toast will be created on. Note that this also changes the position of the toast from fixed to absolute. Meaning that the container should be fixed. | string        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;containerElement: undefined<br>}</code> |
+| duration          | Visibility duration in miliseconds.                                                                                                                                 | number        | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;duration: 1000<br>}</code>              |
+| indefinite        | Show the Notification indefinitely until it is dismissed when programmatically.                                                                                     | boolean       | -                                                                       | false                                                                                                                                                   |
+| message           | Message text (can contain HTML).                                                                                                                                    | string\|array | -                                                                       |                                                                                                                                                         |
+| onClose           | Callback function to call after close (programmatically close or user canceled)                                                                                     | func          | -                                                                       | Default function (see source code)                                                                                                                      |
+| override          |                                                                                                                                                                     | boolean       | -                                                                       |                                                                                                                                                         |
+| position          | Which position the notification will appear when programmatically.                                                                                                  | string        | `top-right`, `top`, `top-left`, `bottom-right`, `bottom`, `bottom-left` | 'top'                                                                                                                                                   |
+| programmatic      |                                                                                                                                                                     | object        | -                                                                       |                                                                                                                                                         |
+| promise           |                                                                                                                                                                     | Promise       | -                                                                       |                                                                                                                                                         |
+| propsNotification |                                                                                                                                                                     | object        | -                                                                       |                                                                                                                                                         |
+| queue             | If should queue with others notices (snackbar/toast/notification).                                                                                                  | boolean       | -                                                                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> notification: {<br>&nbsp;&nbsp;noticeQueue: undefined<br>}</code>      |
+| type              | Type (color) of the notification, optional.                                                                                                                         | string        | -                                                                       |                                                                                                                                                         |
+
+### Events
+
+| Event name    | Properties | Description |
+| ------------- | ---------- | ----------- |
+| close         |            |
+| update:active |            |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
 ## Style
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)

@@ -47,6 +47,21 @@ title: Steps
 
 ---
 
+# Step Item
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name | Description                                                                                                                         | Type           | Values | Default   |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
+| clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
+| override  |                                                                                                                                     | boolean        | -      |           |
+| step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
+| variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
+
+</div>
+
 ## Style
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)

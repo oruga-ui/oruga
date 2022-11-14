@@ -22,6 +22,6 @@
     "concurrently": "7.1.0",
     "sass": "1.53.0",
     "vitepress": "1.0.0-alpha.26",
-    "vue-docgen-cli": "4.44.23"
+    "vue-docgen-cli": "4.45.0"
   }
 }
