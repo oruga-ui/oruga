@@ -81,10 +81,7 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         flex-basis: 0;
         flex-grow: 5;
         flex-shrink: 1;
-
-        @media (min-width: 1024px) {
-            @include side-flex-gap($field-margin-right);
-        }
+        @include side-flex-gap($field-margin-right);
     }
     &--horizontal {
         display: flex;
@@ -95,14 +92,6 @@ $field-horizontal-label-margin: 0 1.5rem 0 0 !default;
         flex-shrink: 0;
         margin: $field-horizontal-label-margin;
         text-align: right;
-    }
-    &__input-wrapper {
-        display: flex;
-        flex-basis: 0;
-        flex-grow: 5;
-        flex-shrink: 1;
-        flex-direction: column;
-        width: 100%;
     }
     &--mobile {
         .o-field__horizontal-body {

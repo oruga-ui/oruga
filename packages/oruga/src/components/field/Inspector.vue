@@ -75,10 +75,6 @@ export default {
                     }
                 },
                 {
-                    class: "fieldInputWrapperClass",
-                    description: "Class for wrapper that contains input and message",
-                },
-                {
                     class: "bodyClass",
                     description: "Class for field body"
                 },
