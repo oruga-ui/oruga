@@ -56,7 +56,7 @@ title: Tooltip
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__tooltip.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tooltip.scss)
 
 | CSS Variable                            | SASS Variable                     | Default                            |
 | --------------------------------------- | --------------------------------- | ---------------------------------- |
