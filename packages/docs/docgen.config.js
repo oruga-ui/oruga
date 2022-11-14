@@ -36,7 +36,6 @@ module.exports = {
     component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent }) => {
       const { displayName, description, docsBlocks, tags, functional } = doc;
       const { deprecated, author, since, version, see, link, style } = tags || {};
-      console.log(displayName, requiresMd)
       return `
 
 ${!isSubComponent ? `

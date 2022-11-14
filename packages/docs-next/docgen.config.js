@@ -44,7 +44,6 @@ module.exports = {
       const { deprecated, author, since, version, see, link, style } = tags || {};
       const component = getComponent(_fileName);
       const requires = !component || IGNORE.indexOf(component) >= 0;
-      console.log(component, requires)
       return `
 ${!isSubComponent ? `
 ---
