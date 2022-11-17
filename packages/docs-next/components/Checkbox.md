@@ -55,7 +55,7 @@ title: Checkbox
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__checkbox.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)
 
 | CSS Variable                                | SASS Variable                         | Default                 |
 | ------------------------------------------- | ------------------------------------- | ----------------------- |

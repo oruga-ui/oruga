@@ -60,7 +60,7 @@ title: Select
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__select.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_select.scss)
 
 | CSS Variable                         | SASS Variable                  | Default                                               |
 | ------------------------------------ | ------------------------------ | ----------------------------------------------------- |

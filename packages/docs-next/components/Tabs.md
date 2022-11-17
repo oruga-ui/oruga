@@ -42,9 +42,23 @@ title: Tabs
 
 ---
 
+# Tab Item
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name | Description           | Type    | Values | Default                                                                                                                               |
+| --------- | --------------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled  | Item will be disabled | boolean | -      |                                                                                                                                       |
+| override  |                       | boolean | -      |                                                                                                                                       |
+| tag       | Tabs item tag name    | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
+
+</div>
+
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__tabs.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tabs.scss)
 
 | CSS Variable                                       | SASS Variable                                | Default                 |
 | -------------------------------------------------- | -------------------------------------------- | ----------------------- |

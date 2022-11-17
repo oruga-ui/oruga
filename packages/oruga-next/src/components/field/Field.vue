@@ -1,6 +1,8 @@
 <template>
     <div :class="rootClasses">
-        <div :class="horizontal ? labelHorizontalClasses : ''">
+        <div
+            v-if="horizontal"
+            :class="labelHorizontalClasses">
             <label
                 v-if="hasLabel"
                 :for="labelFor"
@@ -9,23 +11,33 @@
                 <template v-else>{{ label }}</template>
             </label>
         </div>
-        <div :class="fieldInputWrapperClasses">
-            <o-field-body v-if="horizontal">
+        <template v-else>
+            <label
+                v-if="hasLabel"
+                :for="labelFor"
+                :class="labelClasses">
+                <slot v-if="hasLabelSlot" name="label"/>
+                <template v-else>{{ label }}</template>
+            </label>
+        </template>
+        <o-field-body v-if="horizontal">
+            <slot/>
+        </o-field-body>
+        <div v-else-if="hasInnerField" :class="bodyClasses">
+            <div :class="innerFieldClasses">
                 <slot/>
-            </o-field-body>
-            <div v-else-if="hasInnerField" :class="bodyClasses">
-                <div :class="innerFieldClasses">
-                    <slot/>
-                </div>
             </div>
-            <template v-else>
-                <slot />
-            </template>
-            <p v-if="hasMessage" :class="messageClasses">
-                <slot v-if="hasMessageSlot" name="message"/>
-                <template v-else>{{ newMessage }}</template>
-            </p>
         </div>
+        <template v-else>
+            <slot/>
+        </template>
+        <p
+            v-if="hasMessage && !horizontal"
+            :class="messageClasses"
+        >
+            <slot v-if="hasMessageSlot" name="message"/>
+            <template v-else>{{ newMessage }}</template>
+        </p>
     </div>
 </template>
 
@@ -94,7 +106,7 @@ export default defineComponent({
             type: Boolean,
             default: true
         },
-        /**
+         /**
          * Vertical size of input, optional
          * @values small, medium, large
          */
@@ -106,7 +118,6 @@ export default defineComponent({
         labelClass: [String, Function, Array],
         labelSizeClass: [String, Function, Array],
         labelHorizontalClass: [String, Function, Array],
-        fieldInputWrapperClass: [String, Function, Array],
         bodyClass: [String, Function, Array],
         bodyHorizontalClass: [String, Function, Array],
         addonsClass: [String, Function, Array],
@@ -151,11 +162,6 @@ export default defineComponent({
         labelHorizontalClasses() {
             return [
                 this.computedClass('labelHorizontalClass', 'o-field__horizontal-label')
-            ]
-        },
-        fieldInputWrapperClasses() {
-            return [
-                this.computedClass('fieldInputWrapperClass', 'o-field__input-wrapper')
             ]
         },
         bodyClasses() {

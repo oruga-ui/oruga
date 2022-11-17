@@ -43,16 +43,15 @@ module.exports = {
       const { displayName, description, tags, functional } = doc;
       const { deprecated, author, since, version, see, link, style } = tags || {};
       const component = getComponent(_fileName);
-      if (!component || IGNORE.indexOf(component) >= 0) return;
+      const requires = !component || IGNORE.indexOf(component) >= 0;
       return `
-
 ${!isSubComponent ? `
 ---
 title: ${displayName}
 ---
 `: ''}
 # ${deprecated ? `~~${displayName}~~` : displayName}
-<div class="vp-doc">
+${requires ? '' : `<div class="vp-doc">
 ${deprecated ? `> **Deprecated** ${deprecated[0].description}\n` : ''}
 ${description ? '> ' + description : ''}
 ${functional ? renderedUsage.functionalTag : ''}
@@ -64,6 +63,7 @@ ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 </div>
 ${'<example-' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
+`}
 <div class="vp-doc">
 ${tmplProps(renderedUsage.props, config, component.toLowerCase())}
 ${renderedUsage.methods}
@@ -158,7 +158,7 @@ function renderStyleDocs(config, name) {
   return `
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_${name}.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/${name})
 
   | CSS Variable          | SASS Variable  | Default |
   | --------------------- | -------------- | ------- |

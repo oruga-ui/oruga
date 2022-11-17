@@ -58,7 +58,7 @@ title: Sidebar
 
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__sidebar.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
 
 | CSS Variable                             | SASS Variable                      | Default                             |
 | ---------------------------------------- | ---------------------------------- | ----------------------------------- |

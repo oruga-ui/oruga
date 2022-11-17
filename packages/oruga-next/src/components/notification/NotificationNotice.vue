@@ -24,7 +24,7 @@ export default defineComponent({
         propsNotification: Object,
         noticeClass: [String, Function, Array],
         noticePositionClass: [String, Function, Array],
-        noticeCustomContainerClasses: [String, Function, Array],
+        noticeCustomContainerClass: [String, Function, Array],
     },
     emits: ['update:active', 'close'],
     methods: {
@@ -40,7 +40,7 @@ export default defineComponent({
         },
         noticeCustomContainerClasses() {
             return [
-                this.computedClass('noticeCustomContainerClasses', 'o-notices__custom-container')
+                this.computedClass('noticeCustomContainerClass', 'o-notices__custom-container')
             ]
         },
         timeoutCallback() {

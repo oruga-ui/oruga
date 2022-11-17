@@ -134,9 +134,37 @@ title: Table
 
 ---
 
+# Table Column
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name        | Description                                                     | Type                                         | Values                      | Default                            |
+| ---------------- | --------------------------------------------------------------- | -------------------------------------------- | --------------------------- | ---------------------------------- |
+| customKey        |                                                                 | string\|number                               | -                           |                                    |
+| customSearch     |                                                                 | func                                         | -                           |                                    |
+| customSort       |                                                                 | func                                         | -                           |                                    |
+| field            |                                                                 | string                                       | -                           |                                    |
+| headerSelectable |                                                                 | boolean                                      | -                           |                                    |
+| label            |                                                                 | string                                       | -                           |                                    |
+| meta             |                                                                 | string\|number\|boolean\|func\|object\|array | -                           |                                    |
+| numeric          |                                                                 | boolean                                      | -                           |                                    |
+| position         | Optional, position of column content                            | string                                       | `left`, `centered`, `right` |                                    |
+| searchable       |                                                                 | boolean                                      | -                           |                                    |
+| sortable         |                                                                 | boolean                                      | -                           |                                    |
+| sticky           |                                                                 | boolean                                      | -                           |                                    |
+| subheading       |                                                                 | string                                       | -                           |                                    |
+| tdAttrs          | Adds native attributes to td :td-attrs="(row, column)" => ({})" | func                                         | -                           | Default function (see source code) |
+| thAttrs          | Adds native attributes to th :th-attrs="(column)" => ({})"      | func                                         | -                           | Default function (see source code) |
+| visible          |                                                                 | boolean                                      | -                           | true                               |
+| width            |                                                                 | number\|string                               | -                           |                                    |
+
+</div>
+
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__table.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
 
 | CSS Variable                                  | SASS Variable                           | Default                                                  |
 | --------------------------------------------- | --------------------------------------- | -------------------------------------------------------- |

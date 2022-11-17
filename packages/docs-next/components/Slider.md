@@ -65,9 +65,28 @@ title: Slider
 
 ---
 
+# Slider Tick
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name | Description          | Type    | Values | Default |
+| --------- | -------------------- | ------- | ------ | ------- |
+| override  |                      | boolean | -      |         |
+| value     | Value of single tick | number  | -      | 0       |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__slider.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
 
 | CSS Variable                         | SASS Variable                  | Default                      |
 | ------------------------------------ | ------------------------------ | ---------------------------- |

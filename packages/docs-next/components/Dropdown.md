@@ -65,9 +65,39 @@ title: Dropdown
 
 ---
 
+# Dropdown Item
+
+<div class="vp-doc">
+
+## Props
+
+| Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                |
+| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                     |
+| clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                   |
+| disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                        |
+| override  |                                                       | boolean                                | -      |                                                                                                                                        |
+| tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                      |
+| tag       | Dropdown item tag name                                | string                                 | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      |                                                                                                                                        |
+
+### Events
+
+| Event name | Properties | Description |
+| ---------- | ---------- | ----------- |
+| click      |            |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
 ## Style
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/__dropdown.scss.scss)
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
 
 | CSS Variable                                  | SASS Variable                           | Default                                                              |
 | --------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------- |
