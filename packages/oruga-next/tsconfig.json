@@ -15,7 +15,7 @@
     "strictNullChecks": false,
     "importsNotUsedAsValues": "error",
     "baseUrl": ".",
-    "types": [],
+    "types": ["cypress", "node"],
     "paths": {
       "@/*": [
         "src/*"
