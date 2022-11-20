@@ -1,3 +1,4 @@
+
 /* @docs */
 $tooltip-arrow-margin: 2px !default;
 $tooltip-arrow-size: 5px !default;
@@ -18,40 +19,40 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
 @mixin tooltip-arrow($direction, $name, $color) {
     @if ($direction == "top") {
         border-top-style: solid;
-        @include avariable("border-top-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         border-right-style: solid;
         border-right-color: transparent;
         border-left-style: solid;
         border-left-color: transparent;
-        @include avariable("border-right-width", "tooltip-arrow-size", $tooltip-arrow-size);
-        @include avariable("border-left-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include avariable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "bottom") {
         border-bottom-style: solid;
-        @include avariable("border-bottom-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         border-right-style: solid;
         border-right-color: transparent;
         border-left-style: solid;
         border-left-color: transparent;
-        @include avariable("border-right-width", "tooltip-arrow-size", $tooltip-arrow-size);
-        @include avariable("border-left-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include avariable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "right") {
         border-right-style: solid;
-        @include avariable("border-right-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-right-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         border-top-style: solid;
         border-top-color: transparent;
         border-bottom-style: solid;
         border-bottom-color: transparent;
-        @include avariable("border-top-width", "tooltip-arrow-size", $tooltip-arrow-size);
-        @include avariable("border-bottom-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include avariable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     } @else if ($direction == "left") {
         border-left-style: solid;
-        @include avariable("border-left-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-left-width', 'tooltip-arrow-size', $tooltip-arrow-size);
         border-top-style: solid;
         border-top-color: transparent;
         border-bottom-style: solid;
         border-bottom-color: transparent;
-        @include avariable("border-top-width", "tooltip-arrow-size", $tooltip-arrow-size);
-        @include avariable("border-bottom-width", "tooltip-arrow-size", $tooltip-arrow-size);
+        @include avariable('border-top-width', 'tooltip-arrow-size', $tooltip-arrow-size);
+        @include avariable('border-bottom-width', 'tooltip-arrow-size', $tooltip-arrow-size);
     }
 }
 
@@ -101,10 +102,9 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 top: auto;
                 right: auto;
                 @include evariable(
-                    "bottom",
-                    $TBLR_CALC_EXPRESSION,
-                    eparam("$size", variable("tooltip-arrow-size", $tooltip-arrow-size)),
-                    eparam("$margin", variable("tooltip-arrow-margin", $tooltip-arrow-margin))
+                    'bottom', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 left: 50%;
                 transform: translateX(-50%);
@@ -112,10 +112,9 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         } @else if ($direction == "bottom") {
             &--bottom {
                 @include evariable(
-                    "top",
-                    $TBLR_CALC_EXPRESSION,
-                    eparam("$size", variable("tooltip-arrow-size", $tooltip-arrow-size)),
-                    eparam("$margin", variable("tooltip-arrow-margin", $tooltip-arrow-margin))
+                    'top', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 right: auto;
                 bottom: auto;
@@ -123,15 +122,14 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
                 transform: translateX(-50%);
             }
         } @else if ($direction == "right") {
-            &--right {
+            &--right{
                 top: 50%;
                 right: auto;
                 bottom: auto;
                 @include evariable(
-                    "left",
-                    $TBLR_CALC_EXPRESSION,
-                    eparam("$size", variable("tooltip-arrow-size", $tooltip-arrow-size)),
-                    eparam("$margin", variable("tooltip-arrow-margin", $tooltip-arrow-margin))
+                    'left', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 transform: translateY(-50%);
             }
@@ -139,10 +137,9 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
             &--left {
                 top: 50%;
                 @include evariable(
-                    "right",
-                    $TBLR_CALC_EXPRESSION,
-                    eparam("$size", variable("tooltip-arrow-size", $tooltip-arrow-size)),
-                    eparam("$margin", variable("tooltip-arrow-margin", $tooltip-arrow-margin))
+                    'right', $TBLR_CALC_EXPRESSION,
+                    eparam('$size', variable('tooltip-arrow-size', $tooltip-arrow-size)),
+                    eparam('$margin', variable('tooltip-arrow-margin', $tooltip-arrow-margin)),
                 );
                 bottom: auto;
                 left: auto;
@@ -164,34 +161,34 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         position: absolute;
         content: "";
         pointer-events: none;
-        @include avariable("z-index", "tooltip-content-zindex", $tooltip-content-zindex);
-        @include avariable("color", "tooltip-background-color", $tooltip-background-color);
+        @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
+        @include avariable('color', 'tooltip-background-color', $tooltip-background-color);
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
             &--#{$name} {
-                @include avariable("color", ("variant-" + #{$name}), $color);
+                @include avariable('color', ('variant-' + #{$name}), $color);
             }
         }
     }
     &__content {
         position: absolute;
         white-space: nowrap;
-        @include avariable("max-width", "tooltip-content-max-width", $tooltip-content-max-width);
-        @include avariable("padding", "tooltip-content-padding", $tooltip-content-padding);
-        @include avariable("border-radius", "tooltip-content-radius-large", $tooltip-content-radius-large);
-        @include avariable("font-size", "tooltip-content-font-size", $tooltip-content-font-size);
-        @include avariable("font-weight", "tooltip-content-weight-normal", $tooltip-content-weight-normal);
-        @include avariable("box-shadow", "tooltip-content-box-shadow", $tooltip-content-box-shadow);
-        @include avariable("z-index", "tooltip-content-zindex", $tooltip-content-zindex);
-        @include avariable("background-color", "tooltip-background-color", $tooltip-background-color);
-        @include avariable("color", "tooltip-color", $tooltip-color);
+        @include avariable('max-width', 'tooltip-content-max-width', $tooltip-content-max-width);
+        @include avariable('padding', 'tooltip-content-padding', $tooltip-content-padding);
+        @include avariable('border-radius', 'tooltip-content-radius-large', $tooltip-content-radius-large);
+        @include avariable('font-size', 'tooltip-content-font-size', $tooltip-content-font-size);
+        @include avariable('font-weight', 'tooltip-content-weight-normal', $tooltip-content-weight-normal);
+        @include avariable('box-shadow', 'tooltip-content-box-shadow', $tooltip-content-box-shadow);
+        @include avariable('z-index', 'tooltip-content-zindex', $tooltip-content-zindex);
+        @include avariable('background-color', 'tooltip-background-color', $tooltip-background-color);
+        @include avariable('color', 'tooltip-color', $tooltip-color);
         @each $name, $pair in $colors {
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
             &--#{$name} {
-                @include avariable("background", ("variant-" + #{$name}), $color);
-                @include avariable("color", ("variant-invert-" + #{$name}), $color-invert);
+                @include avariable('background', ('variant-' + #{$name}), $color);
+                @include avariable('color', ('variant-invert-' + #{$name}), $color-invert);
             }
         }
         &--always {
@@ -201,7 +198,7 @@ $TBLR_CALC_EXPRESSION: "calc(($size + $margin) + 100%)";
         &--multiline {
             text-align: center;
             white-space: normal;
-            @include avariable("width", "tooltip-content-multiline-width", $tooltip-content-multiline-width);
+            @include avariable('width', 'tooltip-content-multiline-width', $tooltip-content-multiline-width);
         }
     }
     &__trigger {
