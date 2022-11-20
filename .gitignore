@@ -16,4 +16,4 @@ packages/docs-next/.vitepress/dist/
 
 *.json.lerna_backup
 .idea
-
+.vscode
