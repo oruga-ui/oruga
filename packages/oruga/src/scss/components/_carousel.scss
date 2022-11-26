@@ -83,7 +83,6 @@ $carousel-overlay-zindex: 40 !default;
         }
         &__item {
             display: block;
-            outline: none;
             @include avariable('border', 'carousel-indicator-border', $carousel-indicator-border);
             @include avariable('background', 'carousel-indicator-background', $carousel-indicator-background);
             @include avariable('transition', 'carousel-indicator-transition', $carousel-indicator-transition);
@@ -109,7 +108,6 @@ $carousel-overlay-zindex: 40 !default;
 
     &__arrow__icon {
         cursor: pointer;
-        outline: 0;
         @include avariable('background', 'carousel-arrow-background', $carousel-arrow-background);
         @include avariable('color', 'carousel-arrow-color', $carousel-arrow-color);
         @include avariable('width', 'carousel-arrow-size', $carousel-arrow-size);

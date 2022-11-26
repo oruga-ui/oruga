@@ -82,7 +82,6 @@ $dropdown-mobile-zindex: 50 !default;
     &__item {
         display: block;
         position: relative;
-        outline: none;
         cursor: pointer;
         @include avariable('color', 'dropdown-item-color', $dropdown-item-color);
         @include avariable('font-size', 'dropdown-item-font-size', $dropdown-item-font-size);

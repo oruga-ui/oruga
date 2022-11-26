@@ -32,7 +32,6 @@ $tabs-toggle-link-active-color: $primary-invert !default;
 @mixin item {
     -moz-appearance: none;
     -webkit-appearance: none;
-    outline: none;
     width: 100%;
     margin: 0;
     padding: 0;
