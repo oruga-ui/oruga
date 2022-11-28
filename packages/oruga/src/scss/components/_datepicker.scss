@@ -58,7 +58,6 @@ $datepicker-btn-padding: .5em .5em !default;
     &__box {
         display: block;
         position: relative;
-        outline: none;
         @include avariable('line-height', 'datepicker-box-line-height', $datepicker-box-line-height);
         @include avariable('padding', 'datepicker-box-padding', $datepicker-box-padding);
     }

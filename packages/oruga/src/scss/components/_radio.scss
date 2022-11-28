@@ -27,7 +27,6 @@ $HALF_MARGIN_EXPRESSION: "calc($margin * 0.5)";
 }
 
 .o-radio {
-    outline: none;
     display: inline-flex;
     align-items: center;
     cursor: pointer;
@@ -41,7 +40,6 @@ $HALF_MARGIN_EXPRESSION: "calc($margin * 0.5)";
         @include avariable('height', 'radio-size', $radio-size);
         margin: 0;
         vertical-align: top;
-        outline: none;
         background-position: center;
         background-size: contain;
         -webkit-appearance: none;

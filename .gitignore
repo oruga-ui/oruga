@@ -17,3 +17,4 @@ packages/docs-next/.vitepress/dist/
 packages/demo-vue3/*
 packages/oruga-next/README.md
 .nyc_output
+.vscode

@@ -77,7 +77,8 @@ export default (parentCmp: string) => defineComponent({
             h('div',
                 {
                     class: this.elementClasses,
-                    'data-id': `${parentCmp}-${this.newValue}`
+                    'data-id': `${parentCmp}-${this.newValue}`,
+                    'tabindex': this.isActive ? 0 : -1
                 },
                 content
             ),

@@ -54,7 +54,6 @@ $modal-zindex: 40 !default;
         position: fixed;
         border: none;
         display: inline-block;
-        outline: none;
         vertical-align: top;
         @include avariable('border-radius', 'modal-close-border-radius', $modal-close-border-radius);
         @include avariable('right', 'modal-close-right', $modal-close-right);

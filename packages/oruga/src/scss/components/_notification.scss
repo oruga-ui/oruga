@@ -57,7 +57,6 @@ $notification-notices-zindex: 1000 !default;
         align-items: center;
         flex-grow: 0;
         flex-shrink: 0;
-        outline: none;
         vertical-align: top;
         @include avariable('background-color', 'notification-close-background-color', $notification-close-background-color);
         @include avariable('border-radius', 'notification-close-border-radius', $notification-close-border-radius);

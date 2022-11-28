@@ -75,7 +75,11 @@ export default (parentCmp) => ({
             'div',
             {
                 directives: [{ name: 'show', value: this.isActive && this.visible }],
-                attrs: { 'class': this.elementClasses, 'id': `${parentCmp}-${this.newValue}` }
+                attrs: {
+                    'class': this.elementClasses,
+                    'id': `${parentCmp}-${this.newValue}`,
+                    'tabindex': this.isActive ? 0 : -1
+                }
             },
             this.$slots.default
         )
