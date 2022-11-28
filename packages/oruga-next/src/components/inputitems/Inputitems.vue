@@ -157,7 +157,7 @@ export default defineComponent({
             default: 'value'
         },
         /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
-        autocomplete: Boolean,
+        autocomplete: String,
         /**  Property of the object (if data is array of objects) to use as display text of group */
         groupField: String,
         /**  Property of the object (if data is array of objects) to use as key to get items array of each group, optional */
