@@ -127,6 +127,11 @@ export default {
 			this.$emit("focus", event);
 		},
 
+		onInvalid(event) {
+			this.checkHtml5Validity();
+			this.$emit("invalid", event);
+		},
+
 		getElement() {
 			let el = this.$refs[this.$elementRef];
 			while (el && el.$elementRef) {
@@ -167,7 +172,7 @@ export default {
 			const el = this.getElement();
 			if (el === undefined) return;
 
-			if (!el.checkValidity()) {
+			if (!el.validity.valid) {
 				this.setInvalid();
 				this.isValid = false;
 			} else {

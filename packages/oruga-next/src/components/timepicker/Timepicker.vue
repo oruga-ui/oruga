@@ -132,7 +132,8 @@
             :use-html5-validation="useHtml5Validation"
             @change="onChange($event.target.value)"
             @focus="handleOnFocus"
-            @blur="onBlur() && checkHtml5Validity()"/>
+            @blur="onBlur"
+            @invalid="onInvalid" />
     </div>
 </template>
 
@@ -194,6 +195,7 @@ export default defineComponent({
             }
         }
     },
+    emits: ['focus', 'blur', 'invalid'],
     computed: {
         inputBind() {
             return {

@@ -129,6 +129,11 @@ export default defineComponent({
 			this.$emit("focus", event);
 		},
 
+		onInvalid(event: Event) {
+			this.checkHtml5Validity();
+			this.$emit("invalid", event);
+		},
+
 		getElement() {
 			let el = this.$refs[this.$elementRef];
 			while (el && el.$elementRef) {
@@ -169,7 +174,7 @@ export default defineComponent({
 			const el = this.getElement();
 			if (!el) return;
 
-			if (!el.checkValidity()) {
+			if (!el.validity.valid) {
 				this.setInvalid();
 				this.isValid = false;
 			} else {

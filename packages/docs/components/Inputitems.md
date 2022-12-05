@@ -453,6 +453,7 @@ export default {
 | blur             |            |
 | focus            |            |
 | input            |            |
+| invalid          |            |
 | add              |            |
 | typing           |            |
 | remove           |            |

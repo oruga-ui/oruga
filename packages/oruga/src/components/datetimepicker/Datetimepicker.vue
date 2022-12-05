@@ -73,7 +73,8 @@
         :use-html5-validation="useHtml5Validation"
         @change.native="onChangeNativePicker"
         @focus="onFocus"
-        @blur="onBlur"/>
+        @blur="onBlur"
+        @invalid="onInvalid" />
 </template>
 
 <script>

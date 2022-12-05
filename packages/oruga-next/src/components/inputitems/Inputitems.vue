@@ -48,6 +48,7 @@
                 @typing="onTyping"
                 @focus="onFocus"
                 @blur="customOnBlur"
+                @invalid="onInvalid"
                 @keydown="keydown"
                 @compositionstart="isComposing = true"
                 @compositionend="isComposing = false"
@@ -117,7 +118,7 @@ export default defineComponent({
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     configField: 'inputitems',
-    emits: ['update:modelValue', 'focus', 'blur', 'add', 'remove', 'typing', 'infinite-scroll', 'icon-right-click'],
+    emits: ['update:modelValue', 'focus', 'blur', 'invalid', 'add', 'remove', 'typing', 'infinite-scroll', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: {

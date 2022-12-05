@@ -236,7 +236,8 @@
             :use-html5-validation="false"
             @change.native="onChangeNativePicker"
             @focus="onFocus"
-            @blur="onBlur"/>
+            @blur="onBlur"
+            @invalid="onInvalid" />
     </div>
 </template>
 
