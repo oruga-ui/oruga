@@ -5,6 +5,7 @@
             v-model="computedValue"
             :class="selectClasses"
             ref="select"
+            :autocomplete="autocomplete"
             :multiple="multiple"
             :size="nativeSize"
             @blur="onBlur"
