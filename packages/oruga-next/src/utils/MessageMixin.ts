@@ -1,6 +1,8 @@
 import Icon from '../components/icon/Icon.vue'
+import { defineComponent } from 'vue';
 
-export default {
+
+export default defineComponent({
     components: {
         [Icon.name]: Icon
     },
@@ -86,9 +88,9 @@ export default {
         /**
          * Close the Message and emit events.
          */
-        close() {
+        close(...args) {
             this.isActive = false
-            this.$emit('close', ...arguments)
+            this.$emit('close', ...args)
             this.$emit('update:active', false)
         },
         /**
@@ -107,4 +109,4 @@ export default {
     mounted() {
         this.setAutoClose()
     }
-}
+})

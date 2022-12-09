@@ -2,7 +2,7 @@
   <section>
     <o-collapse class="card" animation="slide" v-for="(collapse, index) of collapses" :key="index" :open="isOpen == index" @open="isOpen = index">
       <template #trigger="props">
-        <div class="card-header" role="button" :aria-controls="'contentIdForA11y5-' + index" :aria-expanded="isOpen">
+        <div class="card-header" role="button" :aria-controls="'contentIdForA11y5-' + index" :aria-expanded="isOpen == index">
           <p class="card-header-title">
             {{ collapse.title }}
           </p>
