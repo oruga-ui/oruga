@@ -1,7 +1,7 @@
 <template>
   <span>
     <div ref="carboncc" class="carbon-container" v-show="show"></div>
-    <i>Please disable AdBlock on this site 🙏</i>
+    <span class="ad-block-msg">If you want to support Oruga, please disable ad blockers on this site, if any 🙏</span>
   </span>
 </template>
 <script lang="ts">
@@ -23,9 +23,9 @@ export default defineComponent({
         }
     },
     mounted: function () {
-      // if ((new URL(location.href)).hostname !== "oruga.io") {
-      //   return;
-      // }
+      if ((new URL(location.href)).hostname !== "oruga.io") {
+        return;
+      }
       let newScript = document.createElement('script');
       newScript.src = '//cdn.carbonads.com/carbon.js?serve=CESI42JW&placement=orugaio';
       newScript.id = '_carbonads_js'
@@ -70,6 +70,9 @@ a {
   color: #999;
   display: block;
   margin-top: 0.5em;
+}
+.ad-block-msg {
+    font-size: 12px;
 }
 @media (max-width: 480px) {
   .carbon-ads .carbon-img img {
