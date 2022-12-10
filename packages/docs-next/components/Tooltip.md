@@ -8,6 +8,7 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
+<Carbon />
 </div>
 <example-tooltip />
 

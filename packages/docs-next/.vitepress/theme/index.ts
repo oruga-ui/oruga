@@ -10,6 +10,7 @@ import HFRepos from './components/HFRepos.vue'
 import Inspector from './components/Inspector.vue'
 import ExampleViewer from './components/ExampleViewer.vue'
 import Expo from './components/Expo.vue'
+import Carbon from './components/Carbon.vue'
 
 import Oruga, { useProgrammatic } from '../../../oruga-next/dist/oruga'
 
@@ -33,6 +34,7 @@ export default {
     app.component('Inspector', Inspector)
     app.component('ExampleViewer', ExampleViewer)
     app.component('Expo', Expo)
+    app.component('Carbon', Carbon)
 
     // @ts-ignore
     const examples = import.meta.globEager('./examples/**/index.vue')

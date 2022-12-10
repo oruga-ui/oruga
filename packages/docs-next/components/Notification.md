@@ -8,6 +8,7 @@ title: Notification
 
 > Bold notification blocks to alert your users of something
 
+<Carbon />
 </div>
 <example-notification />
 
