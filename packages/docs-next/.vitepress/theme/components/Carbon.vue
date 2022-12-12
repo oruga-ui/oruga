@@ -23,9 +23,9 @@ export default defineComponent({
         }
     },
     mounted: function () {
-    //   if ((new URL(location.href)).hostname !== "oruga.io") {
-    //     return;
-    //   }
+      if ((new URL(location.href)).hostname !== "oruga.io") {
+        return;
+      }
       let newScript = document.createElement('script');
       newScript.src = '//cdn.carbonads.com/carbon.js?serve=CESI42JW&placement=orugaio';
       newScript.id = '_carbonads_js'
