@@ -73,10 +73,11 @@ export default defineConfig({
           { text: 'Home', link: '/' },
           { text: 'Documentation', link: '/documentation/' },
           { text: 'Expo', link: '/expo/' },
-          /*{ text: 'Donate ☕️', items: [
-                { text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
+          { text: 'Support', items: [
+              { text:'Liberapay', link: 'https://liberapay.com/oruga-ui' },
+              { text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
             ]
-          },*/
+          },
         // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
         {
           text: `v${version}`,
