@@ -2,7 +2,7 @@
     <div :class="tableRowClasses">
         <a
             :class="tableCellClasses"
-            :style="{'cursor: pointer': weekNumberClickable }"
+            :style="{'cursor': weekNumberClickable ? 'pointer' : 'auto' }"
             v-if="showWeekNumber"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
