@@ -68,7 +68,7 @@
                             :key="column.newKey + ':' + index + 'header'"
                             v-bind="column.thAttrsData"
                             :class="thClasses(column)"
-                            :style="column.style"
+                            :style="isMobile ? {} : column.style"
                             @click.stop="sort(column, null, $event)"
                             :draggable="canDragColumn"
                             @dragstart="handleColumnDragStart($event, column, index)"
@@ -80,7 +80,6 @@
                             <template v-if="column.hasHeaderSlot">
                                 <o-slot-component
                                     :component="column"
-                                    scoped
                                     name="header"
                                     tag="span"
                                     :props="{ column, index }"
@@ -120,12 +119,11 @@
                             :key="column.newKey + ':' + index + 'searchable'"
                             v-bind="column.thAttrsData"
                             :class="thClasses(column)"
-                            :style="column.style">
+                            :style="isMobile ? {} : column.style">
                             <template v-if="column.searchable">
                                 <template v-if="column.hasSearchableSlot">
                                     <o-slot-component
                                         :component="column"
-                                        scoped
                                         name="searchable"
                                         tag="span"
                                         :props="{ column, filters }"
@@ -146,7 +144,7 @@
                         <th
                             v-for="(column, index) in visibleColumns"
                             :key="column.newKey + ':' + index + 'subheading'"
-                            :style="column.style"
+                            :style="isMobile ? {} : column.style"
                             :class="thSubheadingClasses"
                         >
                             <template
@@ -156,7 +154,6 @@
                                 ">
                                 <o-slot-component
                                     :component="column"
-                                    scoped
                                     name="subheading"
                                     tag="span"
                                     :props="{ column, index }"
@@ -217,11 +214,10 @@
                                 :key="column.newKey + index + ':' + colindex"
                                 v-bind="column.tdAttrsData[index]"
                                 :component="column"
-                                scoped
                                 name="default"
                                 tag="td"
                                 :class="tdClasses(row, column)"
-                                :style="column.style"
+                                :style="isMobile ? {} : column.style"
                                 :data-label="column.label"
                                 :props="{ row, column, index, colindex, toggleDetails }"
                                 @click="$emit('cell-click', row, column, index, colindex, $event)"
