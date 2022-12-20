@@ -7,8 +7,8 @@
     </o-carousel-item>
     <template #indicators="{ active, switchTo }">
       <o-carousel
-        :value="active"
-        @input="switchTo($event)"
+        :model-value="active"
+        @update:model-value="switchTo($event)"
         v-bind="settings"
         as-indicator
       >
@@ -28,7 +28,7 @@
         icon="times"
         root-class="ex-close-icon"
         clickable
-        @click.native="switchGallery(false)"
+        @click="switchGallery(false)"
       />
       <div style="color: #ffffff; text-align: center">
         Hello, I'm an overlay!
