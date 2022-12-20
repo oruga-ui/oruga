@@ -8,6 +8,7 @@ title: Autocomplete
 
 > Extended input that provide suggestions while the user types
 
+<Carbon />
 </div>
 <example-autocomplete />
 

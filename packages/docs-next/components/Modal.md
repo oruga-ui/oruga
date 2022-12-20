@@ -8,6 +8,7 @@ title: Modal
 
 > Classic modal overlay to include any content you may need
 
+<Carbon />
 </div>
 <example-modal />
 

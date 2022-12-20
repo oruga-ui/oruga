@@ -8,6 +8,7 @@ title: Icon
 
 > Icons take an important role of any application
 
+<Carbon />
 </div>
 <example-icon />
 

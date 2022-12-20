@@ -8,6 +8,7 @@ title: Slider
 
 > A slider to select a value or range from a given range
 
+<Carbon />
 </div>
 <example-slider />
 

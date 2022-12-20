@@ -8,6 +8,7 @@ title: Skeleton
 
 > A placeholder for content to load
 
+<Carbon />
 </div>
 <example-skeleton />
 

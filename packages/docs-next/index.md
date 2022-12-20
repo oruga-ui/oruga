@@ -25,3 +25,6 @@ features:
     title: Lightweight
     details: No other internal dependency (except for Vue.js) and import only components that you need
 ---
+<div style="padding: 1rem; display: flex; align-items: center; justify-content: center;">
+  <Carbon />
+</div>

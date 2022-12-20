@@ -8,6 +8,7 @@ title: Loading
 
 > A simple loading overlay
 
+<Carbon />
 </div>
 <example-loading />
 

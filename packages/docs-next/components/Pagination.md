@@ -8,6 +8,7 @@ title: Pagination
 
 > A responsive and flexible pagination
 
+<Carbon />
 </div>
 <example-pagination />
 
@@ -35,7 +36,7 @@ title: Pagination
 | iconPack          | Icon pack to use                                                    | string         | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                     |
 | iconPrev          | Icon to use for previous button                                     | string         | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> pagination: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
 | mobileBreakpoint  | Mobile breakpoint as max-width value                                | string         | -                                                 |                                                                                                                                                     |
-| order             | Buttons order, optional                                             | string         | `centered`, `right`, `left`                       |                                                                                                                                                     |
+| order             | Buttons order, optional                                             | string         | `centered`, `right`, `left`                       | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> pagination: {<br>&nbsp;&nbsp;order: 'right'<br>}</code>            |
 | override          |                                                                     | boolean        | -                                                 |                                                                                                                                                     |
 | perPage           | Items count for each page                                           | number\|string | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> pagination: {<br>&nbsp;&nbsp;perPage: 20<br>}</code>               |
 | rangeAfter        | Number of pagination items to show after current page               | number\|string | -                                                 | 1                                                                                                                                                   |
