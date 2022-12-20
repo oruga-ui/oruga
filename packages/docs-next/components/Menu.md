@@ -8,6 +8,7 @@ title: Menu
 
 > A simple menu
 
+<Carbon />
 </div>
 <example-menu />
 

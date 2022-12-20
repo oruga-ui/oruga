@@ -8,6 +8,7 @@ title: Radio
 
 > Select an option from a set
 
+<Carbon />
 </div>
 <example-radio />
 

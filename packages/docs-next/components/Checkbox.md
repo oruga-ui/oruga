@@ -8,6 +8,7 @@ title: Checkbox
 
 > Select a single or grouped options
 
+<Carbon />
 </div>
 <example-checkbox />
 

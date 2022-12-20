@@ -8,6 +8,7 @@ title: Timepicker
 
 > An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
 
+<Carbon />
 </div>
 <example-timepicker />
 
