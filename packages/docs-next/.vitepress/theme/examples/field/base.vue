@@ -1,11 +1,11 @@
 <template>
   <section>
     <o-field label="Name">
-      <o-input value="Kevin Garvey"></o-input>
+      <o-input model-value="Kevin Garvey"></o-input>
     </o-field>
 
     <o-field label="Email" variant="danger" message="This email is invalid">
-      <o-input type="email" value="john@" maxlength="30"> </o-input>
+      <o-input type="email" model-value="john@" maxlength="30"> </o-input>
     </o-field>
 
     <o-field
@@ -13,11 +13,11 @@
       variant="success"
       message="This username is available"
     >
-      <o-input value="johnsilver" maxlength="30"></o-input>
+      <o-input model-value="johnsilver" maxlength="30"></o-input>
     </o-field>
 
     <o-field label="Password" variant="warning">
-      <o-input value="123" type="password" maxlength="30"></o-input>
+      <o-input model-value="123" type="password" maxlength="30"></o-input>
     </o-field>
 
     <o-field label="Subject">
