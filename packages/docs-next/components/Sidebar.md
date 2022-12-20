@@ -8,6 +8,7 @@ title: Sidebar
 
 > A sidebar to use as left/right overlay or static
 
+<Carbon />
 </div>
 <example-sidebar />
 

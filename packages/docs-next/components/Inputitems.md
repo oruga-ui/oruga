@@ -8,6 +8,7 @@ title: Inputitems
 
 > A simple item input field that can have autocomplete functionality
 
+<Carbon />
 </div>
 <example-inputitems />
 

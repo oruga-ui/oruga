@@ -4,6 +4,7 @@
             :class="selectClasses"
             v-model="computedValue"
             ref="select"
+            :autocomplete="autocomplete"
             :multiple="multiple"
             :size="nativeSize"
             v-bind="$attrs"

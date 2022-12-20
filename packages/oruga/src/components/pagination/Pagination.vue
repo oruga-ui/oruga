@@ -179,7 +179,10 @@ export default {
          * Buttons order, optional
          * @values centered, right, left
          */
-        order: String,
+        order: {
+            type: String,
+            default: () => { return getValueByPath(getOptions(), 'pagination.order', 'right') }
+        },
         /**
          * Icon pack to use
          * @values mdi, fa, fas and any other custom icon pack

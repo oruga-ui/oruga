@@ -60,6 +60,7 @@ ${since ? `Since: ${since[0].description}\n` : ''}
 ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
+<Carbon />
 </div>
 ${'<example-' + component.toLowerCase() + ' />'}
 ${tmplClassProps(config, component.toLowerCase())}
