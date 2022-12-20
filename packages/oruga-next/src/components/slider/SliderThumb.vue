@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="$slider.thumbWrapperClasses"
+        :class="getSlider.thumbWrapperClasses"
         :style="wrapperStyle">
         <o-tooltip
             :label="formattedValue"
@@ -9,8 +9,8 @@
             :active="!disabled && tooltip">
             <div
                 v-bind="$attrs"
-                :class="$slider.thumbClasses"
-                :tabindex="disabled ? false : 0"
+                :class="getSlider.thumbClasses"
+                :tabindex="disabled ? null : 0"
                 @mousedown="onButtonDown"
                 @touchstart="onButtonDown"
                 @focus="onFocus"
@@ -94,6 +94,9 @@ export default defineComponent({
         }
     },
     computed: {
+        getSlider() {
+            return this.$slider
+        },
         disabled() {
             return this.$parent.disabled
         },

@@ -1,5 +1,5 @@
 <template>
-    <div :class="$table.mobileSortClasses">
+    <div :class="getTable.mobileSortClasses">
         <o-field>
             <o-select
                 v-model="mobileSort"
@@ -82,6 +82,9 @@ export default defineComponent({
         }
     },
     computed: {
+        getTable() {
+            return this.$table
+        },
         showPlaceholder() {
             return !this.columns || !this.columns.some((column) =>
                 (getValueByPath(column, 'newKey') === this.mobileSort)

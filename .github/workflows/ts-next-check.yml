@@ -15,5 +15,5 @@ jobs:
           node-version: 16.x
       - name: Install dependencies 📦
         run: npm install && npm run bootstrap
-      - name: Check TS 🧐 (Disable failing for now ⚠️)
-        run: npm run test:ts:oruga-next || echo "check disabled"
+      - name: Check TS 🧐
+        run: npm run test:ts:oruga-next

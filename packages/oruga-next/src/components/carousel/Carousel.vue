@@ -43,7 +43,7 @@
             :switchTo="switchTo"
             :indicatorIndex="indicatorIndex"
             name="indicators">
-            <template v-if="childItems.length">
+            <template v-if="getChildItems().length">
                 <div
                     v-if="indicator && !asIndicator"
                     :class="indicatorsClasses">
@@ -338,6 +338,9 @@ export default defineComponent({
                 { [this.computedClass('indicatorItemActiveClass', 'o-car__indicator__item--active')]: this.indicatorIndex === index },
                 { [this.computedClass('indicatorItemStyleClass', 'o-car__indicator__item--', this.indicatorStyle)]: this.indicatorStyle },
             ]
+        },
+        getChildItems() {
+            return this.childItems
         },
         onMouseEnter() {
             this.itemsHovered = true

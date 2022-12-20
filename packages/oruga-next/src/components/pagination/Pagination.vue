@@ -147,25 +147,25 @@ export default defineComponent({
     emits: ['update:active', 'change', 'update:current'],
     props: {
         /** Total count of items */
-        total: [Number, String],
+        total: Number,
         /** Items count for each page */
         perPage: {
-            type: [Number, String],
+            type: Number,
             default: () => { return getValueByPath(getOptions(), 'pagination.perPage', 20) }
         },
         /** Current page number, use v-model:current to make it two-way binding */
         current: {
-            type: [Number, String],
+            type: Number,
             default: 1
         },
         /** Number of pagination items to show before current page */
         rangeBefore: {
-            type: [Number, String],
+            type: Number,
             default: 1
         },
         /** Number of pagination items to show after current page */
         rangeAfter: {
-            type: [Number, String],
+            type: Number,
             default: 1
         },
         /**

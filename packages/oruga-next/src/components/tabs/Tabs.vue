@@ -19,7 +19,7 @@
                 :class="itemWrapperClasses"
                 role="tab"
                 :aria-controls="`${childItem.value}-content`"
-                :aria-selected="`${childItem.isActive}`">
+                :aria-selected="childItem.isActive ? 'true' : 'false'">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
