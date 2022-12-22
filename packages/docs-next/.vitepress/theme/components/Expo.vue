@@ -25,10 +25,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.loadingbtn {
+.loadingbtn, .loadingbtn:hover, .loadingbtn:active, .loadingbtn:focus {
   min-width: 9rem;
   border-color: transparent;
   color: #fff;
+  background: var(--vp-c-brand);;
   cursor: pointer;
   justify-content: center;
   padding: calc(.5em - 1px) 1em;
