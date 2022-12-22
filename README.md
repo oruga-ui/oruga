@@ -29,6 +29,13 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
 </p>
 
+### Support us ✌🏻
+
+<p align="center">
+    <a href="https://ko-fi.com/orugaui"><img alt="Donate using Ko-fi"  src="https://img.shields.io/badge/donate-ko--fi-00AA00.svg?logo=ko-fi" /></a>
+    <a href="https://liberapay.com/oruga-ui/donate"><img alt="Donate using Liberapay" src="https://img.shields.io/badge/donate-liberapay-00AA00.svg?logo=liberapay"></a>
+</p>
+
 ## Features
 
 * **CSS framework agnostic**: No dependency on a specific CSS framework/library but you can easily integrate the components with one of them because they are fully customizable in different ways
