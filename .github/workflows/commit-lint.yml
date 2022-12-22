@@ -1,0 +1,16 @@
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+name: Lint commits
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2.1.0
+      - run: npm install @commitlint/cli
+      - run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
