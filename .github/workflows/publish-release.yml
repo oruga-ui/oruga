@@ -1,0 +1,42 @@
+name: Generate new release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Always release the tip of the default branch
+          ref: develop
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: npm install
+      - run: npm run bootstrap
+      - run: npm run publish:lib:oruga
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run publish:lib:oruga-next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm i extract-changelog-release
+      - name: Generate Release Body
+        run: npx extract-changelog-release > RELEASE_BODY.md
+      - uses: ncipollo/release-action@v1
+        with:
+          bodyFile: 'RELEASE_BODY.md'
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish documentation
+        run: |
+          git push origin develop:master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
