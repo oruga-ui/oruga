@@ -52,8 +52,8 @@ npm install @oruga-ui/oruga --save
 <o-tab-item override label="Cdn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
 ```html
-<link rel="stylesheet" href="//unpkg.com/oruga/dist/oruga.min.css" />
-<script src="//unpkg.com/oruga/dist/oruga.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.css" />
+<script src="https://unpkg.com/@oruga-ui/oruga/dist/oruga.min.js"></script>
 ```
 
 </o-tab-item>
