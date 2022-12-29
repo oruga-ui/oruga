@@ -36,6 +36,7 @@ module.exports = {
   getDestFile: (file, config) => {
     const component = getComponent(file);
     if (!component || IGNORE.indexOf(component) >= 0) return;
+    if (file.includes('/tests/')) return;
     return path.join(config.outDir, `${component}.md`);
   },
   templates: {
