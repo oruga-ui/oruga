@@ -175,7 +175,7 @@ export default {
 						// which should mean that the message will be visible onscreen.
 						// scrollIntoViewIfNeeded() is a non-standard method (but a very common extension).
 						// If we can't use it, we'll just fall back to focusing the field.
-						const canScrollToField = fieldElement?.scrollIntoViewIfNeeded != undefined;
+						const canScrollToField = fieldElement ? fieldElement.scrollIntoViewIfNeeded != undefined : false;
 						validatable.focus({ preventScroll: canScrollToField });
 						if (canScrollToField) {
 							fieldElement.scrollIntoViewIfNeeded();
