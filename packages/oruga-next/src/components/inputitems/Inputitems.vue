@@ -35,7 +35,7 @@
                 :has-counter="false"
                 :size="size"
                 :disabled="disabled"
-                :autocomplete="nativeAutocomplete"
+                :autocomplete="autocomplete"
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
                 :keep-open="openOnFocus"
@@ -157,12 +157,11 @@ export default defineComponent({
             default: 'value'
         },
         /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
-        autocomplete: String,
+        allowAutocomplete: Boolean,
         /**  Property of the object (if data is array of objects) to use as display text of group */
         groupField: String,
         /**  Property of the object (if data is array of objects) to use as key to get items array of each group, optional */
         groupOptions: String,
-        nativeAutocomplete: String,
         /**  Opens a dropdown with choices when the input field is focused */
         openOnFocus: Boolean,
         /** Input will be disabled */
@@ -363,7 +362,7 @@ export default defineComponent({
             const itemToAdd = item || this.newItem.trim()
 
             if (itemToAdd) {
-                if (!this.autocomplete) {
+                if (!this.allowAutocomplete) {
                     const reg = this.separatorsAsRegExp
                     if (reg && itemToAdd.match(reg)) {
                         itemToAdd.split(reg)
@@ -399,7 +398,7 @@ export default defineComponent({
 
         customOnBlur(event) {
             // Add item on-blur if not select only
-            if (!this.autocomplete) this.addItem()
+            if (!this.allowAutocomplete) this.addItem()
 
             this.onBlur(event)
         },
@@ -436,7 +435,7 @@ export default defineComponent({
                 this.removeLastItem()
             }
             // Stop if is to accept select only
-            if (this.autocomplete && !this.allowNew) return
+            if (this.allowAutocomplete && !this.allowNew) return
 
             if (this.confirmKeys.indexOf(key) >= 0) {
                 // Allow Tab to advance to next field regardless
