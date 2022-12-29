@@ -865,9 +865,10 @@ export default defineComponent({
         */
         data: {
             handler(value) {
-                this.newData = value
                 if (!this.backendFiltering) {
                     this.newData = value.filter((row) => this.isRowFiltered(row))
+                } else {
+                    this.newData = [...value]
                 }
                 if (!this.backendSorting) {
                     this.sort(this.currentSortColumn, true)
@@ -876,7 +877,7 @@ export default defineComponent({
                     this.newDataTotal = this.newData.length
                 }
             },
-            deep: true,
+            deep: true
         },
 
         visibleColumns: {
