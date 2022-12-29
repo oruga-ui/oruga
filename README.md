@@ -19,7 +19,6 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build.yml/badge.svg" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/badge.svg?flag=oruga" /></a>
-    <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
 *Oruga Next version for Vue 3.x*
@@ -29,6 +28,12 @@
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build-next.yml/badge.svg" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/badge.svg?flag=oruga-next" /></a>
+</p>
+
+### Contact us 👾
+
+<p align="center">
+    <a href="https://discord.gg/RuKuBYN"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?logo=discord" /></a>
 </p>
 
 ### Support us ✌🏻
@@ -60,9 +65,9 @@ Note: the documentation source code is in the `docs` directory, it serves as the
 
 🌎 Oruga has been tested in all major browsers
 
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Internet Explorer](https://raw.githubusercontent.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png)
---- | --- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ | IE 11  ✔ |
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) |
+--- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ |
 
 ## Quick start
 
