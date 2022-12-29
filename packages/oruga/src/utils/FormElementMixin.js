@@ -3,14 +3,14 @@ import { getValueByPath } from './helpers'
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
-const validatableFormElementTypes = [
-  HTMLButtonElement,
-  HTMLFieldSetElement,
-  HTMLInputElement,
-  HTMLObjectElement,
-  HTMLOutputElement,
-  HTMLSelectElement,
-  HTMLTextAreaElement,
+const validatableFormElementTypes = typeof window === 'undefined' ? [] : [
+    HTMLButtonElement,
+    HTMLFieldSetElement,
+    HTMLInputElement,
+    HTMLObjectElement,
+    HTMLOutputElement,
+    HTMLSelectElement,
+    HTMLTextAreaElement,
 ];
 
 function asValidatableFormElement(el) {
