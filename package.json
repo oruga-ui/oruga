@@ -1,6 +1,10 @@
 {
   "name": "root",
-  "private": true,
+  "version": "0.5.10",
+  "homepage": "https://oruga.io",
+  "description": "UI components for Vue.js and CSS framework agnostic",
+  "author": "Walter Tommasi <tommsi20@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test:oruga": "lerna run test --scope @oruga-ui/oruga",
@@ -23,11 +27,14 @@
     "build:lib:watch:oruga-next": "lerna run build:lib:watch --parallel --scope @oruga-ui/oruga-next",
     "publish:lib:oruga": "lerna run publish:lib --scope @oruga-ui/oruga",
     "publish:lib:oruga-next": "lerna run publish:lib --scope @oruga-ui/oruga-next",
-    "release": "node .scripts/gh_release.js",
-    "test:all": "lerna run test --stream"
+    "test:all": "lerna run test --stream",
+    "version": "node .scripts/config-sync && git add . && conventional-changelog -p angular -i CHANGELOG.md -s && node .scripts/wait-confirm && git add CHANGELOG.md",
+    "postversion": "echo \"You can now publish your tag with 'git push --follow-tags'\""
   },
   "devDependencies": {
+    "conventional-changelog": "^3.1.25",
+    "conventional-changelog-cli": "^2.2.2",
     "lerna": "^3.22.1",
-    "simple-git": "^3.3.0"
+    "replace-in-file": "^6.3.5"
   }
 }
