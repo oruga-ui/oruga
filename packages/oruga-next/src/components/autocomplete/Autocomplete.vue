@@ -19,6 +19,7 @@
             @update:modelValue="onInput"
             @focus="focused"
             @blur="onBlur"
+            @invalid="onInvalid"
             @keydown="keydown"
             @keydown.up.prevent="keyArrows('up')"
             @keydown.down.prevent="keyArrows('down')"
@@ -120,7 +121,7 @@ export default defineComponent({
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'icon-click', 'icon-right-click'],
+    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],

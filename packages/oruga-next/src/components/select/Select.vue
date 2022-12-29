@@ -9,7 +9,8 @@
             :multiple="multiple"
             :size="nativeSize"
             @blur="onBlur"
-            @focus="onFocus">
+            @focus="onFocus"
+            @invalid="onInvalid">
 
             <template v-if="placeholder">
                 <option
@@ -64,7 +65,7 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'select',
     inheritAttrs: false,
-    emits: ['update:modelValue', 'focus', 'blur'],
+    emits: ['update:modelValue', 'focus', 'blur', 'invalid'],
     props: {
         /** @model */
         modelValue: {

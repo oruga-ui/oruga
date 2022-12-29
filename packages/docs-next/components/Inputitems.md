@@ -71,6 +71,7 @@ title: Inputitems
 | icon-right-click  |            |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 | add               |            |
 | remove            |            |

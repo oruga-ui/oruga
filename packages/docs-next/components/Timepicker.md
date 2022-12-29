@@ -69,6 +69,7 @@ title: Timepicker
 | ----------------- | ---------- | ----------- |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 
 ## Slots

@@ -68,6 +68,7 @@ title: Datetimepicker
 | change-year       |            |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 
 ## Slots

@@ -1,6 +1,26 @@
 import { getOptions } from './config';
 import { getValueByPath } from './helpers'
 
+// This should cover all types of HTML elements that have properties related to
+// HTML constraint validation, e.g. .form and .validity.
+const validatableFormElementTypes = typeof window === 'undefined' ? [] : [
+    HTMLButtonElement,
+    HTMLFieldSetElement,
+    HTMLInputElement,
+    HTMLObjectElement,
+    HTMLOutputElement,
+    HTMLSelectElement,
+    HTMLTextAreaElement,
+];
+
+function asValidatableFormElement(el) {
+	if (validatableFormElementTypes.some(t => el instanceof t)) {
+		return el;
+	} else {
+		return null;
+	}
+}
+
 export default {
 	inject: {
         $field: { from: "$field", default: false }
@@ -127,6 +147,45 @@ export default {
 			this.$emit("focus", event);
 		},
 
+		onInvalid(event) {
+			this.checkHtml5Validity();
+			const validatable = asValidatableFormElement(event.target);
+			if (validatable && this.parentField && this.useHtml5Validation) {
+				// We provide our own error message on the field, so we should suppress the browser's default tooltip.
+				// We still want to focus the form's first invalid input, though.
+				event.preventDefault();
+				let isFirstInvalid = false;
+				if (validatable.form != null) {
+					const formElements = validatable.form.elements;
+					for (let i = 0; i < formElements.length; ++i) {
+						const element = asValidatableFormElement(formElements.item(i));
+						if (element && element.willValidate && !element.validity.valid) {
+							isFirstInvalid = (validatable === element);
+							break;
+						}
+					}
+				}
+				if (isFirstInvalid) {
+					const fieldElement = this.parentField.$el;
+					const invalidHandler = getValueByPath(getOptions(), 'reportInvalidInput');
+					if (invalidHandler instanceof Function) {
+						invalidHandler(validatable, fieldElement);
+					} else {
+						// We'll scroll to put the whole field in view, not just the element that triggered the event,
+						// which should mean that the message will be visible onscreen.
+						// scrollIntoViewIfNeeded() is a non-standard method (but a very common extension).
+						// If we can't use it, we'll just fall back to focusing the field.
+						const canScrollToField = fieldElement ? fieldElement.scrollIntoViewIfNeeded != undefined : false;
+						validatable.focus({ preventScroll: canScrollToField });
+						if (canScrollToField) {
+							fieldElement.scrollIntoViewIfNeeded();
+						}
+					}
+				}
+			}
+			this.$emit("invalid", event);
+		},
+
 		getElement() {
 			let el = this.$refs[this.$elementRef];
 			while (el && el.$elementRef) {
@@ -167,7 +226,7 @@ export default {
 			const el = this.getElement();
 			if (el === undefined) return;
 
-			if (!el.checkValidity()) {
+			if (!el.validity.valid) {
 				this.setInvalid();
 				this.isValid = false;
 			} else {

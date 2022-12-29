@@ -49,6 +49,7 @@
                 @typing="onTyping"
                 @focus="onFocus"
                 @blur="customOnBlur"
+                @invalid="onInvalid"
                 @keydown.native="keydown"
                 @compositionstart.native="isComposing = true"
                 @compositionend.native="isComposing = false"

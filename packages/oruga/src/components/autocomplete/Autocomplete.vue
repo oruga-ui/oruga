@@ -19,6 +19,7 @@
             @input="onInput"
             @focus="focused"
             @blur="onBlur"
+            @invalid="onInvalid"
             @keydown.native="keydown"
             @keydown.native.up.prevent="keyArrows('up')"
             @keydown.native.down.prevent="keyArrows('down')"

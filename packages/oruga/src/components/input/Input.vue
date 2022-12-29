@@ -11,7 +11,8 @@
             :value="computedValue"
             @input="computedValue = $event.target.value"
             @blur="onBlur"
-            @focus="onFocus">
+            @focus="onFocus"
+            @invalid="onInvalid" />
 
         <textarea
             v-else
@@ -23,6 +24,7 @@
             @input="computedValue = $event.target.value"
             @blur="onBlur"
             @focus="onFocus"
+            @invalid="onInvalid"
             :style="computedStyles"
             />
 

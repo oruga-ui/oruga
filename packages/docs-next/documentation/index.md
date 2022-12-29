@@ -523,12 +523,13 @@ Take a look at the [official TailwindCSS + Oruga example](https://github.com/oru
 
 ## Global Props
 
-| Field              | Description                                                   | Default |
-| ------------------ | ------------------------------------------------------------- | ------- |
-| statusIcon         | Show status icon using field and variant prop                 | true    |
-| statusVariantIcon  | Default mapping of variant and icon name                      | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code>  |
-| useHtml5Validation | Default form components use-html5-validation attribute        | true    |
-| iconPack           | Icon pack used internally and on the Icon component attribute | 'mdi'   |
+| Field              | Description                                                                                                                                                                                  | Default |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
+| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
+| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
+| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
 
 Take a look at each component docs to know all customizable fields/props by config.
 
