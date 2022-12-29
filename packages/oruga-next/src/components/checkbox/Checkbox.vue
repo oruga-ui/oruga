@@ -75,6 +75,7 @@ export default defineComponent({
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkClass: [String, Function, Array],
+        checkedClass: [String, Function, Array],
         checkCheckedClass: [String, Function, Array],
         checkIndeterminateClass: [String, Function, Array],
         labelClass: [String, Function, Array],
