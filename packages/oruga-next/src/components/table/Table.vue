@@ -45,7 +45,7 @@
             :style="tableWrapperStyle">
             <table
                 :class="tableClasses"
-                :tabindex="!focusable ? false : 0"
+                :tabindex="!focusable ? null : 0"
                 @keydown.self.prevent.up="pressedArrow(-1)"
                 @keydown.self.prevent.down="pressedArrow(1)">
                 <caption v-if="$slots.caption">

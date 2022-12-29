@@ -1,0 +1,19 @@
+name: TS Check (next)
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node 🪢
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install dependencies 📦
+        run: npm install && npm run bootstrap
+      - name: Check TS 🧐
+        run: npm run test:ts:oruga-next

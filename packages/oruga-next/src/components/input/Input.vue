@@ -9,7 +9,7 @@
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
             :value="computedValue"
-            @input="computedValue = $event.target.value"
+            @input="onInput"
             @blur="onBlur"
             @focus="onFocus">
 
@@ -20,7 +20,7 @@
             :class="inputClasses"
             :maxlength="maxlength"
             :value="computedValue"
-            @input="computedValue = $event.target.value"
+            @input="onInput"
             @blur="onBlur"
             @focus="onFocus"
             :style="computedStyles"
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, StyleValue } from 'vue'
 
 import Icon from '../icon/Icon.vue'
 
@@ -255,7 +255,7 @@ export default defineComponent({
         /**
         * Computed inline styles for autoresize
         */
-        computedStyles () {
+        computedStyles () : StyleValue {
             if (!this.autosize) return {}
             return {
                 resize: 'none',
@@ -301,6 +301,10 @@ export default defineComponent({
             this.$nextTick(() => {
                 this.focus()
             })
+        },
+
+        onInput(event) {
+            this.computedValue = event.target.value
         },
 
         iconClick(emit, event) {

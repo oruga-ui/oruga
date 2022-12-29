@@ -1,4 +1,3 @@
-import type { DefineComponent } from 'vue';
 import { defineComponent } from 'vue';
 
 import { hasFlag } from './helpers'
@@ -10,7 +9,7 @@ export const Items = items
 export const Sorted = sorted
 
 export default (itemName: string, flags: number = 0) => {
-    const mixin: DefineComponent = defineComponent({
+    const mixin = defineComponent({
         provide() {
             return {
                 ['o' + itemName]: this

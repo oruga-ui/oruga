@@ -2,7 +2,7 @@
     <div :class="tableRowClasses">
         <a
             :class="tableCellClasses"
-            :style="{'cursor: pointer': weekNumberClickable }"
+            :style="{'cursor': weekNumberClickable ? 'pointer' : 'auto' }"
             v-if="showWeekNumber"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 
@@ -63,7 +63,7 @@ export default defineComponent({
             type: Number
         },
         week: {
-            type: Array,
+            type: Array as PropType<Array<Date>>,
             required: true
         },
         month: {

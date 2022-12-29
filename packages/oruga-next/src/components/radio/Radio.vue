@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         @click.stop="focus"
-        @keydown.prevent.enter="$refs.label.click()">
+        @keydown.prevent.enter="getLabel.click()">
         <input
             v-model="computedValue"
             type="radio"
@@ -46,6 +46,9 @@ export default defineComponent({
         variantClass: [String, Function, Array]
     },
     computed: {
+        getLabel () {
+            return this.$refs.label
+        },
         isChecked() {
             return this.modelValue === this.nativeValue
         },

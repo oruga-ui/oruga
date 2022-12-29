@@ -23,7 +23,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue"
 import Pagination from '../pagination/Pagination.vue'
 
@@ -35,9 +35,9 @@ export default defineComponent({
     emits: ['update:currentPage', 'page-change'],
     props: {
         paginated: Boolean,
-        total: [Number, String],
-        perPage: [Number, String],
-        currentPage: [Number, String],
+        total: Number,
+        perPage: Number,
+        currentPage: Number,
         paginationSimple: Boolean,
         paginationSize: String,
         rounded: Boolean,

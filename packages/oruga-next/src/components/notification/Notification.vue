@@ -50,6 +50,8 @@ import MessageMixin from '../../utils/MessageMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+import { defineComponent } from 'vue';
+
 
 /**
  * Bold notification blocks to alert your users of something
@@ -57,7 +59,7 @@ import { getOptions } from '../../utils/config'
  * @requires ./NotificationNotice.vue
  * @style _notification.scss
  */
-export default {
+export default defineComponent({
     name: 'ONotification',
     configField: 'notification',
     mixins: [BaseComponentMixin, MessageMixin],
@@ -144,5 +146,5 @@ export default {
             ]
         },
     },
-}
+})
 </script>

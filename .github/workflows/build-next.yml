@@ -1,4 +1,4 @@
-name: Build Oruga
+name: Build Oruga (next)
 on:
   push:
     branches: [ develop ]
@@ -10,19 +10,19 @@ jobs:
     strategy:
       max-parallel: 24
       matrix:
-        node-version: [16.x, 17.x]
+        node-version: ['17.9.0']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }} 🪢
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies 📦
         run: npm install && npm run bootstrap
-      - name: Run tests 🧪
-        run: npm run ci:oruga
+      - name: Run lint and component tests 🧪
+        run: npm run test:oruga-next
       - name: Upload coverage 📈
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: oruga
+          flags: oruga-next

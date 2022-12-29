@@ -1,5 +1,5 @@
 const isTouch =
-  typeof window !== 'undefined' && ('ontouchstart' in window || navigator.msMaxTouchPoints > 0)
+  typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
 const events = isTouch ? ['touchstart', 'click'] : ['click']
 
 const instances = []

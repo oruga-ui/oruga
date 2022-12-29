@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         @click="focus"
-        @keydown.prevent.enter="$refs.label.click()"
+        @keydown.prevent.enter="getLabel.click()"
         @mousedown="isMouseDown = true"
         @mouseup="isMouseDown = false"
         @mouseout="isMouseDown = false"
@@ -120,6 +120,9 @@ export default defineComponent({
         }
     },
     computed: {
+        getLabel () {
+            return this.$refs.label
+        },
         rootClasses() {
             return [
                 this.computedClass('rootClass', 'o-switch'),

@@ -103,7 +103,7 @@ export default defineComponent({
 		/**
 		 * Focus method that work dynamically depending on the component.
 		 */
-		focus() {
+		focus(e: Event) {
 			const el = this.getElement();
 			if (!el) return;
 

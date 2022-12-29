@@ -8,7 +8,7 @@
       <o-inputitems
         v-model="tags"
         :data="filteredTags"
-        autocomplete
+        :allow-autocomplete="true"
         :allow-new="allowNew"
         :open-on-focus="openOnFocus"
         field="user.first_name"

@@ -1,7 +1,7 @@
 <template>
   <doc-wrapper :inspect-class="inspectClass">
     <template #default="s">
-      <o-inputitems v-bind="s" v-model="tags" :data="filteredTags" autocomplete field="user.first_name" icon="tag"
+      <o-inputitems v-bind="s" v-model="tags" :data="filteredTags" :allow-autocomplete="true" field="user.first_name" icon="tag"
         placeholder="Add a tag" @typing="getFilteredTags">
       </o-inputitems>
     </template>

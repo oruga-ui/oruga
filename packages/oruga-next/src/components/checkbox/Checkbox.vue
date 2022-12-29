@@ -3,7 +3,7 @@
         :class="rootClasses"
         ref="label"
         @click.stop="focus"
-        @keydown.prevent.enter="$refs.label.click()">
+        @keydown.prevent.enter="getLabel.click()">
         <input
             v-model="computedValue"
             type="checkbox"
@@ -91,6 +91,9 @@ export default defineComponent({
         },
     },
     computed: {
+        getLabel () {
+            return this.$refs.label
+        },
         isChecked () {
             return this.computedValue === this.trueValue
                 || Array.isArray(this.computedValue) && this.computedValue.indexOf(this.nativeValue) !== -1

@@ -15,10 +15,10 @@
     "strictNullChecks": false,
     "importsNotUsedAsValues": "error",
     "baseUrl": ".",
-    "types": [],
+    "types": ["cypress", "node"],
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
       ]
     },
     "lib": [
@@ -33,7 +33,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "./cypress/cypress.d.ts"
   ],
   "exclude": [
     "node_modules"
