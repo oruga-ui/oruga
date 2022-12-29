@@ -1030,6 +1030,7 @@ export default {
 | blur             |            |
 | focus            |            |
 | input            |            |
+| invalid          |            |
 | change-month     |            |
 | change-year      |            |
 | active-change    |            |

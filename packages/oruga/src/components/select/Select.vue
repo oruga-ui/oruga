@@ -9,7 +9,8 @@
             :size="nativeSize"
             v-bind="$attrs"
             @blur="onBlur"
-            @focus="onFocus">
+            @focus="onFocus"
+            @invalid="onInvalid">
 
             <template v-if="placeholder">
                 <option

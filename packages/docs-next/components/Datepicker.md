@@ -91,6 +91,7 @@ title: Datepicker
 | range-end         |            |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 | change-month      |            |
 | change-year       |            |

@@ -11,7 +11,8 @@
             :value="computedValue"
             @input="onInput"
             @blur="onBlur"
-            @focus="onFocus">
+            @focus="onFocus"
+            @invalid="onInvalid" />
 
         <textarea
             v-else
@@ -23,6 +24,7 @@
             @input="onInput"
             @blur="onBlur"
             @focus="onFocus"
+            @invalid="onInvalid"
             :style="computedStyles"
             />
 
@@ -78,7 +80,7 @@ export default defineComponent({
     mixins: [BaseComponentMixin, FormElementMixin],
     configField: 'input',
     inheritAttrs: false,
-    emits: ['update:modelValue', 'icon-click', 'icon-right-click'],
+    emits: ['update:modelValue', 'input', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],

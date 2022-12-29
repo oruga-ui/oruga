@@ -73,6 +73,7 @@ title: Autocomplete
 | blur              |                                                                              |
 | focus             |                                                                              |
 | update:modelValue |                                                                              |
+| invalid           |                                                                              |
 | select            | **selected** `Object` - selected option<br/>**event** `Event` - native event |
 | infinite-scroll   |                                                                              |
 | typing            |                                                                              |

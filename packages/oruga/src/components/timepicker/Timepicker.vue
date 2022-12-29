@@ -132,7 +132,8 @@
             :use-html5-validation="useHtml5Validation"
             @change.native="onChange($event.target.value)"
             @focus="handleOnFocus"
-            @blur="onBlur() && checkHtml5Validity()"/>
+            @blur="onBlur() && checkHtml5Validity()"
+            @invalid="onInvalid" />
     </div>
 </template>
 

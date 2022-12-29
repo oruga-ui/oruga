@@ -51,6 +51,7 @@ title: Select
 | ----------------- | ---------- | ----------- |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 
 ## Slots

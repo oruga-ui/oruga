@@ -56,6 +56,7 @@ title: Input
 | ----------------- | ---------- | ----------- |
 | blur              |            |
 | focus             |            |
+| invalid           |            |
 | update:modelValue |            |
 | icon-click        |            |
 | icon-right-click  |            |

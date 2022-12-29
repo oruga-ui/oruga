@@ -512,6 +512,7 @@ export default {
 | blur             |                                                                             |
 | focus            |                                                                             |
 | input            |                                                                             |
+| invalid           |                                                                              |
 | select           | **selected** `Object` - selected option<br>**event** `Event` - native event |
 | select-header    |                                                                             |
 | select-footer    |                                                                             |

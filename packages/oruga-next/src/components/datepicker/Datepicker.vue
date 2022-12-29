@@ -234,7 +234,8 @@
             :use-html5-validation="false"
             @change="onChangeNativePicker"
             @focus="onFocus"
-            @blur="onBlur"/>
+            @blur="onBlur"
+            @invalid="onInvalid" />
     </div>
 </template>
 
@@ -331,7 +332,7 @@ export default defineComponent({
             $datepicker: this
         }
     },
-    emits: ['update:modelValue', 'focus', 'blur', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change', 'icon-right-click'],
+    emits: ['update:modelValue', 'focus', 'blur', 'invalid', 'change-month', 'change-year', 'range-start', 'range-end', 'active-change', 'icon-right-click'],
     props: {
         modelValue: {
             type: [Date, Array]
