@@ -66,7 +66,7 @@ export default defineConfig({
       logo: '/logo.png',
       socialLinks: [
         { icon: "discord", link: "https://discord.gg/RuKuBYN" },
-        { icon: "twitter", link: "https://twitter.com/oruga_u" },
+        { icon: "twitter", link: "https://twitter.com/oruga_ui" },
         { icon: "github", link: "https://github.com/oruga-ui/oruga" },
       ],
       nav: [
