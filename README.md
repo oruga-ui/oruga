@@ -131,7 +131,7 @@ npm install @oruga-ui/oruga-next
  - To use tree shaking, either register component manually:
 
     ```js
-    import Vue from 'vue'
+    import { createApp } from 'vue'
     import { OField, OInput } from '@oruga-ui/oruga'
     import '@oruga-ui/oruga/dist/oruga.css'
     
