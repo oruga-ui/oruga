@@ -462,7 +462,7 @@ export default {
 | arrowHover        |                  | boolean | -      | true                                                                                                                                              |
 | asIndicator       |                  | boolean | -      |                                                                                                                                                   |
 | autoplay          |                  | boolean | -      | false                                                                                                                                             |
-| breakpoints       |                  | object  | -      |                                                                                                                                                   |
+| breakpoints       |                  | object  | -      | {}                                                                                                                                                |
 | hasDrag           |                  | boolean | -      | true                                                                                                                                              |
 | iconNext          |                  | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
 | iconPack          |                  | string  | -      |                                                                                                                                                   |

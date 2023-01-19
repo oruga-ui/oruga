@@ -511,8 +511,8 @@ export default {
 | icon-click       |                                                                             |
 | blur             |                                                                             |
 | focus            |                                                                             |
+| invalid          |                                                                             |
 | input            |                                                                             |
-| invalid           |                                                                              |
 | select           | **selected** `Object` - selected option<br>**event** `Event` - native event |
 | select-header    |                                                                             |
 | select-footer    |                                                                             |
