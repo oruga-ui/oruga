@@ -75,6 +75,9 @@ export default (parentCmp) => ({
             'div',
             {
                 directives: [{ name: 'show', value: this.isActive && this.visible }],
+                style: {
+                    display: 'block'
+                },
                 attrs: {
                     'class': this.elementClasses,
                     'id': `${parentCmp}-${this.newValue}`,
