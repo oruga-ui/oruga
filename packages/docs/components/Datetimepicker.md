@@ -245,8 +245,8 @@ export default {
 | change-year      |            |
 | blur             |            |
 | focus            |            |
-| input            |            |
 | invalid          |            |
+| input            |            |
 
 ## Slots
 

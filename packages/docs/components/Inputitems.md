@@ -452,8 +452,8 @@ export default {
 | icon-right-click |            |
 | blur             |            |
 | focus            |            |
-| input            |            |
 | invalid          |            |
+| input            |            |
 | add              |            |
 | typing           |            |
 | remove           |            |

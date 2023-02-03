@@ -215,6 +215,7 @@ export default {
 | ---------- | ---------- | ----------- |
 | blur       |            |
 | focus      |            |
+| invalid    |            |
 | input      |            |
 
 ## Slots

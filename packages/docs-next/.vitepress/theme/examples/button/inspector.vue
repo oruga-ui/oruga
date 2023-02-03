@@ -29,6 +29,14 @@ export default {
           },
         },
         {
+          class: "loadingClass",
+          description: "Class of the button with loading",
+          properties: ["loading"],
+          action: (cmp) => {
+            cmp.data.loading = true;
+          },
+        },
+        {
           class: "invertedClass",
           description: "Class of the button when inverted",
           properties: ["inverted"],

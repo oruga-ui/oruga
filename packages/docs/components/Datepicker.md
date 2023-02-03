@@ -1029,8 +1029,8 @@ export default {
 | range-end        |            |
 | blur             |            |
 | focus            |            |
-| input            |            |
 | invalid          |            |
+| input            |            |
 | change-month     |            |
 | change-year      |            |
 | active-change    |            |

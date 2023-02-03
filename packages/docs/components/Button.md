@@ -192,6 +192,14 @@ export default {
                     },
                 },
                 {
+                    class: "loadingClass",
+                    description: "Class of the button loading",
+                    properties: ["loading"],
+                    action: (cmp) => {
+                        cmp.data.loading = true;
+                    },
+                },
+                {
                     class: "invertedClass",
                     description: "Class of the button when inverted",
                     properties: ["inverted"],
@@ -298,6 +306,7 @@ export default {
 | iconRight  | Icon name to show on the right           | string  | -                                                                               |                                                                                                                                      |
 | inverted   |                                          | boolean | -                                                                               |                                                                                                                                      |
 | label      | Button label, optional when default slot | string  | -                                                                               |                                                                                                                                      |
+| loading    | Loading style                            | boolean | -                                                                               |                                                                                                                                      |
 | nativeType | Button type, like native                 | string  | -                                                                               | 'button'                                                                                                                             |
 | outlined   | Outlined style                           | boolean | -                                                                               |                                                                                                                                      |
 | override   | Override classes                         | boolean | -                                                                               | false                                                                                                                                |

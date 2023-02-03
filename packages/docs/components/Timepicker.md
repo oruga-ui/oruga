@@ -330,8 +330,8 @@ export default {
 | ---------- | ---------- | ----------- |
 | blur       |            |
 | focus      |            |
-| input      |            |
 | invalid    |            |
+| input      |            |
 
 ## Slots
 
