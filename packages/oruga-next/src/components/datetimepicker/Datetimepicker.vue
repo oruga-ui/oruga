@@ -27,6 +27,9 @@
         :mobile-native="isMobileNative"
         :locale="locale"
         :append-to-body="appendToBody"
+        :unselectable-dates="unselectableDates"
+        :unselectable-days-of-week="unselectableDaysOfWeek"
+        :selectable-dates="selectableDates"
         @focus="onFocus"
         @blur="onBlur"
         @active-change="$emit('active-change', $event)"
@@ -153,6 +156,14 @@ export default defineComponent({
             }
         },
         appendToBody: Boolean,
+        unselectableDates: [Array, Function],
+        unselectableDaysOfWeek: {
+            type: Array,
+            default: () => {
+                return getValueByPath(getOptions(), 'datepicker.unselectableDaysOfWeek', undefined)
+            }
+        },
+        selectableDates: [Array, Function],
         datepickerWrapperClass: [String, Function, Array],
         timepickerWrapperClass: [String, Function, Array],
     },
