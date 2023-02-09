@@ -266,9 +266,9 @@
 
                 <tfoot v-if="$slots.footer">
                     <tr :class="footerClasses">
-                        <slot name="footer" v-if="hasCustomFooterSlot"/>
+                        <slot name="footer" v-if="hasCustomFooterSlot" :columnCount="columnCount"/>
                         <th :colspan="columnCount" v-else>
-                            <slot name="footer"/>
+                            <slot name="footer" :columnCount="columnCount"/>
                         </th>
                     </tr>
                 </tfoot>
