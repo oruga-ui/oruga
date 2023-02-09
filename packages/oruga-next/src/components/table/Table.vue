@@ -266,7 +266,7 @@
 
                 <tfoot v-if="$slots.footer">
                     <tr :class="footerClasses">
-                        <slot name="footer" v-if="hasCustomFooterSlot()"/>
+                        <slot name="footer" v-if="hasCustomFooterSlot"/>
                         <th :colspan="columnCount" v-else>
                             <slot name="footer"/>
                         </th>
@@ -772,6 +772,20 @@ export default defineComponent({
             const validVisibleData = this.visibleData.filter(
                 (row) => this.isRowCheckable(row))
             return validVisibleData.length === 0
+        },
+        
+        /**
+        * Check if footer slot has custom content.
+        */
+        hasCustomFooterSlot() {
+            if (this.$slots.footer) {
+                const footer = this.$slots.footer()
+                if (footer.length > 1) return true
+
+                const tag = footer[0].tag
+                if (tag !== 'th' && tag !== 'td') return false
+            }
+            return true
         },
 
         /**
@@ -1299,20 +1313,6 @@ export default defineComponent({
                     }
                 }
             }
-        },
-
-        /**
-        * Check if footer slot has custom content.
-        */
-        hasCustomFooterSlot() {
-            if (this.$slots.footer) {
-                const footer = this.$slots.footer()
-                if (footer.length > 1) return true
-
-                const tag = footer[0].tag
-                if (tag !== 'th' && tag !== 'td') return false
-            }
-            return true
         },
 
         /**
