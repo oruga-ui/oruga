@@ -27,73 +27,75 @@
             @icon-click="(event) => $emit('icon-click', event)"
         />
 
-        <transition :name="animation">
-            <div
-                :class="menuClasses"
-                :is="menuTag"
-                v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
-                :style="menuStyle"
-                ref="dropdown">
+        <Teleport :disabled="!appendToBody" to="body">
+            <transition :name="animation">
                 <div
-                    v-if="$slots.header"
-                    :is="itemTag"
-                    ref="header"
-                    role="button"
-                    :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'header')"
-                    :class="itemHeaderClasses">
-                    <slot name="header"/>
-                </div>
-                <template v-for="(element, groupindex) in computedData">
+                    :class="menuClasses"
+                    :is="menuTag"
+                    v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
+                    :style="menuStyle"
+                    ref="dropdown">
                     <div
-                        v-if="element.group"
+                        v-if="$slots.header"
                         :is="itemTag"
-                        :key="groupindex + 'group'"
-                        :class="itemGroupClasses">
-                        <slot
-                            v-if="$slots.group"
-                            name="group"
-                            :group="element.group"
-                            :index="groupindex" />
-                        <span v-else>
-                            {{ element.group }}
-                        </span>
+                        ref="header"
+                        role="button"
+                        :tabindex="0"
+                        @click="selectHeaderOrFoterByClick($event, 'header')"
+                        :class="itemHeaderClasses">
+                        <slot name="header"/>
+                    </div>
+                    <template v-for="(element, groupindex) in computedData">
+                        <div
+                            v-if="element.group"
+                            :is="itemTag"
+                            :key="groupindex + 'group'"
+                            :class="itemGroupClasses">
+                            <slot
+                                v-if="$slots.group"
+                                name="group"
+                                :group="element.group"
+                                :index="groupindex" />
+                            <span v-else>
+                                {{ element.group }}
+                            </span>
+                        </div>
+                        <div
+                            v-for="(option, index) in element.items"
+                            :key="groupindex + ':' + index"
+                            :is="itemTag"
+                            :class="itemOptionClasses(option)"
+                            @click.stop="setSelected(option, !keepOpen, $event)"
+                            :ref="setItemRef"
+                        >
+                            <slot
+                                v-if="$slots.default"
+                                :option="option"
+                                :index="index" />
+                            <span v-else>
+                                {{ getValue(option) }}
+                            </span>
+                        </div>
+                    </template>
+                    <div
+                        v-if="isEmpty && $slots.empty"
+                        :is="itemTag"
+                        :class="itemEmptyClasses">
+                        <slot name="empty" />
                     </div>
                     <div
-                        v-for="(option, index) in element.items"
-                        :key="groupindex + ':' + index"
+                        v-if="$slots.footer"
                         :is="itemTag"
-                        :class="itemOptionClasses(option)"
-                        @click.stop="setSelected(option, !keepOpen, $event)"
-                        :ref="setItemRef"
-                    >
-                        <slot
-                            v-if="$slots.default"
-                            :option="option"
-                            :index="index" />
-                        <span v-else>
-                            {{ getValue(option) }}
-                        </span>
+                        ref="footer"
+                        role="button"
+                        :tabindex="0"
+                        @click="selectHeaderOrFoterByClick($event, 'footer')"
+                        :class="itemFooterClasses">
+                        <slot name="footer"/>
                     </div>
-                </template>
-                <div
-                    v-if="isEmpty && $slots.empty"
-                    :is="itemTag"
-                    :class="itemEmptyClasses">
-                    <slot name="empty" />
                 </div>
-                <div
-                    v-if="$slots.footer"
-                    :is="itemTag"
-                    ref="footer"
-                    role="button"
-                    :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'footer')"
-                    :class="itemFooterClasses">
-                    <slot name="footer"/>
-                </div>
-            </div>
-        </transition>
+            </transition>
+        </Teleport>
     </div>
 </template>
 
@@ -107,6 +109,8 @@ import FormElementMixin from '../../utils/FormElementMixin'
 
 import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+
+import { getScrollingParent } from '../../utils/getScrollingParent';
 
 /**
  * Extended input that provide suggestions while the user types
@@ -142,7 +146,7 @@ export default defineComponent({
             type: String,
             default: 'value'
         },
-        /** The first option will always be pre-selected (easier to just hit enter or tab) */
+        /** The first option will always be pre-selected (easier to just hit enter or tab) */ 
         keepFirst: Boolean,
         /** Clear input text on select */
         clearOnSelect: Boolean,
@@ -236,8 +240,15 @@ export default defineComponent({
             }
         }
     },
+    resizeObserver: undefined,
     data() {
         return {
+            // NEW
+            scrollingParent: document?.documentElement,
+            menuStyle: {
+                maxHeight: this.maxHeight ? toCssDimension(this.maxHeight) : undefined,
+            },
+            // NEW - END
             selected: null,
             hovered: null,
             headerHovered: null,
@@ -263,7 +274,7 @@ export default defineComponent({
         menuClasses() {
             return [
                 this.computedClass('menuClass', 'o-acp__menu'),
-                { [this.computedClass('menuPositionClass', 'o-acp__menu--', this.newDropdownPosition)]: !this.appendToBody },
+                { [this.computedClass('menuPositionClass', 'o-acp__menu--', this.positionClassFromProps)]: !this.appendToBody },
             ]
         },
         itemClasses() {
@@ -369,14 +380,12 @@ export default defineComponent({
             }
             return whiteList
         },
-
-        newDropdownPosition() {
-            if (this.menuPosition === 'top' || (this.menuPosition === 'auto' && !this.isListInViewportVertically)) {
-              return 'top'
+        positionClassFromProps() {
+            if (this.menuPosition !== 'auto') {
+                return this.menuPosition
             }
-            return 'bottom'
+            return ''
         },
-
         newIconRight() {
             if (this.clearable && this.newValue) {
                 return 'close-circle'
@@ -389,12 +398,6 @@ export default defineComponent({
                 return true
             }
             return this.iconRightClickable
-        },
-
-        menuStyle() {
-            return {
-                maxHeight: toCssDimension(this.maxHeight)
-            }
         },
 
         $elementRef() {
@@ -415,19 +418,15 @@ export default defineComponent({
          * When dropdown is toggled, check the visibility to know when
          * to open upwards.
          */
-        isActive(active) {
-            if (this.menuPosition === 'auto') {
-                if (active) {
-                    this.calcDropdownInViewportVertical()
-                } else {
-                    // Timeout to wait for the animation to finish before recalculating
-                    setTimeout(() => {
-                        this.calcDropdownInViewportVertical()
-                    }, 100)
+        isActive(_isActive) {
+            if (_isActive) {
+                this.setMenuAutoPosition() // Noop if not 'auto'
+            } else {
+                this.menuStyle = {
+                    maxHeight: toCssDimension(this.maxHeight)
                 }
             }
         },
-
         /**
          * When updating input's value
          *   1. Emit changes
@@ -629,32 +628,49 @@ export default defineComponent({
                 this.$emit('infinite-scroll')
             }
         },
-
         /**
-         * Calculate if the dropdown is vertically visible when activated,
-         * otherwise it is openened upwards.
+         * This is called only if menuPosition === 'auto'
          */
-        calcDropdownInViewportVertical() {
-            this.$nextTick(() => {
-                /**
-                * this.$refs.dropdown may be undefined
-                * when Autocomplete is conditional rendered
-                */
-                if (!this.$refs.dropdown) return
+        setMenuAutoPosition() {
+            if (this.menuPosition !== 'auto') {
+                return {} // Noop
+            }
+            if (this.isActive) {
+                this.$nextTick(() => {
+                    const inputRef = this.$refs?.input?.$el as HTMLInputElement
+                    const dropdownRef = this.$refs?.dropdown as HTMLDivElement
 
-                const rect = this.$refs.dropdown.getBoundingClientRect()
+                    if (!inputRef || !dropdownRef) {
+                        return
+                    }
 
-                this.isListInViewportVertically = (
-                    rect.top >= 0 &&
-                    rect.bottom <= (window.innerHeight ||
-                        document.documentElement.clientHeight)
-                )
-                if (this.appendToBody) {
-                    this.updateAppendToBody()
-                }
-            })
+                    const { height: inputHeight, bottom: inputBottom, top: inputTop } = inputRef.getBoundingClientRect()
+                    const { height: dropdownHeight } = dropdownRef.getBoundingClientRect()
+
+                    const maxHeight = toCssDimension(this.maxHeight)
+                    if (this.scrollingParent === document.documentElement) {
+                        const shouldPlaceOnBottom = inputBottom + dropdownHeight < window.visualViewport.height
+
+                        this.menuStyle = {
+                            maxHeight,
+                            top: shouldPlaceOnBottom ? `${inputHeight}px` : 'auto',
+                            bottom: shouldPlaceOnBottom ? 'auto' : `${inputHeight}px`,
+                        }
+                    } else {
+                        const { top: parentTop, height: parentHeight } = this.scrollingParent.getBoundingClientRect()
+                        const distanceFromViewport = inputTop - parentTop 
+                        const availableSpace = parentHeight - distanceFromViewport - inputHeight
+                        const _shouldPlaceOnBottom = availableSpace >= dropdownHeight
+
+                        this.menuStyle = {
+                            maxHeight,
+                            top: _shouldPlaceOnBottom ? `${inputHeight}px` : 'auto',
+                            bottom: _shouldPlaceOnBottom ? 'auto' : `${inputHeight}px`,
+                        }
+                    }
+                })
+            }
         },
-
         /**
          * Arrows keys listener.
          * If dropdown is active, set hovered option, or else just open.
@@ -785,44 +801,10 @@ export default defineComponent({
                 this.itemRefs.push(el)
             }
         },
-        updateAppendToBody() {
-            const dropdownMenu = this.$refs.dropdown
-            const trigger = this.$refs.input.$el
-            if (dropdownMenu && trigger) {
-                // update wrapper dropdown
-                const root = this.$data.bodyEl
-                root.classList.forEach((item) => root.classList.remove(...item.split(' ')))
-                this.rootClasses.forEach((item) => {
-                    if (item) {
-                        if (typeof item === 'object') {
-                            Object.keys(item).filter(key => key && item[key]).forEach(
-                                key => root.classList.add(key))
-                        } else {
-                            root.classList.add(...item.split(' '))
-                        }
-                    }
-                })
-                const rect = trigger.getBoundingClientRect()
-                let top = rect.top + window.scrollY
-                const left = rect.left + window.scrollX
-                if (this.newDropdownPosition !== 'top') {
-                    top += trigger.clientHeight
-                } else {
-                    top -= dropdownMenu.clientHeight
-                }
-                dropdownMenu.style.position = 'absolute'
-                dropdownMenu.style.top = `${top}px`
-                dropdownMenu.style.left = `${left}px`
-                dropdownMenu.style.width = `${trigger.clientWidth}px`
-                dropdownMenu.style.maxWidth = `${trigger.clientWidth}px`
-                dropdownMenu.style.zIndex = '9999'
-            }
-        }
     },
     created() {
         if (typeof window !== 'undefined') {
             document.addEventListener('click', this.clickedOutside)
-            if (this.menuPosition === 'auto') window.addEventListener('resize', this.calcDropdownInViewportVertical)
         }
     },
     mounted() {
@@ -830,6 +812,20 @@ export default defineComponent({
         if (this.checkInfiniteScroll && list) {
             list.addEventListener('scroll', this.checkIfReachedTheEndOfScroll)
         }
+
+        // Dynamic positioning handling - START
+        this.scrollingParent = getScrollingParent(this.$refs?.input?.$el)
+
+        if (this.scrollingParent !== document.documentElement) {
+            this.scrollingParent.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
+            this.resizeObserver = new ResizeObserver(this.setMenuAutoPosition)
+            this.resizeObserver.observe(this.scrollingParent)
+        } else {
+            document.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
+            window.addEventListener('resize', this.setMenuAutoPosition)
+        }
+        // Dynamic positioning handling - END
+
         if (this.appendToBody) {
             this.$data.bodyEl = createAbsoluteElement(list)
             this.updateAppendToBody()
@@ -840,10 +836,14 @@ export default defineComponent({
         this.itemRefs = []
     },
     beforeUnmount() {
-        if (typeof window !== 'undefined') {
-            document.removeEventListener('click', this.clickedOutside)
-            if (this.menuPosition === 'auto') window.removeEventListener('resize', this.calcDropdownInViewportVertical)
-        }
+        document.removeEventListener('click', this.clickedOutside)
+
+        // Dynamic positioning handling - START
+        this.resizeObserver?.disconnect()
+        window.removeEventListener('resize', this.setMenuAutoPosition)
+        document.removeEventListener('scroll', this.setMenuAutoPosition)
+        // Dynamic positioning handling - END
+        
         if (this.checkInfiniteScroll && this.$refs.dropdown) {
             const list = this.$refs.dropdown
             list.removeEventListener('scroll', this.checkIfReachedTheEndOfScroll)
