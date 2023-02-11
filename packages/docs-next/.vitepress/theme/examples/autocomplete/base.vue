@@ -1,6 +1,24 @@
 <template>
   <section>
     <p class="content"><b>Selected:</b> {{ selected }}</p>
+
+    <!-- TEMP -->
+    <o-field label="Find a JS framework">
+      <AutocompleteHMR 
+          v-model="name"
+          rounded
+          expanded
+          placeholder="e.g. jQuery"
+          icon="search"
+          clearable
+          :data="filteredDataArray"
+          @select="(option) => (selected = option)"
+      >
+        <template #empty>No results found</template>
+      </AutocompleteHMR>
+    </o-field>
+    <!-- TEMP - END -->
+
     <o-field label="Find a JS framework">
       <o-autocomplete
         v-model="name"

@@ -14,6 +14,11 @@ import Carbon from './components/Carbon.vue'
 
 import Oruga, { useProgrammatic } from '../../../oruga-next/dist/oruga'
 
+
+// TEMP
+import AutocompleteHMR from '../../../oruga-next/src/components/autocomplete/Autocomplete.vue'
+// TEMP - END
+
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -28,6 +33,10 @@ export default {
     library.add(fas)
 
     app.component('vue-fontawesome', FontAwesomeIcon)
+
+    // TEMP
+    app.component('AutocompleteHMR', AutocompleteHMR)
+    // TEMP - END
 
     app.component('DocWrapper', DocWrapper)
     app.component('HFRepos', HFRepos)
