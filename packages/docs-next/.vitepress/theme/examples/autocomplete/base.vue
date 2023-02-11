@@ -1,7 +1,7 @@
 <template>
   <section>
     <!-- TEMP -->
-    <div style="max-height: 300px; overflow: auto">
+    <div style="max-height: 300px; overflow: auto; resize: vertical;">
       <div style="height: 900px; display: flex; align-items: center;">
         <o-field label="Find a JS framework">
           <AutocompleteHMR 
@@ -44,7 +44,6 @@
         v-model="name"
         rounded
         expanded
-        :appendToBody="true"
         placeholder="e.g. jQuery"
         icon="search"
         clearable
@@ -60,66 +59,7 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 
-// TEMP - START
 const data = [
-  "Emma",
-  "Olivia",
-  "Ava",
-  "Isabella",
-  "Sophia",
-  "Mia",
-  "Charlotte",
-  "Amelia",
-  "Harper",
-  "Evelyn",
-  "Abigail",
-  "Emily",
-  "Elizabeth",
-  "Avery",
-  "Sofia",
-  "Ella",
-  "Madison",
-  "Aurora",
-  "Scarlett",
-  "Victoria",
-  "Grace",
-  "Chloe",
-  "Camila",
-  "Penelope",
-  "Riley",
-  "Layla",
-  "Lillian",
-  "Natalie",
-  "Hazel",
-  "Zoey",
-  "Aubrey",
-  "Hailey",
-  "Ellie",
-  "Stella",
-  "Nora",
-  "Aria",
-  "Violet",
-  "Addison",
-  "Leah",
-  "Savannah",
-  "Audrey",
-  "Brooklyn",
-  "Bella",
-  "Claire",
-  "Skylar",
-  "Lily",
-  "Eleanor",
-  "Natalie",
-  "Samantha",
-  "Aaliyah",
-  "Aurora",
-  "Mila",
-  "Genesis"
-];
-
-// TEMP - END
-
-/* const data = [
   "Angular",
   "Angular 2",
   "Aurelia",
@@ -132,7 +72,7 @@ const data = [
   "React",
   "RxJS",
   "Vue.js",
-]; */
+];
 
 export default defineComponent({
   setup() {

@@ -27,7 +27,7 @@
             @icon-click="(event) => $emit('icon-click', event)"
         />
 
-        <Teleport :disabled="!appendToBody" to="body">
+        <Teleport :disabled="!appendToBody || !isScrolledByHTML" to="body">
             <transition :name="animation">
                 <div
                     :class="menuClasses"
@@ -107,8 +107,9 @@ import Input from '../input/Input.vue'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import FormElementMixin from '../../utils/FormElementMixin'
 
-import { getValueByPath, removeElement, createAbsoluteElement, toCssDimension, debounce } from '../../utils/helpers'
+import { getValueByPath, toCssDimension, debounce } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
+import { isSSR, isClient } from '../../utils/ssr'
 
 import { getScrollingParent } from '../../utils/getScrollingParent';
 
@@ -244,9 +245,9 @@ export default defineComponent({
     data() {
         return {
             // NEW
-            scrollingParent: document?.documentElement,
+            scrollingParent: isSSR ? null : document.documentElement,
             menuStyle: {
-                maxHeight: this.maxHeight ? toCssDimension(this.maxHeight) : undefined,
+                maxHeight: toCssDimension(this.maxHeight),
             },
             // NEW - END
             selected: null,
@@ -261,7 +262,6 @@ export default defineComponent({
             hasFocus: false,
             itemRefs: [],
             width: undefined,
-            bodyEl: undefined, // Used to append to body
         }
     },
     computed: {
@@ -352,12 +352,18 @@ export default defineComponent({
                         dropdownRef.style.removeProperty(tDur)
                     }, 1000 / 60)
                     
-                    // ...already returned null and dropdown closed.
-                    return [{ items: null }]
+                    // ...already returned nothing and dropdown closed.
+                    return [{ items: [] }]
                 }
             }
 
             return [{ items: this.data }]
+        },
+        isScrolledByHTML() {
+            if (isSSR) {
+                return true
+            }
+            return this.scrollingParent === document.documentElement
         },
         isEmpty() {
             if (!this.computedData) return true
@@ -628,44 +634,51 @@ export default defineComponent({
                 this.$emit('infinite-scroll')
             }
         },
-        /**
-         * This is called only if menuPosition === 'auto'
-         */
         setMenuAutoPosition() {
             if (this.menuPosition !== 'auto') {
                 return {} // Noop
             }
             if (this.isActive) {
                 this.$nextTick(() => {
-                    const inputRef = this.$refs?.input?.$el as HTMLInputElement
-                    const dropdownRef = this.$refs?.dropdown as HTMLDivElement
+                    const inputRef = this.$refs && this.$refs.input.$el as HTMLInputElement
+                    const dropdownRef = this.$refs && this.$refs.dropdown as HTMLDivElement
 
                     if (!inputRef || !dropdownRef) {
                         return
                     }
 
-                    const { height: inputHeight, bottom: inputBottom, top: inputTop } = inputRef.getBoundingClientRect()
+                    const { height: iptHeight, width: iptWidth, bottom: iptBottom, top: iptTop, left: iptLeft } = inputRef.getBoundingClientRect()
                     const { height: dropdownHeight } = dropdownRef.getBoundingClientRect()
+                    const { top: parentTop, height: parentHeight } = this.scrollingParent.getBoundingClientRect()
 
                     const maxHeight = toCssDimension(this.maxHeight)
-                    if (this.scrollingParent === document.documentElement) {
-                        const shouldPlaceOnBottom = inputBottom + dropdownHeight < window.visualViewport.height
+
+                    if (this.isScrolledByHTML) {
+                        const availableSpace = window.visualViewport.height - iptTop - iptHeight 
+                        const shouldPlaceOnBottom = availableSpace >= dropdownHeight
+
+                        const appendBodyStyles = this.appendToBody ? {
+                            position: 'fixed',
+                            'z-index': 999, // Might be lower?
+                            width: `${iptWidth}px`,
+                            left: `${iptLeft}px`,
+                        } : {}
 
                         this.menuStyle = {
                             maxHeight,
-                            top: shouldPlaceOnBottom ? `${inputHeight}px` : 'auto',
-                            bottom: shouldPlaceOnBottom ? 'auto' : `${inputHeight}px`,
+                            ...appendBodyStyles,
+                            top: shouldPlaceOnBottom ? `${this.appendToBody ? iptBottom : iptHeight}px` : 'auto',
+                            bottom: shouldPlaceOnBottom ? 'auto' : `${this.appendToBody ? window.innerHeight - iptTop : iptHeight}px`,
                         }
                     } else {
-                        const { top: parentTop, height: parentHeight } = this.scrollingParent.getBoundingClientRect()
-                        const distanceFromViewport = inputTop - parentTop 
-                        const availableSpace = parentHeight - distanceFromViewport - inputHeight
-                        const _shouldPlaceOnBottom = availableSpace >= dropdownHeight
+                        const distanceFromViewport = iptTop - parentTop 
+                        const availableSpace = parentHeight - distanceFromViewport - iptHeight
+                        const shouldPlaceOnBottom = availableSpace >= dropdownHeight
 
                         this.menuStyle = {
                             maxHeight,
-                            top: _shouldPlaceOnBottom ? `${inputHeight}px` : 'auto',
-                            bottom: _shouldPlaceOnBottom ? 'auto' : `${inputHeight}px`,
+                            top: shouldPlaceOnBottom ? `${iptHeight}px` : 'auto',
+                            bottom: shouldPlaceOnBottom ? 'auto' : `${iptHeight}px`,
                         }
                     }
                 })
@@ -803,7 +816,7 @@ export default defineComponent({
         },
     },
     created() {
-        if (typeof window !== 'undefined') {
+        if (isClient) {
             document.addEventListener('click', this.clickedOutside)
         }
     },
@@ -813,43 +826,39 @@ export default defineComponent({
             list.addEventListener('scroll', this.checkIfReachedTheEndOfScroll)
         }
 
-        // Dynamic positioning handling - START
-        this.scrollingParent = getScrollingParent(this.$refs?.input?.$el)
+        if (isClient) {
+            // Dynamic positioning handling - START
+            this.scrollingParent = getScrollingParent(this.$refs && this.$refs.input.$el)
 
-        if (this.scrollingParent !== document.documentElement) {
-            this.scrollingParent.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
-            this.resizeObserver = new ResizeObserver(this.setMenuAutoPosition)
-            this.resizeObserver.observe(this.scrollingParent)
-        } else {
-            document.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
-            window.addEventListener('resize', this.setMenuAutoPosition)
+            if (this.scrollingParent !== document.documentElement) {
+                this.scrollingParent.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
+                this.resizeObserver = new ResizeObserver(this.setMenuAutoPosition)
+                this.resizeObserver.observe(this.scrollingParent)
+            } else {
+                document.addEventListener('scroll', this.setMenuAutoPosition, { passive: true })
+                window.addEventListener('resize', this.setMenuAutoPosition)
+            }
         }
         // Dynamic positioning handling - END
-
-        if (this.appendToBody) {
-            this.$data.bodyEl = createAbsoluteElement(list)
-            this.updateAppendToBody()
-        }
     },
     beforeUpdate() {
         this.width = this.$refs.input ? this.$refs.input.$el.clientWidth : undefined
         this.itemRefs = []
     },
     beforeUnmount() {
-        document.removeEventListener('click', this.clickedOutside)
+        if (isClient) {   
+            document.removeEventListener('click', this.clickedOutside)
 
-        // Dynamic positioning handling - START
-        this.resizeObserver?.disconnect()
-        window.removeEventListener('resize', this.setMenuAutoPosition)
-        document.removeEventListener('scroll', this.setMenuAutoPosition)
-        // Dynamic positioning handling - END
-        
-        if (this.checkInfiniteScroll && this.$refs.dropdown) {
-            const list = this.$refs.dropdown
-            list.removeEventListener('scroll', this.checkIfReachedTheEndOfScroll)
-        }
-        if (this.appendToBody) {
-            removeElement(this.$data.bodyEl)
+            // Dynamic positioning handling - START
+            this.resizeObserver && this.resizeObserver.disconnect()
+            window.removeEventListener('resize', this.setMenuAutoPosition)
+            document.removeEventListener('scroll', this.setMenuAutoPosition)
+            // Dynamic positioning handling - END
+            
+            if (this.checkInfiniteScroll && this.$refs.dropdown) {
+                const list = this.$refs.dropdown
+                list.removeEventListener('scroll', this.checkIfReachedTheEndOfScroll)
+            }
         }
     }
 })
