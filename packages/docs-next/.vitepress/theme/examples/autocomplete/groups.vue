@@ -1,5 +1,20 @@
 <template>
   <section>
+
+    <!-- TEMP -->
+    <o-field label="Find a food">
+      <AutocompleteHMR 
+          v-model="name"
+          group-field="type"
+          group-options="items"
+          open-on-focus
+          :data="filteredDataObj"
+          field="user.first_name" @select="(option) => (selected = option)"
+      />
+    </o-field>
+    <!-- TEMP - END -->
+
+
     <p class="content"><b>Selected:</b> {{ selected }}</p>
     <o-field label="Find a food">
       <o-autocomplete

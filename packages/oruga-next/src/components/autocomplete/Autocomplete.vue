@@ -240,7 +240,7 @@ export default defineComponent({
         return {
             selected: null,
             hovered: null,
-             headerHovered: null,
+            headerHovered: null,
             footerHovered: null,
             isActive: false,
             newValue: this.modelValue,
@@ -327,6 +327,25 @@ export default defineComponent({
                     return newData
                 }
             }
+
+            // Return no data to avoid the full list to be shown when clearing input
+            if (!this.openOnFocus && this.modelValue === '') {
+                const dropdownRef = this.$refs.dropdown
+                const tDur = 'transition-duration'
+
+                if (dropdownRef) {
+                    // 'Disable' fade-out transition on empty dropdown
+                    dropdownRef.style.setProperty(tDur, '0ms')
+                    setTimeout(() => {
+                        // 'Re-enable' after a frame. At this point this computed...
+                        dropdownRef.style.removeProperty(tDur)
+                    }, 1000 / 60)
+                    
+                    // ...already returned null and dropdown closed.
+                    return [{ items: null }]
+                }
+            }
+
             return [{ items: this.data }]
         },
         isEmpty() {
