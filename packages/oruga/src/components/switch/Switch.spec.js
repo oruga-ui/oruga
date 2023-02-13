@@ -67,4 +67,9 @@ describe('OSwitch', () => {
         const rootElement = wrapper.find('.o-switch')
         expect(rootElement.classes()).toContain('o-switch--left')
     })
+
+    it('has role switch', async () => {
+        const switchElement = wrapper.find('input')
+        expect(switchElement.attributes().role).toBe('switch')
+    })
 })
