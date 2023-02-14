@@ -52,7 +52,7 @@ Add comments if method is too complex and/or whenever you judge necessary.
 
 You need at least [Node.js](http://nodejs.org/) **version 17.9.1**.
 
-After cloning the repo, run:
+After cloning the repository, install the dependencies and then run:
 
 ```bash
 $ npm run bootstrap
@@ -81,14 +81,14 @@ Then open up new bash and run the live server **concurrently** with the above co
 For Oruga Next (Vue 3):
 
 ```bash
-# build and launch live server of docs in watch mode to see the changes
+# build and launch live server of docs in watch mode to see the changes (it may take a few seconds)
 $ npm run build:docs-next:watch:oruga
 ```
 
 For Oruga (Vue 2):
 
 ```bash
-# build and launch live server of docs in watch mode to see the changes
+# build and launch live server of docs in watch mode to see the changes (it may take a few seconds)
 $ npm run build:docs:watch:oruga
 ```
 
