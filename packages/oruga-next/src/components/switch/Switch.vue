@@ -12,6 +12,7 @@
             v-model="computedValue"
             type="checkbox"
             ref="input"
+            role="switch"
             :class="inputClasses"
             @click.stop
             :disabled="disabled"

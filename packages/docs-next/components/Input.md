@@ -58,6 +58,7 @@ title: Input
 | focus             |            |
 | invalid           |            |
 | update:modelValue |            |
+| input             |            |
 | icon-click        |            |
 | icon-right-click  |            |
 

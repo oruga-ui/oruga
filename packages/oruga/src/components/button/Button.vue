@@ -90,6 +90,10 @@ export default {
             default: () => { return getValueByPath(getOptions(), 'button.rounded', false) }
         },
         /**
+         * Loading style
+         */
+         loading: Boolean,
+        /**
          * Outlined style
          */
         outlined: Boolean,
@@ -129,6 +133,7 @@ export default {
         elementsWrapperClass: [String, Function, Array],
         rootClass: [String, Function, Array],
         outlinedClass: [String, Function, Array],
+        loadingClass: [String, Function, Array],
         invertedClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
         roundedClass: [String, Function, Array],
@@ -153,6 +158,7 @@ export default {
                 { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
                 { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
                 { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
+                { [this.computedClass('loadingClass', 'o-btn--loading')]: this.loading },
             ]
         },
         labelClasses() {
