@@ -15,6 +15,7 @@
                         :class="closeClasses"
                         clickable
                         both
+                        :pack="iconPack"
                         :icon="closeIcon"
                         @click="removeItem(index, $event)"
                         :aria-label="ariaCloseLabel"
