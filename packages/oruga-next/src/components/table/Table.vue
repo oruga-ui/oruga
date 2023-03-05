@@ -388,7 +388,7 @@ export default defineComponent({
         loading: Boolean,
         /** Allow row details  */
         detailed: Boolean,
-        /** Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style */
+        /** Rows can be checked (multiple) */
         checkable: Boolean,
         /** Show check/uncheck all checkbox in table header when checkable */
         headerCheckable: {
@@ -610,6 +610,7 @@ export default defineComponent({
         tdCheckboxClass: [String, Function, Array],
         tdDetailedChevronClass: [String, Function, Array],
         trSelectedClass: [String, Function, Array],
+        trCheckedClass: [String, Function, Array],
         stickyHeaderClass: [String, Function, Array],
         scrollableClass: [String, Function, Array],
         mobileSortClass: [String, Function, Array],
@@ -970,7 +971,8 @@ export default defineComponent({
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('trSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) }
+                { [this.computedClass('trSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) },
+                { [this.computedClass('trCheckedClass', 'o-table__tr--checked')]: this.isRowChecked(row) }
             ]
         },
         thSortIconClasses() {

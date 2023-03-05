@@ -332,6 +332,15 @@ export default {
                 }
             },
             {
+                class: "trCheckedClass",
+                description: "Class of the Table row when checkable and checked",
+                warning: "Select a row of the table to see it in action!",
+                properties: ["checkable"],
+                action: (cmp) => {
+                    cmp.data.checkable = true
+                }
+            },
+            {
                 class: "thSortIconClass",
                 description: "Class of the Table sort icon in the header",
                 warning: "Click on 'First Name' header to sort elements and see it in action!",
