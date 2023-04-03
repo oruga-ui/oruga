@@ -65,7 +65,7 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         width: 100%;
     }
     &--rounded {
-        @include avariable('border-radius', 'button-border-radius', $button-rounded-border-radius);
+        @include avariable('border-radius', 'button-rounded-border-radius', $button-rounded-border-radius);
     }
     &--disabled {
         @include avariable('opacity', 'button-disabled-opacity', $button-disabled-opacity);
