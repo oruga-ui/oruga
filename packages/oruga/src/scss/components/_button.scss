@@ -13,6 +13,7 @@ $button-height: $control-height !default;
 $button-padding: $control-padding-vertical .75em !default;
 $button-rounded-border-radius: $base-rounded-border-radius !default;
 $button-disabled-opacity: $base-disabled-opacity !default;
+$button-outlined-background-color: transparent !default;
 /* @docs */
 
 
@@ -92,7 +93,7 @@ $button-disabled-opacity: $base-disabled-opacity !default;
         }
     }
     &--outlined {
-        background-color: transparent;
+        @include avariable('background-color', 'button-outlined-background-color', $button-outlined-background-color);
         @include avariable('border-color', 'button-background-color', $button-background-color);
         @include avariable('color', 'button-background-color', $button-background-color);
         &:hover {
@@ -104,7 +105,7 @@ $button-disabled-opacity: $base-disabled-opacity !default;
             $color: nth($pair, 1);
             $color-invert: nth($pair, 2);
             &-#{$name} {
-                background-color: transparent;
+                @include avariable('background-color', 'button-outlined-background-color', $button-outlined-background-color);
                 @include avariable('border-color', ('variant-' + #{$name}), $color);
                 @include avariable('color', ('variant-' + #{$name}), $color);
                 &:hover {
