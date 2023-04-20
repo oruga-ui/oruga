@@ -53,6 +53,7 @@
                     <slot name="caption" />
                 </caption>
                 <thead v-if="newColumns.length && showHeader">
+                    <slot name="preheader" />
                     <tr>
                         <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
