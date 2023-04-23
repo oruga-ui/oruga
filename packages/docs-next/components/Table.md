@@ -132,6 +132,7 @@ title: Table
 | footer      |             |          |
 | loading     |             |          |
 | bottom-left |             |          |
+| preheader   | A slot inside `<thead>` above the normal header row. | |
 
 ---
 
