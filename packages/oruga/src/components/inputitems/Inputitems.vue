@@ -154,6 +154,8 @@ export default {
             default: 'value'
         },
         /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
+        allowAutocomplete: Boolean,
+        /** Add autocomplete feature (if true, any Autocomplete props may be used too) */
         autocomplete: Boolean,
         /**  Property of the object (if data is array of objects) to use as display text of group */
         groupField: String,
@@ -360,7 +362,7 @@ export default {
             const itemToAdd = item || this.newItem.trim()
 
             if (itemToAdd) {
-                if (!this.autocomplete) {
+                if (!this.allowAutocomplete) {
                     const reg = this.separatorsAsRegExp
                     if (reg && itemToAdd.match(reg)) {
                         itemToAdd.split(reg)
@@ -396,7 +398,7 @@ export default {
 
         customOnBlur(event) {
             // Add item on-blur if not select only
-            if (!this.autocomplete) this.addItem()
+            if (!this.allowAutocomplete) this.addItem()
 
             this.onBlur(event)
         },
@@ -433,7 +435,7 @@ export default {
                 this.removeLastItem()
             }
             // Stop if is to accept select only
-            if (this.autocomplete && !this.allowNew) return
+            if (this.allowAutocomplete && !this.allowNew) return
 
             if (this.confirmKeys.indexOf(key) >= 0) {
                 // Allow Tab to advance to next field regardless
