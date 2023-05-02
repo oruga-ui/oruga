@@ -9,6 +9,14 @@
   "module": "dist/esm/index.mjs",
   "unpkg": "dist/oruga.min.js",
   "typings": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": "./*"
+  },
   "files": [
     "dist",
     "src",
