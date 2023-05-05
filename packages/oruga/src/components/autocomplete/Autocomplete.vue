@@ -151,6 +151,15 @@ export default {
         keepOpen: Boolean,
         /** Add a button/icon to clear the inputed text */
         clearable: Boolean,
+        /**
+         * Icon name to be added on the clear button
+         */
+        clearIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.clearIcon', 'close-circle')
+            }
+        },
         /** Max height of dropdown content */
         maxHeight: [String, Number],
         /**
@@ -353,8 +362,8 @@ export default {
         },
 
         newIconRight() {
-            if (this.clearable && this.newValue) {
-                return 'close-circle'
+            if (this.clearable && this.newValue && this.clearIcon) {
+                return this.clearIcon
             }
             return this.iconRight
         },
