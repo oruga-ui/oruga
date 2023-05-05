@@ -146,7 +146,9 @@ export default defineComponent({
          */
         clearIcon: {
             type: String,
-            default: 'close-circle'
+            default: () => {
+                return getValueByPath(getOptions(), 'input.clearIcon', 'close-circle')
+            }
         },
         rootClass: [String, Function, Array],
         expandedClass: [String, Function, Array],

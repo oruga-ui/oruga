@@ -156,7 +156,9 @@ export default {
          */
         clearIcon: {
             type: String,
-            default: 'close-circle'
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.clearIcon', 'close-circle')
+            }
         },
         /** Max height of dropdown content */
         maxHeight: [String, Number],
