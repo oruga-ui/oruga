@@ -8,8 +8,7 @@
             :type="newType"
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
-            :value="computedValue"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid" />
@@ -20,8 +19,7 @@
             ref="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
-            :value="computedValue"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -303,10 +301,6 @@ export default defineComponent({
             this.$nextTick(() => {
                 this.focus()
             })
-        },
-
-        onInput(event) {
-            this.computedValue = event.target.value
         },
 
         iconClick(emit, event) {
