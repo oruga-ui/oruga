@@ -2,7 +2,7 @@
 /* @docs */
 $table-background-color: #fff !default;
 $table-background: #f5f5f5 !default;
-$table-boder: 1px solid transparent !default;
+$table-border: 1px solid transparent !default;
 $table-border-radius: $base-border-radius !default;
 $table-card-box-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default;
 $table-card-cell-font-weight: 600 !default;
@@ -43,7 +43,7 @@ $table-th-padding: 0.5em 0.75em !default;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    @include avariable('border', 'table-boder', $table-boder);
+    @include avariable('border', 'table-border', $table-border);
     @include avariable('border-radius', 'table-border-radius', $table-border-radius);
     @include avariable('background-color', 'table-background-color', $table-background-color);
     @include avariable('color', 'table-color', $table-color);
