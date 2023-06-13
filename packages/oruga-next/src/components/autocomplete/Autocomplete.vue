@@ -121,7 +121,7 @@ export default defineComponent({
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
+    emits: ['update:modelValue', 'select', 'select-header', 'select-footer', 'infinite-scroll', 'typing', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],
@@ -570,7 +570,7 @@ export default defineComponent({
                 if (triggerClick) this.setHovered(null)
                 if (closeDropdown) this.isActive = false
             }
-            if (this.selectableFooter && (this.footerHovered || (triggerClick && triggerClick.origin === 'header'))) {
+            if (this.selectableFooter && (this.footerHovered || (triggerClick && triggerClick.origin === 'footer'))) {
                 this.$emit('select-footer', event)
                 this.footerHovered = false
                 if (triggerClick) this.setHovered(null)
