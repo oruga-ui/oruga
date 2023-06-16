@@ -30,6 +30,7 @@
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
                     :size="paginationSize"
+                    :order="paginationOrder"
                     @page-change="(event) => $emit('page-change', event)"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -295,6 +296,7 @@
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
                     :size="paginationSize"
+                    :order="paginationOrder"
                     @page-change="(event) => $emit('page-change', event)"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -586,6 +588,8 @@ export default defineComponent({
         paginationRounded: Boolean,
         /** Size of pagination if paginated */
         paginationSize: String,
+        /** Pagination buttons order if paginated */
+        paginationOrder: String,
         rootClass: [String, Function, Array],
         tableClass: [String, Function, Array],
         wrapperClass: [String, Function, Array],
