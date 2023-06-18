@@ -191,7 +191,7 @@ export default defineComponent({
          * Dropdown menu tag name
          */
         menuTag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
             }

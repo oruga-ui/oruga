@@ -209,7 +209,7 @@ export default defineComponent({
          * Menu tag name
          */
         menuTag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.menuTag', 'div')
             }
@@ -218,7 +218,7 @@ export default defineComponent({
          * Menu item tag name
          */
         itemTag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.itemTag', 'div')
             }

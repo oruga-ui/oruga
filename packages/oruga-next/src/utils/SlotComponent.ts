@@ -16,8 +16,8 @@ export default defineComponent({
             type: Object
         },
         tag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
-            default: 'div'
+            type: [String, Object, Function] as PropType<string | Component>,
+             default: 'div'
         }
     },
     render() {

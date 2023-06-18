@@ -22,7 +22,7 @@ export default defineComponent({
          * Tabs item tag name
          */
         tag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'tabs.itemTag', 'button')
             }

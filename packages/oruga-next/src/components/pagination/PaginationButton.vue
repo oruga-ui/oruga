@@ -29,7 +29,7 @@ export default defineComponent({
             required: true
         },
         tag: {
-            type: [String, Object as PropType<Component>, Function as PropType<Component>],
+            type: [String, Object, Function] as PropType<string | Component>,
             default: 'a',
             validator: (value) => {
                 if (typeof value === 'string') {
