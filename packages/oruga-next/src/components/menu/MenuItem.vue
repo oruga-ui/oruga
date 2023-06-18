@@ -39,6 +39,7 @@
 
 <script lang="ts">
 import BaseComponentMixin from '../../utils/BaseComponentMixin';
+import type { Component, PropType } from 'vue'
 import {defineComponent} from "vue";
 
 export default defineComponent({
@@ -58,7 +59,7 @@ export default defineComponent({
             default: 'slide'
         },
         tag: {
-            type: String,
+            type: [String, Object as PropType<Component>, Function as PropType<Component>],
             default: 'a'
         },
         ariaRole: {

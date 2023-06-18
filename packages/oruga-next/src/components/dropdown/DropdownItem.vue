@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -48,7 +49,7 @@ export default defineComponent({
          * Dropdown item tag name
          */
         tag: {
-            type: String,
+            type: [String, Object as PropType<Component>, Function as PropType<Component>],
             default: () => {
                 return getValueByPath(getOptions(), 'dropdown.itemTag', 'div')
             }

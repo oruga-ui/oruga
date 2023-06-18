@@ -98,6 +98,7 @@
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import Input from '../input/Input.vue'
@@ -208,7 +209,7 @@ export default defineComponent({
          * Menu tag name
          */
         menuTag: {
-            type: String,
+            type: [String, Object as PropType<Component>, Function as PropType<Component>],
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.menuTag', 'div')
             }
@@ -217,7 +218,7 @@ export default defineComponent({
          * Menu item tag name
          */
         itemTag: {
-            type: String,
+            type: [String, Object as PropType<Component>, Function as PropType<Component>],
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.itemTag', 'div')
             }

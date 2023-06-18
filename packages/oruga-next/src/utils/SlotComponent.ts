@@ -1,4 +1,4 @@
-import type { DefineComponent } from 'vue';
+import type { Component, DefineComponent, PropType } from 'vue';
 import { defineComponent, h } from 'vue';
 
 export default defineComponent({
@@ -16,7 +16,7 @@ export default defineComponent({
             type: Object
         },
         tag: {
-            type: String,
+            type: [String, Object as PropType<Component>, Function as PropType<Component>],
             default: 'div'
         }
     },
