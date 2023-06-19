@@ -65,7 +65,7 @@
         </small>
         <ul :class="listClasses" v-else>
             <!--First-->
-            <li v-if="hasFirst" :class="itemClass">
+            <li v-if="hasFirst" :class="listItemClass">
                 <slot
                     v-if="hasDefaultSlot"
                     :page="getPage(1)"
@@ -78,10 +78,10 @@
                     :linkCurrentClass="linkCurrentClasses"
                     :page="getPage(1)" />
             </li>
-            <li v-if="hasFirstEllipsis" :class="itemClass"><span :class="ellipsisClasses">&hellip;</span></li>
+            <li v-if="hasFirstEllipsis" :class="listItemClass"><span :class="ellipsisClasses">&hellip;</span></li>
 
             <!--Pages-->
-            <li v-for="page in pagesInRange" :key="page.number" :class="itemClass">
+            <li v-for="page in pagesInRange" :key="page.number" :class="listItemClass">
                 <slot
                     v-if="hasDefaultSlot"
                     :page="page"
@@ -96,8 +96,8 @@
             </li>
 
             <!--Last-->
-            <li v-if="hasLastEllipsis" :class="itemClass"><span :class="ellipsisClasses">&hellip;</span></li>
-            <li v-if="hasLast" :class="itemClass">
+            <li v-if="hasLastEllipsis" :class="listItemClass"><span :class="ellipsisClasses">&hellip;</span></li>
+            <li v-if="hasLast" :class="listItemClass">
                 <slot
                     v-if="hasDefaultSlot"
                     :page="getPage(pageCount)"
@@ -207,7 +207,7 @@ export default defineComponent({
         rootClass: [String, Function, Array],
         prevBtnClass: [String, Function, Array],
         nextBtnClass: [String, Function, Array],
-        itemClass: [String, Function, Array],
+        listItemClass: [String, Function, Array],
         listClass: [String, Function, Array],
         linkClass: [String, Function, Array],
         linkCurrentClass: [String, Function, Array],

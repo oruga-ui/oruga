@@ -46,6 +46,10 @@ export default {
           specificity: "when <b>mobileClass</b> is applied",
         },
         {
+          class: "listItemClass",
+          description: "Class of the pagination list items",
+        },
+        {
           class: "linkClass",
           description: "Class of the link button",
           specificity: "when <b>mobileClass</b> is applied",
