@@ -29,7 +29,7 @@
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
-                    :size="paginationSize"
+                    :paginationSize="paginationSize"
                     @page-change="(event) => $emit('page-change', event)"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -587,7 +587,10 @@ export default {
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
         /** Size of pagination if paginated */
-        paginationSize: String,
+        paginationSize: {
+          type: String,
+          default: () => { return getValueByPath(getOptions(), 'table.paginationSize', 'small') }
+        },
         rootClass: [String, Function, Array],
         tableClass: [String, Function, Array],
         wrapperClass: [String, Function, Array],
