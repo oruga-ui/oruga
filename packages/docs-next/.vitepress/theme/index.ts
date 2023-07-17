@@ -21,6 +21,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import 'highlight.js/styles/github-dark.css'
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
+import xml from 'highlight.js/lib/languages/xml'
+import hljsVuePlugin from "@highlightjs/vue-plugin"
+
+hljs.registerLanguage('xml', xml)
+hljs.registerLanguage('javascript', javascript)
+
 export default {
   ...DefaultTheme,
   Layout,
@@ -29,6 +38,8 @@ export default {
     library.add(fas)
 
     app.component('vue-fontawesome', FontAwesomeIcon)
+
+    app.use(hljsVuePlugin)
 
     app.component('DocWrapper', DocWrapper)
     app.component('HFRepos', HFRepos)

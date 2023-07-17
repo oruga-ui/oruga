@@ -1,3 +1,46 @@
+<script lang="ts" setup>
+import { ref, computed, onMounted } from 'vue'
+
+const props = defineProps({
+    code: {
+        type: String,
+        required: true,
+    },
+    component: {
+        type: Object,
+        default: () => {}
+    },
+    showCode: {
+        type: Boolean,
+        default: () => true
+    }
+});
+
+const isOpen = ref(false)
+
+const codeComputed = computed(() => {
+    const code = props.code
+    return code.replace(/\.\.\//g, '')
+        .replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
+})
+
+const nodeRef = ref<any>(null)
+
+onMounted(() => {
+    let node = nodeRef.value?.parentNode
+    while (node) {
+        if (node && node.classList && node.classList.contains('vp-doc')) {
+            if (node.parentNode && node.parentNode.classList.contains('main')) {
+                node.classList.remove('vp-doc')
+                break
+            }
+        }
+        node = node.parentNode
+    }
+})
+
+</script>
+
 <template>
     <div
         ref="nodeRef"
@@ -18,95 +61,38 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
-import 'highlight.js/styles/github-dark.css'
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
-import xml from 'highlight.js/lib/languages/xml'
-import hljsVuePlugin from "@highlightjs/vue-plugin"
-
-hljs.registerLanguage('xml', xml)
-hljs.registerLanguage('javascript', javascript)
-
-export default defineComponent({
-    components: {
-        highlightjs: hljsVuePlugin.component
-    },
-    props: {
-        component: {
-            type: Object,
-            default: () => {}
-        },
-        code: String,
-        showCode: {
-            type: Boolean,
-            default: () => true
-        }
-    },
-    setup(props) {
-
-        const isOpen = ref(false)
-
-        const codeComputed = computed(() => {
-            const code = props.code
-            return code.replace(/\.\.\//g, '')
-                .replace('oruga-next/dist/oruga', '@oruga-ui/oruga-next')
-        })
-
-        const nodeRef = ref(null)
-
-        onMounted(() => {
-            let node = nodeRef.value.parentNode
-            while (node) {
-                if (node && node.classList && node.classList.contains('vp-doc')) {
-                    if (node.parentNode && node.parentNode.classList.contains('main')) {
-                        node.classList.remove('vp-doc')
-                        break
-                    }
-                }
-                node = node.parentNode
-            }
-        })
-
-        return {
-            isOpen,
-            codeComputed,
-            nodeRef
-        }
-    }
-})
-</script>
-
 <style lang="scss">
 
 .odocs-mt {
     margin-top: 1rem;
 }
 
-.odocs-panel {
-    border: 1px solid var(--vp-button-alt-bg);
-}
-
-.odocs-spaced > *:not(:last-child) {
-    margin-right: 0.5rem;
+.odocs-example .odocs-spaced > *{
     margin-bottom: 0.5rem;
-}
-
-.odocs-panel-trigger {
-    cursor: pointer;
-    text-align: center;
-    padding: 0.5rem;
-    background-color: var(--vp-button-alt-bg);
-}
-
-.odocs-panel-content {
-    display: flex;
-    background-color: var(--code-bg-color);
-    pre {
-        padding: 0;
-        margin: 0;
-        width: 100%;
+    &:not(:last-child) {
+        margin-right: 0.5rem;
     }
 }
+
+.odocs-panel {
+    border: 1px solid var(--vp-button-alt-bg);
+    
+    .odocs-panel-trigger {
+        cursor: pointer;
+        text-align: center;
+        padding: 0.5rem;
+        background-color: var(--vp-button-alt-bg);
+    }
+
+    .odocs-panel-content {
+        display: flex;
+        background-color: var(--code-bg-color);
+        pre {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+    }
+}
+
 </style>
