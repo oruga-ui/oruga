@@ -10,20 +10,27 @@ title: Switch
 
 <Carbon />
 </div>
-<example-switch />
-
-## Class props
-
-<br />
-
-<inspector-switch-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-switch />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-switch-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Switch Component
+
+### Props
 
 | Prop name      | Description                                                                         | Type                    | Values                                                                          | Default |
 | -------------- | ----------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- | ------- |
@@ -54,21 +61,63 @@ title: Switch
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $switch-active-background-color | $primary !default |
+| $switch-action-background | #f5f5f5 !default |
+| $switch-background | $grey-light !default |
+| $switch-border-radius | $base-border-radius !default |
+| $switch-box-shadow | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default |
+| $switch-disabled-opacity | $base-disabled-opacity !default |
+| $switch-margin-label | .5em !default |
+| $switch-padding | 0.2em !default |
+| $switch-rounded-border-radius | $base-rounded-border-radius !default |
+| $switch-width | 2.75 * 1em !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_switch.scss)
 
-| CSS Variable                           | SASS Variable                    | Default                                                                                          |
-| -------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
-| --oruga-switch-active-background-color | \$switch-active-background-color | \$primary                                                                                        |
-| --oruga-switch-action-background       | \$switch-action-background       | #f5f5f5                                                                                          |
-| --oruga-switch-background              | \$switch-background              | \$grey-light                                                                                     |
-| --oruga-switch-border-radius           | \$switch-border-radius           | \$base-border-radius                                                                             |
-| --oruga-switch-box-shadow              | \$switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
-| --oruga-switch-disabled-opacity        | \$switch-disabled-opacity        | \$base-disabled-opacity                                                                          |
-| --oruga-switch-margin-label            | \$switch-margin-label            | .5em                                                                                             |
-| --oruga-switch-padding                 | \$switch-padding                 | 0.2em                                                                                            |
-| --oruga-switch-rounded-border-radius   | \$switch-rounded-border-radius   | \$base-rounded-border-radius                                                                     |
-| --oruga-switch-width                   | \$switch-width                   | 2.75 \* 1em                                                                                      |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $switch-active-background-color | $primary !default |
+| $switch-action-background | #f5f5f5 !default |
+| $switch-background | $grey-light !default |
+| $switch-border-radius | $base-border-radius !default |
+| $switch-box-shadow | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) !default |
+| $switch-disabled-opacity | $base-disabled-opacity !default |
+| $switch-margin-label | .5em !default |
+| $switch-padding | 0.2em !default |
+| $switch-rounded-border-radius | $base-rounded-border-radius !default |
+| $switch-width | 2.75 * 1em !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_switch.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $switch-spacer | 0.5rem !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_switch.scss)
+
+</div>
 
 </div>

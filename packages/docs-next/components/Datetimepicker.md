@@ -10,20 +10,27 @@ title: Datetimepicker
 
 <Carbon />
 </div>
-<example-datetimepicker />
-
-## Class props
-
-<br />
-
-<inspector-datetimepicker-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-datetimepicker />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-datetimepicker-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Datetimepicker Component
+
+### Props
 
 | Prop name          | Description                                                 | Type           | Values                                            | Default                                                                                                                                  |
 | ------------------ | ----------------------------------------------------------- | -------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -77,12 +84,39 @@ title: Datetimepicker
 | ------ | ----------- | -------- |
 | footer |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datetimepicker.scss)
 
-| CSS Variable | SASS Variable | Default |
-| ------------ | ------------- | ------- |
+</div>
 
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datetimepicker.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+
+<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
+      
+</div>
 
 </div>

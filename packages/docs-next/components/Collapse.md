@@ -10,20 +10,27 @@ title: Collapse
 
 <Carbon />
 </div>
-<example-collapse />
-
-## Class props
-
-<br />
-
-<inspector-collapse-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-collapse />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-collapse-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Collapse Component
+
+### Props
 
 | Prop name | Description                                                              | Type    | Values          | Default                                                                                                                                   |
 | --------- | ------------------------------------------------------------------------ | ------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -48,12 +55,39 @@ title: Collapse
 | trigger |             |          |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_collapse.scss)
 
-| CSS Variable | SASS Variable | Default |
-| ------------ | ------------- | ------- |
+</div>
 
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_collapse.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+
+<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
+      
+</div>
 
 </div>

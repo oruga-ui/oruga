@@ -5,36 +5,49 @@ import { useSidebar } from 'vitepress/dist/client/theme-default/composables/side
 
 const { hasSidebar } = useSidebar()
 
-const selected = ref('')
+const selectedTheme = ref('')
 
-const themeOptions = ref([
-    { label: 'Base CSS', value: 'basecss' },
-    { label: 'Full CSS', value: 'fullcss' },
-    { label: 'Bulma CSS', value: 'bulmacss' }
-])
+const themes =  [
+    { 
+        label: 'Oruga Base Theme', 
+        value: 'theme-orugabase'
+    },
+    { 
+        label: 'Oruga Full Theme', 
+        value: 'theme-orugafull'
+    },
+    { 
+        label: 'Bulma Theme', 
+        value: 'theme-bulma'
+    },
+    { 
+        label: 'Bootstrap Theme', 
+        value: 'theme-bootstrap'
+    }
+]
 
 const onThemeChange = function (value) {
-    localStorage.setItem('oruga.io_theme', selected.value)
+    localStorage.setItem('oruga.io_theme', selectedTheme.value)
     location.reload()
 }
 
 if (typeof window !== 'undefined') {
-    selected.value = localStorage.getItem('oruga.io_theme') || 'fullcss'
+    selectedTheme.value = localStorage.getItem('oruga.io_theme') || themes[0].value;
 }
 </script>
 
 <template>
-    <Layout>
+    <Layout :class="selectedTheme">
         <template #doc-before>
             <client-only>
-                <Teleport to=".VPNavBar .container .content">
+                <Teleport to=".VPNavBar .container .content .content-body">
                     <div class="theme-selector" v-if="hasSidebar">
                         Theme ->
                         <select
-                            v-model="selected"
+                            v-model="selectedTheme"
                             @change="onThemeChange"
                         >
-                            <option v-for="item in themeOptions" :value="item.value">
+                            <option v-for="item in themes" :value="item.value">
                                 {{ item.label }}
                             </option>
                         </select>

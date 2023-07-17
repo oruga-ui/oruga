@@ -64,6 +64,7 @@ export default defineConfig({
     appearance: false,
     themeConfig: {
       logo: '/logo.png',
+      outline: [0, 3],
       socialLinks: [
         { icon: "discord", link: "https://discord.gg/RuKuBYN" },
         { icon: "twitter", link: "https://twitter.com/oruga_ui" },
@@ -78,7 +79,6 @@ export default defineConfig({
               { text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
             ]
           },
-        // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },
         {
           text: `v${version}`,
           items: [
@@ -97,23 +97,24 @@ export default defineConfig({
         '/documentation/': [
             {
                 text: 'Get Started',
-                collapsible: true,
+                collapsed: false,
                 items: getStartedItems
             },
             {
                 text: 'Components',
-                collapsible: true,
+                collapsed: false,
                 items: componentsItems
             }
         ],
         '/components/': [
             {
                 text: 'Get Started',
-                collapsible: true,
+                collapsed: false,
                 items: getStartedItems
             },
             {
                 text: 'Components',
+                collapsed: false,
                 items: componentsItems
             }
         ]

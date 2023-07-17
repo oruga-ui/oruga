@@ -10,20 +10,27 @@ title: Skeleton
 
 <Carbon />
 </div>
-<example-skeleton />
-
-## Class props
-
-<br />
-
-<inspector-skeleton-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-skeleton />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-skeleton-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Skeleton Component
+
+### Props
 
 | Prop name | Description                                  | Type           | Values                      | Default |
 | --------- | -------------------------------------------- | -------------- | --------------------------- | ------- |
@@ -38,15 +45,54 @@ title: Skeleton
 | size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
 | width     | Custom width                                 | number\|string | -                           |         |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $skeleton-background | linear-gradient(90deg, $grey-lighter 25%, rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) !default |
+| $skeleton-border-radius | $base-border-radius !default |
+| $skeleton-duration | 1.5s !default |
+| $skeleton-margin | .5rem 0 0 0 !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_skeleton.scss)
 
-| CSS Variable                   | SASS Variable            | Default                                                                                     |
-| ------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------- |
-| --oruga-skeleton-background    | \$skeleton-background    | linear-gradient(90deg, $grey-lighter 25%, rgba($grey-lighter, 0.5) 50%, \$grey-lighter 75%) |
-| --oruga-skeleton-border-radius | \$skeleton-border-radius | \$base-border-radius                                                                        |
-| --oruga-skeleton-duration      | \$skeleton-duration      | 1.5s                                                                                        |
-| --oruga-skeleton-margin        | \$skeleton-margin        | .5rem 0 0 0                                                                                 |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $skeleton-background | linear-gradient(90deg, $grey-lighter 25%, rgba($grey-lighter, 0.5) 50%, $grey-lighter 75%) !default |
+| $skeleton-border-radius | $base-border-radius !default |
+| $skeleton-duration | 1.5s !default |
+| $skeleton-margin | .5rem 0 0 0 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_skeleton.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $skeleton-bg-color | $dark-bg-subtle !default |
+| $skeleton-bg | linear-gradient(  90deg,  $skeleton-bg-color 25%,  rgba($skeleton-bg-color, 0.5) 50%,  $skeleton-bg-color 75%) !default |
+| $skeleton-duration | 1.5s !default |
+| $skeleton-margin | 0.5rem 0 0 0 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_skeleton.scss)
+
+</div>
 
 </div>

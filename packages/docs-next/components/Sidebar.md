@@ -10,20 +10,27 @@ title: Sidebar
 
 <Carbon />
 </div>
-<example-sidebar />
-
-## Class props
-
-<br />
-
-<inspector-sidebar-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-sidebar />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-sidebar-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Sidebar Component
+
+### Props
 
 | Prop name          | Description                                                                                               | Type           | Values                                                                          | Default                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -57,17 +64,56 @@ title: Sidebar
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $sidebar-overlay | hsla(0,0%,4%,.86) !default |
+| $sidebar-box-shadow | 5px 0px 13px 3px rgba($black, 0.1) !default |
+| $sidebar-content-background-color | $grey-lighter !default |
+| $sidebar-mobile-width | 80px !default |
+| $sidebar-width | 260px !default |
+| $sidebar-zindex | 38 !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
 
-| CSS Variable                             | SASS Variable                      | Default                             |
-| ---------------------------------------- | ---------------------------------- | ----------------------------------- |
-| --oruga-sidebar-overlay                  | \$sidebar-overlay                  | hsla(0,0%,4%,.86)                   |
-| --oruga-sidebar-box-shadow               | \$sidebar-box-shadow               | 5px 0px 13px 3px rgba(\$black, 0.1) |
-| --oruga-sidebar-content-background-color | \$sidebar-content-background-color | \$grey-lighter                      |
-| --oruga-sidebar-mobile-width             | \$sidebar-mobile-width             | 80px                                |
-| --oruga-sidebar-width                    | \$sidebar-width                    | 260px                               |
-| --oruga-sidebar-zindex                   | \$sidebar-zindex                   | 38                                  |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $sidebar-overlay | hsla(0,0%,4%,.86) !default |
+| $sidebar-box-shadow | 5px 0px 13px 3px rgba($black, 0.1) !default |
+| $sidebar-content-background-color | $grey-lighter !default |
+| $sidebar-mobile-width | 80px !default |
+| $sidebar-width | 260px !default |
+| $sidebar-zindex | 38 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_sidebar.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $sidebar-reduced-width | 5rem !default |
+| $sidebar-reduced-height | 10vh !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_sidebar.scss)
+
+</div>
 
 </div>

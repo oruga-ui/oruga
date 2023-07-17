@@ -10,20 +10,27 @@ title: Steps
 
 <Carbon />
 </div>
-<example-steps />
-
-## Class props
-
-<br />
-
-<inspector-steps-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-steps />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-steps-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Steps Component
+
+### Props
 
 | Prop name         | Description                                                                                                                   | Type    | Values                                            | Default                                                                                                                                        |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -52,7 +59,9 @@ title: Steps
 
 <div class="vp-doc">
 
-## Props
+## StepItem Component
+
+### Props
 
 | Prop name | Description                                                                                                                         | Type           | Values | Default   |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
@@ -62,31 +71,89 @@ title: Steps
 | variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
 
 </div>
+<div class="vp-doc">
 
-## Style
+</div>
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $steps-details-background-color | hsl(0, 0%, 100%) !default |
+| $steps-details-padding | .2em !default |
+| $steps-marker-background | $grey-light !default |
+| $steps-marker-color | $primary-invert !default |
+| $steps-marker-border | .2em solid #fff !default |
+| $steps-marker-font-weight | 700 !default |
+| $steps-marker-rounded-border-radius | $base-rounded-border-radius !default |
+| $steps-color | $grey-lighter !default |
+| $steps-previous-color | $primary !default |
+| $steps-active-color | $primary !default |
+| $steps-divider-height | .2em !default |
+| $steps-vertical-padding | 1em 0 !default |
+| $steps-item-line-height | $base-line-height !default |
+| $steps-link-color | hsl(0, 0%, 29%) !default |
+| $steps-content-padding | 1rem !default |
+| $steps-font-size | $base-font-size !default |
+| $steps-details-title-font-weight | 600 !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
 
-| CSS Variable                               | SASS Variable                        | Default                      |
-| ------------------------------------------ | ------------------------------------ | ---------------------------- |
-| --oruga-steps-details-background-color     | \$steps-details-background-color     | hsl(0, 0%, 100%)             |
-| --oruga-steps-details-padding              | \$steps-details-padding              | .2em                         |
-| --oruga-steps-marker-background            | \$steps-marker-background            | \$grey-light                 |
-| --oruga-steps-marker-color                 | \$steps-marker-color                 | \$primary-invert             |
-| --oruga-steps-marker-border                | \$steps-marker-border                | .2em solid #fff              |
-| --oruga-steps-marker-font-weight           | \$steps-marker-font-weight           | 700                          |
-| --oruga-steps-marker-rounded-border-radius | \$steps-marker-rounded-border-radius | \$base-rounded-border-radius |
-| --oruga-steps-color                        | \$steps-color                        | \$grey-lighter               |
-| --oruga-steps-previous-color               | \$steps-previous-color               | \$primary                    |
-| --oruga-steps-active-color                 | \$steps-active-color                 | \$primary                    |
-| --oruga-steps-divider-height               | \$steps-divider-height               | .2em                         |
-| --oruga-steps-vertical-padding             | \$steps-vertical-padding             | 1em 0                        |
-| --oruga-steps-item-line-height             | \$steps-item-line-height             | \$base-line-height           |
-| --oruga-steps-link-color                   | \$steps-link-color                   | hsl(0, 0%, 29%)              |
-| --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
-| --oruga-steps-font-size                    | \$steps-font-size                    | \$base-font-size             |
-| --oruga-steps-details-title-font-weight    | \$steps-details-title-font-weight    | 600                          |
-| --oruga-steps-divider-color-bg             | \$steps-divider-color-bg             | \$steps-color                |
-| --oruga-steps-divider-color                | \$steps-divider-color                | \$primary                    |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $steps-details-background-color | hsl(0, 0%, 100%) !default |
+| $steps-details-padding | .2em !default |
+| $steps-marker-background | $grey-light !default |
+| $steps-marker-color | $primary-invert !default |
+| $steps-marker-border | .2em solid #fff !default |
+| $steps-marker-font-weight | 700 !default |
+| $steps-marker-rounded-border-radius | $base-rounded-border-radius !default |
+| $steps-color | $grey-lighter !default |
+| $steps-previous-color | $primary !default |
+| $steps-active-color | $primary !default |
+| $steps-divider-height | .2em !default |
+| $steps-vertical-padding | 1em 0 !default |
+| $steps-item-line-height | $base-line-height !default |
+| $steps-link-color | hsl(0, 0%, 29%) !default |
+| $steps-content-padding | 1rem !default |
+| $steps-font-size | $base-font-size !default |
+| $steps-details-title-font-weight | 600 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $steps-marker-bg | var(--#{$prefix}gray-light) !default |
+| $steps-marker-border | var(--#{$prefix}white) !default |
+| $steps-marker-color | var(--#{$prefix}white) |
+| $steps-color-active | var(--#{$prefix}primary) |
+| $steps-title-color | var(--#{$prefix}dark) |
+| $steps-title-bg | var(--#{$prefix}white) !default |
+| $steps-divider-height | 0.2em !default |
+| $steps-content-spacer | 1rem !default |
+| $steps-content-padding | 1rem !default |
+| $steps-vertical-padding | 1em 0 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
+
+</div>
 
 </div>

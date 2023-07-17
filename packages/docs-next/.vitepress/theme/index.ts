@@ -15,6 +15,7 @@ import Carbon from './components/Carbon.vue'
 import Oruga, { useProgrammatic } from '../../../oruga-next/dist/oruga'
 
 import { bulmaConfig } from '@oruga-ui/theme-bulma'
+import { bootstrapConfig } from '@oruga-ui/theme-bootstrap'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -60,7 +61,7 @@ export default {
     if (typeof window !== 'undefined') {
         const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
         switch (theme) {
-            case 'fullcss': {
+            case 'theme-orugafull': {
                 if (process.env.NODE_ENV !== 'production') {
                     // @ts-ignore
                     import('../../../oruga-next/dist/oruga-full-vars.css').then(() => {})
@@ -72,14 +73,14 @@ export default {
                 }
                 break
             }
-            case 'basecss': {
+            case 'theme-orugabase': {
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
                 document.head.appendChild(link)
                 break
             }
-            case 'bulmacss': {
+            case 'theme-bulma': {
                 bulmaConfig.iconPack = 'fas'
                 bulmaConfig.iconComponent = 'vue-fontawesome'
                 const { oruga } = useProgrammatic()
@@ -87,6 +88,17 @@ export default {
                 const link = document.createElement('link')
                 link.rel = 'stylesheet'
                 link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
+                document.head.appendChild(link)
+                break
+            }
+            case 'theme-bootstrap': {
+                bootstrapConfig.iconPack = 'fas'
+                bootstrapConfig.iconComponent = 'vue-fontawesome'
+                const { oruga } = useProgrammatic()
+                oruga.config.setOptions(bootstrapConfig)
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.min.css'
                 document.head.appendChild(link)
                 break
             }

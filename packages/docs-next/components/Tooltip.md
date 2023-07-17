@@ -10,20 +10,27 @@ title: Tooltip
 
 <Carbon />
 </div>
-<example-tooltip />
-
-## Class props
-
-<br />
-
-<inspector-tooltip-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-tooltip />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-tooltip-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Tooltip Component
+
+### Props
 
 | Prop name    | Description                                                                     | Type                | Values                                                                                                                                                                        | Default                                                                                                                                    |
 | ------------ | ------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -55,23 +62,70 @@ title: Tooltip
 | content |             |          |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $tooltip-arrow-margin | 2px !default |
+| $tooltip-arrow-size | 5px !default |
+| $tooltip-background-color | $primary !default |
+| $tooltip-color | $primary-invert !default |
+| $tooltip-content-box-shadow | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) !default |
+| $tooltip-content-font-size | 0.85rem !default |
+| $tooltip-content-max-width | 300px !default |
+| $tooltip-content-multiline-width | 300px !default |
+| $tooltip-content-padding | 0.35rem 0.75rem !default |
+| $tooltip-content-radius-large | 6px !default |
+| $tooltip-content-weight-normal | 400 !default |
+| $tooltip-content-zindex | 38 !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tooltip.scss)
 
-| CSS Variable                            | SASS Variable                     | Default                            |
-| --------------------------------------- | --------------------------------- | ---------------------------------- |
-| --oruga-tooltip-arrow-margin            | \$tooltip-arrow-margin            | 2px                                |
-| --oruga-tooltip-arrow-size              | \$tooltip-arrow-size              | 5px                                |
-| --oruga-tooltip-background-color        | \$tooltip-background-color        | \$primary                          |
-| --oruga-tooltip-color                   | \$tooltip-color                   | \$primary-invert                   |
-| --oruga-tooltip-content-box-shadow      | \$tooltip-content-box-shadow      | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) |
-| --oruga-tooltip-content-font-size       | \$tooltip-content-font-size       | 0.85rem                            |
-| --oruga-tooltip-content-max-width       | \$tooltip-content-max-width       | 300px                              |
-| --oruga-tooltip-content-multiline-width | \$tooltip-content-multiline-width | 300px                              |
-| --oruga-tooltip-content-padding         | \$tooltip-content-padding         | 0.35rem 0.75rem                    |
-| --oruga-tooltip-content-radius-large    | \$tooltip-content-radius-large    | 6px                                |
-| --oruga-tooltip-content-weight-normal   | \$tooltip-content-weight-normal   | 400                                |
-| --oruga-tooltip-content-zindex          | \$tooltip-content-zindex          | 38                                 |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $tooltip-arrow-margin | 2px !default |
+| $tooltip-arrow-size | 5px !default |
+| $tooltip-background-color | $primary !default |
+| $tooltip-color | $primary-invert !default |
+| $tooltip-content-box-shadow | 0px 1px 2px 1px rgba(0, 1, 0, 0.2) !default |
+| $tooltip-content-font-size | 0.85rem !default |
+| $tooltip-content-max-width | 300px !default |
+| $tooltip-content-multiline-width | 300px !default |
+| $tooltip-content-padding | 0.35rem 0.75rem !default |
+| $tooltip-content-radius-large | 6px !default |
+| $tooltip-content-weight-normal | 400 !default |
+| $tooltip-content-zindex | 38 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tooltip.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $tooltip-arrow-spacer | 2px !default |
+| $tooltip-content-multiline-width | 50vw !default |
+| $tooltip-shadow | $box-shadow-sm !default |
+| $tooltip-zindex | $zindex-tooltip |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tooltip.scss)
+
+</div>
 
 </div>

@@ -10,20 +10,27 @@ title: Upload
 
 <Carbon />
 </div>
-<example-upload />
-
-## Class props
-
-<br />
-
-<inspector-upload-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-upload />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-upload-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Upload Component
+
+### Props
 
 | Prop name          | Description                                                           | Type                | Values                                                                          | Default                                                                                                                                  |
 | ------------------ | --------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
@@ -60,16 +67,60 @@ title: Upload
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $upload-draggable-border | 1px dashed $grey-light !default |
+| $upload-draggable-border-radius | $base-border-radius !default |
+| $upload-draggable-disabled-opacity | $base-disabled-opacity !default |
+| $upload-draggable-hover-border-color | $grey !default |
+| $upload-draggable-padding | 0.25em !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_upload.scss)
 
-| CSS Variable                                | SASS Variable                         | Default                 |
-| ------------------------------------------- | ------------------------------------- | ----------------------- |
-| --oruga-upload-draggable-border             | \$upload-draggable-border             | 1px dashed \$grey-light |
-| --oruga-upload-draggable-border-radius      | \$upload-draggable-border-radius      | \$base-border-radius    |
-| --oruga-upload-draggable-disabled-opacity   | \$upload-draggable-disabled-opacity   | \$base-disabled-opacity |
-| --oruga-upload-draggable-hover-border-color | \$upload-draggable-hover-border-color | \$grey                  |
-| --oruga-upload-draggable-padding            | \$upload-draggable-padding            | 0.25em                  |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $upload-draggable-border | 1px dashed $grey-light !default |
+| $upload-draggable-border-radius | $base-border-radius !default |
+| $upload-draggable-disabled-opacity | $base-disabled-opacity !default |
+| $upload-draggable-hover-border-color | $grey !default |
+| $upload-draggable-padding | 0.25em !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_upload.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $upload-draggable-bg | transparent !default |
+| $upload-draggable-bg-hover | transparent !default |
+| $upload-draggable-border-color | var(--#{$prefix}border-color) !default |
+| $upload-draggable-border-color-hover | var(--#{$prefix}dark-bg-subtle) !default |
+| $upload-draggable-border-width | var(--#{$prefix}border-width) !default |
+| $upload-draggable-border-radius | var(--#{$prefix}border-radius) !default |
+| $upload-draggable-padding | 2em !default |
+| $upload-disabled-opacity | 0.5 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_upload.scss)
+
+</div>
 
 </div>

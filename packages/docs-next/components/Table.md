@@ -10,20 +10,27 @@ title: Table
 
 <Carbon />
 </div>
-<example-table />
-
-## Class props
-
-<br />
-
-<inspector-table-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-table />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-table-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Table Component
+
+### Props
 
 | Prop name             | Description                                                                                                               | Type           | Values                     | Default                                                                                                                                           |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -35,7 +42,7 @@ title: Table
 | backendPagination     | Rows won't be paginated with Javascript, use with page-change event to paginate in your backend                           | boolean        | -                          |                                                                                                                                                   |
 | backendSorting        | Columns won't be sorted with Javascript, use with sort event to sort in your backend                                      | boolean        | -                          |                                                                                                                                                   |
 | bordered              | Border to all cells                                                                                                       | boolean        | -                          |                                                                                                                                                   |
-| checkable             | Rows can be checked (multiple), checked rows will have a .is-checked class if you want to style                           | boolean        | -                          |                                                                                                                                                   |
+| checkable             | Rows can be checked (multiple)                                                                                            | boolean        | -                          |                                                                                                                                                   |
 | checkboxPosition      | Position of the checkbox (if checkable is true)                                                                           | string         | `left`, `right`            | 'left'                                                                                                                                            |
 | checkedRows           | Set which rows are checked, use v-model:checkedRows to make it two-way binding                                            | array          | -                          | []                                                                                                                                                |
 | columns               | Table columns                                                                                                             | array          | -                          | []                                                                                                                                                |
@@ -72,6 +79,7 @@ title: Table
 | paginated             | Adds pagination to the table                                                                                              | boolean        | -                          |                                                                                                                                                   |
 | paginationPosition    | Pagination position (if paginated)                                                                                        | string         | `bottom`, `top`, `bot`     | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table: {<br>&nbsp;&nbsp;paginationPosition: 'bottom'<br>}</code> |
 | paginationRounded     | Rounded pagination if paginated                                                                                           | boolean        | -                          |                                                                                                                                                   |
+| paginationSize        | Size of pagination if paginated                                                                                           | string         | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table: {<br>&nbsp;&nbsp;paginationSize: 'small'<br>}</code>      |
 | perPage               | How many rows per page (if paginated)                                                                                     | number\|string | -                          | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> table: {<br>&nbsp;&nbsp;perPage: 20<br>}</code>                  |
 | rowClass              | Add a class to row based on the return                                                                                    | func           | -                          | Default function (see source code)                                                                                                                |
 | scrollable            | Add a horizontal scrollbar when table is too wide                                                                         | boolean        | -                          |                                                                                                                                                   |
@@ -127,12 +135,12 @@ title: Table
 | pagination  |             |          |
 | top-left    |             |          |
 | caption     |             |          |
+| preheader   |             |          |
 | detail      |             | <br/>    |
 | empty       |             |          |
 | footer      |             |          |
 | loading     |             |          |
 | bottom-left |             |          |
-| preheader   | A slot inside `<thead>` above the normal header row. | |
 
 ---
 
@@ -140,7 +148,9 @@ title: Table
 
 <div class="vp-doc">
 
-## Props
+## TableColumn Component
+
+### Props
 
 | Prop name        | Description                                                     | Type                                         | Values                      | Default                            |
 | ---------------- | --------------------------------------------------------------- | -------------------------------------------- | --------------------------- | ---------------------------------- |
@@ -163,48 +173,129 @@ title: Table
 | width            |                                                                 | number\|string                               | -                           |                                    |
 
 </div>
+<div class="vp-doc">
 
-## Style
+</div>
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $table-background-color | #fff !default |
+| $table-background | #f5f5f5 !default |
+| $table-boder | 1px solid transparent !default |
+| $table-border-radius | $base-border-radius !default |
+| $table-card-box-shadow | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default |
+| $table-card-cell-font-weight | 600 !default |
+| $table-card-cell-padding | 0 0.5em 0 0 !default |
+| $table-card-cell-text-align | left !default |
+| $table-card-detail-margin | -1rem 0 0 0 |
+| $table-card-margin | 0 0 1rem 0 |
+| $table-color | black !default |
+| $table-current-sort-border-color | $grey !default |
+| $table-current-sort-font-weight | 700 !default |
+| $table-current-sort-hover-border-color | $grey !default |
+| $table-detail-background | #fafafa !default |
+| $table-detail-box-shadow | inset 0 1px 3px $grey !default |
+| $table-detail-chevron-color | $primary !default |
+| $table-detail-chevron-width | 40px !default |
+| $table-detail-padding | 1rem !default |
+| $table-focus-border-color | $primary !default |
+| $table-focus-box-shadow | 0 0 0 0.125em rgba($primary, 0.25) !default |
+| $table-hoverable-background-color | #fafafa !default |
+| $table-narrow-padding | .25em .5em !default |
+| $table-row-active-background-color | $primary !default |
+| $table-row-active-color | $primary-invert !default |
+| $table-sticky-header-height | 300px !default |
+| $table-sticky-zindex | 1 !default |
+| $table-striped-background-color | #fafafa !default |
+| $table-td-border | 1px solid $grey-lighter !default |
+| $table-td-padding | .5em .75em !default |
+| $table-th-border | 2px solid $grey-lighter !default |
+| $table-th-checkbox-width | 40px !default |
+| $table-th-color | #363636 !default |
+| $table-th-detail-width | 14px !default |
+| $table-th-font-weight | 600 !default |
+| $table-th-padding | 0.5em 0.75em !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
 
-| CSS Variable                                  | SASS Variable                           | Default                                                  |
-| --------------------------------------------- | --------------------------------------- | -------------------------------------------------------- |
-| --oruga-table-background-color                | \$table-background-color                | #fff                                                     |
-| --oruga-table-background                      | \$table-background                      | #f5f5f5                                                  |
-| --oruga-table-boder                           | \$table-boder                           | 1px solid transparent                                    |
-| --oruga-table-border-radius                   | \$table-border-radius                   | \$base-border-radius                                     |
-| --oruga-table-card-box-shadow                 | \$table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
-| --oruga-table-card-cell-font-weight           | \$table-card-cell-font-weight           | 600                                                      |
-| --oruga-table-card-cell-padding               | \$table-card-cell-padding               | 0 0.5em 0 0                                              |
-| --oruga-table-card-cell-text-align            | \$table-card-cell-text-align            | left                                                     |
-| --oruga-table-card-detail-margin              | \$table-card-detail-margin              | -1rem 0 0 0                                              |
-| --oruga-table-card-margin                     | \$table-card-margin                     | 0 0 1rem 0                                               |
-| --oruga-table-color                           | \$table-color                           | black                                                    |
-| --oruga-table-current-sort-border-color       | \$table-current-sort-border-color       | \$grey                                                   |
-| --oruga-table-current-sort-font-weight        | \$table-current-sort-font-weight        | 700                                                      |
-| --oruga-table-current-sort-hover-border-color | \$table-current-sort-hover-border-color | \$grey                                                   |
-| --oruga-table-detail-background               | \$table-detail-background               | #fafafa                                                  |
-| --oruga-table-detail-box-shadow               | \$table-detail-box-shadow               | inset 0 1px 3px \$grey                                   |
-| --oruga-table-detail-chevron-color            | \$table-detail-chevron-color            | \$primary                                                |
-| --oruga-table-detail-chevron-width            | \$table-detail-chevron-width            | 40px                                                     |
-| --oruga-table-detail-padding                  | \$table-detail-padding                  | 1rem                                                     |
-| --oruga-table-focus-border-color              | \$table-focus-border-color              | \$primary                                                |
-| --oruga-table-focus-box-shadow                | \$table-focus-box-shadow                | 0 0 0 0.125em rgba(\$primary, 0.25)                      |
-| --oruga-table-hoverable-background-color      | \$table-hoverable-background-color      | #fafafa                                                  |
-| --oruga-table-narrow-padding                  | \$table-narrow-padding                  | .25em .5em                                               |
-| --oruga-table-row-active-background-color     | \$table-row-active-background-color     | \$primary                                                |
-| --oruga-table-row-active-color                | \$table-row-active-color                | \$primary-invert                                         |
-| --oruga-table-sticky-header-height            | \$table-sticky-header-height            | 300px                                                    |
-| --oruga-table-sticky-zindex                   | \$table-sticky-zindex                   | 1                                                        |
-| --oruga-table-striped-background-color        | \$table-striped-background-color        | #fafafa                                                  |
-| --oruga-table-td-border                       | \$table-td-border                       | 1px solid \$grey-lighter                                 |
-| --oruga-table-td-padding                      | \$table-td-padding                      | .5em .75em                                               |
-| --oruga-table-th-border                       | \$table-th-border                       | 2px solid \$grey-lighter                                 |
-| --oruga-table-th-checkbox-width               | \$table-th-checkbox-width               | 40px                                                     |
-| --oruga-table-th-color                        | \$table-th-color                        | #363636                                                  |
-| --oruga-table-th-detail-width                 | \$table-th-detail-width                 | 14px                                                     |
-| --oruga-table-th-font-weight                  | \$table-th-font-weight                  | 600                                                      |
-| --oruga-table-th-padding                      | \$table-th-padding                      | 0.5em 0.75em                                             |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $table-background-color | #fff !default |
+| $table-background | #f5f5f5 !default |
+| $table-boder | 1px solid transparent !default |
+| $table-border-radius | $base-border-radius !default |
+| $table-card-box-shadow | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default |
+| $table-card-cell-font-weight | 600 !default |
+| $table-card-cell-padding | 0 0.5em 0 0 !default |
+| $table-card-cell-text-align | left !default |
+| $table-card-detail-margin | -1rem 0 0 0 |
+| $table-card-margin | 0 0 1rem 0 |
+| $table-color | black !default |
+| $table-current-sort-border-color | $grey !default |
+| $table-current-sort-font-weight | 700 !default |
+| $table-current-sort-hover-border-color | $grey !default |
+| $table-detail-background | #fafafa !default |
+| $table-detail-box-shadow | inset 0 1px 3px $grey !default |
+| $table-detail-chevron-color | $primary !default |
+| $table-detail-chevron-width | 40px !default |
+| $table-detail-padding | 1rem !default |
+| $table-focus-border-color | $primary !default |
+| $table-focus-box-shadow | 0 0 0 0.125em rgba($primary, 0.25) !default |
+| $table-hoverable-background-color | #fafafa !default |
+| $table-narrow-padding | .25em .5em !default |
+| $table-row-active-background-color | $primary !default |
+| $table-row-active-color | $primary-invert !default |
+| $table-sticky-header-height | 300px !default |
+| $table-sticky-zindex | 1 !default |
+| $table-striped-background-color | #fafafa !default |
+| $table-td-border | 1px solid $grey-lighter !default |
+| $table-td-padding | .5em .75em !default |
+| $table-th-border | 2px solid $grey-lighter !default |
+| $table-th-checkbox-width | 40px !default |
+| $table-th-color | #363636 !default |
+| $table-th-detail-width | 14px !default |
+| $table-th-font-weight | 600 !default |
+| $table-th-padding | 0.5em 0.75em !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $table-head-bg | initial !default |
+| $table-head-color | initial !default |
+| $table-head-border-width | var(--#{$prefix}border-width) !default |
+| $table-sticky-zindex | 1 !default |
+| $table-sticky-bg | initial !default |
+| $table-sticky-color | initial !default |
+| $table-detail-padding | 0.5rem 0.75rem !default |
+| $table-detail-bg | var(--#{$prefix}gray-light) !default |
+| $table-sortable-hover-border-color | var(--#{$prefix}secondary) !default |
+| $table-current-sort-bg | var(--#{$prefix}gray-light) !default |
+| $table-focus-color | var(--#{$prefix}-info-rgb) !default |
+| $table-card-spacer | $spacer |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_table.scss)
+
+</div>
 
 </div>

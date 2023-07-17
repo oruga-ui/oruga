@@ -85,3 +85,38 @@
         opacity: 1;
     }
 }
+
+// Theme style 
+
+.theme-orugabase {
+  .theme-orugafull,
+  .theme-bulma,
+  .theme-bootstrap, {
+    display: none;
+  }
+}
+
+
+.theme-orugafull {
+  .theme-orugabase,
+  .theme-bulma,
+  .theme-bootstrap, {
+    display: none;
+  }
+}
+
+.theme-bulma {
+  .theme-orugabase,
+  .theme-orugafull,
+  .theme-bootstrap, {
+    display: none;
+  }
+}
+
+.theme-bootstrap {
+  .theme-orugabase,
+  .theme-orugafull,
+  .theme-bulma, {
+    display: none;
+  }
+}

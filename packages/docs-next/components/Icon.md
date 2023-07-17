@@ -10,20 +10,27 @@ title: Icon
 
 <Carbon />
 </div>
-<example-icon />
-
-## Class props
-
-<br />
-
-<inspector-icon-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-icon />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-icon-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Icon Component
+
+### Props
 
 | Prop name   | Description                                                                                                          | Type           | Values                                                                                                                             | Default |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------- |
@@ -40,12 +47,49 @@ title: Icon
 | spin        | Enable spin effect on icon                                                                                           | boolean        | -                                                                                                                                  |         |
 | variant     | Color of the icon, optional                                                                                          | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                    |         |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $icon-spin-duration | 2s !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_icon.scss)
 
-| CSS Variable               | SASS Variable        | Default |
-| -------------------------- | -------------------- | ------- |
-| --oruga-icon-spin-duration | \$icon-spin-duration | 2s      |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $icon-spin-duration | 2s !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_icon.scss)
+
+</div>
+
+<div class="theme-bulma">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $icon-spin-duration | 2s !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_icon.scss)
+
+</div>
+
+<div class="theme-bootstrap">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $icon-spin-animation-duration | 1.5s !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_icon.scss)
+
+</div>
 
 </div>

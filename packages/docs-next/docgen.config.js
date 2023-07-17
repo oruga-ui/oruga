@@ -1,8 +1,32 @@
 const path = require('path');
 const fs = require('fs');
 
-const src = '../oruga-next/src';
-const srcScss = '../oruga/src';
+const THEMES = [
+  { 
+      label: 'Oruga Base Theme', 
+      value: 'theme-orugabase',
+      path: '../oruga/src',
+      git: 'https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src'
+  },
+  { 
+      label: 'Oruga Full Theme', 
+      value: 'theme-orugafull', 
+      path: '../oruga/src',
+      git: 'https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src'
+  },
+  { 
+      label: 'Bulma Theme', 
+      value: 'theme-bulma', 
+      path: './node_modules/@oruga-ui/theme-bulma/dist',
+      git: 'https://github.com/oruga-ui/theme-bulma/tree/main/src/assets'
+  },
+  { 
+      label: 'Bootstrap Theme', 
+      value: 'theme-bootstrap', 
+      path: './node_modules/@oruga-ui/theme-bootstrap/dist',
+      git: 'https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets'
+  }
+]
 
 const IGNORE = [
   'DropdownItem', 'FieldBody', 'SliderThumb', 'SliderTick',
@@ -26,7 +50,7 @@ const getComponent = (filename) => {
 }
 
 module.exports = {
-  componentsRoot: `${src}/components`,
+  componentsRoot: `../oruga-next/src/components`,
   components: '**/[A-Z]*.vue',
   outDir: './components',
   docsRepo: 'oruga-ui/oruga',
@@ -40,6 +64,7 @@ module.exports = {
     return path.join(config.outDir, `${component}.md`);
   },
   templates: {
+    props: (props) => props,
     component: (renderedUsage, doc, config, _fileName, requiresMd, { isSubComponent }) => {
       const { displayName, description, tags, functional } = doc;
       const { deprecated, author, since, version, see, link, style } = tags || {};
@@ -62,46 +87,57 @@ ${version ? `Version: ${version[0].description}\n` : ''}
 ${see ? see.map(s => `[See](${s.description})\n`) : ''}
 ${link ? link.map(l => `[See](${l.description})\n`) : ''}
 <Carbon />
-</div>
-${'<example-' + component.toLowerCase() + ' />'}
-${tmplClassProps(config, component.toLowerCase())}
-`}
+</div>`}
+${!isSubComponent ? `
 <div class="vp-doc">
-${tmplProps(renderedUsage.props, config, component.toLowerCase())}
+${tmplExamples(component)}
+</div>
+<div class="vp-doc">
+${tmplClassProps(config, component)}
+</div>
+`: ''}
+<div class="vp-doc">
+${tmplProps(renderedUsage.props, config, component)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
 ${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
+</div>
+<div class="vp-doc">
 ${style ? renderStyleDocs(config, style[0].description) : ''}
 </div>`;
     },
-    props: (props) => {
-      return props
-    }
   }
 };
 
+function tmplExamples(name) {
+  return `
+  ## Examples
+
+  ${'<example-' + name.toLowerCase() + ' />'}
+  `;
+}
+
 function tmplClassProps(config, name) {
-    try {
-        name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name
-        return `
+  name = name.toLowerCase()
+  try {
+      name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name
+      return `
 ## Class props
 
-<br />
-
-<inspector-${name.toLowerCase()}-viewer />
-
-<br />
-<br />
+<inspector-${name}-viewer />
 `
-    } catch (err) {
-        return ''
-    }
+  } catch (err) {
+      return ''
+  }
 }
 
 function tmplProps(props, config, name) {
-    let ret = `
-## Props
+  let ret = `
+## ${name} Component
+
+### Props
+
 | Prop name     | Description | Type      | Values      | Default     |
 | ------------- |-------------| --------- | ----------- | ----------- |
 `
@@ -112,7 +148,7 @@ function tmplProps(props, config, name) {
   props.forEach(pr => {
     const p = pr.name
     if (p.endsWith("Class") || p.endsWith("Classes")) {
-      if (!(IGNORE_CLASSES[name] && IGNORE_CLASSES[name].indexOf(p) >= 0)) {
+      if (!(IGNORE_CLASSES[name.toLowerCase()] && IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0)) {
         return;
       }
     }
@@ -152,29 +188,46 @@ function mdclean(input) {
 }
 
 function renderStyleDocs(config, name) {
-  const cssFile = path.resolve(config.cwd, `${srcScss}/scss/components/${name}`)
-  const content = fs.readFileSync(cssFile, 'utf8');
-  const docsRegex = '/* @docs */';
-  const docs = content.substring(content.indexOf(docsRegex) + docsRegex.length, content.lastIndexOf(docsRegex));
-  const variables = docs.split(/\r?\n/).filter(d => !!d);
-  return `
-## Style
+  const renderThemeVariables = (theme) => {
+    const noStyle = `
+<p> This component does not have any Oruga style overrides for the ${theme.label}. </p>
+      `;
+    const componentPath =  `${theme.path}/scss/components/${name}`;
+    if (!fs.existsSync(componentPath)) return noStyle;
+    const cssFile = path.resolve(config.cwd, componentPath)
+    const content = fs.readFileSync(cssFile, 'utf8');
+    const docsRegex = '/* @docs */';
+    if(!content.includes(docsRegex)) return noStyle;
+    const docs = content.substring(content.indexOf(docsRegex) + docsRegex.length, content.lastIndexOf(docsRegex));
+    const variables = docs.replace(/(\r\n|\n|\r)/gm, "").split(";").filter(d => !!d);
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/${name})
-
-  | CSS Variable          | SASS Variable  | Default |
-  | --------------------- | -------------- | ------- |
+    return ` 
+| SASS Variable  | Default |
+| -------------- | ------- |
 ${variables
-      .filter(variable => variable.indexOf('@deprecated') < 0)
-      .map(variable => {
-        const keyValue = variable.split(':');
-        const varName = keyValue[0].trim();
-        const varValue = keyValue[1].replace('!default', '').replace(';', '').trim();
-        const varNameCSS = varName.replace('$', '');
-        return (
-          `| ${'--oruga-' + varNameCSS} | ${varName} | ${varValue} |`
-        )
-      })
-      .join('\n')}
+    .filter(variable => variable.indexOf('@deprecated') < 0)
+    .map(variable => {
+      const keyValue = variable.split(':');
+      const varName = keyValue[0].trim();
+      const varValue = keyValue[1].trim();
+      return (
+        `| ${varName} | ${varValue} |`
+      )
+    })
+    .join('\n')}
+
+
+📄 [Full scss file](${theme.git}/scss/components/${name})
 `
+  };
+
+  return `
+## Theme Styles
+
+    ${ THEMES.map(theme => (`
+<div class="${theme.value}">
+${renderThemeVariables(theme)}
+</div>
+`)).join("")}
+`;
 }

@@ -10,20 +10,27 @@ title: Select
 
 <Carbon />
 </div>
-<example-select />
-
-## Class props
-
-<br />
-
-<inspector-select-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-select />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-select-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Select Component
+
+### Props
 
 | Prop name          | Description                                                 | Type                                   | Values                                                                          | Default                                                                                                                                    |
 | ------------------ | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -60,28 +67,73 @@ title: Select
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $select-background-color | #fff !default |
+| $select-border-color | $grey-lighter !default |
+| $select-border-width | 1px !default |
+| $select-border-style | solid !default |
+| $select-border-radius | $base-border-radius !default |
+| $select-rounded-border-radius | $base-rounded-border-radius !default |
+| $select-box-shadow | none !default |
+| $select-color | #363636 !default |
+| $select-icon-zindex | 4 !default |
+| $select-height | $control-height !default |
+| $select-arrow-size | 1rem !default |
+| $select-line-height | $base-line-height !default |
+| $select-margin | 0 !default |
+| $select-max-width | 100% !default |
+| $select-width | 100% !default |
+| $select-placeholder-opacity | $base-disabled-opacity !default |
+| $select-padding | $control-padding-vertical $control-padding-horizontal !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_select.scss)
 
-| CSS Variable                         | SASS Variable                  | Default                                               |
-| ------------------------------------ | ------------------------------ | ----------------------------------------------------- |
-| --oruga-select-background-color      | \$select-background-color      | #fff                                                  |
-| --oruga-select-border-color          | \$select-border-color          | \$grey-lighter                                        |
-| --oruga-select-border-width          | \$select-border-width          | 1px                                                   |
-| --oruga-select-border-style          | \$select-border-style          | solid                                                 |
-| --oruga-select-border-radius         | \$select-border-radius         | \$base-border-radius                                  |
-| --oruga-select-rounded-border-radius | \$select-rounded-border-radius | \$base-rounded-border-radius                          |
-| --oruga-select-box-shadow            | \$select-box-shadow            | none                                                  |
-| --oruga-select-color                 | \$select-color                 | #363636                                               |
-| --oruga-select-icon-zindex           | \$select-icon-zindex           | 4                                                     |
-| --oruga-select-height                | \$select-height                | \$control-height                                      |
-| --oruga-select-arrow-size            | \$select-arrow-size            | 1rem                                                  |
-| --oruga-select-line-height           | \$select-line-height           | \$base-line-height                                    |
-| --oruga-select-margin                | \$select-margin                | 0                                                     |
-| --oruga-select-max-width             | \$select-max-width             | 100%                                                  |
-| --oruga-select-width                 | \$select-width                 | 100%                                                  |
-| --oruga-select-placeholder-opacity   | \$select-placeholder-opacity   | \$base-disabled-opacity                               |
-| --oruga-select-padding               | \$select-padding               | $control-padding-vertical $control-padding-horizontal |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $select-background-color | #fff !default |
+| $select-border-color | $grey-lighter !default |
+| $select-border-width | 1px !default |
+| $select-border-style | solid !default |
+| $select-border-radius | $base-border-radius !default |
+| $select-rounded-border-radius | $base-rounded-border-radius !default |
+| $select-box-shadow | none !default |
+| $select-color | #363636 !default |
+| $select-icon-zindex | 4 !default |
+| $select-height | $control-height !default |
+| $select-arrow-size | 1rem !default |
+| $select-line-height | $base-line-height !default |
+| $select-margin | 0 !default |
+| $select-max-width | 100% !default |
+| $select-width | 100% !default |
+| $select-placeholder-opacity | $base-disabled-opacity !default |
+| $select-padding | $control-padding-vertical $control-padding-horizontal !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_select.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+
+<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
+      
+</div>
 
 </div>

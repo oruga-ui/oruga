@@ -10,20 +10,27 @@ title: Modal
 
 <Carbon />
 </div>
-<example-modal />
-
-## Class props
-
-<br />
-
-<inspector-modal-viewer />
-
-<br />
-<br />
 
 <div class="vp-doc">
 
-## Props
+## Examples
+
+  <example-modal />
+  
+</div>
+<div class="vp-doc">
+
+## Class props
+
+<inspector-modal-viewer />
+
+</div>
+
+<div class="vp-doc">
+
+## Modal Component
+
+### Props
 
 | Prop name        | Description                                                                                                                                                            | Type           | Values                             | Default                                                                                                                                                              |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -65,23 +72,63 @@ title: Modal
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
+<div class="vp-doc">
+
+## Theme Styles
+
+<div class="theme-orugabase">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $modal-content-background-color | $white !default |
+| $modal-content-border-radius | $base-border-radius !default |
+| $modal-overlay-background-color | hsla(0,0%,4%,.86) !default |
+| $modal-close-border-radius | $base-rounded-border-radius !default |
+| $modal-close-right | 20px !default |
+| $modal-close-top | 20px !default |
+| $modal-close-size | 32px !default |
+| $modal-close-color | $white !default |
+| $modal-content-fullscreen-background-color | #f5f5f5 !default |
+| $modal-content-max-height | calc(100vh - 160px) !default |
+| $modal-content-margin | 0 auto !default |
+| $modal-zindex | 40 !default |
 
 📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)
 
-| CSS Variable                                      | SASS Variable                               | Default                      |
-| ------------------------------------------------- | ------------------------------------------- | ---------------------------- |
-| --oruga-modal-content-background-color            | \$modal-content-background-color            | \$white                      |
-| --oruga-modal-content-border-radius               | \$modal-content-border-radius               | \$base-border-radius         |
-| --oruga-modal-overlay-background-color            | \$modal-overlay-background-color            | hsla(0,0%,4%,.86)            |
-| --oruga-modal-close-border-radius                 | \$modal-close-border-radius                 | \$base-rounded-border-radius |
-| --oruga-modal-close-right                         | \$modal-close-right                         | 20px                         |
-| --oruga-modal-close-top                           | \$modal-close-top                           | 20px                         |
-| --oruga-modal-close-size                          | \$modal-close-size                          | 32px                         |
-| --oruga-modal-close-color                         | \$modal-close-color                         | \$white                      |
-| --oruga-modal-content-fullscreen-background-color | \$modal-content-fullscreen-background-color | #f5f5f5                      |
-| --oruga-modal-content-max-height                  | \$modal-content-max-height                  | calc(100vh - 160px)          |
-| --oruga-modal-content-margin                      | \$modal-content-margin                      | 0 auto                       |
-| --oruga-modal-zindex                              | \$modal-zindex                              | 40                           |
+</div>
+
+<div class="theme-orugafull">
+ 
+| SASS Variable  | Default |
+| -------------- | ------- |
+| $modal-content-background-color | $white !default |
+| $modal-content-border-radius | $base-border-radius !default |
+| $modal-overlay-background-color | hsla(0,0%,4%,.86) !default |
+| $modal-close-border-radius | $base-rounded-border-radius !default |
+| $modal-close-right | 20px !default |
+| $modal-close-top | 20px !default |
+| $modal-close-size | 32px !default |
+| $modal-close-color | $white !default |
+| $modal-content-fullscreen-background-color | #f5f5f5 !default |
+| $modal-content-max-height | calc(100vh - 160px) !default |
+| $modal-content-margin | 0 auto !default |
+| $modal-zindex | 40 !default |
+
+📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_modal.scss)
+
+</div>
+
+<div class="theme-bulma">
+
+<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
+      
+</div>
+
+<div class="theme-bootstrap">
+
+<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
+      
+</div>
 
 </div>
