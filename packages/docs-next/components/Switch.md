@@ -49,19 +49,20 @@ title: Switch
 | v-model        |                                                                                     | string\|number\|boolean | -                                                                               |         |
 | variant        | Color of the switch, optional                                                       | string                  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
-## Events
+### Events
 
 | Event name        | Properties | Description |
 | ----------------- | ---------- | ----------- |
 | update:modelValue |            |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

@@ -32,33 +32,33 @@ title: Carousel
 
 ### Props
 
-| Prop name         | Description | Type    | Values | Default                                                                                                                                           |
-| ----------------- | ----------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| arrow             |             | boolean | -      | true                                                                                                                                              |
-| arrowHover        |             | boolean | -      | true                                                                                                                                              |
-| asIndicator       |             | boolean | -      |                                                                                                                                                   |
-| autoplay          |             | boolean | -      | false                                                                                                                                             |
-| breakpoints       |             | object  | -      | {}                                                                                                                                                |
-| hasDrag           |             | boolean | -      | true                                                                                                                                              |
-| iconNext          |             | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
-| iconPack          |             | string  | -      |                                                                                                                                                   |
-| iconPrev          |             | string  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
-| iconSize          |             | string  | -      |                                                                                                                                                   |
-| indicator         |             | boolean | -      | true                                                                                                                                              |
-| indicatorInside   |             | boolean | -      | false                                                                                                                                             |
-| indicatorMode     |             | string  | -      | 'click'                                                                                                                                           |
-| indicatorPosition |             | string  | -      | 'bottom'                                                                                                                                          |
-| indicatorStyle    |             | string  | -      | 'dots'                                                                                                                                            |
-| interval          |             | number  | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>            |
-| itemsToList       |             | number  | -      | 1                                                                                                                                                 |
-| itemsToShow       |             | number  | -      | 1                                                                                                                                                 |
-| modelValue        |             | number  | -      | 0                                                                                                                                                 |
-| overlay           |             | boolean | -      |                                                                                                                                                   |
-| override          |             | boolean | -      |                                                                                                                                                   |
-| pauseHover        |             | boolean | -      | false                                                                                                                                             |
-| repeat            |             | boolean | -      | false                                                                                                                                             |
+| Prop name         | Description | Type    | Values | Default                                                                                                                                                       |
+| ----------------- | ----------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| arrow             |             | boolean | -      | true                                                                                                                                                          |
+| arrowHover        |             | boolean | -      | true                                                                                                                                                          |
+| asIndicator       |             | boolean | -      |                                                                                                                                                               |
+| autoplay          |             | boolean | -      | false                                                                                                                                                         |
+| breakpoints       |             | object  | -      | {}                                                                                                                                                            |
+| hasDrag           |             | boolean | -      | true                                                                                                                                                          |
+| iconNext          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
+| iconPack          |             | string  | -      |                                                                                                                                                               |
+| iconPrev          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
+| iconSize          |             | string  | -      |                                                                                                                                                               |
+| indicator         |             | boolean | -      | true                                                                                                                                                          |
+| indicatorInside   |             | boolean | -      | false                                                                                                                                                         |
+| indicatorMode     |             | string  | -      | 'click'                                                                                                                                                       |
+| indicatorPosition |             | string  | -      | 'bottom'                                                                                                                                                      |
+| indicatorStyle    |             | string  | -      | 'dots'                                                                                                                                                        |
+| interval          |             | number  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>            |
+| itemsToList       |             | number  | -      | 1                                                                                                                                                             |
+| itemsToShow       |             | number  | -      | 1                                                                                                                                                             |
+| modelValue        |             | number  | -      | 0                                                                                                                                                             |
+| overlay           |             | boolean | -      |                                                                                                                                                               |
+| override          |             | boolean | -      |                                                                                                                                                               |
+| pauseHover        |             | boolean | -      | false                                                                                                                                                         |
+| repeat            |             | boolean | -      | false                                                                                                                                                         |
 
-## Events
+### Events
 
 | Event name        | Properties | Description |
 | ----------------- | ---------- | ----------- |
@@ -66,7 +66,7 @@ title: Carousel
 | scroll            |            |
 | click             |            |
 
-## Slots
+### Slots
 
 | Name       | Description | Bindings        |
 | ---------- | ----------- | --------------- |
@@ -77,6 +77,7 @@ title: Carousel
 | overlay    |             |                 |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

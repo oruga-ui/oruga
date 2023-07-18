@@ -46,7 +46,7 @@ title: Field
 | override         |                                                                                                                  | boolean | -                                                                               |         |
 | variant          | Color of the field and help message, also adds a matching icon, optional. Used by Input, Select and Autocomplete | string  | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
@@ -55,6 +55,7 @@ title: Field
 | message |             |          |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

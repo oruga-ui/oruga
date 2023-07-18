@@ -32,13 +32,13 @@ title: Tabs
 
 ### Props
 
-| Prop name | Description                                     | Type    | Values            | Default                                                                                                                            |
-| --------- | ----------------------------------------------- | ------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| animated  | Tab will have an animation                      | boolean | -                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
-| expanded  | Tabs will be expanded (full-width)              | boolean | -                 |                                                                                                                                    |
-| multiline | Show tab items multiline when there is no space | boolean | -                 |                                                                                                                                    |
-| override  |                                                 | boolean | -                 |                                                                                                                                    |
-| type      | Tab type                                        | string  | `boxed`, `toggle` | 'default'                                                                                                                          |
+| Prop name | Description                                     | Type    | Values            | Default                                                                                                                                        |
+| --------- | ----------------------------------------------- | ------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated  | Tab will have an animation                      | boolean | -                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
+| expanded  | Tabs will be expanded (full-width)              | boolean | -                 |                                                                                                                                                |
+| multiline | Show tab items multiline when there is no space | boolean | -                 |                                                                                                                                                |
+| override  |                                                 | boolean | -                 |                                                                                                                                                |
+| type      | Tab type                                        | string  | `boxed`, `toggle` | 'default'                                                                                                                                      |
 
 ### Slots
 
@@ -48,9 +48,7 @@ title: Tabs
 | end     |             |          |
 | default |             |          |
 
----
-
-# Tab Item
+</div>
 
 <div class="vp-doc">
 
@@ -58,16 +56,16 @@ title: Tabs
 
 ### Props
 
-| Prop name | Description           | Type                | Values | Default                                                                                                                               |
-| --------- | --------------------- | ------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| disabled  | Item will be disabled | boolean             | -      |                                                                                                                                       |
-| override  |                       | boolean             | -      |                                                                                                                                       |
-| tag       | Tabs item tag name    | string \| Component | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
+| Prop name | Description           | Type                | Values | Default                                                                                                                                           |
+| --------- | --------------------- | ------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| disabled  | Item will be disabled | boolean             | -      |                                                                                                                                                   |
+| override  |                       | boolean             | -      |                                                                                                                                                   |
+| tag       | Tabs item tag name    | string \| Component | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> tabs: {<br>&nbsp;&nbsp;itemTag: 'button'<br>}</code> |
 
 </div>
+
 <div class="vp-doc">
 
-</div>
 </div>
 <div class="vp-doc">
 

@@ -48,20 +48,21 @@ title: Checkbox
 | v-model        |                                                                                      | string\|number\|boolean\|array | -                                                                               |         |
 | variant        | Color of the control, optional                                                       | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
-## Events
+### Events
 
 | Event name        | Properties | Description |
 | ----------------- | ---------- | ----------- |
 | update:modelValue |            |
 | input             |            |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

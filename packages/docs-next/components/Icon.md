@@ -48,6 +48,7 @@ title: Icon
 | variant     | Color of the icon, optional                                                                                          | string\|object | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color`                                                    |         |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

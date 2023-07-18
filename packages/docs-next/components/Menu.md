@@ -38,13 +38,14 @@ title: Menu
 | activable |             | boolean | -      | true    |
 | override  |             | boolean | -      |         |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

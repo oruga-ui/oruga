@@ -46,6 +46,7 @@ title: Skeleton
 | width     | Custom width                                 | number\|string | -                           |         |
 
 </div>
+
 <div class="vp-doc">
 
 ## Theme Styles

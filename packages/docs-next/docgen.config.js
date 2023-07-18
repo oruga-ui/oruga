@@ -3,6 +3,11 @@
 const path = require("path");
 const fs = require("fs");
 
+const { mdclean } = require("vue-docgen-cli/lib/templates/utils");
+const renderMethods = require("vue-docgen-cli/lib/templates/methods").default;
+const renderEvents = require("vue-docgen-cli/lib/templates/events").default;
+const renderSlots = require("vue-docgen-cli/lib/templates/slots").default;
+
 // Import theme definitions
 const THEMES = require("./.vitepress/themes.json");
 
@@ -58,19 +63,22 @@ module.exports = {
     },
     templates: {
         props: (props) => props,
-        component: (renderedUsage, doc, config, _fileName, requiresMd, { isSubComponent }) => {
+        methods: (methods) => renderMethods(methods, { hasSubComponents: true}),
+        events: (events) => renderEvents(events, { hasSubComponents: true}),
+        slots: (slots) => renderSlots(slots, { hasSubComponents: true}),
+        component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent, hasSubComponents}) => {
             const { displayName, description, tags, functional } = doc;
             const { deprecated, author, since, version, see, link, style } =
                 tags || {};
-            const component = getComponent(_fileName);
+            const component = getComponent(fileName);
             const requires = !component || IGNORE.indexOf(component) >= 0;
             return `
 ${!isSubComponent ? `
 ---
 title: ${displayName}
 ---
-` : ""}
 # ${deprecated ? `~~${displayName}~~` : displayName}
+` : ""}
 ${requires ? "" : 
 `<div class="vp-doc">
 ${deprecated ? `> **Deprecated** ${deprecated[0].description}\n` : ""}
@@ -98,10 +106,10 @@ ${tmplProps(renderedUsage.props, config, component)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
-${requiresMd.length ? '---\n' + requiresMd.map(component => component.content).join('\n---\n') : ''}
 </div>
+${requiresMd.length ? requiresMd.map(component => component.content).join(' ') : ''}
 <div class="vp-doc">
-${style ? renderStyleDocs(config, style[0].description) : ""}
+${style ? tmplThemeStyle(config, style[0].description) : ""}
 </div>`;
         },
     },
@@ -145,9 +153,8 @@ function tmplProps(props, config, name) {
     props.forEach((pr) => {
         const p = pr.name;
         if (p.endsWith("Class") || p.endsWith("Classes")) {
-            if (!(IGNORE_CLASSES[name.toLowerCase()] && IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0)) {
+            if (!(IGNORE_CLASSES[name.toLowerCase()] && IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0)) 
                 return;
-            }
         }
         const n = pr.type && pr.type.name ? pr.type.name : "";
         let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : "";
@@ -173,26 +180,22 @@ function tmplProps(props, config, name) {
             }
             if (configParts && configParts[0] && configParts[1]) {
                 const value = `${configParts[1].replace(/'/g, "")}: ${params[2]}`;
-                d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g,"")}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g,"")}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
             if (configParts && configParts.length == 1) {
                 const value = `${configParts[0].replace(/'/g, "")}: ${params[2]}`;
-                d = `<div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
         }
 
         d = d.includes("=>") ? "Default function (see source code)" : d;
 
-        ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${mdclean(d)} |` + "\n";
+        ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${d} |` + "\n";
     });
     return ret;
 }
 
-function mdclean(input) {
-    return input.replace(/\r?\n/g, "<br>").replace(/\|/g, "\\|");
-}
-
-function renderStyleDocs(config, name) {
+function tmplThemeStyle(config, name) {
     const renderThemeVariables = (theme) => {
         const noStyle = `
 <p> This component does not have any Oruga style overrides for the ${theme.label}. </p>

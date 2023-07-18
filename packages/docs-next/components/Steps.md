@@ -32,19 +32,19 @@ title: Steps
 
 ### Props
 
-| Prop name         | Description                                                                                                                   | Type    | Values                                            | Default                                                                                                                                        |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated          | Step navigation is animated                                                                                                   | boolean | -                                                 | true                                                                                                                                           |
-| ariaNextLabel     |                                                                                                                               | string  | -                                                 |                                                                                                                                                |
-| ariaPreviousLabel |                                                                                                                               | string  | -                                                 |                                                                                                                                                |
-| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean | -                                                 | true                                                                                                                                           |
-| iconNext          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
-| iconPack          | Icon pack to use for the navigation                                                                                           | string  | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                |
-| iconPrev          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
-| labelPosition     | Position of the marker label, optional                                                                                        | string  | `bottom`, `right`, `left`                         | 'bottom'                                                                                                                                       |
-| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string  | -                                                 |                                                                                                                                                |
-| override          |                                                                                                                               | boolean | -                                                 |                                                                                                                                                |
-| rounded           | Rounded step markers                                                                                                          | boolean | -                                                 | true                                                                                                                                           |
+| Prop name         | Description                                                                                                                   | Type    | Values                                            | Default                                                                                                                                                    |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated          | Step navigation is animated                                                                                                   | boolean | -                                                 | true                                                                                                                                                       |
+| ariaNextLabel     |                                                                                                                               | string  | -                                                 |                                                                                                                                                            |
+| ariaPreviousLabel |                                                                                                                               | string  | -                                                 |                                                                                                                                                            |
+| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean | -                                                 | true                                                                                                                                                       |
+| iconNext          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconNext: 'chevron-right'<br>}</code> |
+| iconPack          | Icon pack to use for the navigation                                                                                           | string  | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                            |
+| iconPrev          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> steps: {<br>&nbsp;&nbsp;iconPrev: 'chevron-left'<br>}</code>  |
+| labelPosition     | Position of the marker label, optional                                                                                        | string  | `bottom`, `right`, `left`                         | 'bottom'                                                                                                                                                   |
+| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string  | -                                                 |                                                                                                                                                            |
+| override          |                                                                                                                               | boolean | -                                                 |                                                                                                                                                            |
+| rounded           | Rounded step markers                                                                                                          | boolean | -                                                 | true                                                                                                                                                       |
 
 ### Slots
 
@@ -53,9 +53,7 @@ title: Steps
 | default    |             |          |
 | navigation |             | <br/>    |
 
----
-
-# Step Item
+</div>
 
 <div class="vp-doc">
 
@@ -71,9 +69,9 @@ title: Steps
 | variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
 
 </div>
+
 <div class="vp-doc">
 
-</div>
 </div>
 <div class="vp-doc">
 
