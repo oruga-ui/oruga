@@ -1,16 +1,61 @@
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+
+const props = defineProps({
+    filter_fullname: {
+        type: String,
+        default: null,
+    },
+});
+const repos = ref<any[]>([]);
+
+const filteredRepos = computed(() => {
+    if (!props.filter_fullname) {
+        return repos.value;
+    }
+    const regex = new RegExp(props.filter_fullname, "gi");
+    return repos.value.filter((repo) => repo.full_name.match(regex));
+});
+onMounted(() => {
+    fetch("/hfrepos.json")
+        .then((data) => data.json())
+        .then((data) => (repos.value = data.items));
+});
+
+function goToIssues(repo: any) {
+    window.location.href = `${repo.html_url}/issues/?q=is:issue+is:open+label:hacktoberfest`;
+}
+function goToRepo(repo: any) {
+    window.location.href = repo.html_url;
+}
+</script>
+
 <template>
     <client-only>
         <div>
             <div class="hfrepos__container">
                 <o-loading :full-page="false" :active="repos.length === 0" />
-                <div v-for="repo of filteredRepos" :key="repo.id" class="hfrepo">
+                <div
+                    v-for="repo of filteredRepos"
+                    :key="repo.id"
+                    class="hfrepo">
                     <div class="hfrepo__header">
-                        <div class="hfrepo__title">{{repo.name}}</div>
-                        <p class="hfrepo__subtitle">{{repo.description}}</p>
+                        <div class="hfrepo__title">{{ repo.name }}</div>
+                        <p class="hfrepo__subtitle">{{ repo.description }}</p>
                     </div>
                     <div class="hfrepo__actions">
-                        <o-button override rootClass="hfrepo__btn" @click="goToRepo(repo)">Explore repo</o-button>
-                        <o-button override rootClass="hfrepo__btn" @click="goToIssues(repo)">See issues</o-button>
+                        <o-button
+                            override
+                            root-class="hfrepo__btn"
+                            @click="goToRepo(repo)"
+                            >Explore repo</o-button
+                        >
+                        <o-button
+                            override
+                            root-class="hfrepo__btn"
+                            @click="goToIssues(repo)"
+                            >See issues</o-button
+                        >
                     </div>
                 </div>
             </div>
@@ -18,45 +63,7 @@
     </client-only>
 </template>
 
-<script>
-export default {
-    props: {
-        filter_fullname: {
-            type: String,
-            default: null
-        }
-    },
-    data() {
-        return {
-            repos: []
-        }
-    },
-    mounted: function() {
-        fetch("/hfrepos.json")
-          .then(data => data.json())
-          .then(data => this.repos = data.items)
-    },
-    computed: {
-        filteredRepos() {
-            if (!this.filter_fullname) {
-                return this.repos
-            }
-            const regex = new RegExp(this.filter_fullname, "gi")
-            return this.repos.filter((repo) => repo.full_name.match(regex))
-        }
-    },
-    methods: {
-        goToIssues(repo) {
-            window.location.href = `${repo.html_url}/issues/?q=is:issue+is:open+label:hacktoberfest`;
-        },
-        goToRepo(repo) {
-            window.location.href = repo.html_url;
-        }
-    }
-}
-</script>
-
-<style scoped>
+<style lang="scss" scoped>
 .hfrepos__container {
     position: relative;
     min-height: 100px;
@@ -66,7 +73,7 @@ export default {
     margin-top: 1rem;
     margin-bottom: 1rem;
     background: #f4f0e1;
-    color: #2B3531;
+    color: #2b3531;
     padding: 1rem;
     border-radius: 1rem;
     width: 80%;
@@ -89,7 +96,7 @@ export default {
 
 .hfrepo__btn {
     cursor: pointer;
-    background: #F74700;
+    background: #f74700;
     color: white;
     padding: 0.9rem;
     border: 0;

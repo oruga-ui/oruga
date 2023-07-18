@@ -1,83 +1,75 @@
-<script lang="ts">
-import { defineComponent, h } from 'vue'
-import { setValueByPath } from '../../../../oruga-next/src/utils/helpers'
-const UNDERLINE_CLASS = 'odocs-underline-element'
+<script setup lang="ts">
+import { onUnmounted, ref, watch, nextTick } from "vue";
+import { setValueByPath } from "../../../../oruga-next/src/utils/helpers";
 
-export default defineComponent({
-    props: {
-        inspectClass: Object
+const UNDERLINE_CLASS = "odocs-underline-element";
+
+const props = defineProps({
+    inspectClass: {
+        type: Object,
+        required: true,
     },
-    data() {
-        return {
-            classes: {},
-            data: {},
-            classesApplied: null
-        }
-    },
-    beforeUnmount() {
-        clearInterval(this.interval)
-        this.interval = null
-    },
-    watch: {
-        'inspectClass': {
-            deep: true,
-            handler({ className, action }) {
-                this.interval = null
-                clearInterval(this.interval)
-                this.classes = Object.assign({}, {})
-                this.data = Object.assign({}, {})
-                this.classesApplied = null
-                this.$nextTick(() => {
-                    if (action) {
-                        action(this)
-                    }
-                    setValueByPath(this.classes, className, () => UNDERLINE_CLASS)
-                    this.classes = Object.assign({}, this.classes)
-                    this.data = Object.assign({}, this.data)
-                    this.$nextTick(() => {
-                        this.interval = setInterval(() => {
-                            let el = document.getElementsByClassName(UNDERLINE_CLASS)[0]
-                            if (el) {
-                                clearInterval(this.interval)
-                                this.classesApplied = el.className.replace(UNDERLINE_CLASS, '').replace(/\s/g, '&nbsp;&nbsp;&nbsp;')
-                            }
-                        }, 300)
-                    })
-                })
+});
+
+const classes = ref({});
+const data = ref({});
+const classesApplied = ref<string | undefined>(undefined);
+const interval = ref<any | undefined>(undefined);
+
+onUnmounted(() => {
+    clearInterval(interval.value);
+    interval.value = undefined;
+});
+
+watch(
+    () => props.inspectClass,
+    ({ className, action }) => {
+        clearInterval(interval.value);
+        interval.value = undefined;
+        classes.value = Object.assign({}, {});
+        data.value = Object.assign({}, {});
+        classesApplied.value = undefined;
+        nextTick(() => {
+            if (action) {
+                action(this);
             }
-        }
-    },
-    render () {
-        let el = h('span',
-        {
-            id: 'docs__element__to__inspect'
-        },
-        [
-            this.classesApplied ? h('div', {}, [
-                h('b', 'Classes applied to the element'),
-                h(
-                    'div',
-                    {
-                        class: 'odocs-classes-applied',
-                        innerHTML: this.classesApplied
+            setValueByPath(classes.value, className, () => UNDERLINE_CLASS);
+            classes.value = Object.assign({}, classes.value);
+            data.value = Object.assign({}, data.value);
+            nextTick(() => {
+                interval.value = setInterval(() => {
+                    const el =
+                        document.getElementsByClassName(UNDERLINE_CLASS)[0];
+                    if (el) {
+                        clearInterval(interval.value);
+                        classesApplied.value = el.className
+                            .replace(UNDERLINE_CLASS, "")
+                            .replace(/\s/g, "&nbsp;&nbsp;&nbsp;");
                     }
-                ),
-            ]) : null,
-            this.$slots.default({
-                ...this.classes,
-                ...this.data,
-            })
-        ],
-        )
-        return el
-    }
-})
+                }, 300);
+            });
+        });
+    },
+    { deep: true },
+);
 </script>
 
-<style>
+<template>
+    <span id="docs__element__to__inspect">
+        <div v-if="classesApplied">
+            <b>'Classes applied to the element'</b>
+            <!-- eslint-disable vue/no-v-html -->
+            <div class="odocs-classes-applied" v-html="classesApplied"></div>
+        </div>
+        <slot :classes="classes" :data="data" />
+    </span>
+</template>
+
+<style lang="scss">
 .odocs-underline-element {
-    border: 2px solid #bd1313!important;
+    border: 2px solid #bd1313 !important;
 }
+
 .odocs-classes-applied {
     margin-top: 1rem;
     margin-bottom: 1rem;

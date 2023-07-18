@@ -1,23 +1,20 @@
+<script setup lang="ts">
+import { markRaw, ref } from "vue";
+
+const props = defineProps({
+    component: {
+        type: String,
+        required: true,
+    },
+});
+
+const cmp = ref();
+
+import(`../../examples/${props.component}/inspector.vue`).then((val) => {
+    cmp.value = markRaw(val.default);
+});
+</script>
+
 <template>
     <component :is="cmp"></component>
 </template>
-
-<script lang="ts">
-import { defineComponent, markRaw } from 'vue'
-
-export default defineComponent({
-    props: {
-        component: String
-    },
-    data() {
-        return {
-            cmp: undefined
-        }
-    },
-    beforeCreate() {
-        import(`../../examples/${this.component}/inspector.vue`).then(val => {
-            this.cmp = markRaw(val.default)
-        })
-    }
-})
-</script>

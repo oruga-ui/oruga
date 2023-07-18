@@ -1,119 +1,132 @@
-import { markRaw } from 'vue'
+import { markRaw } from "vue";
+import type { App, DefineComponent } from "vue";
 
 // THEME
-import DefaultTheme from 'vitepress/theme'
-import Layout from './layout/Layout.vue'
-import './styles/index.scss'
+import DefaultTheme from "vitepress/theme";
+import Layout from "./layout/Layout.vue";
+import "./styles/index.scss";
 
-import DocWrapper from './components/DocWrapper.vue'
-import HFRepos from './components/HFRepos.vue'
-import Inspector from './components/Inspector.vue'
-import ExampleViewer from './components/ExampleViewer.vue'
-import Expo from './components/Expo.vue'
-import Carbon from './components/Carbon.vue'
+import DocWrapper from "./components/DocWrapper.vue";
+import HFRepos from "./components/HFRepos.vue";
+import Inspector from "./components/Inspector.vue";
+import ExampleViewer from "./components/ExampleViewer.vue";
+import Expo from "./components/Expo.vue";
+import Carbon from "./components/Carbon.vue";
 
-import Oruga, { useProgrammatic } from '../../../oruga-next/dist/oruga'
+import Oruga, { useProgrammatic } from "../../../oruga-next/dist/oruga";
 
-import { bulmaConfig } from '@oruga-ui/theme-bulma'
-import { bootstrapConfig } from '@oruga-ui/theme-bootstrap'
+import { bulmaConfig } from "@oruga-ui/theme-bulma";
+import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import 'highlight.js/styles/github-dark.css'
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
-import xml from 'highlight.js/lib/languages/xml'
-import hljsVuePlugin from "@highlightjs/vue-plugin"
+import "highlight.js/styles/github-dark.css";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import xml from "highlight.js/lib/languages/xml";
+import hljsVuePlugin from "@highlightjs/vue-plugin";
 
-hljs.registerLanguage('xml', xml)
-hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage("xml", xml);
+hljs.registerLanguage("javascript", javascript);
 
 export default {
-  ...DefaultTheme,
-  Layout,
-  enhanceApp({ app }) {
+    ...DefaultTheme,
+    Layout,
+    enhanceApp({ app }: { app: App }) {
+        library.add(fas);
 
-    library.add(fas)
+        app.component("VueFontawesome", FontAwesomeIcon);
 
-    app.component('vue-fontawesome', FontAwesomeIcon)
+        app.use(hljsVuePlugin);
 
-    app.use(hljsVuePlugin)
+        app.component("DocWrapper", DocWrapper);
+        app.component("HFRepos", HFRepos);
+        app.component("Inspector", Inspector);
+        app.component("ExampleViewer", ExampleViewer);
+        app.component("Expo", Expo);
+        app.component("Carbon", Carbon);
 
-    app.component('DocWrapper', DocWrapper)
-    app.component('HFRepos', HFRepos)
-    app.component('Inspector', Inspector)
-    app.component('ExampleViewer', ExampleViewer)
-    app.component('Expo', Expo)
-    app.component('Carbon', Carbon)
+        // import example components
+        const examples = import.meta.glob<DefineComponent>(
+            "./examples/**/index.vue",
+            { eager: true },
+        );
+        for (const path in examples) {
+            const v = path.split("/");
+            app.component("example-" + v[2], markRaw(examples[path].default));
+        }
 
-    // @ts-ignore
-    const examples = import.meta.globEager('./examples/**/index.vue')
-    for (const path in examples) {
-        const v = path.split('/')
-        app.component('example-' + v[2], markRaw(examples[path].default))
-    }
+        // import inspector components
+        const inspectors = import.meta.glob<DefineComponent>(
+            "./examples/**/inspector.vue",
+            { eager: true },
+        );
+        for (const path in inspectors) {
+            const v = path.split("/");
+            app.component(
+                "inspector-" + v[2] + "-viewer",
+                markRaw(inspectors[path].default),
+            );
+        }
 
-    // @ts-ignore
-    const inspectors = import.meta.globEager('./examples/**/inspector.vue')
-    for (const path in inspectors) {
-        const v = path.split('/')
-        app.component('inspector-' + v[2] + '-viewer', markRaw(inspectors[path].default))
-    }
+        app.use(Oruga, {
+            iconPack: "fas",
+            iconComponent: "vue-fontawesome",
+        });
 
-    app.use(Oruga, {
-        iconPack: 'fas',
-        iconComponent: 'vue-fontawesome'
-    })
+        // this no longer has effect. 3.3 always unwraps injected refs.
+        app.config.unwrapInjectedRef = true;
 
-    app.config.unwrapInjectedRef = true
-
-    if (typeof window !== 'undefined') {
-        const theme = localStorage.getItem('oruga.io_theme') || 'fullcss'
-        switch (theme) {
-            case 'theme-orugafull': {
-                if (process.env.NODE_ENV !== 'production') {
-                    // @ts-ignore
-                    import('../../../oruga-next/dist/oruga-full-vars.css').then(() => {})
-                } else {
-                    const link = document.createElement('link')
-                    link.rel = 'stylesheet'
-                    link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css'
-                    document.head.appendChild(link)
+        if (typeof window !== "undefined") {
+            const theme = localStorage.getItem("oruga.io_theme") || "fullcss";
+            switch (theme) {
+                case "theme-orugafull": {
+                    if (process.env.NODE_ENV !== "production") {
+                        import("../../../oruga-next/dist/oruga-full-vars.css");
+                    } else {
+                        const link = document.createElement("link");
+                        link.rel = "stylesheet";
+                        link.href =
+                            "https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css";
+                        document.head.appendChild(link);
+                    }
+                    break;
                 }
-                break
-            }
-            case 'theme-orugabase': {
-                const link = document.createElement('link')
-                link.rel = 'stylesheet'
-                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css'
-                document.head.appendChild(link)
-                break
-            }
-            case 'theme-bulma': {
-                bulmaConfig.iconPack = 'fas'
-                bulmaConfig.iconComponent = 'vue-fontawesome'
-                const { oruga } = useProgrammatic()
-                oruga.config.setOptions(bulmaConfig)
-                const link = document.createElement('link')
-                link.rel = 'stylesheet'
-                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css'
-                document.head.appendChild(link)
-                break
-            }
-            case 'theme-bootstrap': {
-                bootstrapConfig.iconPack = 'fas'
-                bootstrapConfig.iconComponent = 'vue-fontawesome'
-                const { oruga } = useProgrammatic()
-                oruga.config.setOptions(bootstrapConfig)
-                const link = document.createElement('link')
-                link.rel = 'stylesheet'
-                link.href = 'https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.min.css'
-                document.head.appendChild(link)
-                break
+                case "theme-orugabase": {
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href =
+                        "https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css";
+                    document.head.appendChild(link);
+                    break;
+                }
+                case "theme-bulma": {
+                    bulmaConfig.iconPack = "fas";
+                    bulmaConfig.iconComponent = "vue-fontawesome";
+                    const { oruga } = useProgrammatic() as any;
+                    oruga.config.setOptions(bulmaConfig);
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href =
+                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css";
+                    document.head.appendChild(link);
+                    break;
+                }
+                case "theme-bootstrap": {
+                    bootstrapConfig.iconPack = "fas";
+                    bootstrapConfig.iconComponent = "vue-fontawesome";
+                    const { oruga } = useProgrammatic() as any;
+                    oruga.config.setOptions(bootstrapConfig);
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href =
+                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.min.css";
+                    document.head.appendChild(link);
+                    break;
+                }
             }
         }
-    }
-  }
-}
+    },
+};
