@@ -1,0 +1,15 @@
+// Vitepress overrides
+
+.VPFlyout:hover .text {
+    color: var(--vp-c-brand) !important;
+}
+
+.VPContent .VPDoc.has-aside .container .content-container {
+    max-width: none;
+}
+
+@media (min-width: 960px) {
+    .VPContent .VPDoc .container > .content {
+        padding: 0px 0px 128px;
+    }
+}

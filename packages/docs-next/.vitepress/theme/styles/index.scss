@@ -1,3 +1,6 @@
+@import "./vitepress";
+@import "./theming";
+
 .oruga-doc-video {
   width: 100%;
   max-width: 640px;
@@ -7,68 +10,56 @@
 .installation-tabs {
   border-radius: 6px;
   overflow: hidden;
-}
+  margin-bottom: 1.5rem;
 
-.installation-tabs-content {
-  background: #282c34;
-  overflow: hidden;
-  padding: 0!important;
-}
+  .installation-tabs-nav-buttons {
+    display: flex;
+    background: #282c34;
+    margin-bottom: 0 !important;  
+    border-bottom: 1px solid #dbdbdb;
 
-.installation-tabs-nav-buttons {
-  display: flex;
-  background: #282c34;
-}
-
-.installation-tabs-nav-button-default {
-  height: 3rem;
-  width: 4rem;
-  cursor: pointer;
-  color: white;
-  border: 1px solid transparent;
-  background-color: transparent;
-  align-items: center;
-}
-
-.installation-tabs-nav-button-active-default {
-  color: #f08d49;
-  border-bottom: 1px solid #f08d49;
-}
-
-
-.Layout .VPDoc.has-aside .content-container {
-    max-width: none;
-}
-
-@media (min-width: 960px) {
-    .Layout .VPDoc .container > .content {
-        padding: 0px 0px 128px;
+    .installation-tabs-nav-button-default {    
+      display: block;
+      height: 3rem;
+      width: 4rem;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      color: white;
+      border: 1px solid transparent;
+      background-color: transparent;
+      align-items: center;
+      text-decoration: none;
     }
+    
+    .installation-tabs-nav-button-active-default {
+      color: #f08d49;
+      border-bottom: 1px solid #f08d49;
+    }
+  }
+
+  .installation-tabs-content {
+    background: #282c34;
+    overflow: hidden;
+    padding: 0!important;
+  }
 }
 
 .main {
     h1, h2 {
-        margin: 0;
-        line-height: 24px;
-        font-size: 16px;
-        font-weight: 400;
-    }
-    h1, h2 {
         position: relative;
+        margin: 0;
+        line-height: 1.5em;
         font-weight: 600;
+        letter-spacing: -.02em;
     }
     h1 {
-        letter-spacing: -.02em;
-        line-height: 40px;
-        font-size: 32px;
+        line-height: 2.5em;
+        font-size: 2em;
     }
     h2 {
-        margin: 48px 0 16px;
-        border-top: 1px solid var(--vp-c-divider-light);
-        padding-top: 24px;
-        letter-spacing: -.02em;
-        line-height: 32px;
-        font-size: 24px;
+        margin: 3rem 0 1rem;
+        line-height: 2em;
+        font-size: 1.5em;
     }
 
     .header-anchor {
@@ -84,39 +75,4 @@
     h2:hover .header-anchor, h2 .header-anchor:focus {
         opacity: 1;
     }
-}
-
-// Theme style 
-
-.theme-orugabase {
-  .theme-orugafull,
-  .theme-bulma,
-  .theme-bootstrap, {
-    display: none;
-  }
-}
-
-
-.theme-orugafull {
-  .theme-orugabase,
-  .theme-bulma,
-  .theme-bootstrap, {
-    display: none;
-  }
-}
-
-.theme-bulma {
-  .theme-orugabase,
-  .theme-orugafull,
-  .theme-bootstrap, {
-    display: none;
-  }
-}
-
-.theme-bootstrap {
-  .theme-orugabase,
-  .theme-orugafull,
-  .theme-bulma, {
-    display: none;
-  }
 }
