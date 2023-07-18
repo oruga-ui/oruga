@@ -8,19 +8,19 @@ const props = defineProps({
     },
     subitem: {
         type: String,
-        default: "",
+        default: undefined,
     },
 });
 
-const emits = defineEmits(["inspect-class"]);
+const emits = defineEmits(["inspect"]);
+
 const selectedElementIndex = ref<number>();
 
 const classesToInspect = computed(() => {
     const data = props.inspectData;
-    data.sort((propa, propb) =>
+    return data.sort((propa, propb) =>
         propa.class < propb.class ? -1 : propa.class > propb.class ? 1 : 0,
     );
-    return props.inspectData;
 });
 
 function addDotToTheEnd(value: string) {
@@ -34,7 +34,7 @@ function setByProperties(props: string[]) {
 function inspectClass(index: number, selectedData: any) {
     selectedElementIndex.value = index;
     const selectedClass = selectedData.realClass || selectedData.class;
-    emits("inspect-class", {
+    emits("inspect", {
         className: selectedClass,
         action: selectedData.action,
     });
@@ -44,42 +44,42 @@ function inspectClass(index: number, selectedData: any) {
 
 <template>
     <!-- eslint-disable vue/no-v-html -->
-
     <div class="vp-doc">
         <o-collapse class="inspector__summary" :open="false">
-            <template #trigger="props">
+            <template #trigger="{ open }">
                 <div class="inspector__summary-trigger" role="button">
                     <div>How does <i>Class props inspector</i> work?</div>
                     <a>
-                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
-                        </o-icon>
+                        <o-icon :icon="open ? 'caret-up' : 'caret-down'" />
                     </a>
                 </div>
             </template>
 
             <div class="inspector__summary-content">
                 <div class="inspector__summary-intro">
-                    <i>Class props inspector</i> is useful to see class props
-                    you want to use to customize Oruga components and how they
-                    change a component. You can click on <b>Inspect</b> button
-                    to find the exact element where a specific class prop acts.
-                    <br /><br />
-                    In the <i>Class props inspector</i> there are other columns
+                    <p>
+                        <i>Class props inspector</i> is useful to see class
+                        props you want to use to customize Oruga components and
+                        how they change a component. You can click on
+                        <b>Inspect</b> button to find the exact element where a
+                        specific class prop acts. <br /><br />
+                        In the <i>Class props inspector</i> there are other
+                        columns
+                    </p>
                 </div>
 
-                <div class="inspector__summary-class">
+                <div>
                     <h4>Class prop</h4>
                     <p>
                         This column contains the name of the Class prop you want
                         to inspect.<br />
-                        If you find a name with a link (<span
-                            >▷ <a>classPropName</a></span
-                        >) this refers to a subitem (e.g.
-                        <i>Dropdown Item</i> in <i>Dropdown</i>).
+                        If you find a name with a link (
+                        <span>▷ <a>classPropName</a> </span>) this refers to a
+                        subitem (e.g. <i>Dropdown Item</i> in <i>Dropdown</i>).
                     </p>
                 </div>
 
-                <div class="inspector__summary-class">
+                <div>
                     <h4>Description</h4>
                     <p>
                         This column contains the description of the Class prop
@@ -88,14 +88,14 @@ function inspectClass(index: number, selectedData: any) {
                         <i>this Class prop is visible only on mobile.</i><br />
                         🔍 This icon indicates that you should pay attention to
                         CSS specificity. See
-                        <a href="/documentation/#deal-with-specificity"
-                            >"Deal with specificity"</a
-                        >
+                        <a href="/documentation/#deal-with-specificity">
+                            "Deal with specificity"
+                        </a>
                         section in the documentation.
                     </p>
                 </div>
 
-                <div class="inspector__summary-class">
+                <div>
                     <h4>Props</h4>
                     <p>
                         This column contains a list of props that activate the
@@ -105,7 +105,7 @@ function inspectClass(index: number, selectedData: any) {
                     </p>
                 </div>
 
-                <div class="inspector__summary-class">
+                <div>
                     <h4>Suffixes</h4>
                     <p>
                         This column contains all the possible suffixes that
@@ -118,6 +118,7 @@ function inspectClass(index: number, selectedData: any) {
                 </div>
             </div>
         </o-collapse>
+
         <table>
             <tr>
                 <th>Class prop</th>
@@ -134,7 +135,7 @@ function inspectClass(index: number, selectedData: any) {
                 }">
                 <td v-if="!data.subitem">{{ data.class }}</td>
                 <td v-if="data.subitem">
-                    ▷ <a :href="`#${subitem}`">{{ data.class }}</a>
+                    ▷ <a :href="`#${subitem}-component`">{{ data.class }}</a>
                 </td>
                 <td>
                     <span>{{ addDotToTheEnd(data.description) }}</span>
@@ -142,45 +143,48 @@ function inspectClass(index: number, selectedData: any) {
                         More detail
                         <a
                             target="_blank"
-                            :href="`/components/${data.componentRef}.html#class-props`"
-                            >here</a
-                        >
+                            :href="`/components/${data.componentRef}.html#class-props`">
+                            here
+                        </a>
                     </span>
-                    <span v-if="data.warning"
-                        ><br />👉 <i><span v-html="data.warning"></span></i
-                    ></span>
-                    <span v-if="data.specificity"
-                        ><br />🔍
-                        <i
-                            ><span
-                                >Classes applied have a higher specificity than
+                    <span v-if="data.warning">
+                        <br />👉 <i><span v-html="data.warning"></span></i>
+                    </span>
+                    <span v-if="data.specificity">
+                        <br />🔍
+                        <i>
+                            <span>
+                                Classes applied have a higher specificity than
                                 expected
-                                <span
-                                    v-html="data.specificity"></span></span></i
-                    ></span>
+                                <span v-html="data.specificity"> </span>
+                            </span>
+                        </i>
+                    </span>
                 </td>
                 <td>
-                    <span v-if="data.properties"
-                        ><code
+                    <span v-if="data.properties">
+                        <code
                             style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.properties)"></code
-                    ></span>
+                            v-html="setByProperties(data.properties)">
+                        </code>
+                    </span>
                 </td>
                 <td>
-                    <span v-if="data.suffixes"
-                        ><code
+                    <span v-if="data.suffixes">
+                        <code
                             style="white-space: nowrap; padding: 0"
-                            v-html="setByProperties(data.suffixes)"></code
-                    ></span>
+                            v-html="setByProperties(data.suffixes)">
+                        </code>
+                    </span>
                 </td>
                 <td>
-                    <button
+                    <o-button
                         v-if="!data.nospec === true"
+                        label="Inspect"
+                        variant="warning"
                         class="inspector__btn"
                         type="button"
-                        @click="inspectClass(index, data)">
-                        Inspect
-                    </button>
+                        @click="inspectClass(index, data)" />
                 </td>
             </tr>
         </table>
@@ -192,35 +196,20 @@ function inspectClass(index: number, selectedData: any) {
     margin-top: 2rem;
 }
 
-.inspector__summary-class h4 {
-    margin-block-start: 0.33em;
-    margin-block-end: 0.33em;
-}
-
-.inspector__summary-trigger div {
-    margin-right: 0.5rem;
-}
-
 .inspector__summary-trigger {
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
+
+    div {
+        margin-right: 0.5rem;
+    }
 }
 
 .inspector__summary-content {
     border: 1px solid #dfe2e5;
     padding: 0.5rem;
-}
-
-.inspector__btn {
-    cursor: pointer;
-    background: #bd1313 !important;
-    color: white !important;
-    font-weight: bold !important;
-    border: 0;
-    box-shadow: none;
-    border-radius: 0.3rem;
-    padding: 0.4rem;
+    border-radius: 2px;
 }
 
 .inspector__highlight,

@@ -6,8 +6,7 @@ import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/Layout.vue";
 import "./styles/index.scss";
 
-import DocWrapper from "./components/DocWrapper.vue";
-import HFRepos from "./components/HFRepos.vue";
+import InspectorWrapper from "./components/InspectorWrapper.vue";
 import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
@@ -41,8 +40,7 @@ export default {
 
         app.use(hljsVuePlugin);
 
-        app.component("DocWrapper", DocWrapper);
-        app.component("HFRepos", HFRepos);
+        app.component("InspectorWrapper", InspectorWrapper);
         app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
