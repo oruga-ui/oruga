@@ -15,8 +15,8 @@ title: Menu
 
 ## Examples
 
-  <example-menu />
-  
+<example-menu />
+
 </div>
 <div class="vp-doc">
 

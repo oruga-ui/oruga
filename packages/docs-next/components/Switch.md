@@ -15,8 +15,8 @@ title: Switch
 
 ## Examples
 
-  <example-switch />
-  
+<example-switch />
+
 </div>
 <div class="vp-doc">
 

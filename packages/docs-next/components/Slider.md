@@ -15,8 +15,8 @@ title: Slider
 
 ## Examples
 
-  <example-slider />
-  
+<example-slider />
+
 </div>
 <div class="vp-doc">
 

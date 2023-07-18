@@ -15,8 +15,8 @@ title: Table
 
 ## Examples
 
-  <example-table />
-  
+<example-table />
+
 </div>
 <div class="vp-doc">
 
@@ -102,10 +102,10 @@ title: Table
 | contextmenu              |                                                                                                                      |
 | cell-click               |                                                                                                                      |
 | click                    | **row** `Object` - clicked row<br/>**index** `number` - index of clicked row                                         |
-| check                    | **newCheckedRows** `Array<Object>` - checked rows                                                                    |
+| check                    | **newCheckedRows** `Array&lt;Object&gt;` - checked rows                                                              |
 | check-all                |                                                                                                                      |
 | update:checkedRows       |                                                                                                                      |
-| select                   | **row** `Object` - selected row<br/>**selected** `Array<Object>` - selected rows                                     |
+| select                   | **row** `Object` - selected row<br/>**selected** `Array&lt;Object&gt;` - selected rows                               |
 | update:selected          |                                                                                                                      |
 | filters-change           |                                                                                                                      |
 | details-open             |                                                                                                                      |

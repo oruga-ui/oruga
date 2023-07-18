@@ -15,8 +15,8 @@ title: Pagination
 
 ## Examples
 
-  <example-pagination />
-  
+<example-pagination />
+
 </div>
 <div class="vp-doc">
 

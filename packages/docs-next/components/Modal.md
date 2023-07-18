@@ -15,8 +15,8 @@ title: Modal
 
 ## Examples
 
-  <example-modal />
-  
+<example-modal />
+
 </div>
 <div class="vp-doc">
 
@@ -43,7 +43,7 @@ title: Modal
 | canCancel        | Can close Modal by clicking 'X', pressing escape or clicking outside                                                                                                   | array\|boolean | `escape`, `x`, `outside`, `button` | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;canCancel: ['escape', 'x', 'outside', 'button']<br>}</code> |
 | closeIcon        | Icon name                                                                                                                                                              | string         | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;closeIcon: 'close'<br>}</code>                              |
 | closeIconSize    |                                                                                                                                                                        | string         | -                                  | 'medium'                                                                                                                                                             |
-| component        | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.\$emit('close')         | object\|func   | -                                  |                                                                                                                                                                      |
+| component        | Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close')          | object\|func   | -                                  |                                                                                                                                                                      |
 | content          | Text content                                                                                                                                                           | string         | -                                  |                                                                                                                                                                      |
 | destroyOnHide    | Destroy modal on hide                                                                                                                                                  | boolean        | -                                  | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> modal: {<br>&nbsp;&nbsp;destroyOnHide: true<br>}</code>                             |
 | events           | Events to be binded to the injected component                                                                                                                          | object         | -                                  |                                                                                                                                                                      |

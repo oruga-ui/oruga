@@ -15,8 +15,8 @@ title: Datepicker
 
 ## Examples
 
-  <example-datepicker />
-  
+<example-datepicker />
+
 </div>
 <div class="vp-doc">
 

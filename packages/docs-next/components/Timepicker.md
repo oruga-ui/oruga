@@ -15,8 +15,8 @@ title: Timepicker
 
 ## Examples
 
-  <example-timepicker />
-  
+<example-timepicker />
+
 </div>
 <div class="vp-doc">
 

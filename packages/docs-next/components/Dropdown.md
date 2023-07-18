@@ -15,8 +15,8 @@ title: Dropdown
 
 ## Examples
 
-  <example-dropdown />
-  
+<example-dropdown />
+
 </div>
 <div class="vp-doc">
 

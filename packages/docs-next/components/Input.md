@@ -15,8 +15,8 @@ title: Input
 
 ## Examples
 
-  <example-input />
-  
+<example-input />
+
 </div>
 <div class="vp-doc">
 

@@ -15,8 +15,8 @@ title: Icon
 
 ## Examples
 
-  <example-icon />
-  
+<example-icon />
+
 </div>
 <div class="vp-doc">
 

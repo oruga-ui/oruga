@@ -15,8 +15,8 @@ title: Inputitems
 
 ## Examples
 
-  <example-inputitems />
-  
+<example-inputitems />
+
 </div>
 <div class="vp-doc">
 

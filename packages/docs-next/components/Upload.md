@@ -15,8 +15,8 @@ title: Upload
 
 ## Examples
 
-  <example-upload />
-  
+<example-upload />
+
 </div>
 <div class="vp-doc">
 

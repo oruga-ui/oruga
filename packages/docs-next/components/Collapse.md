@@ -15,8 +15,8 @@ title: Collapse
 
 ## Examples
 
-  <example-collapse />
-  
+<example-collapse />
+
 </div>
 <div class="vp-doc">
 

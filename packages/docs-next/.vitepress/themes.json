@@ -1,0 +1,26 @@
+[
+    {
+        "label": "Oruga Base Theme",
+        "value": "theme-orugabase",
+        "path": "../oruga/src",
+        "git": "https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src"
+    },
+    {
+        "label": "Oruga Full Theme",
+        "value": "theme-orugafull",
+        "path": "../oruga/src",
+        "git": "https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src"
+    },
+    {
+        "label": "Bulma Theme",
+        "value": "theme-bulma",
+        "path": "./node_modules/@oruga-ui/theme-bulma/dist",
+        "git": "https://github.com/oruga-ui/theme-bulma/tree/main/src/assets"
+    },
+    {
+        "label": "Bootstrap Theme",
+        "value": "theme-bootstrap",
+        "path": "./node_modules/@oruga-ui/theme-bootstrap/dist",
+        "git": "https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets"
+    }
+]

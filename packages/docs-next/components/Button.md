@@ -15,8 +15,8 @@ title: Button
 
 ## Examples
 
-  <example-button />
-  
+<example-button />
+
 </div>
 <div class="vp-doc">
 

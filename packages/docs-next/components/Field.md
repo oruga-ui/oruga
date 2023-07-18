@@ -15,8 +15,8 @@ title: Field
 
 ## Examples
 
-  <example-field />
-  
+<example-field />
+
 </div>
 <div class="vp-doc">
 

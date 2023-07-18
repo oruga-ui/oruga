@@ -15,8 +15,8 @@ title: Checkbox
 
 ## Examples
 
-  <example-checkbox />
-  
+<example-checkbox />
+
 </div>
 <div class="vp-doc">
 

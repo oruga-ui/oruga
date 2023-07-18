@@ -15,8 +15,8 @@ title: Select
 
 ## Examples
 
-  <example-select />
-  
+<example-select />
+
 </div>
 <div class="vp-doc">
 

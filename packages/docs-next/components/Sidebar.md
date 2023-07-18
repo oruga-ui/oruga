@@ -15,8 +15,8 @@ title: Sidebar
 
 ## Examples
 
-  <example-sidebar />
-  
+<example-sidebar />
+
 </div>
 <div class="vp-doc">
 

@@ -15,8 +15,8 @@ title: Autocomplete
 
 ## Examples
 
-  <example-autocomplete />
-  
+<example-autocomplete />
+
 </div>
 <div class="vp-doc">
 

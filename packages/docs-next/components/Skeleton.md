@@ -15,8 +15,8 @@ title: Skeleton
 
 ## Examples
 
-  <example-skeleton />
-  
+<example-skeleton />
+
 </div>
 <div class="vp-doc">
 

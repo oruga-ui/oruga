@@ -15,8 +15,8 @@ title: Radio
 
 ## Examples
 
-  <example-radio />
-  
+<example-radio />
+
 </div>
 <div class="vp-doc">
 

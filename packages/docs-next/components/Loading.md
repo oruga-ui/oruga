@@ -15,8 +15,8 @@ title: Loading
 
 ## Examples
 
-  <example-loading />
-  
+<example-loading />
+
 </div>
 <div class="vp-doc">
 

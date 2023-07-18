@@ -15,8 +15,8 @@ title: Carousel
 
 ## Examples
 
-  <example-carousel />
-  
+<example-carousel />
+
 </div>
 <div class="vp-doc">
 

@@ -15,8 +15,8 @@ title: Steps
 
 ## Examples
 
-  <example-steps />
-  
+<example-steps />
+
 </div>
 <div class="vp-doc">
 

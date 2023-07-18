@@ -15,8 +15,8 @@ title: Tabs
 
 ## Examples
 
-  <example-tabs />
-  
+<example-tabs />
+
 </div>
 <div class="vp-doc">
 

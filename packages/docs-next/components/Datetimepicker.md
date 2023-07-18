@@ -15,8 +15,8 @@ title: Datetimepicker
 
 ## Examples
 
-  <example-datetimepicker />
-  
+<example-datetimepicker />
+
 </div>
 <div class="vp-doc">
 
