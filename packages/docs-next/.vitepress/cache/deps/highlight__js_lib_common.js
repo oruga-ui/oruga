@@ -1,6 +1,6 @@
 import {
   require_core
-} from "./chunk-L6K6KP5D.js";
+} from "./chunk-B4UJYCV3.js";
 import {
   __commonJS,
   __toESM
@@ -11,8 +11,8 @@ var require_xml = __commonJS({
   "node_modules/highlight.js/lib/languages/xml.js"(exports, module) {
     function xml(hljs) {
       const regex = hljs.regex;
-      const TAG_NAME_RE = regex.concat(/[A-Z_]/, regex.optional(/[A-Z0-9_.-]*:/), /[A-Z0-9_.-]*/);
-      const XML_IDENT_RE = /[A-Za-z0-9._:-]+/;
+      const TAG_NAME_RE = regex.concat(/[\p{L}_]/u, regex.optional(/[\p{L}0-9_.-]*:/u), /[\p{L}0-9_.-]*/u);
+      const XML_IDENT_RE = /[\p{L}0-9._:-]+/u;
       const XML_ENTITIES = {
         className: "symbol",
         begin: /&[a-z]+;|&#[0-9]+;|&#x[a-f0-9]+;/
@@ -83,6 +83,7 @@ var require_xml = __commonJS({
           "svg"
         ],
         case_insensitive: true,
+        unicodeRegex: true,
         contains: [
           {
             className: "meta",
@@ -303,7 +304,7 @@ var require_bash = __commonJS({
         end: /'/
       };
       const ARITHMETIC = {
-        begin: /\$\(\(/,
+        begin: /\$?\(\(/,
         end: /\)\)/,
         contains: [
           {
@@ -344,12 +345,14 @@ var require_bash = __commonJS({
         "fi",
         "for",
         "while",
+        "until",
         "in",
         "do",
         "done",
         "case",
         "esac",
-        "function"
+        "function",
+        "select"
       ];
       const LITERALS = [
         "true",
@@ -1524,6 +1527,7 @@ var require_csharp = __commonJS({
         "record",
         "ref",
         "return",
+        "scoped",
         "sealed",
         "sizeof",
         "stackalloc",
@@ -2506,6 +2510,7 @@ var require_css = __commonJS({
                 // from keywords
                 keywords: { built_in: "url data-uri" },
                 contains: [
+                  ...STRINGS,
                   {
                     className: "string",
                     // any character other than `)` as in `url()` will be the start
@@ -2699,11 +2704,11 @@ var require_markdown = __commonJS({
         // defined later
         variants: [
           {
-            begin: /_{2}/,
+            begin: /_{2}(?!\s)/,
             end: /_{2}/
           },
           {
-            begin: /\*{2}/,
+            begin: /\*{2}(?!\s)/,
             end: /\*{2}/
           }
         ]
@@ -2714,11 +2719,11 @@ var require_markdown = __commonJS({
         // defined later
         variants: [
           {
-            begin: /\*(?!\*)/,
+            begin: /\*(?![*\s])/,
             end: /\*/
           },
           {
-            begin: /_(?!_)/,
+            begin: /_(?![_\s])/,
             end: /_/,
             relevance: 0
           }
@@ -2863,10 +2868,21 @@ var require_ruby = __commonJS({
         /\b([A-Z]+[a-z0-9]+)+[A-Z]+/
       );
       const CLASS_NAME_WITH_NAMESPACE_RE = regex.concat(CLASS_NAME_RE, /(::\w+)*/);
+      const PSEUDO_KWS = [
+        "include",
+        "extend",
+        "prepend",
+        "public",
+        "private",
+        "protected",
+        "raise",
+        "throw"
+      ];
       const RUBY_KEYWORDS = {
         "variable.constant": [
           "__FILE__",
-          "__LINE__"
+          "__LINE__",
+          "__ENCODING__"
         ],
         "variable.language": [
           "self",
@@ -2875,9 +2891,6 @@ var require_ruby = __commonJS({
         keyword: [
           "alias",
           "and",
-          "attr_accessor",
-          "attr_reader",
-          "attr_writer",
           "begin",
           "BEGIN",
           "break",
@@ -2893,7 +2906,6 @@ var require_ruby = __commonJS({
           "for",
           "if",
           "in",
-          "include",
           "module",
           "next",
           "not",
@@ -2909,11 +2921,18 @@ var require_ruby = __commonJS({
           "until",
           "when",
           "while",
-          "yield"
+          "yield",
+          ...PSEUDO_KWS
         ],
         built_in: [
           "proc",
-          "lambda"
+          "lambda",
+          "attr_accessor",
+          "attr_reader",
+          "attr_writer",
+          "define_method",
+          "private_constant",
+          "module_function"
         ],
         literal: [
           "true",
@@ -3064,6 +3083,16 @@ var require_ruby = __commonJS({
           }
         ]
       };
+      const INCLUDE_EXTEND = {
+        match: [
+          /(include|extend)\s+/,
+          CLASS_NAME_WITH_NAMESPACE_RE
+        ],
+        scope: {
+          2: "title.class"
+        },
+        keywords: RUBY_KEYWORDS
+      };
       const CLASS_DEFINITION = {
         variants: [
           {
@@ -3076,7 +3105,7 @@ var require_ruby = __commonJS({
           },
           {
             match: [
-              /class\s+/,
+              /\b(class|module)\s+/,
               CLASS_NAME_WITH_NAMESPACE_RE
             ]
           }
@@ -3110,17 +3139,24 @@ var require_ruby = __commonJS({
         relevance: 0,
         match: [
           CLASS_NAME_WITH_NAMESPACE_RE,
-          /\.new[ (]/
+          /\.new[. (]/
         ],
         scope: {
           1: "title.class"
         }
       };
+      const CLASS_REFERENCE = {
+        relevance: 0,
+        match: CLASS_NAME_RE,
+        scope: "title.class"
+      };
       const RUBY_DEFAULT_CONTAINS = [
         STRING,
         CLASS_DEFINITION,
+        INCLUDE_EXTEND,
         OBJECT_CREATION,
         UPPER_CASE_CONSTANT,
+        CLASS_REFERENCE,
         METHOD_DEFINITION,
         {
           // swallow namespace qualifiers before symbols
@@ -3377,6 +3413,81 @@ var require_go = __commonJS({
   }
 });
 
+// node_modules/highlight.js/lib/languages/graphql.js
+var require_graphql = __commonJS({
+  "node_modules/highlight.js/lib/languages/graphql.js"(exports, module) {
+    function graphql(hljs) {
+      const regex = hljs.regex;
+      const GQL_NAME = /[_A-Za-z][_0-9A-Za-z]*/;
+      return {
+        name: "GraphQL",
+        aliases: ["gql"],
+        case_insensitive: true,
+        disableAutodetect: false,
+        keywords: {
+          keyword: [
+            "query",
+            "mutation",
+            "subscription",
+            "type",
+            "input",
+            "schema",
+            "directive",
+            "interface",
+            "union",
+            "scalar",
+            "fragment",
+            "enum",
+            "on"
+          ],
+          literal: [
+            "true",
+            "false",
+            "null"
+          ]
+        },
+        contains: [
+          hljs.HASH_COMMENT_MODE,
+          hljs.QUOTE_STRING_MODE,
+          hljs.NUMBER_MODE,
+          {
+            scope: "punctuation",
+            match: /[.]{3}/,
+            relevance: 0
+          },
+          {
+            scope: "punctuation",
+            begin: /[\!\(\)\:\=\[\]\{\|\}]{1}/,
+            relevance: 0
+          },
+          {
+            scope: "variable",
+            begin: /\$/,
+            end: /\W/,
+            excludeEnd: true,
+            relevance: 0
+          },
+          {
+            scope: "meta",
+            match: /@\w+/,
+            excludeEnd: true
+          },
+          {
+            scope: "symbol",
+            begin: regex.concat(GQL_NAME, regex.lookahead(/\s*:/)),
+            relevance: 0
+          }
+        ],
+        illegal: [
+          /[;<']/,
+          /BEGIN/
+        ]
+      };
+    }
+    module.exports = graphql;
+  }
+});
+
 // node_modules/highlight.js/lib/languages/ini.js
 var require_ini = __commonJS({
   "node_modules/highlight.js/lib/languages/ini.js"(exports, module) {
@@ -3578,7 +3689,9 @@ var require_java = __commonJS({
         "requires",
         "exports",
         "do",
-        "sealed"
+        "sealed",
+        "yield",
+        "permits"
       ];
       const BUILT_INS = [
         "super",
@@ -3688,7 +3801,7 @@ var require_java = __commonJS({
               /\s+/,
               JAVA_IDENT_RE,
               /\s+/,
-              /=/
+              /=(?!=)/
             ],
             className: {
               1: "type",
@@ -3898,6 +4011,7 @@ var require_javascript = __commonJS({
       "window",
       "document",
       "localStorage",
+      "sessionStorage",
       "module",
       "global"
       // Node.js
@@ -3947,7 +4061,11 @@ var require_javascript = __commonJS({
             }
           }
           let m;
-          const afterMatch = match.input.substr(afterMatchIndex);
+          const afterMatch = match.input.substring(afterMatchIndex);
+          if (m = afterMatch.match(/^\s*=/)) {
+            response.ignoreMatch();
+            return;
+          }
           if (m = afterMatch.match(/^\s+extends\s+/)) {
             if (m.index === 0) {
               response.ignoreMatch();
@@ -4018,6 +4136,19 @@ var require_javascript = __commonJS({
           subLanguage: "css"
         }
       };
+      const GRAPHQL_TEMPLATE = {
+        begin: "gql`",
+        end: "",
+        starts: {
+          end: "`",
+          returnEnd: false,
+          contains: [
+            hljs.BACKSLASH_ESCAPE,
+            SUBST
+          ],
+          subLanguage: "graphql"
+        }
+      };
       const TEMPLATE_STRING = {
         className: "string",
         begin: "`",
@@ -4079,7 +4210,10 @@ var require_javascript = __commonJS({
         hljs.QUOTE_STRING_MODE,
         HTML_TEMPLATE,
         CSS_TEMPLATE,
+        GRAPHQL_TEMPLATE,
         TEMPLATE_STRING,
+        // Skip numbers when they are part of a variable name
+        { match: /\$\d+/ },
         NUMBER
         // This is intentional:
         // See https://github.com/highlightjs/highlight.js/issues/3288
@@ -4218,7 +4352,8 @@ var require_javascript = __commonJS({
           /\b/,
           noneOf([
             ...BUILT_IN_GLOBALS,
-            "super"
+            "super",
+            "import"
           ]),
           IDENT_RE$1,
           regex.lookahead(/\(/)
@@ -4277,7 +4412,7 @@ var require_javascript = __commonJS({
         ]
       };
       return {
-        name: "Javascript",
+        name: "JavaScript",
         aliases: ["js", "jsx", "mjs", "cjs"],
         keywords: KEYWORDS$1,
         // this will be extended by TypeScript
@@ -4294,8 +4429,11 @@ var require_javascript = __commonJS({
           hljs.QUOTE_STRING_MODE,
           HTML_TEMPLATE,
           CSS_TEMPLATE,
+          GRAPHQL_TEMPLATE,
           TEMPLATE_STRING,
           COMMENT,
+          // Skip numbers when they are part of a variable name
+          { match: /\$\d+/ },
           NUMBER,
           CLASS_REFERENCE,
           {
@@ -4445,18 +4583,25 @@ var require_json = __commonJS({
         className: "punctuation",
         relevance: 0
       };
-      const LITERALS = { beginKeywords: [
+      const LITERALS = [
         "true",
         "false",
         "null"
-      ].join(" ") };
+      ];
+      const LITERALS_MODE = {
+        scope: "literal",
+        beginKeywords: LITERALS.join(" ")
+      };
       return {
         name: "JSON",
+        keywords: {
+          literal: LITERALS
+        },
         contains: [
           ATTRIBUTE,
           PUNCTUATION,
           hljs.QUOTE_STRING_MODE,
-          LITERALS,
+          LITERALS_MODE,
           hljs.C_NUMBER_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE
@@ -4571,7 +4716,10 @@ var require_kotlin = __commonJS({
           {
             begin: /\(/,
             end: /\)/,
-            contains: [hljs.inherit(STRING, { className: "string" })]
+            contains: [
+              hljs.inherit(STRING, { className: "string" }),
+              "self"
+            ]
           }
         ]
       };
@@ -4676,9 +4824,15 @@ var require_kotlin = __commonJS({
             ]
           },
           {
-            className: "class",
-            beginKeywords: "class interface trait",
-            // remove 'trait' when removed from KEYWORDS
+            begin: [
+              /class|interface|trait/,
+              /\s+/,
+              hljs.UNDERSCORE_IDENT_RE
+            ],
+            beginScope: {
+              3: "title.class"
+            },
+            keywords: "class interface trait",
             end: /[:\{(]|$/,
             excludeEnd: true,
             illegal: "extends implements",
@@ -4696,7 +4850,7 @@ var require_kotlin = __commonJS({
               {
                 className: "type",
                 begin: /[,:]\s*/,
-                end: /[<\(,]|$/,
+                end: /[<\(,){\s]|$/,
                 excludeBegin: true,
                 returnEnd: true
               },
@@ -5387,7 +5541,9 @@ var require_less = __commonJS({
           returnBegin: true,
           excludeEnd: true
         },
-        modes.IMPORTANT
+        modes.IMPORTANT,
+        { beginKeywords: "and not" },
+        modes.FUNCTION_DISPATCH
       );
       const VALUE_WITH_RULESETS = VALUE_MODES.concat({
         begin: /\{/,
@@ -5519,7 +5675,9 @@ var require_less = __commonJS({
         VAR_RULE_MODE,
         PSEUDO_SELECTOR_MODE,
         RULE_MODE,
-        SELECTOR_MODE
+        SELECTOR_MODE,
+        MIXIN_GUARD_MODE,
+        modes.FUNCTION_DISPATCH
       );
       return {
         name: "Less",
@@ -6418,10 +6576,21 @@ var require_php = __commonJS({
         illegal: null,
         contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST)
       });
-      const HEREDOC = hljs.END_SAME_AS_BEGIN({
-        begin: /<<<[ \t]*(\w+)\n/,
+      const HEREDOC = {
+        begin: /<<<[ \t]*(?:(\w+)|"(\w+)")\n/,
         end: /[ \t]*(\w+)\b/,
-        contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST)
+        contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST),
+        "on:begin": (m, resp) => {
+          resp.data._beginMatch = m[1] || m[2];
+        },
+        "on:end": (m, resp) => {
+          if (resp.data._beginMatch !== m[1])
+            resp.ignoreMatch();
+        }
+      };
+      const NOWDOC = hljs.END_SAME_AS_BEGIN({
+        begin: /<<<[ \t]*'(\w+)'\n/,
+        end: /[ \t]*(\w+)\b/
       });
       const WHITESPACE = "[ 	\n]";
       const STRING = {
@@ -6429,7 +6598,8 @@ var require_php = __commonJS({
         variants: [
           DOUBLE_QUOTED,
           SINGLE_QUOTED,
-          HEREDOC
+          HEREDOC,
+          NOWDOC
         ]
       };
       const NUMBER = {
@@ -7035,6 +7205,7 @@ var require_python = __commonJS({
         "async",
         "await",
         "break",
+        "case",
         "class",
         "continue",
         "def",
@@ -7051,6 +7222,7 @@ var require_python = __commonJS({
         "in",
         "is",
         "lambda",
+        "match",
         "nonlocal|10",
         "not",
         "or",
@@ -7365,7 +7537,7 @@ var require_python = __commonJS({
         ],
         unicodeRegex: true,
         keywords: KEYWORDS,
-        illegal: /(<\/|->|\?)|=>/,
+        illegal: /(<\/|\?)|=>/,
         contains: [
           PROMPT,
           NUMBER,
@@ -7807,7 +7979,7 @@ var require_rust = __commonJS({
         "file!",
         "format!",
         "format_args!",
-        "include_bin!",
+        "include_bytes!",
         "include_str!",
         "line!",
         "local_data_key!",
@@ -7967,7 +8139,8 @@ var require_rust = __commonJS({
             begin: hljs.IDENT_RE + "::",
             keywords: {
               keyword: "Self",
-              built_in: BUILTINS
+              built_in: BUILTINS,
+              type: TYPES
             }
           },
           {
@@ -8648,6 +8821,7 @@ var require_scss = __commonJS({
           {
             begin: /:/,
             end: /[;}{]/,
+            relevance: 0,
             contains: [
               modes.BLOCK_COMMENT,
               VARIABLE,
@@ -8655,7 +8829,8 @@ var require_scss = __commonJS({
               modes.CSS_NUMBER_MODE,
               hljs.QUOTE_STRING_MODE,
               hljs.APOS_STRING_MODE,
-              modes.IMPORTANT
+              modes.IMPORTANT,
+              modes.FUNCTION_DISPATCH
             ]
           },
           // matching these here allows us to treat them more like regular CSS
@@ -9303,7 +9478,7 @@ var require_sql = __commonJS({
       });
       const VARIABLE = {
         className: "variable",
-        begin: /@[a-z0-9]+/
+        begin: /@[a-z0-9][a-z0-9_]*/
       };
       const OPERATOR = {
         className: "operator",
@@ -9428,6 +9603,8 @@ var require_swift = __commonJS({
       // will result in additional modes being created to scan for those keywords to
       // avoid conflicts with other rules
       "actor",
+      "any",
+      // contextual
       "associatedtype",
       "async",
       "await",
@@ -9449,6 +9626,7 @@ var require_swift = __commonJS({
       "deinit",
       "didSet",
       // contextual
+      "distributed",
       "do",
       "dynamic",
       // contextual
@@ -10483,6 +10661,7 @@ var require_typescript = __commonJS({
       "window",
       "document",
       "localStorage",
+      "sessionStorage",
       "module",
       "global"
       // Node.js
@@ -10532,7 +10711,11 @@ var require_typescript = __commonJS({
             }
           }
           let m;
-          const afterMatch = match.input.substr(afterMatchIndex);
+          const afterMatch = match.input.substring(afterMatchIndex);
+          if (m = afterMatch.match(/^\s*=/)) {
+            response.ignoreMatch();
+            return;
+          }
           if (m = afterMatch.match(/^\s+extends\s+/)) {
             if (m.index === 0) {
               response.ignoreMatch();
@@ -10603,6 +10786,19 @@ var require_typescript = __commonJS({
           subLanguage: "css"
         }
       };
+      const GRAPHQL_TEMPLATE = {
+        begin: "gql`",
+        end: "",
+        starts: {
+          end: "`",
+          returnEnd: false,
+          contains: [
+            hljs.BACKSLASH_ESCAPE,
+            SUBST
+          ],
+          subLanguage: "graphql"
+        }
+      };
       const TEMPLATE_STRING = {
         className: "string",
         begin: "`",
@@ -10664,7 +10860,10 @@ var require_typescript = __commonJS({
         hljs.QUOTE_STRING_MODE,
         HTML_TEMPLATE,
         CSS_TEMPLATE,
+        GRAPHQL_TEMPLATE,
         TEMPLATE_STRING,
+        // Skip numbers when they are part of a variable name
+        { match: /\$\d+/ },
         NUMBER
         // This is intentional:
         // See https://github.com/highlightjs/highlight.js/issues/3288
@@ -10803,7 +11002,8 @@ var require_typescript = __commonJS({
           /\b/,
           noneOf([
             ...BUILT_IN_GLOBALS,
-            "super"
+            "super",
+            "import"
           ]),
           IDENT_RE$1,
           regex.lookahead(/\(/)
@@ -10862,7 +11062,7 @@ var require_typescript = __commonJS({
         ]
       };
       return {
-        name: "Javascript",
+        name: "JavaScript",
         aliases: ["js", "jsx", "mjs", "cjs"],
         keywords: KEYWORDS$1,
         // this will be extended by TypeScript
@@ -10879,8 +11079,11 @@ var require_typescript = __commonJS({
           hljs.QUOTE_STRING_MODE,
           HTML_TEMPLATE,
           CSS_TEMPLATE,
+          GRAPHQL_TEMPLATE,
           TEMPLATE_STRING,
           COMMENT,
+          // Skip numbers when they are part of a variable name
+          { match: /\$\d+/ },
           NUMBER,
           CLASS_REFERENCE,
           {
@@ -11095,7 +11298,9 @@ var require_typescript = __commonJS({
         name: "TypeScript",
         aliases: [
           "ts",
-          "tsx"
+          "tsx",
+          "mts",
+          "cts"
         ]
       });
       return tsLanguage;
@@ -11242,6 +11447,132 @@ var require_vbnet = __commonJS({
   }
 });
 
+// node_modules/highlight.js/lib/languages/wasm.js
+var require_wasm = __commonJS({
+  "node_modules/highlight.js/lib/languages/wasm.js"(exports, module) {
+    function wasm(hljs) {
+      hljs.regex;
+      const BLOCK_COMMENT = hljs.COMMENT(/\(;/, /;\)/);
+      BLOCK_COMMENT.contains.push("self");
+      const LINE_COMMENT = hljs.COMMENT(/;;/, /$/);
+      const KWS = [
+        "anyfunc",
+        "block",
+        "br",
+        "br_if",
+        "br_table",
+        "call",
+        "call_indirect",
+        "data",
+        "drop",
+        "elem",
+        "else",
+        "end",
+        "export",
+        "func",
+        "global.get",
+        "global.set",
+        "local.get",
+        "local.set",
+        "local.tee",
+        "get_global",
+        "get_local",
+        "global",
+        "if",
+        "import",
+        "local",
+        "loop",
+        "memory",
+        "memory.grow",
+        "memory.size",
+        "module",
+        "mut",
+        "nop",
+        "offset",
+        "param",
+        "result",
+        "return",
+        "select",
+        "set_global",
+        "set_local",
+        "start",
+        "table",
+        "tee_local",
+        "then",
+        "type",
+        "unreachable"
+      ];
+      const FUNCTION_REFERENCE = {
+        begin: [
+          /(?:func|call|call_indirect)/,
+          /\s+/,
+          /\$[^\s)]+/
+        ],
+        className: {
+          1: "keyword",
+          3: "title.function"
+        }
+      };
+      const ARGUMENT = {
+        className: "variable",
+        begin: /\$[\w_]+/
+      };
+      const PARENS = {
+        match: /(\((?!;)|\))+/,
+        className: "punctuation",
+        relevance: 0
+      };
+      const NUMBER = {
+        className: "number",
+        relevance: 0,
+        // borrowed from Prism, TODO: split out into variants
+        match: /[+-]?\b(?:\d(?:_?\d)*(?:\.\d(?:_?\d)*)?(?:[eE][+-]?\d(?:_?\d)*)?|0x[\da-fA-F](?:_?[\da-fA-F])*(?:\.[\da-fA-F](?:_?[\da-fA-D])*)?(?:[pP][+-]?\d(?:_?\d)*)?)\b|\binf\b|\bnan(?::0x[\da-fA-F](?:_?[\da-fA-D])*)?\b/
+      };
+      const TYPE = {
+        // look-ahead prevents us from gobbling up opcodes
+        match: /(i32|i64|f32|f64)(?!\.)/,
+        className: "type"
+      };
+      const MATH_OPERATIONS = {
+        className: "keyword",
+        // borrowed from Prism, TODO: split out into variants
+        match: /\b(f32|f64|i32|i64)(?:\.(?:abs|add|and|ceil|clz|const|convert_[su]\/i(?:32|64)|copysign|ctz|demote\/f64|div(?:_[su])?|eqz?|extend_[su]\/i32|floor|ge(?:_[su])?|gt(?:_[su])?|le(?:_[su])?|load(?:(?:8|16|32)_[su])?|lt(?:_[su])?|max|min|mul|nearest|neg?|or|popcnt|promote\/f32|reinterpret\/[fi](?:32|64)|rem_[su]|rot[lr]|shl|shr_[su]|store(?:8|16|32)?|sqrt|sub|trunc(?:_[su]\/f(?:32|64))?|wrap\/i64|xor))\b/
+      };
+      const OFFSET_ALIGN = {
+        match: [
+          /(?:offset|align)/,
+          /\s*/,
+          /=/
+        ],
+        className: {
+          1: "keyword",
+          3: "operator"
+        }
+      };
+      return {
+        name: "WebAssembly",
+        keywords: {
+          $pattern: /[\w.]+/,
+          keyword: KWS
+        },
+        contains: [
+          LINE_COMMENT,
+          BLOCK_COMMENT,
+          OFFSET_ALIGN,
+          ARGUMENT,
+          PARENS,
+          FUNCTION_REFERENCE,
+          hljs.QUOTE_STRING_MODE,
+          TYPE,
+          MATH_OPERATIONS,
+          NUMBER
+        ]
+      };
+    }
+    module.exports = wasm;
+  }
+});
+
 // node_modules/highlight.js/lib/common.js
 var require_common = __commonJS({
   "node_modules/highlight.js/lib/common.js"(exports, module) {
@@ -11256,6 +11587,7 @@ var require_common = __commonJS({
     hljs.registerLanguage("diff", require_diff());
     hljs.registerLanguage("ruby", require_ruby());
     hljs.registerLanguage("go", require_go());
+    hljs.registerLanguage("graphql", require_graphql());
     hljs.registerLanguage("ini", require_ini());
     hljs.registerLanguage("java", require_java());
     hljs.registerLanguage("javascript", require_javascript());
@@ -11280,6 +11612,7 @@ var require_common = __commonJS({
     hljs.registerLanguage("yaml", require_yaml());
     hljs.registerLanguage("typescript", require_typescript());
     hljs.registerLanguage("vbnet", require_vbnet());
+    hljs.registerLanguage("wasm", require_wasm());
     hljs.HighlightJS = hljs;
     hljs.default = hljs;
     module.exports = hljs;

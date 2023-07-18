@@ -1,14 +1,14 @@
 import {
-  core_default
-} from "./chunk-3P2VWQY7.js";
-import "./chunk-L6K6KP5D.js";
-import {
   computed,
   defineComponent,
   h,
   ref,
   watch
 } from "./chunk-G3CMYKT2.js";
+import {
+  core_default
+} from "./chunk-WP6SVXGP.js";
+import "./chunk-B4UJYCV3.js";
 import "./chunk-UXIASGQL.js";
 
 // node_modules/@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js

@@ -5,7 +5,6 @@ import {
 // node_modules/highlight.js/lib/core.js
 var require_core = __commonJS({
   "node_modules/highlight.js/lib/core.js"(exports, module) {
-    var deepFreezeEs6 = { exports: {} };
     function deepFreeze(obj) {
       if (obj instanceof Map) {
         obj.clear = obj.delete = obj.set = function() {
@@ -17,17 +16,15 @@ var require_core = __commonJS({
         };
       }
       Object.freeze(obj);
-      Object.getOwnPropertyNames(obj).forEach(function(name) {
-        var prop = obj[name];
-        if (typeof prop == "object" && !Object.isFrozen(prop)) {
+      Object.getOwnPropertyNames(obj).forEach((name) => {
+        const prop = obj[name];
+        const type = typeof prop;
+        if ((type === "object" || type === "function") && !Object.isFrozen(prop)) {
           deepFreeze(prop);
         }
       });
       return obj;
     }
-    deepFreezeEs6.exports = deepFreeze;
-    deepFreezeEs6.exports.default = deepFreeze;
-    var deepFreeze$1 = deepFreezeEs6.exports;
     var Response = class {
       /**
        * @param {CompiledMode} mode
@@ -62,9 +59,12 @@ var require_core = __commonJS({
     }
     var SPAN_CLOSE = "</span>";
     var emitsWrappingTags = (node) => {
-      return !!node.kind;
+      return !!node.scope;
     };
-    var expandScopeName = (name, { prefix }) => {
+    var scopeToCSSClass = (name, { prefix }) => {
+      if (name.startsWith("language:")) {
+        return name.replace("language:", "language-");
+      }
       if (name.includes(".")) {
         const pieces = name.split(".");
         return [
@@ -100,13 +100,11 @@ var require_core = __commonJS({
       openNode(node) {
         if (!emitsWrappingTags(node))
           return;
-        let scope = node.kind;
-        if (node.sublanguage) {
-          scope = `language-${scope}`;
-        } else {
-          scope = expandScopeName(scope, { prefix: this.classPrefix });
-        }
-        this.span(scope);
+        const className = scopeToCSSClass(
+          node.scope,
+          { prefix: this.classPrefix }
+        );
+        this.span(className);
       }
       /**
        * Adds a node close to the output stream (if needed)
@@ -132,9 +130,14 @@ var require_core = __commonJS({
         this.buffer += `<span class="${className}">`;
       }
     };
+    var newNode = (opts = {}) => {
+      const result = { children: [] };
+      Object.assign(result, opts);
+      return result;
+    };
     var TokenTree = class _TokenTree {
       constructor() {
-        this.rootNode = { children: [] };
+        this.rootNode = newNode();
         this.stack = [this.rootNode];
       }
       get top() {
@@ -147,9 +150,9 @@ var require_core = __commonJS({
       add(node) {
         this.top.children.push(node);
       }
-      /** @param {string} kind */
-      openNode(kind) {
-        const node = { kind, children: [] };
+      /** @param {string} scope */
+      openNode(scope) {
+        const node = newNode({ scope });
         this.add(node);
         this.stack.push(node);
       }
@@ -214,18 +217,6 @@ var require_core = __commonJS({
       }
       /**
        * @param {string} text
-       * @param {string} kind
-       */
-      addKeyword(text, kind) {
-        if (text === "") {
-          return;
-        }
-        this.openNode(kind);
-        this.addText(text);
-        this.closeNode();
-      }
-      /**
-       * @param {string} text
        */
       addText(text) {
         if (text === "") {
@@ -233,14 +224,21 @@ var require_core = __commonJS({
         }
         this.add(text);
       }
+      /** @param {string} scope */
+      startScope(scope) {
+        this.openNode(scope);
+      }
+      endScope() {
+        this.closeNode();
+      }
       /**
        * @param {Emitter & {root: DataNode}} emitter
        * @param {string} name
        */
-      addSublanguage(emitter, name) {
+      __addSublanguage(emitter, name) {
         const node = emitter.root;
-        node.kind = name;
-        node.sublanguage = true;
+        if (name)
+          node.scope = `language:${name}`;
         this.add(node);
       }
       toHTML() {
@@ -248,6 +246,7 @@ var require_core = __commonJS({
         return renderer.value();
       }
       finalize() {
+        this.closeAllNodes();
         return true;
       }
     };
@@ -935,7 +934,7 @@ var require_core = __commonJS({
       }
       return mode;
     }
-    var version = "11.5.1";
+    var version = "11.8.0";
     var HTMLInjectionError = class extends Error {
       constructor(reason, html) {
         super(reason);
@@ -1038,7 +1037,7 @@ var require_core = __commonJS({
                 buf += match[0];
               } else {
                 const cssClass = language.classNameAliases[kind] || kind;
-                emitter.addKeyword(match[0], cssClass);
+                emitKeyword(match[0], cssClass);
               }
             } else {
               buf += match[0];
@@ -1046,7 +1045,7 @@ var require_core = __commonJS({
             lastIndex = top.keywordPatternRe.lastIndex;
             match = top.keywordPatternRe.exec(modeBuffer);
           }
-          buf += modeBuffer.substr(lastIndex);
+          buf += modeBuffer.substring(lastIndex);
           emitter.addText(buf);
         }
         function processSubLanguage() {
@@ -1067,7 +1066,7 @@ var require_core = __commonJS({
           if (top.relevance > 0) {
             relevance += result2.relevance;
           }
-          emitter.addSublanguage(result2._emitter, result2.language);
+          emitter.__addSublanguage(result2._emitter, result2.language);
         }
         function processBuffer() {
           if (top.subLanguage != null) {
@@ -1076,6 +1075,13 @@ var require_core = __commonJS({
             processKeywords();
           }
           modeBuffer = "";
+        }
+        function emitKeyword(keyword, scope) {
+          if (keyword === "")
+            return;
+          emitter.startScope(scope);
+          emitter.addText(keyword);
+          emitter.endScope();
         }
         function emitMultiClass(scope, match) {
           let i = 1;
@@ -1088,7 +1094,7 @@ var require_core = __commonJS({
             const klass = language.classNameAliases[scope[i]] || scope[i];
             const text = match[i];
             if (klass) {
-              emitter.addKeyword(text, klass);
+              emitKeyword(text, klass);
             } else {
               modeBuffer = text;
               processKeywords();
@@ -1103,7 +1109,7 @@ var require_core = __commonJS({
           }
           if (mode.beginScope) {
             if (mode.beginScope._wrap) {
-              emitter.addKeyword(modeBuffer, language.classNameAliases[mode.beginScope._wrap] || mode.beginScope._wrap);
+              emitKeyword(modeBuffer, language.classNameAliases[mode.beginScope._wrap] || mode.beginScope._wrap);
               modeBuffer = "";
             } else if (mode.beginScope._multi) {
               emitMultiClass(mode.beginScope, match);
@@ -1170,7 +1176,7 @@ var require_core = __commonJS({
         }
         function doEndMatch(match) {
           const lexeme = match[0];
-          const matchPlusRemainder = codeToHighlight.substr(match.index);
+          const matchPlusRemainder = codeToHighlight.substring(match.index);
           const endMode = endOfMode(top, match, matchPlusRemainder);
           if (!endMode) {
             return NO_MATCH;
@@ -1178,7 +1184,7 @@ var require_core = __commonJS({
           const origin = top;
           if (top.endScope && top.endScope._wrap) {
             processBuffer();
-            emitter.addKeyword(lexeme, top.endScope._wrap);
+            emitKeyword(lexeme, top.endScope._wrap);
           } else if (top.endScope && top.endScope._multi) {
             processBuffer();
             emitMultiClass(top.endScope, match);
@@ -1274,24 +1280,27 @@ var require_core = __commonJS({
         let iterations = 0;
         let resumeScanAtSamePosition = false;
         try {
-          top.matcher.considerAll();
-          for (; ; ) {
-            iterations++;
-            if (resumeScanAtSamePosition) {
-              resumeScanAtSamePosition = false;
-            } else {
-              top.matcher.considerAll();
+          if (!language.__emitTokens) {
+            top.matcher.considerAll();
+            for (; ; ) {
+              iterations++;
+              if (resumeScanAtSamePosition) {
+                resumeScanAtSamePosition = false;
+              } else {
+                top.matcher.considerAll();
+              }
+              top.matcher.lastIndex = index;
+              const match = top.matcher.exec(codeToHighlight);
+              if (!match)
+                break;
+              const beforeMatch = codeToHighlight.substring(index, match.index);
+              const processedCount = processLexeme(beforeMatch, match);
+              index = match.index + processedCount;
             }
-            top.matcher.lastIndex = index;
-            const match = top.matcher.exec(codeToHighlight);
-            if (!match)
-              break;
-            const beforeMatch = codeToHighlight.substring(index, match.index);
-            const processedCount = processLexeme(beforeMatch, match);
-            index = match.index + processedCount;
+            processLexeme(codeToHighlight.substring(index));
+          } else {
+            language.__emitTokens(codeToHighlight, emitter);
           }
-          processLexeme(codeToHighlight.substr(index));
-          emitter.closeAllNodes();
           emitter.finalize();
           result = emitter.toHTML();
           return {
@@ -1511,6 +1520,12 @@ var require_core = __commonJS({
         upgradePluginAPI(plugin);
         plugins.push(plugin);
       }
+      function removePlugin(plugin) {
+        const index = plugins.indexOf(plugin);
+        if (index !== -1) {
+          plugins.splice(index, 1);
+        }
+      }
       function fire(event, args) {
         const cb = event;
         plugins.forEach(function(plugin) {
@@ -1541,7 +1556,8 @@ var require_core = __commonJS({
         registerAliases,
         autoDetection,
         inherit,
-        addPlugin
+        addPlugin,
+        removePlugin
       });
       hljs.debugMode = function() {
         SAFE_MODE = false;
@@ -1559,13 +1575,14 @@ var require_core = __commonJS({
       };
       for (const key in MODES) {
         if (typeof MODES[key] === "object") {
-          deepFreeze$1(MODES[key]);
+          deepFreeze(MODES[key]);
         }
       }
       Object.assign(hljs, MODES);
       return hljs;
     };
     var highlight = HLJS({});
+    highlight.newInstance = () => HLJS({});
     module.exports = highlight;
     highlight.HighlightJS = highlight;
     highlight.default = highlight;
@@ -1575,4 +1592,4 @@ var require_core = __commonJS({
 export {
   require_core
 };
-//# sourceMappingURL=chunk-L6K6KP5D.js.map
+//# sourceMappingURL=chunk-B4UJYCV3.js.map

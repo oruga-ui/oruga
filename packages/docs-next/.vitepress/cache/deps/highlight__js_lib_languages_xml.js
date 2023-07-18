@@ -3,8 +3,8 @@ import "./chunk-UXIASGQL.js";
 // node_modules/highlight.js/es/languages/xml.js
 function xml(hljs) {
   const regex = hljs.regex;
-  const TAG_NAME_RE = regex.concat(/[A-Z_]/, regex.optional(/[A-Z0-9_.-]*:/), /[A-Z0-9_.-]*/);
-  const XML_IDENT_RE = /[A-Za-z0-9._:-]+/;
+  const TAG_NAME_RE = regex.concat(/[\p{L}_]/u, regex.optional(/[\p{L}0-9_.-]*:/u), /[\p{L}0-9_.-]*/u);
+  const XML_IDENT_RE = /[\p{L}0-9._:-]+/u;
   const XML_ENTITIES = {
     className: "symbol",
     begin: /&[a-z]+;|&#[0-9]+;|&#x[a-f0-9]+;/
@@ -75,6 +75,7 @@ function xml(hljs) {
       "svg"
     ],
     case_insensitive: true,
+    unicodeRegex: true,
     contains: [
       {
         className: "meta",

@@ -401,10 +401,22 @@ var bulmaConfig = {
     tableEventVariantClass: "is-",
     tableEventsClass: "events",
     tableEventClass: "event",
-    monthClass: "datepicker-table",
     monthBodyClass: "datepicker-body",
-    monthTableClass: "datepicker-months",
-    monthCellClass: "datepicker-cell"
+    monthCellClass: "datepicker-cell",
+    monthCellFirstHoveredClass: "is-first-hovered",
+    monthCellFirstSelectedClass: "is-first-selected",
+    monthCellLastHoveredClass: "is-last-hovered",
+    monthCellLastSelectedClass: "is-last-selected",
+    monthCellNearbyClass: "is-nearby",
+    monthCellSelectableClass: "is-selectable",
+    monthCellSelectedClass: "is-selected",
+    monthCellTodayClass: "is-today",
+    monthCellUnselectableClass: "is-unselectable",
+    monthCellWithinHoveredClass: "is-within-hovered",
+    monthCellWithinSelectedClass: "is-within-selected",
+    monthClass: "datepicker-table",
+    monthEventsClass: "events",
+    monthTableClass: "datepicker-months"
   },
   modal: {
     override: true,
@@ -417,7 +429,8 @@ var bulmaConfig = {
     overlayClass: "modal-background",
     contentClass: "modal-content animation-content",
     closeClass: "modal-close is-large",
-    fullScreenClass: "is-full-screen"
+    fullScreenClass: "is-full-screen",
+    scrollClipClass: "is-clipped"
   },
   sidebar: {
     override: true,
