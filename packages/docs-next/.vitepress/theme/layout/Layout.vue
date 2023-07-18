@@ -1,38 +1,23 @@
 <script setup>
-import { ref } from 'vue'
-import Layout from 'vitepress/dist/client/theme-default/Layout.vue'
-import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
+import { ref } from "vue";
+import Layout from "vitepress/dist/client/theme-default/Layout.vue";
+import { useSidebar } from "vitepress/dist/client/theme-default/composables/sidebar";
 
-const { hasSidebar } = useSidebar()
+// Import theme definitions
+import themes from "../../themes.json";
 
-const selectedTheme = ref('')
+const { hasSidebar } = useSidebar();
 
-const themes =  [
-    { 
-        label: 'Oruga Base Theme', 
-        value: 'theme-orugabase'
-    },
-    { 
-        label: 'Oruga Full Theme', 
-        value: 'theme-orugafull'
-    },
-    { 
-        label: 'Bulma Theme', 
-        value: 'theme-bulma'
-    },
-    { 
-        label: 'Bootstrap Theme', 
-        value: 'theme-bootstrap'
-    }
-]
+const selectedTheme = ref("");
 
-const onThemeChange = function (value) {
-    localStorage.setItem('oruga.io_theme', selectedTheme.value)
-    location.reload()
+function onThemeChange() {
+    localStorage.setItem("oruga.io_theme", selectedTheme.value);
+    location.reload();
 }
 
-if (typeof window !== 'undefined') {
-    selectedTheme.value = localStorage.getItem('oruga.io_theme') || themes[0].value;
+if (typeof window !== "undefined") {
+    selectedTheme.value =
+        localStorage.getItem("oruga.io_theme") || themes[0].value;
 }
 </script>
 
@@ -41,13 +26,13 @@ if (typeof window !== 'undefined') {
         <template #doc-before>
             <client-only>
                 <Teleport to=".VPNavBar .container .content .content-body">
-                    <div class="theme-selector" v-if="hasSidebar">
+                    <div v-if="hasSidebar" class="theme-selector">
                         Theme ->
-                        <select
-                            v-model="selectedTheme"
-                            @change="onThemeChange"
-                        >
-                            <option v-for="item in themes" :value="item.value">
+                        <select v-model="selectedTheme" @change="onThemeChange">
+                            <option
+                                v-for="item in themes"
+                                :key="item.value"
+                                :value="item.value">
                                 {{ item.label }}
                             </option>
                         </select>
