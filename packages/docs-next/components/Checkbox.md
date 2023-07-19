@@ -28,7 +28,11 @@ title: Checkbox
 
 <div class="vp-doc">
 
-## Checkbox Component
+## Checkbox component
+
+```html
+<o-checkbox></o-checkbox>
+```
 
 ### Props
 
@@ -65,62 +69,62 @@ title: Checkbox
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $checkbox-active-background-color | $primary !default |
-| $checkbox-background-color | $primary !default |
-| $checkbox-border-color | $primary !default |
-| $checkbox-border-radius | $base-border-radius !default |
-| $checkbox-border-width | 2px !default |
-| $checkbox-checked-box-shadow-length | 0 0 0.5em !default |
-| $checkbox-checked-box-shadow-opacity | 0.8 !default |
-| $checkbox-checkmark-color | $primary-invert !default |
-| $checkbox-disabled-opacity | $base-disabled-opacity !default |
-| $checkbox-label-padding | 0 0 0 0.5em !default |
-| $checkbox-margin-sibiling | 0.5em !default |
-| $checkbox-size | 1rem !default |
-| $checkbox-line-height | 1.5 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                        | Default                |
+| ------------------------------------ | ---------------------- |
+| $checkbox-active-background-color    | $primary               |
+| $checkbox-background-color           | $primary               |
+| $checkbox-border-color               | $primary               |
+| $checkbox-border-radius              | $base-border-radius    |
+| $checkbox-border-width               | 2px                    |
+| $checkbox-checked-box-shadow-length  | 0 0 0.5em              |
+| $checkbox-checked-box-shadow-opacity | 0.8                    |
+| $checkbox-checkmark-color            | $primary-invert        |
+| $checkbox-disabled-opacity           | $base-disabled-opacity |
+| $checkbox-label-padding              | 0 0 0 0.5em            |
+| $checkbox-margin-sibiling            | 0.5em                  |
+| $checkbox-size                       | 1rem                   |
+| $checkbox-line-height                | 1.5                    |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $checkbox-active-background-color | $primary !default |
-| $checkbox-background-color | $primary !default |
-| $checkbox-border-color | $primary !default |
-| $checkbox-border-radius | $base-border-radius !default |
-| $checkbox-border-width | 2px !default |
-| $checkbox-checked-box-shadow-length | 0 0 0.5em !default |
-| $checkbox-checked-box-shadow-opacity | 0.8 !default |
-| $checkbox-checkmark-color | $primary-invert !default |
-| $checkbox-disabled-opacity | $base-disabled-opacity !default |
-| $checkbox-label-padding | 0 0 0 0.5em !default |
-| $checkbox-margin-sibiling | 0.5em !default |
-| $checkbox-size | 1rem !default |
-| $checkbox-line-height | 1.5 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_checkbox.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                        | Default                |
+| ------------------------------------ | ---------------------- |
+| $checkbox-active-background-color    | $primary               |
+| $checkbox-background-color           | $primary               |
+| $checkbox-border-color               | $primary               |
+| $checkbox-border-radius              | $base-border-radius    |
+| $checkbox-border-width               | 2px                    |
+| $checkbox-checked-box-shadow-length  | 0 0 0.5em              |
+| $checkbox-checked-box-shadow-opacity | 0.8                    |
+| $checkbox-checkmark-color            | $primary-invert        |
+| $checkbox-disabled-opacity           | $base-disabled-opacity |
+| $checkbox-label-padding              | 0 0 0 0.5em            |
+| $checkbox-margin-sibiling            | 0.5em                  |
+| $checkbox-size                       | 1rem                   |
+| $checkbox-line-height                | 1.5                    |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_checkbox.scss)
 
-<div class="theme-bootstrap">
+</div><div class="theme-bulma">
 
-<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
-      
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p> The theme does not have any custom variables for this component. </p>
 </div>
 
 </div>

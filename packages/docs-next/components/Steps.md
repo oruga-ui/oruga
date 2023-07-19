@@ -28,7 +28,11 @@ title: Steps
 
 <div class="vp-doc">
 
-## Steps Component
+## Steps component
+
+```html
+<o-steps></o-steps>
+```
 
 ### Props
 
@@ -57,7 +61,11 @@ title: Steps
 
 <div class="vp-doc">
 
-## StepItem Component
+## StepItem component
+
+```html
+<o-step-item></o-step-item>
+```
 
 ### Props
 
@@ -75,82 +83,83 @@ title: Steps
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $steps-details-background-color | hsl(0, 0%, 100%) !default |
-| $steps-details-padding | .2em !default |
-| $steps-marker-background | $grey-light !default |
-| $steps-marker-color | $primary-invert !default |
-| $steps-marker-border | .2em solid #fff !default |
-| $steps-marker-font-weight | 700 !default |
-| $steps-marker-rounded-border-radius | $base-rounded-border-radius !default |
-| $steps-color | $grey-lighter !default |
-| $steps-previous-color | $primary !default |
-| $steps-active-color | $primary !default |
-| $steps-divider-height | .2em !default |
-| $steps-vertical-padding | 1em 0 !default |
-| $steps-item-line-height | $base-line-height !default |
-| $steps-link-color | hsl(0, 0%, 29%) !default |
-| $steps-content-padding | 1rem !default |
-| $steps-font-size | $base-font-size !default |
-| $steps-details-title-font-weight | 600 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                       | Default                     |
+| ----------------------------------- | --------------------------- |
+| $steps-details-background-color     | hsl(0, 0%, 100%)            |
+| $steps-details-padding              | .2em                        |
+| $steps-marker-background            | $grey-light                 |
+| $steps-marker-color                 | $primary-invert             |
+| $steps-marker-border                | .2em solid #fff             |
+| $steps-marker-font-weight           | 700                         |
+| $steps-marker-rounded-border-radius | $base-rounded-border-radius |
+| $steps-color                        | $grey-lighter               |
+| $steps-previous-color               | $primary                    |
+| $steps-active-color                 | $primary                    |
+| $steps-divider-height               | .2em                        |
+| $steps-vertical-padding             | 1em 0                       |
+| $steps-item-line-height             | $base-line-height           |
+| $steps-link-color                   | hsl(0, 0%, 29%)             |
+| $steps-content-padding              | 1rem                        |
+| $steps-font-size                    | $base-font-size             |
+| $steps-details-title-font-weight    | 600                         |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $steps-details-background-color | hsl(0, 0%, 100%) !default |
-| $steps-details-padding | .2em !default |
-| $steps-marker-background | $grey-light !default |
-| $steps-marker-color | $primary-invert !default |
-| $steps-marker-border | .2em solid #fff !default |
-| $steps-marker-font-weight | 700 !default |
-| $steps-marker-rounded-border-radius | $base-rounded-border-radius !default |
-| $steps-color | $grey-lighter !default |
-| $steps-previous-color | $primary !default |
-| $steps-active-color | $primary !default |
-| $steps-divider-height | .2em !default |
-| $steps-vertical-padding | 1em 0 !default |
-| $steps-item-line-height | $base-line-height !default |
-| $steps-link-color | hsl(0, 0%, 29%) !default |
-| $steps-content-padding | 1rem !default |
-| $steps-font-size | $base-font-size !default |
-| $steps-details-title-font-weight | 600 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_steps.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                       | Default                     |
+| ----------------------------------- | --------------------------- |
+| $steps-details-background-color     | hsl(0, 0%, 100%)            |
+| $steps-details-padding              | .2em                        |
+| $steps-marker-background            | $grey-light                 |
+| $steps-marker-color                 | $primary-invert             |
+| $steps-marker-border                | .2em solid #fff             |
+| $steps-marker-font-weight           | 700                         |
+| $steps-marker-rounded-border-radius | $base-rounded-border-radius |
+| $steps-color                        | $grey-lighter               |
+| $steps-previous-color               | $primary                    |
+| $steps-active-color                 | $primary                    |
+| $steps-divider-height               | .2em                        |
+| $steps-vertical-padding             | 1em 0                       |
+| $steps-item-line-height             | $base-line-height           |
+| $steps-link-color                   | hsl(0, 0%, 29%)             |
+| $steps-content-padding              | 1rem                        |
+| $steps-font-size                    | $base-font-size             |
+| $steps-details-title-font-weight    | 600                         |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_steps.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $steps-marker-bg | var(--#{$prefix}gray-light) !default |
-| $steps-marker-border | var(--#{$prefix}white) !default |
-| $steps-marker-color | var(--#{$prefix}white) |
-| $steps-color-active | var(--#{$prefix}primary) |
-| $steps-title-color | var(--#{$prefix}dark) |
-| $steps-title-bg | var(--#{$prefix}white) !default |
-| $steps-divider-height | 0.2em !default |
-| $steps-content-spacer | 1rem !default |
-| $steps-content-padding | 1rem !default |
-| $steps-vertical-padding | 1em 0 !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable           | Default                     |
+| ----------------------- | --------------------------- |
+| $steps-marker-bg        | var(--#{$prefix}gray-light) |
+| $steps-marker-border    | var(--#{$prefix}white)      |
+| $steps-marker-color     | var(--#{$prefix}white)      |
+| $steps-color-active     | var(--#{$prefix}primary)    |
+| $steps-title-color      | var(--#{$prefix}dark)       |
+| $steps-title-bg         | var(--#{$prefix}white)      |
+| $steps-divider-height   | 0.2em                       |
+| $steps-content-spacer   | 1rem                        |
+| $steps-content-padding  | 1rem                        |
+| $steps-vertical-padding | 1em 0                       |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_steps.scss)
 
 </div>
 

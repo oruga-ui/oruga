@@ -28,7 +28,11 @@ title: Datepicker
 
 <div class="vp-doc">
 
-## Datepicker Component
+## Datepicker component
+
+```html
+<o-datepicker></o-datepicker>
+```
 
 ### Props
 
@@ -117,136 +121,137 @@ title: Datepicker
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $datepicker-font-size | $base-font-size !default |
-| $datepicker-box-line-height | $base-line-height !default |
-| $datepicker-box-padding | .375rem 1rem !default |
-| $datepicker-header-padding | 0 0 0.875rem 0 !default |
-| $datepicker-header-margin | 0 0 0.875rem 0 !default |
-| $datepicker-header-border-bottom | 1px solid $grey-lighter !default |
-| $datepicker-footer-padding | 0.875rem .5rem 0 .5rem !default |
-| $datepicker-footer-margin | 0.875rem 0 0.875rem 0 !default |
-| $datepicker-footer-border-top | 1px solid $grey-lighter !default |
-| $datepicker-table-head-padding | 0 0 0.875rem 0 !default |
-| $datepicker-table-head-margin | 0 0 0.875rem 0 !default |
-| $datepicker-table-head-border-bottom | 1px solid $grey-lighter !default |
-| $datepicker-table-head-item-color | $grey !default |
-| $datepicker-table-head-item-font-weight | 600 !default |
-| $datepicker-item-today-border | solid 1px rgba($primary, 0.5) !default |
-| $datepicker-item-selectable-color | $grey-dark !default |
-| $datepicker-item-disabled-color | $grey-light !default |
-| $datepicker-item-border-radius | $base-border-radius !default |
-| $datepicker-item-padding | 0.5rem 0.75rem !default |
-| $datepicker-item-selected-color | $primary-invert !default |
-| $datepicker-item-selected-background-color | $primary !default |
-| $datepicker-item-selected-border-radius | 0 !default |
-| $datepicker-item-selected-within-background-color | rgba($datepicker-item-selected-background-color, 0.5) !default |
-| $datepicker-item-hovered-background-color | $grey !default |
-| $datepicker-item-hovered-color | $grey-lighter !default |
-| $datepicker-item-hovered-background-color | #f5f5f5 !default |
-| $datepicker-item-hovered-within-background-color | rgba($datepicker-item-hovered-background-color, 0.5) !default |
-| $datepicker-item-nearby-color | $grey-light !default |
-| $datepicker-events-item-padding | .3rem .75rem .75rem !default |
-| $datepicker-event-background-color | $grey-light !default |
-| $datepicker-event-dots-size | .35em !default |
-| $datepicker-event-dots-margin | 0 .1em !default |
-| $datepicker-event-bars-height | .25em !default |
-| $datepicker-btn-border-color | $grey-lighter !default |
-| $datepicker-btn-border-radius | $base-border-radius !default |
-| $datepicker-btn-border | 1px solid transparent !default |
-| $datepicker-btn-color | #363636 !default |
-| $datepicker-btn-height | 2.25em !default |
-| $datepicker-btn-hover-border-color | $grey-light !default |
-| $datepicker-btn-hover-color | #363636 !default |
-| $datepicker-btn-line-height | $base-line-height !default |
-| $datepicker-btn-margin | .25rem !default |
-| $datepicker-btn-min-width | 2.25em !default |
-| $datepicker-btn-padding | .5em .5em !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datepicker.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                                     | Default                                               |
+| ------------------------------------------------- | ----------------------------------------------------- |
+| $datepicker-font-size                             | $base-font-size                                       |
+| $datepicker-box-line-height                       | $base-line-height                                     |
+| $datepicker-box-padding                           | .375rem 1rem                                          |
+| $datepicker-header-padding                        | 0 0 0.875rem 0                                        |
+| $datepicker-header-margin                         | 0 0 0.875rem 0                                        |
+| $datepicker-header-border-bottom                  | 1px solid $grey-lighter                               |
+| $datepicker-footer-padding                        | 0.875rem .5rem 0 .5rem                                |
+| $datepicker-footer-margin                         | 0.875rem 0 0.875rem 0                                 |
+| $datepicker-footer-border-top                     | 1px solid $grey-lighter                               |
+| $datepicker-table-head-padding                    | 0 0 0.875rem 0                                        |
+| $datepicker-table-head-margin                     | 0 0 0.875rem 0                                        |
+| $datepicker-table-head-border-bottom              | 1px solid $grey-lighter                               |
+| $datepicker-table-head-item-color                 | $grey                                                 |
+| $datepicker-table-head-item-font-weight           | 600                                                   |
+| $datepicker-item-today-border                     | solid 1px rgba($primary, 0.5)                         |
+| $datepicker-item-selectable-color                 | $grey-dark                                            |
+| $datepicker-item-disabled-color                   | $grey-light                                           |
+| $datepicker-item-border-radius                    | $base-border-radius                                   |
+| $datepicker-item-padding                          | 0.5rem 0.75rem                                        |
+| $datepicker-item-selected-color                   | $primary-invert                                       |
+| $datepicker-item-selected-background-color        | $primary                                              |
+| $datepicker-item-selected-border-radius           | 0                                                     |
+| $datepicker-item-selected-within-background-color | rgba($datepicker-item-selected-background-color, 0.5) |
+| $datepicker-item-hovered-background-color         | $grey                                                 |
+| $datepicker-item-hovered-color                    | $grey-lighter                                         |
+| $datepicker-item-hovered-background-color         | #f5f5f5                                               |
+| $datepicker-item-hovered-within-background-color  | rgba($datepicker-item-hovered-background-color, 0.5)  |
+| $datepicker-item-nearby-color                     | $grey-light                                           |
+| $datepicker-events-item-padding                   | .3rem .75rem .75rem                                   |
+| $datepicker-event-background-color                | $grey-light                                           |
+| $datepicker-event-dots-size                       | .35em                                                 |
+| $datepicker-event-dots-margin                     | 0 .1em                                                |
+| $datepicker-event-bars-height                     | .25em                                                 |
+| $datepicker-btn-border-color                      | $grey-lighter                                         |
+| $datepicker-btn-border-radius                     | $base-border-radius                                   |
+| $datepicker-btn-border                            | 1px solid transparent                                 |
+| $datepicker-btn-color                             | #363636                                               |
+| $datepicker-btn-height                            | 2.25em                                                |
+| $datepicker-btn-hover-border-color                | $grey-light                                           |
+| $datepicker-btn-hover-color                       | #363636                                               |
+| $datepicker-btn-line-height                       | $base-line-height                                     |
+| $datepicker-btn-margin                            | .25rem                                                |
+| $datepicker-btn-min-width                         | 2.25em                                                |
+| $datepicker-btn-padding                           | .5em .5em                                             |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $datepicker-font-size | $base-font-size !default |
-| $datepicker-box-line-height | $base-line-height !default |
-| $datepicker-box-padding | .375rem 1rem !default |
-| $datepicker-header-padding | 0 0 0.875rem 0 !default |
-| $datepicker-header-margin | 0 0 0.875rem 0 !default |
-| $datepicker-header-border-bottom | 1px solid $grey-lighter !default |
-| $datepicker-footer-padding | 0.875rem .5rem 0 .5rem !default |
-| $datepicker-footer-margin | 0.875rem 0 0.875rem 0 !default |
-| $datepicker-footer-border-top | 1px solid $grey-lighter !default |
-| $datepicker-table-head-padding | 0 0 0.875rem 0 !default |
-| $datepicker-table-head-margin | 0 0 0.875rem 0 !default |
-| $datepicker-table-head-border-bottom | 1px solid $grey-lighter !default |
-| $datepicker-table-head-item-color | $grey !default |
-| $datepicker-table-head-item-font-weight | 600 !default |
-| $datepicker-item-today-border | solid 1px rgba($primary, 0.5) !default |
-| $datepicker-item-selectable-color | $grey-dark !default |
-| $datepicker-item-disabled-color | $grey-light !default |
-| $datepicker-item-border-radius | $base-border-radius !default |
-| $datepicker-item-padding | 0.5rem 0.75rem !default |
-| $datepicker-item-selected-color | $primary-invert !default |
-| $datepicker-item-selected-background-color | $primary !default |
-| $datepicker-item-selected-border-radius | 0 !default |
-| $datepicker-item-selected-within-background-color | rgba($datepicker-item-selected-background-color, 0.5) !default |
-| $datepicker-item-hovered-background-color | $grey !default |
-| $datepicker-item-hovered-color | $grey-lighter !default |
-| $datepicker-item-hovered-background-color | #f5f5f5 !default |
-| $datepicker-item-hovered-within-background-color | rgba($datepicker-item-hovered-background-color, 0.5) !default |
-| $datepicker-item-nearby-color | $grey-light !default |
-| $datepicker-events-item-padding | .3rem .75rem .75rem !default |
-| $datepicker-event-background-color | $grey-light !default |
-| $datepicker-event-dots-size | .35em !default |
-| $datepicker-event-dots-margin | 0 .1em !default |
-| $datepicker-event-bars-height | .25em !default |
-| $datepicker-btn-border-color | $grey-lighter !default |
-| $datepicker-btn-border-radius | $base-border-radius !default |
-| $datepicker-btn-border | 1px solid transparent !default |
-| $datepicker-btn-color | #363636 !default |
-| $datepicker-btn-height | 2.25em !default |
-| $datepicker-btn-hover-border-color | $grey-light !default |
-| $datepicker-btn-hover-color | #363636 !default |
-| $datepicker-btn-line-height | $base-line-height !default |
-| $datepicker-btn-margin | .25rem !default |
-| $datepicker-btn-min-width | 2.25em !default |
-| $datepicker-btn-padding | .5em .5em !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_datepicker.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                                     | Default                                               |
+| ------------------------------------------------- | ----------------------------------------------------- |
+| $datepicker-font-size                             | $base-font-size                                       |
+| $datepicker-box-line-height                       | $base-line-height                                     |
+| $datepicker-box-padding                           | .375rem 1rem                                          |
+| $datepicker-header-padding                        | 0 0 0.875rem 0                                        |
+| $datepicker-header-margin                         | 0 0 0.875rem 0                                        |
+| $datepicker-header-border-bottom                  | 1px solid $grey-lighter                               |
+| $datepicker-footer-padding                        | 0.875rem .5rem 0 .5rem                                |
+| $datepicker-footer-margin                         | 0.875rem 0 0.875rem 0                                 |
+| $datepicker-footer-border-top                     | 1px solid $grey-lighter                               |
+| $datepicker-table-head-padding                    | 0 0 0.875rem 0                                        |
+| $datepicker-table-head-margin                     | 0 0 0.875rem 0                                        |
+| $datepicker-table-head-border-bottom              | 1px solid $grey-lighter                               |
+| $datepicker-table-head-item-color                 | $grey                                                 |
+| $datepicker-table-head-item-font-weight           | 600                                                   |
+| $datepicker-item-today-border                     | solid 1px rgba($primary, 0.5)                         |
+| $datepicker-item-selectable-color                 | $grey-dark                                            |
+| $datepicker-item-disabled-color                   | $grey-light                                           |
+| $datepicker-item-border-radius                    | $base-border-radius                                   |
+| $datepicker-item-padding                          | 0.5rem 0.75rem                                        |
+| $datepicker-item-selected-color                   | $primary-invert                                       |
+| $datepicker-item-selected-background-color        | $primary                                              |
+| $datepicker-item-selected-border-radius           | 0                                                     |
+| $datepicker-item-selected-within-background-color | rgba($datepicker-item-selected-background-color, 0.5) |
+| $datepicker-item-hovered-background-color         | $grey                                                 |
+| $datepicker-item-hovered-color                    | $grey-lighter                                         |
+| $datepicker-item-hovered-background-color         | #f5f5f5                                               |
+| $datepicker-item-hovered-within-background-color  | rgba($datepicker-item-hovered-background-color, 0.5)  |
+| $datepicker-item-nearby-color                     | $grey-light                                           |
+| $datepicker-events-item-padding                   | .3rem .75rem .75rem                                   |
+| $datepicker-event-background-color                | $grey-light                                           |
+| $datepicker-event-dots-size                       | .35em                                                 |
+| $datepicker-event-dots-margin                     | 0 .1em                                                |
+| $datepicker-event-bars-height                     | .25em                                                 |
+| $datepicker-btn-border-color                      | $grey-lighter                                         |
+| $datepicker-btn-border-radius                     | $base-border-radius                                   |
+| $datepicker-btn-border                            | 1px solid transparent                                 |
+| $datepicker-btn-color                             | #363636                                               |
+| $datepicker-btn-height                            | 2.25em                                                |
+| $datepicker-btn-hover-border-color                | $grey-light                                           |
+| $datepicker-btn-hover-color                       | #363636                                               |
+| $datepicker-btn-line-height                       | $base-line-height                                     |
+| $datepicker-btn-margin                            | .25rem                                                |
+| $datepicker-btn-min-width                         | 2.25em                                                |
+| $datepicker-btn-padding                           | .5em .5em                                             |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_datepicker.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $datepicker-background-color | white !default |
-| $datepicker-cell-margin | 0.31rem !default |
-| $datepicker-cell-padding | 0.31rem !default |
-| /* or 0.5rem 0.75rem*/$datepicker-cell-width | calc(#{100%} / 7) !default |
-| $datepicker-cell-font-weight | 400 !default |
-| $datepicker-cell-text-align | center !default |
-| $datepicker-cell-unselectable-color | rgba(0, 0, 0, 0.3) !default |
-| $datepicker-cell-hovered-color | rgba(0, 0, 0, 0.5) !default |
-| $datepicker-cell-selected-color | $primary !default |
-| $datepicker-cell-border-radius | var(--#{$prefix}border-radius) !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                                | Default                        |
+| -------------------------------------------- | ------------------------------ |
+| $datepicker-background-color                 | white                          |
+| $datepicker-cell-margin                      | 0.31rem                        |
+| $datepicker-cell-padding                     | 0.31rem                        |
+| /_ or 0.5rem 0.75rem_/$datepicker-cell-width | calc(#{100%} / 7)              |
+| $datepicker-cell-font-weight                 | 400                            |
+| $datepicker-cell-text-align                  | center                         |
+| $datepicker-cell-unselectable-color          | rgba(0, 0, 0, 0.3)             |
+| $datepicker-cell-hovered-color               | rgba(0, 0, 0, 0.5)             |
+| $datepicker-cell-selected-color              | $primary                       |
+| $datepicker-cell-border-radius               | var(--#{$prefix}border-radius) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
 
 </div>
 

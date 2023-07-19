@@ -28,7 +28,11 @@ title: Button
 
 <div class="vp-doc">
 
-## Button Component
+## Button component
+
+```html
+<o-button></o-button>
+```
 
 ### Props
 
@@ -61,70 +65,71 @@ title: Button
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $button-background-color | $primary !default |
-| $button-color | $primary-invert !default |
-| $button-border-radius | $base-border-radius !default |
-| $button-border | 1px solid $button-background-color !default |
-| $button-box-shadow | none !default |
-| $button-font-weight | 400 !default |
-| $button-line-height | $base-line-height !default |
-| $button-margin-icon-to-text | .1875em !default |
-| $button-margin | 0 !default |
-| $button-height | $control-height !default |
-| $button-padding | $control-padding-vertical .75em !default |
-| $button-rounded-border-radius | $base-rounded-border-radius !default |
-| $button-disabled-opacity | $base-disabled-opacity !default |
-| $button-outlined-background-color | transparent !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_button.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                     | Default                            |
+| --------------------------------- | ---------------------------------- |
+| $button-background-color          | $primary                           |
+| $button-color                     | $primary-invert                    |
+| $button-border-radius             | $base-border-radius                |
+| $button-border                    | 1px solid $button-background-color |
+| $button-box-shadow                | none                               |
+| $button-font-weight               | 400                                |
+| $button-line-height               | $base-line-height                  |
+| $button-margin-icon-to-text       | .1875em                            |
+| $button-margin                    | 0                                  |
+| $button-height                    | $control-height                    |
+| $button-padding                   | $control-padding-vertical .75em    |
+| $button-rounded-border-radius     | $base-rounded-border-radius        |
+| $button-disabled-opacity          | $base-disabled-opacity             |
+| $button-outlined-background-color | transparent                        |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $button-background-color | $primary !default |
-| $button-color | $primary-invert !default |
-| $button-border-radius | $base-border-radius !default |
-| $button-border | 1px solid $button-background-color !default |
-| $button-box-shadow | none !default |
-| $button-font-weight | 400 !default |
-| $button-line-height | $base-line-height !default |
-| $button-margin-icon-to-text | .1875em !default |
-| $button-margin | 0 !default |
-| $button-height | $control-height !default |
-| $button-padding | $control-padding-vertical .75em !default |
-| $button-rounded-border-radius | $base-rounded-border-radius !default |
-| $button-disabled-opacity | $base-disabled-opacity !default |
-| $button-outlined-background-color | transparent !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_button.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                     | Default                            |
+| --------------------------------- | ---------------------------------- |
+| $button-background-color          | $primary                           |
+| $button-color                     | $primary-invert                    |
+| $button-border-radius             | $base-border-radius                |
+| $button-border                    | 1px solid $button-background-color |
+| $button-box-shadow                | none                               |
+| $button-font-weight               | 400                                |
+| $button-line-height               | $base-line-height                  |
+| $button-margin-icon-to-text       | .1875em                            |
+| $button-margin                    | 0                                  |
+| $button-height                    | $control-height                    |
+| $button-padding                   | $control-padding-vertical .75em    |
+| $button-rounded-border-radius     | $base-rounded-border-radius        |
+| $button-disabled-opacity          | $base-disabled-opacity             |
+| $button-outlined-background-color | transparent                        |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_button.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $btn-spacer | 0.5rem !default |
-| $btn-border-color | var(--#{$prefix}border-color) |
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable           | Default                       |
+| ----------------------- | ----------------------------- |
+| $btn-spacer             | 0.5rem                        |
+| $btn-border-color       | var(--#{$prefix}border-color) |
 | $btn-hover-border-color | var(--#{$prefix}border-color) |
-| $btn-hover-box-shadow | $box-shadow-sm !default |
+| $btn-hover-box-shadow   | $box-shadow-sm                |
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_button.scss)
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_button.scss)
 
 </div>
 

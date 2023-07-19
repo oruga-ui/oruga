@@ -28,7 +28,11 @@ title: Notification
 
 <div class="vp-doc">
 
-## Notification Component
+## Notification component
+
+```html
+<o-notification></o-notification>
+```
 
 ### Props
 
@@ -72,7 +76,11 @@ title: Notification
 
 <div class="vp-doc">
 
-## NotificationNotice Component
+## NotificationNotice component
+
+```html
+<o-notification-notice></o-notification-notice>
+```
 
 ### Props
 
@@ -111,80 +119,82 @@ title: Notification
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $notification-background-color | $primary !default |
-| $notification-border-radius | 4px !default |
-| $notification-padding | 1.75em 1.75em !default |
-| $notification-margin-bottom | 1.5rem !default |
-| $notification-animantion | append-animate .3s linear !default |
-| $notification-color | $white !default |
-| $notification-close-border-radius | $base-rounded-border-radius !default |
-| $notification-close-right | .5rem !default |
-| $notification-close-top | .5rem !default |
-| $notification-close-size | 20px !default |
-| $notification-close-color | $white !default |
-| $notification-close-background-color | hsla(0,0%,4%,.2) !default |
-| $notification-icon-margin-right | 1rem !default |
-| $notification-notices-padding | 2em !default |
-| $notification-notices-zindex | 1000 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                        | Default                     |
+| ------------------------------------ | --------------------------- |
+| $notification-background-color       | $primary                    |
+| $notification-border-radius          | 4px                         |
+| $notification-padding                | 1.75em 1.75em               |
+| $notification-margin-bottom          | 1.5rem                      |
+| $notification-animantion             | append-animate .3s linear   |
+| $notification-color                  | $white                      |
+| $notification-close-border-radius    | $base-rounded-border-radius |
+| $notification-close-right            | .5rem                       |
+| $notification-close-top              | .5rem                       |
+| $notification-close-size             | 20px                        |
+| $notification-close-color            | $white                      |
+| $notification-close-background-color | hsla(0,0%,4%,.2)            |
+| $notification-icon-margin-right      | 1rem                        |
+| $notification-notices-padding        | 2em                         |
+| $notification-notices-zindex         | 1000                        |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $notification-background-color | $primary !default |
-| $notification-border-radius | 4px !default |
-| $notification-padding | 1.75em 1.75em !default |
-| $notification-margin-bottom | 1.5rem !default |
-| $notification-animantion | append-animate .3s linear !default |
-| $notification-color | $white !default |
-| $notification-close-border-radius | $base-rounded-border-radius !default |
-| $notification-close-right | .5rem !default |
-| $notification-close-top | .5rem !default |
-| $notification-close-size | 20px !default |
-| $notification-close-color | $white !default |
-| $notification-close-background-color | hsla(0,0%,4%,.2) !default |
-| $notification-icon-margin-right | 1rem !default |
-| $notification-notices-padding | 2em !default |
-| $notification-notices-zindex | 1000 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_notification.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $notification-margin-bottom | 1.5rem !default |
-| $notification-notices-padding | 2em !default |
-| $notification-notices-zindex | 1000 !default |
+| SASS Variable                        | Default                     |
+| ------------------------------------ | --------------------------- |
+| $notification-background-color       | $primary                    |
+| $notification-border-radius          | 4px                         |
+| $notification-padding                | 1.75em 1.75em               |
+| $notification-margin-bottom          | 1.5rem                      |
+| $notification-animantion             | append-animate .3s linear   |
+| $notification-color                  | $white                      |
+| $notification-close-border-radius    | $base-rounded-border-radius |
+| $notification-close-right            | .5rem                       |
+| $notification-close-top              | .5rem                       |
+| $notification-close-size             | 20px                        |
+| $notification-close-color            | $white                      |
+| $notification-close-background-color | hsla(0,0%,4%,.2)            |
+| $notification-icon-margin-right      | 1rem                        |
+| $notification-notices-padding        | 2em                         |
+| $notification-notices-zindex         | 1000                        |
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_notification.scss)
 
-</div>
+</div><div class="theme-bulma">
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $notification-close-btn-position | 1rem !default |
-| $notification-notices-padding | 2em !default |
-| $notification-notices-zindex | $zindex-toast !default |
-| $notification-notices-max-width | 600px !default |
-| $notification-notices-space | 1.5rem !default |
-| $notification-icon-margin-right | 0.5rem !default |
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_notification.scss)
+| SASS Variable                 | Default |
+| ----------------------------- | ------- |
+| $notification-margin-bottom   | 1.5rem  |
+| $notification-notices-padding | 2em     |
+| $notification-notices-zindex  | 1000    |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_notification.scss)
+
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                    | Default       |
+| -------------------------------- | ------------- |
+| $notification-close-btn-position | 1rem          |
+| $notification-notices-padding    | 2em           |
+| $notification-notices-zindex     | $zindex-toast |
+| $notification-notices-max-width  | 600px         |
+| $notification-notices-space      | 1.5rem        |
+| $notification-icon-margin-right  | 0.5rem        |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_notification.scss)
 
 </div>
 

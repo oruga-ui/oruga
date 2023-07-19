@@ -28,7 +28,11 @@ title: Tabs
 
 <div class="vp-doc">
 
-## Tabs Component
+## Tabs component
+
+```html
+<o-tabs></o-tabs>
+```
 
 ### Props
 
@@ -52,7 +56,11 @@ title: Tabs
 
 <div class="vp-doc">
 
-## TabItem Component
+## TabItem component
+
+```html
+<o-tab-item></o-tab-item>
+```
 
 ### Props
 
@@ -69,97 +77,98 @@ title: Tabs
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $tabs-disabled-opacity | $base-disabled-opacity !default |
-| $tabs-font-size | $base-font-size !default |
-| $tabs-icon-margin | 0.5em !default |
-| $tabs-content-padding | 1rem !default |
-| $tabs-margin-bottom | 1.5rem !default |
-| $tabs-border-bottom-color | $grey-lighter !default |
-| $tabs-border-bottom-style | solid !default |
-| $tabs-border-bottom-width | 1px !default |
-| $tabs-link-color | hsl(0, 0%, 29%) !default |
-| $tabs-link-active-border-bottom-color | $primary !default |
-| $tabs-link-active-color | $primary !default |
-| $tabs-link-line-height | $base-line-height !default |
-| $tabs-link-padding | 0.5em 1em !default |
-| $tabs-boxed-link-radius | $base-border-radius !default |
-| $tabs-boxed-link-hover-background-color | hsl(0, 0%, 96%) !default |
-| $tabs-boxed-link-hover-border-bottom-color | hsl(0, 0%, 86%) !default |
-| $tabs-boxed-link-active-background-color | hsl(0, 0%, 100%) !default |
-| $tabs-boxed-link-active-border-color | hsl(0, 0%, 86%) !default |
-| $tabs-boxed-link-active-border-bottom-color | transparent !default |
-| $tabs-toggle-link-border-color | hsl(0, 0%, 86%) !default |
-| $tabs-toggle-link-border-style | solid !default |
-| $tabs-toggle-link-border-width | 1px !default |
-| $tabs-toggle-link-hover-background-color | hsl(0, 0%, 96%) !default |
-| $tabs-toggle-link-hover-border-color | hsl(0, 0%, 71%) !default |
-| $tabs-toggle-link-radius | $base-border-radius !default |
-| $tabs-toggle-link-active-background-color | $primary !default |
-| $tabs-toggle-link-active-border-color | $primary !default |
-| $tabs-toggle-link-active-color | $primary-invert !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tabs.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                               | Default                |
+| ------------------------------------------- | ---------------------- |
+| $tabs-disabled-opacity                      | $base-disabled-opacity |
+| $tabs-font-size                             | $base-font-size        |
+| $tabs-icon-margin                           | 0.5em                  |
+| $tabs-content-padding                       | 1rem                   |
+| $tabs-margin-bottom                         | 1.5rem                 |
+| $tabs-border-bottom-color                   | $grey-lighter          |
+| $tabs-border-bottom-style                   | solid                  |
+| $tabs-border-bottom-width                   | 1px                    |
+| $tabs-link-color                            | hsl(0, 0%, 29%)        |
+| $tabs-link-active-border-bottom-color       | $primary               |
+| $tabs-link-active-color                     | $primary               |
+| $tabs-link-line-height                      | $base-line-height      |
+| $tabs-link-padding                          | 0.5em 1em              |
+| $tabs-boxed-link-radius                     | $base-border-radius    |
+| $tabs-boxed-link-hover-background-color     | hsl(0, 0%, 96%)        |
+| $tabs-boxed-link-hover-border-bottom-color  | hsl(0, 0%, 86%)        |
+| $tabs-boxed-link-active-background-color    | hsl(0, 0%, 100%)       |
+| $tabs-boxed-link-active-border-color        | hsl(0, 0%, 86%)        |
+| $tabs-boxed-link-active-border-bottom-color | transparent            |
+| $tabs-toggle-link-border-color              | hsl(0, 0%, 86%)        |
+| $tabs-toggle-link-border-style              | solid                  |
+| $tabs-toggle-link-border-width              | 1px                    |
+| $tabs-toggle-link-hover-background-color    | hsl(0, 0%, 96%)        |
+| $tabs-toggle-link-hover-border-color        | hsl(0, 0%, 71%)        |
+| $tabs-toggle-link-radius                    | $base-border-radius    |
+| $tabs-toggle-link-active-background-color   | $primary               |
+| $tabs-toggle-link-active-border-color       | $primary               |
+| $tabs-toggle-link-active-color              | $primary-invert        |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $tabs-disabled-opacity | $base-disabled-opacity !default |
-| $tabs-font-size | $base-font-size !default |
-| $tabs-icon-margin | 0.5em !default |
-| $tabs-content-padding | 1rem !default |
-| $tabs-margin-bottom | 1.5rem !default |
-| $tabs-border-bottom-color | $grey-lighter !default |
-| $tabs-border-bottom-style | solid !default |
-| $tabs-border-bottom-width | 1px !default |
-| $tabs-link-color | hsl(0, 0%, 29%) !default |
-| $tabs-link-active-border-bottom-color | $primary !default |
-| $tabs-link-active-color | $primary !default |
-| $tabs-link-line-height | $base-line-height !default |
-| $tabs-link-padding | 0.5em 1em !default |
-| $tabs-boxed-link-radius | $base-border-radius !default |
-| $tabs-boxed-link-hover-background-color | hsl(0, 0%, 96%) !default |
-| $tabs-boxed-link-hover-border-bottom-color | hsl(0, 0%, 86%) !default |
-| $tabs-boxed-link-active-background-color | hsl(0, 0%, 100%) !default |
-| $tabs-boxed-link-active-border-color | hsl(0, 0%, 86%) !default |
-| $tabs-boxed-link-active-border-bottom-color | transparent !default |
-| $tabs-toggle-link-border-color | hsl(0, 0%, 86%) !default |
-| $tabs-toggle-link-border-style | solid !default |
-| $tabs-toggle-link-border-width | 1px !default |
-| $tabs-toggle-link-hover-background-color | hsl(0, 0%, 96%) !default |
-| $tabs-toggle-link-hover-border-color | hsl(0, 0%, 71%) !default |
-| $tabs-toggle-link-radius | $base-border-radius !default |
-| $tabs-toggle-link-active-background-color | $primary !default |
-| $tabs-toggle-link-active-border-color | $primary !default |
-| $tabs-toggle-link-active-color | $primary-invert !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_tabs.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                               | Default                |
+| ------------------------------------------- | ---------------------- |
+| $tabs-disabled-opacity                      | $base-disabled-opacity |
+| $tabs-font-size                             | $base-font-size        |
+| $tabs-icon-margin                           | 0.5em                  |
+| $tabs-content-padding                       | 1rem                   |
+| $tabs-margin-bottom                         | 1.5rem                 |
+| $tabs-border-bottom-color                   | $grey-lighter          |
+| $tabs-border-bottom-style                   | solid                  |
+| $tabs-border-bottom-width                   | 1px                    |
+| $tabs-link-color                            | hsl(0, 0%, 29%)        |
+| $tabs-link-active-border-bottom-color       | $primary               |
+| $tabs-link-active-color                     | $primary               |
+| $tabs-link-line-height                      | $base-line-height      |
+| $tabs-link-padding                          | 0.5em 1em              |
+| $tabs-boxed-link-radius                     | $base-border-radius    |
+| $tabs-boxed-link-hover-background-color     | hsl(0, 0%, 96%)        |
+| $tabs-boxed-link-hover-border-bottom-color  | hsl(0, 0%, 86%)        |
+| $tabs-boxed-link-active-background-color    | hsl(0, 0%, 100%)       |
+| $tabs-boxed-link-active-border-color        | hsl(0, 0%, 86%)        |
+| $tabs-boxed-link-active-border-bottom-color | transparent            |
+| $tabs-toggle-link-border-color              | hsl(0, 0%, 86%)        |
+| $tabs-toggle-link-border-style              | solid                  |
+| $tabs-toggle-link-border-width              | 1px                    |
+| $tabs-toggle-link-hover-background-color    | hsl(0, 0%, 96%)        |
+| $tabs-toggle-link-hover-border-color        | hsl(0, 0%, 71%)        |
+| $tabs-toggle-link-radius                    | $base-border-radius    |
+| $tabs-toggle-link-active-background-color   | $primary               |
+| $tabs-toggle-link-active-border-color       | $primary               |
+| $tabs-toggle-link-active-color              | $primary-invert        |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_tabs.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $nav-tabs-color | var(--#{$prefix}body-color) !default |
-| $nav-tabs-spacer | $spacer !default |
-| $nav-tabs-disabled-opacity | 0.5 !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tabs.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable              | Default                     |
+| -------------------------- | --------------------------- |
+| $nav-tabs-color            | var(--#{$prefix}body-color) |
+| $nav-tabs-spacer           | $spacer                     |
+| $nav-tabs-disabled-opacity | 0.5                         |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tabs.scss)
 
 </div>
 

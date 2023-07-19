@@ -28,7 +28,11 @@ title: Carousel
 
 <div class="vp-doc">
 
-## Carousel Component
+## Carousel component
+
+```html
+<o-carousel></o-carousel>
+```
 
 ### Props
 
@@ -80,86 +84,86 @@ title: Carousel
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $carousel-arrow-background | $white !default |
-| $carousel-arrow-color | $primary !default |
-| $carousel-arrow-icon-spaced | 1.5rem !default |
-| $carousel-arrow-top | 50% !default |
-| $carousel-arrow-size | 1.5rem !default |
-| $carousel-arrow-border-radius | $base-rounded-border-radius !default |
-| $carousel-arrow-border | 1px solid $carousel-arrow-background !default |
-| $carousel-arrow-transition | $speed-slow $easing !default |
-| $carousel-indicators-background | rgba($white , 0.50) !default |
-| $carousel-indicators-padding | .5rem !default |
-| $carousel-indicator-margin | 0 .5rem 0 0 !default |
-| $carousel-indicator-color | $primary !default |
-| $carousel-indicator-background | $white !default |
-| $carousel-indicator-border | 1px solid $carousel-indicator-color !default |
-| $carousel-indicator-active-background | $carousel-indicator-color !default |
-| $carousel-indicator-active-border | 1px solid $carousel-indicator-color !default |
-| $carousel-indicator-transition | $speed-slow $easing !default |
-| $carousel-indicator-size | 10px !default |
-| $carousel-indicator-dots-border-radius | $base-border-radius !default |
-| $carousel-indicator-lines-height | 5px !default |
-| $carousel-indicator-lines-width | 25px !default |
-| $carousel-items-transition | all $speed-slower ease-out 0s !default |
-| $carousel-item-border | 2px solid transparent !default |
-| $carousel-overlay-background | hsla(0,0%,4%,.86) !default |
-| $carousel-overlay-zindex | 40 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_carousel.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                          | Default                              |
+| -------------------------------------- | ------------------------------------ |
+| $carousel-arrow-background             | $white                               |
+| $carousel-arrow-color                  | $primary                             |
+| $carousel-arrow-icon-spaced            | 1.5rem                               |
+| $carousel-arrow-top                    | 50%                                  |
+| $carousel-arrow-size                   | 1.5rem                               |
+| $carousel-arrow-border-radius          | $base-rounded-border-radius          |
+| $carousel-arrow-border                 | 1px solid $carousel-arrow-background |
+| $carousel-arrow-transition             | $speed-slow $easing                  |
+| $carousel-indicators-background        | rgba($white , 0.50)                  |
+| $carousel-indicators-padding           | .5rem                                |
+| $carousel-indicator-margin             | 0 .5rem 0 0                          |
+| $carousel-indicator-color              | $primary                             |
+| $carousel-indicator-background         | $white                               |
+| $carousel-indicator-border             | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-active-background  | $carousel-indicator-color            |
+| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-transition         | $speed-slow $easing                  |
+| $carousel-indicator-size               | 10px                                 |
+| $carousel-indicator-dots-border-radius | $base-border-radius                  |
+| $carousel-indicator-lines-height       | 5px                                  |
+| $carousel-indicator-lines-width        | 25px                                 |
+| $carousel-items-transition             | all $speed-slower ease-out 0s        |
+| $carousel-item-border                  | 2px solid transparent                |
+| $carousel-overlay-background           | hsla(0,0%,4%,.86)                    |
+| $carousel-overlay-zindex               | 40                                   |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $carousel-arrow-background | $white !default |
-| $carousel-arrow-color | $primary !default |
-| $carousel-arrow-icon-spaced | 1.5rem !default |
-| $carousel-arrow-top | 50% !default |
-| $carousel-arrow-size | 1.5rem !default |
-| $carousel-arrow-border-radius | $base-rounded-border-radius !default |
-| $carousel-arrow-border | 1px solid $carousel-arrow-background !default |
-| $carousel-arrow-transition | $speed-slow $easing !default |
-| $carousel-indicators-background | rgba($white , 0.50) !default |
-| $carousel-indicators-padding | .5rem !default |
-| $carousel-indicator-margin | 0 .5rem 0 0 !default |
-| $carousel-indicator-color | $primary !default |
-| $carousel-indicator-background | $white !default |
-| $carousel-indicator-border | 1px solid $carousel-indicator-color !default |
-| $carousel-indicator-active-background | $carousel-indicator-color !default |
-| $carousel-indicator-active-border | 1px solid $carousel-indicator-color !default |
-| $carousel-indicator-transition | $speed-slow $easing !default |
-| $carousel-indicator-size | 10px !default |
-| $carousel-indicator-dots-border-radius | $base-border-radius !default |
-| $carousel-indicator-lines-height | 5px !default |
-| $carousel-indicator-lines-width | 25px !default |
-| $carousel-items-transition | all $speed-slower ease-out 0s !default |
-| $carousel-item-border | 2px solid transparent !default |
-| $carousel-overlay-background | hsla(0,0%,4%,.86) !default |
-| $carousel-overlay-zindex | 40 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_carousel.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                          | Default                              |
+| -------------------------------------- | ------------------------------------ |
+| $carousel-arrow-background             | $white                               |
+| $carousel-arrow-color                  | $primary                             |
+| $carousel-arrow-icon-spaced            | 1.5rem                               |
+| $carousel-arrow-top                    | 50%                                  |
+| $carousel-arrow-size                   | 1.5rem                               |
+| $carousel-arrow-border-radius          | $base-rounded-border-radius          |
+| $carousel-arrow-border                 | 1px solid $carousel-arrow-background |
+| $carousel-arrow-transition             | $speed-slow $easing                  |
+| $carousel-indicators-background        | rgba($white , 0.50)                  |
+| $carousel-indicators-padding           | .5rem                                |
+| $carousel-indicator-margin             | 0 .5rem 0 0                          |
+| $carousel-indicator-color              | $primary                             |
+| $carousel-indicator-background         | $white                               |
+| $carousel-indicator-border             | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-active-background  | $carousel-indicator-color            |
+| $carousel-indicator-active-border      | 1px solid $carousel-indicator-color  |
+| $carousel-indicator-transition         | $speed-slow $easing                  |
+| $carousel-indicator-size               | 10px                                 |
+| $carousel-indicator-dots-border-radius | $base-border-radius                  |
+| $carousel-indicator-lines-height       | 5px                                  |
+| $carousel-indicator-lines-width        | 25px                                 |
+| $carousel-items-transition             | all $speed-slower ease-out 0s        |
+| $carousel-item-border                  | 2px solid transparent                |
+| $carousel-overlay-background           | hsla(0,0%,4%,.86)                    |
+| $carousel-overlay-zindex               | 40                                   |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
 
-<div class="theme-bootstrap">
+</div><div class="theme-bulma">
 
-<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
-      
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p> The theme does not have any custom variables for this component. </p>
 </div>
 
 </div>

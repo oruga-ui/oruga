@@ -28,7 +28,11 @@ title: Pagination
 
 <div class="vp-doc">
 
-## Pagination Component
+## Pagination component
+
+```html
+<o-pagination></o-pagination>
+```
 
 ### Props
 
@@ -73,73 +77,74 @@ title: Pagination
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $pagination-disabled-opacity | $base-disabled-opacity !default |
-| $pagination-ellipsis-color | $grey-light !default |
-| $pagination-link-border-color | $grey-lighter !default |
-| $pagination-link-border-radius | $base-border-radius !default |
-| $pagination-link-border | 1px solid transparent !default |
-| $pagination-link-color | #363636 !default |
-| $pagination-link-current-background-color | $primary !default |
-| $pagination-link-current-border-color | $primary !default |
-| // !!!$pagination-link-current-color | #fff !default |
-| $pagination-link-height | 2.25em !default |
-| $pagination-link-hover-border-color | $grey-light !default |
-| $pagination-link-line-height | $base-line-height !default |
-| $pagination-link-margin | .25rem !default |
-| $pagination-link-min-width | 2.25em !default |
-| $pagination-link-padding | .5em .5em !default |
-| $pagination-margin | -.25rem !default |
-| $pagination-rounded-border-radius | $base-rounded-border-radius !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_pagination.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                             | Default                     |
+| ----------------------------------------- | --------------------------- |
+| $pagination-disabled-opacity              | $base-disabled-opacity      |
+| $pagination-ellipsis-color                | $grey-light                 |
+| $pagination-link-border-color             | $grey-lighter               |
+| $pagination-link-border-radius            | $base-border-radius         |
+| $pagination-link-border                   | 1px solid transparent       |
+| $pagination-link-color                    | #363636                     |
+| $pagination-link-current-background-color | $primary                    |
+| $pagination-link-current-border-color     | $primary                    |
+| // !!!$pagination-link-current-color      | #fff                        |
+| $pagination-link-height                   | 2.25em                      |
+| $pagination-link-hover-border-color       | $grey-light                 |
+| $pagination-link-line-height              | $base-line-height           |
+| $pagination-link-margin                   | .25rem                      |
+| $pagination-link-min-width                | 2.25em                      |
+| $pagination-link-padding                  | .5em .5em                   |
+| $pagination-margin                        | -.25rem                     |
+| $pagination-rounded-border-radius         | $base-rounded-border-radius |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $pagination-disabled-opacity | $base-disabled-opacity !default |
-| $pagination-ellipsis-color | $grey-light !default |
-| $pagination-link-border-color | $grey-lighter !default |
-| $pagination-link-border-radius | $base-border-radius !default |
-| $pagination-link-border | 1px solid transparent !default |
-| $pagination-link-color | #363636 !default |
-| $pagination-link-current-background-color | $primary !default |
-| $pagination-link-current-border-color | $primary !default |
-| // !!!$pagination-link-current-color | #fff !default |
-| $pagination-link-height | 2.25em !default |
-| $pagination-link-hover-border-color | $grey-light !default |
-| $pagination-link-line-height | $base-line-height !default |
-| $pagination-link-margin | .25rem !default |
-| $pagination-link-min-width | 2.25em !default |
-| $pagination-link-padding | .5em .5em !default |
-| $pagination-margin | -.25rem !default |
-| $pagination-rounded-border-radius | $base-rounded-border-radius !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_pagination.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                             | Default                     |
+| ----------------------------------------- | --------------------------- |
+| $pagination-disabled-opacity              | $base-disabled-opacity      |
+| $pagination-ellipsis-color                | $grey-light                 |
+| $pagination-link-border-color             | $grey-lighter               |
+| $pagination-link-border-radius            | $base-border-radius         |
+| $pagination-link-border                   | 1px solid transparent       |
+| $pagination-link-color                    | #363636                     |
+| $pagination-link-current-background-color | $primary                    |
+| $pagination-link-current-border-color     | $primary                    |
+| // !!!$pagination-link-current-color      | #fff                        |
+| $pagination-link-height                   | 2.25em                      |
+| $pagination-link-hover-border-color       | $grey-light                 |
+| $pagination-link-line-height              | $base-line-height           |
+| $pagination-link-margin                   | .25rem                      |
+| $pagination-link-min-width                | 2.25em                      |
+| $pagination-link-padding                  | .5em .5em                   |
+| $pagination-margin                        | -.25rem                     |
+| $pagination-rounded-border-radius         | $base-rounded-border-radius |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $pagination-items-spacer | 0.5rem !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable            | Default |
+| ------------------------ | ------- |
+| $pagination-items-spacer | 0.5rem  |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_pagination.scss)
 
 </div>
 

@@ -28,7 +28,11 @@ title: Autocomplete
 
 <div class="vp-doc">
 
-## Autocomplete Component
+## Autocomplete component
+
+```html
+<o-autocomplete></o-autocomplete>
+```
 
 ### Props
 
@@ -103,67 +107,68 @@ title: Autocomplete
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $autocomplete-item-color | #000000 !default |
-| $autocomplete-item-disabled-opacity | $base-disabled-opacity !default |
-| $autocomplete-item-font-size | $base-font-size !default |
-| $autocomplete-item-hover-background-color | #f5f5f5 !default |
-| $autocomplete-item-hover-color | #000000 !default |
-| $autocomplete-item-line-height | $base-line-height !default |
-| $autocomplete-item-padding | .375rem 1rem !default |
-| $autocomplete-menu-background | #ffffff !default |
-| $autocomplete-menu-border-radius | $base-border-radius !default |
-| $autocomplete-menu-box-shadow | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default |
-| $autocomplete-menu-margin | 0 !default |
-| $autocomplete-menu-max-height | 200px !default |
-| $autocomplete-menu-padding | .5rem 0 .5rem 0 !default |
-| $autocomplete-menu-zindex | 20 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_autocomplete.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                             | Default                                                              |
+| ----------------------------------------- | -------------------------------------------------------------------- |
+| $autocomplete-item-color                  | #000000                                                              |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity                                               |
+| $autocomplete-item-font-size              | $base-font-size                                                      |
+| $autocomplete-item-hover-background-color | #f5f5f5                                                              |
+| $autocomplete-item-hover-color            | #000000                                                              |
+| $autocomplete-item-line-height            | $base-line-height                                                    |
+| $autocomplete-item-padding                | .375rem 1rem                                                         |
+| $autocomplete-menu-background             | #ffffff                                                              |
+| $autocomplete-menu-border-radius          | $base-border-radius                                                  |
+| $autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| $autocomplete-menu-margin                 | 0                                                                    |
+| $autocomplete-menu-max-height             | 200px                                                                |
+| $autocomplete-menu-padding                | .5rem 0 .5rem 0                                                      |
+| $autocomplete-menu-zindex                 | 20                                                                   |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $autocomplete-item-color | #000000 !default |
-| $autocomplete-item-disabled-opacity | $base-disabled-opacity !default |
-| $autocomplete-item-font-size | $base-font-size !default |
-| $autocomplete-item-hover-background-color | #f5f5f5 !default |
-| $autocomplete-item-hover-color | #000000 !default |
-| $autocomplete-item-line-height | $base-line-height !default |
-| $autocomplete-item-padding | .375rem 1rem !default |
-| $autocomplete-menu-background | #ffffff !default |
-| $autocomplete-menu-border-radius | $base-border-radius !default |
-| $autocomplete-menu-box-shadow | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default |
-| $autocomplete-menu-margin | 0 !default |
-| $autocomplete-menu-max-height | 200px !default |
-| $autocomplete-menu-padding | .5rem 0 .5rem 0 !default |
-| $autocomplete-menu-zindex | 20 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_autocomplete.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                             | Default                                                              |
+| ----------------------------------------- | -------------------------------------------------------------------- |
+| $autocomplete-item-color                  | #000000                                                              |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity                                               |
+| $autocomplete-item-font-size              | $base-font-size                                                      |
+| $autocomplete-item-hover-background-color | #f5f5f5                                                              |
+| $autocomplete-item-hover-color            | #000000                                                              |
+| $autocomplete-item-line-height            | $base-line-height                                                    |
+| $autocomplete-item-padding                | .375rem 1rem                                                         |
+| $autocomplete-menu-background             | #ffffff                                                              |
+| $autocomplete-menu-border-radius          | $base-border-radius                                                  |
+| $autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| $autocomplete-menu-margin                 | 0                                                                    |
+| $autocomplete-menu-max-height             | 200px                                                                |
+| $autocomplete-menu-padding                | .5rem 0 .5rem 0                                                      |
+| $autocomplete-menu-zindex                 | 20                                                                   |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $autocomplete-menu-max-height | 200px !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                 | Default |
+| ----------------------------- | ------- |
+| $autocomplete-menu-max-height | 200px   |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
 
 </div>
 

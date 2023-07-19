@@ -28,7 +28,11 @@ title: Table
 
 <div class="vp-doc">
 
-## Table Component
+## Table component
+
+```html
+<o-table></o-table>
+```
 
 ### Props
 
@@ -146,7 +150,11 @@ title: Table
 
 <div class="vp-doc">
 
-## TableColumn Component
+## TableColumn component
+
+```html
+<o-table-column></o-table-column>
+```
 
 ### Props
 
@@ -177,122 +185,123 @@ title: Table
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $table-background-color | #fff !default |
-| $table-background | #f5f5f5 !default |
-| $table-boder | 1px solid transparent !default |
-| $table-border-radius | $base-border-radius !default |
-| $table-card-box-shadow | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default |
-| $table-card-cell-font-weight | 600 !default |
-| $table-card-cell-padding | 0 0.5em 0 0 !default |
-| $table-card-cell-text-align | left !default |
-| $table-card-detail-margin | -1rem 0 0 0 |
-| $table-card-margin | 0 0 1rem 0 |
-| $table-color | black !default |
-| $table-current-sort-border-color | $grey !default |
-| $table-current-sort-font-weight | 700 !default |
-| $table-current-sort-hover-border-color | $grey !default |
-| $table-detail-background | #fafafa !default |
-| $table-detail-box-shadow | inset 0 1px 3px $grey !default |
-| $table-detail-chevron-color | $primary !default |
-| $table-detail-chevron-width | 40px !default |
-| $table-detail-padding | 1rem !default |
-| $table-focus-border-color | $primary !default |
-| $table-focus-box-shadow | 0 0 0 0.125em rgba($primary, 0.25) !default |
-| $table-hoverable-background-color | #fafafa !default |
-| $table-narrow-padding | .25em .5em !default |
-| $table-row-active-background-color | $primary !default |
-| $table-row-active-color | $primary-invert !default |
-| $table-sticky-header-height | 300px !default |
-| $table-sticky-zindex | 1 !default |
-| $table-striped-background-color | #fafafa !default |
-| $table-td-border | 1px solid $grey-lighter !default |
-| $table-td-padding | .5em .75em !default |
-| $table-th-border | 2px solid $grey-lighter !default |
-| $table-th-checkbox-width | 40px !default |
-| $table-th-color | #363636 !default |
-| $table-th-detail-width | 14px !default |
-| $table-th-font-weight | 600 !default |
-| $table-th-padding | 0.5em 0.75em !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                          | Default                                                  |
+| -------------------------------------- | -------------------------------------------------------- |
+| $table-background-color                | #fff                                                     |
+| $table-background                      | #f5f5f5                                                  |
+| $table-boder                           | 1px solid transparent                                    |
+| $table-border-radius                   | $base-border-radius                                      |
+| $table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
+| $table-card-cell-font-weight           | 600                                                      |
+| $table-card-cell-padding               | 0 0.5em 0 0                                              |
+| $table-card-cell-text-align            | left                                                     |
+| $table-card-detail-margin              | -1rem 0 0 0                                              |
+| $table-card-margin                     | 0 0 1rem 0                                               |
+| $table-color                           | black                                                    |
+| $table-current-sort-border-color       | $grey                                                    |
+| $table-current-sort-font-weight        | 700                                                      |
+| $table-current-sort-hover-border-color | $grey                                                    |
+| $table-detail-background               | #fafafa                                                  |
+| $table-detail-box-shadow               | inset 0 1px 3px $grey                                    |
+| $table-detail-chevron-color            | $primary                                                 |
+| $table-detail-chevron-width            | 40px                                                     |
+| $table-detail-padding                  | 1rem                                                     |
+| $table-focus-border-color              | $primary                                                 |
+| $table-focus-box-shadow                | 0 0 0 0.125em rgba($primary, 0.25)                       |
+| $table-hoverable-background-color      | #fafafa                                                  |
+| $table-narrow-padding                  | .25em .5em                                               |
+| $table-row-active-background-color     | $primary                                                 |
+| $table-row-active-color                | $primary-invert                                          |
+| $table-sticky-header-height            | 300px                                                    |
+| $table-sticky-zindex                   | 1                                                        |
+| $table-striped-background-color        | #fafafa                                                  |
+| $table-td-border                       | 1px solid $grey-lighter                                  |
+| $table-td-padding                      | .5em .75em                                               |
+| $table-th-border                       | 2px solid $grey-lighter                                  |
+| $table-th-checkbox-width               | 40px                                                     |
+| $table-th-color                        | #363636                                                  |
+| $table-th-detail-width                 | 14px                                                     |
+| $table-th-font-weight                  | 600                                                      |
+| $table-th-padding                      | 0.5em 0.75em                                             |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $table-background-color | #fff !default |
-| $table-background | #f5f5f5 !default |
-| $table-boder | 1px solid transparent !default |
-| $table-border-radius | $base-border-radius !default |
-| $table-card-box-shadow | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) !default |
-| $table-card-cell-font-weight | 600 !default |
-| $table-card-cell-padding | 0 0.5em 0 0 !default |
-| $table-card-cell-text-align | left !default |
-| $table-card-detail-margin | -1rem 0 0 0 |
-| $table-card-margin | 0 0 1rem 0 |
-| $table-color | black !default |
-| $table-current-sort-border-color | $grey !default |
-| $table-current-sort-font-weight | 700 !default |
-| $table-current-sort-hover-border-color | $grey !default |
-| $table-detail-background | #fafafa !default |
-| $table-detail-box-shadow | inset 0 1px 3px $grey !default |
-| $table-detail-chevron-color | $primary !default |
-| $table-detail-chevron-width | 40px !default |
-| $table-detail-padding | 1rem !default |
-| $table-focus-border-color | $primary !default |
-| $table-focus-box-shadow | 0 0 0 0.125em rgba($primary, 0.25) !default |
-| $table-hoverable-background-color | #fafafa !default |
-| $table-narrow-padding | .25em .5em !default |
-| $table-row-active-background-color | $primary !default |
-| $table-row-active-color | $primary-invert !default |
-| $table-sticky-header-height | 300px !default |
-| $table-sticky-zindex | 1 !default |
-| $table-striped-background-color | #fafafa !default |
-| $table-td-border | 1px solid $grey-lighter !default |
-| $table-td-padding | .5em .75em !default |
-| $table-th-border | 2px solid $grey-lighter !default |
-| $table-th-checkbox-width | 40px !default |
-| $table-th-color | #363636 !default |
-| $table-th-detail-width | 14px !default |
-| $table-th-font-weight | 600 !default |
-| $table-th-padding | 0.5em 0.75em !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_table.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                          | Default                                                  |
+| -------------------------------------- | -------------------------------------------------------- |
+| $table-background-color                | #fff                                                     |
+| $table-background                      | #f5f5f5                                                  |
+| $table-boder                           | 1px solid transparent                                    |
+| $table-border-radius                   | $base-border-radius                                      |
+| $table-card-box-shadow                 | 0 2px 3px rgba($black, 0.1), 0 0 0 1px rgba($black, 0.1) |
+| $table-card-cell-font-weight           | 600                                                      |
+| $table-card-cell-padding               | 0 0.5em 0 0                                              |
+| $table-card-cell-text-align            | left                                                     |
+| $table-card-detail-margin              | -1rem 0 0 0                                              |
+| $table-card-margin                     | 0 0 1rem 0                                               |
+| $table-color                           | black                                                    |
+| $table-current-sort-border-color       | $grey                                                    |
+| $table-current-sort-font-weight        | 700                                                      |
+| $table-current-sort-hover-border-color | $grey                                                    |
+| $table-detail-background               | #fafafa                                                  |
+| $table-detail-box-shadow               | inset 0 1px 3px $grey                                    |
+| $table-detail-chevron-color            | $primary                                                 |
+| $table-detail-chevron-width            | 40px                                                     |
+| $table-detail-padding                  | 1rem                                                     |
+| $table-focus-border-color              | $primary                                                 |
+| $table-focus-box-shadow                | 0 0 0 0.125em rgba($primary, 0.25)                       |
+| $table-hoverable-background-color      | #fafafa                                                  |
+| $table-narrow-padding                  | .25em .5em                                               |
+| $table-row-active-background-color     | $primary                                                 |
+| $table-row-active-color                | $primary-invert                                          |
+| $table-sticky-header-height            | 300px                                                    |
+| $table-sticky-zindex                   | 1                                                        |
+| $table-striped-background-color        | #fafafa                                                  |
+| $table-td-border                       | 1px solid $grey-lighter                                  |
+| $table-td-padding                      | .5em .75em                                               |
+| $table-th-border                       | 2px solid $grey-lighter                                  |
+| $table-th-checkbox-width               | 40px                                                     |
+| $table-th-color                        | #363636                                                  |
+| $table-th-detail-width                 | 14px                                                     |
+| $table-th-font-weight                  | 600                                                      |
+| $table-th-padding                      | 0.5em 0.75em                                             |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_table.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $table-head-bg | initial !default |
-| $table-head-color | initial !default |
-| $table-head-border-width | var(--#{$prefix}border-width) !default |
-| $table-sticky-zindex | 1 !default |
-| $table-sticky-bg | initial !default |
-| $table-sticky-color | initial !default |
-| $table-detail-padding | 0.5rem 0.75rem !default |
-| $table-detail-bg | var(--#{$prefix}gray-light) !default |
-| $table-sortable-hover-border-color | var(--#{$prefix}secondary) !default |
-| $table-current-sort-bg | var(--#{$prefix}gray-light) !default |
-| $table-focus-color | var(--#{$prefix}-info-rgb) !default |
-| $table-card-spacer | $spacer |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_table.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                      | Default                       |
+| ---------------------------------- | ----------------------------- |
+| $table-head-bg                     | initial                       |
+| $table-head-color                  | initial                       |
+| $table-head-border-width           | var(--#{$prefix}border-width) |
+| $table-sticky-zindex               | 1                             |
+| $table-sticky-bg                   | initial                       |
+| $table-sticky-color                | initial                       |
+| $table-detail-padding              | 0.5rem 0.75rem                |
+| $table-detail-bg                   | var(--#{$prefix}gray-light)   |
+| $table-sortable-hover-border-color | var(--#{$prefix}secondary)    |
+| $table-current-sort-bg             | var(--#{$prefix}gray-light)   |
+| $table-focus-color                 | var(--#{$prefix}-info-rgb)    |
+| $table-card-spacer                 | $spacer                       |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_table.scss)
 
 </div>
 

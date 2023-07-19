@@ -28,7 +28,11 @@ title: Inputitems
 
 <div class="vp-doc">
 
-## Inputitems Component
+## Inputitems component
+
+```html
+<o-inputitems></o-inputitems>
+```
 
 ### Props
 
@@ -98,76 +102,76 @@ title: Inputitems
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $inputitems-background-color | $input-background-color !default |
-| $inputitems-height | calc(2em - 1px) !default |
-| $inputitems-padding | calc(.275em - 1px) 0 0 !default |
-| $inputitems-border-color | $grey-lighter !default |
-| $inputitems-border-style | solid !default |
-| $inputitems-border-width | 1px !default |
-| $inputitems-border-radius | $base-border-radius !default |
-| $inputitems-color | #363636 !default |
-| $inputitems-line-height | $base-line-height !default |
-| $inputitems-box-shadow | inset 0 1px 2px hsla(0,0%,4%,.1) !default |
-| $inputitems-max-width | 100% !default |
-| $inputitems-width | 100% !default |
-| $inputitems-counter-font-size | .75rem !default |
-| $inputitems-counter-margin | .25rem 0 0 .5rem !default |
-| $inputitems-item-background-color | $primary !default |
-| $inputitems-item-color | $primary-invert !default |
-| $inputitems-item-border-radius | $base-border-radius !default |
-| $inputitems-item-margin | 0 0 0 0.275em !default |
-| $inputitems-item-padding | 0 .75em 0 .75em !default |
-| $inputitems-margin-icon-to-text | .1875em !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_inputitems.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                     | Default                          |
+| --------------------------------- | -------------------------------- |
+| $inputitems-background-color      | $input-background-color          |
+| $inputitems-height                | calc(2em - 1px)                  |
+| $inputitems-padding               | calc(.275em - 1px) 0 0           |
+| $inputitems-border-color          | $grey-lighter                    |
+| $inputitems-border-style          | solid                            |
+| $inputitems-border-width          | 1px                              |
+| $inputitems-border-radius         | $base-border-radius              |
+| $inputitems-color                 | #363636                          |
+| $inputitems-line-height           | $base-line-height                |
+| $inputitems-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1) |
+| $inputitems-max-width             | 100%                             |
+| $inputitems-width                 | 100%                             |
+| $inputitems-counter-font-size     | .75rem                           |
+| $inputitems-counter-margin        | .25rem 0 0 .5rem                 |
+| $inputitems-item-background-color | $primary                         |
+| $inputitems-item-color            | $primary-invert                  |
+| $inputitems-item-border-radius    | $base-border-radius              |
+| $inputitems-item-margin           | 0 0 0 0.275em                    |
+| $inputitems-item-padding          | 0 .75em 0 .75em                  |
+| $inputitems-margin-icon-to-text   | .1875em                          |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $inputitems-background-color | $input-background-color !default |
-| $inputitems-height | calc(2em - 1px) !default |
-| $inputitems-padding | calc(.275em - 1px) 0 0 !default |
-| $inputitems-border-color | $grey-lighter !default |
-| $inputitems-border-style | solid !default |
-| $inputitems-border-width | 1px !default |
-| $inputitems-border-radius | $base-border-radius !default |
-| $inputitems-color | #363636 !default |
-| $inputitems-line-height | $base-line-height !default |
-| $inputitems-box-shadow | inset 0 1px 2px hsla(0,0%,4%,.1) !default |
-| $inputitems-max-width | 100% !default |
-| $inputitems-width | 100% !default |
-| $inputitems-counter-font-size | .75rem !default |
-| $inputitems-counter-margin | .25rem 0 0 .5rem !default |
-| $inputitems-item-background-color | $primary !default |
-| $inputitems-item-color | $primary-invert !default |
-| $inputitems-item-border-radius | $base-border-radius !default |
-| $inputitems-item-margin | 0 0 0 0.275em !default |
-| $inputitems-item-padding | 0 .75em 0 .75em !default |
-| $inputitems-margin-icon-to-text | .1875em !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_inputitems.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_inputitems.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                     | Default                          |
+| --------------------------------- | -------------------------------- |
+| $inputitems-background-color      | $input-background-color          |
+| $inputitems-height                | calc(2em - 1px)                  |
+| $inputitems-padding               | calc(.275em - 1px) 0 0           |
+| $inputitems-border-color          | $grey-lighter                    |
+| $inputitems-border-style          | solid                            |
+| $inputitems-border-width          | 1px                              |
+| $inputitems-border-radius         | $base-border-radius              |
+| $inputitems-color                 | #363636                          |
+| $inputitems-line-height           | $base-line-height                |
+| $inputitems-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1) |
+| $inputitems-max-width             | 100%                             |
+| $inputitems-width                 | 100%                             |
+| $inputitems-counter-font-size     | .75rem                           |
+| $inputitems-counter-margin        | .25rem 0 0 .5rem                 |
+| $inputitems-item-background-color | $primary                         |
+| $inputitems-item-color            | $primary-invert                  |
+| $inputitems-item-border-radius    | $base-border-radius              |
+| $inputitems-item-margin           | 0 0 0 0.275em                    |
+| $inputitems-item-padding          | 0 .75em 0 .75em                  |
+| $inputitems-margin-icon-to-text   | .1875em                          |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_inputitems.scss)
 
-<div class="theme-bootstrap">
+</div><div class="theme-bulma">
 
-<p> This component does not have any Oruga style overrides for the Bootstrap Theme. </p>
-      
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p> The theme does not have any custom variables for this component. </p>
 </div>
 
 </div>

@@ -28,7 +28,11 @@ title: Slider
 
 <div class="vp-doc">
 
-## Slider Component
+## Slider component
+
+```html
+<o-slider></o-slider>
+```
 
 ### Props
 
@@ -75,7 +79,11 @@ title: Slider
 
 <div class="vp-doc">
 
-## SliderTick Component
+## SliderTick component
+
+```html
+<o-slider-tick></o-slider-tick>
+```
 
 ### Props
 
@@ -97,86 +105,87 @@ title: Slider
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $slider-background | transparent !default |
-| $slider-margin | 1em 0 !default |
-| $slider-mark-size | 0.75rem !default |
-| $slider-font-size | $base-font-size !default |
-| $slider-rounded-borded-radius | $base-rounded-border-radius !default |
-| $slider-thumb-background | $white !default |
-| $slider-thumb-border | 1px solid $grey-light !default |
-| $slider-thumb-radius | $base-border-radius !default |
-| $slider-thumb-shadow | none !default |
-| $slider-thumb-to-track-ratio | 2 !default |
-| $slider-thumb-transform | scale(1.25) !default |
-| $slider-tick-background | $primary !default |
-| $slider-tick-radius | $base-border-radius !default |
-| $slider-tick-to-track-ratio | 0.5 !default |
-| $slider-tick-width | 3px !default |
-| $slider-track-background | $grey-lighter !default |
-| $slider-fill-background | $primary !default |
-| $slider-track-border-radius | $base-border-radius !default |
-| $slider-track-border | 0px solid $grey !default |
-| $slider-track-disabled | 0.5 !default |
-| $slider-track-radius | $base-border-radius !default |
-| $slider-track-shadow | 0px 0px 0px $grey !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                 | Default                     |
+| ----------------------------- | --------------------------- |
+| $slider-background            | transparent                 |
+| $slider-margin                | 1em 0                       |
+| $slider-mark-size             | 0.75rem                     |
+| $slider-font-size             | $base-font-size             |
+| $slider-rounded-borded-radius | $base-rounded-border-radius |
+| $slider-thumb-background      | $white                      |
+| $slider-thumb-border          | 1px solid $grey-light       |
+| $slider-thumb-radius          | $base-border-radius         |
+| $slider-thumb-shadow          | none                        |
+| $slider-thumb-to-track-ratio  | 2                           |
+| $slider-thumb-transform       | scale(1.25)                 |
+| $slider-tick-background       | $primary                    |
+| $slider-tick-radius           | $base-border-radius         |
+| $slider-tick-to-track-ratio   | 0.5                         |
+| $slider-tick-width            | 3px                         |
+| $slider-track-background      | $grey-lighter               |
+| $slider-fill-background       | $primary                    |
+| $slider-track-border-radius   | $base-border-radius         |
+| $slider-track-border          | 0px solid $grey             |
+| $slider-track-disabled        | 0.5                         |
+| $slider-track-radius          | $base-border-radius         |
+| $slider-track-shadow          | 0px 0px 0px $grey           |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $slider-background | transparent !default |
-| $slider-margin | 1em 0 !default |
-| $slider-mark-size | 0.75rem !default |
-| $slider-font-size | $base-font-size !default |
-| $slider-rounded-borded-radius | $base-rounded-border-radius !default |
-| $slider-thumb-background | $white !default |
-| $slider-thumb-border | 1px solid $grey-light !default |
-| $slider-thumb-radius | $base-border-radius !default |
-| $slider-thumb-shadow | none !default |
-| $slider-thumb-to-track-ratio | 2 !default |
-| $slider-thumb-transform | scale(1.25) !default |
-| $slider-tick-background | $primary !default |
-| $slider-tick-radius | $base-border-radius !default |
-| $slider-tick-to-track-ratio | 0.5 !default |
-| $slider-tick-width | 3px !default |
-| $slider-track-background | $grey-lighter !default |
-| $slider-fill-background | $primary !default |
-| $slider-track-border-radius | $base-border-radius !default |
-| $slider-track-border | 0px solid $grey !default |
-| $slider-track-disabled | 0.5 !default |
-| $slider-track-radius | $base-border-radius !default |
-| $slider-track-shadow | 0px 0px 0px $grey !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_slider.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                 | Default                     |
+| ----------------------------- | --------------------------- |
+| $slider-background            | transparent                 |
+| $slider-margin                | 1em 0                       |
+| $slider-mark-size             | 0.75rem                     |
+| $slider-font-size             | $base-font-size             |
+| $slider-rounded-borded-radius | $base-rounded-border-radius |
+| $slider-thumb-background      | $white                      |
+| $slider-thumb-border          | 1px solid $grey-light       |
+| $slider-thumb-radius          | $base-border-radius         |
+| $slider-thumb-shadow          | none                        |
+| $slider-thumb-to-track-ratio  | 2                           |
+| $slider-thumb-transform       | scale(1.25)                 |
+| $slider-tick-background       | $primary                    |
+| $slider-tick-radius           | $base-border-radius         |
+| $slider-tick-to-track-ratio   | 0.5                         |
+| $slider-tick-width            | 3px                         |
+| $slider-track-background      | $grey-lighter               |
+| $slider-fill-background       | $primary                    |
+| $slider-track-border-radius   | $base-border-radius         |
+| $slider-track-border          | 0px solid $grey             |
+| $slider-track-disabled        | 0.5                         |
+| $slider-track-radius          | $base-border-radius         |
+| $slider-track-shadow          | 0px 0px 0px $grey           |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $slider-tick-width | 0.25rem !default |
-| $slider-tick-height | 0.25rem !default |
-| $slider-tick-radius | 50% !default |
-| $slider-tick-bg | var(--#{$prefix}gray) !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_slider.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable       | Default               |
+| ------------------- | --------------------- |
+| $slider-tick-width  | 0.25rem               |
+| $slider-tick-height | 0.25rem               |
+| $slider-tick-radius | 50%                   |
+| $slider-tick-bg     | var(--#{$prefix}gray) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_slider.scss)
 
 </div>
 

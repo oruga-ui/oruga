@@ -28,7 +28,11 @@ title: Loading
 
 <div class="vp-doc">
 
-## Loading Component
+## Loading component
+
+```html
+<o-loading></o-loading>
+```
 
 ### Props
 
@@ -65,49 +69,50 @@ title: Loading
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $loading-overlay-legacy | #7f7f7f !default |
-| $loading-overlay | rgba(255,255,255,0.5) !default |
-| $loading-zindex | 29 !default |
-| $loading-fullpage-zindex | 999 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable            | Default               |
+| ------------------------ | --------------------- |
+| $loading-overlay-legacy  | #7f7f7f               |
+| $loading-overlay         | rgba(255,255,255,0.5) |
+| $loading-zindex          | 29                    |
+| $loading-fullpage-zindex | 999                   |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $loading-overlay-legacy | #7f7f7f !default |
-| $loading-overlay | rgba(255,255,255,0.5) !default |
-| $loading-zindex | 29 !default |
-| $loading-fullpage-zindex | 999 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_loading.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable            | Default               |
+| ------------------------ | --------------------- |
+| $loading-overlay-legacy  | #7f7f7f               |
+| $loading-overlay         | rgba(255,255,255,0.5) |
+| $loading-zindex          | 29                    |
+| $loading-fullpage-zindex | 999                   |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_loading.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $loading-zindex | $zindex-sticky !default |
-| $loading-zindex-fullpage | $zindex-fixed !default |
-| $loading-overlay | rgba(255, 255, 255, 0.5) !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable            | Default                  |
+| ------------------------ | ------------------------ |
+| $loading-zindex          | $zindex-sticky           |
+| $loading-zindex-fullpage | $zindex-fixed            |
+| $loading-overlay         | rgba(255, 255, 255, 0.5) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_loading.scss)
 
 </div>
 

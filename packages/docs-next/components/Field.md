@@ -28,7 +28,11 @@ title: Field
 
 <div class="vp-doc">
 
-## Field Component
+## Field component
+
+```html
+<o-field></o-field>
+```
 
 ### Props
 
@@ -58,55 +62,56 @@ title: Field
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $field-label-color | #363636 !default |
-| $field-label-font-weight | 600 !default |
-| $field-margin-bottom | .75rem !default |
-| $field-message-font-size | .75rem !default |
-| $field-message-margin-top | .25rem !default |
-| $field-margin-right | .37rem !default |
-| $field-horizontal-label-margin | 0 1.5rem 0 0 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_field.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                  | Default      |
+| ------------------------------ | ------------ |
+| $field-label-color             | #363636      |
+| $field-label-font-weight       | 600          |
+| $field-margin-bottom           | .75rem       |
+| $field-message-font-size       | .75rem       |
+| $field-message-margin-top      | .25rem       |
+| $field-margin-right            | .37rem       |
+| $field-horizontal-label-margin | 0 1.5rem 0 0 |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $field-label-color | #363636 !default |
-| $field-label-font-weight | 600 !default |
-| $field-margin-bottom | .75rem !default |
-| $field-message-font-size | .75rem !default |
-| $field-message-margin-top | .25rem !default |
-| $field-margin-right | .37rem !default |
-| $field-horizontal-label-margin | 0 1.5rem 0 0 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_field.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                  | Default      |
+| ------------------------------ | ------------ |
+| $field-label-color             | #363636      |
+| $field-label-font-weight       | 600          |
+| $field-margin-bottom           | .75rem       |
+| $field-message-font-size       | .75rem       |
+| $field-message-margin-top      | .25rem       |
+| $field-margin-right            | .37rem       |
+| $field-horizontal-label-margin | 0 1.5rem 0 0 |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $input-field-grouped-spacer | 0.5rem !default |
-| $input-field-margin-bottom | $spacer !default |
-| $input-field-btn-border-color | $input-border-color !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                 | Default             |
+| ----------------------------- | ------------------- |
+| $input-field-grouped-spacer   | 0.5rem              |
+| $input-field-margin-bottom    | $spacer             |
+| $input-field-btn-border-color | $input-border-color |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
 
 </div>
 

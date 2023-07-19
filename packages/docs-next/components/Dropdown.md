@@ -28,7 +28,11 @@ title: Dropdown
 
 <div class="vp-doc">
 
-## Dropdown Component
+## Dropdown component
+
+```html
+<o-dropdown></o-dropdown>
+```
 
 ### Props
 
@@ -75,7 +79,11 @@ title: Dropdown
 
 <div class="vp-doc">
 
-## DropdownItem Component
+## DropdownItem component
+
+```html
+<o-dropdown-item></o-dropdown-item>
+```
 
 ### Props
 
@@ -108,87 +116,88 @@ title: Dropdown
 </div>
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $dropdown-disabled-opacity | $base-disabled-opacity !default |
-| $dropdown-item-active-background-color | $primary !default |
-| $dropdown-item-active-color | $primary-invert !default |
-| $dropdown-item-color | #000000 !default |
-| $dropdown-item-disabled-opacity | $base-disabled-opacity !default |
-| $dropdown-item-font-size | $base-font-size !default |
-| $dropdown-item-hover-background-color | #f5f5f5 !default |
-| $dropdown-item-hover-color | #000000 !default |
-| $dropdown-item-line-height | $base-line-height !default |
-| $dropdown-item-padding | .375rem 1rem !default |
-| $dropdown-item-font-weight | 400 !default |
-| $dropdown-menu-background | #ffffff !default |
-| $dropdown-menu-border-radius | $base-border-radius !default |
-| $dropdown-menu-box-shadow | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default |
-| $dropdown-menu-margin | 0 !default |
-| $dropdown-menu-padding | .5rem 0 .5rem 0 !default |
-| $dropdown-menu-width | 12rem !default |
-| $dropdown-menu-zindex | 20 !default |
-| $dropdown-mobile-max-height | calc(100vh - 120px) !default |
-| $dropdown-mobile-max-width | 460px !default |
-| $dropdown-mobile-overlay-color | rgba(#000000, 0.86) !default |
-| $dropdown-mobile-overlay-zindex | 40!default |
-| $dropdown-mobile-width | calc(100vw - 40px) !default |
-| $dropdown-mobile-zindex | 50 !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                          | Default                                                              |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| $dropdown-disabled-opacity             | $base-disabled-opacity                                               |
+| $dropdown-item-active-background-color | $primary                                                             |
+| $dropdown-item-active-color            | $primary-invert                                                      |
+| $dropdown-item-color                   | #000000                                                              |
+| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                               |
+| $dropdown-item-font-size               | $base-font-size                                                      |
+| $dropdown-item-hover-background-color  | #f5f5f5                                                              |
+| $dropdown-item-hover-color             | #000000                                                              |
+| $dropdown-item-line-height             | $base-line-height                                                    |
+| $dropdown-item-padding                 | .375rem 1rem                                                         |
+| $dropdown-item-font-weight             | 400                                                                  |
+| $dropdown-menu-background              | #ffffff                                                              |
+| $dropdown-menu-border-radius           | $base-border-radius                                                  |
+| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| $dropdown-menu-margin                  | 0                                                                    |
+| $dropdown-menu-padding                 | .5rem 0 .5rem 0                                                      |
+| $dropdown-menu-width                   | 12rem                                                                |
+| $dropdown-menu-zindex                  | 20                                                                   |
+| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                  |
+| $dropdown-mobile-max-width             | 460px                                                                |
+| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                  |
+| $dropdown-mobile-overlay-zindex        | 40                                                                   |
+| $dropdown-mobile-width                 | calc(100vw - 40px)                                                   |
+| $dropdown-mobile-zindex                | 50                                                                   |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $dropdown-disabled-opacity | $base-disabled-opacity !default |
-| $dropdown-item-active-background-color | $primary !default |
-| $dropdown-item-active-color | $primary-invert !default |
-| $dropdown-item-color | #000000 !default |
-| $dropdown-item-disabled-opacity | $base-disabled-opacity !default |
-| $dropdown-item-font-size | $base-font-size !default |
-| $dropdown-item-hover-background-color | #f5f5f5 !default |
-| $dropdown-item-hover-color | #000000 !default |
-| $dropdown-item-line-height | $base-line-height !default |
-| $dropdown-item-padding | .375rem 1rem !default |
-| $dropdown-item-font-weight | 400 !default |
-| $dropdown-menu-background | #ffffff !default |
-| $dropdown-menu-border-radius | $base-border-radius !default |
-| $dropdown-menu-box-shadow | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) !default |
-| $dropdown-menu-margin | 0 !default |
-| $dropdown-menu-padding | .5rem 0 .5rem 0 !default |
-| $dropdown-menu-width | 12rem !default |
-| $dropdown-menu-zindex | 20 !default |
-| $dropdown-mobile-max-height | calc(100vh - 120px) !default |
-| $dropdown-mobile-max-width | 460px !default |
-| $dropdown-mobile-overlay-color | rgba(#000000, 0.86) !default |
-| $dropdown-mobile-overlay-zindex | 40!default |
-| $dropdown-mobile-width | calc(100vw - 40px) !default |
-| $dropdown-mobile-zindex | 50 !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                          | Default                                                              |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| $dropdown-disabled-opacity             | $base-disabled-opacity                                               |
+| $dropdown-item-active-background-color | $primary                                                             |
+| $dropdown-item-active-color            | $primary-invert                                                      |
+| $dropdown-item-color                   | #000000                                                              |
+| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                               |
+| $dropdown-item-font-size               | $base-font-size                                                      |
+| $dropdown-item-hover-background-color  | #f5f5f5                                                              |
+| $dropdown-item-hover-color             | #000000                                                              |
+| $dropdown-item-line-height             | $base-line-height                                                    |
+| $dropdown-item-padding                 | .375rem 1rem                                                         |
+| $dropdown-item-font-weight             | 400                                                                  |
+| $dropdown-menu-background              | #ffffff                                                              |
+| $dropdown-menu-border-radius           | $base-border-radius                                                  |
+| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
+| $dropdown-menu-margin                  | 0                                                                    |
+| $dropdown-menu-padding                 | .5rem 0 .5rem 0                                                      |
+| $dropdown-menu-width                   | 12rem                                                                |
+| $dropdown-menu-zindex                  | 20                                                                   |
+| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                  |
+| $dropdown-mobile-max-width             | 460px                                                                |
+| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                  |
+| $dropdown-mobile-overlay-zindex        | 40                                                                   |
+| $dropdown-mobile-width                 | calc(100vw - 40px)                                                   |
+| $dropdown-mobile-zindex                | 50                                                                   |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $dropdown-menu-zindex | $zindex-modal !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable         | Default       |
+| --------------------- | ------------- |
+| $dropdown-menu-zindex | $zindex-modal |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
 </div>
 

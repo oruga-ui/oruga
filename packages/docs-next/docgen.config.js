@@ -66,7 +66,7 @@ module.exports = {
         methods: (methods) => renderMethods(methods, { hasSubComponents: true}),
         events: (events) => renderEvents(events, { hasSubComponents: true}),
         slots: (slots) => renderSlots(slots, { hasSubComponents: true}),
-        component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent, hasSubComponents}) => {
+        component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent }) => {
             const { displayName, description, tags, functional } = doc;
             const { deprecated, author, since, version, see, link, style } =
                 tags || {};
@@ -102,7 +102,7 @@ ${tmplClassProps(config, component)}
 ` : ""
 }
 <div class="vp-doc">
-${tmplProps(renderedUsage.props, config, component)}
+${tmplProps(renderedUsage.props, component)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
@@ -137,9 +137,14 @@ function tmplClassProps(config, name) {
     }
 }
 
-function tmplProps(props, config, name) {
+function tmplProps(props, name) {
+    const tag  = name.match(/[A-Z][a-z]+/g).join("-").toLowerCase();
     let ret = `
-## ${name} Component
+## ${name} component
+
+\`\`\`html
+<o-${tag}></o-${tag}> 
+\`\`\`
 
 ### Props
 
@@ -197,9 +202,7 @@ function tmplProps(props, config, name) {
 
 function tmplThemeStyle(config, name) {
     const renderThemeVariables = (theme) => {
-        const noStyle = `
-<p> This component does not have any Oruga style overrides for the ${theme.label}. </p>
-      `;
+        const noStyle = `<p> The theme does not have any custom variables for this component. </p>`;
         const componentPath = `${theme.path}/scss/components/${name}`;
         if (!fs.existsSync(componentPath)) return noStyle;
         const cssFile = path.resolve(config.cwd, componentPath);
@@ -223,24 +226,26 @@ ${variables
     .map((variable) => {
         const keyValue = variable.split(":");
         const varName = keyValue[0].trim();
-        const varValue = keyValue[1].trim();
+        const varValue = keyValue[1].replace('!default', '').trim();
         return `| ${varName} | ${varValue} |`;
     })
     .join("\n")}
 
 
-📄 [Full scss file](${theme.git}/scss/components/${name})
+See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
 `;
     };
 
     return `
-## Theme Styles
+## Sass variables
 
-${THEMES.map((theme) => `
-<div class="${theme.value}">
+${THEMES.map((theme) => 
+`<div class="${theme.value}">
+
+> Current theme ➜ _[${theme.label}](${theme.git})_ 
+
 ${renderThemeVariables(theme)}
-</div>
-`,
+</div>`,
 ).join("")}
 `;
 }

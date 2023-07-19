@@ -28,7 +28,11 @@ title: Input
 
 <div class="vp-doc">
 
-## Input Component
+## Input component
+
+```html
+<o-input></o-input>
+```
 
 ### Props
 
@@ -74,79 +78,80 @@ title: Input
 
 <div class="vp-doc">
 
-## Theme Styles
+## Sass variables
 
 <div class="theme-orugabase">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $input-background-color | #ffffff !default |
-| $input-border-color | $grey-lighter !default |
-| $input-border-style | solid !default |
-| $input-border-width | 1px !default |
-| $input-border-radius | $base-border-radius !default |
-| $input-rounded-border-radius | $base-rounded-border-radius !default |
-| $input-box-shadow | inset 0 1px 2px hsla(0,0%,4%,.1) !default |
-| $input-color | #363636 !default |
-| $input-icon-zindex | 4 !default |
-| $input-counter-font-size | .75rem !default |
-| $input-counter-margin | .25rem 0 0 .5rem !default |
-| $input-height | $control-height !default |
-| $input-line-height | $base-line-height !default |
-| $input-margin | 0 !default |
-| $input-padding | $control-padding-vertical $control-padding-horizontal !default |
-| $input-textarea-max-height | 600px !default |
-| $input-textarea-min-height | 120px !default |
-| $input-textarea-padding | 0.625em !default |
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_input.scss)
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
 
-</div>
+| SASS Variable                | Default                                               |
+| ---------------------------- | ----------------------------------------------------- |
+| $input-background-color      | #ffffff                                               |
+| $input-border-color          | $grey-lighter                                         |
+| $input-border-style          | solid                                                 |
+| $input-border-width          | 1px                                                   |
+| $input-border-radius         | $base-border-radius                                   |
+| $input-rounded-border-radius | $base-rounded-border-radius                           |
+| $input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
+| $input-color                 | #363636                                               |
+| $input-icon-zindex           | 4                                                     |
+| $input-counter-font-size     | .75rem                                                |
+| $input-counter-margin        | .25rem 0 0 .5rem                                      |
+| $input-height                | $control-height                                       |
+| $input-line-height           | $base-line-height                                     |
+| $input-margin                | 0                                                     |
+| $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-textarea-max-height   | 600px                                                 |
+| $input-textarea-min-height   | 120px                                                 |
+| $input-textarea-padding      | 0.625em                                               |
 
-<div class="theme-orugafull">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $input-background-color | #ffffff !default |
-| $input-border-color | $grey-lighter !default |
-| $input-border-style | solid !default |
-| $input-border-width | 1px !default |
-| $input-border-radius | $base-border-radius !default |
-| $input-rounded-border-radius | $base-rounded-border-radius !default |
-| $input-box-shadow | inset 0 1px 2px hsla(0,0%,4%,.1) !default |
-| $input-color | #363636 !default |
-| $input-icon-zindex | 4 !default |
-| $input-counter-font-size | .75rem !default |
-| $input-counter-margin | .25rem 0 0 .5rem !default |
-| $input-height | $control-height !default |
-| $input-line-height | $base-line-height !default |
-| $input-margin | 0 !default |
-| $input-padding | $control-padding-vertical $control-padding-horizontal !default |
-| $input-textarea-max-height | 600px !default |
-| $input-textarea-min-height | 120px !default |
-| $input-textarea-padding | 0.625em !default |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_input.scss)
+</div><div class="theme-orugafull">
 
-</div>
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
 
-<div class="theme-bulma">
+| SASS Variable                | Default                                               |
+| ---------------------------- | ----------------------------------------------------- |
+| $input-background-color      | #ffffff                                               |
+| $input-border-color          | $grey-lighter                                         |
+| $input-border-style          | solid                                                 |
+| $input-border-width          | 1px                                                   |
+| $input-border-radius         | $base-border-radius                                   |
+| $input-rounded-border-radius | $base-rounded-border-radius                           |
+| $input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
+| $input-color                 | #363636                                               |
+| $input-icon-zindex           | 4                                                     |
+| $input-counter-font-size     | .75rem                                                |
+| $input-counter-margin        | .25rem 0 0 .5rem                                      |
+| $input-height                | $control-height                                       |
+| $input-line-height           | $base-line-height                                     |
+| $input-margin                | 0                                                     |
+| $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-textarea-max-height   | 600px                                                 |
+| $input-textarea-min-height   | 120px                                                 |
+| $input-textarea-padding      | 0.625em                                               |
 
-<p> This component does not have any Oruga style overrides for the Bulma Theme. </p>
-      
-</div>
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
 
-<div class="theme-bootstrap">
- 
-| SASS Variable  | Default |
-| -------------- | ------- |
-| $input-icon-color | $input-color !default |
-| $input-icon-spacer | 0.75rem !default |
-| $input-icon-padding-sm | 2rem !default |
-| $input-icon-padding | 2.5rem !default |
-| $input-icon-padding-lg | 3rem !default |
+</div><div class="theme-bulma">
 
-📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_input.scss)
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p> The theme does not have any custom variables for this component. </p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable          | Default      |
+| ---------------------- | ------------ |
+| $input-icon-color      | $input-color |
+| $input-icon-spacer     | 0.75rem      |
+| $input-icon-padding-sm | 2rem         |
+| $input-icon-padding    | 2.5rem       |
+| $input-icon-padding-lg | 3rem         |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_input.scss)
 
 </div>
 
