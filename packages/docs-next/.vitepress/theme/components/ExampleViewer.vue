@@ -43,7 +43,7 @@ onMounted(() => {
 
 <template>
     <div ref="nodeRef" class="odocs-example odocs-mt">
-        <component :is="component"></component>
+        <component :is="component" />
     </div>
     <div v-if="showCode" class="odocs-mt">
         <o-collapse

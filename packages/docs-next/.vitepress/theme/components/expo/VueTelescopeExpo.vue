@@ -158,7 +158,7 @@ function loadMoreItems() {
     </section>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .grid {
     display: flex;
     flex-direction: row;
