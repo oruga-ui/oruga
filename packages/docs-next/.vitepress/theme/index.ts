@@ -74,9 +74,6 @@ export default {
             iconComponent: "vue-fontawesome",
         });
 
-        // this no longer has effect. 3.3 always unwraps injected refs.
-        app.config.unwrapInjectedRef = true;
-
         if (typeof window !== "undefined") {
             const cache = localStorage.getItem("oruga.io_theme");
             const theme =
