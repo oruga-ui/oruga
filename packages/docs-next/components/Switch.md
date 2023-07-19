@@ -11,14 +11,14 @@ title: Switch
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-switch />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

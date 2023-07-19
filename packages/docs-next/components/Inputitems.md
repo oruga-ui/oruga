@@ -11,14 +11,14 @@ title: Inputitems
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-inputitems />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

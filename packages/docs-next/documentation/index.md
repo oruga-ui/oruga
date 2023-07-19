@@ -32,30 +32,23 @@ Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 ## Setup
 
-<o-tabs contentClass="installation-tabs-content" navTabsClass="installation-tabs-nav-buttons" rootClass="installation-tabs">
-<o-tab-item override label="Yarn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
+::: code-group
 
-```bash
+```bash [Yarn]
 yarn add @oruga-ui/oruga-next
 ```
 
-</o-tab-item>
-<o-tab-item override label="Npm" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
 
-```bash
+```bash [Npm]
 npm install @oruga-ui/oruga-next --save
 ```
 
-</o-tab-item>
-<o-tab-item override label="Cdn" itemHeaderTypeClass="installation-tabs-nav-button-" itemHeaderActiveClass="installation-tabs-nav-button-active-">
-
-```html
+```html [Cdn]
 <link rel="stylesheet" href="https://unpkg.com/@oruga-ui/oruga-next/dist/oruga.min.css" />
 <script src="https://unpkg.com/@oruga-ui/oruga-next/dist/oruga.min.js"></script>
 ```
 
-</o-tab-item>
-</o-tabs>
+:::
 
 #### Full bundle
 

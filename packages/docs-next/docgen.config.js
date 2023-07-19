@@ -93,10 +93,10 @@ ${link ? link.map((l) => `[See](${l.description})\n`) : ""}
 </div>`
 }
 ${!isSubComponent ? `
-<div class="vp-doc">
+<div class="vp-example">
 ${tmplExamples(component)}
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 ${tmplClassProps(config, component)}
 </div>
 ` : ""

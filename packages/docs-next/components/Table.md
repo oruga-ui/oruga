@@ -11,14 +11,14 @@ title: Table
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-table />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

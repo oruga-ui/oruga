@@ -11,14 +11,14 @@ title: Slider
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-slider />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

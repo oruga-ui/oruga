@@ -11,14 +11,14 @@ title: Collapse
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-collapse />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

@@ -11,14 +11,14 @@ title: Menu
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-menu />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

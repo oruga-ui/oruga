@@ -11,14 +11,14 @@ title: Datetimepicker
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-datetimepicker />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

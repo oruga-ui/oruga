@@ -11,14 +11,14 @@ title: Sidebar
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-sidebar />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 

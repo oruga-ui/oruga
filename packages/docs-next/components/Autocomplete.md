@@ -11,14 +11,14 @@ title: Autocomplete
 <Carbon />
 </div>
 
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Examples
 
 <example-autocomplete />
 
 </div>
-<div class="vp-doc">
+<div class="vp-example">
 
 ## Class props
 
