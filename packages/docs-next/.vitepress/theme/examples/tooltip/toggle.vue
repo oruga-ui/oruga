@@ -1,28 +1,21 @@
-<template>
-  <section>
-    <o-button @click="active = !active"> Toggle </o-button>
+<script setup>
+import { ref } from "vue";
 
-    <hr />
-
-    <div class="odocs-spaced">
-        <o-tooltip label="I'm never closing" :active="active" always>
-            <o-button> Always </o-button>
-        </o-tooltip>
-
-        <o-tooltip label="Tooltip right" position="right" :active="active">
-            <o-button> Right </o-button>
-        </o-tooltip>
-    </div>
-  </section>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-    setup() {
-        const active = ref(true)
-        return { active }
-    }
-})
+const active = ref(true);
 </script>
+
+<template>
+    <section>
+        <o-button label="Toggle" @click="active = !active" />
+        <hr />
+        <div class="odocs-spaced">
+            <o-tooltip label="I'm never closing" :active="active" always>
+                <o-button label="Always" />
+            </o-tooltip>
+
+            <o-tooltip label="Tooltip right" position="right" :active="active">
+                <o-button label="Right" />
+            </o-tooltip>
+        </div>
+    </section>
+</template>

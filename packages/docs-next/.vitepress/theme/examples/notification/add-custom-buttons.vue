@@ -1,24 +1,25 @@
 <template>
-  <section>
-    <o-notification
-      aria-close-label="Close notification"
-    >
-      <template #default="{ closeNotification }">
-        <div class="notification-content">
-          <span
-            >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
-            fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
-            sapien laoreet elit</span
-          >
-          <o-button label="Cancel" size="small" @click="closeNotification" />
-        </div>
-      </template>
-    </o-notification>
-  </section>
+    <section>
+        <o-notification
+            v-slot="{ closeNotification }"
+            aria-close-label="Close notification">
+            <div class="notification-content">
+                <span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Fusce id fermentum quam. Proin sagittis, nibh id hendrerit
+                    imperdiet, elit sapien laoreet elit
+                </span>
+                <o-button
+                    label="Cancel"
+                    size="small"
+                    @click="closeNotification" />
+            </div>
+        </o-notification>
+    </section>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .notification-content {
-  display: flex;
+    display: flex;
 }
 </style>

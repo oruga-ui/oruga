@@ -1,47 +1,50 @@
 <template>
-  <section>
-    <div class="odocs-spaced">
-      <o-icon pack="fas" icon="user" size="small"> </o-icon>
-      <o-icon pack="fas" icon="home" size="small"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt" size="small"> </o-icon>
-    </div>
+    <section>
+        <div class="odocs-spaced">
+            <o-icon pack="fas" icon="user" size="small" />
+            <o-icon pack="fas" icon="home" size="small" />
+            <o-icon pack="fas" icon="tachometer-alt" size="small" />
+        </div>
 
-    <div class="odocs-spaced">
-      <o-icon pack="fas" icon="user"> </o-icon>
-      <o-icon pack="fas" icon="home"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt"> </o-icon>
-    </div>
+        <div class="odocs-spaced">
+            <o-icon pack="fas" icon="user" />
+            <o-icon pack="fas" icon="home" />
+            <o-icon pack="fas" icon="tachometer-alt" />
+        </div>
 
-    <div class="odocs-spaced">
-      <o-icon pack="fas" icon="user" size="medium"> </o-icon>
-      <o-icon pack="fas" icon="home" size="medium"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt" size="medium"> </o-icon>
-    </div>
+        <div class="odocs-spaced">
+            <o-icon pack="fas" icon="user" size="medium" />
+            <o-icon pack="fas" icon="home" size="medium" />
+            <o-icon pack="fas" icon="tachometer-alt" size="medium" />
+        </div>
 
-    <div class="odocs-spaced">
-      <o-icon pack="fas" icon="user" size="large" variant="success"> </o-icon>
-      <o-icon pack="fas" icon="home" size="large" variant="info"> </o-icon>
-      <o-icon pack="fas" icon="tachometer-alt" size="large" variant="primary">
-      </o-icon>
-    </div>
+        <div class="odocs-spaced">
+            <o-icon pack="fas" icon="user" size="large" variant="success" />
 
-    <div class="odocs-spaced">
-        <o-button variant="success">
-            <o-icon pack="fas" icon="check"></o-icon>
-            <span>Finish</span>
-        </o-button>
+            <o-icon pack="fas" icon="home" size="large" variant="info" />
 
-        <o-button variant="warning">
-            <o-icon pack="fas" icon="check"></o-icon>
-            <span>Finish</span>
-        </o-button>
+            <o-icon
+                pack="fas"
+                icon="tachometer-alt"
+                size="large"
+                variant="primary" />
+        </div>
 
-        <o-button variant="warning">
-            <o-icon pack="fas" icon="sync-alt" spin> </o-icon>
-            <span>Refresh</span>
-        </o-button>
-    </div>
+        <div class="odocs-spaced">
+            <o-button variant="success">
+                <o-icon pack="fas" icon="check" />
+                <span>Finish</span>
+            </o-button>
 
-  </section>
+            <o-button variant="warning">
+                <o-icon pack="fas" icon="check" />
+                <span>Finish</span>
+            </o-button>
+
+            <o-button variant="warning">
+                <o-icon pack="fas" icon="sync-alt" spin />
+                <span>Refresh</span>
+            </o-button>
+        </div>
+    </section>
 </template>
-

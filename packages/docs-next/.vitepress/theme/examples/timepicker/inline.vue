@@ -1,14 +1,11 @@
-<template>
-  <o-timepicker v-model="time" inline></o-timepicker>
-</template>
+<script setup>
+import { ref } from "vue";
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-    setup() {
-        const time = ref(new Date())
-        return { time }
-    }
-})
+const time = ref(new Date());
 </script>
+
+<template>
+    <section>
+        <o-timepicker v-model="time" inline />
+    </section>
+</template>

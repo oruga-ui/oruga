@@ -1,103 +1,93 @@
 <template>
-  <doc-wrapper :inspect-class="inspectClass">
-    <template #default="s">
-      <o-switch v-bind="s" v-model="checkValue">Switch</o-switch>
-    </template>
-  </doc-wrapper>
-  <inspector :inspectData="inspectData" @inspect-class="inspectClass = $event"></inspector>
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-switch v-bind="props" v-model="checkValue">Switch</o-switch>
+    </inspector-wrapper>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      checkValue: true,
-      inspectClass: {},
-      inspectData: [
-        {
-          class: "rootClass",
-          description: "Root class of the element",
+<script setup>
+import { ref } from "vue";
+
+const checkValue = ref(true);
+const inspectData = [
+    {
+        class: "rootClass",
+        description: "Root class of the element",
+    },
+    {
+        class: "inputClass",
+        description: "Root class of the native input checkbox",
+    },
+    {
+        class: "checkClass",
+        description: "Class of the switch check",
+    },
+    {
+        class: "checkCheckedClass",
+        description: "Class of the switch check when checked",
+        action: (cmp, data) => {
+            data.checkValue.value = true;
         },
-        {
-          class: "inputClass",
-          description: "Root class of the native input checkbox",
+    },
+    {
+        class: "checkSwitchClass",
+        description: "Class of the switch check",
+    },
+    {
+        class: "roundedClass",
+        description: "Class of the switch when rounded",
+        properties: ["rounded"],
+        action: (cmp, data) => {
+            data.rounded = true;
         },
-        {
-          class: "checkClass",
-          description: "Class of the switch check",
-          action: () => {
-          }
+    },
+    {
+        class: "disabledClass",
+        description: "Class when slider is disabled",
+        properties: ["disabled"],
+        action: (cmp, data) => {
+            data.disabled = true;
         },
-        {
-          class: "checkCheckedClass",
-          description: "Class of the switch check when checked",
-          action: () => {
-            this.checkValue = true;
-          }
+    },
+    {
+        class: "labelClass",
+        description: "Class of the switch label",
+    },
+    {
+        class: "positionClass",
+        description: "Class of switch label position",
+        properties: ["position"],
+        action: (cmp, data) => {
+            data.position = "left";
         },
-        {
-          class: "checkSwitchClass",
-          description: "Class of the switch check",
+    },
+    {
+        class: "sizeClass",
+        description: "Class of the switch size",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (cmp, data) => {
+            data.size = "large";
         },
-        {
-          class: "roundedClass",
-          description: "Class of the switch when rounded",
-          properties: ["rounded"],
-          action: (cmp) => {
-            cmp.data.rounded = true
-          }
+    },
+    {
+        class: "variantClass",
+        description: "Class of the switch variant",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data) => {
+            data.variant = "warning";
+            data.checkValue.value = true;
         },
-        {
-          class: "disabledClass",
-          description: "Class when slider is disabled",
-          properties: ["disabled"],
-          action: (cmp) => {
-            cmp.data.disabled = true;
-          }
+    },
+    {
+        class: "passiveVariantClass",
+        description: "Class of the switch passive variant",
+        properties: ["passiveVariant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data) => {
+            data.passiveVariant = "danger";
+            data.checkValue.value = false;
         },
-        {
-          class: "labelClass",
-          description: "Class of the switch label"
-        },
-        {
-          class: "positionClass",
-          description: "Class of switch label position",
-          properties: ["position"],
-          action: (cmp) => {
-            cmp.data.position = 'left';
-          }
-        },
-        {
-          class: 'sizeClass',
-          description: 'Class of the switch size',
-          properties: ["size"],
-          suffixes: ['small', 'medium', 'large'],
-          action: (cmp) => {
-            cmp.data.size = 'large';
-          }
-        },
-        {
-          class: 'variantClass',
-          description: 'Class of the switch variant',
-          properties: ["variant"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.variant = 'warning';
-            this.checkValue = true;
-          }
-        },
-        {
-          class: "passiveVariantClass",
-          description: 'Class of the switch passive variant',
-          properties: ["passiveVariant"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            cmp.data.passiveVariant = 'danger';
-            this.checkValue = false;
-          }
-        }
-      ],
-    };
-  },
-};
+    },
+];
 </script>
