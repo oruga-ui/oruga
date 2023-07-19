@@ -1,26 +1,30 @@
 [
     {
-        "label": "Oruga Base Theme",
+        "label": "Oruga Base",
         "value": "theme-orugabase",
         "path": "../oruga/src",
-        "git": "https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src"
+        "git": "https://github.com/oruga-ui/oruga",
+        "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },
     {
-        "label": "Oruga Full Theme",
+        "label": "Oruga Full",
         "value": "theme-orugafull",
         "path": "../oruga/src",
-        "git": "https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src"
+        "git": "https://github.com/oruga-ui/oruga",
+        "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },
     {
-        "label": "Bulma Theme",
+        "label": "Bulma",
         "value": "theme-bulma",
         "path": "./node_modules/@oruga-ui/theme-bulma/dist",
-        "git": "https://github.com/oruga-ui/theme-bulma/tree/main/src/assets"
+        "git": "https://github.com/oruga-ui/theme-bulma",
+        "src": "https://github.com/oruga-ui/theme-bulma/tree/main/src/assets"
     },
     {
-        "label": "Bootstrap Theme",
+        "label": "Bootstrap",
         "value": "theme-bootstrap",
         "path": "./node_modules/@oruga-ui/theme-bootstrap/dist",
-        "git": "https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets"
+        "git": "https://github.com/oruga-ui/theme-bootstrap",
+        "src": "https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets"
     }
 ]

@@ -78,7 +78,11 @@ export default {
         app.config.unwrapInjectedRef = true;
 
         if (typeof window !== "undefined") {
-            const theme = localStorage.getItem("oruga.io_theme") || "fullcss";
+            const cache = localStorage.getItem("oruga.io_theme");
+            const theme =
+                cache && cache !== "undefined"
+                    ? JSON.parse(cache).value
+                    : "theme-orugafull";
             switch (theme) {
                 case "theme-orugafull": {
                     if (process.env.NODE_ENV !== "production") {
