@@ -69,7 +69,7 @@ function onThemeChange(theme) {
 
     @media (max-width: 959px) {
         /* logo width + margin */
-        left: calc(64px + 2rem);
+        left: calc(80px + 2rem);
     }
 
     [role="button"] {
