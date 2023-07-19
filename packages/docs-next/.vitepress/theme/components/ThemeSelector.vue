@@ -104,5 +104,12 @@ function onThemeChange(theme) {
     font-weight: var(--oruga-dropdown-item-font-weight, 400);
     line-height: var(--oruga-dropdown-item-line-height, 1.5);
     padding: var(--oruga-dropdown-item-padding, 0.375rem 1rem);
+    &:hover {
+        background-color: var(
+            --oruga-dropdown-item-hover-background-color,
+            #f5f5f5
+        );
+        color: var(--oruga-dropdown-item-hover-color, #000000);
+    }
 }
 </style>
