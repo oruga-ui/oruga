@@ -14,6 +14,7 @@
     }
 }
 
+
 .main {
     h1, h2, h3 {
         position: relative;
@@ -52,5 +53,15 @@
     h1:hover .header-anchor, h1 .header-anchor:focus,
     h2:hover .header-anchor, h2 .header-anchor:focus {
         opacity: 1;
+    }
+
+        
+    .header-anchor{
+        color: var(--vp-c-brand);
+        text-decoration: none;
+        
+        &:before {
+            content: var(--vp-header-anchor-symbol);
+        }
     }
 }
