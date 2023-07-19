@@ -240,7 +240,7 @@ See ➜ 📄 [Full scss file](${theme.src}/scss/components/${name})
 ## Sass variables
 
 ${THEMES.map((theme) => 
-`<div class="${theme.value}">
+`<div class="${theme.key}">
 
 > Current theme ➜ _[${theme.label}](${theme.git})_ 
 
