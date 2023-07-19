@@ -1,78 +1,39 @@
 @import "./vitepress";
 @import "./theming";
 
+// Custom Scrollbar mixin
+@mixin scrollbar {
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 56px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    background-color: var(--vp-c-bg-soft-down);
+  }
+}
+
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+body .Layout > * {
+  @include scrollbar;
+}
+
+// Introduction 
+
 .oruga-doc-video {
   width: 100%;
   max-width: 640px;
   height: auto;
-}
-
-.installation-tabs {
-  border-radius: 6px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-
-  .installation-tabs-nav-buttons {
-    display: flex;
-    background: #282c34;
-    margin-bottom: 0 !important;  
-    border-bottom: 1px solid #dbdbdb;
-
-    .installation-tabs-nav-button-default {    
-      display: block;
-      height: 3rem;
-      width: 4rem;
-      padding: 0.5em 1em;
-      cursor: pointer;
-      color: white;
-      border: 1px solid transparent;
-      background-color: transparent;
-      align-items: center;
-      text-decoration: none;
-    }
-    
-    .installation-tabs-nav-button-active-default {
-      color: #f08d49;
-      border-bottom: 1px solid #f08d49;
-    }
-  }
-
-  .installation-tabs-content {
-    background: #282c34;
-    overflow: hidden;
-    padding: 0!important;
-  }
-}
-
-.main {
-    h1, h2 {
-        position: relative;
-        margin: 0;
-        line-height: 1.5em;
-        font-weight: 600;
-        letter-spacing: -.02em;
-    }
-    h1 {
-        line-height: 2.5em;
-        font-size: 2em;
-    }
-    h2 {
-        margin: 3rem 0 1rem;
-        line-height: 2em;
-        font-size: 1.5em;
-    }
-
-    .header-anchor {
-        float: left;
-        margin-left: -0.87em;
-        padding-right: 0.23em;
-        font-weight: 500;
-        opacity: 0;
-        transition: color .25s,opacity .25s;
-    }
-
-    h1:hover .header-anchor, h1 .header-anchor:focus,
-    h2:hover .header-anchor, h2 .header-anchor:focus {
-        opacity: 1;
-    }
+  margin: auto;
 }
