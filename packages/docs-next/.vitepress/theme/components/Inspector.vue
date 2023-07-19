@@ -48,7 +48,7 @@ function inspectClass(index: number, selectedData: any) {
         <o-collapse class="inspector__summary" :open="false">
             <template #trigger="{ open }">
                 <div class="inspector__summary-trigger" role="button">
-                    <div>How does <i>Class props inspector</i> work?</div>
+                    <div>How does the <i>Class props inspector</i> work?</div>
                     <a>
                         <o-icon :icon="open ? 'caret-up' : 'caret-down'" />
                     </a>
