@@ -78,7 +78,7 @@ export default {
             const cache = localStorage.getItem("oruga.io_theme");
             const theme =
                 cache && cache !== "undefined"
-                    ? JSON.parse(cache).value
+                    ? JSON.parse(cache).key
                     : "theme-orugafull";
             switch (theme) {
                 case "theme-orugafull": {
