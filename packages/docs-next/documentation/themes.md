@@ -3,6 +3,7 @@
 
 # Themes
 
+Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use <b>Themes</b>.
 
 The default FormKit theme (called "genesis") can be added by installing the @formkit/themes package.
 
@@ -30,11 +31,104 @@ For more info read ["Differences between default and full css"](#differences-bet
 
 
 
-## Overrides
+## Oruga Theme
 
-### Adding classes
+Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
-#### Deal with specificity
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/defaultswitch.mp4" type="video/mp4">
+</video>
+
+If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+
+
+### Using CSS or SASS/SCSS variables
+
+You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
+
+To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
+
+```js
+import '@oruga-ui/oruga-next/dist/oruga-full-vars.css'
+```
+
+and redefine the variables you want to change. 
+
+For example to change variants globally using CSS variables you can do
+
+```css
+:root {
+  --oruga-variant-primary: green;
+  --oruga-variant-danger: red;
+}
+```
+
+or a specific component variable, such as button icon width
+
+```css
+:root {
+  --oruga-button-icon-width: 2.5em;
+}
+```
+
+To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
+
+```js
+import '@oruga-ui/oruga-next/src/scss/oruga-full-vars';
+```
+
+::: warning
+In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
+:::
+
+An example can be found in the [Button style section](/components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
+
+
+### Differences between default and full css
+
+The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
+
+For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
+
+```js
+import '@oruga-ui/oruga-next/dist/oruga.css'
+```
+
+```css
+.dropdown {
+    @apply inline-flex relative;
+}
+.dropdown-menu {
+    top: 100%;
+    min-width: 12em;
+    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply relative block no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+And here's how to style a dropdown using _oruga-full_ stylesheet
+
+```js
+import '@oruga-ui/oruga-next/dist/oruga-full.css'
+```
+
+```css
+.dropdown-menu {
+    min-width: 12em;
+    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
+}
+.dropdown-item {
+    @apply no-underline px-1 py-2 cursor-pointer;
+}
+```
+
+Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
+
+
+
+### Deal with specificity
 
 Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones in the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the `nav item` contains a `marker` and a `divider` which colors change whether the nav item is active or not.
 
@@ -152,148 +246,53 @@ createApp(...)
 In Oruga documentation you'll find a special note (🔍) in the `Class prop inspector` for classes with a higher specificity. 
 
 
+## Bulma Theme
 
-### Oruga default stylesheet
+Bulma Theme
 
-Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
+## Bootstrap Theme
 
-<video class="oruga-doc-video" controls autoplay muted loop>
-  <source src="/defaultswitch.mp4" type="video/mp4">
-</video>
+Bootstrap theme 
 
-If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+## Global Theme Variables
 
-
-### Using CSS or SASS/SCSS variables
-
-You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
-
-To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
-
-```js
-import '@oruga-ui/oruga-next/dist/oruga-full-vars.css'
-```
-
-and redefine the variables you want to change. 
-
-For example to change variants globally using CSS variables you can do
-
-```css
-:root {
-  --oruga-variant-primary: green;
-  --oruga-variant-danger: red;
-}
-```
-
-or a specific component variable, such as button icon width
-
-```css
-:root {
-  --oruga-button-icon-width: 2.5em;
-}
-```
-
-To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
-
-```js
-import '@oruga-ui/oruga-next/src/scss/oruga-full-vars';
-```
-
-::: warning
-In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
+:::info 
+Change the active theme in the navigation bar to see other theme-specific global variables.
 :::
 
-An example can be found in the [Button style section](/components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
+<div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_ 
+
+<<< @/themes/variables-theme-bootstrap.scss{scss}
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/utils/_variables.scss)
+</div>
+
+<div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_ 
+
+<<< @/themes/variables-theme-bulma.scss{scss}
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/master/src/assets/scss/components/utils/_variables.scss)
+</div>
 
 
-### Differences between default and full css
+<div class="theme-orugabase">
 
-The default stylesheet contains only the essantial rules for Oruga components such as display, position, z-index and other basic attributes. 
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_ 
 
-For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
+<<< @/themes/variables-theme-orugabase.scss{scss}
 
-```js
-import '@oruga-ui/oruga-next/dist/oruga.css'
-```
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/utils/_variables.scss)
+</div>
 
-```css
-.dropdown {
-    @apply inline-flex relative;
-}
-.dropdown-menu {
-    top: 100%;
-    min-width: 12em;
-    @apply absolute bg-white left-0 m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply relative block no-underline px-1 py-2 cursor-pointer;
-}
-```
+<div class="theme-orugafull">
 
-And here's how to style a dropdown using _oruga-full_ stylesheet
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_ 
 
-```js
-import '@oruga-ui/oruga-next/dist/oruga-full.css'
-```
+<<< @/themes/variables-theme-orugafull.scss{scss}
 
-```css
-.dropdown-menu {
-    min-width: 12em;
-    @apply bg-white m-0 px-2 shadow-lg rounded-sm z-10;
-}
-.dropdown-item {
-    @apply no-underline px-1 py-2 cursor-pointer;
-}
-```
-
-Take a look at the [official TailwindCSS + Oruga example](https://github.com/oruga-ui/demo-tailwindcss).
-
-
-## Global Props
-
-| Field              | Description                                                                                                                                                                                  | Default |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
-| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
-| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
-| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
-| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
-
-Take a look at each component docs to know all customizable fields/props by config.
-
-## Base Style
-
-| SASS Variable                | Default                                                                                                                                                                                                          |
-|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| \$base-border-radius         | 4px                                                                                                                                                                                                              |
-| \$base-font-size             | 1rem                                                                                                                                                                                                             |
-| \$base-rounded-border-radius | 9999px                                                                                                                                                                                                           |
-| \$base-line-height           | 1.5                                                                                                                                                                                                              |
-| \$base-disabled-opacity      | 0.5                                                                                                                                                                                                              |
-| \$speed                      | 300ms                                                                                                                                                                                                            |
-| \$speed-slow                 | 150ms                                                                                                                                                                                                            |
-| \$speed-slower               | 250ms                                                                                                                                                                                                            |
-| \$easing                     | ease-out                                                                                                                                                                                                         |
-| \$control-border-width       | 1px                                                                                                                                                                                                              |
-| \$control-height             | 2.25em                                                                                                                                                                                                           |
-| \$white                      | #ffffff                                                                                                                                                                                                          |
-| \$black                      | #000000                                                                                                                                                                                                          |
-| \$grey                       | #7a7a7a                                                                                                                                                                                                          |
-| \$grey-light                 | #b5b5b5                                                                                                                                                                                                          |
-| \$grey-lighter               | #dbdbdb                                                                                                                                                                                                          |
-| \$primary                    | #445e00                                                                                                                                                                                                          |
-| \$primary-invert             | \$white                                                                                                                                                                                                          |
-| \$danger                     | #b60000                                                                                                                                                                                                          |
-| \$danger-invert              | \$white                                                                                                                                                                                                          |
-| \$warning                    | #f4c300                                                                                                                                                                                                          |
-| \$warning-invert             | \$black                                                                                                                                                                                                          |
-| \$success                    | #006724                                                                                                                                                                                                          |
-| \$success-invert             | \$white                                                                                                                                                                                                          |
-| \$info                       | #005C98                                                                                                                                                                                                          |
-| \$info-invert                | \$white                                                                                                                                                                                                          |
-| \$whitelist                  | ()                                                                                                                                                                                                               |
-| \$sass-vars                  | true                                                                                                                                                                                                             |
-| \$css-vars                   | true                                                                                                                                                                                                             |
-| \$variable-prefix            | '--oruga-'                                                                                                                                                                                                       |
-| \$sizes                      | (<br>&nbsp;&nbsp;"small": .75rem,<br>&nbsp;&nbsp;"medium": 1.25rem,<br>&nbsp;&nbsp;"large": 1.5rem<br>)                                                                                                                                              |
-| \$colors                     | (<br>&nbsp;&nbsp;"primary": ($primary, $primary-invert),<br>&nbsp;&nbsp;"danger": ($danger, $danger-invert),<br>&nbsp;&nbsp;"warning": ($warning, $warning-invert),<br>&nbsp;&nbsp;"success": ($success, $success-invert),<br>&nbsp;&nbsp;"info": ($info, $info-invert)<br>) |
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/utils/_variables.scss)
+</div>

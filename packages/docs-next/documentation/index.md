@@ -1,36 +1,37 @@
 # Introduction
 
-Oruga is a <b>lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency.</b><br>
-It <b>doesn't depend on any specific style or CSS framework</b> (like Bootstrap, Bulma, TailwindCSS, etc) and it <b>doesn't provide any grid system or CSS utility</b>, it just offer a <b>set of components easy to customize only modifying your stylesheets</b> or <b>integrating it with a CSS framework</b> (see the [demo](#examples)).<br>
-Oruga wants you to <b>focus only on UI/UX aspects</b> of your application and <b>be totally flexible to future changes</b> without having to touch a line of JavaScript. 
+Oruga is a <b>lightweight UI components library</b> for [Vue.js](https://vuejs.org/)<b> without any dependency.</b><br>
+It offers a <b>set of easily customisable components </b> and <b>doesn't depend on any specific style or CSS framework</b> (like Bootstrap, Bulma, TailwindCSS, etc).
+Therefore, it <b>doesn't provide a grid system or CSS utilities</b>, but you can <b>integrate any CSS framework</b> you like (see the [demo](#examples)).<br>
+Oruga provides you with a set of functional components, so you can <b>focus only on the UI/UX aspects</b> of your application 
+and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
 <Carbon />
 
-### Availability
+## Availability
 
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** and has been tested in all major browsers
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** and has been tested in all major browsers.
 
 ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png)
 --- | --- | --- | --- | --- |
 Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
-💅 For more info about components customization, go to the ["Customization section"](#customization).
+💅 For more info about components customization, go to [#customization](/documentation/customization).
 
-🕹 To see Oruga in action, go to the ["Examples" section](#examples).
+🕹 To see Oruga in action, go to [#examples](#examples).
 
 ## Setup
 
 ::: code-group
 
-```bash [Yarn]
-yarn add @oruga-ui/oruga-next
+```bash [Npm]
+npm install @oruga-ui/oruga-next
 ```
 
-
-```bash [Npm]
-npm install @oruga-ui/oruga-next --save
+```bash [Yarn]
+yarn add @oruga-ui/oruga-next
 ```
 
 ```html [Cdn]
@@ -60,11 +61,38 @@ createApp(...)
   .component(OSidebar);
 ```
 
+### Styling
+
+Oruga comes without any styling by default, but you can add styles by simply adding an additional theme package.
+For more details and a list of existing themes, see [#themes](/documentation/themes).
+
+The Oruga <i>default theme</i> can be added by:
+
+::: code-group
+
+```bash [Npm]
+npm install @oruga-ui/theme-oruga
+```
+
+```bash [Yarn]
+yarn add @oruga-ui/theme-oruga
+```
+
+```html [Cdn]
+<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.css" />
+<script src="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.js"></script>
+```
+:::
+
+```js
+import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
+```
+
 ## Nuxt module
 
 Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 
-You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
+You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
 
 ```js
 import Oruga from '@oruga-ui/oruga-next';
@@ -75,7 +103,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 ```
 
-To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
+To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`:
 
 ```js
 plugins: [{ src: '~plugins/oruga.js' }]

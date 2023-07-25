@@ -1,37 +1,40 @@
 
 # Customization
 
-Oruga comes without any styling by default. The main feature of Oruga is its configurability. 
-Oruga allows to customize each component by a class mapping approach. 
-The elements of a component can be configured individually to use specific classes.
-However, there are several official predefined configurations called [themes](#themes) that provide an individual look and feel that you can include and extend.
+Oruga's superpower is its configurability and its <b>CSS framework agnostic</b> approach. <br />
+Each component can be individually customised and configured by defining specific classes using a <b>class-mapping approach</b>.
+Therefore, <b>Oruga comes without any styling by default</b>. 
+However, there are several official predefined configurations called [themes](#themes), which you can include and extend to give your application a individual look and feel.
+And <b>all components came with predefined classes </b> by default.
 
-With Oruga you can easily override existing components style appending one or more classes.
-To configure a component each, component has a set of `class` properties which can be found in the `Class prop` section of a component (see for example [Autocomplete class props](/components/Autocomplete.html#class-props)).
-Here you can inspect the elements affected by each class property using the `Class Prop Inspector`.
-
-<video class="oruga-doc-video" controls autoplay muted loop>
-  <source src="/inspectormov.mp4" type="video/mp4">
-</video>
-
-Oruga allows you to customize components in 3 different ways:
+You can customise component classes in 3 different ways:
 
 - [Global configuration](#global-configuration)
 - [Individual configuration](#overriding-configuration)
 - [Programmatically configuration](#using-configuration)
 
-You can mix them, for example, provide a global configuration and add new classes for specific component use cases!
+::: info
+Although all components have predefined classes, Oruga allows you to easily override the style of existing components by appending one or more classes, either globally or programmatically, to individual components.
+:::
+
+To configure a component, each component has a set of `class` properties which can be found in the `Class prop` section of a component (see for example [Autocomplete class props](/components/Autocomplete.html#class-props)).
+Here you can inspect the elements affected by each class property using the `Class Prop Inspector`. 
+
+<video class="oruga-doc-video" controls autoplay muted loop>
+  <source src="/inspectormov.mp4" type="video/mp4">
+</video>
+
 
 
 ## Global configuration
 
-The easiest way to customise your components is to provide a global configuration object with a class mapping for each component.
+The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
 The Config object is defined as:
 ```js
 {
     globalProp: string|boolean|number|function|....,
-    componentname: {
+    componentName: {
         override: boolean,
         classProp: string|boolean|number|function|....
     }
@@ -71,7 +74,7 @@ createApp(...)
     });
 ```
 
-If you use individual imports you can customize each compoment using `Config` plugin.
+If you use individual imports you can customize each compoment using the `Config` plugin.
 
 ```js
 import { createApp } from 'vue';
@@ -90,7 +93,7 @@ createApp(...)
     });
 ```
 
-You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a suffix is provided by the component and it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name
+You can also use an `array` to specify more than one class or a `function` to extend or override classes in a component. In case you use a function, a `suffix` is provided by the component and it can be used inside the function. For example, `menuPositionClass` in Autocomplete provides a suffix to specify the menu position (_top_, _bottom_), in this case you may define a function and append the suffix to the base class name
 
 ```js
 createApp(...)
@@ -108,7 +111,7 @@ createApp(...)
     });
 ```
 
-For a better customization experience this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
+For a better customisation experience, this function accepts the component's `context` containing its read-only attributes (`props`, `data` and `computed`) as a second parameter. For example using [Bootstrap](https://getbootstrap.com/) you may want to apply variants to buttons only when the element is not outlined:
 
 ```js
 createApp(...)
@@ -129,6 +132,17 @@ createApp(...)
     });
 ```
 
+### Global Props
+
+| Field              | Description                                                                                                                                                                                  | Default |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
+| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
+| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
+| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
+
+Have a look at the docs of each component to know all the customisable fields/props by config.
 
 ### Overriding classes
 
@@ -179,7 +193,6 @@ createApp(...)
         }
     });
 ```
-s
 
 ### Transform classes
 
@@ -224,11 +237,14 @@ You can also add and override classes to a component directly using class proper
 
 ## Programmatically configuration
 
-As alternative Oruga allows to customize each components providing config object programmatically:
+As alternative Oruga allows to customize each components providing and overriding the `Config` object programmatically:
 ```js
 import { useProgrammatic } from '@oruga-ui/oruga-next';
 
 const { oruga } = useProgrammatic();
-oruga.config.setOptions(bulmaConfig);
+
+const config = oruga.config.getOptions();
+
+oruga.config.setOptions(myThemeConfig);
 ```
 
