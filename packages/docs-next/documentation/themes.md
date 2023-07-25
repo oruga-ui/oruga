@@ -4,57 +4,54 @@
 # Themes
 
 Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use <b>Themes</b>.
+Themes provide the <b>CSS styling for the components</b>. They can build on existing CSS frameworks/libraries or be completely lightweight and dependency free.
+A theme comes as a <b>separate package</b>, which you can install and change completely at will. 
+Themes that build on top of an existing CSS framework usually come with a theme-specific global Oruga Config object.
 
-The default FormKit theme (called "genesis") can be added by installing the @formkit/themes package.
+These themes are currently available:
+- [Oruga Theme](https://github.com/oruga-ui/theme-oruga) (default Oruga style - without any dependecy)
+- [Bulma Theme](https://github.com/oruga-ui/theme-bulma) (based on [Bulma](https://bulma.io/) CSS framework)
+- [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) (based on [Bootstrap](https://getbootstrap.com/) styling)
 
-Oruga allows you to customize components in 3 different ways:
+::: tip Theme Preview
+You can change the active theme for this documentation site using the drop down menu in the navigation bar.
+:::
 
-- [Adding new classes](#adding-classes)
-- [Overriding existing classes](#overriding-classes)
-- [Using CSS or SASS/SCSS variables](#using-css-or-sass-scss-variables)
-
-You can mix them, for example adding new classes and using CSS variables!
-
-Oruga provides `oruga.css`, a lightweight stylesheet containing only minimal CSS rules (position, display, z-index ...). Include it if you want to perform a complete customization. 
-
-Oruga provides other 2 different stylesheets:
-
-- `oruga-full.css`: a stylesheet containing the complete Oruga style (the default style used for documentation).
-- `oruga-full-vars.css`: a stylesheet containing the complete Oruga style with css vars you can redefine in your application. For more information [click here](#using-css-or-sass-scss-variables).
-
-For more info read ["Differences between default and full css"](#differences-between-default-and-full-css).
-
-
-
-- [Bulma CSS Theme](https://github.com/oruga-ui/theme-bulma)
-
-
-
-
-## Oruga Theme
-
-Oruga comes with a default stylesheet containing only the essential rules for Oruga components such as display, position, z-index and other basic attributes. You can use the default Oruga stylesheet in this documentation turning on the switch in the navbar. 
 
 <video class="oruga-doc-video" controls autoplay muted loop>
   <source src="/defaultswitch.mp4" type="video/mp4">
 </video>
 
-If you use the default stylesheet to browse documentation some examples won't work as you expect because sizes, variants and adornments are not included in the Oruga default stylesheet. For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
 
 
-### Using CSS or SASS/SCSS variables
+## Using Variables
 
-You can easily customize Oruga using CSS or SASS/SCSS variables. Each component has its own variables, mostly of them with default values defined in the [base style](#base-style) (see [utilities/_variables.scss](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/utilities/_variables.scss)).
+You can easily customise each theme at global and component level using CSS or SASS variables.
+Each theme has its own global and component variables, mostly of them with default values defined.
+The theme-specific global variables can be found on this page under [Global Theme Variables](#global-theme-variables). 
+For component-specific customisation, see a component's `Sass Variables` section, where you'll find a complete list of all the SASS variables (with their respective default values) that you can redefine for each component (an example can be found in the [Button Sass variables](/components/Button.html#sass-variables)).
+Change the active theme to the theme-specific variables.
 
-To use *CSS variables* you have to import `oruga-full-vars.css` stylesheet
+To use *SASS/SCSS variables*, you must use the .scss version of a theme from the package's distribution folder. 
+For example, the Oruga theme:
 
 ```js
-import '@oruga-ui/oruga-next/dist/oruga-full-vars.css'
+import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
 ```
 
-and redefine the variables you want to change. 
+::: warning
+In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
+:::
 
-For example to change variants globally using CSS variables you can do
+
+You can also use CSS variables. In most cases, any theme-specific SASS variable is converted to a CSS variable before being used.
+
+::: info
+For the Oruga Theme, you have to import the `oruga-full.css` stylesheet to use CSS variables.
+::: 
+
+
+For example to change global variable you can do
 
 ```css
 :root {
@@ -71,17 +68,21 @@ or a specific component variable, such as button icon width
 }
 ```
 
-To use *SASS/SCSS variables* you have to use .scss files placed in the Oruga package
+## Oruga Theme
 
-```js
-import '@oruga-ui/oruga-next/src/scss/oruga-full-vars';
-```
+The default _Oruga Theme_ provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the default class configuration.
 
-::: warning
-In order to work with SASS/SCSS you might also have to install `sass` and `sass-loader` depending on your environment.
-:::
+* The minimal `oruga.css` provides a lightweight stylesheet that contains only minimal and essential CSS rules for Oruga components such as display, position, z-index and other basic attributes. 
+This could be the best starting point for creating your own theme if you want to do a full customisation.
 
-An example can be found in the [Button style section](/components/Button.html#style): here you'll find the complete list of all the CSS and SASS/SCSS variables (with their respective default values) you can redefine for each component.
+* The `oruga-full.css` stylesheet provides the full custom Oruga style for each component (the default style for this documentation).
+
+For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+
+::: info
+If you use the base stylesheet to browse the documentation, some examples won't work as you expect because sizes, variants and decorations are not included in the minimal Oruga stylesheet. 
+::: 
+
 
 
 ### Differences between default and full css
@@ -91,7 +92,7 @@ The default stylesheet contains only the essantial rules for Oruga components su
 For example to style a dropdown using override mode with _oruga_ default stylesheet using [TailwindCSS](https://tailwindcss.com/)
 
 ```js
-import '@oruga-ui/oruga-next/dist/oruga.css'
+import '@oruga-ui/theme-oruga/dist/oruga.css'
 ```
 
 ```css
@@ -111,7 +112,7 @@ import '@oruga-ui/oruga-next/dist/oruga.css'
 And here's how to style a dropdown using _oruga-full_ stylesheet
 
 ```js
-import '@oruga-ui/oruga-next/dist/oruga-full.css'
+import '@oruga-ui/theme-oruga/dist/oruga-full.css'
 ```
 
 ```css
@@ -130,7 +131,7 @@ Take a look at the [official TailwindCSS + Oruga example](https://github.com/oru
 
 ### Deal with specificity
 
-Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_specificity.asp) possible, that's why you can easily override existing classes by defining new ones in the global configuration or using attributes. However there are some cases where specificty is higher than you expect, for example in the [Steps](/components/Steps.html) component the `nav item` contains a `marker` and a `divider` which colors change whether the nav item is active or not.
+Oruga CSS comes with the lowest possible [specifity](https://www.w3schools.com/css/css_specificity.asp), so you can easily override existing classes by defining new ones in the global configuration or using attributes. However, there are some cases where the specificity is higher than you might expect, for example in the [Steps](/components/Steps.html) component the `nav item` contains a `marker` and a `divider` whose colors change whether the nav item is active or not.
 
 ```scss
 .o-steps {
@@ -165,7 +166,7 @@ Oruga CSS comes with the lowest [specifity](https://www.w3schools.com/css/css_sp
 }
 ```
 
-If you want to change the color you can use `!important` or change variables values. Otherwise you can easily increase the specificity in your stylesheet
+If you want to change the color you can use `!important` or change the values of the variables. Otherwise, you can easily increase the specificity in your stylesheet
 
 ```css
 .steps-nav-item-active .step-marker {
@@ -202,7 +203,7 @@ createApp(...)
 
 You can see this code in action in [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(code [here](https://github.com/oruga-ui/demo-multiframework/blob/master/src/assets/oruga-tailwindcss.css#L64))
 
-Sometimes components change how elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
+Sometimes components change the way elements are positioned (horizontally, vertically...), this is another case of higher specificity. In the [Steps](/components/Steps.html) component the `vertical` attribute disposes the steps vertically changing the `height` of the steps `divider`.
 
 ```scss
 .o-steps {
@@ -223,7 +224,7 @@ Sometimes components change how elements are positioned (horizontally, verticall
 }
 ```
 
-If you want to set height to 50% keeping the other attributes unchanged you can't just define a new class (unless you want to use `!important`), because of a higher specificity. In that case, we suggest to define your new class in this way
+If you want to set the height to 50% while keeping the other attributes unchanged, you can't just define a new class (unless you want to use `!important`), because of the higher specificity. In this case, we suggest you define your new class like this:
 
 ```css
 .steps-vertical .step-divider {
@@ -243,16 +244,55 @@ createApp(...)
     });
 ```
 
-In Oruga documentation you'll find a special note (🔍) in the `Class prop inspector` for classes with a higher specificity. 
+In the Oruga documentation you'll find a special note (🔍) in the `Class Prop Inspector` for classes with a higher specificity.
 
 
 ## Bulma Theme
 
-Bulma Theme
+The [Bulma Theme](https://github.com/oruga-ui/theme-bulma) provides a customisation of the Oruga components with the [Bulma CSS framework](https://bulma.io/).
+
+The theme comes with its own Bulma-based class mapping configuration and some additional component styling that you have to import:
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import Oruga from '@oruga-ui/oruga-next';
+
+import { bulmaConfig } from '@oruga-ui/theme-bulma';
+
+import '@oruga-ui/theme-bulma/dist/bulma.css';
+
+createApp(App)
+    .use(Oruga, bulmaConfig)
+    .mount('#app')
+```
+
+See the [theme repository](https://github.com/oruga-ui/theme-bulma) for a detailed documentation.
 
 ## Bootstrap Theme
 
 Bootstrap theme 
+The [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) provides a customisation of the Oruga components with [Bootstrap](https://getbootstrap.com/).
+
+The theme comes with its own Bootstrap-based class mapping configuration and some additional component styling that you have to import:
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import Oruga from '@oruga-ui/oruga-next';
+
+import { bootstrapConfig } from '@oruga-ui/theme-bootstrap';
+
+import '@oruga-ui/theme-bootstrap/dist/bootstrap.css';
+
+createApp(App)
+    .use(Oruga, bootstrapConfig)
+    .mount('#app')
+```
+
+See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) for a detailed documentation.
 
 ## Global Theme Variables
 
