@@ -113,6 +113,24 @@ plugins: [{ src: '~plugins/oruga.js' }]
 
 To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plugin documentation](https://v3.nuxtjs.org/guide/directory-structure/plugins/).
 
+## Community
+
+Community involvement and contribution is one of the most important aspects of an open source project. 
+We invite you to contribute to this project!
+There are many ways to help — from creating pull requests to our open source code bases, to filing issues so we can improve Oruga for everyone.
+
+If you need generalized help or want to make connections within the community, consider joining the official Discord. 
+
+[Join the Oruga Discord server →](https://discord.gg/RuKuBYN)
+
+**Open issues on GitHub (bugs and features)** - 
+[GitHub issues](https://github.com/oruga-ui/oruga/issues/new/choose) are for feature requests and bug reports. 
+If you've found a bug, please create a GitHub issue! 
+Feature requests are always welcome. If you have an idea for improvements, let us know!
+
+**Create a theme to share** - 
+We have created some [themes](themes) for you. 
+However, if you have created a nice theme for Oruga? Let us know! We will be happy to include links to and share high quality content in our docs.
 
 ## Examples
 
