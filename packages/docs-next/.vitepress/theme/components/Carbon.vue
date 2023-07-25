@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch, useAttrs } from "vue";
+import { useRoute } from "vitepress";
+import { ref, onMounted, nextTick, watch } from "vue";
 
 const show = ref(false);
 const carboncc = ref<any | null>(null);
 
-const attrs = useAttrs();
+const route = useRoute();
 
 watch(
-    () => attrs.route,
+    () => route,
     (to: any, from: any) => {
         const carbonadsObj: any = (window as any)._carbonads;
         if (to.path !== from.path && typeof carbonadsObj === "object") {
