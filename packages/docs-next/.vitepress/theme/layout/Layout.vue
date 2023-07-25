@@ -8,11 +8,9 @@ const theme = ref({ key: undefined });
 
 <template>
     <Layout :class="theme.key">
-        <template #doc-before>
+        <template #nav-bar-content-before>
             <client-only>
-                <Teleport to=".VPNavBar .container .content .content-body">
-                    <ThemeSelector v-model:theme="theme" />
-                </Teleport>
+                <ThemeSelector v-model:theme="theme" />
             </client-only>
         </template>
     </Layout>

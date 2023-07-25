@@ -54,23 +54,10 @@ function onThemeChange(theme) {
 
 <style lang="scss" scoped>
 .theme-selector {
-    display: inline-flex;
-    position: absolute;
-    left: 0;
-    flex: auto;
-    margin-left: 10px;
-    align-items: center;
-    padding: 0 12px;
+    margin-left: 25px;
     line-height: var(--vp-nav-height-mobile);
     font-size: 14px;
     font-weight: 500;
-    color: var(--vp-c-text-1);
-    transition: color 0.25s;
-
-    @media (max-width: 959px) {
-        /* logo width + margin */
-        left: calc(80px + 2rem);
-    }
 
     [role="button"] {
         cursor: pointer;
