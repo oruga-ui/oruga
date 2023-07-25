@@ -33,10 +33,6 @@ const getStartedItems = [
         text: "Themes",
         link: "/documentation/themes",
     },
-    {
-        text: "Examples",
-        link: "/documentation/#examples",
-    },
 ];
 
 export default defineConfig({
