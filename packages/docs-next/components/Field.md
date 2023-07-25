@@ -66,7 +66,7 @@ title: Field
 
 <div class="theme-orugabase">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/oruga)_
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                  | Default      |
 | ------------------------------ | ------------ |
@@ -82,7 +82,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 </div><div class="theme-orugafull">
 
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/oruga)_
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
 
 | SASS Variable                  | Default      |
 | ------------------------------ | ------------ |
