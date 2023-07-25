@@ -1,5 +1,5 @@
 
-# Customization
+# Customisation
 
 Oruga's superpower is its configurability and its <b>CSS framework agnostic</b> approach. <br />
 Each component can be individually customised and configured by defining specific classes using a <b>class-mapping approach</b>.

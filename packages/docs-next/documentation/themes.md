@@ -77,7 +77,7 @@ This could be the best starting point for creating your own theme if you want to
 
 * The `oruga-full.css` stylesheet provides the full custom Oruga style for each component (the default style for this documentation).
 
-For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customization section"](#customization) if you want to know more about components customization.
+For more info read ["Differences between default and full css"](#differences-between-default-and-full-css) or go to ["Customisation"](/documentation/customisation) if you want to know more about components customisation.
 
 ::: info
 If you use the base stylesheet to browse the documentation, some examples won't work as you expect because sizes, variants and decorations are not included in the minimal Oruga stylesheet. 

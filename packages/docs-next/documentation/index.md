@@ -18,7 +18,7 @@ If you need a component library and want to easily apply your custom styles, Oru
 --- | --- | --- | --- | --- |
 Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
-💅 For more info about components customization, go to [#customization](/documentation/customization).
+💅 For more info about components customisation, go to [#customisation](/documentation/customisation).
 
 🕹 To see Oruga in action, go to [#examples](#examples).
 
