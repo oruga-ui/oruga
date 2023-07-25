@@ -268,7 +268,7 @@ createApp(App)
     .mount('#app')
 ```
 
-See the [theme repository](https://github.com/oruga-ui/theme-bulma) for a detailed documentation.
+See the [theme repository](https://github.com/oruga-ui/theme-bulma) and the [Bulma documenation](https://bulma.io/documentation/) for a detailed documentation.
 
 ## Bootstrap Theme
 
@@ -292,7 +292,7 @@ createApp(App)
     .mount('#app')
 ```
 
-See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) for a detailed documentation.
+See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the [Bootstrap documentation](https://getbootstrap.com/docs/) for a detailed documentation.
 
 ## Global Theme Variables
 
