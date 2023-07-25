@@ -3,14 +3,14 @@
         "label": "Oruga Base",
         "key": "theme-orugabase",
         "path": "../oruga/src",
-        "git": "https://github.com/oruga-ui/oruga",
+        "git": "https://github.com/oruga-ui/theme-oruga",
         "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },
     {
         "label": "Oruga Full",
         "key": "theme-orugafull",
         "path": "../oruga/src",
-        "git": "https://github.com/oruga-ui/oruga",
+        "git": "https://github.com/oruga-ui/theme-oruga",
         "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },
     {

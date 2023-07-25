@@ -47,6 +47,8 @@ const getComponent = (filename) => {
     return path.basename(filename).replace(/\.vue$/, "");
 };
 
+createThemeDocs();
+
 module.exports = {
     componentsRoot: `../oruga-next/src/components`,
     components: "**/[A-Z]*.vue",
@@ -202,7 +204,7 @@ function tmplProps(props, name) {
 
 function tmplThemeStyle(config, name) {
     const renderThemeVariables = (theme) => {
-        const noStyle = `<p> The theme does not have any custom variables for this component. </p>`;
+        const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
         const componentPath = `${theme.path}/scss/components/${name}`;
         if (!fs.existsSync(componentPath)) return noStyle;
         const cssFile = path.resolve(config.cwd, componentPath);
@@ -248,4 +250,34 @@ ${renderThemeVariables(theme)}
 </div>`,
 ).join("")}
 `;
+}
+
+
+function createThemeDocs(){        
+    THEMES.map((theme) => {
+        let componentPath = `${theme.path}/scss/utils/_variables.scss`;
+        if (!fs.existsSync(componentPath))
+            componentPath = `${theme.path}/scss/utilities/_variables.scss`;
+        if (!fs.existsSync(componentPath)) 
+            componentPath = `${theme.path}/scss/components/utils/_variables.scss`;
+        if (!fs.existsSync(componentPath)) {
+            const noStyle = `<p>The theme does not have any custom variables for this component.</p>`;
+            fs.writeFileSync(`./themes/${theme.key}.md`, noStyle);
+            return;
+        }
+        const cssFile = path.resolve(componentPath);
+        const content = fs.readFileSync(cssFile, "utf8");
+        const file = content
+                    // split file 
+                    .split(/(\r\n|\n|\r)/gm)
+                    // remove commands and empty rows
+                    .filter((d) => !d.match(/(?:@use|\*{2}|\*{1}\s|\/\*)/) && !d.match(/(\r\n|\n|\r)/));
+        // remove starting empty lines
+        while(file[0] == "")
+            file.shift();
+        // remove ending empty lines
+        while(file[file.length-1] == "")
+            file.pop();
+        fs.writeFileSync(`./themes/variables-${theme.key}.scss`, file.join("\n"));
+})
 }
