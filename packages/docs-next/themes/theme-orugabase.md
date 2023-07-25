@@ -1,3 +1,8 @@
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_ 
+
+```scss
 $base-font-size: 1rem !default;
 
 $base-border-radius: 4px !default;
@@ -56,3 +61,7 @@ $colors: (
     "success" : ($success, $success-invert),
     "info" : ($info, $info-invert)
 ) !default;
+```
+
+See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/)
+</div>

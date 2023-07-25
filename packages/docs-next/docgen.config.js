@@ -278,6 +278,19 @@ function createThemeDocs(){
         // remove ending empty lines
         while(file[file.length-1] == "")
             file.pop();
-        fs.writeFileSync(`./themes/variables-${theme.key}.scss`, file.join("\n"));
+
+const md = 
+`<div class="${theme.key}">
+
+> Current theme ➜ _[${theme.label}](${theme.git})_ 
+
+\`\`\`scss
+${file.join("\n")}
+\`\`\`
+
+See ➜ 📄 [SCSS files](${theme.src}/scss/)
+</div>
+`;
+        fs.writeFileSync(`./themes/${theme.key}.md`, md);
 })
 }

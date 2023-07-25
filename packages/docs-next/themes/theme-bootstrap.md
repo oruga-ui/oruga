@@ -1,3 +1,8 @@
+<div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_ 
+
+```scss
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 $easing: ease !default;
@@ -24,3 +29,7 @@ $colors: map.merge($colors, $custom-colors);
 // - $theme-colors-rgb            -> var(--#{$prefix}#{$name}-rgb);
 // - $theme-colors-bg-subtle      -> var(--#{$prefix}#{$name}-bg-subtle)
 // - $theme-colors-border-subtle  -> var(--#{$prefix}#{$name}-border-subtle)
+```
+
+See ➜ 📄 [SCSS files](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/)
+</div>

@@ -347,39 +347,10 @@ See the [theme repository](https://github.com/oruga-ui/theme-bootstrap) and the 
 Change the active theme in the navigation bar to see other theme-specific global variables.
 :::
 
-<div class="theme-bootstrap">
+<!--@include: ./../themes/theme-orugabase.md-->
 
-> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_ 
+<!--@include: ./../themes/theme-orugafull.md-->
 
-<<< @/themes/variables-theme-bootstrap.scss{scss}
+<!--@include: ./../themes/theme-bulma.md-->
 
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/utils/_variables.scss)
-</div>
-
-<div class="theme-bulma">
-
-> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_ 
-
-<<< @/themes/variables-theme-bulma.scss{scss}
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/master/src/assets/scss/components/utils/_variables.scss)
-</div>
-
-
-<div class="theme-orugabase">
-
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_ 
-
-<<< @/themes/variables-theme-orugabase.scss{scss}
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/utils/_variables.scss)
-</div>
-
-<div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_ 
-
-<<< @/themes/variables-theme-orugafull.scss{scss}
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/utils/_variables.scss)
-</div>
+<!--@include: ./../themes/theme-bootstrap.md-->
