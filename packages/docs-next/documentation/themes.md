@@ -4,7 +4,7 @@
 # Themes
 
 Because Oruga doesn't come with any CSS by default, we would like to provide you with a variety of ready-to-use <b>Themes</b>.
-Themes provide the <b>CSS styling for the components</b>. They can build on existing CSS frameworks/libraries or be completely lightweight and dependency free.
+A theme provide the <b>CSS styling for the components</b>. They can build on existing CSS frameworks/libraries or be completely lightweight and dependency free.
 A theme comes as a <b>separate package</b>, which you can install and change completely at will. 
 Themes that build on top of an existing CSS framework usually come with a theme-specific global Oruga Config object.
 
