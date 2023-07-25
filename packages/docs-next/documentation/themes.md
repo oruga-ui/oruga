@@ -70,7 +70,23 @@ or a specific component variable, such as button icon width
 
 ## Oruga Theme
 
-The default _Oruga Theme_ provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the default class configuration.
+The default [Oruga Theme](https://github.com/oruga-ui/theme-oruga) provides some ready-to-use and completely dependency-free styling and comes with two different versions, `oruga.css` and `oruga-full.css`. This theme uses the default class configuration.
+
+::: code-group
+
+```bash [Npm]
+npm install @oruga-ui/theme-oruga
+```
+
+```bash [Yarn]
+yarn add @oruga-ui/theme-oruga
+```
+
+```html [Cdn]
+<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.css" />
+```
+
+:::
 
 * The minimal `oruga.css` provides a lightweight stylesheet that contains only minimal and essential CSS rules for Oruga components such as display, position, z-index and other basic attributes. 
 This could be the best starting point for creating your own theme if you want to do a full customisation.
@@ -251,6 +267,21 @@ In the Oruga documentation you'll find a special note (🔍) in the `Class Prop 
 
 The [Bulma Theme](https://github.com/oruga-ui/theme-bulma) provides a customisation of the Oruga components with the [Bulma CSS framework](https://bulma.io/).
 
+::: code-group
+
+```bash [Npm]
+npm install @oruga-ui/theme-bulma
+```
+
+```bash [Yarn]
+yarn add @oruga-ui/theme-bulma
+```
+
+```html [Cdn]
+<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-bulma/dist/bulma.css" />
+```
+
+:::
 The theme comes with its own Bulma-based class mapping configuration and some additional component styling that you have to import:
 
 ```js
@@ -272,8 +303,24 @@ See the [theme repository](https://github.com/oruga-ui/theme-bulma) and the [Bul
 
 ## Bootstrap Theme
 
-Bootstrap theme 
 The [Bootstrap Theme](https://github.com/oruga-ui/theme-bootstrap) provides a customisation of the Oruga components with [Bootstrap](https://getbootstrap.com/).
+
+::: code-group
+
+```bash [Npm]
+npm install @oruga-ui/theme-bootstrap
+```
+
+```bash [Yarn]
+yarn add @oruga-ui/theme-bootstrap
+```
+
+```html [Cdn]
+<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-bootstrap/dist/bootstrap.css" />
+```
+
+:::
+
 
 The theme comes with its own Bootstrap-based class mapping configuration and some additional component styling that you have to import:
 

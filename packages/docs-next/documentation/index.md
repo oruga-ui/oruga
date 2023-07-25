@@ -35,7 +35,6 @@ yarn add @oruga-ui/oruga-next
 ```
 
 ```html [Cdn]
-<link rel="stylesheet" href="https://unpkg.com/@oruga-ui/oruga-next/dist/oruga.min.css" />
 <script src="https://unpkg.com/@oruga-ui/oruga-next/dist/oruga.min.js"></script>
 ```
 
