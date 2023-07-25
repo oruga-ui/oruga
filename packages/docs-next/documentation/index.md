@@ -6,7 +6,10 @@ Therefore, it <b>doesn't provide a grid system or CSS utilities</b>, but you can
 Oruga provides you with a set of functional components, so you can <b>focus only on the UI/UX aspects</b> of your application 
 and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
-If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
+
+If you need a component library and want to easily apply your [custom styles](/documentation/customisation), Oruga is the library for you! 🐛
+
+In addition, if you don't want to style everything yourself, we've created several [themes](/documentation/themes) to provide you with a variety of ready-to-use styles. 🦋
 
 <Carbon />
 
@@ -62,10 +65,10 @@ createApp(...)
 
 ### Styling
 
-Oruga comes without any styling by default, but you can add styles by simply adding an additional theme package.
-For more details and a list of existing themes, see [#themes](/documentation/themes).
+Oruga comes without any styling by default, but you can easily add your own styles or an additional theme package.
+For more details and a list of available themes, see [#customisation](/documentation/customisation) and [#themes](/documentation/themes).
 
-The Oruga <i>default theme</i> can be added by:
+The default **Oruga theme** can be added by:
 
 ::: code-group
 
