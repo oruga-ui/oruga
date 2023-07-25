@@ -62,6 +62,9 @@ export default defineConfig({
     themeConfig: {
         logo: "/logo.png",
         outline: [0, 3],
+        search: {
+            provider: "local",
+        },
         socialLinks: [
             { icon: "discord", link: "https://discord.gg/RuKuBYN" },
             { icon: "twitter", link: "https://twitter.com/oruga_ui" },
