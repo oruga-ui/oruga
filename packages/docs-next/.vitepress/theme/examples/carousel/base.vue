@@ -9,13 +9,15 @@ const carousels = [
 </script>
 
 <template>
-    <o-carousel>
-        <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
-            <section
-                class="ex-slide"
-                :style="{ 'background-color': carousel.color }">
-                <h1>{{ carousel.text }}</h1>
-            </section>
-        </o-carousel-item>
-    </o-carousel>
+    <section>
+        <o-carousel>
+            <o-carousel-item v-for="(carousel, i) in carousels" :key="i">
+                <article
+                    class="ex-slide"
+                    :style="{ 'background-color': carousel.color }">
+                    <h1>{{ carousel.text }}</h1>
+                </article>
+            </o-carousel-item>
+        </o-carousel>
+    </section>
 </template>

@@ -22,19 +22,18 @@ const currentMenu = ref({ icon: "users", text: "People" });
             <o-switch v-model="isScrollable">Scrollable</o-switch>
         </o-field>
 
-        <br />
-
         <o-dropdown
             v-model="currentMenu"
             :scrollable="isScrollable"
             :max-height="maxHeight"
             aria-role="list">
             <template #trigger>
-                <o-button variant="primary" type="button">
-                    <o-icon :icon="currentMenu.icon" />
-                    <span>{{ currentMenu.text }}</span>
-                    <o-icon icon="caret-down" />
-                </o-button>
+                <o-button
+                    variant="primary"
+                    type="button"
+                    :label="currentMenu.text"
+                    :icon-left="currentMenu.icon"
+                    icon-right="caret-down" />
             </template>
 
             <o-dropdown-item
@@ -44,9 +43,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
                 aria-role="listitem">
                 <div class="media">
                     <o-icon class="media-left" :icon="menu.icon" />
-                    <div class="media-content">
-                        <span>{{ menu.text }}</span>
-                    </div>
+                    <div class="media-content">{{ menu.text }}</div>
                 </div>
             </o-dropdown-item>
         </o-dropdown>

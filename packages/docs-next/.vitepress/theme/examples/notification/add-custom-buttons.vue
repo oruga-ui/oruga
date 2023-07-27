@@ -11,6 +11,7 @@
                 </span>
                 <o-button
                     label="Cancel"
+                    variant="primary"
                     size="small"
                     @click="closeNotification" />
             </div>

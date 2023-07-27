@@ -51,7 +51,6 @@ function getMoreAsyncData() {
 
 <template>
     <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
         <o-field label="Find a movie">
             <o-autocomplete
                 :data="data"
@@ -88,6 +87,7 @@ function getMoreAsyncData() {
                 </template>
             </o-autocomplete>
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>
 

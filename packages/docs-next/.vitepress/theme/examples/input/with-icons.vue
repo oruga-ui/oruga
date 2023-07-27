@@ -26,6 +26,14 @@ function clearIconClick() {
 
         <o-field>
             <o-input
+                placeholder="Search..."
+                type="search"
+                icon-right="search"
+                icon-right-clickable />
+        </o-field>
+
+        <o-field>
+            <o-input
                 v-model="email"
                 placeholder="Email"
                 type="email"

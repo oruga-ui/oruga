@@ -81,8 +81,6 @@ const columns = ref([
             </o-table-column>
         </o-table>
 
-        <hr />
-
         <p>
             You can debounce search filter to avoid multiple filtering when
             typing.

@@ -9,7 +9,7 @@ const locale = ref(); // Browser locale
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped>
             <o-field>
                 <o-switch v-model="showWeekNumber">Show week number</o-switch>
             </o-field>
@@ -42,6 +42,7 @@ const locale = ref(); // Browser locale
                 </o-select>
             </o-field>
         </o-field>
+
         <o-field label="Select datetime">
             <o-datetimepicker
                 rounded
@@ -49,8 +50,7 @@ const locale = ref(); // Browser locale
                 icon="calendar"
                 :locale="locale"
                 :datepicker="{ showWeekNumber }"
-                :timepicker="{ enableSeconds, hourFormat }">
-            </o-datetimepicker>
+                :timepicker="{ enableSeconds, hourFormat }" />
         </o-field>
     </section>
 </template>

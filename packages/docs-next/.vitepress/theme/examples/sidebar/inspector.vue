@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const position = ref("static");
+
 const open = ref(false);
 const inspectData = [
     {
@@ -151,42 +152,41 @@ const inspectData = [
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <div class="sidebar-page">
-            <section v-if="position === 'static'" class="sidebar-layout">
-                <o-sidebar v-bind="props" position="static" open>
-                    <img
-                        width="128"
-                        src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
-                        alt="Lightweight UI components for Vue.js" />
-                    <section style="padding: 1em">
-                        <h5>Example 1</h5>
-                        <h5>Example 2</h5>
-                        <h5>Example 3</h5>
-                        <h5>Example 4</h5>
-                        <h5>Example 5</h5>
-                    </section>
-                </o-sidebar>
+        <o-sidebar
+            v-if="position === 'static'"
+            v-bind="props"
+            position="static"
+            open>
+            <img
+                width="128"
+                src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+                alt="Lightweight UI components for Vue.js" />
+            <section style="padding: 1em">
+                <h5>Example 1</h5>
+                <h5>Example 2</h5>
+                <h5>Example 3</h5>
+                <h5>Example 4</h5>
+                <h5>Example 5</h5>
             </section>
-            <section v-if="position !== 'static'" class="sidebar-layout">
-                <o-sidebar
-                    v-bind="props"
-                    v-model:open="open"
-                    :position="position"
-                    variant="primary"
-                    style="--oruga-sidebar-zindex: 50">
-                    <img
-                        width="128"
-                        src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
-                        alt="Lightweight UI components for Vue.js" />
-                    <section style="padding: 1em">
-                        <h5>Example 1</h5>
-                        <h5>Example 2</h5>
-                        <h5>Example 3</h5>
-                        <h5>Example 4</h5>
-                        <h5>Example 5</h5>
-                    </section>
-                </o-sidebar>
+        </o-sidebar>
+        <o-sidebar
+            v-if="position !== 'static'"
+            v-bind="props"
+            v-model:open="open"
+            :position="position"
+            variant="primary"
+            root-class="fixed">
+            <img
+                width="128"
+                src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
+                alt="Lightweight UI components for Vue.js" />
+            <section style="padding: 1em">
+                <h5>Example 1</h5>
+                <h5>Example 2</h5>
+                <h5>Example 3</h5>
+                <h5>Example 4</h5>
+                <h5>Example 5</h5>
             </section>
-        </div>
+        </o-sidebar>
     </inspector-wrapper>
 </template>

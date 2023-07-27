@@ -30,7 +30,11 @@
         </o-field>
 
         <o-field horizontal>
-            <o-button variant="primary" label="Send message" />
+            <o-button
+                variant="primary"
+                icon-left="envelope"
+                label="Send message"
+                outlined />
         </o-field>
     </section>
 </template>

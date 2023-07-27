@@ -16,24 +16,30 @@ import TypesCode from "./types.vue?raw";
 
 import Position from "./position.vue";
 import PositionCode from "./position.vue?raw";
+
+import Sizes from "./sizes.vue";
+import SizesCode from "./sizes.vue?raw";
 </script>
 
 <template>
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
 
-    <h3 id="custom">Custom header</h3>
-    <ExampleViewer :component="CustomHeader" :code="CustomHeaderCode" />
-
-    <h3 id="long">Long header</h3>
-    <ExampleViewer :component="LongHeader" :code="LongHeaderCode" />
-
-    <h3 id="vertical">Vertical</h3>
-    <ExampleViewer :component="Vertical" :code="VerticalCode" />
-
     <h3 id="types">Types</h3>
     <ExampleViewer :component="Types" :code="TypesCode" />
 
     <h3 id="position">Position</h3>
     <ExampleViewer :component="Position" :code="PositionCode" />
+
+    <h3 id="sizes">Sizes</h3>
+    <ExampleViewer :component="Sizes" :code="SizesCode" />
+
+    <h3 id="vertical">Vertical</h3>
+    <ExampleViewer :component="Vertical" :code="VerticalCode" />
+
+    <h3 id="custom">Custom header</h3>
+    <ExampleViewer :component="CustomHeader" :code="CustomHeaderCode" />
+
+    <h3 id="long">Long header</h3>
+    <ExampleViewer :component="LongHeader" :code="LongHeaderCode" />
 </template>

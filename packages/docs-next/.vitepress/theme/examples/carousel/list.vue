@@ -46,42 +46,41 @@ const items = [
 
 <template>
     <section>
-        <div class="example-component">
-            <o-field grouped group-multiline>
-                <o-field>
-                    <o-switch v-model="settings.arrow">Arrow</o-switch>
-                </o-field>
-                <o-field>
-                    <o-switch
-                        v-model="settings.arrowHover"
-                        :disabled="!settings.arrow">
-                        Arrow on hover
-                    </o-switch>
-                </o-field>
-                <o-field>
-                    <o-switch v-model="settings.hasDrag">Drag event</o-switch>
-                </o-field>
-                <o-field>
-                    <o-switch v-model="settings.repeat">Repeat</o-switch>
-                </o-field>
+        <o-field grouped>
+            <o-field>
+                <o-switch v-model="settings.arrow">Arrow</o-switch>
             </o-field>
-            <o-field grouped>
-                <o-field label="Items to Show">
-                    <o-input
-                        v-model.number="settings.itemsToShow"
-                        type="number"
-                        min="1"
-                        :max="items.length" />
-                </o-field>
-                <o-field label="Items to List">
-                    <o-input
-                        v-model.number="settings.itemsToList"
-                        type="number"
-                        min="1"
-                        :max="items.length - 1" />
-                </o-field>
+            <o-field>
+                <o-switch
+                    v-model="settings.arrowHover"
+                    :disabled="!settings.arrow">
+                    Arrow on hover
+                </o-switch>
             </o-field>
-        </div>
+            <o-field>
+                <o-switch v-model="settings.hasDrag">Drag event</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="settings.repeat">Repeat</o-switch>
+            </o-field>
+        </o-field>
+        <o-field grouped>
+            <o-field label="Items to Show">
+                <o-input
+                    v-model.number="settings.itemsToShow"
+                    type="number"
+                    min="1"
+                    :max="items.length" />
+            </o-field>
+            <o-field label="Items to List">
+                <o-input
+                    v-model.number="settings.itemsToList"
+                    type="number"
+                    min="1"
+                    :max="items.length - 1" />
+            </o-field>
+        </o-field>
+
         <o-carousel v-model="carousel" v-bind="settings">
             <o-carousel-item v-for="(item, i) in items" :key="i">
                 <img :src="item.image" />

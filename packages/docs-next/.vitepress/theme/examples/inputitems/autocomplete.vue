@@ -400,6 +400,6 @@ const openOnFocus = ref(false);
                 placeholder="Add an item"
                 @typing="getFilteredTags" />
         </o-field>
-        <p class="content"><b>Items:</b> {{ tags }}</p>
+        <p><b>Items:</b> {{ tags }}</p>
     </section>
 </template>

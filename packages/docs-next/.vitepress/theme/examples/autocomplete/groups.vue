@@ -28,7 +28,6 @@ const filteredDataObj = computed(() =>
 
 <template>
     <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
         <o-field label="Find a food">
             <o-autocomplete
                 v-model="name"
@@ -39,5 +38,6 @@ const filteredDataObj = computed(() =>
                 field="user.first_name"
                 @select="(option) => (selected = option)" />
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

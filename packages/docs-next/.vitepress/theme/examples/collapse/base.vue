@@ -2,9 +2,10 @@
     <section>
         <o-collapse :open="false" aria-id="contentIdForA11y1">
             <template #trigger>
-                <o-button variant="primary" aria-controls="contentIdForA11y1">
-                    Click me!
-                </o-button>
+                <o-button
+                    label="Click me!"
+                    variant="primary"
+                    aria-controls="contentIdForA11y1" />
             </template>
             <div class="notification">
                 <h3>Subtitle</h3>

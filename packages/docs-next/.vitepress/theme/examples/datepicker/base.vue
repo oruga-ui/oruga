@@ -8,7 +8,7 @@ const locale = ref(); // Browser locale
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped>
             <o-field>
                 <o-select v-model="locale" placeholder="Locale">
                     <option :value="undefined"></option>
@@ -30,6 +30,7 @@ const locale = ref(); // Browser locale
                 <o-switch v-model="showWeekNumber">Show week number</o-switch>
             </o-field>
         </o-field>
+
         <o-field label="Select a date">
             <o-datepicker
                 v-model="selected"
@@ -37,8 +38,8 @@ const locale = ref(); // Browser locale
                 :locale="locale"
                 placeholder="Click to select..."
                 icon="calendar"
-                trap-focus>
-            </o-datepicker>
+                trap-focus />
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

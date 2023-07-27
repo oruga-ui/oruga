@@ -176,192 +176,6 @@ const tableData = [
         date: "2016/04/12 00:05:35",
         gender: "Male",
     },
-    {
-        id: 30,
-        user: { first_name: "Alan", last_name: "Mendoza" },
-        date: "2016/04/22 10:48:02",
-        gender: "Male",
-    },
-    {
-        id: 31,
-        user: { first_name: "James", last_name: "Davis" },
-        date: "2017/01/16 15:17:03",
-        gender: "Male",
-    },
-    {
-        id: 32,
-        user: { first_name: "Scott", last_name: "Welch" },
-        date: "2016/10/04 23:31:51",
-        gender: "Male",
-    },
-    {
-        id: 33,
-        user: { first_name: "Mildred", last_name: "Myers" },
-        date: "2016/11/23 13:46:18",
-        gender: "Female",
-    },
-    {
-        id: 34,
-        user: { first_name: "Victor", last_name: "Martinez" },
-        date: "2016/04/06 17:05:07",
-        gender: "Male",
-    },
-    {
-        id: 35,
-        user: { first_name: "Susan", last_name: "Medina" },
-        date: "2016/12/09 10:33:37",
-        gender: "Female",
-    },
-    {
-        id: 36,
-        user: { first_name: "Judy", last_name: "Long" },
-        date: "2016/07/26 16:19:04",
-        gender: "Female",
-    },
-    {
-        id: 37,
-        user: { first_name: "Joan", last_name: "Myers" },
-        date: "2016/09/22 04:55:54",
-        gender: "Female",
-    },
-    {
-        id: 38,
-        user: { first_name: "Rachel", last_name: "Gonzales" },
-        date: "2016/07/15 13:56:38",
-        gender: "Female",
-    },
-    {
-        id: 39,
-        user: { first_name: "Roger", last_name: "Hunt" },
-        date: "2016/08/14 10:43:11",
-        gender: "Male",
-    },
-    {
-        id: 40,
-        user: { first_name: "Dorothy", last_name: "Howard" },
-        date: "2016/06/19 05:34:49",
-        gender: "Female",
-    },
-    {
-        id: 41,
-        user: { first_name: "Eugene", last_name: "Lynch" },
-        date: "2016/12/24 08:19:24",
-        gender: "Male",
-    },
-    {
-        id: 42,
-        user: { first_name: "Kathy", last_name: "Webb" },
-        date: "2017/04/01 21:09:05",
-        gender: "Female",
-    },
-    {
-        id: 43,
-        user: { first_name: "Antonio", last_name: "White" },
-        date: "2017/02/10 06:51:20",
-        gender: "Male",
-    },
-    {
-        id: 44,
-        user: { first_name: "Louis", last_name: "Spencer" },
-        date: "2016/10/08 02:20:22",
-        gender: "Male",
-    },
-    {
-        id: 45,
-        user: { first_name: "Andrea", last_name: "Marshall" },
-        date: "2016/09/04 10:59:57",
-        gender: "Female",
-    },
-    {
-        id: 46,
-        user: { first_name: "Eugene", last_name: "Sims" },
-        date: "2017/03/15 06:39:48",
-        gender: "Male",
-    },
-    {
-        id: 47,
-        user: { first_name: "Mildred", last_name: "Gibson" },
-        date: "2016/04/18 06:43:54",
-        gender: "Female",
-    },
-    {
-        id: 48,
-        user: { first_name: "Joan", last_name: "Arnold" },
-        date: "2016/12/16 04:52:23",
-        gender: "Female",
-    },
-    {
-        id: 49,
-        user: { first_name: "Jesse", last_name: "Schmidt" },
-        date: "2016/06/11 02:44:33",
-        gender: "Male",
-    },
-    {
-        id: 50,
-        user: { first_name: "David", last_name: "Frazier" },
-        date: "2017/02/15 21:46:30",
-        gender: "Male",
-    },
-    {
-        id: 51,
-        user: { first_name: "Nicholas", last_name: "Howell" },
-        date: "2016/11/01 15:08:31",
-        gender: "Male",
-    },
-    {
-        id: 52,
-        user: { first_name: "Douglas", last_name: "Chapman" },
-        date: "2017/02/08 03:33:24",
-        gender: "Male",
-    },
-    {
-        id: 53,
-        user: { first_name: "Bruce", last_name: "Simmons" },
-        date: "2016/07/14 12:11:17",
-        gender: "Male",
-    },
-    {
-        id: 54,
-        user: { first_name: "Antonio", last_name: "George" },
-        date: "2016/11/07 19:12:55",
-        gender: "Male",
-    },
-    {
-        id: 55,
-        user: { first_name: "Chris", last_name: "Marshall" },
-        date: "2016/07/03 12:11:45",
-        gender: "Male",
-    },
-    {
-        id: 56,
-        user: { first_name: "Ashley", last_name: "Hudson" },
-        date: "2016/10/14 21:08:05",
-        gender: "Female",
-    },
-    {
-        id: 57,
-        user: { first_name: "Alan", last_name: "Edwards" },
-        date: "2017/03/22 21:10:25",
-        gender: "Male",
-    },
-    {
-        id: 58,
-        user: { first_name: "George", last_name: "Clark" },
-        date: "2016/04/28 03:15:05",
-        gender: "Male",
-    },
-    {
-        id: 59,
-        user: { first_name: "Frank", last_name: "Porter" },
-        date: "2016/09/08 00:48:14",
-        gender: "Male",
-    },
-    {
-        id: 60,
-        user: { first_name: "Christopher", last_name: "Palmer" },
-        date: "2016/05/24 08:58:12",
-        gender: "Male",
-    },
 ];
 
 const isPaginated = ref(true);
@@ -371,47 +185,69 @@ const sortIcon = ref("arrow-up");
 const sortIconSize = ref("small");
 const defaultSortDirection = ref("asc");
 const currentPage = ref(1);
-const perPage = ref(5);
+const perPage = ref(3);
 const data = ref(tableData);
 </script>
 
 <template>
     <section>
         <o-field grouped group-multiline>
-            <o-select v-model="defaultSortDirection">
-                <option value="asc">Default sort direction: ASC</option>
-                <option value="desc">Default sort direction: DESC</option>
-            </o-select>
-            <o-select v-model="perPage" :disabled="!isPaginated">
-                <option value="5">5 per page</option>
-                <option value="10">10 per page</option>
-                <option value="15">15 per page</option>
-                <option value="20">20 per page</option>
-            </o-select>
-            <o-button :disabled="!isPaginated" @click="currentPage = 2">
-                Set page to 2
-            </o-button>
-            <o-switch v-model="isPaginated">Paginated</o-switch>
-            <o-switch v-model="isPaginationSimple" :disabled="!isPaginated">
-                Simple pagination
-            </o-switch>
-            <o-select v-model="paginationPosition" :disabled="!isPaginated">
-                <option value="bottom">bottom pagination</option>
-                <option value="top">top pagination</option>
-                <option value="both">both</option>
-            </o-select>
-            <o-select v-model="sortIcon">
-                <option value="arrow-up">Arrow sort icon</option>
-                <option value="caret-up">Caret sort icon</option>
-                <option value="chevron-up">Chevron sort icon</option>
-            </o-select>
-            <o-select v-model="sortIconSize">
-                <option value="small">Small sort icon</option>
-                <option value="">Regular sort icon</option>
-                <option value="medium">Medium sort icon</option>
-                <option value="large">Large sort icon</option>
-            </o-select>
+            <o-field>
+                <o-switch v-model="isPaginated">Paginated</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="isPaginationSimple" :disabled="!isPaginated">
+                    Simple pagination
+                </o-switch>
+            </o-field>
+            <o-field>
+                <o-select v-model="defaultSortDirection">
+                    <option value="asc">Default sort direction: ASC</option>
+                    <option value="desc">Default sort direction: DESC</option>
+                </o-select>
+            </o-field>
+            <o-field>
+                <o-select v-model="perPage" :disabled="!isPaginated">
+                    <option value="3">3 per page</option>
+                    <option value="5">5 per page</option>
+                    <option value="10">10 per page</option>
+                    <option value="15">15 per page</option>
+                    <option value="20">20 per page</option>
+                </o-select>
+            </o-field>
+            <o-field>
+                <o-select v-model="paginationPosition" :disabled="!isPaginated">
+                    <option value="bottom">bottom pagination</option>
+                    <option value="top">top pagination</option>
+                    <option value="both">both</option>
+                </o-select>
+            </o-field>
+            <o-field>
+                <o-select v-model="sortIcon">
+                    <option value="arrow-up">Arrow sort icon</option>
+                    <option value="caret-up">Caret sort icon</option>
+                    <option value="chevron-up">Chevron sort icon</option>
+                </o-select>
+            </o-field>
+            <o-field>
+                <o-select v-model="sortIconSize">
+                    <option value="small">Small sort icon</option>
+                    <option value="">Regular sort icon</option>
+                    <option value="medium">Medium sort icon</option>
+                    <option value="large">Large sort icon</option>
+                </o-select>
+            </o-field>
+            <o-field>
+                <o-button
+                    variant="info"
+                    :disabled="!isPaginated"
+                    @click="currentPage = 2">
+                    Set page to 2
+                </o-button>
+            </o-field>
         </o-field>
+
+        <p><b>Page:</b> {{ currentPage }}</p>
 
         <o-table
             v-model:current-page="currentPage"

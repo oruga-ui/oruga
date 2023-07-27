@@ -13,6 +13,6 @@ const tags = ref(["Pistoia", "Valdinievole"]);
                 placeholder="Add an item"
                 aria-close-label="Delete this item" />
         </o-field>
-        <p class="content"><b>Items:</b> {{ tags }}</p>
+        <p><b>Items:</b> {{ tags }}</p>
     </section>
 </template>

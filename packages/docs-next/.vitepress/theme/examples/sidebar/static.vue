@@ -7,8 +7,8 @@ const reduce = ref(false);
 </script>
 
 <template>
-    <div class="sidebar-page">
-        <section class="sidebar-layout">
+    <section class="sidebar-page">
+        <div class="sidebar-layout">
             <o-sidebar
                 position="static"
                 :mobile="mobile"
@@ -27,38 +27,37 @@ const reduce = ref(false);
                     <h5>Example 5</h5>
                 </section>
             </o-sidebar>
+        </div>
 
-            <div style="padding: 1em">
-                <o-field>
-                    <o-switch v-model="reduce">Reduced</o-switch>
-                </o-field>
-                <o-field>
-                    <o-switch v-model="expandOnHover">Expand on hover</o-switch>
-                </o-field>
-                <br />
-                <o-field label="Mobile Layout">
-                    <o-select v-model="mobile">
-                        <option :value="null"></option>
-                        <option value="reduced">Reduced</option>
-                        <option value="hidden">Hidden</option>
-                        <option value="fullwidth">Fullwidth</option>
-                    </o-select>
-                </o-field>
-            </div>
-        </section>
-    </div>
+        <div class="sidebar-layout">
+            <o-field>
+                <o-switch v-model="reduce">Reduced</o-switch>
+            </o-field>
+            <o-field>
+                <o-switch v-model="expandOnHover">Expand on hover</o-switch>
+            </o-field>
+            <br />
+            <o-field label="Mobile Layout">
+                <o-select v-model="mobile">
+                    <option :value="null"></option>
+                    <option value="reduced">Reduced</option>
+                    <option value="hidden">Hidden</option>
+                    <option value="fullwidth">Fullwidth</option>
+                </o-select>
+            </o-field>
+        </div>
+    </section>
 </template>
 
 <style lang="scss" scoped>
 .sidebar-page {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 100%;
-}
-.sidebar-layout {
-    display: flex;
     flex-direction: row;
-    min-height: 100%;
+    width: 100%;
+
+    .sidebar-layout {
+        padding: 1rem;
+        flex-basis: 50%;
+    }
 }
 </style>

@@ -13,12 +13,13 @@ const maxDate = new Date(
 </script>
 
 <template>
-    <o-field label="Select a date">
-        <o-datepicker
-            placeholder="Click to select..."
-            icon="calendar"
-            :min-date="minDate"
-            :max-date="maxDate">
-        </o-datepicker>
-    </o-field>
+    <section>
+        <o-field label="Select a date">
+            <o-datepicker
+                placeholder="Click to select..."
+                icon="calendar"
+                :min-date="minDate"
+                :max-date="maxDate" />
+        </o-field>
+    </section>
 </template>

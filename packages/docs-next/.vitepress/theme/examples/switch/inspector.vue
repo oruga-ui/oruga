@@ -1,9 +1,3 @@
-<template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-switch v-bind="props" v-model="checkValue">Switch</o-switch>
-    </inspector-wrapper>
-</template>
-
 <script setup>
 import { ref } from "vue";
 
@@ -91,3 +85,9 @@ const inspectData = [
     },
 ];
 </script>
+
+<template>
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-switch v-bind="props" v-model="checkValue">Switch</o-switch>
+    </inspector-wrapper>
+</template>

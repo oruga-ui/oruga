@@ -64,9 +64,7 @@ onMounted(() => {
 
 .odocs-example .odocs-spaced > * {
     margin-bottom: 0.5rem;
-    &:not(:last-child) {
-        margin-right: 0.5rem;
-    }
+    margin-right: 0.5rem;
 }
 
 .odocs-panel {

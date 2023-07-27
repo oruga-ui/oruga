@@ -1,22 +1,6 @@
-<template>
-    <inspector-wrapper
-        v-slot="props"
-        :inspect-data="inspectData"
-        :subitem="subitem">
-        <o-slider v-bind="props" :min="1" :max="10" :value="4">
-            <o-slider-tick
-                v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-                :key="val"
-                v-bind="props"
-                :value="val">
-                {{ val }}
-            </o-slider-tick>
-        </o-slider>
-    </inspector-wrapper>
-</template>
-
 <script setup>
 const subitem = "slidertick";
+
 const inspectData = [
     {
         class: "rootClass",
@@ -95,3 +79,20 @@ const inspectData = [
     },
 ];
 </script>
+
+<template>
+    <inspector-wrapper
+        v-slot="props"
+        :inspect-data="inspectData"
+        :subitem="subitem">
+        <o-slider v-bind="props" :min="1" :max="10" :value="4">
+            <o-slider-tick
+                v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+                :key="val"
+                v-bind="props"
+                :value="val">
+                {{ val }}
+            </o-slider-tick>
+        </o-slider>
+    </inspector-wrapper>
+</template>

@@ -79,9 +79,7 @@ const columns = ref([
             <span>Clear selected</span>
         </o-button>
 
-        <p>
-            {{ selected }}
-        </p>
+        <p><b>Selection:</b> {{ selected }}</p>
 
         <o-table v-model:selected="selected" :data="data" focusable>
             <o-table-column

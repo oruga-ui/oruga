@@ -7,6 +7,9 @@ import MultipleCode from "./multiple.vue?raw";
 
 import Scrollable from "./scrollable.vue";
 import ScrollableCode from "./scrollable.vue?raw";
+
+import Position from "./position.vue";
+import PositionCode from "./position.vue?raw";
 </script>
 
 <template>
@@ -18,4 +21,7 @@ import ScrollableCode from "./scrollable.vue?raw";
 
     <h3 id="scrollable">Scrollable</h3>
     <ExampleViewer :component="Scrollable" :code="ScrollableCode" />
+
+    <h3 id="position">Position</h3>
+    <ExampleViewer :component="Position" :code="PositionCode" />
 </template>

@@ -56,11 +56,11 @@ const events = [
         <o-field>
             <o-switch v-model="bars">Bars</o-switch>
         </o-field>
+
         <o-datepicker
             v-model="date"
             inline
             :events="events"
-            :indicators="indicators">
-        </o-datepicker>
+            :indicators="indicators" />
     </section>
 </template>

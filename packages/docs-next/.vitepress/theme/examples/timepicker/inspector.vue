@@ -1,16 +1,3 @@
-<template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-field label="Select time">
-            <o-timepicker
-                v-bind="props"
-                ref="timepicker"
-                placeholder="Click to select...">
-                <div>This is the footer</div>
-            </o-timepicker>
-        </o-field>
-    </inspector-wrapper>
-</template>
-
 <script setup>
 function openTimePicker() {
     setTimeout(() => {
@@ -88,6 +75,19 @@ const inspectData = [
     },
 ];
 </script>
+
+<template>
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-field label="Select time">
+            <o-timepicker
+                v-bind="props"
+                ref="timepicker"
+                placeholder="Click to select...">
+                <div>This is the footer</div>
+            </o-timepicker>
+        </o-field>
+    </inspector-wrapper>
+</template>
 
 <style lang="scss">
 .datepicker__table {

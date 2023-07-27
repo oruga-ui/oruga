@@ -6,14 +6,24 @@ const active = ref(true);
 
 <template>
     <section>
-        <o-button label="Toggle" @click="active = !active" />
-        <hr />
+        <o-field>
+            <o-switch v-model="active"> Toggle </o-switch>
+        </o-field>
+
         <div class="odocs-spaced">
-            <o-tooltip label="I'm never closing" :active="active" always>
+            <o-tooltip
+                label="I'm never closing"
+                :active="active"
+                always
+                position="bottom">
                 <o-button label="Always" />
             </o-tooltip>
 
-            <o-tooltip label="Tooltip right" position="right" :active="active">
+            <o-tooltip
+                variant="danger"
+                label="Tooltip right"
+                position="right"
+                :active="active">
                 <o-button label="Right" />
             </o-tooltip>
         </div>

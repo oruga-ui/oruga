@@ -2,6 +2,12 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Variants from "./variants.vue";
+import VariantsCode from "./variants.vue?raw";
+
+import Position from "./position.vue";
+import PositionCode from "./position.vue?raw";
+
 import Multiline from "./multiline.vue";
 import MultilineCode from "./multiline.vue?raw";
 
@@ -15,6 +21,12 @@ import ToggleCode from "./toggle.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="position">Position</h3>
+    <ExampleViewer :component="Position" :code="PositionCode" />
+
+    <h3 id="variants">Variants</h3>
+    <ExampleViewer :component="Variants" :code="VariantsCode" />
 
     <h3 id="multiline">Multiline</h3>
     <ExampleViewer :component="Multiline" :code="MultilineCode" />

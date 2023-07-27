@@ -13,12 +13,18 @@
         </o-field>
 
         <o-field label="Fan">
-            <o-slider :min="0" :max="3" aria-label="Fan" :tooltip="false">
+            <o-slider
+                :rounded="true"
+                :min="0"
+                :max="3"
+                aria-label="Fan"
+                :tooltip="false">
                 <o-slider-tick :value="0">Off</o-slider-tick>
                 <o-slider-tick :value="1">Low</o-slider-tick>
                 <o-slider-tick :value="2">High</o-slider-tick>
                 <o-slider-tick :value="3">Auto</o-slider-tick>
             </o-slider>
         </o-field>
+        <br />
     </section>
 </template>

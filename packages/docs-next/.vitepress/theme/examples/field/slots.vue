@@ -7,7 +7,7 @@
                     <o-icon size="small" icon="question-circle" />
                 </o-tooltip>
             </template>
-            <o-input size="medium"></o-input>
+            <o-input size="medium" />
         </o-field>
 
         <o-field>

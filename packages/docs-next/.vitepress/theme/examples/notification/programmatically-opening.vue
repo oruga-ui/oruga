@@ -1,59 +1,8 @@
-<template>
-    <section>
-        <div class="odocs-spaced">
-            <o-button
-                label="Launch notification (default)"
-                size="medium"
-                @click="simple" />
-            <o-button
-                label="Launch notification (custom)"
-                variant="success"
-                size="medium"
-                @click="success" />
-            <hr />
-            <o-button label="Launch toast" size="medium" @click="toast" />
-            <o-button
-                label="Launch toast (queued)"
-                variant="success"
-                size="medium"
-                @click="queueToast" />
-            <hr />
-            <o-button
-                label="Launch notification (custom)"
-                variant="danger"
-                size="medium"
-                @click="danger" />
-            <o-button
-                label="Launch notification (component)"
-                variant="warning"
-                size="medium"
-                @click="component" />
-        </div>
-    </section>
-</template>
-
 <script setup>
 import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 
 const { oruga } = useProgrammatic();
-
-function toast() {
-    oruga.notification.open({
-        message: "Something happened correctly!",
-        rootClass: "toast-notification",
-        position: "top",
-    });
-}
-
-function queueToast() {
-    oruga.notification.open({
-        message: "Something happened correctly!",
-        rootClass: "toast-notification",
-        position: "top",
-        queue: true,
-    });
-}
 
 function simple() {
     oruga.notification.open("Something happened");
@@ -67,8 +16,25 @@ function success() {
     });
 }
 
+function toast() {
+    oruga.notification.open({
+        message: "Something happened correctly!",
+        rootClass: "toast toast-notification",
+        position: "top",
+    });
+}
+
+function queueToast() {
+    oruga.notification.open({
+        message: "Something happened correctly!",
+        rootClass: "toast toast-notification",
+        position: "top",
+        queue: true,
+    });
+}
+
 function danger() {
-    const notif = oruga.notification.open({
+    oruga.notification.open({
         duration: 5000,
         message: `Something's not good, also I'm on <b>bottom</b>`,
         position: "bottom-right",
@@ -89,6 +55,42 @@ function component() {
     });
 }
 </script>
+
+<template>
+    <section>
+        <div class="odocs-spaced">
+            <o-button
+                label="Launch notification (default)"
+                size="medium"
+                @click="simple" />
+            <o-button
+                label="Launch notification (custom)"
+                variant="success"
+                size="medium"
+                @click="success" />
+        </div>
+        <div class="odocs-spaced">
+            <o-button label="Launch toast" size="medium" @click="toast" />
+            <o-button
+                label="Launch toast (queued)"
+                variant="success"
+                size="medium"
+                @click="queueToast" />
+        </div>
+        <div class="odocs-spaced">
+            <o-button
+                label="Launch notification (custom)"
+                variant="danger"
+                size="medium"
+                @click="danger" />
+            <o-button
+                label="Launch notification (component)"
+                variant="warning"
+                size="medium"
+                @click="component" />
+        </div>
+    </section>
+</template>
 
 <style lang="scss">
 .toast-notification {

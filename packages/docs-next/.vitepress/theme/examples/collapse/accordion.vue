@@ -5,16 +5,19 @@ const isOpen = ref(0);
 
 const collapses = ref([
     {
-        title: "Title 1",
-        text: "Text 1",
+        title: "Open to read something intersting written for you!",
+        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.  <br />
+          Nulla accumsan, metus ultrices eleifend gravida,   <br />
+          nulla nunc varius lectus, nec rutrum justo nibh eu lectus.  <br />
+          Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`,
     },
     {
-        title: "Title 2",
-        text: "Text 2",
+        title: "What the different between Oruga and Buefy?",
+        text: "Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. <br />",
     },
     {
-        title: "Title 3",
-        text: "Text 3",
+        title: "Nothing special, ignore it!",
+        text: "Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.",
     },
 ]);
 </script>
@@ -40,9 +43,7 @@ const collapses = ref([
                 </div>
             </template>
             <div class="card-content">
-                <div class="content">
-                    {{ collapse.text }}
-                </div>
+                <div class="content" v-html="collapse.text" />
             </div>
         </o-collapse>
     </section>

@@ -1,8 +1,10 @@
 <template>
     <section>
         <o-field>
-            <o-datepicker ref="datepicker" expanded placeholder="Select a date">
-            </o-datepicker>
+            <o-datepicker
+                ref="datepicker"
+                expanded
+                placeholder="Select a date" />
             <o-button
                 icon-left="calendar"
                 type="primary"

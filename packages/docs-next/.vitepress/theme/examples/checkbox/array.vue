@@ -6,7 +6,7 @@ const checkboxGroup = ref(["Flint"]);
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field>
             <o-checkbox v-model="checkboxGroup" native-value="Silver">
                 Silver
             </o-checkbox>
@@ -20,9 +20,6 @@ const checkboxGroup = ref(["Flint"]);
                 Billy
             </o-checkbox>
         </o-field>
-        <p class="content">
-            <b>Selection:</b>
-            {{ checkboxGroup }}
-        </p>
+        <p><b>Selection:</b> {{ checkboxGroup }}</p>
     </section>
 </template>

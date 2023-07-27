@@ -67,13 +67,15 @@ const columns = ref([
 </script>
 
 <template>
-    <o-table :data="data">
-        <o-table-column
-            v-for="(column, idx) in columns"
-            :key="idx"
-            v-slot="{ row }"
-            v-bind="column">
-            {{ row[column.field] }}
-        </o-table-column>
-    </o-table>
+    <section>
+        <o-table :data="data">
+            <o-table-column
+                v-for="(column, idx) in columns"
+                :key="idx"
+                v-slot="{ row }"
+                v-bind="column">
+                {{ row[column.field] }}
+            </o-table-column>
+        </o-table>
+    </section>
 </template>

@@ -5,6 +5,7 @@ import { ref } from "vue";
 const activeStep = ref(1);
 const isStepsClickable = ref(false);
 const isAnimated = ref(true);
+const isVertical = ref(false);
 const isProfileSuccess = ref(false);
 const isRounded = ref(true);
 const enableProfileActivateEvent = ref(false);
@@ -17,6 +18,7 @@ const nextIcon = ref("chevron-right");
 // Misc
 const showSocial = ref(false);
 const labelPosition = ref("bottom");
+const stepsPosition = ref("left");
 
 const onProfileActivate = () => {
     if (enableProfileActivateEvent.value) {
@@ -38,12 +40,13 @@ const onProfileActivate = () => {
                 <o-switch v-model="isRounded"> Rounded </o-switch>
             </o-field>
             <o-field>
+                <o-switch v-model="isVertical"> Vertical </o-switch>
+            </o-field>
+            <o-field>
                 <o-switch v-model="isStepsClickable">
                     Clickable Marker
                 </o-switch>
             </o-field>
-        </o-field>
-        <o-field grouped group-multiline>
             <o-field>
                 <o-switch v-model="hasNavigation">
                     Navigation Buttons
@@ -86,10 +89,17 @@ const onProfileActivate = () => {
                     <option value="left">Left</option>
                 </o-select>
             </o-field>
+            <o-field label="Steps position">
+                <o-select v-model="stepsPosition">
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                </o-select>
+            </o-field>
         </o-field>
 
         <o-steps
             v-model="activeStep"
+            :vertical="isVertical"
             :animated="isAnimated"
             :rounded="isRounded"
             :has-navigation="hasNavigation"
@@ -132,22 +142,21 @@ const onProfileActivate = () => {
             <template v-if="customNavigation" #navigation="{ previous, next }">
                 <o-button
                     outlined
+                    label="Previous"
                     variant="danger"
                     icon-pack="fas"
                     icon-left="backward"
                     :disabled="previous.disabled"
-                    @click.prevent="previous.action">
-                    Previous
-                </o-button>
+                    @click.prevent="previous.action" />
+
                 <o-button
                     outlined
+                    label="Next"
                     variant="success"
                     icon-pack="fas"
                     icon-right="forward"
                     :disabled="next.disabled"
-                    @click.prevent="next.action">
-                    Next
-                </o-button>
+                    @click.prevent="next.action" />
             </template>
         </o-steps>
     </section>

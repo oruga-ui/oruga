@@ -30,7 +30,6 @@ const filteredDataArray = computed(() =>
 
 <template>
     <section>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
         <o-field label="Find a JS framework">
             <o-autocomplete
                 v-model="name"
@@ -44,5 +43,6 @@ const filteredDataArray = computed(() =>
                 <template #empty>No results found</template>
             </o-autocomplete>
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

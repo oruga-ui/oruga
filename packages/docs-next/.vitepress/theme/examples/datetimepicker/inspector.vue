@@ -30,8 +30,7 @@ const inspectData = [
                 ref="datetimepicker"
                 placeholder="Click to select..."
                 icon="calendar"
-                horizontal-time-picker>
-            </o-datetimepicker>
+                horizontal-time-picker />
         </o-field>
     </inspector-wrapper>
 </template>

@@ -25,19 +25,17 @@ function cardModal() {
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
-            <o-button
-                label="Open modal (HTML)"
-                size="medium"
-                variant="primary"
-                @click="imageModal()" />
+    <section class="odocs-spaced">
+        <o-button
+            label="Open modal (HTML)"
+            size="medium"
+            variant="primary"
+            @click="imageModal()" />
 
-            <o-button
-                label="Open modal (Component)"
-                size="medium"
-                variant="primary"
-                @click="cardModal()" />
-        </div>
+        <o-button
+            label="Open modal (Component)"
+            size="medium"
+            variant="primary"
+            @click="cardModal()" />
     </section>
 </template>

@@ -34,24 +34,26 @@ onMounted(() => {
 </script>
 
 <template>
-    <o-field label="Select a date">
-        <o-datepicker
-            :focused-date="date"
-            :first-day-of-week="1"
-            placeholder="Click to select...">
-            <template #header>
-                <o-field>
-                    <o-autocomplete
-                        v-model="month"
-                        open-on-focus
-                        readonly
-                        :data="months"
-                        field="name"
-                        @select="selectMonth">
-                    </o-autocomplete>
-                    <o-button disabled>{{ date.getFullYear() }}</o-button>
-                </o-field>
-            </template>
-        </o-datepicker>
-    </o-field>
+    <section>
+        <o-field label="Select a date">
+            <o-datepicker
+                :focused-date="date"
+                :first-day-of-week="1"
+                placeholder="Click to select...">
+                <template #header>
+                    <o-field>
+                        <o-autocomplete
+                            v-model="month"
+                            open-on-focus
+                            readonly
+                            :data="months"
+                            field="name"
+                            @select="selectMonth">
+                        </o-autocomplete>
+                        <o-button disabled>{{ date.getFullYear() }}</o-button>
+                    </o-field>
+                </template>
+            </o-datepicker>
+        </o-field>
+    </section>
 </template>

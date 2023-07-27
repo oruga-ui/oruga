@@ -56,18 +56,16 @@ const promptModalCloseAll = async () => {
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
-            <o-button
-                label="Open prompt"
-                size="medium"
-                variant="primary"
-                @click="promptModal()" />
-            <o-button
-                label="Open prompt (closeAll timeout)"
-                size="medium"
-                variant="primary"
-                @click="promptModalCloseAll()" />
-        </div>
+    <section class="odocs-spaced">
+        <o-button
+            label="Open prompt"
+            size="medium"
+            variant="primary"
+            @click="promptModal()" />
+        <o-button
+            label="Open prompt (closeAll timeout)"
+            size="medium"
+            variant="primary"
+            @click="promptModalCloseAll()" />
     </section>
 </template>

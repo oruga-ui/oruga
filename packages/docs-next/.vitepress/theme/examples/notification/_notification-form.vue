@@ -1,13 +1,7 @@
 <script setup>
 defineProps({
-    email: {
-        type: String,
-        default: "",
-    },
-    password: {
-        type: String,
-        default: "",
-    },
+    email: { type: String, default: "" },
+    password: { type: String, default: "" },
 });
 
 defineEmits(["close"]);
@@ -60,12 +54,12 @@ defineEmits(["close"]);
     flex-direction: column;
     max-height: calc(100vh - 160px);
     overflow: auto;
-    width: 100%;
 
     @media screen and (min-width: 769px) {
         margin: 0 auto;
         max-height: calc(100vh - 40px);
-        width: 640px;
+        width: 540px;
+        overflow: visible;
     }
 
     .modal-card-foot,
@@ -80,9 +74,9 @@ defineEmits(["close"]);
     }
 
     .modal-card-head {
-        border-bottom: 1px solid #dbdbdb;
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
+        border-bottom: 1px solid #dbdbdb;
 
         .modal-card-title {
             color: #363636;

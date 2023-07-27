@@ -37,25 +37,6 @@ const name = ref("John Silver");
             <o-input placeholder="No label" rounded />
         </o-field>
 
-        <o-field label="Success" variant="success">
-            <o-input placeholder="Success" />
-        </o-field>
-
-        <o-field
-            label="Error"
-            variant="danger"
-            message="You can have a message too">
-            <o-input placeholder="Error" />
-        </o-field>
-
-        <o-field label="Info" variant="info">
-            <o-input placeholder="Info" />
-        </o-field>
-
-        <o-field label="Warning" variant="warning">
-            <o-input placeholder="Warning" />
-        </o-field>
-
         <o-field label="Disabled">
             <o-input placeholder="Disabled" disabled />
         </o-field>

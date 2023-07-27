@@ -16,7 +16,7 @@ function openLoading() {
 </script>
 
 <template>
-    <div>
+    <section>
         <o-field>
             <o-button
                 label="Launch loading"
@@ -34,5 +34,5 @@ function openLoading() {
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit
         </p>
-    </div>
+    </section>
 </template>

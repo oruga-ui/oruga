@@ -17,11 +17,16 @@ const multiline = ref(false);
         </o-field>
 
         <o-tabs v-model="activeTab" :multiline="multiline">
-            <o-tab-item :value="0" label="Pictures">
+            <o-tab-item :value="0" label="Pictures" icon="image">
+                hat light is light, if Silvia be not seen? <br />
+                What joy is joy.
+            </o-tab-item>
+
+            <o-tab-item :value="1" label="Articles" icon="pen">
                 Lorem ipsum dolor sit amet.
             </o-tab-item>
 
-            <o-tab-item :value="1" label="Music">
+            <o-tab-item :value="2" label="Music" icon="music">
                 Lorem <br />
                 ipsum <br />
                 dolor <br />
@@ -29,7 +34,11 @@ const multiline = ref(false);
                 amet.
             </o-tab-item>
 
-            <o-tab-item :value="2" :visible="showBooks" label="Books">
+            <o-tab-item
+                :value="3"
+                :visible="showBooks"
+                label="Books"
+                icon="book">
                 What light is light, if Silvia be not seen? <br />
                 What joy is joy, if Silvia be not by— <br />
                 Unless it be to think that she is by <br />
@@ -38,7 +47,7 @@ const multiline = ref(false);
                 There is no music in the nightingale.
             </o-tab-item>
 
-            <o-tab-item :value="3" label="Videos" icon="video" disabled>
+            <o-tab-item :value="4" label="Videos" icon="video" disabled>
                 Nunc nec velit nec libero vestibulum eleifend. Curabitur
                 pulvinar congue luctus. Nullam hendrerit iaculis augue vitae
                 ornare. Maecenas vehicula pulvinar tellus, id sodales felis

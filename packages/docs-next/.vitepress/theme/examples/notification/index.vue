@@ -5,6 +5,9 @@ import ProgrammaticallyOpeningCode from "./programmatically-opening.vue?raw";
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import Variants from "./variants.vue";
+import VariantsCode from "./variants.vue?raw";
+
 import UseTypes from "./use-types.vue";
 import UseTypesCode from "./use-types.vue?raw";
 
@@ -15,6 +18,9 @@ import AddCustomButtonsCode from "./add-custom-buttons.vue?raw";
 <template>
     <h3 id="base">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="variants">Variants</h3>
+    <ExampleViewer :component="Variants" :code="VariantsCode" />
 
     <h3 id="types">Use types</h3>
     <ExampleViewer :component="UseTypes" :code="UseTypesCode" />

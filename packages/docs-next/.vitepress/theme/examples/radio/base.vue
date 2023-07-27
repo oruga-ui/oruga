@@ -6,7 +6,7 @@ const radio = ref("Jack");
 
 <template>
     <section>
-        <o-field grouped>
+        <o-field>
             <o-radio v-model="radio" name="name" native-value="Flint">
                 Flint
             </o-radio>
@@ -20,9 +20,6 @@ const radio = ref("Jack");
                 Vane
             </o-radio>
         </o-field>
-        <p class="content">
-            <b>Selection:</b>
-            {{ radio }}
-        </p>
+        <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>

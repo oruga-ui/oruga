@@ -9,9 +9,11 @@ const selectedOptions = ref([]);
         <p class="content"><b>selected</b>: {{ selectedOptions }}</p>
         <o-dropdown v-model="selectedOptions" multiple aria-role="list">
             <template #trigger>
-                <o-button variant="primary" type="button">
+                <o-button
+                    variant="primary"
+                    type="button"
+                    icon-right="caret-down">
                     <span>Selected ({{ selectedOptions.length }})</span>
-                    <o-icon icon="caret-down"></o-icon>
                 </o-button>
             </template>
 

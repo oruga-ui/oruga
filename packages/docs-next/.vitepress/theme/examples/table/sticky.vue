@@ -34,36 +34,6 @@ const data = ref([
         date: "2016/12/06 14:38:38",
         gender: "Female",
     },
-    {
-        id: 6,
-        user: { first_name: "Sara", last_name: "Armstrong" },
-        date: "2016/09/23 18:50:04",
-        gender: "Female",
-    },
-    {
-        id: 7,
-        user: { first_name: "Anthony", last_name: "Webb" },
-        date: "2016/08/30 23:49:38",
-        gender: "Male",
-    },
-    {
-        id: 8,
-        user: { first_name: "Andrew", last_name: "Greene" },
-        date: "2016/11/20 14:57:47",
-        gender: "Male",
-    },
-    {
-        id: 9,
-        user: { first_name: "Russell", last_name: "White" },
-        date: "2016/07/13 09:29:49",
-        gender: "Male",
-    },
-    {
-        id: 10,
-        user: { first_name: "Lori", last_name: "Hunter" },
-        date: "2016/12/09 01:44:05",
-        gender: "Female",
-    },
 ]);
 
 const columns = ref([
@@ -152,10 +122,11 @@ const columns = ref([
 </script>
 
 <template>
-    <section>
+    <section class="overflow">
         <o-field grouped>
             <o-switch v-model="stickyHeaders">Sticky Headers</o-switch>
         </o-field>
+
         <o-table :data="data" :sticky-header="stickyHeaders">
             <o-table-column
                 v-for="(column, idx) in columns"
@@ -176,5 +147,8 @@ const columns = ref([
 .is-sticky-column-two {
     background: #167df0 !important;
     color: white !important;
+}
+.overflow {
+    overflow-x: scroll;
 }
 </style>

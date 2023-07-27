@@ -6,28 +6,34 @@ const radio = ref("default");
 
 <template>
     <section>
-        <div class="field">
+        <o-field>
             <o-radio v-model="radio" native-value="default"> Default </o-radio>
-        </div>
-        <div class="field">
+        </o-field>
+        <o-field>
+            <o-radio v-model="radio" native-value="primary" variant="primary">
+                Primary
+            </o-radio>
+        </o-field>
+        <o-field>
             <o-radio v-model="radio" native-value="info" variant="info">
                 Info
             </o-radio>
-        </div>
-        <div class="field">
+        </o-field>
+        <o-field>
             <o-radio v-model="radio" native-value="success" variant="success">
                 Success
             </o-radio>
-        </div>
-        <div class="field">
-            <o-radio v-model="radio" native-value="danger" variant="danger">
-                Danger
-            </o-radio>
-        </div>
-        <div class="field">
+        </o-field>
+        <o-field>
             <o-radio v-model="radio" native-value="warning" variant="warning">
                 Warning
             </o-radio>
-        </div>
+        </o-field>
+        <o-field>
+            <o-radio v-model="radio" native-value="danger" variant="danger">
+                Danger
+            </o-radio>
+        </o-field>
+        <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>

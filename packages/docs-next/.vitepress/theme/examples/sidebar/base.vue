@@ -10,6 +10,15 @@ const right = ref(false);
 
 <template>
     <section>
+        <o-field grouped>
+            <o-switch v-model="overlay">Overlay</o-switch>
+            <o-switch v-model="fullheight">Fullheight</o-switch>
+            <o-switch v-model="fullwidth">Fullwidth</o-switch>
+            <o-switch v-model="right">Right</o-switch>
+        </o-field>
+
+        <o-button @click="open = true">Show</o-button>
+
         <o-sidebar
             v-model:open="open"
             :fullheight="fullheight"
@@ -27,15 +36,5 @@ const right = ref(false);
                 alt="Lightweight UI components for Vue.js" />
             <h3>Example</h3>
         </o-sidebar>
-        <o-field grouped group-multiline>
-            <o-switch v-model="overlay">Overlay</o-switch>
-            <o-switch v-model="fullheight">Fullheight</o-switch>
-            <o-switch v-model="fullwidth">Fullwidth</o-switch>
-            <o-switch v-model="right">Right</o-switch>
-        </o-field>
-
-        <br />
-
-        <o-button @click="open = true">Show</o-button>
     </section>
 </template>

@@ -1,27 +1,3 @@
-<template>
-    <section>
-        <o-pagination v-model:current="current" :total="200" :per-page="10">
-            <template #default="props">
-                <o-pagination-button
-                    :id="`page${props.page.number}`"
-                    :page="props.page">
-                    {{ convertToRoman(props.page.number) }}
-                </o-pagination-button>
-            </template>
-            <template #previous="props">
-                <o-pagination-button :page="props.page">
-                    Previous
-                </o-pagination-button>
-            </template>
-            <template #next="props">
-                <o-pagination-button :page="props.page">
-                    Next
-                </o-pagination-button>
-            </template>
-        </o-pagination>
-    </section>
-</template>
-
 <script setup>
 import { ref } from "vue";
 
@@ -76,3 +52,27 @@ function convertToRoman(num) {
     }, "");
 }
 </script>
+
+<template>
+    <section>
+        <o-pagination v-model:current="current" :total="200" :per-page="10">
+            <template #default="props">
+                <o-pagination-button
+                    :id="`page${props.page.number}`"
+                    :page="props.page">
+                    {{ convertToRoman(props.page.number) }}
+                </o-pagination-button>
+            </template>
+            <template #previous="props">
+                <o-pagination-button :page="props.page">
+                    Previous
+                </o-pagination-button>
+            </template>
+            <template #next="props">
+                <o-pagination-button :page="props.page">
+                    Next
+                </o-pagination-button>
+            </template>
+        </o-pagination>
+    </section>
+</template>

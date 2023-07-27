@@ -134,10 +134,11 @@ const inspectData = [
         :subitem="subitem">
         <o-dropdown v-model="currentMenu" v-bind="props" aria-role="list">
             <template #trigger="{ active }">
-                <o-button ref="dropdownbtn" variant="primary">
-                    <span>Click me!</span>
-                    <o-icon :icon="active ? 'caret-up' : 'caret-down'" />
-                </o-button>
+                <o-button
+                    ref="dropdownbtn"
+                    label="Click me!"
+                    variant="primary"
+                    :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
             <o-dropdown-item v-bind="props" value="ac1" aria-role="listitem">
                 Action

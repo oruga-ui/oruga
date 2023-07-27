@@ -126,7 +126,7 @@ function columndrop(payload) {
 </script>
 
 <template>
-    <div>
+    <section>
         <p>
             Use <code>draggable</code>/<code>draggable-column</code> prop to
             allow rows and columns to be draggable. Manage dragging using
@@ -156,5 +156,5 @@ function columndrop(payload) {
                 {{ row[column.field] }}
             </o-table-column>
         </o-table>
-    </div>
+    </section>
 </template>

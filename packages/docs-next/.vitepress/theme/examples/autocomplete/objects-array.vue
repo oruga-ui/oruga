@@ -383,11 +383,11 @@ const filteredDataObj = computed(() =>
 
 <template>
     <section>
-        <o-field grouped group-multiline>
+        <o-field grouped>
             <o-switch v-model="openOnFocus">Open dropdown on focus</o-switch>
             <o-switch v-model="keepFirst">Keep-first</o-switch>
         </o-field>
-        <p class="content"><b>Selected:</b> {{ selected }}</p>
+
         <o-field label="Find a name">
             <o-autocomplete
                 v-model="name"
@@ -398,5 +398,6 @@ const filteredDataObj = computed(() =>
                 field="user.first_name"
                 @select="(option) => (selected = option)" />
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

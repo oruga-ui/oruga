@@ -5,5 +5,7 @@ const datetime = ref(new Date());
 </script>
 
 <template>
-    <o-datetimepicker v-model="datetime" inline></o-datetimepicker>
+    <section>
+        <o-datetimepicker v-model="datetime" inline />
+    </section>
 </template>

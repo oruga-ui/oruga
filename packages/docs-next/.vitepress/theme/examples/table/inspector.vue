@@ -25,20 +25,6 @@ const data = [
         date: "2016-04-26 06:26:28",
         gender: "Female",
     },
-    {
-        id: 4,
-        first_name: "Clarence",
-        last_name: "Flores",
-        date: "2016-04-10 10:28:46",
-        gender: "Male",
-    },
-    {
-        id: 5,
-        first_name: "Brandon",
-        last_name: "Lee",
-        date: "2016-12-06 14:38:38",
-        gender: "Female",
-    },
 ];
 
 const columns = [

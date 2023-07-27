@@ -10,8 +10,6 @@
             <o-button label="@gmail.com" />
         </o-field>
 
-        <hr />
-
         <o-field>
             <o-select placeholder="Currency">
                 <option>$</option>
@@ -44,6 +42,20 @@
                 <o-dropdown-item>Another action</o-dropdown-item>
                 <o-dropdown-item>Something else</o-dropdown-item>
             </o-dropdown>
+        </o-field>
+
+        <o-field>
+            <o-button variant="primary" label="Button" />
+            <o-dropdown>
+                <template #trigger>
+                    <o-button variant="primary" icon-right="caret-down" />
+                </template>
+
+                <o-dropdown-item>Action</o-dropdown-item>
+                <o-dropdown-item>Another action</o-dropdown-item>
+                <o-dropdown-item>Something else</o-dropdown-item>
+            </o-dropdown>
+            <o-button variant="primary" label="Button" />
         </o-field>
 
         <o-field>

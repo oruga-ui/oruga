@@ -6,30 +6,29 @@ const isCardModalActive = ref(false);
 </script>
 
 <template>
-    <section>
-        <div class="odocs-spaced">
-            <o-button
-                label="Open modal"
-                size="medium"
-                variant="primary"
-                @click="isImageModalActive = true" />
+    <section class="odocs-spaced">
+        <o-button
+            label="Open modal"
+            size="medium"
+            variant="primary"
+            @click="isImageModalActive = true" />
 
-            <o-button
-                label="Open modal (clip scroll)"
-                size="medium"
-                variant="primary"
-                @click="isCardModalActive = true" />
-        </div>
+        <o-button
+            label="Open modal (clip scroll)"
+            size="medium"
+            variant="primary"
+            @click="isCardModalActive = true" />
 
         <o-modal v-model:active="isImageModalActive">
             <p style="text-align: center">
                 <img
+                    style="background-color: white"
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4" />
             </p>
         </o-modal>
 
         <o-modal v-model:active="isCardModalActive" :width="640" scroll="clip">
-            <div style="padding: 10px">
+            <div style="padding: 10px; background-color: white">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Etiam sodales leo nec convallis rutrum. Vivamus pharetra

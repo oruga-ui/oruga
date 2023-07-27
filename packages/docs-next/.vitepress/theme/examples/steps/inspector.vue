@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const activeStep = ref(1);
+
 const subitem = "stepitem",
     inspectData = [
         {

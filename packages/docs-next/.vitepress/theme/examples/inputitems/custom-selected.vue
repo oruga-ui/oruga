@@ -39,6 +39,6 @@ function getType(item) {
                 </template>
             </o-inputitems>
         </o-field>
-        <p class="content"><b>Items:</b> {{ items }}</p>
+        <p><b>Items:</b> {{ items }}</p>
     </section>
 </template>

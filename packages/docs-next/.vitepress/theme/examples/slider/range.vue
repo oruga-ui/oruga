@@ -10,6 +10,7 @@ const numbers2 = ref([2, 6]);
         <o-field>
             <o-slider v-model="numbers" :min="1" :max="15" :step="0.5" ticks />
         </o-field>
+        <p>{{ numbers }}</p>
 
         <o-field>
             <o-slider
@@ -19,5 +20,6 @@ const numbers2 = ref([2, 6]);
                 :max="8"
                 :step="2" />
         </o-field>
+        <p>{{ numbers2 }}</p>
     </section>
 </template>
