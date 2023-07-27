@@ -4,7 +4,7 @@
 Oruga's superpower is its configurability and its <b>CSS framework agnostic</b> approach. <br />
 Each component can be individually customised and configured by defining specific classes using a <b>class-mapping approach</b>.
 Therefore, <b>Oruga comes without any styling by default</b>. 
-However, there are several official predefined configurations called [themes](#themes), which you can include and extend to give your application a individual look and feel.
+However, there are several official predefined configurations called [themes](/documentation/themes), which you can include and extend to give your application a individual look and feel.
 And <b>all components came with predefined classes </b> by default.
 
 You can customise component classes in 3 different ways:
@@ -162,7 +162,7 @@ createApp(...)
 ```
 
 ::: info
-While using themes like [Bootstrap](/themes#bootstrap) or [Bulma](/themes#bulma), this feature is used to create specific theme configs.
+While using themes like [Bootstrap](/documentation/themes#bootstrap) or [Bulma](/documentation/themes#bulma), this feature is used to create specific theme configs.
 :::
 
 Or directly in your component:
