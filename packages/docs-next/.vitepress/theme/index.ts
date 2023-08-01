@@ -25,7 +25,6 @@ import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import xml from "highlight.js/lib/languages/xml";
-import hljsVuePlugin from "@highlightjs/vue-plugin";
 
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
@@ -37,8 +36,6 @@ export default {
         library.add(fas);
 
         app.component("VueFontawesome", FontAwesomeIcon);
-
-        app.use(hljsVuePlugin);
 
         app.component("InspectorWrapper", InspectorWrapper);
         app.component("Inspector", Inspector);
