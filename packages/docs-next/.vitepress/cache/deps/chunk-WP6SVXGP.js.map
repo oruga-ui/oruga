@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../node_modules/highlight.js/es/core.js"],
-  "sourcesContent": ["// https://nodejs.org/api/packages.html#packages_writing_dual_packages_while_avoiding_or_minimizing_hazards\nimport HighlightJS from '../lib/core.js';\nexport { HighlightJS };\nexport default HighlightJS;\n"],
-  "mappings": ";;;;;;;;AACA,kBAAwB;AAExB,IAAO,eAAQ,YAAAA;",
-  "names": ["HighlightJS"]
-}
