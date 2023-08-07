@@ -25,9 +25,13 @@ import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import xml from "highlight.js/lib/languages/xml";
+import scss from "highlight.js/lib/languages/scss";
+import css from "highlight.js/lib/languages/css";
 
 hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("scss", scss);
+hljs.registerLanguage("css", css);
 
 export default {
     ...DefaultTheme,

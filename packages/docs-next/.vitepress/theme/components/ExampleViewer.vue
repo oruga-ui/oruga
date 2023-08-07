@@ -124,7 +124,7 @@ function copy(val: string) {
                             v-model="tab"
                             type="radio"
                             value="STYLE" />
-                        <label :for="`tab-style-${uid}`">SASS</label>
+                        <label :for="`tab-style-${uid}`">SCSS</label>
                     </template>
                 </div>
                 <div class="blocks">
@@ -160,8 +160,8 @@ function copy(val: string) {
                         <button
                             title="Copy Code"
                             class="copy"
-                            @click="copy(scriptCode)" />
-                        <span class="lang">css</span>
+                            @click="copy(styleCode)" />
+                        <span class="lang">scss</span>
                         <div
                             v-html="
                                 markdown.render('```css ' + styleCode + ' ```')
