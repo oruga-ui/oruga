@@ -23,3 +23,9 @@ const time = ref(new Date());
         </o-field>
     </section>
 </template>
+
+<style lang="scss" scoped>
+button {
+    margin-left: 0.5rem;
+}
+</style>

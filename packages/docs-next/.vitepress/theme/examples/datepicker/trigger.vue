@@ -15,7 +15,7 @@ const selectedString = computed(() =>
                     <o-button icon-left="calendar" type="primary" />
                 </template>
             </o-datepicker>
-            <o-input readonly :value="selectedString" />
+            <o-input readonly :value="selectedString" expanded />
         </o-field>
     </section>
 </template>

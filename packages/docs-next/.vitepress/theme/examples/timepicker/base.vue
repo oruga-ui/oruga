@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
+const selected = ref(new Date());
 const hourFormat = ref(); // Browser locale
 const enableSeconds = ref(false);
 const locale = ref(); // Browser locale
@@ -41,6 +42,7 @@ const locale = ref(); // Browser locale
 
         <o-field label="Select time">
             <o-timepicker
+                v-model="selected"
                 rounded
                 placeholder="Click to select..."
                 icon="clock"
@@ -48,5 +50,6 @@ const locale = ref(); // Browser locale
                 :hour-format="hourFormat"
                 :locale="locale" />
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

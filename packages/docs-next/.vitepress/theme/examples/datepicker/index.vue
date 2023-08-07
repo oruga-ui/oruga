@@ -17,11 +17,8 @@ import TriggerCode from "./trigger.vue?raw";
 import Programmatically from "./programmatically.vue";
 import ProgrammaticallyCode from "./programmatically.vue?raw";
 
-import FooterSlot from "./footer-slot.vue";
-import FooterSlotCode from "./footer-slot.vue?raw";
-
-import HeaderSlot from "./header-slot.vue";
-import HeaderSlotCode from "./header-slot.vue?raw";
+import Slots from "./slots.vue";
+import SlotsCode from "./slots.vue?raw";
 
 import Events from "./events.vue";
 import EventsCode from "./events.vue?raw";
@@ -49,11 +46,8 @@ import MonthPickerCode from "./month-picker.vue?raw";
     <h3 id="programmatically">Programmatically</h3>
     <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 
-    <h3 id="footer">Footer slot</h3>
-    <ExampleViewer :component="FooterSlot" :code="FooterSlotCode" />
-
-    <h3 id="header">Header slot</h3>
-    <ExampleViewer :component="HeaderSlot" :code="HeaderSlotCode" />
+    <h3 id="slots">Slots</h3>
+    <ExampleViewer :component="Slots" :code="SlotsCode" />
 
     <h3 id="events">Events</h3>
     <ExampleViewer :component="Events" :code="EventsCode" />

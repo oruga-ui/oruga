@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
+const selected = ref(new Date());
 const showWeekNumber = ref(false);
 const enableSeconds = ref(false);
 const hourFormat = ref(); // Browser locale
@@ -45,6 +46,7 @@ const locale = ref(); // Browser locale
 
         <o-field label="Select datetime">
             <o-datetimepicker
+                v-model="selected"
                 rounded
                 placeholder="Click to select..."
                 icon="calendar"
@@ -52,5 +54,6 @@ const locale = ref(); // Browser locale
                 :datepicker="{ showWeekNumber }"
                 :timepicker="{ enableSeconds, hourFormat }" />
         </o-field>
+        <p><b>Selected:</b> {{ selected }}</p>
     </section>
 </template>

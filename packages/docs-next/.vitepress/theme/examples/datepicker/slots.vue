@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 const months = [
     { name: "January", value: 0 },
@@ -37,23 +37,52 @@ onMounted(() => {
     <section>
         <o-field label="Select a date">
             <o-datepicker
-                :focused-date="date"
+                v-model="date"
                 :first-day-of-week="1"
                 placeholder="Click to select...">
                 <template #header>
                     <o-field>
                         <o-autocomplete
                             v-model="month"
+                            root-class="grow"
                             open-on-focus
                             readonly
                             :data="months"
                             field="name"
-                            @select="selectMonth">
-                        </o-autocomplete>
-                        <o-button disabled>{{ date.getFullYear() }}</o-button>
+                            expanded
+                            @select="selectMonth" />
+                        <o-button disabled>{{ date?.getFullYear() }}</o-button>
                     </o-field>
+                </template>
+                <template #footer>
+                    <div class="footer-container">
+                        <o-button variant="primary" @click="date = new Date()">
+                            <o-icon icon="calendar"></o-icon>
+                            <span>Today</span>
+                        </o-button>
+
+                        <o-button variant="danger" @click="date = null">
+                            <o-icon icon="times"></o-icon>
+                            <span>Clear</span>
+                        </o-button>
+                    </div>
                 </template>
             </o-datepicker>
         </o-field>
     </section>
 </template>
+
+<style lang="scss" scoped>
+.footer-container {
+    display: flex;
+    justify-content: end;
+    margin-top: 0.5rem;
+
+    button {
+        margin-left: 0.5rem;
+    }
+}
+.grow {
+    flex-grow: 1;
+}
+</style>

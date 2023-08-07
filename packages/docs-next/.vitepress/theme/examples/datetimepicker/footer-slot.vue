@@ -11,7 +11,7 @@ const datetime = ref(new Date());
                 v-model="datetime"
                 placeholder="Click to select...">
                 <template #footer>
-                    <div class="buttons-footer">
+                    <div class="footer-container">
                         <o-button
                             variant="primary"
                             @click="datetime = new Date()">
@@ -29,8 +29,14 @@ const datetime = ref(new Date());
     </section>
 </template>
 
-<style lang="scss">
-.buttons-footer {
-    margin-top: 1rem;
+<style lang="scss" scoped>
+.footer-container {
+    display: flex;
+    justify-content: end;
+    margin-top: 0.5rem;
+
+    button {
+        margin-left: 0.5rem;
+    }
 }
 </style>
