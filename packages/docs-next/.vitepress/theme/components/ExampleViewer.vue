@@ -32,26 +32,39 @@ const codeComputed = computed(() => {
         .replace("oruga-next/dist/oruga", "@oruga-ui/oruga-next");
 });
 
-const jsCode = computed(() =>
+const scriptCode = computed(() =>
     codeComputed.value.includes("<script setup>")
         ? codeComputed.value.substring(
               codeComputed.value.indexOf("<script setup>") +
                   "<script setup>".length,
-              codeComputed.value.indexOf("/script>") - 1,
+              codeComputed.value.lastIndexOf("/script>") - 1,
           )
         : "",
 );
 
-const htmlCode = computed(() =>
+const templateCode = computed(() =>
     codeComputed.value
         .substring(
             codeComputed.value.indexOf("<template>") + "<template>".length,
-            codeComputed.value.indexOf("</template>"),
+            codeComputed.value.lastIndexOf("</template>"),
         )
         // remove prefix whitespace
         .split(/(\r\n|\n|\r)/gm)
         .map((l) => l.replace("    ", ""))
         .join(""),
+);
+
+const styleCode = computed(() =>
+    codeComputed.value.includes("<style")
+        ? codeComputed.value
+              .substring(
+                  codeComputed.value.indexOf("<style") + "<s>".length,
+                  codeComputed.value.lastIndexOf("</style>"),
+              )
+              // remove prefix whitespace
+              .split(/(\r\n|\n|\r)/gm)
+              .join("")
+        : "",
 );
 
 const nodeRef = ref<any>(null);
@@ -91,18 +104,27 @@ function copy(val: string) {
             <div class="vp-code-group">
                 <div class="tabs">
                     <input
-                        :id="`tab-html-${uid}`"
+                        :id="`tab-tempalte-${uid}`"
                         v-model="tab"
                         type="radio"
-                        value="HTML" />
-                    <label :for="`tab-html-${uid}`">HTML</label>
-                    <template v-if="jsCode">
+                        value="TEMPLATE" />
+                    <label :for="`tab-tempalte-${uid}`">HTML</label>
+                    <template v-if="scriptCode">
                         <input
-                            :id="`tab-js-${uid}`"
+                            v-if="scriptCode"
+                            :id="`tab-script-${uid}`"
                             v-model="tab"
                             type="radio"
-                            value="JS" />
-                        <label :for="`tab-js-${uid}`">JS</label>
+                            value="SCRIPT" />
+                        <label :for="`tab-script-${uid}`">JS</label>
+                    </template>
+                    <template v-if="styleCode">
+                        <input
+                            :id="`tab-style-${uid}`"
+                            v-model="tab"
+                            type="radio"
+                            value="STYLE" />
+                        <label :for="`tab-style-${uid}`">SASS</label>
                     </template>
                 </div>
                 <div class="blocks">
@@ -112,22 +134,37 @@ function copy(val: string) {
                         <button
                             title="Copy Code"
                             class="copy"
-                            @click="copy(htmlCode)" />
+                            @click="copy(templateCode)" />
                         <span class="lang">html</span>
                         <div
                             v-html="
-                                markdown.render('```html ' + htmlCode + ' ```')
+                                markdown.render(
+                                    '```html ' + templateCode + ' ```',
+                                )
                             " />
                     </div>
                     <div class="language-js" :class="{ active: tab == 'JS' }">
                         <button
                             title="Copy Code"
                             class="copy"
-                            @click="copy(jsCode)" />
+                            @click="copy(scriptCode)" />
                         <span class="lang">html</span>
                         <div
                             v-html="
-                                markdown.render('```js ' + jsCode + ' ```')
+                                markdown.render('```js ' + scriptCode + ' ```')
+                            " />
+                    </div>
+                    <div
+                        class="language-css"
+                        :class="{ active: tab == 'STYLE' }">
+                        <button
+                            title="Copy Code"
+                            class="copy"
+                            @click="copy(scriptCode)" />
+                        <span class="lang">css</span>
+                        <div
+                            v-html="
+                                markdown.render('```css ' + styleCode + ' ```')
                             " />
                     </div>
                 </div>
