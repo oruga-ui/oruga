@@ -238,18 +238,24 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable                                | Default                        |
-| -------------------------------------------- | ------------------------------ |
-| $datepicker-background-color                 | white                          |
-| $datepicker-cell-margin                      | 0.31rem                        |
-| $datepicker-cell-padding                     | 0.31rem                        |
-| /_ or 0.5rem 0.75rem_/$datepicker-cell-width | calc(#{100%} / 7)              |
-| $datepicker-cell-font-weight                 | 400                            |
-| $datepicker-cell-text-align                  | center                         |
-| $datepicker-cell-unselectable-color          | rgba(0, 0, 0, 0.3)             |
-| $datepicker-cell-hovered-color               | rgba(0, 0, 0, 0.5)             |
-| $datepicker-cell-selected-color              | $primary                       |
-| $datepicker-cell-border-radius               | var(--#{$prefix}border-radius) |
+| SASS Variable                   | Default                                 |
+| ------------------------------- | --------------------------------------- |
+| $datepicker-background-color    | var(--#{$prefix}body-bg)                |
+| $datepicker-pagination-spacer   | calc($spacer \* 0.5)                    |
+| $datepicker-section-spacer      | calc($spacer \* 0.75)                   |
+| $datepicker-section-border      | 1px solid var(--#{$prefix}border-color) |
+| $datepicker-cell-padding        | 0.5rem 0.75rem                          |
+| $datepicker-cell-width          | calc(#{100%} / 7)                       |
+| $datepicker-cell-border-radius  | var(--#{$prefix}border-radius)          |
+| $datepicker-cell-font-weight    | 400                                     |
+| $datepicker-cell-color          | var(--#{$prefix}black)                  |
+| $datepicker-cell-hovered-color  | var(--#{$prefix}secondary)              |
+| $datepicker-cell-selected-color | var(--#{$prefix}primary)                |
+| $datepicker-month-width         | 20rem                                   |
+| $datepicker-month-cell-spacer   | calc($spacer \* 0.5)                    |
+| $datepicker-month-cell-height   | 2.5rem                                  |
+| $datepicker-dropdown-width      | calc(100vw - 40px)                      |
+| $datepicker-dropdown-max-width  | 460px                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_datepicker.scss)
 

@@ -184,7 +184,26 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-<p>The theme does not have any custom variables for this component.</p>
+| SASS Variable              | Default                     |
+| -------------------------- | --------------------------- |
+| $menu-label-bg             | transparent                 |
+| $menu-label-color          | var(--#{$prefix}body-color) |
+| $menu-label-font-size      | 0.75em                      |
+| $menu-list-line-height     | 1.25em                      |
+| $menu-item-padding         | 0.5em 0.75em                |
+| $menu-item-bg              | transparent                 |
+| $menu-item-color           | var(--#{$prefix}body-color) |
+| $menu-item-active-bg       | var(--#{$prefix}primary)    |
+| $menu-item-active-color    | var(--#{$prefix}white)      |
+| $menu-item-disabled-bg     | transparent                 |
+| $menu-item-disabled-color  | var(--#{$prefix}secondary)  |
+| $menu-icon-spacer          | 0.5rem                      |
+| $menu-submenu-border-left  | 1px solid #445e00           |
+| $menu-submenu-padding-left | 0.75em                      |
+| $menu-submenu-margin       | 0.75em                      |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
+
 </div>
 
 </div>

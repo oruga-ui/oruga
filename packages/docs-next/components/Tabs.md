@@ -162,11 +162,13 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable              | Default                     |
-| -------------------------- | --------------------------- |
-| $nav-tabs-color            | var(--#{$prefix}body-color) |
-| $nav-tabs-spacer           | $spacer                     |
-| $nav-tabs-disabled-opacity | 0.5                         |
+| SASS Variable                           | Default                     |
+| --------------------------------------- | --------------------------- |
+| $nav-tabs-color                         | var(--#{$prefix}body-color) |
+| $nav-tabs-spacer                        | $spacer                     |
+| $nav-tabs-disabled-opacity              | 0.5                         |
+| $nav-underline-link-active-bg           | $nav-tabs-link-active-bg    |
+| $nav-underline-link-active-border-color | currentcolor                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_tabs.scss)
 

@@ -145,9 +145,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable             | Default                |
-| ------------------------- | ---------------------- |
-| $timepicker-select-margin | 0.2rem 0.2rem 0.2rem 0 |
+| SASS Variable | Default |
+| ------------- | ------- |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_timepicker.scss)
 
