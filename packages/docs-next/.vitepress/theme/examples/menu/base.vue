@@ -1,21 +1,14 @@
-<script setup>
-import { ref } from "vue";
-
-const isActive = ref(true);
-</script>
-
 <template>
     <section>
         <o-menu>
             <o-menu-list label="Menu">
                 <o-menu-item icon="info-circle" label="Info" />
-                <o-menu-item icon="cog" :active="isActive" expanded>
+                <o-menu-item icon="cog" expanded>
                     <template #label="props">
                         Administrator
                         <o-icon
-                            class="is-pulled-right"
                             :icon="
-                                props.expanded ? 'chevron-up' : 'chevron-down'
+                                props.active ? 'chevron-up' : 'chevron-down'
                             " />
                     </template>
                     <o-menu-item icon="user" label="Users" />
