@@ -52,6 +52,81 @@ title: Menu
 
 <div class="vp-doc">
 
+## MenuList component
+
+```html
+<o-menu-list></o-menu-list>
+```
+
+### Props
+
+| Prop name | Description         | Type    | Values                     | Default |
+| --------- | ------------------- | ------- | -------------------------- | ------- |
+| ariaRole  |                     | string  | -                          |         |
+| icon      |                     | string  | -                          |         |
+| iconPack  |                     | string  | -                          |         |
+| label     |                     | string  | -                          |         |
+| override  |                     | boolean | -                          |         |
+| size      | Icon size, optional | string  | `small`, `medium`, `large` |         |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| label   |             |          |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+</div>
+
+<div class="vp-doc">
+
+## MenuItem component
+
+```html
+<o-menu-item></o-menu-item>
+```
+
+### Props
+
+| Prop name | Description         | Type                | Values                     | Default |
+| --------- | ------------------- | ------------------- | -------------------------- | ------- |
+| active    |                     | boolean             | -                          |         |
+| animation |                     | string              | -                          | 'slide' |
+| ariaRole  |                     | string              | -                          | ''      |
+| disabled  |                     | boolean             | -                          |         |
+| expanded  |                     | boolean             | -                          |         |
+| icon      |                     | string              | -                          |         |
+| iconPack  |                     | string              | -                          |         |
+| label     |                     | string              | -                          |         |
+| override  |                     | boolean             | -                          |         |
+| size      | Icon size, optional | string              | `small`, `medium`, `large` |         |
+| tag       |                     | string \| Component | -                          | 'a'     |
+
+### Events
+
+| Event name      | Properties | Description |
+| --------------- | ---------- | ----------- |
+| update:expanded |            |
+| update:active   |            |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| label   |             | <br/>    |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+</div>
+<div class="vp-doc">
+
 ## Sass variables
 
 <div class="theme-orugabase">
