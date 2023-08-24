@@ -43,7 +43,9 @@ yarn add @oruga-ui/oruga-next
 
 :::
 
-#### Full bundle
+### Full bundle import
+
+You can import all Oruga components using the main plugin export:
 
 ```js
 import { createApp } from 'vue';
@@ -52,7 +54,20 @@ import Oruga from '@oruga-ui/oruga-next';
 createApp(...).use(Oruga);
 ```
 
-#### Individual components (tree shaking)
+### Individual components imports (tree shaking)
+
+Each component can also be added individually using its own plugin. This adds the component, including its subcomponents and programmatic components:
+
+```js
+import { createApp } from 'vue';
+import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next';
+
+createApp(...)
+  .use(Autocomplete)
+  .uze(Sidebar);
+```
+
+However, if you just need to import a single component separately, without any additional programmatic functionalities, you can import individual components like this:
 
 ```js
 import { createApp } from 'vue';
@@ -63,12 +78,13 @@ createApp(...)
   .component(OSidebar);
 ```
 
+
 ### Styling
 
-Oruga comes without any styling by default, but you can easily add your own styles or an additional theme package.
+Oruga comes without any styling by default, but you can easily add your own custom styles or an additional theme package.
 For more details and a list of available themes, see [#customisation](/documentation/customisation) and [#themes](/documentation/themes).
 
-The default **Oruga theme** can be added by:
+The default **Oruga theme** can be added like this:
 
 ::: code-group
 
@@ -86,8 +102,8 @@ yarn add @oruga-ui/theme-oruga
 ```
 :::
 
-```js
-import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
+```scss
+@import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
 ```
 
 ## Nuxt module
