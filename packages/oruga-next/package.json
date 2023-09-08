@@ -86,7 +86,7 @@
     "codecov": "3.7.2",
     "concurrently": "5.2.0",
     "core-js": "3.6.5",
-    "cypress": "^10.11.0",
+    "cypress": "^13.1.0",
     "eslint": "6.7.2",
     "eslint-plugin-vue": "^9.8.0",
     "jest-serializer-vue": "0.3.0",
