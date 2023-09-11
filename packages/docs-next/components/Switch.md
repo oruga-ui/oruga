@@ -83,7 +83,7 @@ title: Switch
 | $switch-border-radius           | $base-border-radius                                                                              |
 | $switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
 | $switch-disabled-opacity        | $base-disabled-opacity                                                                           |
-| $switch-margin-label            | .5em                                                                                             |
+| $switch-margin-label            | 0.5em                                                                                            |
 | $switch-padding                 | 0.2em                                                                                            |
 | $switch-rounded-border-radius   | $base-rounded-border-radius                                                                      |
 | $switch-width                   | 2.75 \* 1em                                                                                      |
@@ -102,7 +102,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $switch-border-radius           | $base-border-radius                                                                              |
 | $switch-box-shadow              | 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05) |
 | $switch-disabled-opacity        | $base-disabled-opacity                                                                           |
-| $switch-margin-label            | .5em                                                                                             |
+| $switch-margin-label            | 0.5em                                                                                            |
 | $switch-padding                 | 0.2em                                                                                            |
 | $switch-rounded-border-radius   | $base-rounded-border-radius                                                                      |
 | $switch-width                   | 2.75 \* 1em                                                                                      |

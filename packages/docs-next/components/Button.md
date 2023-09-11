@@ -80,10 +80,10 @@ title: Button
 | $button-box-shadow                | none                               |
 | $button-font-weight               | 400                                |
 | $button-line-height               | $base-line-height                  |
-| $button-margin-icon-to-text       | .1875em                            |
+| $button-margin-icon-to-text       | 0.1875em                           |
 | $button-margin                    | 0                                  |
 | $button-height                    | $control-height                    |
-| $button-padding                   | $control-padding-vertical .75em    |
+| $button-padding                   | $control-padding-vertical 0.75em   |
 | $button-rounded-border-radius     | $base-rounded-border-radius        |
 | $button-disabled-opacity          | $base-disabled-opacity             |
 | $button-outlined-background-color | transparent                        |
@@ -103,10 +103,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $button-box-shadow                | none                               |
 | $button-font-weight               | 400                                |
 | $button-line-height               | $base-line-height                  |
-| $button-margin-icon-to-text       | .1875em                            |
+| $button-margin-icon-to-text       | 0.1875em                           |
 | $button-margin                    | 0                                  |
 | $button-height                    | $control-height                    |
-| $button-padding                   | $control-padding-vertical .75em    |
+| $button-padding                   | $control-padding-vertical 0.75em   |
 | $button-rounded-border-radius     | $base-rounded-border-radius        |
 | $button-disabled-opacity          | $base-disabled-opacity             |
 | $button-outlined-background-color | transparent                        |

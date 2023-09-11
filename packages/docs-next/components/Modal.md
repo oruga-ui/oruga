@@ -90,7 +90,7 @@ title: Modal
 | ------------------------------------------ | --------------------------- |
 | $modal-content-background-color            | $white                      |
 | $modal-content-border-radius               | $base-border-radius         |
-| $modal-overlay-background-color            | hsla(0,0%,4%,.86)           |
+| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)       |
 | $modal-close-border-radius                 | $base-rounded-border-radius |
 | $modal-close-right                         | 20px                        |
 | $modal-close-top                           | 20px                        |
@@ -111,7 +111,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------------------------------ | --------------------------- |
 | $modal-content-background-color            | $white                      |
 | $modal-content-border-radius               | $base-border-radius         |
-| $modal-overlay-background-color            | hsla(0,0%,4%,.86)           |
+| $modal-overlay-background-color            | hsla(0, 0%, 4%, 0.86)       |
 | $modal-close-border-radius                 | $base-rounded-border-radius |
 | $modal-close-right                         | 20px                        |
 | $modal-close-top                           | 20px                        |

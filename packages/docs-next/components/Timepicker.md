@@ -104,8 +104,8 @@ title: Timepicker
 | -------------------------------------- | ----------------------------------------------------- |
 | $timepicker-font-size                  | $base-font-size                                       |
 | $timepicker-box-line-height            | $base-line-height                                     |
-| $timepicker-box-padding                | .375rem 1rem                                          |
-| $timepicker-footer-padding             | 0 .5rem                                               |
+| $timepicker-box-padding                | 0.375rem 1rem                                         |
+| $timepicker-footer-padding             | 0 0.5rem                                              |
 | $timepicker-footer-margin              | 0.875rem 0 0 0                                        |
 | $timepicker-select-line-height         | $base-line-height                                     |
 | $timepicker-select-padding             | $control-padding-vertical $control-padding-horizontal |
@@ -124,8 +124,8 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | -------------------------------------- | ----------------------------------------------------- |
 | $timepicker-font-size                  | $base-font-size                                       |
 | $timepicker-box-line-height            | $base-line-height                                     |
-| $timepicker-box-padding                | .375rem 1rem                                          |
-| $timepicker-footer-padding             | 0 .5rem                                               |
+| $timepicker-box-padding                | 0.375rem 1rem                                         |
+| $timepicker-footer-padding             | 0 0.5rem                                              |
 | $timepicker-footer-margin              | 0.875rem 0 0 0                                        |
 | $timepicker-select-line-height         | $base-line-height                                     |
 | $timepicker-select-padding             | $control-padding-vertical $control-padding-horizontal |

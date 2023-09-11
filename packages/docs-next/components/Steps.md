@@ -92,16 +92,16 @@ title: Steps
 | SASS Variable                       | Default                     |
 | ----------------------------------- | --------------------------- |
 | $steps-details-background-color     | hsl(0, 0%, 100%)            |
-| $steps-details-padding              | .2em                        |
+| $steps-details-padding              | 0.2em                       |
 | $steps-marker-background            | $grey-light                 |
 | $steps-marker-color                 | $primary-invert             |
-| $steps-marker-border                | .2em solid #fff             |
+| $steps-marker-border                | 0.2em solid #fff            |
 | $steps-marker-font-weight           | 700                         |
 | $steps-marker-rounded-border-radius | $base-rounded-border-radius |
 | $steps-color                        | $grey-lighter               |
 | $steps-previous-color               | $primary                    |
 | $steps-active-color                 | $primary                    |
-| $steps-divider-height               | .2em                        |
+| $steps-divider-height               | 0.2em                       |
 | $steps-vertical-padding             | 1em 0                       |
 | $steps-item-line-height             | $base-line-height           |
 | $steps-link-color                   | hsl(0, 0%, 29%)             |
@@ -118,16 +118,16 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | SASS Variable                       | Default                     |
 | ----------------------------------- | --------------------------- |
 | $steps-details-background-color     | hsl(0, 0%, 100%)            |
-| $steps-details-padding              | .2em                        |
+| $steps-details-padding              | 0.2em                       |
 | $steps-marker-background            | $grey-light                 |
 | $steps-marker-color                 | $primary-invert             |
-| $steps-marker-border                | .2em solid #fff             |
+| $steps-marker-border                | 0.2em solid #fff            |
 | $steps-marker-font-weight           | 700                         |
 | $steps-marker-rounded-border-radius | $base-rounded-border-radius |
 | $steps-color                        | $grey-lighter               |
 | $steps-previous-color               | $primary                    |
 | $steps-active-color                 | $primary                    |
-| $steps-divider-height               | .2em                        |
+| $steps-divider-height               | 0.2em                       |
 | $steps-vertical-padding             | 1em 0                       |
 | $steps-item-line-height             | $base-line-height           |
 | $steps-link-color                   | hsl(0, 0%, 29%)             |

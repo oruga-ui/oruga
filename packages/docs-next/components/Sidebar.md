@@ -80,7 +80,7 @@ title: Sidebar
 
 | SASS Variable                     | Default                            |
 | --------------------------------- | ---------------------------------- |
-| $sidebar-overlay                  | hsla(0,0%,4%,.86)                  |
+| $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)              |
 | $sidebar-box-shadow               | 5px 0px 13px 3px rgba($black, 0.1) |
 | $sidebar-content-background-color | $grey-lighter                      |
 | $sidebar-mobile-width             | 80px                               |
@@ -95,7 +95,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 | SASS Variable                     | Default                            |
 | --------------------------------- | ---------------------------------- |
-| $sidebar-overlay                  | hsla(0,0%,4%,.86)                  |
+| $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)              |
 | $sidebar-box-shadow               | 5px 0px 13px 3px rgba($black, 0.1) |
 | $sidebar-content-background-color | $grey-lighter                      |
 | $sidebar-mobile-width             | 80px                               |

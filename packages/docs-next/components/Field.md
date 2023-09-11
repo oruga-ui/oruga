@@ -72,10 +72,10 @@ title: Field
 | ------------------------------ | ------------ |
 | $field-label-color             | #363636      |
 | $field-label-font-weight       | 600          |
-| $field-margin-bottom           | .75rem       |
-| $field-message-font-size       | .75rem       |
-| $field-message-margin-top      | .25rem       |
-| $field-margin-right            | .37rem       |
+| $field-margin-bottom           | 0.75rem      |
+| $field-message-font-size       | 0.75rem      |
+| $field-message-margin-top      | 0.25rem      |
+| $field-margin-right            | 0.37rem      |
 | $field-horizontal-label-margin | 0 1.5rem 0 0 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
@@ -88,10 +88,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | ------------------------------ | ------------ |
 | $field-label-color             | #363636      |
 | $field-label-font-weight       | 600          |
-| $field-margin-bottom           | .75rem       |
-| $field-message-font-size       | .75rem       |
-| $field-message-margin-top      | .25rem       |
-| $field-margin-right            | .37rem       |
+| $field-margin-bottom           | 0.75rem      |
+| $field-message-font-size       | 0.75rem      |
+| $field-message-margin-top      | 0.25rem      |
+| $field-margin-right            | 0.37rem      |
 | $field-horizontal-label-margin | 0 1.5rem 0 0 |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)

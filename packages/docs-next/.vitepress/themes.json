@@ -2,14 +2,14 @@
     {
         "label": "Oruga Base",
         "key": "theme-orugabase",
-        "path": "../oruga/src",
+        "path": "./node_modules/@oruga-ui/theme-oruga/dist",
         "git": "https://github.com/oruga-ui/theme-oruga",
         "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },
     {
         "label": "Oruga Full",
         "key": "theme-orugafull",
-        "path": "../oruga/src",
+        "path": "./node_modules/@oruga-ui/theme-oruga/dist",
         "git": "https://github.com/oruga-ui/theme-oruga",
         "src": "https://github.com/oruga-ui/theme-oruga/tree/main/src/assets"
     },

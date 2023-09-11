@@ -131,14 +131,14 @@ title: Notification
 | $notification-border-radius          | 4px                         |
 | $notification-padding                | 1.75em 1.75em               |
 | $notification-margin-bottom          | 1.5rem                      |
-| $notification-animantion             | append-animate .3s linear   |
+| $notification-animantion             | append-animate 0.3s linear  |
 | $notification-color                  | $white                      |
 | $notification-close-border-radius    | $base-rounded-border-radius |
-| $notification-close-right            | .5rem                       |
-| $notification-close-top              | .5rem                       |
+| $notification-close-right            | 0.5rem                      |
+| $notification-close-top              | 0.5rem                      |
 | $notification-close-size             | 20px                        |
 | $notification-close-color            | $white                      |
-| $notification-close-background-color | hsla(0,0%,4%,.2)            |
+| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)        |
 | $notification-icon-margin-right      | 1rem                        |
 | $notification-notices-padding        | 2em                         |
 | $notification-notices-zindex         | 1000                        |
@@ -155,14 +155,14 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $notification-border-radius          | 4px                         |
 | $notification-padding                | 1.75em 1.75em               |
 | $notification-margin-bottom          | 1.5rem                      |
-| $notification-animantion             | append-animate .3s linear   |
+| $notification-animantion             | append-animate 0.3s linear  |
 | $notification-color                  | $white                      |
 | $notification-close-border-radius    | $base-rounded-border-radius |
-| $notification-close-right            | .5rem                       |
-| $notification-close-top              | .5rem                       |
+| $notification-close-right            | 0.5rem                      |
+| $notification-close-top              | 0.5rem                      |
 | $notification-close-size             | 20px                        |
 | $notification-close-color            | $white                      |
-| $notification-close-background-color | hsla(0,0%,4%,.2)            |
+| $notification-close-background-color | hsla(0, 0%, 4%, 0.2)        |
 | $notification-icon-margin-right      | 1rem                        |
 | $notification-notices-padding        | 2em                         |
 | $notification-notices-zindex         | 1000                        |

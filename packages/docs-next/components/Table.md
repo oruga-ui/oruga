@@ -215,14 +215,14 @@ title: Table
 | $table-focus-border-color              | $primary                                                 |
 | $table-focus-box-shadow                | 0 0 0 0.125em rgba($primary, 0.25)                       |
 | $table-hoverable-background-color      | #fafafa                                                  |
-| $table-narrow-padding                  | .25em .5em                                               |
+| $table-narrow-padding                  | 0.25em 0.5em                                             |
 | $table-row-active-background-color     | $primary                                                 |
 | $table-row-active-color                | $primary-invert                                          |
 | $table-sticky-header-height            | 300px                                                    |
 | $table-sticky-zindex                   | 1                                                        |
 | $table-striped-background-color        | #fafafa                                                  |
 | $table-td-border                       | 1px solid $grey-lighter                                  |
-| $table-td-padding                      | .5em .75em                                               |
+| $table-td-padding                      | 0.5em 0.75em                                             |
 | $table-th-border                       | 2px solid $grey-lighter                                  |
 | $table-th-checkbox-width               | 40px                                                     |
 | $table-th-color                        | #363636                                                  |
@@ -260,14 +260,14 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $table-focus-border-color              | $primary                                                 |
 | $table-focus-box-shadow                | 0 0 0 0.125em rgba($primary, 0.25)                       |
 | $table-hoverable-background-color      | #fafafa                                                  |
-| $table-narrow-padding                  | .25em .5em                                               |
+| $table-narrow-padding                  | 0.25em 0.5em                                             |
 | $table-row-active-background-color     | $primary                                                 |
 | $table-row-active-color                | $primary-invert                                          |
 | $table-sticky-header-height            | 300px                                                    |
 | $table-sticky-zindex                   | 1                                                        |
 | $table-striped-background-color        | #fafafa                                                  |
 | $table-td-border                       | 1px solid $grey-lighter                                  |
-| $table-td-padding                      | .5em .75em                                               |
+| $table-td-padding                      | 0.5em 0.75em                                             |
 | $table-th-border                       | 2px solid $grey-lighter                                  |
 | $table-th-checkbox-width               | 40px                                                     |
 | $table-th-color                        | #363636                                                  |

@@ -83,22 +83,18 @@ export default {
                     : "theme-orugafull";
             switch (theme) {
                 case "theme-orugafull": {
-                    if (process.env.NODE_ENV !== "production") {
-                        import("../../../oruga-next/dist/oruga-full-vars.css");
-                    } else {
-                        const link = document.createElement("link");
-                        link.rel = "stylesheet";
-                        link.href =
-                            "https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga-full-vars.min.css";
-                        document.head.appendChild(link);
-                    }
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href =
+                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga-full.min.css";
+                    document.head.appendChild(link);
                     break;
                 }
                 case "theme-orugabase": {
                     const link = document.createElement("link");
                     link.rel = "stylesheet";
                     link.href =
-                        "https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.css";
+                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga.min.css";
                     document.head.appendChild(link);
                     break;
                 }

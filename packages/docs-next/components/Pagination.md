@@ -97,10 +97,10 @@ title: Pagination
 | $pagination-link-height                   | 2.25em                      |
 | $pagination-link-hover-border-color       | $grey-light                 |
 | $pagination-link-line-height              | $base-line-height           |
-| $pagination-link-margin                   | .25rem                      |
+| $pagination-link-margin                   | 0.25rem                     |
 | $pagination-link-min-width                | 2.25em                      |
-| $pagination-link-padding                  | .5em .5em                   |
-| $pagination-margin                        | -.25rem                     |
+| $pagination-link-padding                  | 0.5em 0.5em                 |
+| $pagination-margin                        | -0.25rem                    |
 | $pagination-rounded-border-radius         | $base-rounded-border-radius |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)
@@ -123,10 +123,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $pagination-link-height                   | 2.25em                      |
 | $pagination-link-hover-border-color       | $grey-light                 |
 | $pagination-link-line-height              | $base-line-height           |
-| $pagination-link-margin                   | .25rem                      |
+| $pagination-link-margin                   | 0.25rem                     |
 | $pagination-link-min-width                | 2.25em                      |
-| $pagination-link-padding                  | .5em .5em                   |
-| $pagination-margin                        | -.25rem                     |
+| $pagination-link-padding                  | 0.5em 0.5em                 |
+| $pagination-margin                        | -0.25rem                    |
 | $pagination-rounded-border-radius         | $base-rounded-border-radius |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_pagination.scss)

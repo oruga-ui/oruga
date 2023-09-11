@@ -100,9 +100,9 @@ title: Carousel
 | $carousel-arrow-border-radius          | $base-rounded-border-radius          |
 | $carousel-arrow-border                 | 1px solid $carousel-arrow-background |
 | $carousel-arrow-transition             | $speed-slow $easing                  |
-| $carousel-indicators-background        | rgba($white , 0.50)                  |
-| $carousel-indicators-padding           | .5rem                                |
-| $carousel-indicator-margin             | 0 .5rem 0 0                          |
+| $carousel-indicators-background        | rgba($white, 0.5)                    |
+| $carousel-indicators-padding           | 0.5rem                               |
+| $carousel-indicator-margin             | 0 0.5rem 0 0                         |
 | $carousel-indicator-color              | $primary                             |
 | $carousel-indicator-background         | $white                               |
 | $carousel-indicator-border             | 1px solid $carousel-indicator-color  |
@@ -115,7 +115,7 @@ title: Carousel
 | $carousel-indicator-lines-width        | 25px                                 |
 | $carousel-items-transition             | all $speed-slower ease-out 0s        |
 | $carousel-item-border                  | 2px solid transparent                |
-| $carousel-overlay-background           | hsla(0,0%,4%,.86)                    |
+| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                |
 | $carousel-overlay-zindex               | 40                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)
@@ -134,9 +134,9 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $carousel-arrow-border-radius          | $base-rounded-border-radius          |
 | $carousel-arrow-border                 | 1px solid $carousel-arrow-background |
 | $carousel-arrow-transition             | $speed-slow $easing                  |
-| $carousel-indicators-background        | rgba($white , 0.50)                  |
-| $carousel-indicators-padding           | .5rem                                |
-| $carousel-indicator-margin             | 0 .5rem 0 0                          |
+| $carousel-indicators-background        | rgba($white, 0.5)                    |
+| $carousel-indicators-padding           | 0.5rem                               |
+| $carousel-indicator-margin             | 0 0.5rem 0 0                         |
 | $carousel-indicator-color              | $primary                             |
 | $carousel-indicator-background         | $white                               |
 | $carousel-indicator-border             | 1px solid $carousel-indicator-color  |
@@ -149,7 +149,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $carousel-indicator-lines-width        | 25px                                 |
 | $carousel-items-transition             | all $speed-slower ease-out 0s        |
 | $carousel-item-border                  | 2px solid transparent                |
-| $carousel-overlay-background           | hsla(0,0%,4%,.86)                    |
+| $carousel-overlay-background           | hsla(0, 0%, 4%, 0.86)                |
 | $carousel-overlay-zindex               | 40                                   |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_carousel.scss)

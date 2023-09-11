@@ -76,7 +76,7 @@ title: Radio
 | $radio-checked-box-shadow-length  | 0 0 0.5em              |
 | $radio-checked-box-shadow-opacity | 0.8                    |
 | $radio-disabled-opacity           | $base-disabled-opacity |
-| $radio-label-padding              | 0 0 0 .5em             |
+| $radio-label-padding              | 0 0 0 0.5em            |
 | $radio-margin-sibiling            | 0.5em                  |
 | $radio-size                       | 1rem                   |
 | $radio-line-height                | 1.25                   |
@@ -93,7 +93,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $radio-checked-box-shadow-length  | 0 0 0.5em              |
 | $radio-checked-box-shadow-opacity | 0.8                    |
 | $radio-disabled-opacity           | $base-disabled-opacity |
-| $radio-label-padding              | 0 0 0 .5em             |
+| $radio-label-padding              | 0 0 0 0.5em            |
 | $radio-margin-sibiling            | 0.5em                  |
 | $radio-size                       | 1rem                   |
 | $radio-line-height                | 1.25                   |

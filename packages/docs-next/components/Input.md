@@ -92,11 +92,11 @@ title: Input
 | $input-border-width          | 1px                                                   |
 | $input-border-radius         | $base-border-radius                                   |
 | $input-rounded-border-radius | $base-rounded-border-radius                           |
-| $input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
+| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-counter-font-size     | .75rem                                                |
-| $input-counter-margin        | .25rem 0 0 .5rem                                      |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-height                | $control-height                                       |
 | $input-line-height           | $base-line-height                                     |
 | $input-margin                | 0                                                     |
@@ -119,11 +119,11 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $input-border-width          | 1px                                                   |
 | $input-border-radius         | $base-border-radius                                   |
 | $input-rounded-border-radius | $base-rounded-border-radius                           |
-| $input-box-shadow            | inset 0 1px 2px hsla(0,0%,4%,.1)                      |
+| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
 | $input-color                 | #363636                                               |
 | $input-icon-zindex           | 4                                                     |
-| $input-counter-font-size     | .75rem                                                |
-| $input-counter-margin        | .25rem 0 0 .5rem                                      |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
 | $input-height                | $control-height                                       |
 | $input-line-height           | $base-line-height                                     |
 | $input-margin                | 0                                                     |
