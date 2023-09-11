@@ -8,20 +8,38 @@
   "scripts": {
     "docs:dev": "concurrently \"vue-docgen --watch\" \"vitepress dev\"",
     "docs:gen": "vue-docgen",
-    "docs:build": "vitepress build"
+    "docs:build": "vitepress build",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "update": "ncu -u"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.28",
-    "@fortawesome/free-solid-svg-icons": "5.13.0",
-    "@fortawesome/vue-fontawesome": "3.0.0-5",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bulma": "0.2.10",
-    "highlight.js": "11.5.1"
+    "@oruga-ui/theme-bootstrap": "^0.4.0",
+    "@oruga-ui/theme-bulma": "^0.2.11",
+    "@oruga-ui/theme-oruga": "^0.0.1",
+    "highlight.js": "11.8.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-highlightjs": "^4.0.1"
   },
   "devDependencies": {
-    "concurrently": "7.1.0",
-    "sass": "1.53.0",
-    "vitepress": "1.0.0-alpha.26",
-    "vue-docgen-cli": "4.45.0"
+    "@types/node": "^18.16.19",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "@vue/tsconfig": "^0.4.0",
+    "concurrently": "8.2.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.15.1",
+    "npm-check-updates": "^16.10.16",
+    "prettier": "^2.8.8",
+    "sass": "^1.63.6",
+    "typescript": "5.1.6",
+    "vitepress": "^1.0.0-beta.5",
+    "vue": "^3.3.4",
+    "vue-docgen-cli": "4.67.0",
+    "vue-tsc": "^1.8.5"
   }
 }

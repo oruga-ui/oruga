@@ -10,44 +10,55 @@ title: Dropdown
 
 <Carbon />
 </div>
+
+<div class="vp-example">
+
+## Examples
+
 <example-dropdown />
+
+</div>
+<div class="vp-example">
 
 ## Class props
 
-<br />
-
 <inspector-dropdown-viewer />
 
-<br />
-<br />
+</div>
 
 <div class="vp-doc">
 
-## Props
+## Dropdown component
 
-| Prop name              | Description                                                                                                                                            | Type                                   | Values                                   | Default                                                                                                                                   |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| animation              | Custom animation (transition name)                                                                                                                     | string                                 | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;animation: 'fade'<br>}</code> |
-| appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                                                                                                           |
-| appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                           |
-| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                                                                                                      |
-| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                                                                                                      |
-| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                                                                                                      |
-| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                                                                                                           |
-| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                                                                                                           |
-| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                                                                                                           |
-| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;maxHeight: 200<br>}</code>    |
-| menuTag                | Dropdown menu tag name                                                                                                                                 | string                                 | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;menuTag: 'div'<br>}</code>    |
-| mobileBreakpoint       | Mobile breakpoint as max-width value                                                                                                                   | string                                 | -                                        |                                                                                                                                           |
-| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;mobileModal: true<br>}</code> |
-| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                                                                                                           |
-| override               |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                           |
-| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                                                                                                           |
-| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                                                                                                           |
-| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>   |
-| triggerTabindex        | Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)                                                           | number                                 | -                                        | 0                                                                                                                                         |
-| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                                                                                                                 |
-| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                                                                                                      |
+```html
+<o-dropdown></o-dropdown>
+```
+
+### Props
+
+| Prop name              | Description                                                                                                                                            | Type                                   | Values                                   | Default                                                                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animation              | Custom animation (transition name)                                                                                                                     | string                                 | -                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;animation: 'fade'<br>}</code> |
+| appendToBody           | Append dropdown content to body                                                                                                                        | boolean                                | -                                        |                                                                                                                                                       |
+| appendToBodyCopyParent |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                                       |
+| ariaRole               | Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus | string                                 | `list`, `menu`, `dialog`                 | null                                                                                                                                                  |
+| canClose               | Can close dropdown by pressing escape or by clicking outside                                                                                           | array\|boolean                         | `escape`, `outside`                      | true                                                                                                                                                  |
+| closeOnClick           | Close dropdown when content is clicked                                                                                                                 | boolean                                | -                                        | true                                                                                                                                                  |
+| disabled               | Dropdown disabled                                                                                                                                      | boolean                                | -                                        |                                                                                                                                                       |
+| expanded               | Dropdown will be expanded (full-width)                                                                                                                 | boolean                                | -                                        |                                                                                                                                                       |
+| inline                 | Dropdown content (items) are shown inline, trigger is removed                                                                                          | boolean                                | -                                        |                                                                                                                                                       |
+| maxHeight              | Max height of dropdown content                                                                                                                         | string\|number                         | -                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;maxHeight: 200<br>}</code>    |
+| menuTag                | Dropdown menu tag name                                                                                                                                 | string \| Component                    | -                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;menuTag: 'div'<br>}</code>    |
+| mobileBreakpoint       | Mobile breakpoint as max-width value                                                                                                                   | string                                 | -                                        |                                                                                                                                                       |
+| mobileModal            | Dropdown content (items) are shown into a modal on mobile                                                                                              | boolean                                | -                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;mobileModal: true<br>}</code> |
+| multiple               | Allows multiple selections                                                                                                                             | boolean                                | -                                        |                                                                                                                                                       |
+| override               |                                                                                                                                                        | boolean                                | -                                        |                                                                                                                                                       |
+| position               | Optional, position of the dropdown relative to the trigger                                                                                             | string                                 | `top-right`, `top-left`, `bottom-left`   |                                                                                                                                                       |
+| scrollable             | Dropdown content will be scrollable                                                                                                                    | boolean                                | -                                        |                                                                                                                                                       |
+| trapFocus              | Trap focus inside the dropdown.                                                                                                                        | boolean                                | -                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>   |
+| triggerTabindex        | Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)                                                           | number                                 | -                                        | 0                                                                                                                                                     |
+| triggers               | Dropdown will be triggered by any events                                                                                                               | array                                  | `click`, `hover`, `contextmenu`, `focus` | ['click']                                                                                                                                             |
+| v-model                |                                                                                                                                                        | string\|number\|boolean\|object\|array | -                                        | null                                                                                                                                                  |
 
 ### Events
 
@@ -64,23 +75,27 @@ title: Dropdown
 | trigger |             |          |
 | default |             |          |
 
----
-
-# Dropdown Item
+</div>
 
 <div class="vp-doc">
 
-## Props
+## DropdownItem component
 
-| Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                |
-| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                     |
-| clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                   |
-| disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                        |
-| override  |                                                       | boolean                                | -      |                                                                                                                                        |
-| tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                      |
-| tag       | Dropdown item tag name                                | string                                 | -      | <div>From <b>config</b></div><br><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
-| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      |                                                                                                                                        |
+```html
+<o-dropdown-item></o-dropdown-item>
+```
+
+### Props
+
+| Prop name | Description                                           | Type                                   | Values | Default                                                                                                                                            |
+| --------- | ----------------------------------------------------- | -------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  |                                                       | string                                 | -      | ''                                                                                                                                                 |
+| clickable | Item is clickable and emit an event                   | boolean                                | -      | true                                                                                                                                               |
+| disabled  | Item is disabled                                      | boolean                                | -      |                                                                                                                                                    |
+| override  |                                                       | boolean                                | -      |                                                                                                                                                    |
+| tabindex  |                                                       | number\|string                         | -      | 0                                                                                                                                                  |
+| tag       | Dropdown item tag name                                | string \| Component                    | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'> dropdown: {<br>&nbsp;&nbsp;itemTag: 'div'<br>}</code> |
+| value     | The value that will be returned on events and v-model | string\|number\|boolean\|object\|array | -      |                                                                                                                                                    |
 
 ### Events
 
@@ -96,35 +111,94 @@ title: Dropdown
 
 </div>
 
-## Style
+<div class="vp-doc">
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_dropdown.scss)
+</div>
+<div class="vp-doc">
 
-| CSS Variable                                  | SASS Variable                           | Default                                                              |
-| --------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------- |
-| --oruga-dropdown-disabled-opacity             | \$dropdown-disabled-opacity             | \$base-disabled-opacity                                              |
-| --oruga-dropdown-item-active-background-color | \$dropdown-item-active-background-color | \$primary                                                            |
-| --oruga-dropdown-item-active-color            | \$dropdown-item-active-color            | \$primary-invert                                                     |
-| --oruga-dropdown-item-color                   | \$dropdown-item-color                   | #000000                                                              |
-| --oruga-dropdown-item-disabled-opacity        | \$dropdown-item-disabled-opacity        | \$base-disabled-opacity                                              |
-| --oruga-dropdown-item-font-size               | \$dropdown-item-font-size               | \$base-font-size                                                     |
-| --oruga-dropdown-item-hover-background-color  | \$dropdown-item-hover-background-color  | #f5f5f5                                                              |
-| --oruga-dropdown-item-hover-color             | \$dropdown-item-hover-color             | #000000                                                              |
-| --oruga-dropdown-item-line-height             | \$dropdown-item-line-height             | \$base-line-height                                                   |
-| --oruga-dropdown-item-padding                 | \$dropdown-item-padding                 | .375rem 1rem                                                         |
-| --oruga-dropdown-item-font-weight             | \$dropdown-item-font-weight             | 400                                                                  |
-| --oruga-dropdown-menu-background              | \$dropdown-menu-background              | #ffffff                                                              |
-| --oruga-dropdown-menu-border-radius           | \$dropdown-menu-border-radius           | \$base-border-radius                                                 |
-| --oruga-dropdown-menu-box-shadow              | \$dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02) |
-| --oruga-dropdown-menu-margin                  | \$dropdown-menu-margin                  | 0                                                                    |
-| --oruga-dropdown-menu-padding                 | \$dropdown-menu-padding                 | .5rem 0 .5rem 0                                                      |
-| --oruga-dropdown-menu-width                   | \$dropdown-menu-width                   | 12rem                                                                |
-| --oruga-dropdown-menu-zindex                  | \$dropdown-menu-zindex                  | 20                                                                   |
-| --oruga-dropdown-mobile-max-height            | \$dropdown-mobile-max-height            | calc(100vh - 120px)                                                  |
-| --oruga-dropdown-mobile-max-width             | \$dropdown-mobile-max-width             | 460px                                                                |
-| --oruga-dropdown-mobile-overlay-color         | \$dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                  |
-| --oruga-dropdown-mobile-overlay-zindex        | \$dropdown-mobile-overlay-zindex        | 40                                                                   |
-| --oruga-dropdown-mobile-width                 | \$dropdown-mobile-width                 | calc(100vw - 40px)                                                   |
-| --oruga-dropdown-mobile-zindex                | \$dropdown-mobile-zindex                | 50                                                                   |
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                          | Default                                                                      |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| $dropdown-disabled-opacity             | $base-disabled-opacity                                                       |
+| $dropdown-item-active-background-color | $primary                                                                     |
+| $dropdown-item-active-color            | $primary-invert                                                              |
+| $dropdown-item-color                   | #000000                                                                      |
+| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                                       |
+| $dropdown-item-font-size               | $base-font-size                                                              |
+| $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
+| $dropdown-item-hover-color             | #000000                                                                      |
+| $dropdown-item-line-height             | $base-line-height                                                            |
+| $dropdown-item-padding                 | 0.375rem 1rem                                                                |
+| $dropdown-item-font-weight             | 400                                                                          |
+| $dropdown-menu-background              | #ffffff                                                                      |
+| $dropdown-menu-border-radius           | $base-border-radius                                                          |
+| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-menu-margin                  | 0                                                                            |
+| $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
+| $dropdown-menu-width                   | 12rem                                                                        |
+| $dropdown-menu-zindex                  | 20                                                                           |
+| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                          |
+| $dropdown-mobile-max-width             | 460px                                                                        |
+| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                          |
+| $dropdown-mobile-overlay-zindex        | 40                                                                           |
+| $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
+| $dropdown-mobile-zindex                | 50                                                                           |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                          | Default                                                                      |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| $dropdown-disabled-opacity             | $base-disabled-opacity                                                       |
+| $dropdown-item-active-background-color | $primary                                                                     |
+| $dropdown-item-active-color            | $primary-invert                                                              |
+| $dropdown-item-color                   | #000000                                                                      |
+| $dropdown-item-disabled-opacity        | $base-disabled-opacity                                                       |
+| $dropdown-item-font-size               | $base-font-size                                                              |
+| $dropdown-item-hover-background-color  | #f5f5f5                                                                      |
+| $dropdown-item-hover-color             | #000000                                                                      |
+| $dropdown-item-line-height             | $base-line-height                                                            |
+| $dropdown-item-padding                 | 0.375rem 1rem                                                                |
+| $dropdown-item-font-weight             | 400                                                                          |
+| $dropdown-menu-background              | #ffffff                                                                      |
+| $dropdown-menu-border-radius           | $base-border-radius                                                          |
+| $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-menu-margin                  | 0                                                                            |
+| $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
+| $dropdown-menu-width                   | 12rem                                                                        |
+| $dropdown-menu-zindex                  | 20                                                                           |
+| $dropdown-mobile-max-height            | calc(100vh - 120px)                                                          |
+| $dropdown-mobile-max-width             | 460px                                                                        |
+| $dropdown-mobile-overlay-color         | rgba(#000000, 0.86)                                                          |
+| $dropdown-mobile-overlay-zindex        | 40                                                                           |
+| $dropdown-mobile-width                 | calc(100vw - 40px)                                                           |
+| $dropdown-mobile-zindex                | 50                                                                           |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_dropdown.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable         | Default       |
+| --------------------- | ------------- |
+| $dropdown-menu-zindex | $zindex-modal |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
+
+</div>
 
 </div>

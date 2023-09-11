@@ -1,24 +1,21 @@
-<template>
-  <o-field class="file">
-    <o-upload v-model="file">
-      <o-button tag="a" variant="primary">
-        <o-icon icon="upload"></o-icon>
-        <span>Click to upload</span>
-      </o-button>
-    </o-upload>
-    <span class="file-name" v-if="file">
-      {{ file.name }}
-    </span>
-  </o-field>
-</template>
+<script setup>
+import { ref } from "vue";
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-    setup() {
-        const file = ref(null)
-        return { file }
-    }
-})
+const file = ref(null);
 </script>
+
+<template>
+    <section>
+        <o-field class="file">
+            <o-upload v-model="file">
+                <o-button tag="a" variant="primary">
+                    <o-icon icon="upload" />
+                    <span>Click to upload</span>
+                </o-button>
+            </o-upload>
+            <span v-if="file" class="file-name">
+                {{ file.name }}
+            </span>
+        </o-field>
+    </section>
+</template>

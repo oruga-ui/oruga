@@ -10,20 +10,31 @@ title: Radio
 
 <Carbon />
 </div>
+
+<div class="vp-example">
+
+## Examples
+
 <example-radio />
+
+</div>
+<div class="vp-example">
 
 ## Class props
 
-<br />
-
 <inspector-radio-viewer />
 
-<br />
-<br />
+</div>
 
 <div class="vp-doc">
 
-## Props
+## Radio component
+
+```html
+<o-radio></o-radio>
+```
+
+### Props
 
 | Prop name   | Description                    | Type                           | Values                                                                          | Default |
 | ----------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------------------- | ------- |
@@ -36,32 +47,69 @@ title: Radio
 | v-model     |                                | string\|number\|boolean\|array | -                                                                               |         |
 | variant     | Color of the control, optional | string                         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` |         |
 
-## Events
+### Events
 
 | Event name        | Properties | Description |
 | ----------------- | ---------- | ----------- |
 | update:modelValue |            |
 | input             |            |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_radio.scss)
+<div class="vp-doc">
 
-| CSS Variable                             | SASS Variable                      | Default                 |
-| ---------------------------------------- | ---------------------------------- | ----------------------- |
-| --oruga-radio-active-background-color    | \$radio-active-background-color    | \$primary               |
-| --oruga-radio-checked-box-shadow-length  | \$radio-checked-box-shadow-length  | 0 0 0.5em               |
-| --oruga-radio-checked-box-shadow-opacity | \$radio-checked-box-shadow-opacity | 0.8                     |
-| --oruga-radio-disabled-opacity           | \$radio-disabled-opacity           | \$base-disabled-opacity |
-| --oruga-radio-label-padding              | \$radio-label-padding              | 0 0 0 .5em              |
-| --oruga-radio-margin-sibiling            | \$radio-margin-sibiling            | 0.5em                   |
-| --oruga-radio-size                       | \$radio-size                       | 1rem                    |
-| --oruga-radio-line-height                | \$radio-line-height                | 1.25                    |
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                     | Default                |
+| --------------------------------- | ---------------------- |
+| $radio-active-background-color    | $primary               |
+| $radio-checked-box-shadow-length  | 0 0 0.5em              |
+| $radio-checked-box-shadow-opacity | 0.8                    |
+| $radio-disabled-opacity           | $base-disabled-opacity |
+| $radio-label-padding              | 0 0 0 0.5em            |
+| $radio-margin-sibiling            | 0.5em                  |
+| $radio-size                       | 1rem                   |
+| $radio-line-height                | 1.25                   |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_radio.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                     | Default                |
+| --------------------------------- | ---------------------- |
+| $radio-active-background-color    | $primary               |
+| $radio-checked-box-shadow-length  | 0 0 0.5em              |
+| $radio-checked-box-shadow-opacity | 0.8                    |
+| $radio-disabled-opacity           | $base-disabled-opacity |
+| $radio-label-padding              | 0 0 0 0.5em            |
+| $radio-margin-sibiling            | 0.5em                  |
+| $radio-size                       | 1rem                   |
+| $radio-line-height                | 1.25                   |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_radio.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
 
 </div>

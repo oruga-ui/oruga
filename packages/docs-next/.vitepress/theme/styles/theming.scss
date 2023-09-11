@@ -1,0 +1,82 @@
+// the theme classes come from the value props in themes.json
+
+// Components Theme Style section
+
+.theme-orugabase {
+    .theme-orugafull,
+    .theme-bulma,
+    .theme-bootstrap, {
+        display: none;
+    }
+}
+
+.theme-orugafull {
+    .theme-orugabase,
+    .theme-bulma,
+    .theme-bootstrap, {
+        display: none;
+    }
+}
+
+.theme-bulma {
+    .theme-orugabase,
+    .theme-orugafull,
+    .theme-bootstrap, {
+        display: none;
+    }
+}
+
+.theme-bootstrap {
+    .theme-orugabase,
+    .theme-orugafull,
+    .theme-bulma, {
+        display: none;
+    }
+}
+
+// Global theme overrides
+
+.theme-bootstrap {
+    a.VPButton, 
+    a.VPLink,
+    a.outline-link,
+    a.pager-link {
+        text-decoration: none;
+    }
+
+    .VPSidebarItem p {
+        margin: 0;
+    }
+    
+    .VPDocAside ul:not(.nested) {
+        padding: 0;
+    }
+    
+    .main a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.theme-bulma {
+    .content-body {
+        button,
+        button:focus {
+            border: 0;
+            box-shadow: none;
+            color: inherit;
+        }
+    }
+
+    .VPDocAside ul {
+        list-style: none;
+        margin: 0;
+    }
+
+    .vp-code-group .tabs {
+        margin-bottom: 0;
+        display: block;
+    }
+}

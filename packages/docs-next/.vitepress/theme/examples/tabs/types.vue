@@ -1,15 +1,19 @@
 <template>
-  <section>
-    <o-tabs type="boxed">
-      <o-tab-item label="Pictures" icon="images"></o-tab-item>
-      <o-tab-item label="Music" icon="music"></o-tab-item>
-      <o-tab-item label="Videos" icon="video"></o-tab-item>
-    </o-tabs>
+    <section>
+        <o-field label="Boxed">
+            <o-tabs type="boxed">
+                <o-tab-item label="Pictures" icon="images" />
+                <o-tab-item label="Music" icon="music" />
+                <o-tab-item label="Videos" icon="video" />
+            </o-tabs>
+        </o-field>
 
-    <o-tabs type="toggle">
-      <o-tab-item label="Pictures" icon="images"></o-tab-item>
-      <o-tab-item label="Music" icon="music"></o-tab-item>
-      <o-tab-item label="Videos" icon="video"></o-tab-item>
-    </o-tabs>
-  </section>
+        <o-field label="Toggle">
+            <o-tabs type="toggle">
+                <o-tab-item label="Pictures" icon="images" />
+                <o-tab-item label="Music" icon="music" />
+                <o-tab-item label="Videos" icon="video" />
+            </o-tabs>
+        </o-field>
+    </section>
 </template>

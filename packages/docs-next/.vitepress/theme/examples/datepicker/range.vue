@@ -1,10 +1,17 @@
+<script setup>
+const date = new Date();
+</script>
+
 <template>
-  <o-field label="Select a date">
-    <o-datepicker
-      placeholder="Click to select..."
-      icon="calendar"
-      range
-    >
-    </o-datepicker>
-  </o-field>
+    <section>
+        <o-field label="Select a date">
+            <o-datepicker
+                v-model="date"
+                placeholder="Click to select..."
+                icon="calendar"
+                trap-focus
+                range />
+        </o-field>
+        <p><b>Selected:</b> {{ date }}</p>
+    </section>
 </template>

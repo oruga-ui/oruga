@@ -1,19 +1,27 @@
-<template>
-
-	<h2>Base</h2>
-
-	<ExampleViewer :component="Base" :code="BaseCode" />
-
-	<h2>With Icons</h2>
-
-	<ExampleViewer :component="WithIcons" :code="WithIconsCode" />
-
-</template>
-
 <script setup>
-	import Base from './base.vue';
-	import BaseCode from './base.vue?raw';
+import Base from "./base.vue";
+import BaseCode from "./base.vue?raw";
 
-	import WithIcons from './with-icons.vue';
-	import WithIconsCode from './with-icons.vue?raw';
+import Variants from "./variants.vue";
+import VariantsCode from "./variants.vue?raw";
+
+import Sizes from "./sizes.vue";
+import SizesCode from "./sizes.vue?raw";
+
+import WithIcons from "./with-icons.vue";
+import WithIconsCode from "./with-icons.vue?raw";
 </script>
+
+<template>
+    <h3 id="base">Base</h3>
+    <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="variants">Variants</h3>
+    <ExampleViewer :component="Variants" :code="VariantsCode" />
+
+    <h3 id="sizes">Sizes</h3>
+    <ExampleViewer :component="Sizes" :code="SizesCode" />
+
+    <h3 id="icons">With Icons</h3>
+    <ExampleViewer :component="WithIcons" :code="WithIconsCode" />
+</template>
