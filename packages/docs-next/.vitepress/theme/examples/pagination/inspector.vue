@@ -38,6 +38,10 @@ const inspectData = [
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
+        class: "listItemClass",
+        description: "Class of the pagination list items",
+    },
+    {
         class: "linkCurrentClass",
         description: "Class of the current link",
     },

@@ -4,21 +4,11 @@
             <slot />
         </div>
         <div>
-            <div v-if="paginated">
-                <o-pagination
-                    :icon-pack="iconPack"
-                    :total="total"
-                    :per-page="perPage"
-                    :simple="paginationSimple"
-                    :size="paginationSize"
-                    :current="newCurrentPage"
-                    :rounded="rounded"
-                    @change="pageChanged"
-                    :aria-next-label="ariaNextLabel"
-                    :aria-previous-label="ariaPreviousLabel"
-                    :aria-page-label="ariaPageLabel"
-                    :aria-current-label="ariaCurrentLabel" />
-            </div>
+            <o-pagination
+                v-if="paginated"
+                v-bind="$attrs"
+                :current="newCurrentPage"
+                @change="pageChanged"/>
         </div>
     </div>
 </template>
@@ -35,18 +25,8 @@ export default defineComponent({
     emits: ['update:currentPage', 'page-change'],
     props: {
         paginated: Boolean,
-        total: Number,
-        perPage: Number,
         currentPage: Number,
-        paginationSimple: Boolean,
-        paginationSize: String,
-        rounded: Boolean,
-        iconPack: String,
         rootClass: [String, Array, Object],
-        ariaNextLabel: String,
-        ariaPreviousLabel: String,
-        ariaPageLabel: String,
-        ariaCurrentLabel: String
     },
     data() {
         return {

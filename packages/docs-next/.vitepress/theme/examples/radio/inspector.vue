@@ -57,8 +57,8 @@ const inspectData = [
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-radio v-model="props.checkbox" native-value="default" v-bind="props"
-            >Radio</o-radio
-        >
+        <o-radio v-model="props.checkbox" native-value="default" v-bind="props">
+            Radio
+        </o-radio>
     </inspector-wrapper>
 </template>

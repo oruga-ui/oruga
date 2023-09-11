@@ -1,28 +1,3 @@
-<template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-field :variant="props.fieldvariant" :message="props.fieldmessage">
-            <o-select
-                v-bind="props"
-                v-model="selectedOptions"
-                placeholder="Select a character">
-                <optgroup label="Black Sails">
-                    <option value="flint">Flint</option>
-                    <option value="silver">Silver</option>
-                    <option value="vane">Vane</option>
-                    <option value="billy">Billy</option>
-                    <option value="jack">Jack</option>
-                </optgroup>
-                <optgroup label="Breaking Bad">
-                    <option value="heisenberg">Heisenberg</option>
-                    <option value="jesse">Jesse</option>
-                    <option value="saul">Saul</option>
-                    <option value="mike">Mike</option>
-                </optgroup>
-            </o-select>
-        </o-field>
-    </inspector-wrapper>
-</template>
-
 <script setup>
 import { ref } from "vue";
 
@@ -141,3 +116,28 @@ const inspectData = [
     },
 ];
 </script>
+
+<template>
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-field :variant="props.fieldvariant" :message="props.fieldmessage">
+            <o-select
+                v-bind="props"
+                v-model="selectedOptions"
+                placeholder="Select a character">
+                <optgroup label="Black Sails">
+                    <option value="flint">Flint</option>
+                    <option value="silver">Silver</option>
+                    <option value="vane">Vane</option>
+                    <option value="billy">Billy</option>
+                    <option value="jack">Jack</option>
+                </optgroup>
+                <optgroup label="Breaking Bad">
+                    <option value="heisenberg">Heisenberg</option>
+                    <option value="jesse">Jesse</option>
+                    <option value="saul">Saul</option>
+                    <option value="mike">Mike</option>
+                </optgroup>
+            </o-select>
+        </o-field>
+    </inspector-wrapper>
+</template>
