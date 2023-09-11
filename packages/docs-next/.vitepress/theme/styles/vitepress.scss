@@ -1,5 +1,9 @@
 // Vitepress overrides
 
+.VPNavBarTitle a {
+    text-decoration: none;
+}
+
 .VPFlyout:hover .text {
     color: var(--vp-c-brand) !important;
 }

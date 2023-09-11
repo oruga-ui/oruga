@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import Layout from "vitepress/dist/client/theme-default/Layout.vue";
 import ThemeSelector from "./../components/ThemeSelector.vue";
+import { useSidebar } from "vitepress/dist/client/theme-default/composables/sidebar";
+
+const { hasSidebar } = useSidebar();
 
 const theme = ref({ key: undefined });
 </script>
@@ -10,7 +13,7 @@ const theme = ref({ key: undefined });
     <Layout :class="theme.key">
         <template #nav-bar-content-before>
             <client-only>
-                <ThemeSelector v-model:theme="theme" />
+                <ThemeSelector v-if="hasSidebar" v-model:theme="theme" />
             </client-only>
         </template>
     </Layout>
