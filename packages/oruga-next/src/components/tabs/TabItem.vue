@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -21,7 +22,7 @@ export default defineComponent({
          * Tabs item tag name
          */
         tag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'tabs.itemTag', 'button')
             }

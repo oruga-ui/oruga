@@ -295,7 +295,7 @@
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
-                    :size="paginationSize"
+                    :paginationSize="paginationSize"
                     :order="paginationOrder"
                     @page-change="(event) => $emit('page-change', event)"
                     :aria-next-label="ariaNextLabel"
@@ -587,7 +587,10 @@ export default defineComponent({
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
         /** Size of pagination if paginated */
-        paginationSize: String,
+        paginationSize: {
+          type: String,
+          default: () => { return getValueByPath(getOptions(), 'table.paginationSize', 'small') }
+        },
         /** Pagination buttons order if paginated */
         paginationOrder: String,
         rootClass: [String, Function, Array],

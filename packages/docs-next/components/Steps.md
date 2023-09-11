@@ -86,5 +86,7 @@ title: Steps
 | --oruga-steps-content-padding              | \$steps-content-padding              | 1rem                         |
 | --oruga-steps-font-size                    | \$steps-font-size                    | \$base-font-size             |
 | --oruga-steps-details-title-font-weight    | \$steps-details-title-font-weight    | 600                          |
+| --oruga-steps-divider-color-bg             | \$steps-divider-color-bg             | \$steps-color                |
+| --oruga-steps-divider-color                | \$steps-divider-color                | \$primary                    |
 
 </div>

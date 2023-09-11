@@ -587,7 +587,10 @@ export default {
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
         /** Size of pagination if paginated */
-        paginationSize: String,
+        paginationSize: {
+          type: String,
+          default: () => { return getValueByPath(getOptions(), 'table.paginationSize', 'small') }
+        },
         rootClass: [String, Function, Array],
         tableClass: [String, Function, Array],
         wrapperClass: [String, Function, Array],

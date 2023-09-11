@@ -33,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import Icon from '../icon/Icon.vue'
@@ -121,7 +122,7 @@ export default defineComponent({
          * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
          */
         tag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: 'button'
         },
         /**

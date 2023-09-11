@@ -20,6 +20,7 @@ $steps-details-title-font-weight: 600 !default;
 /* @docs */
 
 $LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
+$GRADIENT_EXPRESSION: "linear-gradient(to left, $param1 50%, $param2 50%)";
 
 @mixin steps-size($size, $name: null) {
 
@@ -137,7 +138,11 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
                         @include avariable('color', ('variant-' + #{$name}), $color);
                     }
                     .o-steps__divider {
-                        background: linear-gradient(to left, $steps-color 50%, $color 50%);
+                        @include evariable(
+                            'background', $GRADIENT_EXPRESSION,
+                            eparam('$param1', variable(if($name != null, ('steps-divider-color-bg-' + #{$name}), 'steps-divider-color-bg'), $steps-color)),
+                            eparam('$param2', variable(if($name != null, ('steps-divider-color-' + #{$name}), 'steps-divider-color'), $color)),
+                        );
                         background-size: 200% 100%;
                     }
                 }
@@ -147,7 +152,11 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
                         @include avariable('background-color', ('variant-' + #{$name}), $color);
                     }
                     .o-steps__divider {
-                        background: linear-gradient(to left, $steps-color 50%, $color 50%);
+                        @include evariable(
+                            'background', $GRADIENT_EXPRESSION,
+                            eparam('$param1', variable(if($name != null, ('steps-divider-color-bg-' + #{$name}), 'steps-divider-color-bg'), $steps-color)),
+                            eparam('$param2', variable(if($name != null, ('steps-divider-color-' + #{$name}), 'steps-divider-color'), $color)),
+                        );
                         background-size: 200% 100%;
                     }
                 }
@@ -156,7 +165,7 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
     }
 
     &__divider {
-        background: linear-gradient(to left, $steps-color 50%, $steps-active-color 50%);
+        background: linear-gradient(to left, variable('steps-divider-color-bg', $steps-color) 50%, variable('steps-divider-color', $primary) 50%);
         background-size: 200% 100%;
         background-position: right bottom;
         // This will contain the divider
@@ -301,7 +310,11 @@ $LR_CALC_EXPRESSION: "calc(($size - $divider-height) * 0.5)";
                 $color: nth($pair, 1);
                 &--#{$name} {
                     .o-steps__divider {
-                        background: linear-gradient(to top, $steps-color 50%, $color 50%);
+                        @include evariable(
+                            'background', $GRADIENT_EXPRESSION,
+                            eparam('$param1', variable(if($name != null, ('steps-divider-color-bg-' + #{$name}), 'steps-divider-color-bg'), $steps-color)),
+                            eparam('$param2', variable(if($name != null, ('steps-divider-color-' + #{$name}), 'steps-divider-color'), $color)),
+                        );
                         background-size: 100% 200%;
                         background-position: left bottom;
                     }
