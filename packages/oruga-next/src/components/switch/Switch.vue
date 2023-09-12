@@ -26,9 +26,10 @@
             <span :class="checkSwitchClasses"></span>
         </span>
         <span
+            v-if="label || $slots.default"
             :id="ariaLabelledby"
             :class="labelClasses">
-            <slot/>
+            <slot>{{ label }}</slot>
         </span>
     </label>
 </template>
@@ -55,6 +56,13 @@ export default defineComponent({
          * Same as native value
          */
         nativeValue: [String, Number, Boolean],
+        /**
+         * Input label, unnecessary when default slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
+        },
         disabled: Boolean,
         /**
          * Color of the switch, optional

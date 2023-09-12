@@ -21,9 +21,10 @@
             :false-value="falseValue"
             :aria-labelledby="ariaLabelledby">
         <span
+            v-if="label || $slots.default"
             :id="ariaLabelledby"
             :class="labelClasses">
-            <slot/>
+            <slot>{{ label }}</slot>
         </span>
     </label>
 </template>
@@ -47,6 +48,13 @@ export default defineComponent({
         'input'
     ],
     props: {
+        /**
+         * Input label, unnecessary when default slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
+        },
         /**
          * Same as native indeterminate
          */

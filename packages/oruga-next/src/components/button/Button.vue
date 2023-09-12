@@ -16,8 +16,8 @@
                 :class="iconLeftClasses"
             />
             <span
-                :class="labelClasses"
-                v-if="label || $slots.default">
+                v-if="label || $slots.default"
+                :class="labelClasses">
                 <slot>{{ label }}</slot>
             </span>
             <o-icon
@@ -67,9 +67,12 @@ export default defineComponent({
          */
         size: String,
         /**
-         * Button label, optional when default slot
+         * Button label, unnecessary when default slot is used
          */
-        label: String,
+        label: {
+            type: String,
+            default: undefined,
+        },
         /**
          * Icon pack to use
          * @values mdi, fa, fas and any other custom icon pack
