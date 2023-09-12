@@ -28,24 +28,24 @@
         />
 
         <transition :name="animation">
-            <div
-                :class="menuClasses"
-                :is="menuTag"
+            <component
                 v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
+                :is="menuTag"
+                :class="menuClasses"
                 :style="menuStyle"
                 ref="dropdown">
-                <div
+                <component
                     v-if="$slots.header"
                     :is="itemTag"
                     ref="header"
                     role="button"
                     :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'header')"
-                    :class="itemHeaderClasses">
+                    :class="itemHeaderClasses"
+                    @click="selectHeaderOrFoterByClick($event, 'header')">
                     <slot name="header"/>
-                </div>
+                </component>
                 <template v-for="(element, groupindex) in computedData">
-                    <div
+                    <component
                         v-if="element.group"
                         :is="itemTag"
                         :key="groupindex + 'group'"
@@ -58,15 +58,14 @@
                         <span v-else>
                             {{ element.group }}
                         </span>
-                    </div>
-                    <div
+                    </component>
+                    <component
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
                         :is="itemTag"
                         :class="itemOptionClasses(option)"
-                        @click.stop="setSelected(option, !keepOpen, $event)"
                         :ref="setItemRef"
-                    >
+                        @click.stop="setSelected(option, !keepOpen, $event)">
                         <slot
                             v-if="$slots.default"
                             :option="option"
@@ -74,25 +73,25 @@
                         <span v-else>
                             {{ getValue(option) }}
                         </span>
-                    </div>
+                    </component>
                 </template>
-                <div
+                <component
                     v-if="isEmpty && $slots.empty"
                     :is="itemTag"
                     :class="itemEmptyClasses">
                     <slot name="empty" />
-                </div>
-                <div
+                </component>
+                <component
                     v-if="$slots.footer"
                     :is="itemTag"
                     ref="footer"
                     role="button"
                     :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'footer')"
-                    :class="itemFooterClasses">
+                    :class="itemFooterClasses"
+                    @click="selectHeaderOrFoterByClick($event, 'footer')">
                     <slot name="footer"/>
-                </div>
-            </div>
+                </component>
+            </component>
         </transition>
     </div>
 </template>

@@ -60,8 +60,9 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    autocomplete="off"
                                     :modelValue="isAllChecked"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     @update:modelValue="checkAll"/>
                             </template>
@@ -107,8 +108,9 @@
                         <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
                             <template v-if="headerCheckable">
                                 <o-checkbox
-                                    autocomplete="off"
                                     :modelValue="isAllChecked"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     @update:modelValue="checkAll"/>
                             </template>
@@ -205,9 +207,10 @@
                                 :class="tdCheckboxClasses"
                                 v-if="checkable && checkboxPosition === 'left'">
                                 <o-checkbox
-                                    autocomplete="off"
-                                    :disabled="!isRowCheckable(row)"
                                     :modelValue="isRowChecked(row)"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="!isRowCheckable(row)"
                                     @update:modelValue="checkRow(row, index, $event)"
                                 />
                             </td>
@@ -230,9 +233,10 @@
                                 :class="tdCheckboxClasses"
                                 v-if="checkable && checkboxPosition === 'right'">
                                 <o-checkbox
-                                    autocomplete="off"
-                                    :disabled="!isRowCheckable(row)"
                                     :modelValue="isRowChecked(row)"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="!isRowCheckable(row)"
                                     @update:modelValue="checkRow(row, index, $event)"
                                 />
                             </td>
@@ -411,6 +415,14 @@ export default defineComponent({
                     'right'
                 ].indexOf(value) >= 0
             }
+        },
+        /**
+         * Color of the checkbox when checkable, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
+        checkboxVariant: {
+            type: String,
+            default: undefined
         },
         /** Set which row is selected, use v-model:selected to make it two-way binding */
         selected: Object,
