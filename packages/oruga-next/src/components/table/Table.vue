@@ -299,7 +299,7 @@
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
-                    :paginationSize="paginationSize"
+                    :size="paginationSize"
                     :order="paginationOrder"
                     @page-change="(event) => $emit('page-change', event)"
                     :aria-next-label="ariaNextLabel"
