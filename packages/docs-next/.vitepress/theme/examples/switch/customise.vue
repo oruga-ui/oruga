@@ -11,10 +11,12 @@ const position = ref("right");
 <template>
     <section>
         <o-field grouped>
-            <o-switch v-model="isRounded">Rounded</o-switch>
-            <o-switch v-model="position" true-value="left" false-value="right">
-                Label on left
-            </o-switch>
+            <o-switch v-model="isRounded" label="Rounded" />
+            <o-switch
+                v-model="position"
+                true-value="left"
+                false-value="right"
+                label="Label on left" />
         </o-field>
         <o-field grouped>
             <o-field label="Variant">
@@ -54,7 +56,6 @@ const position = ref("right");
             :size="size"
             :variant="variant"
             :passive-variant="passive"
-            >Sample</o-switch
-        >
+            label="Sample" />
     </section>
 </template>
