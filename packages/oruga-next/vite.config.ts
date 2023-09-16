@@ -1,10 +1,15 @@
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import istanbul from 'vite-plugin-istanbul'
 
 // https://vitejs.dev/config/
-export default {
-    open: true,
-    port: 3000,
+/** @type {import('vite').UserConfig} */
+export default defineConfig({
+    root: __dirname,
+    server: {
+        open: true,
+        port: 3000,
+    },
     build: {
         sourcemap: true
     },
@@ -17,4 +22,4 @@ export default {
             cypress: true,
         })
     ]
-}
+})
