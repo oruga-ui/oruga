@@ -20,7 +20,7 @@
                 <component
                     v-if="component"
                     v-bind="props"
-                    v-on="events || {}"
+                    v-on="events"
                     :is="component"
                     @close="close"/>
                 <div v-else-if="content"> {{ content }} </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type Component } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import MatchMediaMixin from '../../utils/MatchMediaMixin'
@@ -71,7 +71,7 @@ export default defineComponent({
         /** Whether modal is active or not, use v-model:active to make it two-way binding */
         active: Boolean,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
-        component: [Object, Function],
+        component: Object as () => Component,
         /** Text content */
         content: String,
         /** @ignore */
@@ -81,7 +81,10 @@ export default defineComponent({
         /** Props to be binded to the injected component */
         props: Object,
          /** Events to be binded to the injected component */
-        events: Object,
+        events: {
+            type: Object, 
+            default: () => ({})
+        },
         /** Width of the Modal */
         width: {
             type: [String, Number],

@@ -1,39 +1,46 @@
 <template>
-    <section :class="monthClasses">
-        <div :class="monthBodyClasses">
-            <div :class="monthTableClasses">
-            <template
-                v-for="(date, index) in monthDates"
-                :key="index">
-                <a
-                    :ref="`month-${date.getMonth()}`"
-                    v-if="selectableDate(date) && !disabled"
-                    :class="cellClasses(date)"
-                    role="button"
-                    href="#"
-                    :disabled="disabled"
-                    @click.prevent="updateSelectedDate(date)"
-                    @mouseenter="setRangeHoverEndDate(date)"
-                    @keydown.prevent="manageKeydown($event, date)"
-                    :tabindex="focused.month === date.getMonth() ? null : -1">
-                    {{ monthNames[date.getMonth()] }}
-                    <div class="events" v-if="eventsDateMatch(date)">
-                        <div
-                            class="event"
-                            :class="event.type"
-                            v-for="(event, index) in eventsDateMatch(date)"
-                            :key="index"/>
-                    </div>
-                </a>
-                <div
-                    v-else
-                    :class="cellClasses(date)">
-                    {{ monthNames[date.getMonth()] }}
-                </div>
-            </template>
+  <section :class="monthClasses">
+    <div :class="monthBodyClasses">
+      <div :class="monthTableClasses">
+        <template
+          v-for="(date, index) in monthDates"
+          :key="index"
+        >
+          <a
+            v-if="selectableDate(date) && !disabled"
+            :ref="`month-${date.getMonth()}`"
+            :class="cellClasses(date)"
+            role="button"
+            href="#"
+            :disabled="disabled"
+            :tabindex="focused.month === date.getMonth() ? null : -1"
+            @click.prevent="updateSelectedDate(date)"
+            @mouseenter="setRangeHoverEndDate(date)"
+            @keydown.prevent="manageKeydown($event, date)"
+          >
+            {{ monthNames[date.getMonth()] }}
+            <div
+              v-if="eventsDateMatch(date).length"
+              class="events"
+            >
+              <div
+                v-for="(event, index) in eventsDateMatch(date)"
+                :key="index"
+                class="event"
+                :class="event.type"
+              />
             </div>
-        </div>
-    </section>
+          </a>
+          <div
+            v-else
+            :class="cellClasses(date)"
+          >
+            {{ monthNames[date.getMonth()] }}
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -46,7 +53,6 @@ export default {
     name: 'ODatepickerMonth',
     mixins: [BaseComponentMixin, DatepickerMixin],
     configField: 'datepicker',
-    emits: ['update:modelValue', 'range-start', 'range-end', 'updated:focused'],
     props: {
         modelValue: {
             type: [Date, Array]
@@ -81,6 +87,7 @@ export default {
         monthCellUnselectableClass: [String, Function, Array],
         monthCellEventsClass: [String, Function, Array]
     },
+    emits: ['update:modelValue', 'range-start', 'range-end', 'updated:focused'],
     data() {
         return {
             selectedBeginDate: undefined,
@@ -256,7 +263,7 @@ export default {
             return validity.indexOf(false) < 0
         },
         eventsDateMatch(day) {
-            if (!this.eventsInThisYear.length) return false
+            if (!this.eventsInThisYear.length) return []
 
             const monthEvents = []
 
@@ -267,7 +274,7 @@ export default {
             }
 
             if (!monthEvents.length) {
-                return false
+                return []
             }
 
             return monthEvents
