@@ -200,6 +200,7 @@ export function createAbsoluteElement(el: Element) {
  */
 export function escapeRegExpChars(value: string) {
     if (!value) return value;
+    // eslint-disable-next-line no-useless-escape
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
@@ -341,17 +342,15 @@ export function getStyleValue(value: any): any {
 
 export function debounce(func: Function, wait: number, immediate?: boolean) {
     let timeout: any;
-    return function () {
-        const context = this;
-        const args = arguments;
-        const later = function () {
+    return (...args: any[]) => {
+        const later = () => {
             timeout = null;
-            if (!immediate) func.apply(context, args);
+            if (!immediate) func.apply(this, args);
         };
         const callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+        if (callNow) func.apply(this, args);
     };
 }
 

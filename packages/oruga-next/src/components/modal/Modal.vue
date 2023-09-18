@@ -312,7 +312,7 @@ export default defineComponent({
         cancel(method) {
             if (this.cancelOptions.indexOf(method) < 0) return;
 
-            this.onCancel.apply(null, arguments);
+            this.onCancel.apply(null);
             this.close({ action: "cancel", method });
         },
 
@@ -325,7 +325,7 @@ export default defineComponent({
                 this.destroyed = true;
             }
             this.$emit("update:active", false);
-            this.onClose.apply(null, arguments);
+            this.onClose.apply(null);
 
             // Waiting for the animation complete before destroying
             if (this.programmatic) {
@@ -333,7 +333,7 @@ export default defineComponent({
                     this.programmatic.instances.remove(this);
                 }
                 if (this.programmatic.resolve) {
-                    this.programmatic.resolve.apply(null, arguments);
+                    this.programmatic.resolve.apply(null);
                 }
                 window.requestAnimationFrame(() => {
                     removeElement(this.$el);

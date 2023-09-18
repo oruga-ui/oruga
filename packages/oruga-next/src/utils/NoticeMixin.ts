@@ -126,17 +126,17 @@ export default {
             );
         },
 
-        close() {
+        close(...args: any[]) {
             clearTimeout(this.timer);
             this.$emit("close");
-            this.onClose.apply(null, arguments);
+            this.onClose.apply(null, args);
 
             if (this.programmatic) {
                 if (this.programmatic.instances) {
                     this.programmatic.instances.remove(this);
                 }
                 if (this.programmatic.resolve) {
-                    this.programmatic.resolve.apply(null, arguments);
+                    this.programmatic.resolve.apply(null, args);
                 }
             }
 

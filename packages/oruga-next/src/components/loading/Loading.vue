@@ -147,8 +147,8 @@ export default defineComponent({
         /**
          * Emit events, and destroy modal if it's programmatic.
          */
-        close() {
-            this.onCancel.apply(null, arguments);
+        close(...args: any[]) {
+            this.onCancel.apply(null, args);
             this.$emit("close");
             this.$emit("update:active", false);
 
@@ -158,7 +158,7 @@ export default defineComponent({
                     this.programmatic.instances.remove(this);
                 }
                 if (this.programmatic.resolve) {
-                    this.programmatic.resolve.apply(null, arguments);
+                    this.programmatic.resolve.apply(null, args);
                 }
                 this.isActive = false;
                 window.requestAnimationFrame(() => {

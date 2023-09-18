@@ -1,6 +1,11 @@
 /* eslint-env node */
 module.exports = {
   root: true,
+  env: {
+    node: true,
+    commonjs: true,
+    jest: true,
+  },
   extends: [
     "prettier",
     "eslint:recommended",

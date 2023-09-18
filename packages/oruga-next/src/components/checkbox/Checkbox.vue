@@ -137,8 +137,8 @@ export default defineComponent({
             :indeterminate.prop="indeterminate"
             :true-value="trueValue"
             :false-value="falseValue"
-            @click.stop
-            :aria-labelledby="ariaLabelledby" />
+            :aria-labelledby="ariaLabelledby"
+            @click.stop />
         <span :id="ariaLabelledby" :class="labelClasses">
             <slot />
         </span>

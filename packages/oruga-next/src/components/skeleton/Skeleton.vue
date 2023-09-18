@@ -99,9 +99,10 @@ export default defineComponent({
                         width: toCssDimension(width),
                         borderRadius: this.circle ? "50%" : null,
                     },
-                }
+                }),
             );
         }
+
         return h(
             "div",
             {
@@ -117,7 +118,7 @@ export default defineComponent({
                 ],
             },
             items,
-        )
+        );
     },
 });
 </script>

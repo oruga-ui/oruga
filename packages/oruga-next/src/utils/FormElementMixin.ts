@@ -91,8 +91,8 @@ export default defineComponent({
          * Get the type prop from parent if it's a Field.
          */
         statusVariant() {
-            if (!this.parentField) return;
-            if (!this.parentField.newVariant) return;
+            if (!this.parentField) return undefined;
+            if (!this.parentField.newVariant) return undefined;
             if (typeof this.parentField.newVariant === "string") {
                 return this.parentField.newVariant;
             } else {
@@ -102,6 +102,7 @@ export default defineComponent({
                     }
                 }
             }
+            return undefined;
         },
 
         /**
@@ -136,7 +137,7 @@ export default defineComponent({
         /**
          * Focus method that work dynamically depending on the component.
          */
-        focus(e: Event) {
+        focus() {
             const el = this.getElement();
             if (!el) return;
 

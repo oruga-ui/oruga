@@ -318,7 +318,7 @@ export default defineComponent({
             if (this.cancelOptions.indexOf(method) < 0) return;
             if (this.isStatic) return;
 
-            this.onCancel.apply(null, arguments);
+            this.onCancel.apply(null);
             this.close();
         },
 

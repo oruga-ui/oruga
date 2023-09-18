@@ -33,9 +33,9 @@ const LoadingProgrammatic = {
         render(vnode, document.createElement("div"));
         return vnode.component.proxy as InstanceType<typeof Loading>;
     },
-    closeAll() {
+    closeAll(...args: any[]) {
         instances.walk((entry) => {
-            entry.close(...arguments);
+            entry.close(...args);
         });
     },
 };

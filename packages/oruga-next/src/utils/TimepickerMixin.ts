@@ -223,7 +223,6 @@ export default defineComponent({
             minutesSelected: null,
             secondsSelected: null,
             meridienSelected: null,
-            _elementRef: "input",
         };
     },
     computed: {
@@ -250,7 +249,6 @@ export default defineComponent({
                 second: this.enableSeconds
                     ? this.localeOptions.second || "numeric"
                     : undefined,
-                // @ts-ignore to update types
                 hourCycle: !this.isHourFormat24 ? "h12" : "h23",
             });
         },
@@ -314,6 +312,7 @@ export default defineComponent({
                     return literal.value;
                 }
             }
+            return undefined;
         },
         amString() {
             if (

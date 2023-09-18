@@ -29,7 +29,6 @@ export default defineComponent({
                     message = this.parent.newMessage;
                     first = false;
                 }
-                // @ts-ignore (Why props null ??)
                 return h(
                     resolveComponent("OField"),
                     { variant: this.parent.newVariant, message },
