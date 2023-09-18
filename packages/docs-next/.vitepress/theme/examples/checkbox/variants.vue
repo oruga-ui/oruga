@@ -1,22 +1,22 @@
 <template>
     <section>
         <o-field>
-            <o-checkbox :value="true"> Default </o-checkbox>
+            <o-checkbox :value="true" label="Default" />
         </o-field>
         <o-field>
-            <o-checkbox :value="true" variant="primary"> Primary </o-checkbox>
+            <o-checkbox :value="true" variant="primary" label="Primary" />
         </o-field>
         <o-field>
-            <o-checkbox :value="true" variant="info"> Info </o-checkbox>
+            <o-checkbox :value="true" variant="info" label="Info" />
         </o-field>
         <o-field>
-            <o-checkbox :value="true" variant="success"> Success </o-checkbox>
+            <o-checkbox :value="true" variant="success" label="Success" />
         </o-field>
         <o-field>
-            <o-checkbox :value="true" variant="danger"> Danger </o-checkbox>
+            <o-checkbox :value="true" variant="danger" label="Danger" />
         </o-field>
         <o-field>
-            <o-checkbox :value="true" variant="warning"> Warning </o-checkbox>
+            <o-checkbox :value="true" variant="warning" label="Warning" />
         </o-field>
     </section>
 </template>
