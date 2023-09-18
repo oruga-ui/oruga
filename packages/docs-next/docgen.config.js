@@ -69,7 +69,7 @@ module.exports = {
         events: (events) => renderEvents(events, { hasSubComponents: true}),
         slots: (slots) => renderSlots(slots, { hasSubComponents: true}),
         component: (renderedUsage, doc, config, fileName, requiresMd, { isSubComponent }) => {
-            const { displayName, description, tags, functional } = doc;
+            const { displayName, description, tags, functional, docsBlocks } = doc;
             const { deprecated, author, since, version, see, link, style } =
                 tags || {};
             const component = getComponent(fileName);
@@ -92,7 +92,9 @@ ${version ? `Version: ${version[0].description}\n` : ""}
 ${see ? see.map((s) => `[See](${s.description})\n`) : ""}
 ${link ? link.map((l) => `[See](${l.description})\n`) : ""}
 <Carbon />
-</div>`
+</div>
+${docsBlocks ? docsBlocks : ""}
+`
 }
 ${!isSubComponent ? `
 <div class="vp-example">
