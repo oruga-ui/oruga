@@ -44,6 +44,7 @@
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "update": "ncu -u"
   },
   "keywords": [
