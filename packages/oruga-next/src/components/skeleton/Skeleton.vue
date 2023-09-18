@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, h } from 'vue'
+import { defineComponent, h } from "vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { toCssDimension } from '../../utils/helpers'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { toCssDimension } from "../../utils/helpers";
 
 /**
  * A placeholder for content to load
@@ -10,19 +10,19 @@ import { toCssDimension } from '../../utils/helpers'
  * @style _skeleton.scss
  */
 export default defineComponent({
-    name: 'OSkeleton',
+    name: "OSkeleton",
     mixins: [BaseComponentMixin],
-    configField: 'skeleton',
+    configField: "skeleton",
     props: {
         /** Show or hide loader	 */
         active: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Show a loading animation */
         animated: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Custom width */
         width: [Number, String],
@@ -33,12 +33,12 @@ export default defineComponent({
         /** Rounded style */
         rounded: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Number of shapes to display */
         count: {
             type: Number,
-            default: 1
+            default: 1,
         },
         /**
          * Skeleton position in relation to the element
@@ -46,14 +46,10 @@ export default defineComponent({
          */
         position: {
             type: String,
-            default: 'left',
+            default: "left",
             validator(value: string) {
-                return [
-                    'left',
-                    'centered',
-                    'right'
-                ].indexOf(value) > -1
-            }
+                return ["left", "centered", "right"].indexOf(value) > -1;
+            },
         },
         /**
          * Size of skeleton
@@ -65,40 +61,63 @@ export default defineComponent({
         positionClass: [String, Function, Array],
         itemClass: [String, Function, Array],
         itemRoundedClass: [String, Function, Array],
-        sizeClass: [String, Function, Array]
+        sizeClass: [String, Function, Array],
     },
     render() {
-        if (!this.active) return
-        const items = []
-        const width = this.width
-        const height = this.height
+        if (!this.active) return;
+        const items = [];
+        const width = this.width;
+        const height = this.height;
         for (let i = 0; i < this.count; i++) {
-            items.push(h('div',
-                {
+            items.push(
+                h("div", {
                     class: [
-                      this.computedClass('itemClass', 'o-sklt__item'),
-                      { [this.computedClass('itemRoundedClass', 'o-sklt__item--rounded')]: this.rounded },
-                      { [this.computedClass('animationClass', 'o-sklt__item--animated')]: this.animated },
-                      { [this.computedClass('sizeClass', 'o-sklt__item--', this.size)]: this.size },
+                        this.computedClass("itemClass", "o-sklt__item"),
+                        {
+                            [this.computedClass(
+                                "itemRoundedClass",
+                                "o-sklt__item--rounded",
+                            )]: this.rounded,
+                        },
+                        {
+                            [this.computedClass(
+                                "animationClass",
+                                "o-sklt__item--animated",
+                            )]: this.animated,
+                        },
+                        {
+                            [this.computedClass(
+                                "sizeClass",
+                                "o-sklt__item--",
+                                this.size,
+                            )]: this.size,
+                        },
                     ],
                     key: i,
                     style: {
                         height: toCssDimension(height),
                         width: toCssDimension(width),
-                        borderRadius: this.circle ? '50%' : null
-                    }
+                        borderRadius: this.circle ? "50%" : null,
+                    },
                 }
-            ))
+            );
         }
-        return h('div',
+        return h(
+            "div",
             {
                 class: [
-                    this.computedClass('rootClass', 'o-sklt'),
-                    { [this.computedClass('positionClass', 'o-sklt--', this.position)]: this.position }
-                ]
+                    this.computedClass("rootClass", "o-sklt"),
+                    {
+                        [this.computedClass(
+                            "positionClass",
+                            "o-sklt--",
+                            this.position,
+                        )]: this.position,
+                    },
+                ],
             },
-            items
+            items,
         )
-    }
-})
+    },
+});
 </script>

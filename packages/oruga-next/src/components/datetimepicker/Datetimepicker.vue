@@ -1,3 +1,421 @@
+<script lang="ts">
+import FormElementMixin from "../../utils/FormElementMixin";
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { getValueByPath, isMobile, matchWithGroups } from "../../utils/helpers";
+import { getOptions } from "../../utils/config";
+
+import Datepicker from "../datepicker/Datepicker.vue";
+import Timepicker from "../timepicker/Timepicker.vue";
+import { defineComponent } from "vue";
+
+const AM = "AM";
+const PM = "PM";
+
+/**
+ * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+ * @displayName Datetimepicker
+ * @style _datetimepicker.scss
+ */
+export default defineComponent({
+    name: "ODatetimepicker",
+    components: {
+        [Datepicker.name]: Datepicker,
+        [Timepicker.name]: Timepicker,
+    },
+    configField: "datetimepicker",
+    mixins: [FormElementMixin, BaseComponentMixin],
+    inheritAttrs: false,
+    props: {
+        modelValue: {
+            type: Date,
+        },
+        editable: {
+            type: Boolean,
+            default: false,
+        },
+        size: String,
+        placeholder: String,
+        disabled: Boolean,
+        iconRight: String,
+        iconRightClickable: Boolean,
+        inline: Boolean,
+        openOnFocus: Boolean,
+        position: String,
+        mobileNative: {
+            type: Boolean,
+            default: true,
+        },
+        minDatetime: Date,
+        maxDatetime: Date,
+        datetimeFormatter: {
+            type: Function,
+        },
+        datetimeParser: {
+            type: Function,
+        },
+        datetimeCreator: {
+            type: Function,
+            default: (date: Date) => {
+                const datetimeCreator = getValueByPath(
+                    getOptions(),
+                    "datetimepicker.datetimeCreator",
+                    undefined,
+                );
+                if (typeof datetimeCreator === "function") {
+                    return datetimeCreator(date);
+                } else {
+                    return date;
+                }
+            },
+        },
+        datepicker: Object,
+        timepicker: Object,
+        locale: {
+            type: [String, Array],
+            default: () => {
+                return getValueByPath(getOptions(), "locale");
+            },
+        },
+        appendToBody: Boolean,
+        datepickerWrapperClass: [String, Function, Array],
+        timepickerWrapperClass: [String, Function, Array],
+    },
+    emits: [
+        "update:modelValue",
+        "focus",
+        "blur",
+        "invalid",
+        "change-year",
+        "change-month",
+        "icon-right-click",
+        "active-change",
+    ],
+    data() {
+        return {
+            newValue: this.modelValue,
+        };
+    },
+    computed: {
+        datepickerWrapperClasses() {
+            return [
+                this.computedClass("datepickerWrapperClass", "o-dtpck__date"),
+            ];
+        },
+        timepickerWrapperClasses() {
+            return [
+                this.computedClass("timepickerWrapperClass", "o-dtpck__time"),
+            ];
+        },
+        computedValue: {
+            get() {
+                return this.newValue;
+            },
+            set(value) {
+                if (value) {
+                    let val = new Date(value.getTime());
+                    if (this.newValue) {
+                        // restore time part
+                        if (
+                            (value.getDate() !== this.newValue.getDate() ||
+                                value.getMonth() !== this.newValue.getMonth() ||
+                                value.getFullYear() !==
+                                    this.newValue.getFullYear()) &&
+                            value.getHours() === 0 &&
+                            value.getMinutes() === 0 &&
+                            value.getSeconds() === 0
+                        ) {
+                            val.setHours(
+                                this.newValue.getHours(),
+                                this.newValue.getMinutes(),
+                                this.newValue.getSeconds(),
+                                0,
+                            );
+                        }
+                    } else {
+                        val = this.datetimeCreator(value);
+                    }
+                    // check min and max range
+                    if (this.minDatetime && val < this.minDatetime) {
+                        val = this.minDatetime;
+                    } else if (this.maxDatetime && val > this.maxDatetime) {
+                        val = this.maxDatetime;
+                    }
+                    this.newValue = new Date(val.getTime());
+                } else {
+                    this.newValue = value;
+                }
+                this.$emit("update:modelValue", this.newValue);
+            },
+        },
+        localeOptions() {
+            return new Intl.DateTimeFormat(this.locale, {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: this.enableSeconds() ? "numeric" : undefined,
+            }).resolvedOptions();
+        },
+        dtf() {
+            return new Intl.DateTimeFormat(this.locale, {
+                year: this.localeOptions.year || "numeric",
+                month: this.localeOptions.month || "numeric",
+                day: this.localeOptions.day || "numeric",
+                hour: this.localeOptions.hour || "numeric",
+                minute: this.localeOptions.minute || "numeric",
+                second: this.enableSeconds()
+                    ? this.localeOptions.second || "numeric"
+                    : undefined,
+                // @ts-ignore to update types
+                hourCycle: !this.isHourFormat24() ? "h12" : "h23",
+            });
+        },
+        isMobileNative() {
+            return this.mobileNative;
+        },
+        isMobile() {
+            return this.isMobileNative && isMobile.any();
+        },
+        minDate() {
+            if (!this.minDatetime) {
+                return this.datepicker ? this.datepicker.minDate : null;
+            }
+            return new Date(
+                this.minDatetime.getFullYear(),
+                this.minDatetime.getMonth(),
+                this.minDatetime.getDate(),
+                0,
+                0,
+                0,
+                0,
+            );
+        },
+        maxDate() {
+            if (!this.maxDatetime) {
+                return this.datepicker ? this.datepicker.maxDate : null;
+            }
+            return new Date(
+                this.maxDatetime.getFullYear(),
+                this.maxDatetime.getMonth(),
+                this.maxDatetime.getDate(),
+                0,
+                0,
+                0,
+                0,
+            );
+        },
+        // Only enable min/max time if local (not necessarily UTC) date portion matches
+        minTime() {
+            if (
+                !this.minDatetime ||
+                this.newValue === null ||
+                typeof this.newValue === "undefined" ||
+                this.newValue.getFullYear() != this.minDatetime.getFullYear() ||
+                this.newValue.getMonth() != this.minDatetime.getMonth() ||
+                this.newValue.getDate() != this.minDatetime.getDate()
+            ) {
+                return this.timepicker ? this.timepicker.minTime : null;
+            }
+            return this.minDatetime;
+        },
+        maxTime() {
+            if (
+                !this.maxDatetime ||
+                this.newValue === null ||
+                typeof this.newValue === "undefined" ||
+                this.newValue.getFullYear() != this.maxDatetime.getFullYear() ||
+                this.newValue.getMonth() != this.maxDatetime.getMonth() ||
+                this.newValue.getDate() != this.maxDatetime.getDate()
+            ) {
+                return this.timepicker ? this.timepicker.maxTime : null;
+            }
+            return this.maxDatetime;
+        },
+        datepickerSize() {
+            return this.datepicker && this.datepicker.size
+                ? this.datepicker.size
+                : this.size;
+        },
+        timepickerSize() {
+            return this.timepicker && this.timepicker.size
+                ? this.timepicker.size
+                : this.size;
+        },
+        timepickerDisabled() {
+            return this.timepicker && this.timepicker.disabled
+                ? this.timepicker.disabled
+                : this.disabled;
+        },
+    },
+    watch: {
+        modelValue(value) {
+            this.newValue = value;
+        },
+    },
+    mounted() {
+        if (!this.isMobile || this.inline) {
+            // $refs attached, it's time to refresh datepicker (input)
+            if (this.newValue) {
+                this.$refs.datepicker.$forceUpdate();
+            }
+        }
+    },
+    methods: {
+        enableSeconds() {
+            if (this.$refs.timepicker) {
+                return this.$refs.timepicker.enableSeconds;
+            }
+            return false;
+        },
+        isHourFormat24() {
+            if (this.$refs.timepicker) {
+                return this.$refs.timepicker.isHourFormat24;
+            }
+            return !this.localeOptions.hour12;
+        },
+        defaultDatetimeParser(date) {
+            const datetimeParser = getValueByPath(
+                getOptions(),
+                "datetimepicker.datetimeParser",
+                undefined,
+            );
+            if (typeof this.datetimeParser === "function") {
+                return this.datetimeParser(date);
+            } else if (typeof datetimeParser === "function") {
+                return datetimeParser(date);
+            } else {
+                if (
+                    this.dtf.formatToParts &&
+                    typeof this.dtf.formatToParts === "function"
+                ) {
+                    const dayPeriods = [
+                        AM,
+                        PM,
+                        AM.toLowerCase(),
+                        PM.toLowerCase(),
+                    ];
+                    if (this.$refs.timepicker) {
+                        dayPeriods.push(this.$refs.timepicker.amString);
+                        dayPeriods.push(this.$refs.timepicker.pmString);
+                    }
+                    const parts = this.dtf.formatToParts(new Date());
+                    const formatRegex = parts
+                        .map((part, idx) => {
+                            if (part.type === "literal") {
+                                if (
+                                    idx + 1 < parts.length &&
+                                    parts[idx + 1].type === "hour"
+                                ) {
+                                    return `[^\\d]+`;
+                                }
+                                return part.value.replace(/ /g, "\\s?");
+                            } else if (part.type === "dayPeriod") {
+                                return `((?!=<${part.type}>)(${dayPeriods.join(
+                                    "|",
+                                )})?)`;
+                            }
+                            return `((?!=<${part.type}>)\\d+)`;
+                        })
+                        .join("");
+                    const datetimeGroups = matchWithGroups(formatRegex, date);
+
+                    // We do a simple validation for the group.
+                    // If it is not valid, it will fallback to Date.parse below
+                    if (
+                        datetimeGroups.year &&
+                        datetimeGroups.year.length === 4 &&
+                        datetimeGroups.month &&
+                        datetimeGroups.month <= 12 &&
+                        datetimeGroups.day &&
+                        datetimeGroups.day <= 31 &&
+                        datetimeGroups.hour &&
+                        datetimeGroups.hour >= 0 &&
+                        datetimeGroups.hour < 24 &&
+                        datetimeGroups.minute &&
+                        datetimeGroups.minute >= 0 &&
+                        datetimeGroups.minute <= 59
+                    ) {
+                        const d = new Date(
+                            datetimeGroups.year,
+                            datetimeGroups.month - 1,
+                            datetimeGroups.day,
+                            datetimeGroups.hour,
+                            datetimeGroups.minute,
+                            datetimeGroups.second || 0,
+                        );
+                        return d;
+                    }
+                }
+
+                return new Date(Date.parse(date));
+            }
+        },
+        defaultDatetimeFormatter(date) {
+            const datetimeFormatter = getValueByPath(
+                getOptions(),
+                "datetimepicker.datetimeFormatter",
+                undefined,
+            );
+            if (typeof this.datetimeFormatter === "function") {
+                return this.datetimeFormatter(date);
+            } else if (typeof datetimeFormatter === "function") {
+                return datetimeFormatter(date);
+            } else {
+                return this.dtf.format(date);
+            }
+        },
+        /*
+         * Parse date from string
+         */
+        onChangeNativePicker(event) {
+            const date = event.target.value;
+            const s = date ? date.split(/\D/) : [];
+            if (s.length >= 5) {
+                const year = parseInt(s[0], 10);
+                const month = parseInt(s[1], 10) - 1;
+                const day = parseInt(s[2], 10);
+                const hours = parseInt(s[3], 10);
+                const minutes = parseInt(s[4], 10);
+                // Seconds are omitted intentionally; they are unsupported by input
+                // type=datetime-local and cause the control to fail native validation
+                this.computedValue = new Date(year, month, day, hours, minutes);
+            } else {
+                this.computedValue = null;
+            }
+        },
+        formatNative(value) {
+            const date = new Date(value);
+            if (value && !isNaN(date.getTime())) {
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                const seconds = date.getSeconds();
+                return (
+                    year +
+                    "-" +
+                    ((month < 10 ? "0" : "") + month) +
+                    "-" +
+                    ((day < 10 ? "0" : "") + day) +
+                    "T" +
+                    ((hours < 10 ? "0" : "") + hours) +
+                    ":" +
+                    ((minutes < 10 ? "0" : "") + minutes) +
+                    ":" +
+                    ((seconds < 10 ? "0" : "") + seconds)
+                );
+            }
+            return "";
+        },
+        toggle() {
+            this.$refs.datepicker.toggle();
+        },
+    },
+});
+</script>
+
 <template>
     <o-datepicker
         v-if="!isMobile || inline"
@@ -46,8 +464,7 @@
                     :size="timepickerSize"
                     :disabled="timepickerDisabled"
                     :mobile-native="isMobileNative"
-                    :locale="locale"
-                />
+                    :locale="locale" />
             </div>
             <template v-if="$slots.footer !== undefined">
                 <slot name="footer" />
@@ -76,346 +493,3 @@
         @blur="onBlur"
         @invalid="onInvalid" />
 </template>
-
-<script lang="ts">
-import FormElementMixin from '../../utils/FormElementMixin'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath, isMobile, matchWithGroups } from '../../utils/helpers'
-import { getOptions } from '../../utils/config'
-
-import Datepicker from '../datepicker/Datepicker.vue'
-import Timepicker from '../timepicker/Timepicker.vue'
-import { defineComponent } from 'vue'
-
-const AM = 'AM'
-const PM = 'PM'
-
-/**
- * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
- * @displayName Datetimepicker
- * @style _datetimepicker.scss
- */
-export default defineComponent({
-    name: 'ODatetimepicker',
-    components: {
-        [Datepicker.name]: Datepicker,
-        [Timepicker.name]: Timepicker
-    },
-    configField: 'datetimepicker',
-    mixins: [FormElementMixin, BaseComponentMixin],
-    inheritAttrs: false,
-    emits: ['update:modelValue', 'focus', 'blur', 'invalid', 'change-year', 'change-month', 'icon-right-click', 'active-change'],
-    props: {
-        modelValue: {
-            type: Date
-        },
-        editable: {
-            type: Boolean,
-            default: false
-        },
-        size: String,
-        placeholder: String,
-        disabled: Boolean,
-        iconRight: String,
-        iconRightClickable: Boolean,
-        inline: Boolean,
-        openOnFocus: Boolean,
-        position: String,
-        mobileNative: {
-            type: Boolean,
-            default: true
-        },
-        minDatetime: Date,
-        maxDatetime: Date,
-        datetimeFormatter: {
-            type: Function
-        },
-        datetimeParser: {
-            type: Function
-        },
-        datetimeCreator: {
-            type: Function,
-            default: (date: Date) => {
-                const datetimeCreator = getValueByPath(getOptions(), 'datetimepicker.datetimeCreator', undefined)
-                if (typeof datetimeCreator === 'function') {
-                    return datetimeCreator(date)
-                } else {
-                    return date
-                }
-            }
-        },
-        datepicker: Object,
-        timepicker: Object,
-        locale: {
-            type: [String, Array],
-            default: () => {
-                return getValueByPath(getOptions(), 'locale')
-            }
-        },
-        appendToBody: Boolean,
-        datepickerWrapperClass: [String, Function, Array],
-        timepickerWrapperClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            newValue: this.modelValue
-        }
-    },
-    computed: {
-        datepickerWrapperClasses() {
-            return [
-                this.computedClass('datepickerWrapperClass', 'o-dtpck__date')
-            ]
-        },
-        timepickerWrapperClasses() {
-            return [
-                this.computedClass('timepickerWrapperClass', 'o-dtpck__time')
-            ]
-        },
-        computedValue: {
-            get() {
-                return this.newValue
-            },
-            set(value) {
-                if (value) {
-                    let val = new Date(value.getTime())
-                    if (this.newValue) {
-                        // restore time part
-                        if ((value.getDate() !== this.newValue.getDate() ||
-                            value.getMonth() !== this.newValue.getMonth() ||
-                            value.getFullYear() !== this.newValue.getFullYear()) &&
-                            value.getHours() === 0 &&
-                            value.getMinutes() === 0 &&
-                            value.getSeconds() === 0) {
-                            val.setHours(this.newValue.getHours(),
-                                this.newValue.getMinutes(),
-                                this.newValue.getSeconds(), 0)
-                        }
-                    } else {
-                        val = this.datetimeCreator(value)
-                    }
-                    // check min and max range
-                    if (this.minDatetime && val < this.minDatetime) {
-                        val = this.minDatetime
-                    } else if (this.maxDatetime && val > this.maxDatetime) {
-                        val = this.maxDatetime
-                    }
-                    this.newValue = new Date(val.getTime())
-                } else {
-                    this.newValue = value
-                }
-                this.$emit('update:modelValue', this.newValue)
-            }
-        },
-        localeOptions() {
-            return new Intl.DateTimeFormat(this.locale, {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                second: this.enableSeconds() ? 'numeric' : undefined
-            }).resolvedOptions()
-        },
-        dtf() {
-            return new Intl.DateTimeFormat(this.locale, {
-                year: this.localeOptions.year || 'numeric',
-                month: this.localeOptions.month || 'numeric',
-                day: this.localeOptions.day || 'numeric',
-                hour: this.localeOptions.hour || 'numeric',
-                minute: this.localeOptions.minute || 'numeric',
-                second: this.enableSeconds() ? this.localeOptions.second || 'numeric' : undefined,
-                // @ts-ignore to update types
-                hourCycle: !this.isHourFormat24() ? 'h12' : 'h23'
-            })
-        },
-        isMobileNative() {
-            return this.mobileNative
-        },
-        isMobile() {
-            return this.isMobileNative && isMobile.any()
-        },
-        minDate() {
-            if (!this.minDatetime) {
-                return this.datepicker ? this.datepicker.minDate : null
-            }
-            return new Date(this.minDatetime.getFullYear(),
-                this.minDatetime.getMonth(),
-                this.minDatetime.getDate(), 0, 0, 0, 0)
-        },
-        maxDate() {
-            if (!this.maxDatetime) {
-                return this.datepicker ? this.datepicker.maxDate : null
-            }
-            return new Date(this.maxDatetime.getFullYear(),
-                this.maxDatetime.getMonth(),
-                this.maxDatetime.getDate(), 0, 0, 0, 0)
-        },
-        // Only enable min/max time if local (not necessarily UTC) date portion matches
-        minTime() {
-            if (!this.minDatetime || (this.newValue === null || typeof this.newValue === 'undefined')
-                || this.newValue.getFullYear() != this.minDatetime.getFullYear()
-                || this.newValue.getMonth() != this.minDatetime.getMonth()
-                || this.newValue.getDate() != this.minDatetime.getDate() ) {
-                return this.timepicker ? this.timepicker.minTime : null
-            }
-            return this.minDatetime
-        },
-        maxTime() {
-            if (!this.maxDatetime || (this.newValue === null || typeof this.newValue === 'undefined')
-                || this.newValue.getFullYear() != this.maxDatetime.getFullYear()
-                || this.newValue.getMonth() != this.maxDatetime.getMonth()
-                || this.newValue.getDate() != this.maxDatetime.getDate() ) {
-                return this.timepicker ? this.timepicker.maxTime : null
-            }
-            return this.maxDatetime
-        },
-        datepickerSize() {
-            return this.datepicker && this.datepicker.size
-                ? this.datepicker.size : this.size
-        },
-        timepickerSize() {
-            return this.timepicker && this.timepicker.size
-                ? this.timepicker.size : this.size
-        },
-        timepickerDisabled() {
-            return this.timepicker && this.timepicker.disabled
-                ? this.timepicker.disabled : this.disabled
-        }
-    },
-    watch: {
-        modelValue(value) {
-            this.newValue = value
-        }
-    },
-    methods: {
-        enableSeconds() {
-            if (this.$refs.timepicker) {
-                return this.$refs.timepicker.enableSeconds
-            }
-            return false
-        },
-        isHourFormat24() {
-            if (this.$refs.timepicker) {
-                return this.$refs.timepicker.isHourFormat24
-            }
-            return !this.localeOptions.hour12
-        },
-        defaultDatetimeParser(date) {
-            const datetimeParser = getValueByPath(getOptions(), 'datetimepicker.datetimeParser', undefined)
-            if (typeof this.datetimeParser === 'function') {
-                return this.datetimeParser(date)
-            } else if (typeof datetimeParser === 'function') {
-                return datetimeParser(date)
-            } else {
-                if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                    let dayPeriods = [AM, PM, AM.toLowerCase(), PM.toLowerCase()]
-                    if (this.$refs.timepicker) {
-                        dayPeriods.push(this.$refs.timepicker.amString)
-                        dayPeriods.push(this.$refs.timepicker.pmString)
-                    }
-                    const parts = this.dtf.formatToParts(new Date())
-                    const formatRegex = parts.map((part, idx) => {
-                        if (part.type === 'literal') {
-                            if (idx + 1 < parts.length && parts[idx + 1].type === 'hour') {
-                                return `[^\\d]+`
-                            }
-                            return part.value.replace(/ /g, '\\s?')
-                        } else if (part.type === 'dayPeriod') {
-                            return `((?!=<${part.type}>)(${dayPeriods.join('|')})?)`
-                        }
-                        return `((?!=<${part.type}>)\\d+)`
-                    }).join('')
-                    const datetimeGroups = matchWithGroups(formatRegex, date)
-
-                    // We do a simple validation for the group.
-                    // If it is not valid, it will fallback to Date.parse below
-                    if (
-                        datetimeGroups.year &&
-                        datetimeGroups.year.length === 4 &&
-                        datetimeGroups.month &&
-                        datetimeGroups.month <= 12 &&
-                        datetimeGroups.day &&
-                        datetimeGroups.day <= 31 &&
-                        datetimeGroups.hour &&
-                        datetimeGroups.hour >= 0 &&
-                        datetimeGroups.hour < 24 &&
-                        datetimeGroups.minute &&
-                        datetimeGroups.minute >= 0 &&
-                        datetimeGroups.minute <= 59
-                    ) {
-                        const d = new Date(
-                            datetimeGroups.year,
-                            datetimeGroups.month - 1,
-                            datetimeGroups.day,
-                            datetimeGroups.hour,
-                            datetimeGroups.minute,
-                            datetimeGroups.second || 0)
-                        return d
-                    }
-                }
-
-                return new Date(Date.parse(date))
-            }
-        },
-        defaultDatetimeFormatter(date) {
-             const datetimeFormatter = getValueByPath(getOptions(), 'datetimepicker.datetimeFormatter', undefined)
-            if (typeof this.datetimeFormatter === 'function') {
-                return this.datetimeFormatter(date)
-            } else if (typeof datetimeFormatter === 'function') {
-                return datetimeFormatter(date)
-            } else {
-                return this.dtf.format(date)
-            }
-        },
-        /*
-        * Parse date from string
-        */
-        onChangeNativePicker(event) {
-            const date = event.target.value
-            const s = date ? date.split(/\D/) : []
-            if (s.length >= 5) {
-                const year = parseInt(s[0], 10)
-                const month = parseInt(s[1], 10) - 1
-                const day = parseInt(s[2], 10)
-                const hours = parseInt(s[3], 10)
-                const minutes = parseInt(s[4], 10)
-                // Seconds are omitted intentionally; they are unsupported by input
-                // type=datetime-local and cause the control to fail native validation
-                this.computedValue = new Date(year, month, day, hours, minutes)
-            } else {
-                this.computedValue = null
-            }
-        },
-        formatNative(value) {
-            const date = new Date(value)
-            if (value && !isNaN(date.getTime())) {
-                const year = date.getFullYear()
-                const month = date.getMonth() + 1
-                const day = date.getDate()
-                const hours = date.getHours()
-                const minutes = date.getMinutes()
-                const seconds = date.getSeconds()
-                return year + '-' +
-                    ((month < 10 ? '0' : '') + month) + '-' +
-                    ((day < 10 ? '0' : '') + day) + 'T' +
-                    ((hours < 10 ? '0' : '') + hours) + ':' +
-                    ((minutes < 10 ? '0' : '') + minutes) + ':' +
-                    ((seconds < 10 ? '0' : '') + seconds)
-            }
-            return ''
-        },
-        toggle() {
-            this.$refs.datepicker.toggle()
-        }
-    },
-    mounted() {
-        if (!this.isMobile || this.inline) {
-            // $refs attached, it's time to refresh datepicker (input)
-            if (this.newValue) {
-                this.$refs.datepicker.$forceUpdate()
-            }
-        }
-    }
-})
-</script>

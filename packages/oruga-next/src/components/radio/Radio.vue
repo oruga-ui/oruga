@@ -1,28 +1,8 @@
-<template>
-    <label
-        :class="rootClasses"
-        ref="label"
-        @click.stop="focus"
-        @keydown.prevent.enter="getLabel.click()">
-        <input
-            v-model="computedValue"
-            type="radio"
-            ref="input"
-            @click.stop
-            :class="checkClasses"
-            :disabled="disabled"
-            :required="required"
-            :name="name"
-            :value="nativeValue">
-        <span :class="labelClasses"><slot/></span>
-    </label>
-</template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import CheckRadioMixin from '../../utils/CheckRadioMixin'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import CheckRadioMixin from "../../utils/CheckRadioMixin";
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
 
 /**
  * Select an option from a set
@@ -30,12 +10,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  * @style _radio.scss
  */
 export default defineComponent({
-    name: 'ORadio',
+    name: "ORadio",
     mixins: [BaseComponentMixin, CheckRadioMixin],
-    configField: 'radio',
-    emits: [
-        'input'
-    ],
+    configField: "radio",
     props: {
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
@@ -44,36 +21,74 @@ export default defineComponent({
         checkClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array]
+        variantClass: [String, Function, Array],
     },
+    emits: ["input"],
     computed: {
-        getLabel () {
-            return this.$refs.label
+        getLabel() {
+            return this.$refs.label;
         },
         isChecked() {
-            return this.modelValue === this.nativeValue
+            return this.modelValue === this.nativeValue;
         },
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-radio'),
-                { [this.computedClass('checkedClass', 'o-radio--checked')] : this.isChecked },
-                { [this.computedClass('sizeClass', 'o-radio--', this.size)]: this.size },
-                { [this.computedClass('disabledClass', 'o-radio--disabled')]: this.disabled },
-                { [this.computedClass('variantClass', 'o-radio--', this.variant)]: this.variant }
-
-            ]
+                this.computedClass("rootClass", "o-radio"),
+                {
+                    [this.computedClass("checkedClass", "o-radio--checked")]:
+                        this.isChecked,
+                },
+                {
+                    [this.computedClass("sizeClass", "o-radio--", this.size)]:
+                        this.size,
+                },
+                {
+                    [this.computedClass("disabledClass", "o-radio--disabled")]:
+                        this.disabled,
+                },
+                {
+                    [this.computedClass(
+                        "variantClass",
+                        "o-radio--",
+                        this.variant,
+                    )]: this.variant,
+                },
+            ];
         },
         checkClasses() {
             return [
-                this.computedClass('checkClass', 'o-radio__check'),
-                { [this.computedClass('checkCheckedClass', 'o-radio__check--checked')]: this.isChecked },
-            ]
+                this.computedClass("checkClass", "o-radio__check"),
+                {
+                    [this.computedClass(
+                        "checkCheckedClass",
+                        "o-radio__check--checked",
+                    )]: this.isChecked,
+                },
+            ];
         },
         labelClasses() {
-            return [
-                this.computedClass('labelClass', 'o-radio__label')
-            ]
-        }
-    }
-})
+            return [this.computedClass("labelClass", "o-radio__label")];
+        },
+    },
+});
 </script>
+
+<template>
+    <label
+        ref="label"
+        :class="rootClasses"
+        @click.stop="focus"
+        @keydown.prevent.enter="getLabel.click()">
+        <input
+            ref="input"
+            v-model="computedValue"
+            type="radio"
+            :class="checkClasses"
+            :disabled="disabled"
+            :required="required"
+            :name="name"
+            :value="nativeValue"
+            @click.stop />
+        <span :class="labelClasses"><slot /></span>
+    </label>
+</template>

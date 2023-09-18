@@ -1,15 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Field from './Field.vue'
+import Field from "./Field.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Field)
-    }
-} as Plugin
+        registerComponent(app, Field);
+    },
+} as Plugin;
 
-export {
-    Field as OField
-}
+export { Field as OField };

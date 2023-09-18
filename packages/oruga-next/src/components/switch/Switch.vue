@@ -1,42 +1,7 @@
-<template>
-    <label
-        :class="rootClasses"
-        ref="label"
-        @click="focus"
-        @keydown.prevent.enter="getLabel.click()"
-        @mousedown="isMouseDown = true"
-        @mouseup="isMouseDown = false"
-        @mouseout="isMouseDown = false"
-        @blur="isMouseDown = false">
-        <input
-            v-model="computedValue"
-            type="checkbox"
-            ref="input"
-            role="switch"
-            :class="inputClasses"
-            @click.stop
-            :disabled="disabled"
-            :name="name"
-            :required="required"
-            :value="nativeValue"
-            :true-value="trueValue"
-            :false-value="falseValue"
-            :aria-labelledby="ariaLabelledby">
-        <span :class="checkClasses">
-            <span :class="checkSwitchClasses"></span>
-        </span>
-        <span
-            :id="ariaLabelledby"
-            :class="labelClasses">
-            <slot/>
-        </span>
-    </label>
-</template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
 
 /**
  * Switch between two opposing states
@@ -44,10 +9,9 @@ import BaseComponentMixin from '../../utils/BaseComponentMixin'
  * @style _switch.scss
  */
 export default defineComponent({
-    name: 'OSwitch',
+    name: "OSwitch",
     mixins: [BaseComponentMixin],
-    configField: 'switch',
-    emits: ['update:modelValue'],
+    configField: "switch",
     props: {
         /** @model */
         modelValue: [String, Number, Boolean],
@@ -61,7 +25,7 @@ export default defineComponent({
          * @values primary, info, success, warning, danger, and any other custom color
          */
         variant: String,
-         /**
+        /**
          * Color of the switch when is passive, optional
          * @values primary, info, success, warning, danger, and any other custom color
          */
@@ -79,24 +43,24 @@ export default defineComponent({
          */
         trueValue: {
             type: [String, Number, Boolean],
-            default: true
+            default: true,
         },
         /**
          * Overrides the returned value when it's not checked
          */
         falseValue: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         /** Rounded style */
         rounded: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Label position */
         position: {
             type: String,
-            default: 'right'
+            default: "right",
         },
         /** Accessibility label to establish relationship between the switch and control label' */
         ariaLabelledby: String,
@@ -112,74 +76,142 @@ export default defineComponent({
         elementsWrapperClass: [String, Function, Array],
         passiveVariantClass: [String, Function, Array],
         positionClass: [String, Function, Array],
-        inputClass: [String, Function, Array]
+        inputClass: [String, Function, Array],
     },
+    emits: ["update:modelValue"],
     data() {
         return {
             newValue: this.modelValue,
-            isMouseDown: false
-        }
+            isMouseDown: false,
+        };
     },
     computed: {
-        getLabel () {
-            return this.$refs.label
+        getLabel() {
+            return this.$refs.label;
         },
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-switch'),
-                { [this.computedClass('sizeClass', 'o-switch--', this.size)]: this.size },
-                { [this.computedClass('disabledClass', 'o-switch--disabled')]: this.disabled },
-                { [this.computedClass('variantClass', 'o-switch--', this.variant)]: this.variant },
-                { [this.computedClass('positionClass', 'o-switch--', this.position)]: this.position },
-                { [this.computedClass('passiveVariantClass', 'o-switch--', this.passiveVariant + '-passive')]: this.passiveVariant }
-            ]
+                this.computedClass("rootClass", "o-switch"),
+                {
+                    [this.computedClass("sizeClass", "o-switch--", this.size)]:
+                        this.size,
+                },
+                {
+                    [this.computedClass("disabledClass", "o-switch--disabled")]:
+                        this.disabled,
+                },
+                {
+                    [this.computedClass(
+                        "variantClass",
+                        "o-switch--",
+                        this.variant,
+                    )]: this.variant,
+                },
+                {
+                    [this.computedClass(
+                        "positionClass",
+                        "o-switch--",
+                        this.position,
+                    )]: this.position,
+                },
+                {
+                    [this.computedClass(
+                        "passiveVariantClass",
+                        "o-switch--",
+                        this.passiveVariant + "-passive",
+                    )]: this.passiveVariant,
+                },
+            ];
         },
         inputClasses() {
-            return [
-                this.computedClass('inputClass', 'o-switch__input')
-            ]
+            return [this.computedClass("inputClass", "o-switch__input")];
         },
         checkClasses() {
             return [
-                this.computedClass('checkClass', 'o-switch__check'),
-                { [this.computedClass('checkCheckedClass', 'o-switch__check--checked')]: (this.newValue === this.trueValue)},
-                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
-            ]
+                this.computedClass("checkClass", "o-switch__check"),
+                {
+                    [this.computedClass(
+                        "checkCheckedClass",
+                        "o-switch__check--checked",
+                    )]: this.newValue === this.trueValue,
+                },
+                {
+                    [this.computedClass("roundedClass", "o-switch--rounded")]:
+                        this.rounded,
+                },
+            ];
         },
         checkSwitchClasses() {
             return [
-                this.computedClass('checkSwitchClass', 'o-switch__check-switch'),
-                { [this.computedClass('roundedClass', 'o-switch--rounded')]: this.rounded },
-            ]
+                this.computedClass(
+                    "checkSwitchClass",
+                    "o-switch__check-switch",
+                ),
+                {
+                    [this.computedClass("roundedClass", "o-switch--rounded")]:
+                        this.rounded,
+                },
+            ];
         },
         labelClasses() {
-            return [
-                this.computedClass('labelClass', 'o-switch__label')
-            ]
+            return [this.computedClass("labelClass", "o-switch__label")];
         },
         computedValue: {
             get() {
-                return this.newValue
+                return this.newValue;
             },
             set(value) {
-                this.newValue = value
-                this.$emit('update:modelValue', this.newValue)
-            }
-        }
+                this.newValue = value;
+                this.$emit("update:modelValue", this.newValue);
+            },
+        },
     },
     watch: {
         /**
-        * When v-model change, set internal value.
-        */
+         * When v-model change, set internal value.
+         */
         modelValue(value) {
-            this.newValue = value
-        }
+            this.newValue = value;
+        },
     },
     methods: {
         focus() {
             // MacOS FireFox and Safari do not focus when clicked
-            this.$refs.input.focus()
-        }
-    }
-})
+            this.$refs.input.focus();
+        },
+    },
+});
 </script>
+
+<template>
+    <label
+        ref="label"
+        :class="rootClasses"
+        @click="focus"
+        @keydown.prevent.enter="getLabel.click()"
+        @mousedown="isMouseDown = true"
+        @mouseup="isMouseDown = false"
+        @mouseout="isMouseDown = false"
+        @blur="isMouseDown = false">
+        <input
+            ref="input"
+            v-model="computedValue"
+            type="checkbox"
+            role="switch"
+            :class="inputClasses"
+            :disabled="disabled"
+            :name="name"
+            :required="required"
+            :value="nativeValue"
+            :true-value="trueValue"
+            :false-value="falseValue"
+            :aria-labelledby="ariaLabelledby"
+            @click.stop />
+        <span :class="checkClasses">
+            <span :class="checkSwitchClasses"></span>
+        </span>
+        <span :id="ariaLabelledby" :class="labelClasses">
+            <slot />
+        </span>
+    </label>
+</template>
