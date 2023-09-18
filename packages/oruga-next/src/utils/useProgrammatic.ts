@@ -8,5 +8,5 @@ function addProgrammatic(property: string, component: any) {
 
 // composable for internal and external usage
 export function useProgrammatic() {
-    return {oruga, addProgrammatic};
+    return { oruga, addProgrammatic };
 }

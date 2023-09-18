@@ -1,18 +1,15 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Carousel from './Carousel.vue'
-import CarouselItem from './CarouselItem.vue'
+import Carousel from "./Carousel.vue";
+import CarouselItem from "./CarouselItem.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Carousel)
-        registerComponent(app, CarouselItem)
-    }
-} as Plugin
+        registerComponent(app, Carousel);
+        registerComponent(app, CarouselItem);
+    },
+} as Plugin;
 
-export {
-    Carousel as OCarousel,
-    CarouselItem as OCarouselItem
-}
+export { Carousel as OCarousel, CarouselItem as OCarouselItem };
