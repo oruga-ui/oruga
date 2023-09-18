@@ -505,7 +505,7 @@ export default defineComponent({
                 :aria-hidden="!isActive" />
         </transition>
         <transition :name="animation">
-            <div
+            <component
                 :is="menuTag"
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
@@ -516,7 +516,7 @@ export default defineComponent({
                 :aria-modal="!inline"
                 :style="menuStyle">
                 <slot />
-            </div>
+            </component>
         </transition>
     </div>
 </template>
