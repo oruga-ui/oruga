@@ -26,7 +26,7 @@
             />
         </transition>
         <transition :name="animation">
-            <div
+            <component
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
                 :is="menuTag"
@@ -37,7 +37,7 @@
                 :style="menuStyle"
                 v-trap-focus="trapFocus">
                 <slot/>
-            </div>
+            </component>
         </transition>
     </div>
 </template>
