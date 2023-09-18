@@ -10,13 +10,9 @@
                         expanded />
                 </template>
 
-                <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-                <o-dropdown-item aria-role="listitem">
-                    Another action
-                </o-dropdown-item>
-                <o-dropdown-item aria-role="listitem">
-                    Something else
-                </o-dropdown-item>
+                <o-dropdown-item aria-role="listitem" label="Action" />
+                <o-dropdown-item aria-role="listitem" label="Another action" />
+                <o-dropdown-item aria-role="listitem" label="Something else" />
             </o-dropdown>
         </o-field>
 
@@ -30,13 +26,9 @@
                         expanded />
                 </template>
 
-                <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-                <o-dropdown-item aria-role="listitem">
-                    Another action
-                </o-dropdown-item>
-                <o-dropdown-item aria-role="listitem">
-                    Something else
-                </o-dropdown-item>
+                <o-dropdown-item aria-role="listitem" label="Action" />
+                <o-dropdown-item aria-role="listitem" label="Another action" />
+                <o-dropdown-item aria-role="listitem" label="Something else" />
             </o-dropdown>
         </o-field>
     </section>

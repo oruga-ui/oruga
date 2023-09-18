@@ -17,17 +17,18 @@ const selectedOptions = ref([]);
                 </o-button>
             </template>
 
-            <o-dropdown-item value="option1" aria-role="listitem">
-                <span>Option 1</span>
-            </o-dropdown-item>
-
-            <o-dropdown-item value="option2" aria-role="listitem">
-                <span>Option 2</span>
-            </o-dropdown-item>
-
-            <o-dropdown-item value="option3" aria-role="listitem">
-                <span>Option 3</span>
-            </o-dropdown-item>
+            <o-dropdown-item
+                value="option1"
+                aria-role="listitem"
+                label="Option 1" />
+            <o-dropdown-item
+                value="option2"
+                aria-role="listitem"
+                label="Option 2" />
+            <o-dropdown-item
+                value="option3"
+                aria-role="listitem"
+                label="Option 3" />
         </o-dropdown>
     </section>
 </template>

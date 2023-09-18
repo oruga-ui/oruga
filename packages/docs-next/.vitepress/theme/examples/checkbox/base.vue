@@ -8,7 +8,7 @@ const checkboxCustom = ref("Yes");
 <template>
     <section>
         <o-field>
-            <o-checkbox>Basic</o-checkbox>
+            <o-checkbox label="Basic" />
         </o-field>
         <o-field>
             <o-checkbox v-model="checkbox">
@@ -27,7 +27,7 @@ const checkboxCustom = ref("Yes");
             <o-checkbox :indeterminate="true"> Indeterminate </o-checkbox>
         </o-field>
         <o-field>
-            <o-checkbox disabled>Disabled</o-checkbox>
+            <o-checkbox label="Disabled" disabled />
         </o-field>
     </section>
 </template>

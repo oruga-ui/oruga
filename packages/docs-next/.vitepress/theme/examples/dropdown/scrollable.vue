@@ -19,7 +19,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
 <template>
     <section>
         <o-field>
-            <o-switch v-model="isScrollable">Scrollable</o-switch>
+            <o-switch v-model="isScrollable" label="Scrollable" />
         </o-field>
 
         <o-dropdown
