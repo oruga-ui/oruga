@@ -1,15 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Button from './Button.vue'
+import Button from "./Button.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Button)
-    }
-} as Plugin
+        registerComponent(app, Button);
+    },
+} as Plugin;
 
-export {
-    Button as OButton
-}
+export { Button as OButton };
