@@ -1,22 +1,22 @@
-import { defineConfig } from 'rollup'
-import vue from 'rollup-plugin-vue'
-import node from '@rollup/plugin-node-resolve'
-import cjs from '@rollup/plugin-commonjs'
-import babel from '@rollup/plugin-babel'
-import terser from '@rollup/plugin-terser'
+import { defineConfig } from 'rollup';
+import vue from 'rollup-plugin-vue';
+import node from '@rollup/plugin-node-resolve';
+import cjs from '@rollup/plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import terser from '@rollup/plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 import pack from './package.json' assert { type: "json" };
 
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`
+const bannerTxt = `/*! Oruga v${pack.version} | MIT License | github.com/oruga-ui/oruga */`;
 
-const baseFolder = './src/components/'
+const baseFolder = './src/components/';
 
 const components = fs
     .readdirSync(baseFolder)
@@ -31,15 +31,15 @@ const entries = {
     ...components.reduce((obj, name) => {
         obj[name] = (baseFolder + name)
         return obj
-    }, {})
+    }, {}),
 }
 
 const definePlugins = (ssr = false) => [
     node({
-        extensions: ['.vue', '.ts']
+        extensions: ['.vue', '.ts'],
     }),
     typescript({
-        typescript: require('typescript')
+        typescript: require('typescript'),
     }),
     vue({  
         template: {
@@ -47,18 +47,18 @@ const definePlugins = (ssr = false) => [
             compilerOptions: {
                 whitespace: 'condense'
             },
-            optimizeSSR: ssr
+            optimizeSSR: ssr,
         }
     }),
     babel({
-        babelHelpers: 'bundled'
+        babelHelpers: 'bundled',
     }),
-    cjs()
+    cjs(),
 ]
 
 const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
+    if (typeof s !== 'string') return '';
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 // ESM build to be used with webpack/rollup.
@@ -114,24 +114,25 @@ const esmIndexConfig = defineConfig({
     plugins: definePlugins(),
 });
 
-let configs = [
-    esmConfig, 
-    cjsConfig,
-    umdIndexConfig,
-    esmIndexConfig, 
-]
-
 export default () => {
+    let configs = [
+        esmConfig, 
+        cjsConfig,
+        umdIndexConfig,
+        esmIndexConfig, 
+    ];
+
     if (process.env.MINIFY === 'true') {
-        configs = configs.filter((c) => !!c.output.file)
+        configs = configs.filter((c) => !!c.output.file);
         configs.forEach((c) => {
             c.output.file = c.output.file?.replace(/\.m?js/g, r => `.min${r}`);
             c.plugins.push(terser({
                 output: {
                     comments: RegExp('/^!/')
                 }
-            }))
+            }));
         })
     }
+
     return configs;
 }
