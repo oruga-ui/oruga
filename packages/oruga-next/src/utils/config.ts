@@ -2,7 +2,13 @@ import { ref, type App } from "vue";
 import { merge } from "./helpers";
 import type { OrugaOptions } from "@/types";
 
-const options = ref<OrugaOptions>({
+export let VueInstance: App;
+
+export const setVueInstance = (Vue: App): void => {
+    VueInstance = Vue;
+};
+
+const globalOptions = ref<OrugaOptions>({
     iconPack: "mdi",
     useHtml5Validation: true,
     statusIcon: true,
@@ -10,11 +16,11 @@ const options = ref<OrugaOptions>({
 });
 
 export const setOptions = (options: OrugaOptions): void => {
-    options.value = options;
+    globalOptions.value = options;
 };
 
 export const getOptions = (): OrugaOptions => {
-    return options.value;
+    return globalOptions.value;
 };
 
 export const ConfigProgrammatic = {
@@ -25,7 +31,9 @@ export const ConfigProgrammatic = {
 };
 
 export const ConfigPlugin = {
-    install(Vue: App, options?: OrugaOptions): void {
+    install(app: App, options?: OrugaOptions): void {
+        // set global vue instance
+        setVueInstance(app);
         // set options
         setOptions(merge(getOptions(), options, true));
     },

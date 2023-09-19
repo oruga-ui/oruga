@@ -39,9 +39,9 @@ export function bound(val: number, min: number, max: number): number {
 }
 
 /**
- * Get value of an object property/path even if it's nested
+ * Get a value of an object property/path even if it's nested
  */
-export function getValueByPath<T>(
+export function getValueByPath<T = any>(
     obj: Record<string, any>,
     path: string,
     defaultValue?: T,
@@ -56,7 +56,7 @@ export function getValueByPath<T>(
 }
 
 /**
- * Set value of an object property/path even if it's nested
+ * Set a value of an object property/path even if it's nested
  */
 export function setValueByPath<T>(
     obj: Record<string, any>,

@@ -4,8 +4,16 @@ import type { OrugaOptions } from "@/types";
 import * as plugins from "./components/plugins";
 
 import { merge } from "./utils/helpers";
-import { setOptions, getOptions, ConfigProgrammatic } from "./utils/config";
+import {
+    setVueInstance,
+    setOptions,
+    getOptions,
+    ConfigProgrammatic,
+} from "./utils/config";
 import { registerPlugin, registerProgrammaticComponent } from "./utils/plugins";
+
+// export all types
+export * from "./types";
 
 // export all vue components
 export * from "./components";
@@ -24,6 +32,8 @@ export { useProgrammatic } from "./utils/programmatic";
 // default export main oruga vue plugin
 export default {
     install(app: App, options?: OrugaOptions): void {
+        // set global vue instance
+        setVueInstance(app);
         // set options
         const defaultOptions = getOptions();
         setOptions(merge(defaultOptions, options, true));

@@ -7,7 +7,7 @@ import { merge } from "../../utils/helpers";
 import { VueInstance } from "../../utils/config";
 import {
     registerComponent,
-    registerComponentProgrammatic,
+    registerProgrammaticComponent,
 } from "../../utils/plugins";
 import InstanceRegistry from "../..//utils/InstanceRegistry";
 
@@ -16,10 +16,10 @@ import { createVNode, render } from "vue";
 
 let localVueInstance: App;
 
-const instances = new InstanceRegistry();
+const instances = new InstanceRegistry<typeof NotificationNotice>();
 
 const NotificationProgrammatic = {
-    open(params): InstanceType<typeof NotificationNotice> {
+    open(params: string | any): InstanceType<typeof NotificationNotice> {
         let newParams;
         if (typeof params === "string") {
             newParams = {
@@ -29,7 +29,7 @@ const NotificationProgrammatic = {
             newParams = params;
         }
 
-        const defaultParam = {
+        const defaultParams = {
             programmatic: { instances },
             position: getValueByPath(
                 getOptions(),
@@ -40,6 +40,7 @@ const NotificationProgrammatic = {
                 params.closable ||
                 getValueByPath(getOptions(), "notification.closable", false),
         };
+
         let slot;
         if (Array.isArray(newParams.message)) {
             slot = newParams.message;
@@ -47,24 +48,23 @@ const NotificationProgrammatic = {
         }
 
         newParams.active = true;
-        const propsData = merge(defaultParam, newParams);
+        const propsData = merge(defaultParams, newParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;
         });
 
-        const app = localVueInstance || VueInstance;
         propsData.propsNotification = Object.assign({}, propsData);
         propsData.propsNotification.isActive = true;
-        const defaultSlot = () => {
-            return slot;
-        };
+        const defaultSlot = () => slot;
+
+        const app = localVueInstance || VueInstance;
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         return vnode.component.proxy as InstanceType<typeof NotificationNotice>;
     },
-    closeAll(...args: any[]) {
+    closeAll(...args: any[]): void {
         instances.walk((entry) => {
             entry.close(...args);
         });
@@ -75,7 +75,7 @@ export default {
     install(app: App) {
         localVueInstance = app;
         registerComponent(app, Notification);
-        registerComponentProgrammatic(
+        registerProgrammaticComponent(
             app,
             "notification",
             NotificationProgrammatic,

@@ -7,13 +7,13 @@ import { VueInstance } from "../../utils/config";
 import { merge } from "../../utils/helpers";
 import {
     registerComponent,
-    registerComponentProgrammatic,
+    registerProgrammaticComponent,
 } from "../../utils/plugins";
 import InstanceRegistry from "../../utils/InstanceRegistry";
 
 let localVueInstance: App;
 
-const instances = new InstanceRegistry();
+const instances = new InstanceRegistry<typeof Modal>();
 
 const ModalProgrammatic = {
     open(params: OModal | string): InstanceType<typeof Modal> {
@@ -29,27 +29,27 @@ const ModalProgrammatic = {
         const defaultParam = {
             programmatic: { instances },
         };
+
         let slot;
         if (Array.isArray(newParams.content)) {
             slot = newParams.content;
             delete newParams.content;
         }
+
         const propsData = merge(defaultParam, newParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;
         });
 
+        const defaultSlot = () => slot;
         const app = localVueInstance || VueInstance;
-        const defaultSlot = () => {
-            return slot;
-        };
         const vnode = createVNode(Modal, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         return vnode.component.proxy as InstanceType<typeof Modal>;
     },
-    closeAll(...args: any[]) {
+    closeAll(...args: any[]): void {
         instances.walk((entry) => {
             entry.close(...args);
         });
@@ -60,7 +60,7 @@ export default {
     install(app: App) {
         localVueInstance = app;
         registerComponent(app, Modal);
-        registerComponentProgrammatic(app, "modal", ModalProgrammatic);
+        registerProgrammaticComponent(app, "modal", ModalProgrammatic);
     },
 } as Plugin;
 
