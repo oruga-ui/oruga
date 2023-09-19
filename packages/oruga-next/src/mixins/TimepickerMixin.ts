@@ -1,7 +1,7 @@
 import type { App } from "vue";
 import { defineComponent } from "vue";
 
-import { getOptions } from "../utils/options";
+import { getOptions } from "../utils/config";
 import FormElementMixin from "./FormElementMixin";
 import { getValueByPath, isMobile, matchWithGroups } from "../utils/helpers";
 
