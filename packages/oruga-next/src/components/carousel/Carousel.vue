@@ -5,11 +5,11 @@ import { sign, mod, bound, getValueByPath } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";
 
 import Icon from "../icon/Icon.vue";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import {
     default as ProviderParentMixin,
     Sorted,
-} from "../../utils/ProviderParentMixin";
+} from "../../mixins/ProviderParentMixin";
 
 /**
  * A Slideshow for cycling images in confined spaces

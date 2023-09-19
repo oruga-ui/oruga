@@ -2,8 +2,8 @@
 import type { Component, PropType } from "vue";
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import trapFocus from "../../directives/trapFocus";
 import { getOptions } from "../../utils/config";

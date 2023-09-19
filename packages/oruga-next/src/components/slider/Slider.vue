@@ -3,7 +3,7 @@ import SliderThumb from "./SliderThumb.vue";
 import SliderTick from "./SliderTick.vue";
 
 import { getOptions } from "../../utils/config";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import { getValueByPath } from "../../utils/helpers";
 import { defineComponent } from "vue";
 

@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TabbedMixin from "../../utils/TabbedMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import TabbedMixin from "../../mixins/TabbedMixin";
 
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";

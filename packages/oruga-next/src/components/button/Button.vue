@@ -5,7 +5,7 @@ import { defineComponent } from "vue";
 import Icon from "../icon/Icon.vue";
 
 import { getOptions } from "../../utils/config";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import { getValueByPath } from "../../utils/helpers";
 
 /**

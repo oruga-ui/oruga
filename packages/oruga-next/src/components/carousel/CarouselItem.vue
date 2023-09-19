@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import {
     default as InjectedChildMixin,
     Sorted,
-} from "../../utils/InjectedChildMixin";
+} from "../../mixins/InjectedChildMixin";
 
 /**
  * @displayName Carousel Item

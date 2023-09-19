@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 import { getOptions } from "../../utils/config";
 import getIcons from "../../utils/icons";

@@ -1,6 +1,6 @@
 <script lang="ts">
-import FormElementMixin from "../../utils/FormElementMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import { getValueByPath, isMobile, matchWithGroups } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";
 

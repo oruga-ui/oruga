@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import FormElementMixin from "../../utils/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
 import { File } from "../../utils/ssr";
 
 /**

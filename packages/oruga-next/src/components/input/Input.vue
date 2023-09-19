@@ -3,8 +3,8 @@ import { defineComponent, type StyleValue } from "vue";
 
 import Icon from "../icon/Icon.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import FormElementMixin from "../../utils/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
 
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";

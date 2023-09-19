@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent, type Component } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import trapFocus from "../../directives/trapFocus";
 import {

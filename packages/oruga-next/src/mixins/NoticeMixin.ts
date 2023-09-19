@@ -1,6 +1,5 @@
-import { getOptions } from "./config";
-import { getValueByPath } from "./helpers";
-import { removeElement } from "./helpers";
+import { getOptions } from "../utils/config";
+import { getValueByPath, removeElement } from "../utils/helpers";
 
 export default {
     props: {

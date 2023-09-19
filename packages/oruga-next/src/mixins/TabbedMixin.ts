@@ -3,7 +3,7 @@ import { defineComponent } from "vue";
 import Icon from "../components/icon/Icon.vue";
 import SlotComponent from "./SlotComponent";
 import { default as ProviderParentMixin, Sorted } from "./ProviderParentMixin";
-import { mod } from "./helpers";
+import { mod } from "../utils/helpers";
 
 export default (cmp: string) =>
     defineComponent({

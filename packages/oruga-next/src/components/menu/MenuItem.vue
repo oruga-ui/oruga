@@ -1,5 +1,5 @@
 <script lang="ts">
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import type { Component, PropType } from "vue";
 import { defineComponent } from "vue";
 

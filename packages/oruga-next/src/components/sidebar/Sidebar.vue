@@ -1,6 +1,6 @@
 <script lang="ts">
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import { getOptions } from "../../utils/config";
 import { removeElement, getValueByPath } from "../../utils/helpers";

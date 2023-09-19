@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 
-import { hasFlag } from "./helpers";
+import { hasFlag } from "../utils/helpers";
 
 const items = 1;
 const sorted = 3;
