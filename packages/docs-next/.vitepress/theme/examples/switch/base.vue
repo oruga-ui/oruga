@@ -8,7 +8,7 @@ const isSwitchedCustom = ref("Yes");
 <template>
     <section>
         <o-field>
-            <o-switch>Default</o-switch>
+            <o-switch label="Default" />
         </o-field>
         <o-field>
             <o-switch v-model="isSwitched">

@@ -1,16 +1,16 @@
 <template>
     <section>
         <o-field>
-            <o-checkbox size="small"> Small </o-checkbox>
+            <o-checkbox size="small" label="Small" />
         </o-field>
         <o-field>
-            <o-checkbox> Default </o-checkbox>
+            <o-checkbox label="Default" />
         </o-field>
         <o-field>
-            <o-checkbox size="medium"> Medium </o-checkbox>
+            <o-checkbox size="medium" label="Medium" />
         </o-field>
         <o-field>
-            <o-checkbox size="large"> Large </o-checkbox>
+            <o-checkbox size="large" label="Large" />
         </o-field>
     </section>
 </template>
