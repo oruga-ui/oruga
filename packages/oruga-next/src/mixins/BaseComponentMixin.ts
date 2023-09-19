@@ -1,7 +1,7 @@
 import type { ComponentOptions } from "vue";
 import { defineComponent } from "vue";
-import { getOptions } from "./config";
-import { getValueByPath, blankIfUndefined, endsWith } from "./helpers";
+import { getOptions } from "../utils/options";
+import { getValueByPath, blankIfUndefined, endsWith } from "../utils/helpers";
 
 const _defaultSuffixProcessor = (input: string, suffix: string) => {
     return blankIfUndefined(input)
