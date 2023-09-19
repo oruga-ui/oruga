@@ -8,7 +8,7 @@
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.mjs",
-  "unpkg": "dist/oruga.js",
+  "unpkg": "dist/oruga.min.js",
   "typings": "dist/types/index.d.ts",
   "exports": {
     ".": {
