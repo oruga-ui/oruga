@@ -7,22 +7,28 @@ const radio = ref("small");
 <template>
     <section>
         <o-field>
-            <o-radio v-model="radio" native-value="small" size="small">
-                Small
-            </o-radio>
+            <o-radio
+                v-model="radio"
+                native-value="small"
+                size="small"
+                label="Small" />
         </o-field>
         <o-field>
-            <o-radio v-model="radio" native-value="default"> Default </o-radio>
+            <o-radio v-model="radio" native-value="default" label="Default" />
         </o-field>
         <o-field>
-            <o-radio v-model="radio" native-value="medium" size="medium">
-                Medium
-            </o-radio>
+            <o-radio
+                v-model="radio"
+                native-value="medium"
+                size="medium"
+                label="Medium" />
         </o-field>
         <o-field>
-            <o-radio v-model="radio" native-value="large" size="large">
-                Large
-            </o-radio>
+            <o-radio
+                v-model="radio"
+                native-value="large"
+                size="large"
+                label="Large" />
         </o-field>
         <p><b>Selection:</b> {{ radio }}</p>
     </section>

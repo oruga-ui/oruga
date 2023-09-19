@@ -8,13 +8,9 @@
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Another action
-            </o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Something else
-            </o-dropdown-item>
+            <o-dropdown-item aria-role="listitem" label="Action" />
+            <o-dropdown-item aria-role="listitem" label="Another action" />
+            <o-dropdown-item aria-role="listitem" label="Something else" />
         </o-dropdown>
 
         <o-dropdown :triggers="['hover']" aria-role="list">
@@ -25,13 +21,9 @@
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Another action
-            </o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Something else
-            </o-dropdown-item>
+            <o-dropdown-item aria-role="listitem" label="Action" />
+            <o-dropdown-item aria-role="listitem" label="Another action" />
+            <o-dropdown-item aria-role="listitem" label="Something else" />
         </o-dropdown>
 
         <o-dropdown disabled aria-role="list">
@@ -41,13 +33,9 @@
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Another action
-            </o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Something else
-            </o-dropdown-item>
+            <o-dropdown-item aria-role="listitem" label="Action" />
+            <o-dropdown-item aria-role="listitem" label="Another action" />
+            <o-dropdown-item aria-role="listitem" label="Something else" />
         </o-dropdown>
 
         <o-dropdown aria-role="list">
@@ -58,13 +46,9 @@
                 </div>
             </template>
 
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Another action
-            </o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Something else
-            </o-dropdown-item>
+            <o-dropdown-item aria-role="listitem" label="Action" />
+            <o-dropdown-item aria-role="listitem" label="Another action" />
+            <o-dropdown-item aria-role="listitem" label="Something else" />
         </o-dropdown>
 
         <o-dropdown :triggers="['contextmenu']" aria-role="list">
@@ -72,13 +56,9 @@
                 <o-button label="Right click" role="button" />
             </template>
 
-            <o-dropdown-item aria-role="listitem">Action</o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Another action
-            </o-dropdown-item>
-            <o-dropdown-item aria-role="listitem">
-                Something else
-            </o-dropdown-item>
+            <o-dropdown-item aria-role="listitem" label="Action" />
+            <o-dropdown-item aria-role="listitem" label="Another action" />
+            <o-dropdown-item aria-role="listitem" label="Something else" />
         </o-dropdown>
     </section>
 </template>

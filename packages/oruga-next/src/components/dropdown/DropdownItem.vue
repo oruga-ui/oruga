@@ -23,6 +23,13 @@ export default defineComponent({
             type: [String, Number, Boolean, Object, Array],
         },
         /**
+         * Item label, unnecessary when default slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
+        },
+        /**
          * Item is disabled
          */
         disabled: Boolean,
@@ -117,6 +124,6 @@ export default defineComponent({
         :role="ariaRoleItem"
         :tabindex="tabindex"
         @click="selectItem">
-        <slot />
+        <slot>{{ label }}</slot>
     </component>
 </template>

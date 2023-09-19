@@ -1763,7 +1763,7 @@ export default defineComponent({
                     :root-class="paginationWrapperClasses"
                     :icon-pack="iconPack"
                     :rounded="paginationRounded"
-                    :pagination-size="paginationSize"
+                    :size="paginationSize"
                     :order="paginationOrder"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"

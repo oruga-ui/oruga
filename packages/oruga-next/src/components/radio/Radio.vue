@@ -14,6 +14,15 @@ export default defineComponent({
     mixins: [BaseComponentMixin, CheckRadioMixin],
     configField: "radio",
     props: {
+        /**
+         * Input label, unnecessary when default slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
+        },
+        /** Accessibility label to establish relationship between the checkbox and control label */
+        ariaLabelledby: String,
         rootClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
         checkedClass: [String, Function, Array],
@@ -88,7 +97,13 @@ export default defineComponent({
             :required="required"
             :name="name"
             :value="nativeValue"
+            :aria-labelledby="ariaLabelledby"
             @click.stop />
-        <span :class="labelClasses"><slot /></span>
+        <span
+            v-if="label || $slots.default"
+            :id="ariaLabelledby"
+            :class="labelClasses">
+            <slot>{{ label }}</slot>
+        </span>
     </label>
 </template>
