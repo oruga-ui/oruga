@@ -39,6 +39,13 @@ export default defineComponent({
             default: null,
         },
         /**
+         * Trigger label, unnecessary when trgger slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
+        },
+        /**
          * Dropdown disabled
          */
         disabled: Boolean,
@@ -494,7 +501,9 @@ export default defineComponent({
             @contextmenu.prevent="onContextMenu"
             @mouseenter="onHover"
             @focus.capture="onFocus">
-            <slot name="trigger" :active="isActive" />
+            <slot name="trigger" :active="isActive">
+                {{ label }}
+            </slot>
         </div>
 
         <transition :name="animation">
