@@ -36,10 +36,11 @@
     "url": "https://github.com/oruga-ui/oruga/issues"
   },
   "scripts": {
-    "build:vue": "rollup -c && rollup -c --environment MINIFY",
+    "build:vue": "rollup -c",
     "build:vue:watch": "rollup -c --watch",
-    "build:lib": "rimraf dist && npm run build:vue",
+    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue && npm run build:types",
     "build:lib:watch": "npm link &&  \"npm run build:vue:watch\"",
+    "build:types": "vue-tsc -d --emitDeclarationOnly --declarationDir dist/types --declaration true",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
