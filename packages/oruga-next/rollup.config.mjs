@@ -60,7 +60,7 @@ const capitalize = (s) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
-
+  
 // ESM build to be used with webpack/rollup.
 const esmConfig = defineConfig({
     input: entries,
@@ -86,7 +86,7 @@ const cjsConfig = defineConfig({
     plugins: definePlugins(true),
 });
 
-// Browser build
+// Browser builds
 const umdIndexConfig = defineConfig({
     input: 'src/index.ts',
     external: ['vue'],
@@ -103,6 +103,28 @@ const umdIndexConfig = defineConfig({
     plugins: definePlugins(),
 });
 
+const umdIndexMinifiedConfig = defineConfig({
+    input: 'src/index.ts',
+    external: ['vue'],
+    output: {
+        format: 'umd',
+        name: capitalize('oruga'),
+        file: 'dist/oruga.min.js',
+        exports: 'named',
+        banner: bannerTxt,
+        globals: {
+            vue: 'Vue'
+        }
+    },
+    plugins: [
+        ...definePlugins(), 
+        terser({
+            output: {
+                comments: RegExp('/^!/')
+            }
+        })
+    ]});
+
 const esmIndexConfig = defineConfig({
     input: 'src/index.ts',
     external: ['vue'],
@@ -114,25 +136,29 @@ const esmIndexConfig = defineConfig({
     plugins: definePlugins(),
 });
 
-export default () => {
-    let configs = [
-        esmConfig, 
-        cjsConfig,
-        umdIndexConfig,
-        esmIndexConfig, 
-    ];
-
-    if (process.env.MINIFY === 'true') {
-        configs = configs.filter((c) => !!c.output.file);
-        configs.forEach((c) => {
-            c.output.file = c.output.file?.replace(/\.m?js/g, r => `.min${r}`);
-            c.plugins.push(terser({
-                output: {
-                    comments: RegExp('/^!/')
-                }
-            }));
+const esmIndexMinifiedConfig = defineConfig({
+    input: 'src/index.ts',
+    external: ['vue'],
+    output: {
+        format: 'esm',
+        file: 'dist/oruga.min.mjs',
+        banner: bannerTxt
+    },
+    plugins: [
+        ...definePlugins(), 
+        terser({
+            output: {
+                comments: RegExp('/^!/')
+            }
         })
-    }
+    ]
+});
 
-    return configs;
-}
+export default  [
+    esmConfig, 
+    cjsConfig,
+    umdIndexConfig,
+    umdIndexMinifiedConfig,
+    esmIndexConfig, 
+    esmIndexMinifiedConfig,
+];
