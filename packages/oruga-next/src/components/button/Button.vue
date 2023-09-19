@@ -19,7 +19,6 @@ defineOptions({
     inheritAttrs: false,
 });
 
-// mixins: [BaseComponentMixin],
 const props = defineProps({
     override: Boolean,
     /**
@@ -95,42 +94,47 @@ const props = defineProps({
     disabled: Boolean,
     /**  @ignore */
     iconBoth: Boolean, // This is used internally
-    elementsWrapperClass: [String, Function, Array],
-    rootClass: [String, Function, Array],
-    outlinedClass: [String, Function, Array],
-    loadingClass: [String, Function, Array],
-    invertedClass: [String, Function, Array],
-    expandedClass: [String, Function, Array],
-    roundedClass: [String, Function, Array],
-    disabledClass: [String, Function, Array],
-    iconClass: [String, Function, Array],
-    iconLeftClass: [String, Function, Array],
-    iconRightClass: [String, Function, Array],
-    labelClass: [String, Function, Array],
-    sizeClass: [String, Function, Array],
-    variantClass: [String, Function, Array],
+    rootClass: { type: [String, Function, Array], default: undefined },
+    elementsWrapperClass: {
+        type: [String, Function, Array],
+        default: undefined,
+    },
+    outlinedClass: { type: [String, Function, Array], default: undefined },
+    loadingClass: { type: [String, Function, Array], default: undefined },
+    invertedClass: { type: [String, Function, Array], default: undefined },
+    expandedClass: { type: [String, Function, Array], default: undefined },
+    roundedClass: { type: [String, Function, Array], default: undefined },
+    disabledClass: { type: [String, Function, Array], default: undefined },
+    iconClass: { type: [String, Function, Array], default: undefined },
+    iconLeftClass: { type: [String, Function, Array], default: undefined },
+    iconRightClass: { type: [String, Function, Array], default: undefined },
+    labelClass: { type: [String, Function, Array], default: undefined },
+    sizeClass: { type: [String, Function, Array], default: undefined },
+    variantClass: { type: [String, Function, Array], default: undefined },
 });
 
 const rootClasses = computed(() => {
     return [
-        useComputedClass("rootClass", "o-btn"),
+        useComputedClass(props, "rootClass", "o-btn"),
         {
-            [useComputedClass("sizeClass", "o-btn--", props.size)]: props.size,
+            [useComputedClass(props, "sizeClass", "o-btn--", props.size)]:
+                props.size,
         },
         {
-            [useComputedClass("variantClass", "o-btn--", props.variant)]:
+            [useComputedClass(props, "variantClass", "o-btn--", props.variant)]:
                 props.variant,
         },
         {
-            [useComputedClass("outlinedClass", "o-btn--outlined")]:
+            [useComputedClass(props, "outlinedClass", "o-btn--outlined")]:
                 props.outlined && !props.variant,
         },
         {
-            [useComputedClass("invertedClass", "o-btn--inverted")]:
+            [useComputedClass(props, "invertedClass", "o-btn--inverted")]:
                 props.inverted && !props.variant,
         },
         {
             [useComputedClass(
+                props,
                 "outlinedClass",
                 "o-btn--outlined-",
                 props.variant,
@@ -138,51 +142,54 @@ const rootClasses = computed(() => {
         },
         {
             [useComputedClass(
+                props,
                 "invertedClass",
                 "o-btn--inverted-",
                 props.variant,
             )]: props.inverted && props.variant,
         },
         {
-            [useComputedClass("expandedClass", "o-btn--expanded")]:
+            [useComputedClass(props, "expandedClass", "o-btn--expanded")]:
                 props.expanded,
         },
         {
-            [useComputedClass("loadingClass", "o-btn--loading")]: props.loading,
+            [useComputedClass(props, "loadingClass", "o-btn--loading")]:
+                props.loading,
         },
         {
-            [useComputedClass("roundedClass", "o-btn--rounded")]: props.rounded,
+            [useComputedClass(props, "roundedClass", "o-btn--rounded")]:
+                props.rounded,
         },
         {
-            [useComputedClass("disabledClass", "o-btn--disabled")]:
+            [useComputedClass(props, "disabledClass", "o-btn--disabled")]:
                 props.disabled,
         },
     ];
 });
 
 const labelClasses = computed(() => {
-    return [useComputedClass("labelClass", "o-btn__label")];
+    return [useComputedClass(props, "labelClass", "o-btn__label")];
 });
 
 const iconClasses = computed(() => {
-    return [useComputedClass("iconClass", "o-btn__icon")];
+    return [useComputedClass(props, "iconClass", "o-btn__icon")];
 });
 
 const iconLeftClasses = computed(() => {
     return [
         ...iconClasses.value,
-        useComputedClass("iconLeftClass", "o-btn__icon-left"),
+        useComputedClass(props, "iconLeftClass", "o-btn__icon-left"),
     ];
 });
 
 const iconRightClasses = computed(() => {
     return [
         ...iconClasses.value,
-        useComputedClass("iconRightClass", "o-btn__icon-right"),
+        useComputedClass(props, "iconRightClass", "o-btn__icon-right"),
     ];
 });
 const elementsWrapperClasses = computed(() => {
-    return [useComputedClass("elementsWrapperClass", "o-btn__wrapper")];
+    return [useComputedClass(props, "elementsWrapperClass", "o-btn__wrapper")];
 });
 const computedTag = computed(() => {
     if (typeof props.disabled !== "undefined" && props.disabled !== false) {
