@@ -43,6 +43,11 @@
     <a href="https://liberapay.com/oruga-ui/donate"><img alt="Donate using Liberapay" src="https://img.shields.io/badge/donate-liberapay-00AA00.svg?logo=liberapay"></a>
 </p>
 
+> [!NOTE]  
+> **_Oruga for Vue 2.x deprecated_**  
+> Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year, from now on Oruga for Vue 2 is deprecated and will not receive any further updates. Further enhancements will only be developed for Oruga-next. See [#496](https://github.com/oruga-ui/oruga/issues/496).
+
+
 ## Features
 
 * **CSS framework agnostic**: No dependency on a specific CSS framework/library but you can easily integrate the components with one of them because they are fully customizable in different ways
