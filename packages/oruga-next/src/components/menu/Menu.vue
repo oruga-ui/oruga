@@ -11,6 +11,8 @@ import {defineComponent} from "vue";
 /**
  * A simple menu
  * @displayName Menu
+ * @requires ./MenuList.vue
+ * @requires ./MenuItem.vue
  * @style _menu.scss
  */
 export default defineComponent({

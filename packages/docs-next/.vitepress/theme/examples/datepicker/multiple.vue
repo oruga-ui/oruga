@@ -1,23 +1,17 @@
-<template>
-  <o-field label="Select a date">
-    <o-datepicker
-      v-model="dates"
-      multiple
-      placeholder="Click to select..."
-    >
-    </o-datepicker>
-  </o-field>
-</template>
-<script>
-import { defineComponent, ref } from 'vue';
+<script setup>
+import { ref } from "vue";
 
-export default defineComponent({
-  setup() {
-    const dates = ref([]);
-
-    return {
-      dates,
-    };
-  },
-});
+const dates = ref([]);
 </script>
+
+<template>
+    <section>
+        <o-field label="Select a date">
+            <o-datepicker
+                v-model="dates"
+                multiple
+                placeholder="Click to select..." />
+        </o-field>
+        <p><b>Selected:</b> {{ dates }}</p>
+    </section>
+</template>

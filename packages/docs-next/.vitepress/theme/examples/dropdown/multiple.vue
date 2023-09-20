@@ -1,38 +1,34 @@
-<template>
-  <section>
-    <p class="content"><b>selected</b>: {{ selectedOptions }}</p>
-    <o-dropdown v-model="selectedOptions" multiple aria-role="list">
-      <template #trigger>
-        <o-button variant="primary" type="button">
-          <span>Selected ({{ selectedOptions.length }})</span>
-          <o-icon icon="caret-down"></o-icon>
-        </o-button>
-      </template>
+<script setup>
+import { ref } from "vue";
 
-      <o-dropdown-item value="option1" aria-role="listitem">
-        <span>Option 1</span>
-      </o-dropdown-item>
-
-      <o-dropdown-item value="option2" aria-role="listitem">
-        <span>Option 2</span>
-      </o-dropdown-item>
-
-      <o-dropdown-item value="option3" aria-role="listitem">
-        <span>Option 3</span>
-      </o-dropdown-item>
-    </o-dropdown>
-  </section>
-</template>
-<script>
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const selectedOptions = ref([]);
-
-    return {
-      selectedOptions,
-    };
-  },
-});
+const selectedOptions = ref([]);
 </script>
+
+<template>
+    <section>
+        <p class="content"><b>selected</b>: {{ selectedOptions }}</p>
+        <o-dropdown v-model="selectedOptions" multiple aria-role="list">
+            <template #trigger>
+                <o-button
+                    variant="primary"
+                    type="button"
+                    icon-right="caret-down">
+                    <span>Selected ({{ selectedOptions.length }})</span>
+                </o-button>
+            </template>
+
+            <o-dropdown-item
+                value="option1"
+                aria-role="listitem"
+                label="Option 1" />
+            <o-dropdown-item
+                value="option2"
+                aria-role="listitem"
+                label="Option 2" />
+            <o-dropdown-item
+                value="option3"
+                aria-role="listitem"
+                label="Option 3" />
+        </o-dropdown>
+    </section>
+</template>

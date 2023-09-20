@@ -10,20 +10,31 @@ title: Menu
 
 <Carbon />
 </div>
+
+<div class="vp-example">
+
+## Examples
+
 <example-menu />
+
+</div>
+<div class="vp-example">
 
 ## Class props
 
-<br />
-
 <inspector-menu-viewer />
 
-<br />
-<br />
+</div>
 
 <div class="vp-doc">
 
-## Props
+## Menu component
+
+```html
+<o-menu></o-menu>
+```
+
+### Props
 
 | Prop name | Description | Type    | Values | Default |
 | --------- | ----------- | ------- | ------ | ------- |
@@ -31,31 +42,168 @@ title: Menu
 | activable |             | boolean | -      | true    |
 | override  |             | boolean | -      |         |
 
-## Slots
+### Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
 | default |             |          |
 
-## Style
+</div>
 
-📄 [Full scss file](https://github.com/oruga-ui/oruga/blob/master/packages/oruga/src/scss/components/_menu.scss)
+<div class="vp-doc">
 
-| CSS Variable                              | SASS Variable                       | Default             |
-| ----------------------------------------- | ----------------------------------- | ------------------- |
-| --oruga-menu-item-color                   | \$menu-item-color                   | \$grey-dark         |
-| --oruga-menu-item-hover-color             | \$menu-item-hover-color             | \$black             |
-| --oruga-menu-item-hover-background-color  | \$menu-item-hover-background-color  | \$grey-light        |
-| --oruga-menu-item-active-color            | \$menu-item-active-color            | \$primary-invert    |
-| --oruga-menu-item-active-background-color | \$menu-item-active-background-color | \$primary           |
-| --oruga-menu-item-disabled-color          | \$menu-item-disabled-color          | \$grey-light        |
-| --oruga-menu-list-border-left             | \$menu-list-border-left             | 1px solid \$primary |
-| --oruga-menu-list-line-height             | \$menu-list-line-height             | 1.25em              |
-| --oruga-menu-item-padding                 | \$menu-item-padding                 | 0.5em 0.75em        |
-| --oruga-menu-nested-list-margin           | \$menu-nested-list-margin           | 0.75em              |
-| --oruga-menu-nested-list-padding-left     | \$menu-nested-list-padding-left     | 0.75em              |
-| --oruga-menu-label-color                  | \$menu-label-color                  | \$grey              |
-| --oruga-menu-label-font-size              | \$menu-label-font-size              | 0.75em              |
-| --oruga-menu-label-spacing                | \$menu-label-spacing                | 1em                 |
+## MenuList component
+
+```html
+<o-menu-list></o-menu-list>
+```
+
+### Props
+
+| Prop name | Description         | Type    | Values                     | Default |
+| --------- | ------------------- | ------- | -------------------------- | ------- |
+| ariaRole  |                     | string  | -                          |         |
+| icon      |                     | string  | -                          |         |
+| iconPack  |                     | string  | -                          |         |
+| label     |                     | string  | -                          |         |
+| override  |                     | boolean | -                          |         |
+| size      | Icon size, optional | string  | `small`, `medium`, `large` |         |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| label   |             |          |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+</div>
+
+<div class="vp-doc">
+
+## MenuItem component
+
+```html
+<o-menu-item></o-menu-item>
+```
+
+### Props
+
+| Prop name | Description         | Type                | Values                     | Default |
+| --------- | ------------------- | ------------------- | -------------------------- | ------- |
+| active    |                     | boolean             | -                          |         |
+| animation |                     | string              | -                          | 'slide' |
+| ariaRole  |                     | string              | -                          | ''      |
+| disabled  |                     | boolean             | -                          |         |
+| expanded  |                     | boolean             | -                          |         |
+| icon      |                     | string              | -                          |         |
+| iconPack  |                     | string              | -                          |         |
+| label     |                     | string              | -                          |         |
+| override  |                     | boolean             | -                          |         |
+| size      | Icon size, optional | string              | `small`, `medium`, `large` |         |
+| tag       |                     | string \| Component | -                          | 'a'     |
+
+### Events
+
+| Event name      | Properties | Description |
+| --------------- | ---------- | ----------- |
+| update:expanded |            |
+| update:active   |            |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| label   |             | <br/>    |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+</div>
+<div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                      | Default            |
+| ---------------------------------- | ------------------ |
+| $menu-item-color                   | $grey-dark         |
+| $menu-item-hover-color             | $black             |
+| $menu-item-hover-background-color  | $grey-light        |
+| $menu-item-active-color            | $primary-invert    |
+| $menu-item-active-background-color | $primary           |
+| $menu-item-disabled-color          | $grey-light        |
+| $menu-list-border-left             | 1px solid $primary |
+| $menu-list-line-height             | 1.25em             |
+| $menu-item-padding                 | 0.5em 0.75em       |
+| $menu-nested-list-margin           | 0.75em             |
+| $menu-nested-list-padding-left     | 0.75em             |
+| $menu-label-color                  | $grey              |
+| $menu-label-font-size              | 0.75em             |
+| $menu-label-spacing                | 1em                |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                      | Default            |
+| ---------------------------------- | ------------------ |
+| $menu-item-color                   | $grey-dark         |
+| $menu-item-hover-color             | $black             |
+| $menu-item-hover-background-color  | $grey-light        |
+| $menu-item-active-color            | $primary-invert    |
+| $menu-item-active-background-color | $primary           |
+| $menu-item-disabled-color          | $grey-light        |
+| $menu-list-border-left             | 1px solid $primary |
+| $menu-list-line-height             | 1.25em             |
+| $menu-item-padding                 | 0.5em 0.75em       |
+| $menu-nested-list-margin           | 0.75em             |
+| $menu-nested-list-padding-left     | 0.75em             |
+| $menu-label-color                  | $grey              |
+| $menu-label-font-size              | 0.75em             |
+| $menu-label-spacing                | 1em                |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_menu.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable              | Default                     |
+| -------------------------- | --------------------------- |
+| $menu-label-bg             | transparent                 |
+| $menu-label-color          | var(--#{$prefix}body-color) |
+| $menu-label-font-size      | 0.75em                      |
+| $menu-list-line-height     | 1.25em                      |
+| $menu-item-padding         | 0.5em 0.75em                |
+| $menu-item-bg              | transparent                 |
+| $menu-item-color           | var(--#{$prefix}body-color) |
+| $menu-item-active-bg       | var(--#{$prefix}primary)    |
+| $menu-item-active-color    | var(--#{$prefix}white)      |
+| $menu-item-disabled-bg     | transparent                 |
+| $menu-item-disabled-color  | var(--#{$prefix}secondary)  |
+| $menu-icon-spacer          | 0.5rem                      |
+| $menu-submenu-border-left  | 1px solid #445e00           |
+| $menu-submenu-padding-left | 0.75em                      |
+| $menu-submenu-margin       | 0.75em                      |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_menu.scss)
+
+</div>
 
 </div>

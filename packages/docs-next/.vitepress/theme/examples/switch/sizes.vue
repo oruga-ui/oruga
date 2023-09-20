@@ -1,16 +1,16 @@
 <template>
-  <section>
-    <o-field>
-      <o-switch size="small">Small</o-switch>
-    </o-field>
-    <o-field>
-      <o-switch>Default</o-switch>
-    </o-field>
-    <o-field>
-      <o-switch size="medium">Medium</o-switch>
-    </o-field>
-    <o-field>
-      <o-switch size="large">Large</o-switch>
-    </o-field>
-  </section>
+    <section>
+        <o-field>
+            <o-switch size="small" label="Small" />
+        </o-field>
+        <o-field>
+            <o-switch label="Default" />
+        </o-field>
+        <o-field>
+            <o-switch size="medium" label="Medium" />
+        </o-field>
+        <o-field>
+            <o-switch size="large" label="Large" />
+        </o-field>
+    </section>
 </template>

@@ -1,38 +1,36 @@
-<template>
-  <o-tabs type="boxed">
-    <o-tab-item>
-      <template #header>
-        <o-icon icon="info-circle" rootClass="custom-icon"></o-icon>
-        <span> Issues 3 </span>
-      </template>
-    </o-tab-item>
-    <o-tab-item>
-      <template #header>
-        <o-icon icon="retweet" rootClass="custom-icon"></o-icon>
-        <span> Pull Requests {{ count }} </span>
-      </template>
-    </o-tab-item>
-  </o-tabs>
-</template>
+<script setup>
+import { ref, onMounted } from "vue";
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
+const count = ref(1);
 
-export default defineComponent({
-    setup() {
-        const count = ref(1)
-        onMounted(() => {
-            setTimeout(() => {
-                count.value++;
-            }, 3 * 1000);
-        })
-        return { count }
-    }
-})
+onMounted(() => {
+    setTimeout(() => {
+        count.value++;
+    }, 3000);
+});
 </script>
 
-<style>
+<template>
+    <section>
+        <o-tabs type="boxed">
+            <o-tab-item>
+                <template #header>
+                    <o-icon icon="info-circle" root-class="custom-icon" />
+                    <span> Issues 3 </span>
+                </template>
+            </o-tab-item>
+            <o-tab-item>
+                <template #header>
+                    <o-icon icon="retweet" root-class="custom-icon" />
+                    <span> Pull Requests {{ count }} </span>
+                </template>
+            </o-tab-item>
+        </o-tabs>
+    </section>
+</template>
+
+<style lang="scss">
 .custom-icon {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 </style>

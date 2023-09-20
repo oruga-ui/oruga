@@ -11,7 +11,6 @@ export default defineComponent({
     },
     data() {
         return {
-            matchMediaRef: undefined,
             isMatchMedia: undefined
         }
     },
@@ -20,28 +19,24 @@ export default defineComponent({
             this.isMatchMedia = event.matches
         }
     },
-    created() {
-        if (typeof window !== 'undefined') {
-            let width = this.mobileBreakpoint
-            if (!width) {
-                const config = getOptions()
-                const defaultWidth = getValueByPath(config, `mobileBreakpoint`, '1023px')
-                width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
-            }
-            this.matchMediaRef = window.matchMedia(`(max-width: ${width})`)
-            if (this.matchMediaRef) {
-                this.isMatchMedia = this.matchMediaRef.matches
-                this.matchMediaRef.addListener(this.onMatchMedia, false)
-            } else {
-                this.isMatchMedia = false
-            }
+    mounted() {
+        let width = this.mobileBreakpoint
+        if (!width) {
+            const config = getOptions()
+            const defaultWidth = getValueByPath(config, `mobileBreakpoint`, '1023px')
+            width = getValueByPath(config, `${this.$options.configField}.mobileBreakpoint`, defaultWidth)
+        }
+        this.$mediaRef = window.matchMedia(`(max-width: ${width})`)
+        if (this.$mediaRef) {
+            this.isMatchMedia = this.$mediaRef.matches
+            this.$mediaRef.addEventListener('change', this.onMatchMedia)
+        } else {
+            this.isMatchMedia = false
         }
     },
-    beforeUnmount() {
-        if (typeof window !== 'undefined') {
-            if (this.matchMediaRef) {
-                this.matchMediaRef.removeListener(this.checkMatchMedia)
-            }
+    unmounted() {
+        if (this.$mediaRef) {
+            this.$mediaRef.removeEventListener('change', this.onMatchMedia)
         }
     }
 })

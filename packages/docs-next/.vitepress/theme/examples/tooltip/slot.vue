@@ -1,8 +1,7 @@
 <template>
-  <section>
-    <div class="odocs-spaced">
+    <section class="odocs-spaced">
         <o-tooltip position="bottom" multiline>
-            <o-button>Html Content</o-button>
+            <o-button label="Html Content" />
             <template #content>
                 <b>Lorem ipsum dolor sit amet</b>, consectetur warning elit.
                 <i>Fusce id fermentum quam</i>.
@@ -12,16 +11,14 @@
         <o-tooltip
             variant="primary"
             :triggers="['click']"
-            :auto-close="['outside', 'escape']"
-            >
+            :auto-close="['outside', 'escape']">
             <template #content>
-                <o-icon icon="heart" variant="danger"></o-icon>
-                <o-icon icon="thumbs-up" variant="info"></o-icon>
-                <o-icon icon="thumbs-down" variant="warning"></o-icon>
-                <o-icon icon="smile-beam"></o-icon>
+                <o-icon icon="heart" variant="danger" />
+                <o-icon icon="thumbs-up" variant="info" />
+                <o-icon icon="thumbs-down" variant="warning" />
+                <o-icon icon="smile-beam" />
             </template>
-            <o-button>Action</o-button>
+            <o-button label="Action" />
         </o-tooltip>
-    </div>
-  </section>
+    </section>
 </template>

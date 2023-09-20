@@ -1,48 +1,42 @@
+<script setup>
+function openDatetimePicker() {
+    setTimeout(() => {
+        this.$refs.datetimepicker.$el
+            .getElementsByClassName("o-drop__trigger")[0]
+            .click();
+    }, 500);
+}
+
+const inspectData = [
+    {
+        class: "datepickerWrapperClass",
+        description: "Class of the Datepicker wrapper",
+    },
+    {
+        class: "timepickerWrapperClass",
+        description: "Class of the Timepicker wrapper",
+        action: () => {
+            openDatetimePicker();
+        },
+    },
+];
+</script>
 
 <template>
-  <doc-wrapper :inspect-class="inspectClass">
-    <template #default="s">
-      <o-field label="Select datetime">
-        <o-datetimepicker v-bind="s" placeholder="Click to select..." icon="calendar" horizontal-time-picker
-          ref="datetimepicker">
-        </o-datetimepicker>
-      </o-field>
-    </template>
-  </doc-wrapper>
-  <inspector :inspectData="inspectData" @inspect-class="inspectClass = $event"></inspector>
+    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+        <o-field label="Select datetime">
+            <o-datetimepicker
+                v-bind="props"
+                ref="datetimepicker"
+                placeholder="Click to select..."
+                icon="calendar"
+                horizontal-time-picker />
+        </o-field>
+    </inspector-wrapper>
 </template>
 
-<script>
-export default {
-  methods: {
-    openDatetimePicker() {
-      setTimeout(() => {
-        this.$refs.datetimepicker.$el.getElementsByClassName('o-drop__trigger')[0].click()
-      }, 500)
-    }
-  },
-  data() {
-    return {
-      inspectClass: {},
-      inspectData: [
-        {
-          class: "datepickerWrapperClass",
-          description: "Class of the Datepicker wrapper",
-        },
-        {
-          class: "timepickerWrapperClass",
-          description: "Class of the Timepicker wrapper",
-          action: () => {
-            this.openDatetimePicker();
-          }
-        }
-      ],
-    };
-  }
-}
-</script>
-<style>
+<style lang="scss">
 .datepicker__table {
-  border-collapse: collapse;
+    border-collapse: collapse;
 }
 </style>

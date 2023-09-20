@@ -1,34 +1,34 @@
-<template>
-  <section>
-    <div class="block">
-      <o-radio v-model="radio" name="name" native-value="Flint">
-        Flint
-      </o-radio>
-      <o-radio v-model="radio" name="name" native-value="Silver">
-        Silver
-      </o-radio>
-      <o-radio v-model="radio" name="name" native-value="Jack"> Jack </o-radio>
-      <o-radio v-model="radio" name="name" native-value="Vane" disabled>
-        Vane
-      </o-radio>
-    </div>
-    <p class="content">
-      <b>Selection:</b>
-      {{ radio }}
-    </p>
-  </section>
-</template>
+<script setup>
+import { ref } from "vue";
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const radio = ref('Jack')
-
-    return {
-      radio
-    }
-  }
-})
+const radio = ref("Jack");
 </script>
+
+<template>
+    <section>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                name="name"
+                native-value="Flint"
+                label="Flint" />
+            <o-radio
+                v-model="radio"
+                name="name"
+                native-value="Silver"
+                label="Silver" />
+            <o-radio
+                v-model="radio"
+                name="name"
+                native-value="Jack"
+                label="Jack" />
+            <o-radio
+                v-model="radio"
+                name="name"
+                native-value="Vane"
+                label="Vane"
+                disabled />
+        </o-field>
+        <p><b>Selection:</b> {{ radio }}</p>
+    </section>
+</template>

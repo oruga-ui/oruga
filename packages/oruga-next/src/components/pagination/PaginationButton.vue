@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 import { getOptions } from '../../utils/config'
 import { getValueByPath } from '../../utils/helpers'
@@ -28,9 +29,14 @@ export default defineComponent({
             required: true
         },
         tag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: 'a',
-            validator: (value) => getValueByPath(getOptions(), 'linkTags', ['a', 'button', 'input', 'router-link', 'nuxt-link']).indexOf(value) >= 0
+            validator: (value) => {
+                if (typeof value === 'string') {
+                    return getValueByPath(getOptions(), 'linkTags', ['a', 'button', 'input', 'router-link', 'nuxt-link']).indexOf(value) >= 0
+                }
+                return true
+            }
         },
         disabled: {
             type: Boolean,

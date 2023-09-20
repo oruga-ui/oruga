@@ -1,20 +1,23 @@
 <template>
     <section>
         <div class="odocs-spaced">
-            <o-button variant="primary">Primary</o-button>
-            <o-button variant="success">Success</o-button>
-            <o-button variant="danger">Danger</o-button>
-            <o-button variant="warning">Warning</o-button>
-            <o-button variant="info">Info</o-button>
+            <o-button label="Primary" variant="primary" />
+            <o-button label="Success" variant="success" />
+            <o-button label="Info" variant="info" />
+            <o-button label="Warning" variant="warning" />
+            <o-button label="Danger" variant="danger" />
         </div>
         <div class="odocs-spaced">
-            <o-button>Normal</o-button>
-            <o-button disabled>Disabled</o-button>
-            <o-button rounded>Rounded</o-button>
+            <o-button label="Normal" />
+            <o-button label="Disabled" disabled />
+            <o-button label="Rounded" rounded />
         </div>
         <div class="odocs-spaced">
-            <o-button variant="primary" outlined>Outlined</o-button>
-            <o-button variant="primary" inverted>Inverted</o-button>
+            <o-button label="Outlined" variant="primary" outlined />
+            <o-button label="Inverted" variant="primary" inverted />
+        </div>
+        <div class="odocs-spaced">
+            <o-button label="Expanded" variant="primary" expanded />
         </div>
     </section>
 </template>

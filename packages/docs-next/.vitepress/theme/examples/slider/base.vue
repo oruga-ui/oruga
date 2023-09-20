@@ -1,33 +1,44 @@
-<template>
-  <section>
-    <o-field label="Simple">
-      <o-slider v-model="value"></o-slider>
-    </o-field>
+<script setup>
+import { computed, ref } from "vue";
 
-    <o-field label="Warning">
-      <o-slider v-model="value" variant="warning"></o-slider>
-    </o-field>
+const sliderValue = ref(10);
 
-    <o-field label="Large">
-      <o-slider v-model="value" size="large"></o-slider>
-    </o-field>
-
-    <o-field label="Disabled">
-      <o-slider :value="30" disabled></o-slider>
-    </o-field>
-  </section>
-</template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const value = ref(5)
-
-    return {
-      value
+const sliderType = computed(() => {
+    if (sliderValue.value > 25 && sliderValue.value < 75) {
+        return "warning";
+    } else if (sliderValue.value >= 75) {
+        return "success";
     }
-  }
-})
+    return "danger";
+});
 </script>
+
+<template>
+    <section>
+        <o-field label="Simple">
+            <o-slider :model-value="8" />
+        </o-field>
+
+        <o-field label="Disabled">
+            <o-slider :model-value="30" disabled />
+        </o-field>
+
+        <o-field label="Tooltip type">
+            <o-slider v-model="sliderValue" :tooltip-variant="sliderType" />
+        </o-field>
+
+        <o-field label="Hide tooltip">
+            <o-slider :model-value="20" :tooltip="false" />
+        </o-field>
+
+        <o-field label="Custom tooltip label">
+            <o-slider
+                :model-value="30"
+                :custom-formatter="(val) => val + '%'" />
+        </o-field>
+
+        <o-field label="Rounded thumb">
+            <o-slider :model-value="8" rounded />
+        </o-field>
+    </section>
+</template>

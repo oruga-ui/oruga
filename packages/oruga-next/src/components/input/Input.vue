@@ -8,8 +8,7 @@
             :type="newType"
             :autocomplete="newAutocomplete"
             :maxlength="maxlength"
-            :value="computedValue"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid" />
@@ -20,8 +19,7 @@
             ref="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
-            :value="computedValue"
-            @input="onInput"
+            v-model="computedValue"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -141,6 +139,15 @@ export default defineComponent({
             type: Boolean,
             default: () => { return getValueByPath(getOptions(), 'input.clearable', false) }
         },
+        /**
+         * Icon name to be added on the clear button
+         */
+        clearIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'input.clearIcon', 'close-circle')
+            }
+        },
         rootClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
         iconLeftSpaceClass: [String, Function, Array],
@@ -210,14 +217,14 @@ export default defineComponent({
         hasIconRight() {
             return this.passwordReveal
                 || (this.statusIcon && this.statusVariantIcon)
-                || (this.clearable && this.newValue)
+                || (this.clearable && this.newValue && this.clearIcon)
                 || this.iconRight
         },
         rightIcon() {
             if (this.passwordReveal) {
                 return this.passwordVisibleIcon
-            } else if (this.clearable && this.newValue) {
-                return 'close-circle'
+            } else if (this.clearable && this.newValue && this.clearIcon) {
+                return this.clearIcon
             } else if (this.iconRight) {
                 return this.iconRight
             }
@@ -303,10 +310,6 @@ export default defineComponent({
             this.$nextTick(() => {
                 this.focus()
             })
-        },
-
-        onInput(event) {
-            this.computedValue = event.target.value
         },
 
         iconClick(emit, event) {

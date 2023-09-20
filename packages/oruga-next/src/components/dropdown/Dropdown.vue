@@ -2,8 +2,7 @@
     <div
         ref="dropdown"
         :class="rootClasses"
-        @mouseleave="isHoverable = false"
-    >
+        @mouseleave="isHoverable = false">
         <div
             v-if="!inline"
             :tabindex="disabled ? null : triggerTabindex"
@@ -14,7 +13,9 @@
             @mouseenter="onHover"
             @focus.capture="onFocus"
             aria-haspopup="true">
-            <slot name="trigger" :active="isActive"/>
+            <slot name="trigger" :active="isActive">
+                {{ label }}
+            </slot>
         </div>
 
         <transition :name="animation">
@@ -22,11 +23,10 @@
                 v-if="isMobileModal"
                 v-show="isActive"
                 :class="menuMobileOverlayClasses"
-                :aria-hidden="!isActive"
-            />
+                :aria-hidden="!isActive" />
         </transition>
         <transition :name="animation">
-            <div
+            <component
                 v-show="(!disabled && (isActive || isHoverable)) || inline"
                 ref="dropdownMenu"
                 :is="menuTag"
@@ -37,12 +37,13 @@
                 :style="menuStyle"
                 v-trap-focus="trapFocus">
                 <slot/>
-            </div>
+            </component>
         </transition>
     </div>
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -76,6 +77,13 @@ export default defineComponent({
         modelValue: {
             type: [String, Number, Boolean, Object, Array],
             default: null
+        }, 
+        /**
+         * Trigger label, unnecessary when trgger slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
         },
         /**
          * Dropdown disabled
@@ -190,7 +198,7 @@ export default defineComponent({
          * Dropdown menu tag name
          */
         menuTag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
             }

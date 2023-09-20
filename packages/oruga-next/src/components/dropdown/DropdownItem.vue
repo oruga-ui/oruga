@@ -5,11 +5,12 @@
         @click="selectItem"
         :role="ariaRoleItem"
         :tabindex="tabindex">
-        <slot/>
+        <slot>{{ label }}</slot>
     </component>
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
@@ -32,6 +33,13 @@ export default defineComponent({
          */
         value: {
             type: [String, Number, Boolean, Object, Array]
+        },  
+        /**
+         * Item label, unnecessary when default slot is used
+         */
+        label: {
+            type: String,
+            default: undefined,
         },
         /**
          * Item is disabled
@@ -48,7 +56,7 @@ export default defineComponent({
          * Dropdown item tag name
          */
         tag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'dropdown.itemTag', 'div')
             }

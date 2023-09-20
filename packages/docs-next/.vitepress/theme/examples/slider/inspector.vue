@@ -1,106 +1,98 @@
-<template>
-  <doc-wrapper :inspect-class="inspectClass">
-    <template #default="s">
-      <o-slider v-bind="s" :min="1" :max="10" :value="4">
-        <o-slider-tick v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="val" v-bind="s" :value="val" >
-          {{ val }}
-        </o-slider-tick>
-      </o-slider>
-    </template>
-  </doc-wrapper>
-  <inspector :inspectData="inspectData" :subitem="subitem" @inspect-class="inspectClass = $event"></inspector>
-</template>
+<script setup>
+const subitem = "slidertick";
 
-<script>
-export default {
-  data() {
-    return {
-      subitem: "slider-tick",
-      inspectClass: {},
-      inspectData: [
-        {
-          class: "rootClass",
-          description: "Root class of the element",
+const inspectData = [
+    {
+        class: "rootClass",
+        description: "Root class of the element",
+    },
+    {
+        class: "trackClass",
+        description: "Class of the slider track",
+    },
+    {
+        class: "fillClass",
+        description: "Class of the filled part of the slider",
+    },
+    {
+        class: "thumbRoundedClass",
+        description: "Class when the slider is rounded",
+        properties: ["rounded"],
+        action: (cmp, data) => {
+            data.rounded = true;
         },
-        {
-          class: "trackClass",
-          description: "Class of the slider track",
-          action: () => {
-          }
+    },
+    {
+        class: "thumbDraggingClass",
+        description: "Class when the thumb gets dragged",
+        warning: "Drag the thumb to see it in action!",
+    },
+    {
+        class: "disabledClass",
+        description: "Class when slider is disabled",
+        properties: ["disabled"],
+        action: (cmp, data) => {
+            data.disabled = true;
         },
-        {
-          class: "fillClass",
-          description: "Class of the filled part of the slider",
-          action: () => {
-          }
+    },
+    {
+        class: "thumbWrapperClass",
+        description: "Class of the thumb wrapper",
+        action: (cmp, data) => {
+            data.fullScreen = true;
         },
-        {
-          class: "thumbRoundedClass",
-          description: "Class when the slider is rounded",
-          properties: ["rounded"],
-          action: (cmp) => {
-            cmp.data.rounded = true
-          }
+    },
+    {
+        class: "thumbClass",
+        description: "Class of the thumb",
+        action: (cmp, data) => {
+            data.fullScreen = true;
         },
-        {
-          class: "thumbDraggingClass",
-          description: "Class when the thumb gets dragged",
-          warning: "Drag the thumb to see it in action!",
-          action: () => {
-          }
+    },
+    {
+        class: "variantClass",
+        description: "Class of the slider variant",
+        properties: ["variant"],
+        suffixes: ["primary", "info", "warning", "danger"],
+        action: (cmp, data) => {
+            data.position = "static";
+            data.variant = "warning";
         },
-        {
-          class: "disabledClass",
-          description: "Class when slider is disabled",
-          properties: ["disabled"],
-          action: (cmp) => {
-            cmp.data.disabled = true;
-          }
-        },
-        {
-          class: "thumbWrapperClass",
-          description: "Class of the thumb wrapper",
-          action: (cmp) => {
-            cmp.data.fullScreen = true;
-          }
-        },
-        {
-          class: "thumbClass",
-          description: "Class of the thumb",
-          action: (cmp) => {
-            cmp.data.fullScreen = true;
-          }
-        },
-        {
-          class: "variantClass",
-          description: 'Class of the slider variant',
-          properties: ["variant"],
-          suffixes: ['primary', 'info', 'warning', 'danger'],
-          action: (cmp) => {
-            this.position = 'static';
-            cmp.data.variant = 'warning';
-          }
-        },
-        {
-          class: "tickClass",
-          description: "Class of slider tick",
-          properties: ["ticks"],
-          subitem: true,
-        },
-        {
-          class: "tickHiddenClass",
-          description: "Class when slider tick is hidden",
-          properties: ["ticks"],
-          subitem: true,
-        },
-        {
-          class: "tickLabelClass",
-          description: "Class of tick label",
-          properties: ["ticks"],
-          subitem: true,
-        }
-      ]
-    };
-  },
-};
+    },
+    {
+        class: "tickClass",
+        description: "Class of slider tick",
+        properties: ["ticks"],
+        subitem: true,
+    },
+    {
+        class: "tickHiddenClass",
+        description: "Class when slider tick is hidden",
+        properties: ["ticks"],
+        subitem: true,
+    },
+    {
+        class: "tickLabelClass",
+        description: "Class of tick label",
+        properties: ["ticks"],
+        subitem: true,
+    },
+];
 </script>
+
+<template>
+    <inspector-wrapper
+        v-slot="props"
+        :inspect-data="inspectData"
+        :subitem="subitem">
+        <o-slider v-bind="props" :min="1" :max="10" :value="4">
+            <o-slider-tick
+                v-for="val in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+                :key="val"
+                v-bind="props"
+                :value="val">
+                {{ val }}
+            </o-slider-tick>
+        </o-slider>
+    </inspector-wrapper>
+</template>

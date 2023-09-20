@@ -1,41 +1,49 @@
-<template>
-  <section>
-    <div class="field">
-      <o-radio v-model="radio" native-value="default"> Default </o-radio>
-    </div>
-    <div class="field">
-      <o-radio v-model="radio" native-value="info" variant="info">
-        Info
-      </o-radio>
-    </div>
-    <div class="field">
-      <o-radio v-model="radio" native-value="success" variant="success">
-        Success
-      </o-radio>
-    </div>
-    <div class="field">
-      <o-radio v-model="radio" native-value="danger" variant="danger">
-        Danger
-      </o-radio>
-    </div>
-    <div class="field">
-      <o-radio v-model="radio" native-value="warning" variant="warning">
-        Warning
-      </o-radio>
-    </div>
-  </section>
-</template>
+<script setup>
+import { ref } from "vue";
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const radio = ref('default')
-
-    return {
-      radio
-    }
-  }
-})
+const radio = ref("default");
 </script>
+
+<template>
+    <section>
+        <o-field>
+            <o-radio v-model="radio" native-value="default" label="Default" />
+        </o-field>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="primary"
+                variant="primary"
+                label="Primary" />
+        </o-field>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="info"
+                variant="info"
+                label="Info" />
+        </o-field>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="success"
+                variant="success"
+                label="Success" />
+        </o-field>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="warning"
+                variant="warning"
+                label="Warning" />
+        </o-field>
+        <o-field>
+            <o-radio
+                v-model="radio"
+                native-value="danger"
+                variant="danger"
+                label="Danger" />
+        </o-field>
+        <p><b>Selection:</b> {{ radio }}</p>
+    </section>
+</template>

@@ -28,24 +28,24 @@
         />
 
         <transition :name="animation">
-            <div
-                :class="menuClasses"
-                :is="menuTag"
+            <component
                 v-show="isActive && (!isEmpty || $slots.empty || $slots.header || $slots.footer)"
+                :is="menuTag"
+                :class="menuClasses"
                 :style="menuStyle"
                 ref="dropdown">
-                <div
+                <component
                     v-if="$slots.header"
                     :is="itemTag"
                     ref="header"
                     role="button"
                     :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'header')"
-                    :class="itemHeaderClasses">
+                    :class="itemHeaderClasses"
+                    @click="selectHeaderOrFoterByClick($event, 'header')">
                     <slot name="header"/>
-                </div>
+                </component>
                 <template v-for="(element, groupindex) in computedData">
-                    <div
+                    <component
                         v-if="element.group"
                         :is="itemTag"
                         :key="groupindex + 'group'"
@@ -58,15 +58,14 @@
                         <span v-else>
                             {{ element.group }}
                         </span>
-                    </div>
-                    <div
+                    </component>
+                    <component
                         v-for="(option, index) in element.items"
                         :key="groupindex + ':' + index"
                         :is="itemTag"
                         :class="itemOptionClasses(option)"
-                        @click.stop="setSelected(option, !keepOpen, $event)"
                         :ref="setItemRef"
-                    >
+                        @click.stop="setSelected(option, !keepOpen, $event)">
                         <slot
                             v-if="$slots.default"
                             :option="option"
@@ -74,30 +73,31 @@
                         <span v-else>
                             {{ getValue(option) }}
                         </span>
-                    </div>
+                    </component>
                 </template>
-                <div
+                <component
                     v-if="isEmpty && $slots.empty"
                     :is="itemTag"
                     :class="itemEmptyClasses">
                     <slot name="empty" />
-                </div>
-                <div
+                </component>
+                <component
                     v-if="$slots.footer"
                     :is="itemTag"
                     ref="footer"
                     role="button"
                     :tabindex="0"
-                    @click="selectHeaderOrFoterByClick($event, 'footer')"
-                    :class="itemFooterClasses">
+                    :class="itemFooterClasses"
+                    @click="selectHeaderOrFoterByClick($event, 'footer')">
                     <slot name="footer"/>
-                </div>
-            </div>
+                </component>
+            </component>
         </transition>
     </div>
 </template>
 
 <script lang="ts">
+import type { Component, PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import Input from '../input/Input.vue'
@@ -121,7 +121,7 @@ export default defineComponent({
     },
     mixins: [BaseComponentMixin, FormElementMixin],
     inheritAttrs: false,
-    emits: ['update:modelValue', 'select', 'infinite-scroll', 'typing', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
+    emits: ['update:modelValue', 'select', 'select-header', 'select-footer', 'infinite-scroll', 'typing', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],
@@ -156,6 +156,15 @@ export default defineComponent({
         keepOpen: Boolean,
         /** Add a button/icon to clear the inputed text */
         clearable: Boolean,
+        /**
+         * Icon name to be added on the clear button
+         */
+        clearIcon: {
+            type: String,
+            default: () => {
+                return getValueByPath(getOptions(), 'autocomplete.clearIcon', 'close-circle')
+            }
+        },
         /** Max height of dropdown content */
         maxHeight: [String, Number],
         /**
@@ -199,7 +208,7 @@ export default defineComponent({
          * Menu tag name
          */
         menuTag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.menuTag', 'div')
             }
@@ -208,7 +217,7 @@ export default defineComponent({
          * Menu item tag name
          */
         itemTag: {
-            type: String,
+            type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
                 return getValueByPath(getOptions(), 'autocomplete.itemTag', 'div')
             }
@@ -359,8 +368,8 @@ export default defineComponent({
         },
 
         newIconRight() {
-            if (this.clearable && this.newValue) {
-                return 'close-circle'
+            if (this.clearable && this.newValue && this.clearIcon) {
+                return this.clearIcon
             }
             return this.iconRight
         },
@@ -561,7 +570,7 @@ export default defineComponent({
                 if (triggerClick) this.setHovered(null)
                 if (closeDropdown) this.isActive = false
             }
-            if (this.selectableFooter && (this.footerHovered || (triggerClick && triggerClick.origin === 'header'))) {
+            if (this.selectableFooter && (this.footerHovered || (triggerClick && triggerClick.origin === 'footer'))) {
                 this.$emit('select-footer', event)
                 this.footerHovered = false
                 if (triggerClick) this.setHovered(null)

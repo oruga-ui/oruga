@@ -1,13 +1,14 @@
 <template>
-  <section>
-    <o-field>
-      <o-datepicker ref="datepicker" expanded placeholder="Select a date">
-      </o-datepicker>
-      <o-button
-        @click="$refs.datepicker.toggle()"
-        icon-left="calendar"
-        type="primary"
-      />
-    </o-field>
-  </section>
+    <section>
+        <o-field>
+            <o-datepicker
+                ref="datepicker"
+                expanded
+                placeholder="Select a date" />
+            <o-button
+                icon-left="calendar"
+                type="primary"
+                @click="$refs.datepicker.toggle()" />
+        </o-field>
+    </section>
 </template>
