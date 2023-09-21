@@ -19,8 +19,12 @@ watch(selectedTheme, (theme) => emits("update:theme", theme));
 // load last used theme
 const cache = localStorage.getItem("oruga.io_theme");
 // set theme
+try {
 selectedTheme.value =
     cache && cache !== "undefined" ? JSON.parse(cache) : themes[0];
+} catch (error) {
+    selectedTheme.value = themes[0];
+}
 
 function onThemeChange(theme) {
     selectedTheme.value = theme;

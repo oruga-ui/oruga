@@ -77,10 +77,15 @@ export default {
 
         if (typeof window !== "undefined") {
             const cache = localStorage.getItem("oruga.io_theme");
-            const theme =
+            let theme = "";
+            try {
+                theme =
                 cache && cache !== "undefined"
                     ? JSON.parse(cache).key
                     : "theme-orugafull";
+            } catch (error) {
+                theme = "theme-orugafull";
+            }
             switch (theme) {
                 case "theme-orugafull": {
                     const link = document.createElement("link");
