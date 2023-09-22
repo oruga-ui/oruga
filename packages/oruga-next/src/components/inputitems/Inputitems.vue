@@ -432,7 +432,7 @@ export default defineComponent({
 
 <template>
     <div :class="rootClasses">
-        <div :class="containerClasses" @click="hasInput && focus($event)">
+        <div :class="containerClasses" @click="hasInput && focus()">
             <slot name="selected" :items="items">
                 <span
                     v-for="(item, index) in items"

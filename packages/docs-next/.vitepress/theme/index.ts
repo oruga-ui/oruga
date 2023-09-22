@@ -33,6 +33,24 @@ hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("scss", scss);
 hljs.registerLanguage("css", css);
 
+// Import theme definitions
+import themes from "../themes.json";
+
+// load last used theme or set a default one
+function loadTheme() {
+    const cache = localStorage.getItem("oruga.io:theme");
+    if (cache && cache !== "undefined") {
+        try {
+            const themeConfig = JSON.parse(cache);
+            if (themeConfig && typeof themeConfig === "object")
+                return themeConfig;
+        } catch (e) {
+            return themes[0];
+        }
+    }
+    return themes[0];
+}
+
 export default {
     ...DefaultTheme,
     Layout,
@@ -76,38 +94,15 @@ export default {
         });
 
         if (typeof window !== "undefined") {
-            const cache = localStorage.getItem("oruga.io_theme");
-            const theme =
-                cache && cache !== "undefined"
-                    ? JSON.parse(cache).key
-                    : "theme-orugafull";
-            switch (theme) {
-                case "theme-orugafull": {
-                    const link = document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href =
-                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga-full.min.css";
-                    document.head.appendChild(link);
-                    break;
-                }
-                case "theme-orugabase": {
-                    const link = document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href =
-                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-oruga/dist/oruga.min.css";
-                    document.head.appendChild(link);
-                    break;
-                }
+            const theme = loadTheme();
+
+            // update oruga config by theme config
+            switch (theme.key) {
                 case "theme-bulma": {
                     bulmaConfig.iconPack = "fas";
                     bulmaConfig.iconComponent = "vue-fontawesome";
                     const { oruga } = useProgrammatic() as any;
                     oruga.config.setOptions(bulmaConfig);
-                    const link = document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href =
-                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bulma/dist/bulma.min.css";
-                    document.head.appendChild(link);
                     break;
                 }
                 case "theme-bootstrap": {
@@ -115,14 +110,15 @@ export default {
                     bootstrapConfig.iconComponent = "vue-fontawesome";
                     const { oruga } = useProgrammatic() as any;
                     oruga.config.setOptions(bootstrapConfig);
-                    const link = document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href =
-                        "https://cdn.jsdelivr.net/npm/@oruga-ui/theme-bootstrap/dist/bootstrap.min.css";
-                    document.head.appendChild(link);
                     break;
                 }
             }
+
+            // add theme style
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = theme.cdn;
+            document.head.appendChild(link);
         }
     },
 };

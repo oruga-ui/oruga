@@ -1,3 +1,29 @@
+# [0.7.0](https://github.com/oruga-ui/oruga/compare/v0.6.0...v0.7.0) (2023-09-20)
+
+
+### Bug Fixes
+
+* **autocomplete:** add missing emit and wrong event name 'select-footer' ([3b19d54](https://github.com/oruga-ui/oruga/commit/3b19d54501a54166a3e743bceee37f70e73700f1))
+* **autocomplete:** use dynamic component  ([d0b9096](https://github.com/oruga-ui/oruga/commit/d0b909684adbdead878cecc53e7e5345addc3483))
+* **input:** better support input type=number ([#528](https://github.com/oruga-ui/oruga/issues/528)) ([f01f591](https://github.com/oruga-ui/oruga/commit/f01f5917d58646b96b2d6268931357b1727b992d))
+* **oruga-next:** provide node subpath exports ([#520](https://github.com/oruga-ui/oruga/issues/520)) ([00770a9](https://github.com/oruga-ui/oruga/commit/00770a9e6d1a9b74c496d1d30d56436ae550c2ed))
+* **radio:** add checkedClass prop ([2a632a5](https://github.com/oruga-ui/oruga/commit/2a632a5d83b902bb40d6547bb52ad62206b9d0d6))
+* remove console.log statement in ModalProgrammatic ([428d08f](https://github.com/oruga-ui/oruga/commit/428d08fa5ab631d06cbe30a8256639c8aa04d291))
+* **table:** fix missing paginationSize ([#584](https://github.com/oruga-ui/oruga/issues/584)) ([3f7a692](https://github.com/oruga-ui/oruga/commit/3f7a692d0a2570731da0a02a5a9595b03cbf2717))
+* **table:** fix pagination size prop ([126aba4](https://github.com/oruga-ui/oruga/commit/126aba420d7b0635e8d1c9aec1202ab1bf2eab20))
+
+
+### Features
+
+* add a way to style step dividers  ([#555](https://github.com/oruga-ui/oruga/issues/555)) ([4915c4d](https://github.com/oruga-ui/oruga/commit/4915c4dbcb1a6c2cd39bc7660d41916b330bc0cd))
+* add component to tag prop types  ([7c62f2b](https://github.com/oruga-ui/oruga/commit/7c62f2b7daf7fdc364bacccb1f9be9de2ff10f3f))
+* add the clearIcon prop to input and autocomplete  ([a33ee8e](https://github.com/oruga-ui/oruga/commit/a33ee8ec11b69df218c17f388b4202947d473164))
+* **label:** add several label props  ([22bdd03](https://github.com/oruga-ui/oruga/commit/22bdd03db029ce70b6eda1df87d1d6d24c3c3002))
+* **pagination:** add itemClass prop ([3659e50](https://github.com/oruga-ui/oruga/commit/3659e50d45d61a44b833b050b09119e5a677de3f))
+* **table:** add checkbox-variant prop ([8821624](https://github.com/oruga-ui/oruga/commit/8821624335c2f7d197706d7d2f35858135fe0bf0))
+
+
+
 ## [0.6.0](https://github.com/oruga-ui/oruga/compare/v0.5.10...v0.6.0) (2023-04-25)
 
 ### Breaking changes :exclamation:
