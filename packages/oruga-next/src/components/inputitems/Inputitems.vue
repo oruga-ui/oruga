@@ -2,8 +2,8 @@
 import Autocomplete from "../autocomplete/Autocomplete.vue";
 import Icon from "../icon/Icon.vue";
 
-import FormElementMixin from "../../utils/FormElementMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 import { getValueByPath } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";

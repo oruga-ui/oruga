@@ -3,7 +3,7 @@ import { defineComponent } from "vue";
 
 import Icon from "../icon/Icon.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 import { getOptions } from "../../utils/config";
 import { removeElement, getValueByPath } from "../../utils/helpers";

@@ -2,9 +2,9 @@
 import type { App, PropType } from "vue";
 import { defineComponent } from "vue";
 
-import FormElementMixin from "../../utils/FormElementMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import {
     isMobile,

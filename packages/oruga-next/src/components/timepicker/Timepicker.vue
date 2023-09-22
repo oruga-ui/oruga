@@ -7,9 +7,9 @@ import Input from "../input/Input.vue";
 import Select from "../select/Select.vue";
 import Icon from "../icon/Icon.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TimepickerMixin from "../../utils/TimepickerMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import TimepickerMixin from "../../mixins/TimepickerMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import { getValueByPath } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";

@@ -7,14 +7,14 @@ import Icon from "../icon/Icon.vue";
 import Input from "../input/Input.vue";
 import Loading from "../loading/Loading.vue";
 
-import SlotComponent from "../../utils/SlotComponent";
+import SlotComponent from "../../mixins/SlotComponent";
 
 import TableMobileSort from "./TableMobileSort.vue";
 import TableColumn from "./TableColumn.vue";
 import TablePagination from "./TablePagination.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import {
     getValueByPath,

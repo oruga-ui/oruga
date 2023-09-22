@@ -115,26 +115,24 @@ const props = defineProps({
 
 const rootClasses = computed(() => {
     return [
-        useComputedClass(props, "rootClass", "o-btn"),
+        useComputedClass("rootClass", "o-btn"),
         {
-            [useComputedClass(props, "sizeClass", "o-btn--", props.size)]:
-                props.size,
+            [useComputedClass("sizeClass", "o-btn--", props.size)]: props.size,
         },
         {
-            [useComputedClass(props, "variantClass", "o-btn--", props.variant)]:
+            [useComputedClass("variantClass", "o-btn--", props.variant)]:
                 props.variant,
         },
         {
-            [useComputedClass(props, "outlinedClass", "o-btn--outlined")]:
+            [useComputedClass("outlinedClass", "o-btn--outlined")]:
                 props.outlined && !props.variant,
         },
         {
-            [useComputedClass(props, "invertedClass", "o-btn--inverted")]:
+            [useComputedClass("invertedClass", "o-btn--inverted")]:
                 props.inverted && !props.variant,
         },
         {
             [useComputedClass(
-                props,
                 "outlinedClass",
                 "o-btn--outlined-",
                 props.variant,
@@ -142,54 +140,51 @@ const rootClasses = computed(() => {
         },
         {
             [useComputedClass(
-                props,
                 "invertedClass",
                 "o-btn--inverted-",
                 props.variant,
             )]: props.inverted && props.variant,
         },
         {
-            [useComputedClass(props, "expandedClass", "o-btn--expanded")]:
+            [useComputedClass("expandedClass", "o-btn--expanded")]:
                 props.expanded,
         },
         {
-            [useComputedClass(props, "loadingClass", "o-btn--loading")]:
-                props.loading,
+            [useComputedClass("loadingClass", "o-btn--loading")]: props.loading,
         },
         {
-            [useComputedClass(props, "roundedClass", "o-btn--rounded")]:
-                props.rounded,
+            [useComputedClass("roundedClass", "o-btn--rounded")]: props.rounded,
         },
         {
-            [useComputedClass(props, "disabledClass", "o-btn--disabled")]:
+            [useComputedClass("disabledClass", "o-btn--disabled")]:
                 props.disabled,
         },
     ];
 });
 
 const labelClasses = computed(() => {
-    return [useComputedClass(props, "labelClass", "o-btn__label")];
+    return [useComputedClass("labelClass", "o-btn__label")];
 });
 
 const iconClasses = computed(() => {
-    return [useComputedClass(props, "iconClass", "o-btn__icon")];
+    return [useComputedClass("iconClass", "o-btn__icon")];
 });
 
 const iconLeftClasses = computed(() => {
     return [
         ...iconClasses.value,
-        useComputedClass(props, "iconLeftClass", "o-btn__icon-left"),
+        useComputedClass("iconLeftClass", "o-btn__icon-left"),
     ];
 });
 
 const iconRightClasses = computed(() => {
     return [
         ...iconClasses.value,
-        useComputedClass(props, "iconRightClass", "o-btn__icon-right"),
+        useComputedClass("iconRightClass", "o-btn__icon-right"),
     ];
 });
 const elementsWrapperClasses = computed(() => {
-    return [useComputedClass(props, "elementsWrapperClass", "o-btn__wrapper")];
+    return [useComputedClass("elementsWrapperClass", "o-btn__wrapper")];
 });
 const computedTag = computed(() => {
     if (typeof props.disabled !== "undefined" && props.disabled !== false) {

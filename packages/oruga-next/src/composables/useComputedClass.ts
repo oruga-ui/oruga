@@ -1,7 +1,12 @@
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, type ComponentInternalInstance } from "vue";
 import { getOptions } from "@/utils/config";
 import { blankIfUndefined, endsWith, getValueByPath } from "@/utils/helpers";
-import type { ComponentInternalInstance } from "vue";
+
+import type {
+    FieldDefinition,
+    ComponentContext,
+    TransformFunction,
+} from "@/types";
 
 const defaultSuffixProcessor = (input: string, suffix: string): string => {
     return blankIfUndefined(input)
@@ -11,7 +16,7 @@ const defaultSuffixProcessor = (input: string, suffix: string): string => {
         .join(" ");
 };
 
-const getContext = (vm: ComponentInternalInstance) => {
+const getContext = (vm: ComponentInternalInstance): ComponentContext => {
     const computedNames = vm.proxy?.$options.computed
         ? Object.keys(vm.proxy.$options.computed)
         : [];
@@ -29,17 +34,15 @@ const getContext = (vm: ComponentInternalInstance) => {
     };
 };
 
-export function useComputedClass(
-    props,
-    field,
-    defaultValue,
-    suffix = "",
-): string {
+export function useComputedClass(field, defaultValue, suffix = ""): string {
+    // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)
         throw new Error(
             "useComputedClass must be called within a component setup function.",
         );
+    // get component props
+    const props = vm.props;
 
     const configField = vm.proxy?.$options.configField;
     if (!configField)
@@ -50,52 +53,50 @@ export function useComputedClass(
     const override =
         props.override ||
         getValueByPath(config, `${configField}.override`, false);
-
     const overrideClass = getValueByPath(
         config,
         `${configField}.${field}.override`,
         override,
     );
 
-    const globalTransformClasses = getValueByPath(
-        config,
-        "transformClasses",
-        undefined,
-    );
-    const localTransformClasses = getValueByPath(
+    const globalTransformClasses = getValueByPath<
+        TransformFunction | undefined
+    >(config, "transformClasses");
+    const localTransformClasses = getValueByPath<TransformFunction | undefined>(
         config,
         `${configField}.transformClasses`,
-        undefined,
     );
 
     let globalClass =
-        getValueByPath(config, `${configField}.${field}.class`, "") ||
-        getValueByPath(config, `${configField}.${field}`, "");
-
-    let currentClass = getValueByPath(props, field);
+        getValueByPath<FieldDefinition>(
+            config,
+            `${configField}.${field}.class`,
+            "",
+        ) ||
+        getValueByPath<FieldDefinition>(config, `${configField}.${field}`, "");
+    let currentClass = getValueByPath<FieldDefinition>(props, field, "");
 
     if (Array.isArray(currentClass)) {
         currentClass = currentClass.join(" ");
+    }
+    if (typeof currentClass === "function") {
+        const context = getContext(vm);
+        currentClass = currentClass(suffix, context);
+    } else {
+        currentClass = defaultSuffixProcessor(currentClass as string, suffix);
+    }
+
+    if (typeof globalClass === "function") {
+        const context = getContext(vm);
+        globalClass = globalClass(suffix, context);
+    } else {
+        globalClass = defaultSuffixProcessor(globalClass as string, suffix);
     }
 
     if (defaultValue.includes("{*}")) {
         defaultValue = defaultValue.replace(/\{\*\}/g, suffix);
     } else {
         defaultValue = defaultValue + suffix;
-    }
-
-    let context = null;
-    if (typeof currentClass === "function") {
-        context = getContext(vm);
-        currentClass = currentClass(suffix, context);
-    } else {
-        currentClass = defaultSuffixProcessor(currentClass, suffix);
-    }
-
-    if (typeof globalClass === "function") {
-        globalClass = globalClass(suffix, context || config);
-    } else {
-        globalClass = defaultSuffixProcessor(globalClass, suffix);
     }
 
     let appliedClasses = (

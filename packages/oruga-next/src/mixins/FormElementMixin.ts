@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import { getOptions } from "./config";
-import { getValueByPath } from "./helpers";
+import { getOptions } from "../utils/config";
+import { getValueByPath } from "../utils/helpers";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.

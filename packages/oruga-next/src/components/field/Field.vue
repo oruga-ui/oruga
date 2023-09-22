@@ -3,8 +3,8 @@ import { defineComponent } from "vue";
 
 import FieldBody from "./FieldBody.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together

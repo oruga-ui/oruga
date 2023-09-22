@@ -1,6 +1,6 @@
 <script lang="ts">
 import { getOptions } from "../../utils/config";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import {
     createAbsoluteElement,
     removeElement,
@@ -209,7 +209,7 @@ export default defineComponent({
             if (this.position !== "auto") {
                 return this.position;
             }
-            const defaultPosition = getValueByPath(
+            const defaultPosition = getValueByPath<Position>(
                 getOptions(),
                 "tooltip.position",
                 "top",
@@ -267,7 +267,7 @@ export default defineComponent({
                         : "top";
                 const crossOpposite = opposites[crossPosition];
                 // In descending order of priority
-                const positions = [
+                const positions: Position[] = [
                     defaultPosition,
                     defaultOpposite,
                     crossPosition,
@@ -277,7 +277,7 @@ export default defineComponent({
                 for (const position of positions) {
                     const overlap = intersectionArea(
                         viewRect,
-                        contentRectAtAnchor(position as Position),
+                        contentRectAtAnchor(position),
                     );
                     if (overlap > maxOverlap) {
                         maxOverlap = overlap;

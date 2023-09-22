@@ -4,8 +4,8 @@ import { defineComponent } from "vue";
 
 import Input from "../input/Input.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import FormElementMixin from "../../utils/FormElementMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import FormElementMixin from "../../mixins/FormElementMixin";
 
 import {
     getValueByPath,

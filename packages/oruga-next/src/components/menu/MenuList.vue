@@ -1,5 +1,5 @@
 <script lang="ts">
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import { defineComponent } from "vue";
 
 export default defineComponent({

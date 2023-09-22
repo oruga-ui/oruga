@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 /**
  * @displayName Slider Tick

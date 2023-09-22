@@ -3,7 +3,7 @@ import { defineComponent } from "vue";
 
 import DatepickerTableRow from "./DatepickerTableRow.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 export default defineComponent({
     name: "ODatepickerTable",

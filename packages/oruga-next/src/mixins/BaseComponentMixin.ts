@@ -1,7 +1,8 @@
 import type { ComponentOptions } from "vue";
 import { defineComponent } from "vue";
-import { getOptions } from "./config";
-import { getValueByPath, blankIfUndefined, endsWith } from "./helpers";
+import { getOptions } from "../utils/config";
+import { getValueByPath, blankIfUndefined, endsWith } from "../utils/helpers";
+import type { FieldDefinition } from "@/types";
 
 const _defaultSuffixProcessor = (input: string, suffix: string) => {
     return blankIfUndefined(input)
@@ -62,17 +63,20 @@ export default defineComponent({
             );
 
             let globalClass =
-                getValueByPath(
+                getValueByPath<FieldDefinition>(
                     config,
                     `${this.$options.configField}.${field}.class`,
                     "",
                 ) ||
-                getValueByPath(
+                getValueByPath<FieldDefinition>(
                     config,
                     `${this.$options.configField}.${field}`,
                     "",
                 );
-            let currentClass = getValueByPath(this.$props, field);
+            let currentClass = getValueByPath<FieldDefinition>(
+                this.$props,
+                field,
+            );
 
             if (Array.isArray(currentClass)) {
                 currentClass = currentClass.join(" ");
@@ -89,12 +93,18 @@ export default defineComponent({
                 context = _getContext(this);
                 currentClass = currentClass(suffix, context);
             } else {
-                currentClass = _defaultSuffixProcessor(currentClass, suffix);
+                currentClass = _defaultSuffixProcessor(
+                    currentClass as string,
+                    suffix,
+                );
             }
             if (typeof globalClass === "function") {
                 globalClass = globalClass(suffix, context || _getContext(this));
             } else {
-                globalClass = _defaultSuffixProcessor(globalClass, suffix);
+                globalClass = _defaultSuffixProcessor(
+                    globalClass as string,
+                    suffix,
+                );
             }
             let appliedClasses = (
                 `${

@@ -2,8 +2,8 @@
 import type { Component, PropType } from "vue";
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TabbedChildMixin from "../../utils/TabbedChildMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import TabbedChildMixin from "../../mixins/TabbedChildMixin";
 
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";

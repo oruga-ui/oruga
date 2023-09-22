@@ -4,9 +4,9 @@ import { defineComponent } from "vue";
 import Button from "../button/Button.vue";
 import Icon from "../icon/Icon.vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TabbedMixin from "../../utils/TabbedMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import TabbedMixin from "../../mixins/TabbedMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";
