@@ -11,7 +11,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:prettier/recommended",
     "plugin:vue/vue3-recommended",
-    // "plugin:vuejs-accessibility/recommended",
+    "plugin:vuejs-accessibility/recommended",
     "@vue/typescript/recommended",
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
