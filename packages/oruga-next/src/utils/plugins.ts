@@ -1,5 +1,5 @@
 import type { App, Component, Plugin } from "vue";
-import { useProgrammatic } from "./programmatic";
+import { useOruga, addProgrammatic } from "./programmatic";
 
 /** register a plugin to the vue app instance */
 export const registerPlugin = (app: App, plugin: Plugin): void => {
@@ -18,7 +18,7 @@ export const registerProgrammaticComponent = (
     component: Component,
 ): void => {
     // use composable for unified access to programmatic oruga object
-    const { oruga, addProgrammatic } = useProgrammatic();
+    const oruga = useOruga();
 
     // add component (manipulates the programmatic oruga object)
     addProgrammatic(property, component);

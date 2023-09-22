@@ -27,7 +27,7 @@ export { NotificationProgrammatic } from "./components/notification";
 export { ConfigProgrammatic } from "./utils/config";
 
 // export programmatic composable
-export { useProgrammatic } from "./utils/programmatic";
+export { useOruga } from "./utils/programmatic";
 
 // default export main oruga vue plugin
 export default {
