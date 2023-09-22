@@ -16,15 +16,26 @@ watch(
 );
 watch(selectedTheme, (theme) => emits("update:theme", theme));
 
-// load last used theme
-const cache = localStorage.getItem("oruga.io_theme");
-// set theme
-selectedTheme.value =
-    cache && cache !== "undefined" ? JSON.parse(cache) : themes[0];
+selectedTheme.value = loadTheme();
+
+// load last used theme or set a default one
+function loadTheme() {
+    const cache = localStorage.getItem("oruga.io:theme");
+    if (cache && cache !== "undefined") {
+        try {
+            const themeConfig = JSON.parse(cache);
+            if (themeConfig && typeof themeConfig === "object")
+                return themeConfig;
+        } catch (e) {
+            return themes[0];
+        }
+    }
+    return themes[0];
+}
 
 function onThemeChange(theme) {
     selectedTheme.value = theme;
-    localStorage.setItem("oruga.io_theme", JSON.stringify(theme));
+    localStorage.setItem("oruga.io:theme", JSON.stringify(theme));
     location.reload();
 }
 </script>
