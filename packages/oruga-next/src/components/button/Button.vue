@@ -5,7 +5,8 @@ import OIcon from "../icon/Icon.vue";
 
 import { getOptions } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
-import { useComputedClass } from "@/composables";
+import { useComputedClass, useClassProps } from "@/composables";
+import { baseComponentProps } from "@/mixins/SharedProps";
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -20,58 +21,92 @@ defineOptions({
 });
 
 const props = defineProps({
-    override: Boolean,
+    // add global shared props
+    ...baseComponentProps,
+    /**
+     * Html tag name
+     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
+     */
+    tag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: "button",
+    },
+    /**
+     * Button label, optional when default slot
+     */
+    label: { type: String, default: undefined },
     /**
      * Color of the control, optional
      * @values primary, info, success, warning, danger, and any other custom color
      */
-    variant: String,
+    variant: {
+        type: String,
+        default: () => getValueByPath(getOptions(), "button.variant"),
+    },
     /**
-     * Size of button, optional
+     * Invert the variant
+     */
+    inverted: {
+        type: Boolean,
+        default: () => getValueByPath(getOptions(), "button.inverted"),
+    },
+    /**
+     * Size of the button
      * @values small, medium, large
      */
-    size: String,
+    size: {
+        type: String,
+        default: () => getValueByPath(getOptions(), "button.size"),
+    },
     /**
-     * Button label, optional when default slot
+     * Enable rounded style
      */
-    label: String,
+    rounded: {
+        type: Boolean,
+        default: () => getValueByPath(getOptions(), "button.rounded", false),
+    },
+    /**
+     * Enable outlined style
+     */
+    outlined: {
+        type: Boolean,
+        default: () => getValueByPath(getOptions(), "button.outlined", false),
+    },
     /**
      * Icon pack to use
      * @values mdi, fa, fas and any other custom icon pack
      */
-    iconPack: String,
-    /**
-     * Icon name to show on the left
-     */
-    iconLeft: String,
-    /**
-     * Icon name to show on the right
-     */
-    iconRight: String,
-    /**
-     * Rounded style
-     */
-    rounded: {
-        type: Boolean,
-        default: () => {
-            return getValueByPath(getOptions(), "button.rounded", false);
-        },
+    iconPack: {
+        type: String,
+        default: () => getValueByPath(getOptions(), "button.iconPack"),
     },
     /**
-     * Outlined style
+     * Icon name to show on the left side
      */
-    outlined: Boolean,
+    iconLeft: { type: String, default: undefined },
     /**
-     * Loading style
+     * Icon name to show on the right side
      */
-    loading: Boolean,
+    iconRight: { type: String, default: undefined },
+    /**
+     * This is used internally
+     * @ignore
+     */
+    iconBoth: { type: Boolean, default: false },
+    /**
+     * Enable loading state
+     */
+    loading: { type: Boolean, default: false },
+    /**
+     * Enable disabled state
+     */
+    disabled: { type: Boolean, default: false },
     /**
      * Button will be expanded (full-width)
      */
-    expanded: Boolean,
-    inverted: Boolean,
+    expanded: { type: Boolean, default: false },
     /**
-     * Button type, like native
+     * Native html type, like native
      */
     nativeType: {
         type: String,
@@ -80,130 +115,97 @@ const props = defineProps({
             return ["button", "submit", "reset"].indexOf(value) >= 0;
         },
     },
-    /**
-     * Button tag name
-     * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
-     */
-    tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
-        default: "button",
+    // add class props
+    ...useClassProps([
+        "rootClass",
+        "elementsWrapperClass",
+        "outlinedClass",
+        "loadingClass",
+        "invertedClass",
+        "expandedClass",
+        "roundedClass",
+        "disabledClass",
+        "iconClass",
+        "iconLeftClass",
+        "iconRightClass",
+        "labelClass",
+        "sizeClass",
+        "variantClass",
+    ]),
+});
+
+const computedTag = computed(() =>
+    typeof props.disabled !== "undefined" && props.disabled !== false
+        ? "button"
+        : props.tag,
+);
+
+const computedNativeType = computed(() =>
+    props.tag === "button" || props.tag === "input" ? props.nativeType : null,
+);
+
+const computedDisabled = computed(() => (props.disabled ? true : null));
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-btn"),
+    {
+        [useComputedClass("sizeClass", "o-btn--", props.size)]: props.size,
     },
-    /**
-     * Button will be disabled
-     */
-    disabled: Boolean,
-    /**  @ignore */
-    iconBoth: Boolean, // This is used internally
-    rootClass: { type: [String, Function, Array], default: undefined },
-    elementsWrapperClass: {
-        type: [String, Function, Array],
-        default: undefined,
+    {
+        [useComputedClass("variantClass", "o-btn--", props.variant)]:
+            props.variant,
     },
-    outlinedClass: { type: [String, Function, Array], default: undefined },
-    loadingClass: { type: [String, Function, Array], default: undefined },
-    invertedClass: { type: [String, Function, Array], default: undefined },
-    expandedClass: { type: [String, Function, Array], default: undefined },
-    roundedClass: { type: [String, Function, Array], default: undefined },
-    disabledClass: { type: [String, Function, Array], default: undefined },
-    iconClass: { type: [String, Function, Array], default: undefined },
-    iconLeftClass: { type: [String, Function, Array], default: undefined },
-    iconRightClass: { type: [String, Function, Array], default: undefined },
-    labelClass: { type: [String, Function, Array], default: undefined },
-    sizeClass: { type: [String, Function, Array], default: undefined },
-    variantClass: { type: [String, Function, Array], default: undefined },
-});
+    {
+        [useComputedClass("outlinedClass", "o-btn--outlined")]:
+            props.outlined && !props.variant,
+    },
+    {
+        [useComputedClass("outlinedClass", "o-btn--outlined-", props.variant)]:
+            props.outlined && props.variant,
+    },
+    {
+        [useComputedClass("invertedClass", "o-btn--inverted")]:
+            props.inverted && !props.variant,
+    },
+    {
+        [useComputedClass("invertedClass", "o-btn--inverted-", props.variant)]:
+            props.inverted && props.variant,
+    },
+    {
+        [useComputedClass("expandedClass", "o-btn--expanded")]: props.expanded,
+    },
+    {
+        [useComputedClass("loadingClass", "o-btn--loading")]: props.loading,
+    },
+    {
+        [useComputedClass("roundedClass", "o-btn--rounded")]: props.rounded,
+    },
+    {
+        [useComputedClass("disabledClass", "o-btn--disabled")]: props.disabled,
+    },
+]);
 
-const rootClasses = computed(() => {
-    return [
-        useComputedClass("rootClass", "o-btn"),
-        {
-            [useComputedClass("sizeClass", "o-btn--", props.size)]: props.size,
-        },
-        {
-            [useComputedClass("variantClass", "o-btn--", props.variant)]:
-                props.variant,
-        },
-        {
-            [useComputedClass("outlinedClass", "o-btn--outlined")]:
-                props.outlined && !props.variant,
-        },
-        {
-            [useComputedClass("invertedClass", "o-btn--inverted")]:
-                props.inverted && !props.variant,
-        },
-        {
-            [useComputedClass(
-                "outlinedClass",
-                "o-btn--outlined-",
-                props.variant,
-            )]: props.outlined && props.variant,
-        },
-        {
-            [useComputedClass(
-                "invertedClass",
-                "o-btn--inverted-",
-                props.variant,
-            )]: props.inverted && props.variant,
-        },
-        {
-            [useComputedClass("expandedClass", "o-btn--expanded")]:
-                props.expanded,
-        },
-        {
-            [useComputedClass("loadingClass", "o-btn--loading")]: props.loading,
-        },
-        {
-            [useComputedClass("roundedClass", "o-btn--rounded")]: props.rounded,
-        },
-        {
-            [useComputedClass("disabledClass", "o-btn--disabled")]:
-                props.disabled,
-        },
-    ];
-});
+const labelClasses = computed(() => [
+    useComputedClass("labelClass", "o-btn__label"),
+]);
 
-const labelClasses = computed(() => {
-    return [useComputedClass("labelClass", "o-btn__label")];
-});
+const iconClasses = computed(() => [
+    useComputedClass("iconClass", "o-btn__icon"),
+]);
 
-const iconClasses = computed(() => {
-    return [useComputedClass("iconClass", "o-btn__icon")];
-});
+const iconLeftClasses = computed(() => [
+    ...iconClasses.value,
+    useComputedClass("iconLeftClass", "o-btn__icon-left"),
+]);
 
-const iconLeftClasses = computed(() => {
-    return [
-        ...iconClasses.value,
-        useComputedClass("iconLeftClass", "o-btn__icon-left"),
-    ];
-});
+const iconRightClasses = computed(() => [
+    ...iconClasses.value,
+    useComputedClass("iconRightClass", "o-btn__icon-right"),
+]);
 
-const iconRightClasses = computed(() => {
-    return [
-        ...iconClasses.value,
-        useComputedClass("iconRightClass", "o-btn__icon-right"),
-    ];
-});
-const elementsWrapperClasses = computed(() => {
-    return [useComputedClass("elementsWrapperClass", "o-btn__wrapper")];
-});
-const computedTag = computed(() => {
-    if (typeof props.disabled !== "undefined" && props.disabled !== false) {
-        return "button";
-    }
-    return props.tag;
-});
-
-const computedNativeType = computed(() => {
-    if (props.tag === "button" || props.tag === "input") {
-        return props.nativeType;
-    }
-    return null;
-});
-
-const computedDisabled = computed(() => {
-    if (props.disabled) return true;
-    return null;
-});
+const elementsWrapperClasses = computed(() => [
+    useComputedClass("elementsWrapperClass", "o-btn__wrapper"),
+]);
 </script>
 
 <template>
