@@ -83,6 +83,12 @@ export default {
     },
 } as Plugin;
 
+declare module "@/types" {
+    interface OrugaPrgrammatic {
+        notification: typeof NotificationProgrammatic;
+    }
+}
+
 export { Notification as ONotification, NotificationProgrammatic };
 
 export interface ONotification {

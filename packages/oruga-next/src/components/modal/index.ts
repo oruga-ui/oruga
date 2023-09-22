@@ -64,6 +64,12 @@ export default {
     },
 } as Plugin;
 
+declare module "@/types" {
+    interface OrugaPrgrammatic {
+        modal: typeof ModalProgrammatic;
+    }
+}
+
 export { ModalProgrammatic, Modal as OModal };
 
 export interface OModal {

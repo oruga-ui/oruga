@@ -51,4 +51,10 @@ export default {
     },
 } as Plugin;
 
+declare module "@/types" {
+    interface OrugaPrgrammatic {
+        loading: typeof LoadingProgrammatic;
+    }
+}
+
 export { LoadingProgrammatic, Loading as OLoading };

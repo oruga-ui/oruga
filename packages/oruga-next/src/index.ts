@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import type { OrugaOptions } from "@/types";
+import type { OrugaOptions } from "./types";
 
 import * as plugins from "./components/plugins";
 
@@ -45,3 +45,9 @@ export default {
         registerProgrammaticComponent(app, "config", ConfigProgrammatic);
     },
 };
+
+declare module "./types" {
+    interface OrugaPrgrammatic {
+        config: typeof ConfigProgrammatic;
+    }
+}
