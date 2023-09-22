@@ -40,8 +40,12 @@
 
 <p align="center">
     <a href="https://ko-fi.com/orugaui"><img alt="Donate using Ko-fi"  src="https://img.shields.io/badge/donate-ko--fi-00AA00.svg?logo=ko-fi" /></a>
-    <a href="https://liberapay.com/oruga-ui/donate"><img alt="Donate using Liberapay" src="https://img.shields.io/badge/donate-liberapay-00AA00.svg?logo=liberapay"></a>
 </p>
+
+> [!NOTE]  
+> **_Oruga for Vue 2.x deprecated_**  
+> Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year, from now on Oruga for Vue 2 is deprecated and will not receive any further updates. Further enhancements will only be developed for Oruga-next. See [#496](https://github.com/oruga-ui/oruga/issues/496).
+
 
 ## Features
 
@@ -219,6 +223,7 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
   <tr>
     <td align="center"><a href="https://twitter.com/walter_tommasi"><img src="https://avatars0.githubusercontent.com/u/8029488?v=4" width="80px;" alt=""/><br /><sub><b>Walter Tommasi</b></sub></a><br /></td>
     <td align="center"><a href="https://twitter.com/4stagi"><img src="https://avatars0.githubusercontent.com/u/537363?v=4" width="80px;" alt=""/><br /><sub><b>Andrea Stagi</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/mlmoravek"><img src="https://avatars0.githubusercontent.com/u/25961416?v=4" width="80px;" alt=""/><br /><sub><b>Marcel Moravek</b></sub></a><br /></td>
   </tr>
 </table>
 
