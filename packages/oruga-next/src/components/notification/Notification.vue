@@ -50,7 +50,7 @@ import MessageMixin from '../../utils/MessageMixin'
 import BaseComponentMixin from '../../utils/BaseComponentMixin'
 import { getValueByPath } from '../../utils/helpers'
 import { getOptions } from '../../utils/config'
-import { defineComponent } from 'vue';
+import { defineComponent, type Component } from 'vue';
 
 
 /**
@@ -94,7 +94,7 @@ export default defineComponent({
             default: 'fade'
         },
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
-        component: [Object, Function],
+        component: Object as () => Component,
         /** Props to be binded to the injected component */
         props: Object,
         /** Events to be binded to the injected component */
