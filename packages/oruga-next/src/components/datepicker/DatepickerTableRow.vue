@@ -1,74 +1,30 @@
-<template>
-    <div :class="tableRowClasses">
-        <a
-            :class="tableCellClasses"
-            :style="{'cursor': weekNumberClickable ? 'pointer' : 'auto' }"
-            v-if="showWeekNumber"
-            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
-            <span>{{ getWeekNumber(week[6]) }}</span>
-        </a>
-        <template
-            v-for="(weekDay, index) in week"
-            :key="index">
-            <a
-                :ref="`day-${weekDay.getMonth()}-${weekDay.getDate()}`"
-                v-if="selectableDate(weekDay) && !disabled"
-                :class="cellClasses(weekDay)"
-                role="button"
-                href="#"
-                :disabled="disabled"
-                @click.prevent="emitChosenDate(weekDay)"
-                @mouseenter="setRangeHoverEndDate(weekDay)"
-                @keydown="manageKeydown($event, weekDay)"
-                :tabindex="day === weekDay.getDate() && month === weekDay.getMonth() ? null : -1">
-                <span>{{ weekDay.getDate() }}</span>
-                <div
-                    :class="tableEventsClasses"
-                    v-if="eventsDateMatch(weekDay)">
-                    <div
-                        :class="eventClasses(event)"
-                        v-for="(event, index) in eventsDateMatch(weekDay)"
-                        :key="index"/>
-                </div>
-            </a>
-            <div
-                v-else
-                :key="index"
-                :class="cellClasses(weekDay)">
-                <span>{{ weekDay.getDate() }}</span>
-            </div>
-        </template>
-    </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, type PropType } from "vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
 
 export default defineComponent({
-    name: 'ODatepickerTableRow',
+    name: "ODatepickerTableRow",
     mixins: [BaseComponentMixin],
-    configField: 'datepicker',
+    configField: "datepicker",
     inject: {
-        $datepicker: { from: '$datepicker', default: false }
+        $datepicker: { from: "$datepicker", default: false },
     },
-    emits: ['select', 'rangeHoverEndDate', 'change-focus'],
     props: {
         selectedDate: {
-            type: [Date, Array]
+            type: [Date, Array],
         },
         hoveredDateRange: Array,
         day: {
-            type: Number
+            type: Number,
         },
         week: {
             type: Array as PropType<Array<Date>>,
-            required: true
+            required: true,
         },
         month: {
             type: Number,
-            required: true
+            required: true,
         },
         showWeekNumber: Boolean,
         minDate: Date,
@@ -107,85 +63,96 @@ export default defineComponent({
         tableEventsClass: [String, Function, Array],
         tableEventVariantClass: [String, Function, Array],
     },
+    emits: ["select", "rangeHoverEndDate", "change-focus"],
     computed: {
         tableRowClasses() {
-            return [
-                this.computedClass('tableRowClass', 'o-dpck__table__row'),
-            ]
+            return [this.computedClass("tableRowClass", "o-dpck__table__row")];
         },
         tableCellClasses() {
             return [
-                this.computedClass('tableCellClass', 'o-dpck__table__cell'),
-            ]
+                this.computedClass("tableCellClass", "o-dpck__table__cell"),
+            ];
         },
         tableEventsClasses() {
             return [
-                this.computedClass('tableEventsClass', 'o-dpck__table__events'),
-            ]
+                this.computedClass("tableEventsClass", "o-dpck__table__events"),
+            ];
         },
         hasEvents() {
-            return this.events && this.events.length
-        }
+            return this.events && this.events.length;
+        },
     },
     watch: {
         day(day) {
-            const refName = `day-${this.month}-${day}`
+            const refName = `day-${this.month}-${day}`;
             this.$nextTick(() => {
                 if (this.$refs[refName] && this.$refs[refName].length > 0) {
                     if (this.$refs[refName][0]) {
-                        this.$refs[refName][0].focus()
+                        this.$refs[refName][0].focus();
                     }
                 }
-            }) // $nextTick needed when month is changed
-        }
+            }); // $nextTick needed when month is changed
+        },
     },
     methods: {
         firstWeekOffset(year, dow, doy) {
             // first-week day -- which january is always in the first week (4 for iso, 1 for other)
-            const fwd = 7 + dow - doy
+            const fwd = 7 + dow - doy;
             // first-week day local weekday -- which local weekday is fwd
-            const firstJanuary = new Date(year, 0, fwd)
-            const fwdlw = (7 + firstJanuary.getDay() - dow) % 7
-            return -fwdlw + fwd - 1
+            const firstJanuary = new Date(year, 0, fwd);
+            const fwdlw = (7 + firstJanuary.getDay() - dow) % 7;
+            return -fwdlw + fwd - 1;
         },
         daysInYear(year) {
-            return this.isLeapYear(year) ? 366 : 365
+            return this.isLeapYear(year) ? 366 : 365;
         },
         isLeapYear(year) {
-            return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
+            return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
         },
         getSetDayOfYear(input) {
-            return Math.round((input.getTime() - new Date(input.getFullYear(), 0, 1).getTime()) / 864e5) + 1
+            return (
+                Math.round(
+                    (input.getTime() -
+                        new Date(input.getFullYear(), 0, 1).getTime()) /
+                        864e5,
+                ) + 1
+            );
         },
         weeksInYear(year, dow, doy) {
-            const weekOffset = this.firstWeekOffset(year, dow, doy)
-            const weekOffsetNext = this.firstWeekOffset(year + 1, dow, doy)
-            return (this.daysInYear(year) - weekOffset + weekOffsetNext) / 7
+            const weekOffset = this.firstWeekOffset(year, dow, doy);
+            const weekOffsetNext = this.firstWeekOffset(year + 1, dow, doy);
+            return (this.daysInYear(year) - weekOffset + weekOffsetNext) / 7;
         },
         getWeekNumber(mom) {
-            const dow = this.firstDayOfWeek // first day of week
+            const dow = this.firstDayOfWeek; // first day of week
             // Rules for the first week : 1 for the 1st January, 4 for the 4th January
-            const doy = this.rulesForFirstWeek
-            const weekOffset = this.firstWeekOffset(mom.getFullYear(), dow, doy)
-            const week = Math.floor((this.getSetDayOfYear(mom) - weekOffset - 1) / 7) + 1
-            let resWeek
-            let resYear
+            const doy = this.rulesForFirstWeek;
+            const weekOffset = this.firstWeekOffset(
+                mom.getFullYear(),
+                dow,
+                doy,
+            );
+            const week =
+                Math.floor((this.getSetDayOfYear(mom) - weekOffset - 1) / 7) +
+                1;
+            let resWeek;
+            let resYear;
             if (week < 1) {
-                resYear = mom.getFullYear() - 1
-                resWeek = week + this.weeksInYear(resYear, dow, doy)
+                resYear = mom.getFullYear() - 1;
+                resWeek = week + this.weeksInYear(resYear, dow, doy);
             } else if (week > this.weeksInYear(mom.getFullYear(), dow, doy)) {
-                resWeek = week - this.weeksInYear(mom.getFullYear(), dow, doy)
-                resYear = mom.getFullYear() + 1
+                resWeek = week - this.weeksInYear(mom.getFullYear(), dow, doy);
+                resYear = mom.getFullYear() + 1;
             } else {
-                resYear = mom.getFullYear()
-                resWeek = week
+                resYear = mom.getFullYear();
+                resWeek = week;
             }
 
-            return resWeek
+            return resWeek;
         },
         clickWeekNumber(week) {
             if (this.weekNumberClickable) {
-                this.$datepicker.$emit('week-number-click', week)
+                this.$datepicker.$emit("week-number-click", week);
             }
         },
         /*
@@ -193,257 +160,354 @@ export default defineComponent({
          * is within this month
          */
         selectableDate(day) {
-            const validity = []
+            const validity = [];
 
             if (this.minDate) {
-                validity.push(day >= this.minDate)
+                validity.push(day >= this.minDate);
             }
 
             if (this.maxDate) {
-                validity.push(day <= this.maxDate)
+                validity.push(day <= this.maxDate);
             }
 
             if (this.nearbyMonthDays && !this.nearbySelectableMonthDays) {
-                validity.push(day.getMonth() === this.month)
+                validity.push(day.getMonth() === this.month);
             }
 
             if (this.selectableDates) {
                 for (let i = 0; i < this.selectableDates.length; i++) {
-                    const enabledDate = this.selectableDates[i]
-                    if (day.getDate() === enabledDate.getDate() &&
+                    const enabledDate = this.selectableDates[i];
+                    if (
+                        day.getDate() === enabledDate.getDate() &&
                         day.getFullYear() === enabledDate.getFullYear() &&
-                        day.getMonth() === enabledDate.getMonth()) {
-                        return true
+                        day.getMonth() === enabledDate.getMonth()
+                    ) {
+                        return true;
                     } else {
-                        validity.push(false)
+                        validity.push(false);
                     }
                 }
             }
 
             if (this.unselectableDates) {
                 for (let i = 0; i < this.unselectableDates.length; i++) {
-                    const disabledDate = this.unselectableDates[i]
+                    const disabledDate = this.unselectableDates[i];
                     validity.push(
                         day.getDate() !== disabledDate.getDate() ||
                             day.getFullYear() !== disabledDate.getFullYear() ||
-                            day.getMonth() !== disabledDate.getMonth()
-                    )
+                            day.getMonth() !== disabledDate.getMonth(),
+                    );
                 }
             }
 
             if (this.unselectableDaysOfWeek) {
                 for (let i = 0; i < this.unselectableDaysOfWeek.length; i++) {
-                    const dayOfWeek = this.unselectableDaysOfWeek[i]
-                    validity.push(day.getDay() !== dayOfWeek)
+                    const dayOfWeek = this.unselectableDaysOfWeek[i];
+                    validity.push(day.getDay() !== dayOfWeek);
                 }
             }
 
-            return validity.indexOf(false) < 0
+            return validity.indexOf(false) < 0;
         },
 
         /*
-        * Emit select event with chosen date as payload
-        */
+         * Emit select event with chosen date as payload
+         */
         emitChosenDate(day) {
-            if (this.disabled) return
+            if (this.disabled) return;
 
             if (this.selectableDate(day)) {
-                this.$emit('select', day)
+                this.$emit("select", day);
             }
         },
 
         eventsDateMatch(day) {
-            if (!this.events || !this.events.length) return false
+            if (!this.events || !this.events.length) return false;
 
-            const dayEvents = []
+            const dayEvents = [];
 
             for (let i = 0; i < this.events.length; i++) {
                 if (this.events[i].date.getDay() === day.getDay()) {
-                    dayEvents.push(this.events[i])
+                    dayEvents.push(this.events[i]);
                 }
             }
 
             if (!dayEvents.length) {
-                return false
+                return false;
             }
 
-            return dayEvents
+            return dayEvents;
         },
 
         /*
-        * Build cellClasses for cell using validations
-        */
+         * Build cellClasses for cell using validations
+         */
         cellClasses(day) {
             function dateMatch(dateOne, dateTwo, multiple = false) {
                 // if either date is null or undefined, return false
                 // if using multiple flag, return false
                 if (!dateOne || !dateTwo || multiple) {
-                    return false
+                    return false;
                 }
 
                 if (Array.isArray(dateTwo)) {
-                    return dateTwo.some((date) => (
-                        dateOne.getDate() === date.getDate() &&
-                        dateOne.getFullYear() === date.getFullYear() &&
-                        dateOne.getMonth() === date.getMonth()
-                    ))
+                    return dateTwo.some(
+                        (date) =>
+                            dateOne.getDate() === date.getDate() &&
+                            dateOne.getFullYear() === date.getFullYear() &&
+                            dateOne.getMonth() === date.getMonth(),
+                    );
                 }
-                return (dateOne.getDate() === dateTwo.getDate() &&
+                return (
+                    dateOne.getDate() === dateTwo.getDate() &&
                     dateOne.getFullYear() === dateTwo.getFullYear() &&
-                    dateOne.getMonth() === dateTwo.getMonth())
+                    dateOne.getMonth() === dateTwo.getMonth()
+                );
             }
 
             function dateWithin(dateOne, dates, multiple = false) {
-                if (!Array.isArray(dates) || multiple) { return false }
+                if (!Array.isArray(dates) || multiple) {
+                    return false;
+                }
 
-                return dateOne > dates[0] && dateOne < dates[1]
+                return dateOne > dates[0] && dateOne < dates[1];
             }
 
             return [
                 ...this.tableCellClasses,
                 {
-                    [this.computedClass('tableCellSelectedClass', 'o-dpck__table__cell--selected')] :
-                        dateMatch(day, this.selectedDate) || dateWithin(day, this.selectedDate, this.multiple)
+                    [this.computedClass(
+                        "tableCellSelectedClass",
+                        "o-dpck__table__cell--selected",
+                    )]:
+                        dateMatch(day, this.selectedDate) ||
+                        dateWithin(day, this.selectedDate, this.multiple),
                 },
                 {
-                    [this.computedClass('tableCellFirstSelectedClass', 'o-dpck__table__cell--first-selected')] :
-                        dateMatch(
-                            day,
-                            Array.isArray(this.selectedDate) && this.selectedDate[0],
-                            this.multiple
-                        ),
+                    [this.computedClass(
+                        "tableCellFirstSelectedClass",
+                        "o-dpck__table__cell--first-selected",
+                    )]: dateMatch(
+                        day,
+                        Array.isArray(this.selectedDate) &&
+                            this.selectedDate[0],
+                        this.multiple,
+                    ),
                 },
                 {
-                    [this.computedClass('tableCellWithinSelectedClass', 'o-dpck__table__cell--within-selected')] :
-                        dateWithin(day, this.selectedDate, this.multiple)
+                    [this.computedClass(
+                        "tableCellWithinSelectedClass",
+                        "o-dpck__table__cell--within-selected",
+                    )]: dateWithin(day, this.selectedDate, this.multiple),
                 },
                 {
-                    [this.computedClass('tableCellLastSelectedClass', 'o-dpck__table__cell--last-selected')] :
-                        dateMatch(
-                            day,
-                            Array.isArray(this.selectedDate) && this.selectedDate[1],
-                            this.multiple
-                        ),
+                    [this.computedClass(
+                        "tableCellLastSelectedClass",
+                        "o-dpck__table__cell--last-selected",
+                    )]: dateMatch(
+                        day,
+                        Array.isArray(this.selectedDate) &&
+                            this.selectedDate[1],
+                        this.multiple,
+                    ),
                 },
                 {
-                    [this.computedClass('tableCellFirstHoveredClass', 'o-dpck__table__cell--first-hovered')] :
-                        dateMatch(
-                            day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[0]
-                        ),
+                    [this.computedClass(
+                        "tableCellFirstHoveredClass",
+                        "o-dpck__table__cell--first-hovered",
+                    )]: dateMatch(
+                        day,
+                        Array.isArray(this.hoveredDateRange) &&
+                            this.hoveredDateRange[0],
+                    ),
                 },
                 {
-                    [this.computedClass('tableCellWithinHoveredClass', 'o-dpck__table__cell--within-hovered')] :
-                        dateWithin(day, this.hoveredDateRange)
+                    [this.computedClass(
+                        "tableCellWithinHoveredClass",
+                        "o-dpck__table__cell--within-hovered",
+                    )]: dateWithin(day, this.hoveredDateRange),
                 },
                 {
-                    [this.computedClass('tableCellLastHoveredClass', 'o-dpck__table__cell--last-hovered')] :
-                        dateMatch(
-                            day,
-                            Array.isArray(this.hoveredDateRange) && this.hoveredDateRange[1]
-                        )
+                    [this.computedClass(
+                        "tableCellLastHoveredClass",
+                        "o-dpck__table__cell--last-hovered",
+                    )]: dateMatch(
+                        day,
+                        Array.isArray(this.hoveredDateRange) &&
+                            this.hoveredDateRange[1],
+                    ),
                 },
                 {
-                    [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator())
+                    [this.computedClass(
+                        "tableCellTodayClass",
+                        "o-dpck__table__cell--today",
+                    )]: dateMatch(day, this.dateCreator()),
                 },
                 {
-                    [this.computedClass('tableCellSelectableClass', 'o-dpck__table__cell--selectable')] :
-                        this.selectableDate(day) && !this.disabled
+                    [this.computedClass(
+                        "tableCellSelectableClass",
+                        "o-dpck__table__cell--selectable",
+                    )]: this.selectableDate(day) && !this.disabled,
                 },
                 {
-                    [this.computedClass('tableCellUnselectableClass', 'o-dpck__table__cell--unselectable')] :
-                        !this.selectableDate(day) || this.disabled
+                    [this.computedClass(
+                        "tableCellUnselectableClass",
+                        "o-dpck__table__cell--unselectable",
+                    )]: !this.selectableDate(day) || this.disabled,
                 },
                 {
-                    [this.computedClass('tableCellInvisibleClass', 'o-dpck__table__cell--invisible')] :
-                        !this.nearbyMonthDays && day.getMonth() !== this.month
+                    [this.computedClass(
+                        "tableCellInvisibleClass",
+                        "o-dpck__table__cell--invisible",
+                    )]: !this.nearbyMonthDays && day.getMonth() !== this.month,
                 },
                 {
-                    [this.computedClass('tableCellNearbyClass', 'o-dpck__table__cell--nearby')] :
-                       this.nearbySelectableMonthDays && day.getMonth() !== this.month
+                    [this.computedClass(
+                        "tableCellNearbyClass",
+                        "o-dpck__table__cell--nearby",
+                    )]:
+                        this.nearbySelectableMonthDays &&
+                        day.getMonth() !== this.month,
                 },
                 {
-                    [this.computedClass('tableCellEventsClass', 'o-dpck__table__cell--events')] :
-                        this.hasEvents
+                    [this.computedClass(
+                        "tableCellEventsClass",
+                        "o-dpck__table__cell--events",
+                    )]: this.hasEvents,
                 },
                 {
-                    [this.computedClass('tableCellTodayClass', 'o-dpck__table__cell--today')] :
-                        dateMatch(day, this.dateCreator())
-                }
-            ]
+                    [this.computedClass(
+                        "tableCellTodayClass",
+                        "o-dpck__table__cell--today",
+                    )]: dateMatch(day, this.dateCreator()),
+                },
+            ];
         },
 
         eventClasses(event) {
             return [
-                this.computedClass('tableEventClass', 'o-dpck__table__event'),
-                { [this.computedClass('tableEventVariantClass', 'o-dpck__table__event--', event.type)]: event.type },
-                { [this.computedClass('tableEventIndicatorsClass', 'o-dpck__table__event--', this.indicators)]: this.indicators }
-            ]
+                this.computedClass("tableEventClass", "o-dpck__table__event"),
+                {
+                    [this.computedClass(
+                        "tableEventVariantClass",
+                        "o-dpck__table__event--",
+                        event.type,
+                    )]: event.type,
+                },
+                {
+                    [this.computedClass(
+                        "tableEventIndicatorsClass",
+                        "o-dpck__table__event--",
+                        this.indicators,
+                    )]: this.indicators,
+                },
+            ];
         },
 
         setRangeHoverEndDate(day) {
             if (this.range) {
-                this.$emit('rangeHoverEndDate', day)
+                this.$emit("rangeHoverEndDate", day);
             }
         },
 
         manageKeydown(event, weekDay) {
             // https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/key/Key_Values#Navigation_keys
-            const { key } = event
-            let preventDefault = true
+            const { key } = event;
+            let preventDefault = true;
             switch (key) {
-                case 'Tab': {
-                    preventDefault = false
-                    break
+                case "Tab": {
+                    preventDefault = false;
+                    break;
                 }
-                case ' ':
-                case 'Space':
-                case 'Spacebar':
-                case 'Enter': {
-                    this.emitChosenDate(weekDay)
-                    break
+                case " ":
+                case "Space":
+                case "Spacebar":
+                case "Enter": {
+                    this.emitChosenDate(weekDay);
+                    break;
                 }
 
-                case 'ArrowLeft':
-                case 'Left': {
-                    this.changeFocus(weekDay, -1)
-                    break
+                case "ArrowLeft":
+                case "Left": {
+                    this.changeFocus(weekDay, -1);
+                    break;
                 }
-                case 'ArrowRight':
-                case 'Right': {
-                    this.changeFocus(weekDay, 1)
-                    break
+                case "ArrowRight":
+                case "Right": {
+                    this.changeFocus(weekDay, 1);
+                    break;
                 }
-                case 'ArrowUp':
-                case 'Up': {
-                    this.changeFocus(weekDay, -7)
-                    break
+                case "ArrowUp":
+                case "Up": {
+                    this.changeFocus(weekDay, -7);
+                    break;
                 }
-                case 'ArrowDown':
-                case 'Down': {
-                    this.changeFocus(weekDay, 7)
-                    break
+                case "ArrowDown":
+                case "Down": {
+                    this.changeFocus(weekDay, 7);
+                    break;
                 }
             }
             if (preventDefault) {
-                event.preventDefault()
+                event.preventDefault();
             }
         },
 
         changeFocus(day, inc) {
-            const nextDay = new Date(day.getTime())
-            nextDay.setDate(day.getDate() + inc)
+            const nextDay = new Date(day.getTime());
+            nextDay.setDate(day.getDate() + inc);
             while (
                 (!this.minDate || nextDay > this.minDate) &&
                 (!this.maxDate || nextDay < this.maxDate) &&
                 !this.selectableDate(nextDay)
             ) {
-                nextDay.setDate(day.getDate() + Math.sign(inc))
+                nextDay.setDate(day.getDate() + Math.sign(inc));
             }
-            this.setRangeHoverEndDate(nextDay)
-            this.$emit('change-focus', nextDay)
-        }
-    }
-})
+            this.setRangeHoverEndDate(nextDay);
+            this.$emit("change-focus", nextDay);
+        },
+    },
+});
 </script>
+
+<template>
+    <div :class="tableRowClasses">
+        <a
+            v-if="showWeekNumber"
+            :class="tableCellClasses"
+            :style="{ cursor: weekNumberClickable ? 'pointer' : 'auto' }"
+            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
+            <span>{{ getWeekNumber(week[6]) }}</span>
+        </a>
+        <template v-for="(weekDay, index) in week" :key="index">
+            <a
+                v-if="selectableDate(weekDay) && !disabled"
+                :ref="`day-${weekDay.getMonth()}-${weekDay.getDate()}`"
+                :class="cellClasses(weekDay)"
+                role="button"
+                href="#"
+                :disabled="disabled"
+                :tabindex="
+                    day === weekDay.getDate() && month === weekDay.getMonth()
+                        ? null
+                        : -1
+                "
+                @click.prevent="emitChosenDate(weekDay)"
+                @mouseenter="setRangeHoverEndDate(weekDay)"
+                @keydown="manageKeydown($event, weekDay)">
+                <span>{{ weekDay.getDate() }}</span>
+                <div
+                    v-if="eventsDateMatch(weekDay)"
+                    :class="tableEventsClasses">
+                    <div
+                        v-for="(event, index) in eventsDateMatch(weekDay)"
+                        :key="index"
+                        :class="eventClasses(event)" />
+                </div>
+            </a>
+            <div v-else :key="index" :class="cellClasses(weekDay)">
+                <span>{{ weekDay.getDate() }}</span>
+            </div>
+        </template>
+    </div>
+</template>

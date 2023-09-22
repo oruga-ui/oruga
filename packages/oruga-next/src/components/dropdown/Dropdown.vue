@@ -1,57 +1,18 @@
-<template>
-    <div
-        ref="dropdown"
-        :class="rootClasses"
-        @mouseleave="isHoverable = false">
-        <div
-            v-if="!inline"
-            :tabindex="disabled ? null : triggerTabindex"
-            ref="trigger"
-            :class="triggerClasses"
-            @click="onClick"
-            @contextmenu.prevent="onContextMenu"
-            @mouseenter="onHover"
-            @focus.capture="onFocus"
-            aria-haspopup="true">
-            <slot name="trigger" :active="isActive">
-                {{ label }}
-            </slot>
-        </div>
-
-        <transition :name="animation">
-            <div
-                v-if="isMobileModal"
-                v-show="isActive"
-                :class="menuMobileOverlayClasses"
-                :aria-hidden="!isActive" />
-        </transition>
-        <transition :name="animation">
-            <component
-                v-show="(!disabled && (isActive || isHoverable)) || inline"
-                ref="dropdownMenu"
-                :is="menuTag"
-                :class="menuClasses"
-                :aria-hidden="!isActive"
-                :role="ariaRole"
-                :aria-modal="!inline"
-                :style="menuStyle"
-                v-trap-focus="trapFocus">
-                <slot/>
-            </component>
-        </transition>
-    </div>
-</template>
-
 <script lang="ts">
-import type { Component, PropType } from 'vue'
-import { defineComponent } from 'vue'
+import type { Component, PropType } from "vue";
+import { defineComponent } from "vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import MatchMediaMixin from '../../utils/MatchMediaMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import MatchMediaMixin from "../../utils/MatchMediaMixin";
 
-import trapFocus from '../../directives/trapFocus'
-import { getOptions } from '../../utils/config'
-import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } from '../../utils/helpers'
+import trapFocus from "../../directives/trapFocus";
+import { getOptions } from "../../utils/config";
+import {
+    removeElement,
+    createAbsoluteElement,
+    toCssDimension,
+    getValueByPath,
+} from "../../utils/helpers";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -60,24 +21,23 @@ import { removeElement, createAbsoluteElement, toCssDimension, getValueByPath } 
  * @style _dropdown.scss
  */
 export default defineComponent({
-    name: 'ODropdown',
+    name: "ODropdown",
     directives: {
-        trapFocus
+        trapFocus,
     },
-    configField: 'dropdown',
+    configField: "dropdown",
     mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
-            $dropdown: this
-        }
+            $dropdown: this,
+        };
     },
-    emits: ['update:modelValue', 'active-change', 'change'],
     props: {
         /** @model */
         modelValue: {
             type: [String, Number, Boolean, Object, Array],
-            default: null
-        }, 
+            default: null,
+        },
         /**
          * Trigger label, unnecessary when trgger slot is used
          */
@@ -103,8 +63,8 @@ export default defineComponent({
         maxHeight: {
             type: [String, Number],
             default: () => {
-                return getValueByPath(getOptions(), 'dropdown.maxHeight', 200)
-            }
+                return getValueByPath(getOptions(), "dropdown.maxHeight", 200);
+            },
         },
         /**
          * Optional, position of the dropdown relative to the trigger
@@ -113,13 +73,15 @@ export default defineComponent({
         position: {
             type: String,
             validator: (value: string) => {
-                return [
-                    'top-right',
-                    'top-left',
-                    'bottom-left',
-                    'bottom-right'
-                ].indexOf(value) > -1
-            }
+                return (
+                    [
+                        "top-right",
+                        "top-left",
+                        "bottom-left",
+                        "bottom-right",
+                    ].indexOf(value) > -1
+                );
+            },
         },
         /**
          * Dropdown content (items) are shown into a modal on mobile
@@ -127,8 +89,12 @@ export default defineComponent({
         mobileModal: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'dropdown.mobileModal', true)
-            }
+                return getValueByPath(
+                    getOptions(),
+                    "dropdown.mobileModal",
+                    true,
+                );
+            },
         },
         /**
          * Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus
@@ -137,13 +103,9 @@ export default defineComponent({
         ariaRole: {
             type: String,
             validator: (value: string) => {
-                return [
-                    'menu',
-                    'list',
-                    'dialog'
-                ].indexOf(value) > -1
+                return ["menu", "list", "dialog"].indexOf(value) > -1;
             },
-            default: null
+            default: null,
         },
         /**
          * Custom animation (transition name)
@@ -151,8 +113,12 @@ export default defineComponent({
         animation: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'dropdown.animation', 'fade')
-            }
+                return getValueByPath(
+                    getOptions(),
+                    "dropdown.animation",
+                    "fade",
+                );
+            },
         },
         /**
          * Allows multiple selections
@@ -164,15 +130,15 @@ export default defineComponent({
         trapFocus: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'dropdown.trapFocus', true)
-            }
+                return getValueByPath(getOptions(), "dropdown.trapFocus", true);
+            },
         },
         /**
          * Close dropdown when content is clicked
          */
         closeOnClick: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /**
          * Can close dropdown by pressing escape or by clicking outside
@@ -180,7 +146,7 @@ export default defineComponent({
          */
         canClose: {
             type: [Array, Boolean],
-            default: true
+            default: true,
         },
         /**
          * Dropdown will be expanded (full-width)
@@ -192,7 +158,7 @@ export default defineComponent({
          */
         triggers: {
             type: Array,
-            default: () => ['click']
+            default: () => ["click"],
         },
         /**
          * Dropdown menu tag name
@@ -200,23 +166,23 @@ export default defineComponent({
         menuTag: {
             type: [String, Object, Function] as PropType<string | Component>,
             default: () => {
-                return getValueByPath(getOptions(), 'dropdown.menuTag', 'div')
-            }
+                return getValueByPath(getOptions(), "dropdown.menuTag", "div");
+            },
         },
         /**
          * Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)
          */
         triggerTabindex: {
             type: Number,
-            default: 0
+            default: 0,
         },
         /**
          * Append dropdown content to body
          */
         appendToBody: Boolean,
         /**
-        * @ignore
-        */
+         * @ignore
+         */
         appendToBodyCopyParent: Boolean,
         rootClass: [String, Function, Array],
         triggerClass: [String, Function, Array],
@@ -227,80 +193,127 @@ export default defineComponent({
         menuActiveClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
         disabledClass: [String, Function, Array],
-        expandedClass: [String, Function, Array]
+        expandedClass: [String, Function, Array],
     },
+    emits: ["update:modelValue", "active-change", "change"],
     data() {
         return {
             selected: this.modelValue,
             isActive: false,
             isHoverable: false,
-            bodyEl: undefined // Used to append to body
-        }
+            bodyEl: undefined, // Used to append to body
+        };
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-drop'),
-                { [this.computedClass('disabledClass', 'o-drop--disabled')]: this.disabled },
-                { [this.computedClass('expandedClass', 'o-drop--expanded')]: this.expanded },
-                { [this.computedClass('inlineClass', 'o-drop--inline')]: this.inline },
-                { [this.computedClass('mobileClass', 'o-drop--mobile')]: this.isMobileModal && this.isMatchMedia && !this.hoverable },
-            ]
+                this.computedClass("rootClass", "o-drop"),
+                {
+                    [this.computedClass("disabledClass", "o-drop--disabled")]:
+                        this.disabled,
+                },
+                {
+                    [this.computedClass("expandedClass", "o-drop--expanded")]:
+                        this.expanded,
+                },
+                {
+                    [this.computedClass("inlineClass", "o-drop--inline")]:
+                        this.inline,
+                },
+                {
+                    [this.computedClass("mobileClass", "o-drop--mobile")]:
+                        this.isMobileModal &&
+                        this.isMatchMedia &&
+                        !this.hoverable,
+                },
+            ];
         },
         triggerClasses() {
-            return [
-                this.computedClass('triggerClass', 'o-drop__trigger')
-            ]
+            return [this.computedClass("triggerClass", "o-drop__trigger")];
         },
         menuMobileOverlayClasses() {
             return [
-                this.computedClass('menuMobileOverlayClass', 'o-drop__overlay')
-            ]
+                this.computedClass("menuMobileOverlayClass", "o-drop__overlay"),
+            ];
         },
         menuClasses() {
             return [
-                this.computedClass('menuClass', 'o-drop__menu'),
-                { [this.computedClass('menuPositionClass', 'o-drop__menu--', this.position)]: this.position },
-                { [this.computedClass('menuActiveClass', 'o-drop__menu--active')]: (this.isActive || this.inline) }
-            ]
+                this.computedClass("menuClass", "o-drop__menu"),
+                {
+                    [this.computedClass(
+                        "menuPositionClass",
+                        "o-drop__menu--",
+                        this.position,
+                    )]: this.position,
+                },
+                {
+                    [this.computedClass(
+                        "menuActiveClass",
+                        "o-drop__menu--active",
+                    )]: this.isActive || this.inline,
+                },
+            ];
         },
         isMobileModal() {
-            return this.mobileModal && !this.inline
+            return this.mobileModal && !this.inline;
         },
         cancelOptions() {
-            return typeof this.canClose === 'boolean'
+            return typeof this.canClose === "boolean"
                 ? this.canClose
-                    ? ['escape', 'outside']
+                    ? ["escape", "outside"]
                     : []
-                : this.canClose
+                : this.canClose;
         },
         menuStyle() {
             return {
-                maxHeight: this.scrollable ? toCssDimension(this.maxHeight) : null,
-                overflow: this.scrollable ? 'auto' : null
-            }
+                maxHeight: this.scrollable
+                    ? toCssDimension(this.maxHeight)
+                    : null,
+                overflow: this.scrollable ? "auto" : null,
+            };
         },
         hoverable() {
-            return this.triggers.indexOf('hover') >= 0
-        }
+            return this.triggers.indexOf("hover") >= 0;
+        },
     },
     watch: {
         /**
-        * When v-model is changed set the new selected item.
-        */
+         * When v-model is changed set the new selected item.
+         */
         modelValue(value) {
-            this.selected = value
+            this.selected = value;
         },
         /**
-        * Emit event when isActive value is changed.
-        */
+         * Emit event when isActive value is changed.
+         */
         isActive(value) {
-            this.$emit('active-change', value)
+            this.$emit("active-change", value);
             if (this.appendToBody) {
                 this.$nextTick(() => {
-                    this.updateAppendToBody()
-                })
+                    this.updateAppendToBody();
+                });
             }
+        },
+    },
+    mounted() {
+        if (this.appendToBody) {
+            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdownMenu);
+            this.updateAppendToBody();
+        }
+    },
+    created() {
+        if (typeof window !== "undefined") {
+            document.addEventListener("click", this.clickedOutside);
+            document.addEventListener("keyup", this.keyPress);
+        }
+    },
+    beforeUnmount() {
+        if (typeof window !== "undefined") {
+            document.removeEventListener("click", this.clickedOutside);
+            document.removeEventListener("keyup", this.keyPress);
+        }
+        if (this.appendToBody) {
+            removeElement(this.$data.bodyEl);
         }
     },
     methods: {
@@ -315,175 +328,204 @@ export default defineComponent({
                 if (this.selected) {
                     if (this.selected.indexOf(value) === -1) {
                         // Add value
-                        this.selected = [...this.selected, value]
+                        this.selected = [...this.selected, value];
                     } else {
                         // Remove value
-                        this.selected = this.selected.filter((val) => val !== value)
+                        this.selected = this.selected.filter(
+                            (val) => val !== value,
+                        );
                     }
                 } else {
-                    this.selected = [value]
+                    this.selected = [value];
                 }
-                this.$emit('change', this.selected)
+                this.$emit("change", this.selected);
             } else {
                 if (this.selected !== value) {
-                    this.selected = value
-                    this.$emit('change', this.selected)
+                    this.selected = value;
+                    this.$emit("change", this.selected);
                 }
             }
-            this.$emit('update:modelValue', this.selected)
+            this.$emit("update:modelValue", this.selected);
             if (!this.multiple) {
-                this.isActive = !this.closeOnClick
+                this.isActive = !this.closeOnClick;
                 if (this.hoverable && this.closeOnClick) {
-                    this.isHoverable = false
+                    this.isHoverable = false;
                 }
             }
         },
 
         /**
-        * White-listed items to not close when clicked.
-        */
+         * White-listed items to not close when clicked.
+         */
         isInWhiteList(el) {
-            if (el === this.$refs.dropdownMenu) return true
-            if (el === this.$refs.trigger) return true
+            if (el === this.$refs.dropdownMenu) return true;
+            if (el === this.$refs.trigger) return true;
             // All chidren from dropdown
             if (this.$refs.dropdownMenu !== undefined) {
-                const children = this.$refs.dropdownMenu.querySelectorAll('*')
+                const children = this.$refs.dropdownMenu.querySelectorAll("*");
                 for (const child of children) {
                     if (el === child) {
-                        return true
+                        return true;
                     }
                 }
             }
             // All children from trigger
             if (this.$refs.trigger !== undefined) {
-                const children = this.$refs.trigger.querySelectorAll('*')
+                const children = this.$refs.trigger.querySelectorAll("*");
                 for (const child of children) {
                     if (el === child) {
-                        return true
+                        return true;
                     }
                 }
             }
-            return false
+            return false;
         },
 
         /**
-        * Close dropdown if clicked outside.
-        */
+         * Close dropdown if clicked outside.
+         */
         clickedOutside(event) {
-            if (this.cancelOptions.indexOf('outside') < 0) return
-            if (this.inline) return
+            if (this.cancelOptions.indexOf("outside") < 0) return;
+            if (this.inline) return;
 
-            if (!this.isInWhiteList(event.target)) this.isActive = false
+            if (!this.isInWhiteList(event.target)) this.isActive = false;
         },
 
         /**
          * Keypress event that is bound to the document
          */
         keyPress({ key }) {
-            if (this.isActive && (key === 'Escape' || key === 'Esc')) {
-                if (this.cancelOptions.indexOf('escape') < 0) return
-                this.isActive = false
+            if (this.isActive && (key === "Escape" || key === "Esc")) {
+                if (this.cancelOptions.indexOf("escape") < 0) return;
+                this.isActive = false;
             }
         },
 
         onClick() {
-            if (this.triggers.indexOf('click') < 0) return
-            this.toggle()
+            if (this.triggers.indexOf("click") < 0) return;
+            this.toggle();
         },
         onContextMenu() {
-            if (this.triggers.indexOf('contextmenu') < 0) return
-            this.toggle()
+            if (this.triggers.indexOf("contextmenu") < 0) return;
+            this.toggle();
         },
         onHover() {
-            if (this.triggers.indexOf('hover') < 0) return
-            this.isHoverable = true
+            if (this.triggers.indexOf("hover") < 0) return;
+            this.isHoverable = true;
         },
         onFocus() {
-            if (this.triggers.indexOf('focus') < 0) return
-            this.toggle()
+            if (this.triggers.indexOf("focus") < 0) return;
+            this.toggle();
         },
 
         /**
-        * Toggle dropdown if it's not disabled.
-        */
+         * Toggle dropdown if it's not disabled.
+         */
         toggle() {
-            if (this.disabled) return
+            if (this.disabled) return;
 
             if (!this.isActive) {
                 // if not active, toggle after clickOutside event
                 // this fixes toggling programmatic
                 this.$nextTick(() => {
-                    const value = !this.isActive
-                    this.isActive = value
+                    const value = !this.isActive;
+                    this.isActive = value;
                     // Vue 2.6.x ???
-                    setTimeout(() => (this.isActive = value))
-                })
+                    setTimeout(() => (this.isActive = value));
+                });
             } else {
-                this.isActive = !this.isActive
+                this.isActive = !this.isActive;
             }
         },
 
         updateAppendToBody() {
-            const dropdownMenu = this.$refs.dropdownMenu
-            const trigger = this.$refs.trigger
+            const dropdownMenu = this.$refs.dropdownMenu;
+            const trigger = this.$refs.trigger;
             if (dropdownMenu && trigger) {
                 // update wrapper dropdown
-                const dropdown = this.$data.bodyEl.children[0]
-                dropdown.classList.forEach((item) => dropdown.classList.remove(...item.split(' ')))
+                const dropdown = this.$data.bodyEl.children[0];
+                dropdown.classList.forEach((item) =>
+                    dropdown.classList.remove(...item.split(" ")),
+                );
                 this.rootClasses.forEach((item) => {
                     if (item) {
-                        if (typeof item === 'object') {
-                            Object.keys(item).filter(key => key && item[key]).forEach(
-                                key => dropdown.classList.add(key))
+                        if (typeof item === "object") {
+                            Object.keys(item)
+                                .filter((key) => key && item[key])
+                                .forEach((key) => dropdown.classList.add(key));
                         } else {
-                            dropdown.classList.add(...item.split(' '))
+                            dropdown.classList.add(...item.split(" "));
                         }
                     }
-                })
+                });
                 if (this.appendToBodyCopyParent) {
-                    const parentNode = this.$refs.dropdown.parentNode
-                    const parent = this.$data.bodyEl
-                    parent.classList.forEach((item) => parent.classList.remove(...item.split(' ')))
-                    parentNode.classList.forEach((item) => parent.classList.add(...item.split(' ')))
+                    const parentNode = this.$refs.dropdown.parentNode;
+                    const parent = this.$data.bodyEl;
+                    parent.classList.forEach((item) =>
+                        parent.classList.remove(...item.split(" ")),
+                    );
+                    parentNode.classList.forEach((item) =>
+                        parent.classList.add(...item.split(" ")),
+                    );
                 }
-                const rect = trigger.getBoundingClientRect()
-                let top = rect.top + window.scrollY
-                let left = rect.left + window.scrollX
-                if (!this.position || this.position.indexOf('bottom') >= 0) {
-                    top += trigger.clientHeight
+                const rect = trigger.getBoundingClientRect();
+                let top = rect.top + window.scrollY;
+                let left = rect.left + window.scrollX;
+                if (!this.position || this.position.indexOf("bottom") >= 0) {
+                    top += trigger.clientHeight;
                 } else {
-                    top -= dropdownMenu.clientHeight
+                    top -= dropdownMenu.clientHeight;
                 }
-                if (this.position && this.position.indexOf('left') >= 0) {
-                    left -= (dropdownMenu.clientWidth - trigger.clientWidth)
+                if (this.position && this.position.indexOf("left") >= 0) {
+                    left -= dropdownMenu.clientWidth - trigger.clientWidth;
                 }
-                dropdownMenu.style.position = 'absolute'
-                dropdownMenu.style.top = `${top}px`
-                dropdownMenu.style.left = `${left}px`
-                dropdownMenu.style.zIndex = '9999'
+                dropdownMenu.style.position = "absolute";
+                dropdownMenu.style.top = `${top}px`;
+                dropdownMenu.style.left = `${left}px`;
+                dropdownMenu.style.zIndex = "9999";
             }
-        }
+        },
     },
-    mounted() {
-        if (this.appendToBody) {
-            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdownMenu)
-            this.updateAppendToBody()
-        }
-    },
-    created() {
-        if (typeof window !== 'undefined') {
-            document.addEventListener('click', this.clickedOutside)
-            document.addEventListener('keyup', this.keyPress)
-        }
-    },
-    beforeUnmount() {
-        if (typeof window !== 'undefined') {
-            document.removeEventListener('click', this.clickedOutside)
-            document.removeEventListener('keyup', this.keyPress)
-        }
-        if (this.appendToBody) {
-            removeElement(this.$data.bodyEl)
-        }
-    }
-})
+});
 </script>
+
+<template>
+    <div ref="dropdown" :class="rootClasses" @mouseleave="isHoverable = false">
+        <div
+            v-if="!inline"
+            ref="trigger"
+            :tabindex="disabled ? null : triggerTabindex"
+            :class="triggerClasses"
+            aria-haspopup="true"
+            @click="onClick"
+            @contextmenu.prevent="onContextMenu"
+            @mouseenter="onHover"
+            @focus.capture="onFocus">
+            <slot name="trigger" :active="isActive">
+                {{ label }}
+            </slot>
+        </div>
+
+        <transition :name="animation">
+            <div
+                v-if="isMobileModal"
+                v-show="isActive"
+                :class="menuMobileOverlayClasses"
+                :aria-hidden="!isActive" />
+        </transition>
+        <transition :name="animation">
+            <component
+                :is="menuTag"
+                v-show="(!disabled && (isActive || isHoverable)) || inline"
+                ref="dropdownMenu"
+                v-trap-focus="trapFocus"
+                :class="menuClasses"
+                :aria-hidden="!isActive"
+                :role="ariaRole"
+                :aria-modal="!inline"
+                :style="menuStyle">
+                <slot />
+            </component>
+        </transition>
+    </div>
+</template>

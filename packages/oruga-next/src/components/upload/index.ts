@@ -1,15 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Upload from './Upload.vue'
+import Upload from "./Upload.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Upload)
-    }
-} as Plugin
+        registerComponent(app, Upload);
+    },
+} as Plugin;
 
-export {
-    Upload as OUpload
-}
+export { Upload as OUpload };

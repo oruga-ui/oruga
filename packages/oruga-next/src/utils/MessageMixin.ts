@@ -1,21 +1,20 @@
-import Icon from '../components/icon/Icon.vue'
-import { defineComponent } from 'vue';
-
+import Icon from "../components/icon/Icon.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
     components: {
-        [Icon.name]: Icon
+        [Icon.name]: Icon,
     },
     props: {
         /** Whether modal is active or not, use the .sync modifier (Vue 2.x) or v-model:active (Vue 3.x) to make it two-way binding */
         active: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Adds an 'X' button that closes the notification. */
         closable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /** Message text (can contain HTML). */
         message: String,
@@ -30,37 +29,23 @@ export default defineComponent({
         /** Icon size */
         iconSize: {
             type: String,
-            default: 'large'
+            default: "large",
         },
         /** Hide notification after duration only not programmatic. */
         autoClose: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /** Visibility duration in miliseconds. */
         duration: {
             type: Number,
-            default: 2000
-        }
+            default: 2000,
+        },
     },
     data() {
         return {
-            isActive: this.active
-        }
-    },
-    watch: {
-        active(value) {
-            this.isActive = value
-        },
-        isActive(value) {
-            if (value) {
-                this.setAutoClose()
-            } else {
-                if (this.timer) {
-                    clearTimeout(this.timer)
-                }
-            }
-        }
+            isActive: this.active,
+        };
     },
     computed: {
         /**
@@ -68,30 +53,47 @@ export default defineComponent({
          */
         computedIcon() {
             if (this.icon) {
-                return this.icon
+                return this.icon;
             }
             switch (this.type) {
-                case 'info':
-                    return 'information'
-                case 'success':
-                    return 'check-circle'
-                case 'warning':
-                    return 'alert'
-                case 'danger':
-                    return 'alert-circle'
+                case "info":
+                    return "information";
+                case "success":
+                    return "check-circle";
+                case "warning":
+                    return "alert";
+                case "danger":
+                    return "alert-circle";
                 default:
-                    return null
+                    return null;
             }
-        }
+        },
+    },
+    watch: {
+        active(value) {
+            this.isActive = value;
+        },
+        isActive(value) {
+            if (value) {
+                this.setAutoClose();
+            } else {
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                }
+            }
+        },
+    },
+    mounted() {
+        this.setAutoClose();
     },
     methods: {
         /**
          * Close the Message and emit events.
          */
         close(...args) {
-            this.isActive = false
-            this.$emit('close', ...args)
-            this.$emit('update:active', false)
+            this.isActive = false;
+            this.$emit("close", ...args);
+            this.$emit("update:active", false);
         },
         /**
          * Set timer to auto close message
@@ -100,13 +102,10 @@ export default defineComponent({
             if (this.autoClose) {
                 this.timer = setTimeout(() => {
                     if (this.isActive) {
-                        this.close({action: 'close', method: 'timeout'})
+                        this.close({ action: "close", method: "timeout" });
                     }
-                }, this.duration)
+                }, this.duration);
             }
-        }
+        },
     },
-    mounted() {
-        this.setAutoClose()
-    }
-})
+});

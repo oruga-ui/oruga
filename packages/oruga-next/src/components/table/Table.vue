@@ -1,340 +1,30 @@
-<template>
-    <div :class="rootClasses">
-
-        <div ref="slot" style="display:none">
-            <slot />
-        </div>
-
-        <o-table-mobile-sort
-            v-if="isMobile && hasSortablenewColumns"
-            :current-sort-column="currentSortColumn"
-            :columns="newColumns"
-            :placeholder="mobileSortPlaceholder"
-            :icon-pack="iconPack"
-            :sort-icon="sortIcon"
-            :sort-icon-size="sortIconSize"
-            :is-asc="isAsc"
-            @sort="(column, event) => sort(column, null, event)"
-        />
-
-        <template v-if="paginated && (paginationPosition === 'top' || paginationPosition === 'both')">
-            <slot name="pagination">
-                <o-table-pagination
-                    v-bind="$attrs"
-                    :per-page="perPage"
-                    :paginated="paginated"
-                    :total="newDataTotal"
-                    :current-page="newCurrentPage"
-                    @update:currentPage="newCurrentPage = $event"
-                    :root-class="paginationWrapperClasses"
-                    :icon-pack="iconPack"
-                    :rounded="paginationRounded"
-                    :size="paginationSize"
-                    :order="paginationOrder"
-                    @page-change="(event) => $emit('page-change', event)"
-                    :aria-next-label="ariaNextLabel"
-                    :aria-previous-label="ariaPreviousLabel"
-                    :aria-page-label="ariaPageLabel"
-                    :aria-current-label="ariaCurrentLabel"
-                >
-                    <slot name="top-left"/>
-                </o-table-pagination>
-            </slot>
-        </template>
-
-        <div
-            :class="tableWrapperClasses"
-            :style="tableWrapperStyle">
-            <table
-                :class="tableClasses"
-                :tabindex="!focusable ? null : 0"
-                @keydown.self.prevent.up="pressedArrow(-1)"
-                @keydown.self.prevent.down="pressedArrow(1)">
-                <caption v-if="$slots.caption">
-                    <slot name="caption" />
-                </caption>
-                <thead v-if="newColumns.length && showHeader">
-                    <slot name="preheader" />
-                    <tr>
-                        <th v-if="showDetailRowIcon" :class="thDetailedClasses"/>
-                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'left'">
-                            <template v-if="headerCheckable">
-                                <o-checkbox
-                                    :modelValue="isAllChecked"
-                                    autocomplete="off"
-                                    :variant="checkboxVariant"
-                                    :disabled="isAllUncheckable"
-                                    @update:modelValue="checkAll"/>
-                            </template>
-                        </th>
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'header'"
-                            v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
-                            :style="isMobile ? {} : column.style"
-                            @click.stop="sort(column, null, $event)"
-                            :draggable="canDragColumn"
-                            @dragstart="handleColumnDragStart($event, column, index)"
-                            @dragend="handleColumnDragEnd($event, column, index)"
-                            @drop="handleColumnDrop($event, column, index)"
-                            @dragover="handleColumnDragOver($event, column, index)"
-                            @dragleave="handleColumnDragLeave($event, column, index)">
-
-                            <template v-if="column.hasHeaderSlot">
-                                <o-slot-component
-                                    :component="column"
-                                    name="header"
-                                    tag="span"
-                                    :props="{ column, index }"
-                                />
-                            </template>
-                            <template v-else>
-                                <span>
-                                    {{ column.label }}
-                                    <span
-                                        v-show="column.sortable && currentSortColumn === column"
-                                        :class="thSortIconClasses()">
-                                        <o-icon
-                                            :icon="sortIcon"
-                                            :pack="iconPack"
-                                            both
-                                            :size="sortIconSize"
-                                            :rotation="!isAsc ? 180 : 0" />
-                                    </span>
-                                </span>
-                            </template>
-                        </th>
-                        <th :class="thCheckboxClasses" v-if="checkable && checkboxPosition === 'right'">
-                            <template v-if="headerCheckable">
-                                <o-checkbox
-                                    :modelValue="isAllChecked"
-                                    autocomplete="off"
-                                    :variant="checkboxVariant"
-                                    :disabled="isAllUncheckable"
-                                    @update:modelValue="checkAll"/>
-                            </template>
-                        </th>
-                    </tr>
-                    <tr v-if="hasSearchablenewColumns">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                        <th v-if="checkable && checkboxPosition === 'left'" />
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'searchable'"
-                            v-bind="column.thAttrsData"
-                            :class="thClasses(column)"
-                            :style="isMobile ? {} : column.style">
-                            <template v-if="column.searchable">
-                                <template v-if="column.hasSearchableSlot">
-                                    <o-slot-component
-                                        :component="column"
-                                        name="searchable"
-                                        tag="span"
-                                        :props="{ column, filters }"
-                                    />
-                                </template>
-                                <o-input
-                                    v-else
-                                    @[filtersEvent]="onFiltersEvent"
-                                    v-model="filters[column.field]"
-                                    :type="column.numeric ? 'number' : 'text'" />
-                            </template>
-                        </th>
-                        <th v-if="checkable && checkboxPosition === 'right'" />
-                    </tr>
-                    <tr v-if="hasCustomSubheadings">
-                        <th v-if="showDetailRowIcon" :class="thDetailedClasses" />
-                        <th v-if="checkable && checkboxPosition === 'left'" />
-                        <th
-                            v-for="(column, index) in visibleColumns"
-                            :key="column.newKey + ':' + index + 'subheading'"
-                            :style="isMobile ? {} : column.style"
-                            :class="thSubheadingClasses"
-                        >
-                            <template
-                                v-if="
-                                    column.$slots &&
-                                    column.$slots.subheading
-                                ">
-                                <o-slot-component
-                                    :component="column"
-                                    name="subheading"
-                                    tag="span"
-                                    :props="{ column, index }"
-                                />
-                            </template>
-                            <template v-else>{{ column.subheading }}</template>
-                        </th>
-                        <th v-if="checkable && checkboxPosition === 'right'" />
-                    </tr>
-                </thead>
-                <tbody>
-                    <template
-                        v-for="(row, index) in visibleData"
-                        :key="this.customRowKey ? row[this.customRowKey] : index">
-                        <tr
-                            :class="rowClasses(row, index)"
-                            @click="selectRow(row, index)"
-                            @dblclick="$emit('dblclick', row)"
-                            @mouseenter="emitEventForRow('mouseenter', $event, row)"
-                            @mouseleave="emitEventForRow('mouseleave', $event, row)"
-                            @contextmenu="$emit('contextmenu', row, $event)"
-                            :draggable="canDragRow"
-                            @dragstart="handleDragStart($event, row, index)"
-                            @dragend="handleDragEnd($event, row, index)"
-                            @drop="handleDrop($event, row, index)"
-                            @dragover="handleDragOver($event, row, index)"
-                            @dragleave="handleDragLeave($event, row, index)">
-
-                            <td
-                                v-if="showDetailRowIcon"
-                                :class="tdDetailedChevronClasses"
-                            >
-
-                                <o-icon
-                                    v-if="hasDetailedVisible(row)"
-                                    :icon="detailIcon"
-                                    :pack="iconPack"
-                                    :rotation="isVisibleDetailRow(row) ? 90 : 0"
-                                    role="button"
-                                    @click.stop="toggleDetails(row)"
-                                    clickable
-                                    both />
-                            </td>
-
-                            <td
-                                :class="tdCheckboxClasses"
-                                v-if="checkable && checkboxPosition === 'left'">
-                                <o-checkbox
-                                    :modelValue="isRowChecked(row)"
-                                    autocomplete="off"
-                                    :variant="checkboxVariant"
-                                    :disabled="!isRowCheckable(row)"
-                                    @update:modelValue="checkRow(row, index, $event)"
-                                />
-                            </td>
-
-                            <o-slot-component
-                                v-for="(column, colindex) in visibleColumns"
-                                :key="column.newKey + index + ':' + colindex"
-                                v-bind="column.tdAttrsData[index]"
-                                :component="column"
-                                name="default"
-                                tag="td"
-                                :class="tdClasses(row, column)"
-                                :style="isMobile ? {} : column.style"
-                                :data-label="column.label"
-                                :props="{ row, column, index, colindex, toggleDetails }"
-                                @click="$emit('cell-click', row, column, index, colindex, $event)"
-                            />
-
-                            <td
-                                :class="tdCheckboxClasses"
-                                v-if="checkable && checkboxPosition === 'right'">
-                                <o-checkbox
-                                    :modelValue="isRowChecked(row)"
-                                    autocomplete="off"
-                                    :variant="checkboxVariant"
-                                    :disabled="!isRowCheckable(row)"
-                                    @update:modelValue="checkRow(row, index, $event)"
-                                />
-                            </td>
-                        </tr>
-
-                        <transition :name="detailTransition">
-                            <tr
-                                v-if="isActiveDetailRow(row)"
-                                :key="(customRowKey ? row[customRowKey] : index) + 'detail'"
-                                :class="detailedClasses">
-                                <td :colspan="columnCount">
-                                    <slot
-                                        name="detail"
-                                        :row="row"
-                                        :index="index"/>
-                                </td>
-                            </tr>
-                        </transition>
-                        <slot
-                            v-if="isActiveCustomDetailRow(row)"
-                            name="detail"
-                            :row="row"
-                            :index="index"
-                        />
-                    </template>
-
-                    <tr v-if="!visibleData.length">
-                        <td :colspan="columnCount">
-                            <slot name="empty"/>
-                        </td>
-                    </tr>
-
-                </tbody>
-
-                <tfoot v-if="$slots.footer">
-                    <tr :class="footerClasses">
-                        <slot name="footer" v-if="hasCustomFooterSlot()"/>
-                        <th :colspan="columnCount" v-else>
-                            <slot name="footer"/>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <slot name="loading">
-                <o-loading :full-page="false" :active="loading" />
-            </slot>
-        </div>
-
-        <template v-if="(checkable && $slots['bottom-left']) ||
-            (paginated && (paginationPosition === 'bottom' || paginationPosition === 'both'))">
-            <slot name="pagination">
-                <o-table-pagination
-                    v-bind="$attrs"
-                    :per-page="perPage"
-                    :paginated="paginated"
-                    :total="newDataTotal"
-                    :current-page="newCurrentPage"
-                    @update:currentPage="newCurrentPage = $event"
-                    :root-class="paginationWrapperClasses"
-                    :icon-pack="iconPack"
-                    :rounded="paginationRounded"
-                    :size="paginationSize"
-                    :order="paginationOrder"
-                    @page-change="(event) => $emit('page-change', event)"
-                    :aria-next-label="ariaNextLabel"
-                    :aria-previous-label="ariaPreviousLabel"
-                    :aria-page-label="ariaPageLabel"
-                    :aria-current-label="ariaCurrentLabel"
-                >
-                    <slot name="bottom-left"/>
-                </o-table-pagination>
-            </slot>
-        </template>
-
-    </div>
-</template>
-
 <script lang="ts">
-import { createApp, createVNode, defineComponent, h } from 'vue'
+import { createApp, createVNode, defineComponent, h } from "vue";
 
-import Button from '../button/Button.vue'
-import Checkbox from '../checkbox/Checkbox.vue'
-import Icon from '../icon/Icon.vue'
-import Input from '../input/Input.vue'
-import Loading from '../loading/Loading.vue'
+import Button from "../button/Button.vue";
+import Checkbox from "../checkbox/Checkbox.vue";
+import Icon from "../icon/Icon.vue";
+import Input from "../input/Input.vue";
+import Loading from "../loading/Loading.vue";
 
-import SlotComponent from '../../utils/SlotComponent'
+import SlotComponent from "../../utils/SlotComponent";
 
-import TableMobileSort from './TableMobileSort.vue'
-import TableColumn from './TableColumn.vue'
-import TablePagination from './TablePagination.vue'
+import TableMobileSort from "./TableMobileSort.vue";
+import TableColumn from "./TableColumn.vue";
+import TablePagination from "./TablePagination.vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import MatchMediaMixin from '../../utils/MatchMediaMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import MatchMediaMixin from "../../utils/MatchMediaMixin";
 
-import { getValueByPath, indexOf, toCssDimension, debounce, escapeRegExpChars, removeDiacriticsFromString } from '../../utils/helpers'
-import { getOptions } from '../../utils/config'
+import {
+    getValueByPath,
+    indexOf,
+    toCssDimension,
+    debounce,
+    escapeRegExpChars,
+    removeDiacriticsFromString,
+} from "../../utils/helpers";
+import { getOptions } from "../../utils/config";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -343,7 +33,7 @@ import { getOptions } from '../../utils/config'
  * @style _table.scss
  */
 export default defineComponent({
-    name: 'OTable',
+    name: "OTable",
     components: {
         [Button.name]: Button,
         [Checkbox.name]: Checkbox,
@@ -353,35 +43,26 @@ export default defineComponent({
         [SlotComponent.name]: SlotComponent,
         [TableMobileSort.name]: TableMobileSort,
         [TableColumn.name]: TableColumn,
-        [TablePagination.name]: TablePagination
+        [TablePagination.name]: TablePagination,
     },
     mixins: [BaseComponentMixin, MatchMediaMixin],
-    configField: 'table',
-    inheritAttrs: false,
+    configField: "table",
     provide() {
         return {
-            $table: this
-        }
+            $table: this,
+        };
     },
-    emits: [
-        'page-change', 'click', 'dblclick', 'contextmenu',
-        'check', 'check-all', 'update:checkedRows',
-        'select', 'update:selected', 'filters-change', 'details-open', 'details-close', 'update:openedDetailed',
-        'mouseenter', 'mouseleave', 'sort', 'sorting-priority-removed',
-        'dragstart', 'dragend', 'drop', 'dragleave', 'dragover', 'cell-click',
-        'columndragstart', 'columndragend', 'columndrop', 'columndragleave', 'columndragover',
-        'update:currentPage'
-    ],
+    inheritAttrs: false,
     props: {
         /** Table data */
         data: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         /** Table columns */
         columns: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         /** Border to all cells */
         bordered: Boolean,
@@ -400,7 +81,7 @@ export default defineComponent({
         /** Show check/uncheck all checkbox in table header when checkable */
         headerCheckable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /**
          * Position of the checkbox (if checkable is true)
@@ -408,13 +89,10 @@ export default defineComponent({
          */
         checkboxPosition: {
             type: String,
-            default: 'left',
+            default: "left",
             validator: (value: string) => {
-                return [
-                    'left',
-                    'right'
-                ].indexOf(value) >= 0
-            }
+                return ["left", "right"].indexOf(value) >= 0;
+            },
         },
         /**
          * Color of the checkbox when checkable, optional
@@ -422,14 +100,14 @@ export default defineComponent({
          */
         checkboxVariant: {
             type: String,
-            default: undefined
+            default: undefined,
         },
         /** Set which row is selected, use v-model:selected to make it two-way binding */
         selected: Object,
         /** Custom method to verify if a row is selectable, works when is selected. */
         isRowSelectable: {
             type: Function,
-            default: () => true
+            default: () => true,
         },
         /** Table can be focused and user can navigate with keyboard arrows (require selected) and rows are highlighted when hovering */
         focusable: Boolean,
@@ -438,19 +116,19 @@ export default defineComponent({
         /** Custom method to verify if a row is checkable, works when is checkable */
         isRowCheckable: {
             type: Function,
-            default: () => true
+            default: () => true,
         },
         /** Set which rows are checked, use v-model:checkedRows to make it two-way binding */
         checkedRows: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         /** Rows appears as cards on mobile (collapse rows) */
         mobileCards: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'table.mobileCards', true)
-            }
+                return getValueByPath(getOptions(), "table.mobileCards", true);
+            },
         },
         /** Sets the default sort column and order — e.g. ['first_name', 'desc']	 */
         defaultSort: [String, Array],
@@ -460,12 +138,18 @@ export default defineComponent({
          */
         defaultSortDirection: {
             type: String,
-            default: 'asc'
+            default: "asc",
         },
         /** Sets the header sorting icon */
         sortIcon: {
             type: String,
-            default: () => { return getValueByPath(getOptions(), 'table.sortIcon', 'arrow-up') }
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "table.sortIcon",
+                    "arrow-up",
+                );
+            },
         },
         /**
          * Sets the size of the sorting icon
@@ -473,29 +157,37 @@ export default defineComponent({
          */
         sortIconSize: {
             type: String,
-            default: () => { return getValueByPath(getOptions(), 'table.sortIconSize', 'small') }
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "table.sortIconSize",
+                    "small",
+                );
+            },
         },
         /** Adds pagination to the table */
         paginated: Boolean,
         /** Current page of table data (if paginated), use v-model:currentPage to make it two-way binding */
         currentPage: {
             type: Number,
-            default: 1
+            default: 1,
         },
         /** How many rows per page (if paginated) */
         perPage: {
             type: [Number, String],
-            default: () => { return getValueByPath(getOptions(), 'table.perPage', 20) }
+            default: () => {
+                return getValueByPath(getOptions(), "table.perPage", 20);
+            },
         },
         /** Allow chevron icon and column to be visible */
         showDetailIcon: {
             type: Boolean,
-            default: true
+            default: true,
         },
         /** Icon name of detail action */
         detailIcon: {
             type: String,
-            default: 'chevron-right'
+            default: "chevron-right",
         },
         /**
          * Pagination position (if paginated)
@@ -503,14 +195,16 @@ export default defineComponent({
          */
         paginationPosition: {
             type: String,
-            default: () => { return getValueByPath(getOptions(), 'table.paginationPosition', 'bottom') },
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "table.paginationPosition",
+                    "bottom",
+                );
+            },
             validator: (value: string) => {
-                return [
-                    'bottom',
-                    'top',
-                    'both'
-                ].indexOf(value) >= 0
-            }
+                return ["bottom", "top", "both"].indexOf(value) >= 0;
+            },
         },
         /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
         backendSorting: Boolean,
@@ -519,39 +213,39 @@ export default defineComponent({
         /** Add a class to row based on the return */
         rowClass: {
             type: Function,
-            default: () => ''
+            default: () => "",
         },
         /** Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop) */
         openedDetailed: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         /** Controls the visibility of the trigger that toggles the detailed rows. */
         hasDetailedVisible: {
             type: Function,
-            default: () => true
+            default: () => true,
         },
         /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
         detailKey: {
             type: String,
-            default: ''
+            default: "",
         },
         /** Custom style on details */
         customDetailRow: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /* Transition name to use when toggling row details. */
         detailTransition: {
             type: String,
-            default: ''
+            default: "",
         },
         /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
         backendPagination: Boolean,
         /** Total number of table data if backend-pagination is enabled */
         total: {
             type: [Number, String],
-            default: 0
+            default: 0,
         },
         /** Icon pack to use */
         iconPack: String,
@@ -562,12 +256,12 @@ export default defineComponent({
         /** Allows rows to be draggable */
         draggable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /** Allows columns to be draggable */
         draggableColumn: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /** Add a horizontal scrollbar when table is too wide */
         scrollable: Boolean,
@@ -582,26 +276,34 @@ export default defineComponent({
         /** Add a native event to filter */
         filtersEvent: {
             type: String,
-            default: ''
+            default: "",
         },
         /** Filtering debounce time (in milliseconds) */
         debounceSearch: Number,
         /** Show header */
         showHeader: {
             type: Boolean,
-            default: () => { return getValueByPath(getOptions(), 'table.showHeader', true) }
+            default: () => {
+                return getValueByPath(getOptions(), "table.showHeader", true);
+            },
         },
         /** Make the checkbox column sticky when checkable */
         stickyCheckbox: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /** Rounded pagination if paginated */
         paginationRounded: Boolean,
         /** Size of pagination if paginated */
         paginationSize: {
-          type: String,
-          default: () => { return getValueByPath(getOptions(), 'table.paginationSize', 'small') }
+            type: String,
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "table.paginationSize",
+                    "small",
+                );
+            },
         },
         /** Pagination buttons order if paginated */
         paginationOrder: String,
@@ -636,13 +338,46 @@ export default defineComponent({
         mobileSortClass: [String, Function, Array],
         paginationWrapperClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
-        thSubheadingClass: [String, Function, Array]
+        thSubheadingClass: [String, Function, Array],
     },
+    emits: [
+        "page-change",
+        "click",
+        "dblclick",
+        "contextmenu",
+        "check",
+        "check-all",
+        "update:checkedRows",
+        "select",
+        "update:selected",
+        "filters-change",
+        "details-open",
+        "details-close",
+        "update:openedDetailed",
+        "mouseenter",
+        "mouseleave",
+        "sort",
+        "sorting-priority-removed",
+        "dragstart",
+        "dragend",
+        "drop",
+        "dragleave",
+        "dragover",
+        "cell-click",
+        "columndragstart",
+        "columndragend",
+        "columndrop",
+        "columndragleave",
+        "columndragover",
+        "update:currentPage",
+    ],
     data() {
         return {
             visibleDetailRows: this.openedDetailed,
             newData: this.data,
-            newDataTotal: this.backendPagination ? this.total : this.data.length,
+            newDataTotal: this.backendPagination
+                ? this.total
+                : this.data.length,
             newCheckedRows: [...this.checkedRows],
             lastCheckedRowIndex: null,
             newCurrentPage: this.currentPage,
@@ -653,444 +388,565 @@ export default defineComponent({
             firstTimeSort: true,
             sequence: 1,
             isDraggingRow: false,
-            isDraggingColumn: false
-        }
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.checkSort()
-        })
+            isDraggingColumn: false,
+        };
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-table__root'),
-                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.isMobile }
-            ]
+                this.computedClass("rootClass", "o-table__root"),
+                {
+                    [this.computedClass(
+                        "mobileClass",
+                        "o-table__wrapper--mobile",
+                    )]: this.isMobile,
+                },
+            ];
         },
         tableClasses() {
             return [
-                this.computedClass('tableClass', 'o-table'),
-                { [this.computedClass('borderedClass', 'o-table--bordered')]: this.bordered },
-                { [this.computedClass('stripedClass', 'o-table--striped')]: this.striped },
-                { [this.computedClass('narrowedClass', 'o-table--narrowed')]: this.narrowed },
-                { [this.computedClass('hoverableClass', 'o-table--hoverable')]: ((this.hoverable || this.focusable) && this.visibleData.length) },
-                { [this.computedClass('emptyClass', 'o-table--table__empty')]: !this.visibleData.length }
-            ]
+                this.computedClass("tableClass", "o-table"),
+                {
+                    [this.computedClass("borderedClass", "o-table--bordered")]:
+                        this.bordered,
+                },
+                {
+                    [this.computedClass("stripedClass", "o-table--striped")]:
+                        this.striped,
+                },
+                {
+                    [this.computedClass("narrowedClass", "o-table--narrowed")]:
+                        this.narrowed,
+                },
+                {
+                    [this.computedClass(
+                        "hoverableClass",
+                        "o-table--hoverable",
+                    )]:
+                        (this.hoverable || this.focusable) &&
+                        this.visibleData.length,
+                },
+                {
+                    [this.computedClass("emptyClass", "o-table--table__empty")]:
+                        !this.visibleData.length,
+                },
+            ];
         },
         tableWrapperClasses() {
             return [
-                this.computedClass('wrapperClass', 'o-table__wrapper'),
-                { [this.computedClass('stickyHeaderClass', 'o-table__wrapper--sticky-header')]: this.stickyHeader },
-                { [this.computedClass('scrollableClass', 'o-table__wrapper--scrollable')]: this.isScrollable },
-                { [this.computedClass('mobileClass', 'o-table__wrapper--mobile')]: this.isMobile },
-            ]
+                this.computedClass("wrapperClass", "o-table__wrapper"),
+                {
+                    [this.computedClass(
+                        "stickyHeaderClass",
+                        "o-table__wrapper--sticky-header",
+                    )]: this.stickyHeader,
+                },
+                {
+                    [this.computedClass(
+                        "scrollableClass",
+                        "o-table__wrapper--scrollable",
+                    )]: this.isScrollable,
+                },
+                {
+                    [this.computedClass(
+                        "mobileClass",
+                        "o-table__wrapper--mobile",
+                    )]: this.isMobile,
+                },
+            ];
         },
         footerClasses() {
-            return [
-                this.computedClass('footerClass', 'o-table__footer')
-            ]
+            return [this.computedClass("footerClass", "o-table__footer")];
         },
         thBaseClasses() {
-            return [
-                this.computedClass('thClass', 'o-table__th')
-            ]
+            return [this.computedClass("thClass", "o-table__th")];
         },
         tdBaseClasses() {
-            return [
-                this.computedClass('tdClass', 'o-table__td')
-            ]
+            return [this.computedClass("tdClass", "o-table__td")];
         },
         thCheckboxClasses() {
             return [
                 ...this.thBaseClasses,
-                this.computedClass('thCheckboxClass', 'o-table__th-checkbox')
-            ]
+                this.computedClass("thCheckboxClass", "o-table__th-checkbox"),
+            ];
         },
         thDetailedClasses() {
             return [
-                 ...this.thBaseClasses,
-                this.computedClass('thDetailedClass', 'o-table__th--detailed')
-            ]
+                ...this.thBaseClasses,
+                this.computedClass("thDetailedClass", "o-table__th--detailed"),
+            ];
         },
         thSubheadingClasses() {
             return [
                 ...this.thBaseClasses,
-                this.computedClass('thSubheadingClass', 'o-table__th')
+                this.computedClass("thSubheadingClass", "o-table__th"),
             ];
         },
         tdCheckboxClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdCheckboxClass', 'o-table__td-checkbox'),
-                ...this.thStickyClasses({ sticky: this.stickyCheckbox })
-            ]
+                this.computedClass("tdCheckboxClass", "o-table__td-checkbox"),
+                ...this.thStickyClasses({ sticky: this.stickyCheckbox }),
+            ];
         },
         detailedClasses() {
-            return [
-                this.computedClass('detailedClass', 'o-table__detail')
-            ]
+            return [this.computedClass("detailedClass", "o-table__detail")];
         },
         tdDetailedChevronClasses() {
             return [
                 ...this.tdBaseClasses,
-                this.computedClass('tdDetailedChevronClass', 'o-table__td-chevron')
-            ]
+                this.computedClass(
+                    "tdDetailedChevronClass",
+                    "o-table__td-chevron",
+                ),
+            ];
         },
         mobileSortClasses() {
             return [
-                this.computedClass('mobileSortClass', 'o-table__mobile-sort')
-            ]
+                this.computedClass("mobileSortClass", "o-table__mobile-sort"),
+            ];
         },
         paginationWrapperClasses() {
             return [
-                this.computedClass('paginationWrapperClass', 'o-table__pagination')
-            ]
+                this.computedClass(
+                    "paginationWrapperClass",
+                    "o-table__pagination",
+                ),
+            ];
         },
         tableWrapperStyle() {
             return {
-                height: toCssDimension(this.height)
-            }
+                height: toCssDimension(this.height),
+            };
         },
         /**
-        * Splitted data based on the pagination.
-        */
+         * Splitted data based on the pagination.
+         */
         visibleData() {
-            if (!this.paginated) return this.newData
+            if (!this.paginated) return this.newData;
 
-            const currentPage = this.newCurrentPage
-            const perPage = this.perPage
+            const currentPage = this.newCurrentPage;
+            const perPage = this.perPage;
 
             if (this.newData.length <= perPage) {
-                return this.newData
+                return this.newData;
             } else {
-                const start = (currentPage - 1) * perPage
-                const end = start + parseInt(perPage, 10)
-                return this.newData.slice(start, end)
+                const start = (currentPage - 1) * perPage;
+                const end = start + parseInt(perPage, 10);
+                return this.newData.slice(start, end);
             }
         },
 
         visibleColumns() {
-            if (!this.newColumns) return this.newColumns
+            if (!this.newColumns) return this.newColumns;
             return this.newColumns.filter((column) => {
-                return column.visible || column.visible === undefined
-            })
+                return column.visible || column.visible === undefined;
+            });
         },
 
         /**
-        * Check if all rows in the page are checked.
-        */
+         * Check if all rows in the page are checked.
+         */
         isAllChecked() {
-            const validVisibleData = this.visibleData.filter(
-                (row) => this.isRowCheckable(row))
-            if (validVisibleData.length === 0) return false
+            const validVisibleData = this.visibleData.filter((row) =>
+                this.isRowCheckable(row),
+            );
+            if (validVisibleData.length === 0) return false;
             const isAllChecked = validVisibleData.some((currentVisibleRow) => {
-                return indexOf(this.newCheckedRows, currentVisibleRow, this.customIsChecked) < 0
-            })
-            return !isAllChecked
+                return (
+                    indexOf(
+                        this.newCheckedRows,
+                        currentVisibleRow,
+                        this.customIsChecked,
+                    ) < 0
+                );
+            });
+            return !isAllChecked;
         },
 
         /**
-        * Check if all rows in the page are checkable.
-        */
+         * Check if all rows in the page are checkable.
+         */
         isAllUncheckable() {
-            const validVisibleData = this.visibleData.filter(
-                (row) => this.isRowCheckable(row))
-            return validVisibleData.length === 0
+            const validVisibleData = this.visibleData.filter((row) =>
+                this.isRowCheckable(row),
+            );
+            return validVisibleData.length === 0;
         },
 
         /**
-        * Check if has any sortable column.
-        */
+         * Check if has any sortable column.
+         */
         hasSortablenewColumns() {
             return this.newColumns.some((column) => {
-                return column.sortable
-            })
+                return column.sortable;
+            });
         },
 
         /**
-        * Check if has any searchable column.
-        */
+         * Check if has any searchable column.
+         */
         hasSearchablenewColumns() {
             return this.newColumns.some((column) => {
-                return column.searchable
-            })
+                return column.searchable;
+            });
         },
 
         /**
-        * Return total column count based if it's checkable or expanded
-        */
+         * Return total column count based if it's checkable or expanded
+         */
         columnCount() {
-            let count = this.visibleColumns.length
-            count += this.checkable ? 1 : 0
-            count += (this.detailed && this.showDetailIcon) ? 1 : 0
+            let count = this.visibleColumns.length;
+            count += this.checkable ? 1 : 0;
+            count += this.detailed && this.showDetailIcon ? 1 : 0;
 
-            return count
+            return count;
         },
 
         /**
-        * return if detailed row tabled
-        * will be with chevron column & icon or not
-        */
+         * return if detailed row tabled
+         * will be with chevron column & icon or not
+         */
         showDetailRowIcon() {
-            return this.detailed && this.showDetailIcon
+            return this.detailed && this.showDetailIcon;
         },
 
         /**
-        * return if scrollable table
-        */
+         * return if scrollable table
+         */
         isScrollable() {
-            if (this.scrollable) return true
-            if (!this.newColumns) return false
+            if (this.scrollable) return true;
+            if (!this.newColumns) return false;
             return this.newColumns.some((column) => {
-                return column.sticky
-            })
+                return column.sticky;
+            });
         },
 
         newColumns() {
             if (this.columns && this.columns.length) {
                 return this.columns.map((column) => {
                     const vnode = createVNode(TableColumn, column, (props) => {
-                        const vnode = h('span', {}, getValueByPath(props.row, column.field))
-                        return [vnode]
-                    })
+                        const vnode = h(
+                            "span",
+                            {},
+                            getValueByPath(props.row, column.field),
+                        );
+                        return [vnode];
+                    });
                     return createApp(vnode)
-                        .provide('$table', this)
-                        .mount(document.createElement('div'))
-                })
+                        .provide("$table", this)
+                        .mount(document.createElement("div"));
+                });
             }
-            return this.defaultSlots
+            return this.defaultSlots;
         },
 
         isMobile() {
-            return this.mobileCards && this.isMatchMedia
+            return this.mobileCards && this.isMatchMedia;
         },
 
         hasCustomSubheadings() {
-            if (this.$slots.subheading) return true
+            if (this.$slots.subheading) return true;
             return this.newColumns.some((column) => {
-                return column.subheading || (column.$slots.subheading)
-            })
+                return column.subheading || column.$slots.subheading;
+            });
         },
 
         canDragRow() {
-            return this.draggable && !this.isDraggingColumn
+            return this.draggable && !this.isDraggingColumn;
         },
         canDragColumn() {
-            return this.draggableColumn && !this.isDraggingRow
-        }
+            return this.draggableColumn && !this.isDraggingRow;
+        },
     },
     watch: {
         /**
-        * When data prop change:
-        *   1. Update internal value.
-        *   2. Filter data if it's not backend-filtered.
-        *   3. Sort again if it's not backend-sorted.
-        *   4. Set new total if it's not backend-paginated.
-        */
+         * When data prop change:
+         *   1. Update internal value.
+         *   2. Filter data if it's not backend-filtered.
+         *   3. Sort again if it's not backend-sorted.
+         *   4. Set new total if it's not backend-paginated.
+         */
         data: {
             handler(value) {
                 if (!this.backendFiltering) {
-                    this.newData = value.filter((row) => this.isRowFiltered(row))
+                    this.newData = value.filter((row) =>
+                        this.isRowFiltered(row),
+                    );
                 } else {
-                    this.newData = [...value]
+                    this.newData = [...value];
                 }
                 if (!this.backendSorting) {
-                    this.sort(this.currentSortColumn, true)
+                    this.sort(this.currentSortColumn, true);
                 }
                 if (!this.backendPagination) {
-                    this.newDataTotal = this.newData.length
+                    this.newDataTotal = this.newData.length;
                 }
             },
-            deep: true
+            deep: true,
         },
 
         visibleColumns: {
             handler() {
-                this.processTdAttrs()
-            }
+                this.processTdAttrs();
+            },
         },
 
         visibleData: {
             handler() {
-                this.processTdAttrs()
-            }
+                this.processTdAttrs();
+            },
         },
 
         /**
-        * When Pagination total change, update internal total
-        * only if it's backend-paginated.
-        */
+         * When Pagination total change, update internal total
+         * only if it's backend-paginated.
+         */
         total(newTotal) {
-            if (!this.backendPagination) return
+            if (!this.backendPagination) return;
 
-            this.newDataTotal = newTotal
+            this.newDataTotal = newTotal;
         },
 
         currentPage(newValue) {
-            this.newCurrentPage = newValue
+            this.newCurrentPage = newValue;
         },
 
         /**
-        * When checkedRows prop change, update internal value without
-        * mutating original data.
-        */
+         * When checkedRows prop change, update internal value without
+         * mutating original data.
+         */
         checkedRows: {
             handler(rows) {
-                this.newCheckedRows = [...rows]
+                this.newCheckedRows = [...rows];
             },
             deep: true,
         },
 
         debounceSearch: {
             handler(value) {
-                this.debouncedHandleFiltersChange = debounce(this.handleFiltersChange, value)
+                this.debouncedHandleFiltersChange = debounce(
+                    this.handleFiltersChange,
+                    value,
+                );
             },
-            immediate: true
+            immediate: true,
         },
 
         filters: {
             handler(value) {
                 if (this.debounceSearch) {
-                    this.debouncedHandleFiltersChange(value)
+                    this.debouncedHandleFiltersChange(value);
                 } else {
-                    this.handleFiltersChange(value)
+                    this.handleFiltersChange(value);
                 }
             },
             deep: true,
         },
 
         /**
-        * When the user wants to control the detailed rows via props.
-        * Or wants to open the details of certain row with the router for example.
-        */
+         * When the user wants to control the detailed rows via props.
+         * Or wants to open the details of certain row with the router for example.
+         */
         openedDetailed(expandedRows) {
-            this.visibleDetailRows = expandedRows
+            this.visibleDetailRows = expandedRows;
         },
 
         newCurrentPage(newVal) {
-            this.$emit('update:currentPage', newVal)
-        }
+            this.$emit("update:currentPage", newVal);
+        },
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.checkSort();
+        });
     },
     methods: {
         thClasses(column) {
             return [
                 ...this.thBaseClasses,
                 ...this.thStickyClasses(column),
-                { [this.computedClass('thCurrentSortClass', 'o-table__th-current-sort')]: (this.currentSortColumn === column) },
-                { [this.computedClass('thSortableClass', 'o-table__th--sortable')]: column.sortable },
-                { [this.computedClass('thUnselectableClass', 'o-table__th--unselectable')]: column.isHeaderUnselectable },
-                { [this.computedClass('thPositionClass', 'o-table__th--', column.position)]: column.position },
-            ]
+                {
+                    [this.computedClass(
+                        "thCurrentSortClass",
+                        "o-table__th-current-sort",
+                    )]: this.currentSortColumn === column,
+                },
+                {
+                    [this.computedClass(
+                        "thSortableClass",
+                        "o-table__th--sortable",
+                    )]: column.sortable,
+                },
+                {
+                    [this.computedClass(
+                        "thUnselectableClass",
+                        "o-table__th--unselectable",
+                    )]: column.isHeaderUnselectable,
+                },
+                {
+                    [this.computedClass(
+                        "thPositionClass",
+                        "o-table__th--",
+                        column.position,
+                    )]: column.position,
+                },
+            ];
         },
         thStickyClasses(column) {
             return [
-                { [this.computedClass('thStickyClass', 'o-table__th--sticky')]: column.sticky }
-            ]
+                {
+                    [this.computedClass(
+                        "thStickyClass",
+                        "o-table__th--sticky",
+                    )]: column.sticky,
+                },
+            ];
         },
         rowClasses(row, index) {
             return [
                 this.rowClass(row, index),
-                { [this.computedClass('trSelectedClass', 'o-table__tr--selected')]: this.isRowSelected(row, this.selected) },
-                { [this.computedClass('trCheckedClass', 'o-table__tr--checked')]: this.isRowChecked(row) }
-            ]
+                {
+                    [this.computedClass(
+                        "trSelectedClass",
+                        "o-table__tr--selected",
+                    )]: this.isRowSelected(row, this.selected),
+                },
+                {
+                    [this.computedClass(
+                        "trCheckedClass",
+                        "o-table__tr--checked",
+                    )]: this.isRowChecked(row),
+                },
+            ];
         },
         thSortIconClasses() {
             return [
-                this.computedClass('thSortIconClass', 'o-table__th__sort-icon'),
-            ]
+                this.computedClass("thSortIconClass", "o-table__th__sort-icon"),
+            ];
         },
         tdClasses(row, column) {
             return [
                 ...this.tdBaseClasses,
-                { [this.computedClass('tdPositionClass', 'o-table__td--', column.position)]: column.position },
-                { [this.computedClass('tdStickyClass', 'o-table__td--sticky')]: column.sticky }
-            ]
+                {
+                    [this.computedClass(
+                        "tdPositionClass",
+                        "o-table__td--",
+                        column.position,
+                    )]: column.position,
+                },
+                {
+                    [this.computedClass(
+                        "tdStickyClass",
+                        "o-table__td--sticky",
+                    )]: column.sticky,
+                },
+            ];
         },
         onFiltersEvent(event) {
-            this.$emit(`filters-event-${this.filtersEvent}`, { event, filters: this.filters })
+            this.$emit(`filters-event-${this.filtersEvent}`, {
+                event,
+                filters: this.filters,
+            });
         },
         handleFiltersChange(value) {
             if (this.backendFiltering) {
-                this.$emit('filters-change', value)
+                this.$emit("filters-change", value);
             } else {
-                this.newData = this.data.filter((row) => this.isRowFiltered(row))
+                this.newData = this.data.filter((row) =>
+                    this.isRowFiltered(row),
+                );
                 if (!this.backendPagination) {
-                    this.newDataTotal = this.newData.length
+                    this.newDataTotal = this.newData.length;
                 }
                 if (!this.backendSorting) {
                     if (Object.keys(this.currentSortColumn).length > 0) {
-                        this.doSortSingleColumn(this.currentSortColumn)
+                        this.doSortSingleColumn(this.currentSortColumn);
                     }
                 }
             }
         },
 
         /**
-        * Sort an array by key without mutating original data.
-        * Call the user sort function if it was passed.
-        */
+         * Sort an array by key without mutating original data.
+         * Call the user sort function if it was passed.
+         */
         sortBy(array, key, fn, isAsc) {
-            let sorted = []
+            let sorted = [];
             // Sorting without mutating original data
-            if (fn && typeof fn === 'function') {
-                sorted = [...array].sort((a, b) => fn(a, b, isAsc))
+            if (fn && typeof fn === "function") {
+                sorted = [...array].sort((a, b) => fn(a, b, isAsc));
             } else {
                 sorted = [...array].sort((a, b) => {
                     // Get nested values from objects
-                    let newA = getValueByPath(a, key)
-                    let newB = getValueByPath(b, key)
+                    let newA = getValueByPath(a, key);
+                    let newB = getValueByPath(b, key);
 
                     // sort boolean type
-                    if (typeof newA === 'boolean' && typeof newB === 'boolean') {
-                        return isAsc ? newA > newB ? 1 : -1: newA > newB ? -1 : 1
+                    if (
+                        typeof newA === "boolean" &&
+                        typeof newB === "boolean"
+                    ) {
+                        return isAsc
+                            ? newA > newB
+                                ? 1
+                                : -1
+                            : newA > newB
+                            ? -1
+                            : 1;
                     }
 
-                    if (!newA && newA !== 0) return 1
-                    if (!newB && newB !== 0) return -1
-                    if (newA === newB) return 0
+                    if (!newA && newA !== 0) return 1;
+                    if (!newB && newB !== 0) return -1;
+                    if (newA === newB) return 0;
 
-                    newA = (typeof newA === 'string')
-                        ? newA.toUpperCase()
-                        : newA
-                    newB = (typeof newB === 'string')
-                        ? newB.toUpperCase()
-                        : newB
+                    newA = typeof newA === "string" ? newA.toUpperCase() : newA;
+                    newB = typeof newB === "string" ? newB.toUpperCase() : newB;
 
                     return isAsc
-                        ? newA > newB ? 1 : -1
-                        : newA > newB ? -1 : 1
-                })
+                        ? newA > newB
+                            ? 1
+                            : -1
+                        : newA > newB
+                        ? -1
+                        : 1;
+                });
             }
 
-            return sorted
+            return sorted;
         },
 
         /**
-        * Sort the column.
-        * Toggle current direction on column if it's sortable
-        * and not just updating the prop.
-        */
+         * Sort the column.
+         * Toggle current direction on column if it's sortable
+         * and not just updating the prop.
+         */
         sort(column, updatingData = false, event = null) {
-            if (!column || !column.sortable) return
+            if (!column || !column.sortable) return;
 
             if (!updatingData) {
-                this.isAsc = column === this.currentSortColumn
-                    ? !this.isAsc
-                    : (this.defaultSortDirection.toLowerCase() !== 'desc')
+                this.isAsc =
+                    column === this.currentSortColumn
+                        ? !this.isAsc
+                        : this.defaultSortDirection.toLowerCase() !== "desc";
             }
             if (!this.firstTimeSort) {
                 /**
                  * @property {string} field column field
                  * @property {boolean} direction 'asc' or 'desc'
                  * @property {Event} event native event
-                */
-                this.$emit('sort', column.field, this.isAsc ? 'asc' : 'desc', event)
+                 */
+                this.$emit(
+                    "sort",
+                    column.field,
+                    this.isAsc ? "asc" : "desc",
+                    event,
+                );
             }
             if (!this.backendSorting) {
-                this.doSortSingleColumn(column)
+                this.doSortSingleColumn(column);
             }
-            this.currentSortColumn = column
+            this.currentSortColumn = column;
         },
 
         doSortSingleColumn(column) {
@@ -1098,83 +954,87 @@ export default defineComponent({
                 this.newData,
                 column.field,
                 column.customSort,
-                this.isAsc
-            )
+                this.isAsc,
+            );
         },
 
         isRowSelected(row, selected) {
             if (!selected) {
-                return false
+                return false;
             }
             if (this.customRowKey) {
-                return row[this.customRowKey] === selected[this.customRowKey]
+                return row[this.customRowKey] === selected[this.customRowKey];
             }
-            return row === selected
+            return row === selected;
         },
 
         /**
-        * Check if the row is checked (is added to the array).
-        */
+         * Check if the row is checked (is added to the array).
+         */
         isRowChecked(row) {
-            return indexOf(this.newCheckedRows, row, this.customIsChecked) >= 0
+            return indexOf(this.newCheckedRows, row, this.customIsChecked) >= 0;
         },
 
         /**
-        * Remove a checked row from the array.
-        */
+         * Remove a checked row from the array.
+         */
         removeCheckedRow(row) {
-            const index = indexOf(this.newCheckedRows, row, this.customIsChecked)
+            const index = indexOf(
+                this.newCheckedRows,
+                row,
+                this.customIsChecked,
+            );
             if (index >= 0) {
-                this.newCheckedRows.splice(index, 1)
+                this.newCheckedRows.splice(index, 1);
             }
         },
 
         /**
-        * Header checkbox click listener.
-        * Add or remove all rows in current page.
-        */
+         * Header checkbox click listener.
+         * Add or remove all rows in current page.
+         */
         checkAll() {
-            const isAllChecked = this.isAllChecked
+            const isAllChecked = this.isAllChecked;
             this.visibleData.forEach((currentRow) => {
                 if (this.isRowCheckable(currentRow)) {
-                    this.removeCheckedRow(currentRow)
+                    this.removeCheckedRow(currentRow);
                 }
                 if (!isAllChecked) {
                     if (this.isRowCheckable(currentRow)) {
-                        this.newCheckedRows.push(currentRow)
+                        this.newCheckedRows.push(currentRow);
                     }
                 }
-            })
+            });
             /**
              * @property {Array<Object>} newCheckedRows checked rows
              */
-            this.$emit('check', this.newCheckedRows)
-            this.$emit('check-all', this.newCheckedRows)
+            this.$emit("check", this.newCheckedRows);
+            this.$emit("check-all", this.newCheckedRows);
 
             // Emit checked rows to update user variable
-            this.$emit('update:checkedRows', this.newCheckedRows)
+            this.$emit("update:checkedRows", this.newCheckedRows);
         },
 
         /**
-        * Row checkbox click listener.
-        */
+         * Row checkbox click listener.
+         */
         checkRow(row, index, event) {
-            if (!this.isRowCheckable(row)) return
-            const lastIndex = this.lastCheckedRowIndex
-            this.lastCheckedRowIndex = index
+            if (!this.isRowCheckable(row)) return;
+            const lastIndex = this.lastCheckedRowIndex;
+            this.lastCheckedRowIndex = index;
 
             if (event.shiftKey && lastIndex !== null && index !== lastIndex) {
-                this.shiftCheckRow(row, index, lastIndex)
+                this.shiftCheckRow(row, index, lastIndex);
             } else if (!this.isRowChecked(row)) {
-                this.newCheckedRows.push(row)
+                this.newCheckedRows.push(row);
             } else {
-                this.removeCheckedRow(row)
+                this.removeCheckedRow(row);
             }
 
-            this.$emit('check', this.newCheckedRows, row)
+            this.$emit("check", this.newCheckedRows, row);
 
             // Emit checked rows to update user variable
-            this.$emit('update:checkedRows', this.newCheckedRows)
+            this.$emit("update:checkedRows", this.newCheckedRows);
         },
 
         /**
@@ -1184,143 +1044,163 @@ export default defineComponent({
             // Get the subset of the list between the two indicies
             const subset = this.visibleData.slice(
                 Math.min(index, lastCheckedRowIndex),
-                Math.max(index, lastCheckedRowIndex) + 1
-            )
+                Math.max(index, lastCheckedRowIndex) + 1,
+            );
 
             // Determine the operation based on the state of the clicked checkbox
-            const shouldCheck = !this.isRowChecked(row)
+            const shouldCheck = !this.isRowChecked(row);
 
             subset.forEach((item) => {
-                this.removeCheckedRow(item)
+                this.removeCheckedRow(item);
                 if (shouldCheck && this.isRowCheckable(item)) {
-                    this.newCheckedRows.push(item)
+                    this.newCheckedRows.push(item);
                 }
-            })
+            });
         },
 
         /**
-        * Row click listener.
-        * Emit all necessary events.
-        */
+         * Row click listener.
+         * Emit all necessary events.
+         */
         selectRow(row, index) {
             /**
              * @property {Object} row clicked row
              * @property {number} index index of clicked row
              */
-            this.$emit('click', row, index)
+            this.$emit("click", row, index);
 
-            if (this.selected === row) return
-            if (!this.isRowSelectable(row)) return
+            if (this.selected === row) return;
+            if (!this.isRowSelectable(row)) return;
 
             // Emit new and old row
             /**
              * @property {Object} row selected row
              * @property {Array<Object>} selected selected rows
              */
-            this.$emit('select', row, this.selected)
+            this.$emit("select", row, this.selected);
 
             // Emit new row to update user variable
-            this.$emit('update:selected', row)
+            this.$emit("update:selected", row);
         },
 
         /**
-        * Toggle to show/hide details slot
-        */
+         * Toggle to show/hide details slot
+         */
         toggleDetails(obj) {
-            const found = this.isVisibleDetailRow(obj)
+            const found = this.isVisibleDetailRow(obj);
 
             if (found) {
-                this.closeDetailRow(obj)
-                this.$emit('details-close', obj)
+                this.closeDetailRow(obj);
+                this.$emit("details-close", obj);
             } else {
-                this.openDetailRow(obj)
-                this.$emit('details-open', obj)
+                this.openDetailRow(obj);
+                this.$emit("details-open", obj);
             }
 
             // Syncs the detailed rows with the parent component
-            this.$emit('update:openedDetailed', this.visibleDetailRows)
+            this.$emit("update:openedDetailed", this.visibleDetailRows);
         },
 
         openDetailRow(obj) {
-            const index = this.handleDetailKey(obj)
-            this.visibleDetailRows.push(index)
+            const index = this.handleDetailKey(obj);
+            this.visibleDetailRows.push(index);
         },
 
         closeDetailRow(obj) {
-            const index = this.handleDetailKey(obj)
-            const i = this.visibleDetailRows.indexOf(index)
+            const index = this.handleDetailKey(obj);
+            const i = this.visibleDetailRows.indexOf(index);
             if (i >= 0) {
-                this.visibleDetailRows.splice(i, 1)
+                this.visibleDetailRows.splice(i, 1);
             }
         },
 
         isVisibleDetailRow(obj) {
-            const index = this.handleDetailKey(obj)
-            return this.visibleDetailRows.indexOf(index) >= 0
+            const index = this.handleDetailKey(obj);
+            return this.visibleDetailRows.indexOf(index) >= 0;
         },
 
         isActiveDetailRow(row) {
-            return this.detailed && !this.customDetailRow && this.isVisibleDetailRow(row)
+            return (
+                this.detailed &&
+                !this.customDetailRow &&
+                this.isVisibleDetailRow(row)
+            );
         },
 
         isActiveCustomDetailRow(row) {
-            return this.detailed && this.customDetailRow && this.isVisibleDetailRow(row)
+            return (
+                this.detailed &&
+                this.customDetailRow &&
+                this.isVisibleDetailRow(row)
+            );
         },
 
         isRowFiltered(row) {
             for (const key in this.filters) {
-                if (!this.filters[key]) continue
-                const input = this.filters[key]
-                const column = this.newColumns.filter((c) => c.field === key)[0]
-                if (column && column.customSearch && typeof column.customSearch === 'function') {
-                    if (!column.customSearch(row, input)) return false
+                if (!this.filters[key]) continue;
+                const input = this.filters[key];
+                const column = this.newColumns.filter(
+                    (c) => c.field === key,
+                )[0];
+                if (
+                    column &&
+                    column.customSearch &&
+                    typeof column.customSearch === "function"
+                ) {
+                    if (!column.customSearch(row, input)) return false;
                 } else {
-                    const value = getValueByPath(row, key)
-                    if (value == null) return false
+                    const value = getValueByPath(row, key);
+                    if (value == null) return false;
                     if (Number.isInteger(value)) {
-                        if (value !== Number(input)) return false
+                        if (value !== Number(input)) return false;
                     } else {
-                        const re = new RegExp(escapeRegExpChars(input), 'i')
+                        const re = new RegExp(escapeRegExpChars(input), "i");
                         if (Array.isArray(value)) {
-                            const valid = value.some((val) =>
-                                re.test(removeDiacriticsFromString(val)) || re.test(val)
-                            )
-                            if (!valid) return false
+                            const valid = value.some(
+                                (val) =>
+                                    re.test(removeDiacriticsFromString(val)) ||
+                                    re.test(val),
+                            );
+                            if (!valid) return false;
                         } else {
-                            if (!re.test(removeDiacriticsFromString(value)) && !re.test(value)) {
-                                return false
+                            if (
+                                !re.test(removeDiacriticsFromString(value)) &&
+                                !re.test(value)
+                            ) {
+                                return false;
                             }
                         }
                     }
                 }
             }
-            return true
+            return true;
         },
 
         /**
-        * When the detailKey is defined we use the object[detailKey] as index.
-        * If not, use the object reference by default.
-        */
+         * When the detailKey is defined we use the object[detailKey] as index.
+         * If not, use the object reference by default.
+         */
         handleDetailKey(index) {
-            const key = this.detailKey
-            return !key.length || !index
-                ? index
-                : index[key]
+            const key = this.detailKey;
+            return !key.length || !index ? index : index[key];
         },
 
         /**
-        * Call initSort only first time (For example async data).
-        */
+         * Call initSort only first time (For example async data).
+         */
         checkSort() {
             if (this.newColumns.length && this.firstTimeSort) {
-                this.initSort()
-                this.firstTimeSort = false
+                this.initSort();
+                this.firstTimeSort = false;
             } else if (this.newColumns.length) {
                 if (Object.keys(this.currentSortColumn).length > 0) {
                     for (let i = 0; i < this.newColumns.length; i++) {
-                        if (this.newColumns[i].field === this.currentSortColumn.field) {
-                            this.currentSortColumn = this.newColumns[i]
-                            break
+                        if (
+                            this.newColumns[i].field ===
+                            this.currentSortColumn.field
+                        ) {
+                            this.currentSortColumn = this.newColumns[i];
+                            break;
                         }
                     }
                 }
@@ -1328,202 +1208,572 @@ export default defineComponent({
         },
 
         /**
-        * Check if footer slot has custom content.
-        */
+         * Check if footer slot has custom content.
+         */
         hasCustomFooterSlot() {
             if (this.$slots.footer) {
-                const footer = this.$slots.footer()
-                if (footer.length > 1) return true
+                const footer = this.$slots.footer();
+                if (footer.length > 1) return true;
 
-                const tag = footer[0].tag
-                if (tag !== 'th' && tag !== 'td') return false
+                const tag = footer[0].tag;
+                if (tag !== "th" && tag !== "td") return false;
             }
-            return true
+            return true;
         },
 
         /**
-        * Table arrow keys listener, change selection.
-        */
+         * Table arrow keys listener, change selection.
+         */
         pressedArrow(pos) {
-            if (!this.visibleData.length) return
+            if (!this.visibleData.length) return;
 
-            let index = this.visibleData.indexOf(this.selected) + pos
+            let index = this.visibleData.indexOf(this.selected) + pos;
 
             // Prevent from going up from first and down from last
-            index = index < 0
-                ? 0
-                : index > this.visibleData.length - 1
+            index =
+                index < 0
+                    ? 0
+                    : index > this.visibleData.length - 1
                     ? this.visibleData.length - 1
-                    : index
+                    : index;
 
-            const row = this.visibleData[index]
+            const row = this.visibleData[index];
 
             if (!this.isRowSelectable(row)) {
-                let newIndex = null
+                let newIndex = null;
                 if (pos > 0) {
-                    for (let i = index; i < this.visibleData.length && newIndex === null; i++) {
-                        if (this.isRowSelectable(this.visibleData[i])) newIndex = i
+                    for (
+                        let i = index;
+                        i < this.visibleData.length && newIndex === null;
+                        i++
+                    ) {
+                        if (this.isRowSelectable(this.visibleData[i]))
+                            newIndex = i;
                     }
                 } else {
                     for (let i = index; i >= 0 && newIndex === null; i--) {
-                        if (this.isRowSelectable(this.visibleData[i])) newIndex = i
+                        if (this.isRowSelectable(this.visibleData[i]))
+                            newIndex = i;
                     }
                 }
                 if (newIndex >= 0) {
-                    this.selectRow(this.visibleData[newIndex])
+                    this.selectRow(this.visibleData[newIndex]);
                 }
             } else {
-                this.selectRow(row)
+                this.selectRow(row);
             }
         },
 
         /**
-        * Focus table element if has selected prop.
-        */
+         * Focus table element if has selected prop.
+         */
         focus() {
-            if (!this.focusable) return
+            if (!this.focusable) return;
 
-            this.$el.querySelector('table').focus()
+            this.$el.querySelector("table").focus();
         },
 
         /**
-        * Initial sorted column based on the default-sort prop.
-        */
+         * Initial sorted column based on the default-sort prop.
+         */
         initSort() {
-            if (!this.defaultSort) return
-            let sortField = ''
-            let sortDirection = this.defaultSortDirection
+            if (!this.defaultSort) return;
+            let sortField = "";
+            let sortDirection = this.defaultSortDirection;
             if (Array.isArray(this.defaultSort)) {
-                sortField = this.defaultSort[0]
+                sortField = this.defaultSort[0];
                 if (this.defaultSort[1]) {
-                    sortDirection = this.defaultSort[1]
+                    sortDirection = this.defaultSort[1];
                 }
             } else {
-                sortField = this.defaultSort
+                sortField = this.defaultSort;
             }
             const sortColumn = this.newColumns.filter(
-                (column) => (column.field === sortField))[0]
+                (column) => column.field === sortField,
+            )[0];
             if (sortColumn) {
-                this.isAsc = sortDirection.toLowerCase() !== 'desc'
-                this.sort(sortColumn, true)
+                this.isAsc = sortDirection.toLowerCase() !== "desc";
+                this.sort(sortColumn, true);
             }
         },
         /**
-        * Emits drag start event
-        */
+         * Emits drag start event
+         */
         handleDragStart(event, row, index) {
-            if (!this.draggable) return
-            this.$emit('dragstart', {event, row, index})
+            if (!this.draggable) return;
+            this.$emit("dragstart", { event, row, index });
         },
         /**
-        * Emits drag leave event
-        */
+         * Emits drag leave event
+         */
         handleDragEnd(event, row, index) {
-            if (!this.draggable) return
-            this.$emit('dragend', {event, row, index})
+            if (!this.draggable) return;
+            this.$emit("dragend", { event, row, index });
         },
         /**
-        * Emits drop event
-        */
+         * Emits drop event
+         */
         handleDrop(event, row, index) {
-            if (!this.draggable) return
-            this.$emit('drop', {event, row, index})
+            if (!this.draggable) return;
+            this.$emit("drop", { event, row, index });
         },
         /**
-        * Emits drag over event
-        */
+         * Emits drag over event
+         */
         handleDragOver(event, row, index) {
-            if (!this.draggable) return
-            this.$emit('dragover', {event, row, index})
+            if (!this.draggable) return;
+            this.$emit("dragover", { event, row, index });
         },
         /**
-        * Emits drag leave event
-        */
+         * Emits drag leave event
+         */
         handleDragLeave(event, row, index) {
-            if (!this.draggable) return
-            this.$emit('dragleave', {event, row, index})
+            if (!this.draggable) return;
+            this.$emit("dragleave", { event, row, index });
         },
 
         /**
-        * Emits drag start event (column)
-        */
+         * Emits drag start event (column)
+         */
         handleColumnDragStart(event, column, index) {
-            if (!this.canDragColumn) return
-            this.isDraggingColumn = true
-            this.$emit('columndragstart', {event, column, index})
+            if (!this.canDragColumn) return;
+            this.isDraggingColumn = true;
+            this.$emit("columndragstart", { event, column, index });
         },
 
         /**
-        * Emits drag leave event (column)
-        */
+         * Emits drag leave event (column)
+         */
         handleColumnDragEnd(event, column, index) {
-            if (!this.canDragColumn) return
-            this.isDraggingColumn = false
-            this.$emit('columndragend', {event, column, index})
+            if (!this.canDragColumn) return;
+            this.isDraggingColumn = false;
+            this.$emit("columndragend", { event, column, index });
         },
 
         /**
-        * Emits drop event (column)
-        */
+         * Emits drop event (column)
+         */
         handleColumnDrop(event, column, index) {
-            if (!this.canDragColumn) return
-            this.$emit('columndrop', {event, column, index})
+            if (!this.canDragColumn) return;
+            this.$emit("columndrop", { event, column, index });
         },
 
         /**
-        * Emits drag over event (column)
-        */
+         * Emits drag over event (column)
+         */
         handleColumnDragOver(event, column, index) {
-            if (!this.canDragColumn) return
-            this.$emit('columndragover', {event, column, index})
+            if (!this.canDragColumn) return;
+            this.$emit("columndragover", { event, column, index });
         },
 
         /**
-        * Emits drag leave event (column)
-        */
+         * Emits drag leave event (column)
+         */
         handleColumnDragLeave(event, column, index) {
-            if (!this.canDragColumn) return
-            this.$emit('columndragleave', {event, column, index})
+            if (!this.canDragColumn) return;
+            this.$emit("columndragleave", { event, column, index });
         },
 
         emitEventForRow(eventName, event, row) {
-            return this.$attrs[eventName] ? this.$emit(eventName, row, event) : null
+            return this.$attrs[eventName]
+                ? this.$emit(eventName, row, event)
+                : null;
         },
 
         processTdAttrs() {
             if (this.visibleColumns.length && this.visibleData.length) {
                 for (let i = 0; i < this.visibleColumns.length; i++) {
-                    const col = this.visibleColumns[i]
-                    if (typeof col.tdAttrs !== 'undefined') {
+                    const col = this.visibleColumns[i];
+                    if (typeof col.tdAttrs !== "undefined") {
                         this.visibleData.forEach((data, index) => {
-                            col.tdAttrsData[index] = col.tdAttrs(data, col)
-                        })
+                            col.tdAttrsData[index] = col.tdAttrs(data, col);
+                        });
                     }
                 }
             }
         },
 
         _addColumn(column) {
-            this.defaultSlots.push(column)
-            const slot = this.$refs['slot']
+            this.defaultSlots.push(column);
+            const slot = this.$refs["slot"];
             if (slot && slot.children) {
                 this.$nextTick(() => {
-                    const ids = this.defaultSlots.map(it => `[data-id="${it.newKey}"]`).join(',')
-                    const sortedIds = Array.from(slot.querySelectorAll(ids)).map(
-                        (el: any) => el.getAttribute('data-id'))
-                    this.defaultSlots = this.defaultSlots.sort((a, b) =>
-                        sortedIds.indexOf(`${a.newKey}`) - sortedIds.indexOf(`${b.newKey}`) )
-                })
+                    const ids = this.defaultSlots
+                        .map((it) => `[data-id="${it.newKey}"]`)
+                        .join(",");
+                    const sortedIds = Array.from(
+                        slot.querySelectorAll(ids),
+                    ).map((el: any) => el.getAttribute("data-id"));
+                    this.defaultSlots = this.defaultSlots.sort(
+                        (a, b) =>
+                            sortedIds.indexOf(`${a.newKey}`) -
+                            sortedIds.indexOf(`${b.newKey}`),
+                    );
+                });
             }
         },
 
         _removeColumn(column) {
-            this.defaultSlots = this.defaultSlots.filter(d => d.newKey !== column.newKey)
+            this.defaultSlots = this.defaultSlots.filter(
+                (d) => d.newKey !== column.newKey,
+            );
         },
 
         _nextSequence() {
-            return this.sequence++
-        }
-    }
-})
+            return this.sequence++;
+        },
+    },
+});
 </script>
+
+<template>
+    <div :class="rootClasses">
+        <div ref="slot" style="display: none">
+            <slot />
+        </div>
+
+        <o-table-mobile-sort
+            v-if="isMobile && hasSortablenewColumns"
+            :current-sort-column="currentSortColumn"
+            :columns="newColumns"
+            :placeholder="mobileSortPlaceholder"
+            :icon-pack="iconPack"
+            :sort-icon="sortIcon"
+            :sort-icon-size="sortIconSize"
+            :is-asc="isAsc"
+            @sort="(column, event) => sort(column, null, event)" />
+
+        <template
+            v-if="
+                paginated &&
+                (paginationPosition === 'top' || paginationPosition === 'both')
+            ">
+            <slot name="pagination">
+                <o-table-pagination
+                    v-bind="$attrs"
+                    :per-page="perPage"
+                    :paginated="paginated"
+                    :total="newDataTotal"
+                    :current-page="newCurrentPage"
+                    :root-class="paginationWrapperClasses"
+                    :icon-pack="iconPack"
+                    :rounded="paginationRounded"
+                    :size="paginationSize"
+                    :order="paginationOrder"
+                    :aria-next-label="ariaNextLabel"
+                    :aria-previous-label="ariaPreviousLabel"
+                    :aria-page-label="ariaPageLabel"
+                    :aria-current-label="ariaCurrentLabel"
+                    @update:currentPage="newCurrentPage = $event"
+                    @page-change="(event) => $emit('page-change', event)">
+                    <slot name="top-left" />
+                </o-table-pagination>
+            </slot>
+        </template>
+
+        <div :class="tableWrapperClasses" :style="tableWrapperStyle">
+            <table
+                :class="tableClasses"
+                :tabindex="!focusable ? null : 0"
+                @keydown.self.prevent.up="pressedArrow(-1)"
+                @keydown.self.prevent.down="pressedArrow(1)">
+                <caption v-if="$slots.caption">
+                    <slot name="caption" />
+                </caption>
+                <thead v-if="newColumns.length && showHeader">
+                    <slot name="preheader" />
+                    <tr>
+                        <th
+                            v-if="showDetailRowIcon"
+                            :class="thDetailedClasses" />
+                        <th
+                            v-if="checkable && checkboxPosition === 'left'"
+                            :class="thCheckboxClasses">
+                            <template v-if="headerCheckable">
+                                <o-checkbox
+                                    :model-value="isAllChecked"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="isAllUncheckable"
+                                    @update:modelValue="checkAll" />
+                            </template>
+                        </th>
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'header'"
+                            v-bind="column.thAttrsData"
+                            :class="thClasses(column)"
+                            :style="isMobile ? {} : column.style"
+                            :draggable="canDragColumn"
+                            @click.stop="sort(column, null, $event)"
+                            @dragstart="
+                                handleColumnDragStart($event, column, index)
+                            "
+                            @dragend="
+                                handleColumnDragEnd($event, column, index)
+                            "
+                            @drop="handleColumnDrop($event, column, index)"
+                            @dragover="
+                                handleColumnDragOver($event, column, index)
+                            "
+                            @dragleave="
+                                handleColumnDragLeave($event, column, index)
+                            ">
+                            <template v-if="column.hasHeaderSlot">
+                                <o-slot-component
+                                    :component="column"
+                                    name="header"
+                                    tag="span"
+                                    :props="{ column, index }" />
+                            </template>
+                            <template v-else>
+                                <span>
+                                    {{ column.label }}
+                                    <span
+                                        v-show="
+                                            column.sortable &&
+                                            currentSortColumn === column
+                                        "
+                                        :class="thSortIconClasses()">
+                                        <o-icon
+                                            :icon="sortIcon"
+                                            :pack="iconPack"
+                                            both
+                                            :size="sortIconSize"
+                                            :rotation="!isAsc ? 180 : 0" />
+                                    </span>
+                                </span>
+                            </template>
+                        </th>
+                        <th
+                            v-if="checkable && checkboxPosition === 'right'"
+                            :class="thCheckboxClasses">
+                            <template v-if="headerCheckable">
+                                <o-checkbox
+                                    :model-value="isAllChecked"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="isAllUncheckable"
+                                    @update:modelValue="checkAll" />
+                            </template>
+                        </th>
+                    </tr>
+                    <tr v-if="hasSearchablenewColumns">
+                        <th
+                            v-if="showDetailRowIcon"
+                            :class="thDetailedClasses" />
+                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'searchable'"
+                            v-bind="column.thAttrsData"
+                            :class="thClasses(column)"
+                            :style="isMobile ? {} : column.style">
+                            <template v-if="column.searchable">
+                                <template v-if="column.hasSearchableSlot">
+                                    <o-slot-component
+                                        :component="column"
+                                        name="searchable"
+                                        tag="span"
+                                        :props="{ column, filters }" />
+                                </template>
+                                <o-input
+                                    v-else
+                                    v-model="filters[column.field]"
+                                    :type="column.numeric ? 'number' : 'text'"
+                                    @[filtersEvent]="onFiltersEvent" />
+                            </template>
+                        </th>
+                        <th v-if="checkable && checkboxPosition === 'right'" />
+                    </tr>
+                    <tr v-if="hasCustomSubheadings">
+                        <th
+                            v-if="showDetailRowIcon"
+                            :class="thDetailedClasses" />
+                        <th v-if="checkable && checkboxPosition === 'left'" />
+                        <th
+                            v-for="(column, index) in visibleColumns"
+                            :key="column.newKey + ':' + index + 'subheading'"
+                            :style="isMobile ? {} : column.style"
+                            :class="thSubheadingClasses">
+                            <template
+                                v-if="
+                                    column.$slots && column.$slots.subheading
+                                ">
+                                <o-slot-component
+                                    :component="column"
+                                    name="subheading"
+                                    tag="span"
+                                    :props="{ column, index }" />
+                            </template>
+                            <template v-else>{{ column.subheading }}</template>
+                        </th>
+                        <th v-if="checkable && checkboxPosition === 'right'" />
+                    </tr>
+                </thead>
+                <tbody>
+                    <template
+                        v-for="(row, index) in visibleData"
+                        :key="customRowKey ? row[customRowKey] : index">
+                        <tr
+                            :class="rowClasses(row, index)"
+                            :draggable="canDragRow"
+                            @click="selectRow(row, index)"
+                            @dblclick="$emit('dblclick', row)"
+                            @mouseenter="
+                                emitEventForRow('mouseenter', $event, row)
+                            "
+                            @mouseleave="
+                                emitEventForRow('mouseleave', $event, row)
+                            "
+                            @contextmenu="$emit('contextmenu', row, $event)"
+                            @dragstart="handleDragStart($event, row, index)"
+                            @dragend="handleDragEnd($event, row, index)"
+                            @drop="handleDrop($event, row, index)"
+                            @dragover="handleDragOver($event, row, index)"
+                            @dragleave="handleDragLeave($event, row, index)">
+                            <td
+                                v-if="showDetailRowIcon"
+                                :class="tdDetailedChevronClasses">
+                                <o-icon
+                                    v-if="hasDetailedVisible(row)"
+                                    :icon="detailIcon"
+                                    :pack="iconPack"
+                                    :rotation="isVisibleDetailRow(row) ? 90 : 0"
+                                    role="button"
+                                    clickable
+                                    both
+                                    @click.stop="toggleDetails(row)" />
+                            </td>
+
+                            <td
+                                v-if="checkable && checkboxPosition === 'left'"
+                                :class="tdCheckboxClasses">
+                                <o-checkbox
+                                    :model-value="isRowChecked(row)"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="!isRowCheckable(row)"
+                                    @update:modelValue="
+                                        checkRow(row, index, $event)
+                                    " />
+                            </td>
+
+                            <o-slot-component
+                                v-for="(column, colindex) in visibleColumns"
+                                :key="column.newKey + index + ':' + colindex"
+                                v-bind="column.tdAttrsData[index]"
+                                :component="column"
+                                name="default"
+                                tag="td"
+                                :class="tdClasses(row, column)"
+                                :style="isMobile ? {} : column.style"
+                                :data-label="column.label"
+                                :props="{
+                                    row,
+                                    column,
+                                    index,
+                                    colindex,
+                                    toggleDetails,
+                                }"
+                                @click="
+                                    $emit(
+                                        'cell-click',
+                                        row,
+                                        column,
+                                        index,
+                                        colindex,
+                                        $event,
+                                    )
+                                " />
+
+                            <td
+                                v-if="checkable && checkboxPosition === 'right'"
+                                :class="tdCheckboxClasses">
+                                <o-checkbox
+                                    :model-value="isRowChecked(row)"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="!isRowCheckable(row)"
+                                    @update:modelValue="
+                                        checkRow(row, index, $event)
+                                    " />
+                            </td>
+                        </tr>
+
+                        <transition :name="detailTransition">
+                            <tr
+                                v-if="isActiveDetailRow(row)"
+                                :key="
+                                    (customRowKey ? row[customRowKey] : index) +
+                                    'detail'
+                                "
+                                :class="detailedClasses">
+                                <td :colspan="columnCount">
+                                    <slot
+                                        name="detail"
+                                        :row="row"
+                                        :index="index" />
+                                </td>
+                            </tr>
+                        </transition>
+                        <slot
+                            v-if="isActiveCustomDetailRow(row)"
+                            name="detail"
+                            :row="row"
+                            :index="index" />
+                    </template>
+
+                    <tr v-if="!visibleData.length">
+                        <td :colspan="columnCount">
+                            <slot name="empty" />
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tfoot v-if="$slots.footer">
+                    <tr :class="footerClasses">
+                        <slot v-if="hasCustomFooterSlot()" name="footer" />
+                        <th v-else :colspan="columnCount">
+                            <slot name="footer" />
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <slot name="loading">
+                <o-loading :full-page="false" :active="loading" />
+            </slot>
+        </div>
+
+        <template
+            v-if="
+                (checkable && $slots['bottom-left']) ||
+                (paginated &&
+                    (paginationPosition === 'bottom' ||
+                        paginationPosition === 'both'))
+            ">
+            <slot name="pagination">
+                <o-table-pagination
+                    v-bind="$attrs"
+                    :per-page="perPage"
+                    :paginated="paginated"
+                    :total="newDataTotal"
+                    :current-page="newCurrentPage"
+                    :root-class="paginationWrapperClasses"
+                    :icon-pack="iconPack"
+                    :rounded="paginationRounded"
+                    :size="paginationSize"
+                    :order="paginationOrder"
+                    :aria-next-label="ariaNextLabel"
+                    :aria-previous-label="ariaPreviousLabel"
+                    :aria-page-label="ariaPageLabel"
+                    :aria-current-label="ariaCurrentLabel"
+                    @update:currentPage="newCurrentPage = $event"
+                    @page-change="(event) => $emit('page-change', event)">
+                    <slot name="bottom-left" />
+                </o-table-pagination>
+            </slot>
+        </template>
+    </div>
+</template>

@@ -1,27 +1,29 @@
-import type { Component, DefineComponent, PropType } from 'vue';
-import { defineComponent, h } from 'vue';
+import type { Component, DefineComponent, PropType } from "vue";
+import { defineComponent, h } from "vue";
 
 export default defineComponent({
-    name: 'OSlotComponent',
+    name: "OSlotComponent",
     props: {
         component: {
             type: Object,
-            required: true
+            required: true,
         },
         name: {
             type: String,
-            default: 'default'
+            default: "default",
         },
         props: {
-            type: Object
+            type: Object,
         },
         tag: {
             type: [String, Object, Function] as PropType<string | Component>,
-             default: 'div'
-        }
+            default: "div",
+        },
     },
     render() {
-        const slot = (this.component as DefineComponent).$slots[this.name](this.props)
-        return h(this.tag, {}, slot)
-    }
-})
+        const slot = (this.component as DefineComponent).$slots[this.name](
+            this.props,
+        );
+        return h(this.tag, {}, slot);
+    },
+});

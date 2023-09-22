@@ -1,69 +1,13 @@
-<template>
-    <div :class="rootClasses">
-        <input
-            v-if="type !== 'textarea'"
-            v-bind="$attrs"
-            ref="input"
-            :class="inputClasses"
-            :type="newType"
-            :autocomplete="newAutocomplete"
-            :maxlength="maxlength"
-            v-model="computedValue"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid" />
-
-        <textarea
-            v-else
-            v-bind="$attrs"
-            ref="textarea"
-            :class="inputClasses"
-            :maxlength="maxlength"
-            v-model="computedValue"
-            @blur="onBlur"
-            @focus="onFocus"
-            @invalid="onInvalid"
-            :style="computedStyles"
-            />
-
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick('icon-click', $event)"/>
-
-        <o-icon
-            v-if="hasIconRight"
-            :class="iconRightClasses"
-            :clickable="passwordReveal || clearable || iconRightClickable"
-            :icon="rightIcon"
-            :pack="iconPack"
-            :size="size"
-            :variant="rightIconVariant"
-            both
-            @click="rightIconClick"/>
-
-        <small
-            v-if="maxlength && hasCounter && isFocused && type !== 'number'"
-            :class="counterClasses">
-            {{ valueLength }} / {{ maxlength }}
-        </small>
-    </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, type StyleValue } from 'vue'
+import { defineComponent, type StyleValue } from "vue";
 
-import Icon from '../icon/Icon.vue'
+import Icon from "../icon/Icon.vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import FormElementMixin from '../../utils/FormElementMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import FormElementMixin from "../../utils/FormElementMixin";
 
-import { getOptions } from '../../utils/config'
-import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from "../../utils/config";
+import { getValueByPath } from "../../utils/helpers";
 
 /**
  * Get user Input. Use with Field to access all functionalities
@@ -71,26 +15,25 @@ import { getValueByPath } from '../../utils/helpers'
  * @style _input.scss
  */
 export default defineComponent({
-    name: 'OInput',
+    name: "OInput",
     components: {
-        [Icon.name]: Icon
+        [Icon.name]: Icon,
     },
     mixins: [BaseComponentMixin, FormElementMixin],
-    configField: 'input',
+    configField: "input",
     inheritAttrs: false,
-    emits: ['update:modelValue', 'input', 'focus', 'blur', 'invalid', 'icon-click', 'icon-right-click'],
     props: {
         /** @model */
         modelValue: [Number, String],
         /** Native options to use in HTML5 validation */
-		autocomplete: String,
+        autocomplete: String,
         /**
          * Input type, like native
          * @values Any native input type, and textarea
          */
         type: {
             type: String,
-            default: 'text'
+            default: "text",
         },
         /**
          * Vertical size of input, optional
@@ -98,9 +41,9 @@ export default defineComponent({
          */
         size: String,
         /**
-        * Color of the control, optional
-        * @values primary, info, success, warning, danger, and any other custom color
-        */
+         * Color of the control, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: String,
         /**
          * 	Adds the reveal password functionality
@@ -115,14 +58,16 @@ export default defineComponent({
          */
         hasCounter: {
             type: Boolean,
-            default: () => { return getValueByPath(getOptions(), 'input.counter', false) }
+            default: () => {
+                return getValueByPath(getOptions(), "input.counter", false);
+            },
         },
         /**
          * Automatically adjust height in textarea
          */
         autosize: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /**
          * 	Icon name to be added on the right side
@@ -137,7 +82,9 @@ export default defineComponent({
         /** Add a button/icon to clear the inputed text */
         clearable: {
             type: Boolean,
-            default: () => { return getValueByPath(getOptions(), 'input.clearable', false) }
+            default: () => {
+                return getValueByPath(getOptions(), "input.clearable", false);
+            },
         },
         /**
          * Icon name to be added on the clear button
@@ -145,8 +92,12 @@ export default defineComponent({
         clearIcon: {
             type: String,
             default: () => {
-                return getValueByPath(getOptions(), 'input.clearIcon', 'close-circle')
-            }
+                return getValueByPath(
+                    getOptions(),
+                    "input.clearIcon",
+                    "close-circle",
+                );
+            },
         },
         rootClass: [String, Function, Array],
         expandedClass: [String, Function, Array],
@@ -158,184 +109,276 @@ export default defineComponent({
         iconRightClass: [String, Function, Array],
         counterClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array]
+        variantClass: [String, Function, Array],
     },
+    emits: [
+        "update:modelValue",
+        "input",
+        "focus",
+        "blur",
+        "invalid",
+        "icon-click",
+        "icon-right-click",
+    ],
     data() {
         return {
             newValue: this.modelValue,
             newType: this.type,
             // from mixin (ts workaround)
-            newAutocomplete: this.autocomplete || getValueByPath(getOptions(), 'input.autocompletete', 'off'),
+            newAutocomplete:
+                this.autocomplete ||
+                getValueByPath(getOptions(), "input.autocompletete", "off"),
             isPasswordVisible: false,
-            height: 'auto'
-        }
+            height: "auto",
+        };
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-ctrl-input'),
-                { [this.computedClass('expandedClass', 'o-ctrl-input--expanded')]: this.expanded }
-            ]
+                this.computedClass("rootClass", "o-ctrl-input"),
+                {
+                    [this.computedClass(
+                        "expandedClass",
+                        "o-ctrl-input--expanded",
+                    )]: this.expanded,
+                },
+            ];
         },
         inputClasses() {
             return [
-                this.computedClass('inputClass', 'o-input'),
-                { [this.computedClass('roundedClass', 'o-input--rounded')]: this.rounded },
-                { [this.computedClass('sizeClass', 'o-input--', this.size)]: this.size },
-                { [this.computedClass('variantClass', 'o-input--', (this.statusVariant || this.variant))]: (this.statusVariant || this.variant) },
-                { [this.computedClass('textareaClass', 'o-input__textarea')]: this.type === 'textarea' },
-                { [this.computedClass('iconLeftSpaceClass', 'o-input-iconspace-left')]: this.icon },
-                { [this.computedClass('iconRightSpaceClass', 'o-input-iconspace-right')]: this.hasIconRight }
-            ]
+                this.computedClass("inputClass", "o-input"),
+                {
+                    [this.computedClass("roundedClass", "o-input--rounded")]:
+                        this.rounded,
+                },
+                {
+                    [this.computedClass("sizeClass", "o-input--", this.size)]:
+                        this.size,
+                },
+                {
+                    [this.computedClass(
+                        "variantClass",
+                        "o-input--",
+                        this.statusVariant || this.variant,
+                    )]: this.statusVariant || this.variant,
+                },
+                {
+                    [this.computedClass("textareaClass", "o-input__textarea")]:
+                        this.type === "textarea",
+                },
+                {
+                    [this.computedClass(
+                        "iconLeftSpaceClass",
+                        "o-input-iconspace-left",
+                    )]: this.icon,
+                },
+                {
+                    [this.computedClass(
+                        "iconRightSpaceClass",
+                        "o-input-iconspace-right",
+                    )]: this.hasIconRight,
+                },
+            ];
         },
         iconLeftClasses() {
-            return [
-                this.computedClass('iconLeftClass', 'o-input__icon-left')
-            ]
+            return [this.computedClass("iconLeftClass", "o-input__icon-left")];
         },
         iconRightClasses() {
             return [
-                this.computedClass('iconRightClass', 'o-input__icon-right')
-            ]
+                this.computedClass("iconRightClass", "o-input__icon-right"),
+            ];
         },
         counterClasses() {
-            return [
-                this.computedClass('counterClass', 'o-input__counter')
-            ]
+            return [this.computedClass("counterClass", "o-input__counter")];
         },
         computedValue: {
             get() {
-                return this.newValue
+                return this.newValue;
             },
             set(value) {
-                this.newValue = value
-                this.$emit('update:modelValue', this.newValue)
-                this.syncFilled(this.newValue)
-                !this.isValid && this.checkHtml5Validity()
-            }
+                this.newValue = value;
+                this.$emit("update:modelValue", this.newValue);
+                this.syncFilled(this.newValue);
+                !this.isValid && this.checkHtml5Validity();
+            },
         },
         hasIconRight() {
-            return this.passwordReveal
-                || (this.statusIcon && this.statusVariantIcon)
-                || (this.clearable && this.newValue && this.clearIcon)
-                || this.iconRight
+            return (
+                this.passwordReveal ||
+                (this.statusIcon && this.statusVariantIcon) ||
+                (this.clearable && this.newValue && this.clearIcon) ||
+                this.iconRight
+            );
         },
         rightIcon() {
             if (this.passwordReveal) {
-                return this.passwordVisibleIcon
+                return this.passwordVisibleIcon;
             } else if (this.clearable && this.newValue && this.clearIcon) {
-                return this.clearIcon
+                return this.clearIcon;
             } else if (this.iconRight) {
-                return this.iconRight
+                return this.iconRight;
             }
-            return this.statusVariantIcon
+            return this.statusVariantIcon;
         },
         rightIconVariant() {
             if (this.passwordReveal || this.iconRight) {
-                return this.iconRightVariant || this.variant || null
+                return this.iconRightVariant || this.variant || null;
             }
-            return this.statusVariant
+            return this.statusVariant;
         },
 
         /**
-        * Check if have any message prop from parent if it's a Field.
-        */
+         * Check if have any message prop from parent if it's a Field.
+         */
         hasMessage() {
-            return !!this.statusMessage
+            return !!this.statusMessage;
         },
 
         /**
-        * Current password-reveal icon name.
-        */
+         * Current password-reveal icon name.
+         */
         passwordVisibleIcon() {
-            return !this.isPasswordVisible ? 'eye' : 'eye-off'
+            return !this.isPasswordVisible ? "eye" : "eye-off";
         },
         /**
-        * Get value length
-        */
+         * Get value length
+         */
         valueLength() {
-            if (typeof this.computedValue === 'string') {
-                return this.computedValue.length
-            } else if (typeof this.computedValue === 'number') {
-                return this.computedValue.toString().length
+            if (typeof this.computedValue === "string") {
+                return this.computedValue.length;
+            } else if (typeof this.computedValue === "number") {
+                return this.computedValue.toString().length;
             }
-            return 0
+            return 0;
         },
         /**
-        * Computed inline styles for autoresize
-        */
-        computedStyles () : StyleValue {
-            if (!this.autosize) return {}
+         * Computed inline styles for autoresize
+         */
+        computedStyles(): StyleValue {
+            if (!this.autosize) return {};
             return {
-                resize: 'none',
+                resize: "none",
                 height: this.height,
-                overflow: 'hidden'
-            }
+                overflow: "hidden",
+            };
         },
 
         $elementRef() {
-            return this.type === 'textarea'
-                ? 'textarea'
-                : 'input'
-        }
+            return this.type === "textarea" ? "textarea" : "input";
+        },
     },
     watch: {
         /**
-        * When v-model is changed:
-        *   1. Set internal value.
-        */
+         * When v-model is changed:
+         *   1. Set internal value.
+         */
         modelValue: {
             immediate: true,
             handler(value) {
-                this.newValue = value
-                this.syncFilled(this.newValue)
-                if(this.autosize) {
-                    this.resize()
+                this.newValue = value;
+                this.syncFilled(this.newValue);
+                if (this.autosize) {
+                    this.resize();
                 }
-            }
+            },
         },
         type(type) {
-            this.newType = type
-        }
+            this.newType = type;
+        },
     },
     methods: {
         /**
-        * Toggle the visibility of a password-reveal input
-        * by changing the type and focus the input right away.
-        */
+         * Toggle the visibility of a password-reveal input
+         * by changing the type and focus the input right away.
+         */
         togglePasswordVisibility() {
-            this.isPasswordVisible = !this.isPasswordVisible
-            this.newType = this.isPasswordVisible ? 'text' : 'password'
+            this.isPasswordVisible = !this.isPasswordVisible;
+            this.newType = this.isPasswordVisible ? "text" : "password";
 
             this.$nextTick(() => {
-                this.focus()
-            })
+                this.focus();
+            });
         },
 
         iconClick(emit, event) {
-            this.$emit(emit, event)
+            this.$emit(emit, event);
             this.$nextTick(() => {
-                this.focus()
-            })
+                this.focus();
+            });
         },
 
         rightIconClick(event) {
             if (this.passwordReveal) {
-                this.togglePasswordVisibility()
+                this.togglePasswordVisibility();
             } else if (this.clearable) {
-                this.computedValue = ''
+                this.computedValue = "";
             } else if (this.iconRightClickable) {
-                this.iconClick('icon-right-click', event)
+                this.iconClick("icon-right-click", event);
             }
         },
 
         resize() {
-            this.height = 'auto'
+            this.height = "auto";
             this.$nextTick(() => {
-                const scrollHeight = this.$refs.textarea.scrollHeight
-                this.height = scrollHeight + 'px'
-            })
-        }
-    }
-})
+                const scrollHeight = this.$refs.textarea.scrollHeight;
+                this.height = scrollHeight + "px";
+            });
+        },
+    },
+});
 </script>
+
+<template>
+    <div :class="rootClasses">
+        <input
+            v-if="type !== 'textarea'"
+            v-bind="$attrs"
+            ref="input"
+            v-model="computedValue"
+            :class="inputClasses"
+            :type="newType"
+            :autocomplete="newAutocomplete"
+            :maxlength="maxlength"
+            @blur="onBlur"
+            @focus="onFocus"
+            @invalid="onInvalid" />
+
+        <textarea
+            v-else
+            v-bind="$attrs"
+            ref="textarea"
+            v-model="computedValue"
+            :class="inputClasses"
+            :maxlength="maxlength"
+            :style="computedStyles"
+            @blur="onBlur"
+            @focus="onFocus"
+            @invalid="onInvalid" />
+
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick('icon-click', $event)" />
+
+        <o-icon
+            v-if="hasIconRight"
+            :class="iconRightClasses"
+            :clickable="passwordReveal || clearable || iconRightClickable"
+            :icon="rightIcon"
+            :pack="iconPack"
+            :size="size"
+            :variant="rightIconVariant"
+            both
+            @click="rightIconClick" />
+
+        <small
+            v-if="maxlength && hasCounter && isFocused && type !== 'number'"
+            :class="counterClasses">
+            {{ valueLength }} / {{ maxlength }}
+        </small>
+    </div>
+</template>

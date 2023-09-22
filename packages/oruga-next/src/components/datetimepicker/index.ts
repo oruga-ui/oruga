@@ -1,15 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Datetimepicker from './Datetimepicker.vue'
+import Datetimepicker from "./Datetimepicker.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Datetimepicker)
-    }
-} as Plugin
+        registerComponent(app, Datetimepicker);
+    },
+} as Plugin;
 
-export {
-    Datetimepicker as ODatetimepicker
-}
+export { Datetimepicker as ODatetimepicker };

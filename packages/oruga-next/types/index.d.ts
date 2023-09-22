@@ -1,1 +1,1 @@
-declare module '@oruga-ui/oruga-next';
+declare module "@oruga-ui/oruga-next";
