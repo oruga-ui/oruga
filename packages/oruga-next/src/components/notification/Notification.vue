@@ -1,6 +1,6 @@
 <script lang="ts">
-import MessageMixin from "../../utils/MessageMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import MessageMixin from "../../mixins/MessageMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import { getValueByPath } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";
 import { defineComponent, type Component } from "vue";

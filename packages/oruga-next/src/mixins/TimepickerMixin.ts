@@ -1,9 +1,9 @@
 import type { App } from "vue";
 import { defineComponent } from "vue";
 
-import { getOptions } from "./config";
+import { getOptions } from "../utils/config";
 import FormElementMixin from "./FormElementMixin";
-import { getValueByPath, isMobile, matchWithGroups } from "./helpers";
+import { getValueByPath, isMobile, matchWithGroups } from "../utils/helpers";
 
 const AM = "AM";
 const PM = "PM";

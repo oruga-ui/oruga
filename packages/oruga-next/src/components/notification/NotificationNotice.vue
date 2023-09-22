@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import NoticeMixin from "../../utils/NoticeMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import NoticeMixin from "../../mixins/NoticeMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 /**
  * @displayName Notification Notice

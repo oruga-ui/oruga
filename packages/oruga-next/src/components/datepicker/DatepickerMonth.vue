@@ -1,7 +1,7 @@
 <script lang="ts">
 import { isDefined } from "../../utils/helpers";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 import DatepickerMixin from "./DatepickerMixin";
 
 export default {

@@ -239,9 +239,9 @@ You can also add and override classes to a component directly using class proper
 
 As alternative Oruga allows to customize each components providing and overriding the `Config` object programmatically:
 ```js
-import { useProgrammatic } from '@oruga-ui/oruga-next';
+import { useOruga } from '@oruga-ui/oruga-next';
 
-const { oruga } = useProgrammatic();
+const oruga  = useOruga();
 
 const config = oruga.config.getOptions();
 

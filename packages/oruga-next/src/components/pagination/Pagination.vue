@@ -7,8 +7,8 @@ import Icon from "../icon/Icon.vue";
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import MatchMediaMixin from "../../mixins/MatchMediaMixin";
 
 /**
  * A responsive and flexible pagination

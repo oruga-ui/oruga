@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import CheckRadioMixin from "../../utils/CheckRadioMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
+import CheckRadioMixin from "../../mixins/CheckRadioMixin";
 
 /**
  * Select a single or grouped options

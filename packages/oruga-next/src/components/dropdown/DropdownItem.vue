@@ -2,7 +2,7 @@
 import type { Component, PropType } from "vue";
 import { defineComponent } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import BaseComponentMixin from "../../mixins/BaseComponentMixin";
 
 import { getOptions } from "../../utils/config";
 import { getValueByPath } from "../../utils/helpers";
