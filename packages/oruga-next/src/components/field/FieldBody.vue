@@ -25,6 +25,14 @@ export default defineComponent({
                 if (first) {
                     message = this.parent.newMessage
                     first = false
+                    if (this.parent.hasMessageSlot()) {
+                        const messageSlot = h('template',
+                        this.parent.$slots.message({
+                            slot: 'message'
+                        }))
+                        return h('o-field',
+                        { variant: this.parent.newVariant, message}, ()=>[element, messageSlot])
+                    }
                 }
                 // @ts-ignore (Why props null ??)
                 return h(resolveComponent('OField'),

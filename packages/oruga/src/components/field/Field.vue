@@ -31,13 +31,10 @@
         <template v-else>
             <slot />
         </template>
-        <p
-            v-if="hasMessage && !horizontal"
-            :class="messageClasses"
-        >
+        <template v-if="hasMessage && !horizontal">
             <slot v-if="hasMessageSlot" name="message"/>
-            <template v-else>{{ newMessage }}</template>
-        </p>
+            <p v-else :class="messageClasses">{{ newMessage }}</p>
+        </template>
     </div>
 </template>
 

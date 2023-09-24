@@ -24,6 +24,14 @@ export default {
                 if (first) {
                     message = this.parent.newMessage
                     first = false
+                    let messageSlot = this.parent.hasMessageSlot
+                    ? h('template', {
+                            slot: 'message'   
+                        }, [this.parent.$slots.message]
+                    )
+                    : null
+                    return h('o-field',
+                        { attrs: {variant: this.parent.newVariant, message} }, [element, messageSlot])
                 }
                 return h('o-field',
                     { attrs: { variant: this.parent.newVariant, message } }, [element])
