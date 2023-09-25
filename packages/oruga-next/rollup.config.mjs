@@ -1,16 +1,14 @@
 import { defineConfig } from "rollup";
 import vue from "rollup-plugin-vue";
+import esbuild from "rollup-plugin-esbuild";
 import node from "@rollup/plugin-node-resolve";
 import cjs from "@rollup/plugin-commonjs";
 import babel from "@rollup/plugin-babel";
-import terser from "@rollup/plugin-terser";
-import typescript from "rollup-plugin-typescript2";
+import alias from "@rollup/plugin-alias";
 
 import fs, { readFileSync } from "fs";
 import path from "path";
-
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+import { fileURLToPath } from "url";
 
 const pack = JSON.parse(readFileSync("./package.json"));
 
@@ -32,12 +30,17 @@ const entries = {
   }, {}),
 };
 
-const definePlugins = (ssr = false) => [
+const definePlugins = (minify = false, ssr = false) => [
   node({
     extensions: [".vue", ".ts"],
   }),
-  typescript({
-    typescript: require("typescript"),
+  alias({
+    entries: [
+      {
+        find: "@",
+        replacement: fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    ],
   }),
   vue({
     template: {
@@ -48,16 +51,20 @@ const definePlugins = (ssr = false) => [
       optimizeSSR: ssr,
     },
   }),
+  esbuild({
+    minify,
+    // Add extra loaders
+    loaders: {
+      // Add .json files support
+      // require @rollup/plugin-commonjs
+      ".json": "json",
+    },
+  }),
   babel({
     babelHelpers: "bundled",
   }),
   cjs(),
 ];
-
-const capitalize = (s) => {
-  if (typeof s !== "string") return "";
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
 
 // ESM build to be used with webpack/rollup.
 const esmConfig = defineConfig({
@@ -81,7 +88,7 @@ const cjsConfig = defineConfig({
     dir: "dist/cjs",
     exports: "named",
   },
-  plugins: definePlugins(true),
+  plugins: definePlugins(false, true),
 });
 
 // Browser builds
@@ -90,7 +97,7 @@ const umdIndexConfig = defineConfig({
   external: ["vue"],
   output: {
     format: "umd",
-    name: capitalize("oruga"),
+    name: "Oruga",
     file: "dist/oruga.js",
     exports: "named",
     banner: bannerTxt,
@@ -102,26 +109,20 @@ const umdIndexConfig = defineConfig({
 });
 
 const umdIndexMinifiedConfig = defineConfig({
-    input: 'src/index.ts',
-    external: ['vue'],
-    output: {
-        format: 'umd',
-        name: capitalize('oruga'),
-        file: 'dist/oruga.min.js',
-        exports: 'named',
-        banner: bannerTxt,
-        globals: {
-            vue: 'Vue'
-        }
+  input: "src/index.ts",
+  external: ["vue"],
+  output: {
+    format: "umd",
+    name: "Oruga",
+    file: "dist/oruga.min.js",
+    exports: "named",
+    banner: bannerTxt,
+    globals: {
+      vue: "Vue",
     },
-    plugins: [
-        ...definePlugins(), 
-        terser({
-            output: {
-                comments: RegExp('/^!/')
-            }
-        })
-    ]});
+  },
+  plugins: definePlugins(true),
+});
 
 const esmIndexConfig = defineConfig({
   input: "src/index.ts",
@@ -135,28 +136,21 @@ const esmIndexConfig = defineConfig({
 });
 
 const esmIndexMinifiedConfig = defineConfig({
-    input: 'src/index.ts',
-    external: ['vue'],
-    output: {
-        format: 'esm',
-        file: 'dist/oruga.min.mjs',
-        banner: bannerTxt
-    },
-    plugins: [
-        ...definePlugins(), 
-        terser({
-            output: {
-                comments: RegExp('/^!/')
-            }
-        })
-    ]
+  input: "src/index.ts",
+  external: ["vue"],
+  output: {
+    format: "esm",
+    file: "dist/oruga.min.mjs",
+    banner: bannerTxt,
+  },
+  plugins: definePlugins(true),
 });
 
-export default  [
-    esmConfig, 
-    cjsConfig,
-    umdIndexConfig,
-    umdIndexMinifiedConfig,
-    esmIndexConfig, 
-    esmIndexMinifiedConfig,
+export default [
+  esmConfig,
+  cjsConfig,
+  umdIndexConfig,
+  umdIndexMinifiedConfig,
+  esmIndexConfig,
+  esmIndexMinifiedConfig,
 ];
