@@ -165,27 +165,30 @@ function tmplProps(props, name) {
             if (!(IGNORE_CLASSES[name.toLowerCase()] && IGNORE_CLASSES[name.toLowerCase()].indexOf(p) >= 0)) 
                 return;
         }
-        const n = pr.type && pr.type.name ? pr.type.name : "";
-        let d = pr.defaultValue && pr.defaultValue.value ? pr.defaultValue.value : "";
+        if(pr.tags?.ignore) return;
+
+        const n = pr.type?.name ? pr.type.name : "";
+        let d = pr.defaultValue?.value ? pr.defaultValue.value : "";
         const v = pr.values ? pr.values.map((pv) => `\`${pv}\``).join(", ") : "-";
         const t = pr.description ? pr.description : "";
 
-        if (
-            d.indexOf("getValueByPath") >= 0 &&
+        if(d === "undefined") d = "";
+        else if (
+            d.indexOf("getOption") >= 0 &&
             d.indexOf("const ") < 0 &&
             d.indexOf("if ") < 0 &&
             d.indexOf("else ") < 0
         ) {
             const params = d
-                .substring(d.lastIndexOf("("), d.lastIndexOf(")"))
+                .substring(d.lastIndexOf("(") + 1, d.lastIndexOf(")"))
                 .split(",");
             let configParts = null;
             if (params.length > 3) {
                 // In case last param contains a ','
                 params[2] = params.slice(2).join(",");
             }
-            if (params[1]) {
-                configParts = params[1].split(".");
+            if (params[0]) {
+                configParts = params[0].split(".");
             }
             if (configParts && configParts[0] && configParts[1]) {
                 const value = `${configParts[1].replace(/'/g, "")}: ${params[2]}`;
@@ -196,8 +199,13 @@ function tmplProps(props, name) {
                 d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
         }
+        else if(d.includes("=>")) {
+            d = "Default function (see source code)";
+        }
+        else {
+            d = `<code style='white-space: nowrap; padding: 0;'>${d}</code>`;
+        }
 
-        d = d.includes("=>") ? "Default function (see source code)" : d;
 
         ret += `| ${mdclean(p)} | ${mdclean(t)} | ${mdclean(n)} | ${mdclean(v)} | ${d} |` + "\n";
     });

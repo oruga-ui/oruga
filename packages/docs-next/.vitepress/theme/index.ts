@@ -12,7 +12,7 @@ import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 import Carbon from "./components/Carbon.vue";
 
-import Oruga, { useProgrammatic } from "../../../oruga-next/dist/oruga";
+import Oruga, { useOruga } from "../../../oruga-next/dist/oruga";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
@@ -101,14 +101,14 @@ export default {
                 case "theme-bulma": {
                     bulmaConfig.iconPack = "fas";
                     bulmaConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useProgrammatic() as any;
+                    const oruga = useOruga();
                     oruga.config.setOptions(bulmaConfig);
                     break;
                 }
                 case "theme-bootstrap": {
                     bootstrapConfig.iconPack = "fas";
                     bootstrapConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useProgrammatic() as any;
+                    const oruga = useOruga();
                     oruga.config.setOptions(bootstrapConfig);
                     break;
                 }
