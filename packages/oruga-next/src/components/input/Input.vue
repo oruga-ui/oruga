@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, StyleValue } from 'vue'
+import { defineComponent, type StyleValue } from 'vue'
 
 import Icon from '../icon/Icon.vue'
 

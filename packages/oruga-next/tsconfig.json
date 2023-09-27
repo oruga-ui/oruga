@@ -1,11 +1,8 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,9 +10,8 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
-    "importsNotUsedAsValues": "error",
     "baseUrl": ".",
-    "types": ["cypress", "node"],
+    "types": ["cypress", "node", "vite/client"],
     "paths": {
       "@/*": [
         "src/*",

@@ -19,10 +19,10 @@
                     {{ monthNames[date.getMonth()] }}
                     <div class="events" v-if="eventsDateMatch(date)">
                         <div
+                            v-for="(event, index) in (eventsDateMatch(date) as any[])"
+                            :key="index" 
                             class="event"
-                            :class="event.type"
-                            v-for="(event, index) in eventsDateMatch(date)"
-                            :key="index"/>
+                            :class="event.type"/>
                     </div>
                 </a>
                 <div
