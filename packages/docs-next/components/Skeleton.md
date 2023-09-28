@@ -44,7 +44,7 @@ title: Skeleton
 | count     | Number of shapes to display                  | number         | -                           | 1       |
 | height    | Custom height                                | number\|string | -                           |         |
 | override  |                                              | boolean        | -                           |         |
-| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | 'left'  |
+| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | "left"  |
 | rounded   | Rounded style                                | boolean        | -                           | true    |
 | size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
 | width     | Custom width                                 | number\|string | -                           |         |

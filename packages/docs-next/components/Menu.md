@@ -95,8 +95,8 @@ title: Menu
 | Prop name | Description         | Type                | Values                     | Default |
 | --------- | ------------------- | ------------------- | -------------------------- | ------- |
 | active    |                     | boolean             | -                          |         |
-| animation |                     | string              | -                          | 'slide' |
-| ariaRole  |                     | string              | -                          | ''      |
+| animation |                     | string              | -                          | "slide" |
+| ariaRole  |                     | string              | -                          | ""      |
 | disabled  |                     | boolean             | -                          |         |
 | expanded  |                     | boolean             | -                          |         |
 | icon      |                     | string              | -                          |         |
@@ -104,7 +104,7 @@ title: Menu
 | label     |                     | string              | -                          |         |
 | override  |                     | boolean             | -                          |         |
 | size      | Icon size, optional | string              | `small`, `medium`, `large` |         |
-| tag       |                     | string \| Component | -                          | 'a'     |
+| tag       |                     | string \| Component | -                          | "a"     |
 
 ### Events
 

@@ -176,6 +176,7 @@ function tmplProps(props, name) {
         ) {
             const params = d
                 .substring(d.lastIndexOf("("), d.lastIndexOf(")"))
+                .replace(/\r\n/g, "")
                 .split(",");
             let configParts = null;
             if (params.length > 3) {
@@ -183,14 +184,14 @@ function tmplProps(props, name) {
                 params[2] = params.slice(2).join(",");
             }
             if (params[1]) {
-                configParts = params[1].split(".");
+                configParts = params[1].trim().split(".");
             }
             if (configParts && configParts[0] && configParts[1]) {
-                const value = `${configParts[1].replace(/'/g, "")}: ${params[2]}`;
-                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'/g,"")}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
+                const value = `${configParts[1].replace(/'|"/g, "")}: ${params[2]}`;
+                d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${configParts[0].replace(/'|"/g,"")}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
             if (configParts && configParts.length == 1) {
-                const value = `${configParts[0].replace(/'/g, "")}: ${params[2]}`;
+                const value = `${configParts[0].replace(/'|"/g, "")}: ${params[2]}`;
                 d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
             }
         }
