@@ -64,7 +64,7 @@ import { Autocomplete, Sidebar } from '@oruga-ui/oruga-next';
 
 createApp(...)
   .use(Autocomplete)
-  .uze(Sidebar);
+  .use(Sidebar);
 ```
 
 However, if you just need to import a single component separately, without any additional programmatic functionalities, you can import individual components like this:
