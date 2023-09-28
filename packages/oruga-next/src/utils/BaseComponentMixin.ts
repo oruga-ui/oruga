@@ -92,7 +92,10 @@ export default defineComponent({
                 currentClass = _defaultSuffixProcessor(currentClass, suffix);
             }
             if (typeof globalClass === "function") {
-                globalClass = globalClass(suffix, context || _getContext(this));
+                globalClass = (globalClass as Function)(
+                    suffix,
+                    context || _getContext(this),
+                );
             } else {
                 globalClass = _defaultSuffixProcessor(globalClass, suffix);
             }

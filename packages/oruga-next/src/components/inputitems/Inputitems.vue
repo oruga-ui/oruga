@@ -23,17 +23,6 @@ export default defineComponent({
     mixins: [FormElementMixin, BaseComponentMixin],
     inheritAttrs: false,
     configField: "inputitems",
-    emits: [
-        "update:modelValue",
-        "focus",
-        "blur",
-        "invalid",
-        "add",
-        "remove",
-        "typing",
-        "infinite-scroll",
-        "icon-right-click",
-    ],
     props: {
         /** @model */
         modelValue: {
@@ -188,6 +177,17 @@ export default defineComponent({
             },
         },
     },
+    emits: [
+        "update:modelValue",
+        "focus",
+        "blur",
+        "invalid",
+        "add",
+        "remove",
+        "typing",
+        "infinite-scroll",
+        "icon-right-click",
+    ],
     data() {
         return {
             items: Array.isArray(this.modelValue)
@@ -432,7 +432,7 @@ export default defineComponent({
 
 <template>
     <div :class="rootClasses">
-        <div :class="containerClasses" @click="hasInput && focus($event)">
+        <div :class="containerClasses" @click="hasInput && focus()">
             <slot name="selected" :items="items">
                 <span
                     v-for="(item, index) in items"
@@ -446,14 +446,14 @@ export default defineComponent({
                         both
                         :pack="iconPack"
                         :icon="closeIcon"
-                        @click="removeItem(index, $event)"
-                        :aria-label="ariaCloseLabel" />
+                        :aria-label="ariaCloseLabel"
+                        @click="removeItem(index, $event)" />
                 </span>
             </slot>
 
             <o-autocomplete
-                ref="autocomplete"
                 v-if="hasInput"
+                ref="autocomplete"
                 v-model="newItem"
                 v-bind="autocompleteBind"
                 :data="data"

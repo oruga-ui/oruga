@@ -53,7 +53,6 @@ export default defineComponent({
     name: "OTooltip",
     mixins: [BaseComponentMixin],
     configField: "tooltip",
-    emits: ["open", "close"],
     props: {
         /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
         active: {
@@ -137,6 +136,7 @@ export default defineComponent({
         arrowClass: [String, Function, Array],
         arrowOrderClass: [String, Function, Array],
     },
+    emits: ["open", "close"],
     data() {
         return {
             isActive: false,
@@ -209,7 +209,7 @@ export default defineComponent({
             if (this.position !== "auto") {
                 return this.position;
             }
-            const defaultPosition = getValueByPath(
+            const defaultPosition = getValueByPath<Position>(
                 getOptions(),
                 "tooltip.position",
                 "top",
@@ -267,7 +267,7 @@ export default defineComponent({
                         : "top";
                 const crossOpposite = opposites[crossPosition];
                 // In descending order of priority
-                const positions = [
+                const positions: Position[] = [
                     defaultPosition,
                     defaultOpposite,
                     crossPosition,
@@ -277,7 +277,7 @@ export default defineComponent({
                 for (const position of positions) {
                     const overlap = intersectionArea(
                         viewRect,
-                        contentRectAtAnchor(position as Position),
+                        contentRectAtAnchor(position),
                     );
                     if (overlap > maxOverlap) {
                         maxOverlap = overlap;
@@ -303,6 +303,27 @@ export default defineComponent({
                 this.updateAppendToBody();
             }
         },
+    },
+    mounted() {
+        if (this.appendToBody) {
+            this.$data.bodyEl = createAbsoluteElement(this.$refs.content);
+            this.updateAppendToBody();
+        }
+    },
+    created() {
+        if (typeof window !== "undefined") {
+            document.addEventListener("click", this.clickedOutside);
+            document.addEventListener("keyup", this.keyPress);
+        }
+    },
+    beforeUnmount() {
+        if (typeof window !== "undefined") {
+            document.removeEventListener("click", this.clickedOutside);
+            document.removeEventListener("keyup", this.keyPress);
+        }
+        if (this.appendToBody) {
+            removeElement(this.$data.bodyEl);
+        }
     },
     methods: {
         updateAppendToBody() {
@@ -427,27 +448,6 @@ export default defineComponent({
             }
             return false;
         },
-    },
-    mounted() {
-        if (this.appendToBody) {
-            this.$data.bodyEl = createAbsoluteElement(this.$refs.content);
-            this.updateAppendToBody();
-        }
-    },
-    created() {
-        if (typeof window !== "undefined") {
-            document.addEventListener("click", this.clickedOutside);
-            document.addEventListener("keyup", this.keyPress);
-        }
-    },
-    beforeUnmount() {
-        if (typeof window !== "undefined") {
-            document.removeEventListener("click", this.clickedOutside);
-            document.removeEventListener("keyup", this.keyPress);
-        }
-        if (this.appendToBody) {
-            removeElement(this.$data.bodyEl);
-        }
     },
 });
 </script>
