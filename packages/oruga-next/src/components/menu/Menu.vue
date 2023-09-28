@@ -1,12 +1,6 @@
-<template>
-    <div :class="rootClasses">
-        <slot />
-    </div>
-</template>
-
 <script lang="ts">
-import BaseComponentMixin from '../../utils/BaseComponentMixin';
-import {defineComponent} from "vue";
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { defineComponent } from "vue";
 
 /**
  * A simple menu
@@ -16,28 +10,28 @@ import {defineComponent} from "vue";
  * @style _menu.scss
  */
 export default defineComponent({
-    name: 'OMenu',
-    configField: 'menu',
+    name: "OMenu",
+    configField: "menu",
     mixins: [BaseComponentMixin],
     props: {
         accordion: {
             type: Boolean,
-            default: true
+            default: true,
         },
         activable: {
             type: Boolean,
-            default: true
+            default: true,
         },
-        rootClass: [String, Array, Function]
+        rootClass: [String, Array, Function],
     },
     data() {
         return {
             menuItems: [],
-        }
+        };
     },
     computed: {
         rootClasses() {
-            return this.computedClass('rootClass', 'o-menu')
+            return this.computedClass("rootClass", "o-menu");
         },
     },
     methods: {
@@ -56,7 +50,13 @@ export default defineComponent({
             resetMenu: this.resetMenu,
             accordion: () => this.accordion,
             activable: () => this.activable,
-        }
-    }
-})
+        };
+    },
+});
 </script>
+
+<template>
+    <div :class="rootClasses">
+        <slot />
+    </div>
+</template>

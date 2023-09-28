@@ -1,15 +1,13 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin } from "vue";
 
-import Input from './Input.vue'
+import Input from "./Input.vue";
 
-import { registerComponent } from '../../utils/plugins'
+import { registerComponent } from "../../utils/plugins";
 
 export default {
     install(app: App) {
-        registerComponent(app, Input)
-    }
-} as Plugin
+        registerComponent(app, Input);
+    },
+} as Plugin;
 
-export {
-    Input as OInput
-}
+export { Input as OInput };

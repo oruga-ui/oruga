@@ -1,46 +1,59 @@
-import type { App } from 'vue'
-import { defineComponent } from 'vue';
+import type { App } from "vue";
+import { defineComponent } from "vue";
 
-import { getOptions } from './config'
-import FormElementMixin from './FormElementMixin'
-import { getValueByPath, isMobile, matchWithGroups } from './helpers'
+import { getOptions } from "./config";
+import FormElementMixin from "./FormElementMixin";
+import { getValueByPath, isMobile, matchWithGroups } from "./helpers";
 
-const AM = 'AM'
-const PM = 'PM'
-const HOUR_FORMAT_24 = '24'
-const HOUR_FORMAT_12 = '12'
+const AM = "AM";
+const PM = "PM";
+const HOUR_FORMAT_24 = "24";
+const HOUR_FORMAT_12 = "12";
 
 const defaultTimeFormatter = (date, vm) => {
-    return vm.dtf.format(date)
-}
+    return vm.dtf.format(date);
+};
 
 const defaultTimeParser = (timeString, vm) => {
     if (timeString) {
-        let d = null
+        let d = null;
         if (vm.computedValue && !isNaN(vm.computedValue)) {
-            d = new Date(vm.computedValue)
+            d = new Date(vm.computedValue);
         } else {
-            d = vm.timeCreator()
-            d.setMilliseconds(0)
+            d = vm.timeCreator();
+            d.setMilliseconds(0);
         }
 
-        if (vm.dtf.formatToParts && typeof vm.dtf.formatToParts === 'function') {
+        if (
+            vm.dtf.formatToParts &&
+            typeof vm.dtf.formatToParts === "function"
+        ) {
             const formatRegex = vm.dtf
-                .formatToParts(d).map((part) => {
-                    if (part.type === 'literal') {
-                        return part.value.replace(/ /g, '\\s?')
-                    } else if (part.type === 'dayPeriod') {
-                        return `((?!=<${part.type}>)(${vm.amString}|${vm.pmString}|${AM}|${PM}|${AM.toLowerCase()}|${PM.toLowerCase()})?)`
+                .formatToParts(d)
+                .map((part) => {
+                    if (part.type === "literal") {
+                        return part.value.replace(/ /g, "\\s?");
+                    } else if (part.type === "dayPeriod") {
+                        return `((?!=<${part.type}>)(${vm.amString}|${
+                            vm.pmString
+                        }|${AM}|${PM}|${AM.toLowerCase()}|${PM.toLowerCase()})?)`;
                     }
-                    return `((?!=<${part.type}>)\\d+)`
-                }).join('')
-            const timeGroups = matchWithGroups(formatRegex, timeString)
+                    return `((?!=<${part.type}>)\\d+)`;
+                })
+                .join("");
+            const timeGroups = matchWithGroups(formatRegex, timeString);
 
             // We do a simple validation for the group.
             // If it is not valid, it will fallback to Date.parse below
-            timeGroups.hour = timeGroups.hour ? parseInt(timeGroups.hour, 10) : null
-            timeGroups.minute = timeGroups.minute ? parseInt(timeGroups.minute, 10) : null
-            timeGroups.second = timeGroups.second ? parseInt(timeGroups.second, 10) : null
+            timeGroups.hour = timeGroups.hour
+                ? parseInt(timeGroups.hour, 10)
+                : null;
+            timeGroups.minute = timeGroups.minute
+                ? parseInt(timeGroups.minute, 10)
+                : null;
+            timeGroups.second = timeGroups.second
+                ? parseInt(timeGroups.second, 10)
+                : null;
             if (
                 timeGroups.hour &&
                 timeGroups.hour >= 0 &&
@@ -49,56 +62,63 @@ const defaultTimeParser = (timeString, vm) => {
                 timeGroups.minute >= 0 &&
                 timeGroups.minute < 59
             ) {
-                if (timeGroups.dayPeriod &&
-                    (
-                        timeGroups.dayPeriod.toLowerCase() === vm.pmString.toLowerCase() ||
-                        timeGroups.dayPeriod.toLowerCase() === PM.toLowerCase()
-                    ) &&
-                    timeGroups.hour < 12) {
-                    timeGroups.hour += 12
+                if (
+                    timeGroups.dayPeriod &&
+                    (timeGroups.dayPeriod.toLowerCase() ===
+                        vm.pmString.toLowerCase() ||
+                        timeGroups.dayPeriod.toLowerCase() ===
+                            PM.toLowerCase()) &&
+                    timeGroups.hour < 12
+                ) {
+                    timeGroups.hour += 12;
                 }
-                d.setHours(timeGroups.hour)
-                d.setMinutes(timeGroups.minute)
-                d.setSeconds(timeGroups.second || 0)
-                return d
+                d.setHours(timeGroups.hour);
+                d.setMinutes(timeGroups.minute);
+                d.setSeconds(timeGroups.second || 0);
+                return d;
             }
         }
 
         // Fallback if formatToParts is not supported or if we were not able to parse a valid date
-        let am = false
+        let am = false;
         if (vm.hourFormat === HOUR_FORMAT_12) {
-            const dateString12 = timeString.split(' ')
-            timeString = dateString12[0]
-            am = (dateString12[1] === vm.amString || dateString12[1] === AM)
+            const dateString12 = timeString.split(" ");
+            timeString = dateString12[0];
+            am = dateString12[1] === vm.amString || dateString12[1] === AM;
         }
-        const time = timeString.split(':')
-        let hours = parseInt(time[0], 10)
-        const minutes = parseInt(time[1], 10)
-        const seconds = vm.enableSeconds ? parseInt(time[2], 10) : 0
-        if (isNaN(hours) || hours < 0 || hours > 23 ||
+        const time = timeString.split(":");
+        let hours = parseInt(time[0], 10);
+        const minutes = parseInt(time[1], 10);
+        const seconds = vm.enableSeconds ? parseInt(time[2], 10) : 0;
+        if (
+            isNaN(hours) ||
+            hours < 0 ||
+            hours > 23 ||
             (vm.hourFormat === HOUR_FORMAT_12 && (hours < 1 || hours > 12)) ||
-            isNaN(minutes) || minutes < 0 || minutes > 59) {
-            return null
+            isNaN(minutes) ||
+            minutes < 0 ||
+            minutes > 59
+        ) {
+            return null;
         }
-        d.setSeconds(seconds)
-        d.setMinutes(minutes)
+        d.setSeconds(seconds);
+        d.setMinutes(minutes);
         if (vm.hourFormat === HOUR_FORMAT_12) {
             if (am && hours === 12) {
-                hours = 0
+                hours = 0;
             } else if (!am && hours !== 12) {
-                hours += 12
+                hours += 12;
             }
         }
-        d.setHours(hours)
-        return new Date(d.getTime())
+        d.setHours(hours);
+        return new Date(d.getTime());
     }
-    return null
-}
+    return null;
+};
 
 export default defineComponent({
     mixins: [FormElementMixin],
     inheritAttrs: false,
-    emits: ['update:modelValue'],
     props: {
         /** @model */
         modelValue: Date,
@@ -114,58 +134,74 @@ export default defineComponent({
          */
         size: String,
         hourFormat: {
-            type: String
+            type: String,
         },
         incrementHours: {
             type: Number,
-            default: 1
+            default: 1,
         },
         incrementMinutes: {
             type: Number,
-            default: 1
+            default: 1,
         },
         incrementSeconds: {
             type: Number,
-            default: 1
+            default: 1,
         },
         timeFormatter: {
             type: Function,
             default: (date: Date, vm: App) => {
-                const timeFormatter = getValueByPath(getOptions(), 'timepicker.timeFormatter', undefined)
-                if (typeof timeFormatter === 'function') {
-                    return timeFormatter(date)
+                const timeFormatter = getValueByPath(
+                    getOptions(),
+                    "timepicker.timeFormatter",
+                    undefined,
+                );
+                if (typeof timeFormatter === "function") {
+                    return timeFormatter(date);
                 } else {
-                    return defaultTimeFormatter(date, vm)
+                    return defaultTimeFormatter(date, vm);
                 }
-            }
+            },
         },
         timeParser: {
             type: Function,
             default: (date: Date, vm: App) => {
-                const timeParser = getValueByPath(getOptions(), 'timepicker.timeParser', undefined)
-                if (typeof timeParser === 'function') {
-                    return timeParser(date)
+                const timeParser = getValueByPath(
+                    getOptions(),
+                    "timepicker.timeParser",
+                    undefined,
+                );
+                if (typeof timeParser === "function") {
+                    return timeParser(date);
                 } else {
-                    return defaultTimeParser(date, vm)
+                    return defaultTimeParser(date, vm);
                 }
-            }
+            },
         },
         mobileNative: {
             type: Boolean,
             default: () => {
-                return getValueByPath(getOptions(), 'timepicker.mobileNative', true)
-            }
+                return getValueByPath(
+                    getOptions(),
+                    "timepicker.mobileNative",
+                    true,
+                );
+            },
         },
         timeCreator: {
             type: Function,
             default: () => {
-                const timeCreator = getValueByPath(getOptions(), 'timepicker.timeCreator', undefined)
-                if (typeof timeCreator === 'function') {
-                    return timeCreator()
+                const timeCreator = getValueByPath(
+                    getOptions(),
+                    "timepicker.timeCreator",
+                    undefined,
+                );
+                if (typeof timeCreator === "function") {
+                    return timeCreator();
                 } else {
-                    return new Date()
+                    return new Date();
                 }
-            }
+            },
         },
         position: String,
         unselectableTimes: Array,
@@ -176,9 +212,10 @@ export default defineComponent({
         appendToBody: Boolean,
         resetOnMeridianChange: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
+    emits: ["update:modelValue"],
     data() {
         return {
             dateSelected: this.modelValue,
@@ -186,174 +223,214 @@ export default defineComponent({
             minutesSelected: null,
             secondsSelected: null,
             meridienSelected: null,
-            _elementRef: 'input'
-        }
+            $elementRef: "input",
+        };
     },
     computed: {
         computedValue: {
             get() {
-                return this.dateSelected
+                return this.dateSelected;
             },
             set(value) {
-                this.dateSelected = value
-                this.$emit('update:modelValue', this.dateSelected)
-            }
+                this.dateSelected = value;
+                this.$emit("update:modelValue", this.dateSelected);
+            },
         },
         localeOptions() {
             return new Intl.DateTimeFormat(this.locale, {
-                hour: 'numeric',
-                minute: 'numeric',
-                second: this.enableSeconds ? 'numeric' : undefined
-            }).resolvedOptions()
+                hour: "numeric",
+                minute: "numeric",
+                second: this.enableSeconds ? "numeric" : undefined,
+            }).resolvedOptions();
         },
         dtf() {
             return new Intl.DateTimeFormat(this.locale, {
-                hour: this.localeOptions.hour || 'numeric',
-                minute: this.localeOptions.minute || 'numeric',
-                second: this.enableSeconds ? this.localeOptions.second || 'numeric' : undefined,
-                // @ts-ignore to update types
-                hourCycle: !this.isHourFormat24 ? 'h12' : 'h23'
-            })
+                hour: this.localeOptions.hour || "numeric",
+                minute: this.localeOptions.minute || "numeric",
+                second: this.enableSeconds
+                    ? this.localeOptions.second || "numeric"
+                    : undefined,
+                hourCycle: !this.isHourFormat24 ? "h12" : "h23",
+            });
         },
         newHourFormat() {
-            return this.hourFormat || (this.localeOptions.hour12 ? HOUR_FORMAT_12 : HOUR_FORMAT_24)
+            return (
+                this.hourFormat ||
+                (this.localeOptions.hour12 ? HOUR_FORMAT_12 : HOUR_FORMAT_24)
+            );
         },
         sampleTime() {
-            let d = this.timeCreator()
-            d.setHours(10)
-            d.setSeconds(0)
-            d.setMinutes(0)
-            d.setMilliseconds(0)
-            return d
+            const d = this.timeCreator();
+            d.setHours(10);
+            d.setSeconds(0);
+            d.setMinutes(0);
+            d.setMilliseconds(0);
+            return d;
         },
         hourLiteral() {
-            if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                let d = this.sampleTime
-                const parts = this.dtf.formatToParts(d)
-                const literal = parts.find((part, idx) => (idx > 0 && parts[idx - 1].type === 'hour'))
+            if (
+                this.dtf.formatToParts &&
+                typeof this.dtf.formatToParts === "function"
+            ) {
+                const d = this.sampleTime;
+                const parts = this.dtf.formatToParts(d);
+                const literal = parts.find(
+                    (part, idx) => idx > 0 && parts[idx - 1].type === "hour",
+                );
                 if (literal) {
-                    return literal.value
+                    return literal.value;
                 }
             }
-            return ':'
+            return ":";
         },
         minuteLiteral() {
-            if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                let d = this.sampleTime
-                const parts = this.dtf.formatToParts(d)
-                const literal = parts.find((part, idx) => (idx > 0 && parts[idx - 1].type === 'minute'))
+            if (
+                this.dtf.formatToParts &&
+                typeof this.dtf.formatToParts === "function"
+            ) {
+                const d = this.sampleTime;
+                const parts = this.dtf.formatToParts(d);
+                const literal = parts.find(
+                    (part, idx) => idx > 0 && parts[idx - 1].type === "minute",
+                );
                 if (literal) {
-                    return literal.value
+                    return literal.value;
                 }
             }
-            return ':'
+            return ":";
         },
         secondLiteral() {
-            if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                let d = this.sampleTime
-                const parts = this.dtf.formatToParts(d)
-                const literal = parts.find((part, idx) => (idx > 0 && parts[idx - 1].type === 'second'))
+            if (
+                this.dtf.formatToParts &&
+                typeof this.dtf.formatToParts === "function"
+            ) {
+                const d = this.sampleTime;
+                const parts = this.dtf.formatToParts(d);
+                const literal = parts.find(
+                    (part, idx) => idx > 0 && parts[idx - 1].type === "second",
+                );
                 if (literal) {
-                    return literal.value
+                    return literal.value;
                 }
             }
+            return "";
         },
         amString() {
-            if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                let d = this.sampleTime
-                d.setHours(10)
-                const dayPeriod = this.dtf.formatToParts(d).find((part) => part.type === 'dayPeriod')
+            if (
+                this.dtf.formatToParts &&
+                typeof this.dtf.formatToParts === "function"
+            ) {
+                const d = this.sampleTime;
+                d.setHours(10);
+                const dayPeriod = this.dtf
+                    .formatToParts(d)
+                    .find((part) => part.type === "dayPeriod");
                 if (dayPeriod) {
-                    return dayPeriod.value
+                    return dayPeriod.value;
                 }
             }
-            return AM
+            return AM;
         },
         pmString() {
-            if (this.dtf.formatToParts && typeof this.dtf.formatToParts === 'function') {
-                let d = this.sampleTime
-                d.setHours(20)
-                const dayPeriod = this.dtf.formatToParts(d).find((part) => part.type === 'dayPeriod')
+            if (
+                this.dtf.formatToParts &&
+                typeof this.dtf.formatToParts === "function"
+            ) {
+                const d = this.sampleTime;
+                d.setHours(20);
+                const dayPeriod = this.dtf
+                    .formatToParts(d)
+                    .find((part) => part.type === "dayPeriod");
                 if (dayPeriod) {
-                    return dayPeriod.value
+                    return dayPeriod.value;
                 }
             }
-            return PM
+            return PM;
         },
         hours() {
-            if (!this.incrementHours || this.incrementHours < 1) throw new Error('Hour increment cannot be null or less than 1.')
-            const hours = []
-            const numberOfHours = this.isHourFormat24 ? 24 : 12
+            if (!this.incrementHours || this.incrementHours < 1)
+                throw new Error(
+                    "Hour increment cannot be null or less than 1.",
+                );
+            const hours = [];
+            const numberOfHours = this.isHourFormat24 ? 24 : 12;
             for (let i = 0; i < numberOfHours; i += this.incrementHours) {
-                let value = i
-                let label = value
+                let value = i;
+                let label = value;
                 if (!this.isHourFormat24) {
-                    value = (i + 1)
-                    label = value
+                    value = i + 1;
+                    label = value;
                     if (this.meridienSelected === this.amString) {
                         if (value === 12) {
-                            value = 0
+                            value = 0;
                         }
                     } else if (this.meridienSelected === this.pmString) {
                         if (value !== 12) {
-                            value += 12
+                            value += 12;
                         }
                     }
                 }
                 hours.push({
                     label: this.formatNumber(label),
-                    value: value
-                })
+                    value: value,
+                });
             }
-            return hours
+            return hours;
         },
 
         minutes() {
-            if (!this.incrementMinutes || this.incrementMinutes < 1) throw new Error('Minute increment cannot be null or less than 1.')
-            const minutes = []
+            if (!this.incrementMinutes || this.incrementMinutes < 1)
+                throw new Error(
+                    "Minute increment cannot be null or less than 1.",
+                );
+            const minutes = [];
             for (let i = 0; i < 60; i += this.incrementMinutes) {
                 minutes.push({
                     label: this.formatNumber(i, true),
-                    value: i
-                })
+                    value: i,
+                });
             }
-            return minutes
+            return minutes;
         },
 
         seconds() {
-            if (!this.incrementSeconds || this.incrementSeconds < 1) throw new Error('Second increment cannot be null or less than 1.')
-            const seconds = []
+            if (!this.incrementSeconds || this.incrementSeconds < 1)
+                throw new Error(
+                    "Second increment cannot be null or less than 1.",
+                );
+            const seconds = [];
             for (let i = 0; i < 60; i += this.incrementSeconds) {
                 seconds.push({
                     label: this.formatNumber(i, true),
-                    value: i
-                })
+                    value: i,
+                });
             }
-            return seconds
+            return seconds;
         },
 
         meridiens() {
-            return [this.amString, this.pmString]
+            return [this.amString, this.pmString];
         },
 
         isMobile() {
-            return this.mobileNative && isMobile.any()
+            return this.mobileNative && isMobile.any();
         },
 
         isHourFormat24() {
-            return this.newHourFormat === HOUR_FORMAT_24
-        }
+            return this.newHourFormat === HOUR_FORMAT_24;
+        },
     },
     watch: {
         hourFormat() {
             if (this.hoursSelected !== null) {
-                this.meridienSelected = this.hoursSelected >= 12 ? this.pmString : this.amString
+                this.meridienSelected =
+                    this.hoursSelected >= 12 ? this.pmString : this.amString;
             }
         },
         locale() {
             // see updateInternalState default
             if (!this.value) {
-                this.meridienSelected = this.amString
+                this.meridienSelected = this.amString;
             }
         },
         /**
@@ -363,58 +440,75 @@ export default defineComponent({
          */
         modelValue: {
             handler(value) {
-                this.updateInternalState(value)
-                !this.isValid && this.$refs.input.checkHtml5Validity()
+                this.updateInternalState(value);
+                !this.isValid && this.$refs.input.checkHtml5Validity();
             },
-            immediate: true
+            immediate: true,
+        },
+    },
+    created() {
+        if (typeof window !== "undefined") {
+            document.addEventListener("keyup", this.keyPress);
+        }
+    },
+    beforeUnmount() {
+        if (typeof window !== "undefined") {
+            document.removeEventListener("keyup", this.keyPress);
         }
     },
     methods: {
         onMeridienChange(value) {
             if (this.hoursSelected !== null && this.resetOnMeridianChange) {
-                this.hoursSelected = null
-                this.minutesSelected = null
-                this.secondsSelected = null
-                this.computedValue = null
+                this.hoursSelected = null;
+                this.minutesSelected = null;
+                this.secondsSelected = null;
+                this.computedValue = null;
             } else if (this.hoursSelected !== null) {
                 if (value === this.pmString) {
-                    this.hoursSelected += 12
+                    this.hoursSelected += 12;
                 } else if (value === this.amString) {
-                    this.hoursSelected -= 12
+                    this.hoursSelected -= 12;
                 }
             }
             this.updateDateSelected(
                 this.hoursSelected,
                 this.minutesSelected,
                 this.enableSeconds ? this.secondsSelected : 0,
-                value)
+                value,
+            );
         },
 
         onHoursChange(value) {
-            if (!this.minutesSelected && typeof this.defaultMinutes !== 'undefined') {
-                this.minutesSelected = this.defaultMinutes
+            if (
+                !this.minutesSelected &&
+                typeof this.defaultMinutes !== "undefined"
+            ) {
+                this.minutesSelected = this.defaultMinutes;
             }
-            if (!this.secondsSelected && typeof this.defaultSeconds !== 'undefined') {
-                this.secondsSelected = this.defaultSeconds
+            if (
+                !this.secondsSelected &&
+                typeof this.defaultSeconds !== "undefined"
+            ) {
+                this.secondsSelected = this.defaultSeconds;
             }
             this.updateDateSelected(
                 parseInt(value, 10),
                 this.minutesSelected,
                 this.enableSeconds ? this.secondsSelected : 0,
-                this.meridienSelected
-            )
+                this.meridienSelected,
+            );
         },
 
         onMinutesChange(value) {
             if (!this.secondsSelected && this.defaultSeconds) {
-                this.secondsSelected = this.defaultSeconds
+                this.secondsSelected = this.defaultSeconds;
             }
             this.updateDateSelected(
                 this.hoursSelected,
                 parseInt(value, 10),
                 this.enableSeconds ? this.secondsSelected : 0,
-                this.meridienSelected
-            )
+                this.meridienSelected,
+            );
         },
 
         onSecondsChange(value) {
@@ -422,175 +516,216 @@ export default defineComponent({
                 this.hoursSelected,
                 this.minutesSelected,
                 parseInt(value, 10),
-                this.meridienSelected
-            )
+                this.meridienSelected,
+            );
         },
 
         updateDateSelected(hours, minutes, seconds, meridiens) {
-            if (hours != null && minutes != null &&
-                ((!this.isHourFormat24 && meridiens !== null) || this.isHourFormat24)) {
-                let time = null
+            if (
+                hours != null &&
+                minutes != null &&
+                ((!this.isHourFormat24 && meridiens !== null) ||
+                    this.isHourFormat24)
+            ) {
+                let time = null;
                 if (this.computedValue && !isNaN(this.computedValue)) {
-                    time = new Date(this.computedValue)
+                    time = new Date(this.computedValue);
                 } else {
-                    time = this.timeCreator()
-                    time.setMilliseconds(0)
+                    time = this.timeCreator();
+                    time.setMilliseconds(0);
                 }
-                time.setHours(hours)
-                time.setMinutes(minutes)
-                time.setSeconds(seconds)
+                time.setHours(hours);
+                time.setMinutes(minutes);
+                time.setSeconds(seconds);
                 if (!isNaN(time.getTime())) {
-                    this.computedValue = new Date(time.getTime())
+                    this.computedValue = new Date(time.getTime());
                 }
             }
         },
 
         updateInternalState(value) {
             if (value) {
-                this.hoursSelected = value.getHours()
-                this.minutesSelected = value.getMinutes()
-                this.secondsSelected = value.getSeconds()
-                this.meridienSelected = value.getHours() >= 12 ? this.pmString : this.amString
+                this.hoursSelected = value.getHours();
+                this.minutesSelected = value.getMinutes();
+                this.secondsSelected = value.getSeconds();
+                this.meridienSelected =
+                    value.getHours() >= 12 ? this.pmString : this.amString;
             } else {
-                this.hoursSelected = null
-                this.minutesSelected = null
-                this.secondsSelected = null
-                this.meridienSelected = this.amString
+                this.hoursSelected = null;
+                this.minutesSelected = null;
+                this.secondsSelected = null;
+                this.meridienSelected = this.amString;
             }
-            this.dateSelected = value
+            this.dateSelected = value;
         },
 
         isHourDisabled(hour) {
-            let disabled = false
+            let disabled = false;
             if (this.minTime) {
-                const minHours = this.minTime.getHours()
+                const minHours = this.minTime.getHours();
                 const noMinutesAvailable = this.minutes.every((minute) => {
-                    return this.isMinuteDisabledForHour(hour, minute.value)
-                })
-                disabled = hour < minHours || noMinutesAvailable
+                    return this.isMinuteDisabledForHour(hour, minute.value);
+                });
+                disabled = hour < minHours || noMinutesAvailable;
             }
             if (this.maxTime) {
                 if (!disabled) {
-                    const maxHours = this.maxTime.getHours()
-                    disabled = hour > maxHours
+                    const maxHours = this.maxTime.getHours();
+                    disabled = hour > maxHours;
                 }
             }
             if (this.unselectableTimes) {
                 if (!disabled) {
-                    const unselectable = this.unselectableTimes.filter((time) => {
-                        if (this.enableSeconds && this.secondsSelected !== null) {
-                            return time.getHours() === hour &&
-                                time.getMinutes() === this.minutesSelected &&
-                                time.getSeconds() === this.secondsSelected
-                        } else if (this.minutesSelected !== null) {
-                            return time.getHours() === hour &&
-                                time.getMinutes() === this.minutesSelected
-                        }
-                        return false
-                    })
+                    const unselectable = this.unselectableTimes.filter(
+                        (time) => {
+                            if (
+                                this.enableSeconds &&
+                                this.secondsSelected !== null
+                            ) {
+                                return (
+                                    time.getHours() === hour &&
+                                    time.getMinutes() ===
+                                        this.minutesSelected &&
+                                    time.getSeconds() === this.secondsSelected
+                                );
+                            } else if (this.minutesSelected !== null) {
+                                return (
+                                    time.getHours() === hour &&
+                                    time.getMinutes() === this.minutesSelected
+                                );
+                            }
+                            return false;
+                        },
+                    );
                     if (unselectable.length > 0) {
-                        disabled = true
+                        disabled = true;
                     } else {
                         disabled = this.minutes.every((minute) => {
-                            return this.unselectableTimes.filter((time) => {
-                                return time.getHours() === hour &&
-                                    time.getMinutes() === minute.value
-                            }).length > 0
-                        })
+                            return (
+                                this.unselectableTimes.filter((time) => {
+                                    return (
+                                        time.getHours() === hour &&
+                                        time.getMinutes() === minute.value
+                                    );
+                                }).length > 0
+                            );
+                        });
                     }
                 }
             }
-            return disabled
+            return disabled;
         },
 
         isMinuteDisabledForHour(hour, minute) {
-            let disabled = false
+            let disabled = false;
             if (this.minTime) {
-                const minHours = this.minTime.getHours()
-                const minMinutes = this.minTime.getMinutes()
-                disabled = hour === minHours && minute < minMinutes
+                const minHours = this.minTime.getHours();
+                const minMinutes = this.minTime.getMinutes();
+                disabled = hour === minHours && minute < minMinutes;
             }
             if (this.maxTime) {
                 if (!disabled) {
-                    const maxHours = this.maxTime.getHours()
-                    const maxMinutes = this.maxTime.getMinutes()
-                    disabled = hour === maxHours && minute > maxMinutes
+                    const maxHours = this.maxTime.getHours();
+                    const maxMinutes = this.maxTime.getMinutes();
+                    disabled = hour === maxHours && minute > maxMinutes;
                 }
             }
 
-            return disabled
+            return disabled;
         },
 
         isMinuteDisabled(minute) {
-            let disabled = false
+            let disabled = false;
             if (this.hoursSelected !== null) {
                 if (this.isHourDisabled(this.hoursSelected)) {
-                    disabled = true
+                    disabled = true;
                 } else {
-                    disabled = this.isMinuteDisabledForHour(this.hoursSelected, minute)
+                    disabled = this.isMinuteDisabledForHour(
+                        this.hoursSelected,
+                        minute,
+                    );
                 }
                 if (this.unselectableTimes) {
                     if (!disabled) {
-                        const unselectable = this.unselectableTimes.filter((time) => {
-                            if (this.enableSeconds && this.secondsSelected !== null) {
-                                return time.getHours() === this.hoursSelected &&
-                                    time.getMinutes() === minute &&
-                                    time.getSeconds() === this.secondsSelected
-                            } else {
-                                return time.getHours() === this.hoursSelected &&
-                                    time.getMinutes() === minute
-                            }
-                        })
-                        disabled = unselectable.length > 0
+                        const unselectable = this.unselectableTimes.filter(
+                            (time) => {
+                                if (
+                                    this.enableSeconds &&
+                                    this.secondsSelected !== null
+                                ) {
+                                    return (
+                                        time.getHours() ===
+                                            this.hoursSelected &&
+                                        time.getMinutes() === minute &&
+                                        time.getSeconds() ===
+                                            this.secondsSelected
+                                    );
+                                } else {
+                                    return (
+                                        time.getHours() ===
+                                            this.hoursSelected &&
+                                        time.getMinutes() === minute
+                                    );
+                                }
+                            },
+                        );
+                        disabled = unselectable.length > 0;
                     }
                 }
             }
-            return disabled
+            return disabled;
         },
 
         isSecondDisabled(second) {
-            let disabled = false
+            let disabled = false;
             if (this.minutesSelected !== null) {
                 if (this.isMinuteDisabled(this.minutesSelected)) {
-                    disabled = true
+                    disabled = true;
                 } else {
                     if (this.minTime) {
-                        const minHours = this.minTime.getHours()
-                        const minMinutes = this.minTime.getMinutes()
-                        const minSeconds = this.minTime.getSeconds()
-                        disabled = this.hoursSelected === minHours &&
+                        const minHours = this.minTime.getHours();
+                        const minMinutes = this.minTime.getMinutes();
+                        const minSeconds = this.minTime.getSeconds();
+                        disabled =
+                            this.hoursSelected === minHours &&
                             this.minutesSelected === minMinutes &&
-                            second < minSeconds
+                            second < minSeconds;
                     }
                     if (this.maxTime) {
                         if (!disabled) {
-                            const maxHours = this.maxTime.getHours()
-                            const maxMinutes = this.maxTime.getMinutes()
-                            const maxSeconds = this.maxTime.getSeconds()
-                            disabled = this.hoursSelected === maxHours &&
+                            const maxHours = this.maxTime.getHours();
+                            const maxMinutes = this.maxTime.getMinutes();
+                            const maxSeconds = this.maxTime.getSeconds();
+                            disabled =
+                                this.hoursSelected === maxHours &&
                                 this.minutesSelected === maxMinutes &&
-                                second > maxSeconds
+                                second > maxSeconds;
                         }
                     }
                 }
                 if (this.unselectableTimes) {
                     if (!disabled) {
-                        const unselectable = this.unselectableTimes.filter((time) => {
-                            return time.getHours() === this.hoursSelected &&
-                                time.getMinutes() === this.minutesSelected &&
-                                time.getSeconds() === second
-                        })
-                        disabled = unselectable.length > 0
+                        const unselectable = this.unselectableTimes.filter(
+                            (time) => {
+                                return (
+                                    time.getHours() === this.hoursSelected &&
+                                    time.getMinutes() ===
+                                        this.minutesSelected &&
+                                    time.getSeconds() === second
+                                );
+                            },
+                        );
+                        disabled = unselectable.length > 0;
                     }
                 }
             }
-            return disabled
+            return disabled;
         },
 
-        isMeridienDisabled(meridienString){
+        isMeridienDisabled(meridienString) {
             const offset = meridienString == "AM" ? 0 : 12;
-            for(let i = 0; i < 12; i++){
-                if(!this.isHourDisabled(i + offset)){
+            for (let i = 0; i < 12; i++) {
+                if (!this.isHourDisabled(i + offset)) {
                     return false;
                 }
             }
@@ -601,14 +736,14 @@ export default defineComponent({
          * Parse string into date
          */
         onChange(value) {
-            const date = this.timeParser(value, this)
-            this.updateInternalState(date)
+            const date = this.timeParser(value, this);
+            this.updateInternalState(date);
             if (date && !isNaN(date)) {
-                this.computedValue = date
+                this.computedValue = date;
             } else {
                 // Force refresh input value when not valid date
-                this.computedValue = null
-                this.$refs.input.newValue = this.computedValue
+                this.computedValue = null;
+                this.$refs.input.newValue = this.computedValue;
             }
         },
 
@@ -617,9 +752,10 @@ export default defineComponent({
          */
         toggle(active) {
             if (this.$refs.dropdown) {
-                this.$refs.dropdown.isActive = typeof active === 'boolean'
-                    ? active
-                    : !this.$refs.dropdown.isActive
+                this.$refs.dropdown.isActive =
+                    typeof active === "boolean"
+                        ? active
+                        : !this.$refs.dropdown.isActive;
             }
         },
 
@@ -627,16 +763,16 @@ export default defineComponent({
          * Close timepicker
          */
         close() {
-            this.toggle(false)
+            this.toggle(false);
         },
 
         /*
          * Call default onFocus method and show timepicker
          */
         handleOnFocus() {
-            this.onFocus()
+            this.onFocus();
             if (this.openOnFocus) {
-                this.toggle(true)
+                this.toggle(true);
             }
         },
 
@@ -644,49 +780,51 @@ export default defineComponent({
          * Format date into string 'HH-MM-SS'
          */
         formatHHMMSS(value) {
-            const date = new Date(value)
+            const date = new Date(value);
             if (value && !isNaN(date.getTime())) {
-                const hours = date.getHours()
-                const minutes = date.getMinutes()
-                const seconds = date.getSeconds()
-                return this.formatNumber(hours, true) + ':' +
-                    this.formatNumber(minutes, true) + ':' +
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                const seconds = date.getSeconds();
+                return (
+                    this.formatNumber(hours, true) +
+                    ":" +
+                    this.formatNumber(minutes, true) +
+                    ":" +
                     this.formatNumber(seconds, true)
+                );
             }
-            return ''
+            return "";
         },
 
         /*
          * Parse time from string
          */
         onChangeNativePicker(event) {
-            const date = event.target.value
+            const date = event.target.value;
             if (date) {
-                let time = null
+                let time = null;
                 if (this.computedValue && !isNaN(this.computedValue)) {
-                    time = new Date(this.computedValue)
+                    time = new Date(this.computedValue);
                 } else {
-                    time = new Date()
-                    time.setMilliseconds(0)
+                    time = new Date();
+                    time.setMilliseconds(0);
                 }
-                const t = date.split(':')
-                time.setHours(parseInt(t[0], 10))
-                time.setMinutes(parseInt(t[1], 10))
-                time.setSeconds(t[2] ? parseInt(t[2], 10) : 0)
-                this.computedValue = new Date(time.getTime())
+                const t = date.split(":");
+                time.setHours(parseInt(t[0], 10));
+                time.setMinutes(parseInt(t[1], 10));
+                time.setSeconds(t[2] ? parseInt(t[2], 10) : 0);
+                this.computedValue = new Date(time.getTime());
             } else {
-                this.computedValue = null
+                this.computedValue = null;
             }
         },
 
         formatNumber(value, prependZero) {
-            return this.isHourFormat24 || prependZero
-                ? this.pad(value)
-                : value
+            return this.isHourFormat24 || prependZero ? this.pad(value) : value;
         },
 
         pad(value) {
-            return (value < 10 ? '0' : '') + value
+            return (value < 10 ? "0" : "") + value;
         },
 
         /*
@@ -694,17 +832,21 @@ export default defineComponent({
          */
         formatValue(date) {
             if (date && !isNaN(date)) {
-                return this.timeFormatter(date, this)
+                return this.timeFormatter(date, this);
             } else {
-                return null
+                return null;
             }
         },
         /**
          * Keypress event that is bound to the document.
          */
         keyPress({ key }) {
-            if (this.$refs.dropdown && this.$refs.dropdown.isActive && (key === 'Escape' || key === 'Esc')) {
-                this.toggle(false)
+            if (
+                this.$refs.dropdown &&
+                this.$refs.dropdown.isActive &&
+                (key === "Escape" || key === "Esc")
+            ) {
+                this.toggle(false);
             }
         },
         /**
@@ -712,18 +854,8 @@ export default defineComponent({
          */
         onActiveChange(value) {
             if (!value) {
-                this.onBlur()
+                this.onBlur();
             }
-        }
+        },
     },
-    created() {
-        if (typeof window !== 'undefined') {
-            document.addEventListener('keyup', this.keyPress)
-        }
-    },
-    beforeUnmount() {
-        if (typeof window !== 'undefined') {
-            document.removeEventListener('keyup', this.keyPress)
-        }
-    }
-})
+});

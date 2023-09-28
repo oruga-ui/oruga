@@ -1,3 +1,133 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import Dropdown from "../dropdown/Dropdown.vue";
+import DropdownItem from "../dropdown/DropdownItem.vue";
+import Input from "../input/Input.vue";
+import Select from "../select/Select.vue";
+import Icon from "../icon/Icon.vue";
+
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import TimepickerMixin from "../../utils/TimepickerMixin";
+import MatchMediaMixin from "../../utils/MatchMediaMixin";
+
+import { getValueByPath } from "../../utils/helpers";
+import { getOptions } from "../../utils/config";
+
+/**
+ * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
+ * @displayName Timepicker
+ * @style _timepicker.scss
+ */
+export default defineComponent({
+    name: "OTimepicker",
+    components: {
+        [Input.name]: Input,
+        [Select.name]: Select,
+        [Icon.name]: Icon,
+        [Dropdown.name]: Dropdown,
+        [DropdownItem.name]: DropdownItem,
+    },
+    configField: "timepicker",
+    mixins: [BaseComponentMixin, TimepickerMixin, MatchMediaMixin],
+    inheritAttrs: false,
+    props: {
+        rootClass: [String, Function, Array],
+        sizeClass: [String, Function, Array],
+        boxClass: [String, Function, Array],
+        separatorClass: [String, Function, Array],
+        footerClass: [String, Function, Array],
+        inputClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "timepicker.inputClasses",
+                    {},
+                );
+            },
+        },
+        dropdownClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "timepicker.dropdownClasses",
+                    {},
+                );
+            },
+        },
+        selectClasses: {
+            type: Object,
+            default: () => {
+                return getValueByPath(
+                    getOptions(),
+                    "timepicker.selectClasses",
+                    {},
+                );
+            },
+        },
+    },
+    emits: ["focus", "blur", "invalid"],
+    computed: {
+        inputBind() {
+            return {
+                ...this.$attrs,
+                ...this.inputClasses,
+            };
+        },
+        dropdownBind() {
+            return {
+                "root-class": this.computedClass(
+                    "dropdownClasses.rootClass",
+                    "o-tpck__dropdown",
+                ),
+                ...this.dropdownClasses,
+            };
+        },
+        selectBind() {
+            return {
+                "select-class": this.computedClass(
+                    "selectClasses.selectClass",
+                    "o-tpck__select",
+                ),
+                "placeholder-class": this.computedClass(
+                    "selectClasses.placeholderClass",
+                    "o-tpck__select-placeholder",
+                ),
+                ...this.selectClasses,
+            };
+        },
+        rootClasses() {
+            return [
+                this.computedClass("rootClass", "o-tpck"),
+                {
+                    [this.computedClass("sizeClass", "o-tpck--", this.size)]:
+                        this.size,
+                },
+                {
+                    [this.computedClass("mobileClass", "o-tpck--mobile")]:
+                        this.isMatchMedia,
+                },
+            ];
+        },
+        boxClasses() {
+            return [this.computedClass("boxClass", "o-tpck__box")];
+        },
+        separatorClasses() {
+            return [this.computedClass("separatorClass", "o-tpck__separator")];
+        },
+        footerClasses() {
+            return [this.computedClass("footerClass", "o-tpck__footer")];
+        },
+        nativeStep() {
+            if (this.enableSeconds) return "1";
+            return null;
+        },
+    },
+});
+</script>
+
 <template>
     <div :class="rootClasses">
         <o-dropdown
@@ -27,7 +157,7 @@
                         :use-html5-validation="useHtml5Validation"
                         @keyup.enter="toggle(true)"
                         @change="onChange($event.target.value)"
-                        @focus="handleOnFocus"/>
+                        @focus="handleOnFocus" />
                 </slot>
             </template>
 
@@ -37,7 +167,6 @@
                 :item-class="boxClasses"
                 :disabled="disabled"
                 :clickable="false">
-
                 <o-select
                     override
                     v-bind="selectBind"
@@ -107,7 +236,7 @@
                 <footer
                     v-if="$slots.default !== undefined"
                     :class="footerClasses">
-                    <slot/>
+                    <slot />
                 </footer>
             </o-dropdown-item>
         </o-dropdown>
@@ -136,112 +265,3 @@
             @invalid="onInvalid" />
     </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-import Dropdown from '../dropdown/Dropdown.vue'
-import DropdownItem from '../dropdown/DropdownItem.vue'
-import Input from '../input/Input.vue'
-import Select from '../select/Select.vue'
-import Icon from '../icon/Icon.vue'
-
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import TimepickerMixin from '../../utils/TimepickerMixin'
-import MatchMediaMixin from '../../utils/MatchMediaMixin'
-
-import { getValueByPath } from '../../utils/helpers'
-import { getOptions } from '../../utils/config'
-
-/**
- * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
- * @displayName Timepicker
- * @style _timepicker.scss
- */
-export default defineComponent({
-    name: 'OTimepicker',
-    components: {
-        [Input.name]: Input,
-        [Select.name]: Select,
-        [Icon.name]: Icon,
-        [Dropdown.name]: Dropdown,
-        [DropdownItem.name]: DropdownItem
-    },
-    configField: 'timepicker',
-    mixins: [BaseComponentMixin, TimepickerMixin, MatchMediaMixin],
-    inheritAttrs: false,
-    props: {
-        rootClass: [String, Function, Array],
-        sizeClass: [String, Function, Array],
-        boxClass: [String, Function, Array],
-        separatorClass: [String, Function, Array],
-        footerClass: [String, Function, Array],
-        inputClasses: {
-            type: Object,
-            default: () => {
-                return getValueByPath(getOptions(), 'timepicker.inputClasses', {})
-            }
-        },
-        dropdownClasses: {
-            type: Object,
-            default: () => {
-                return getValueByPath(getOptions(), 'timepicker.dropdownClasses', {})
-            }
-        },
-        selectClasses: {
-            type: Object,
-            default: () => {
-                return getValueByPath(getOptions(), 'timepicker.selectClasses', {})
-            }
-        }
-    },
-    emits: ['focus', 'blur', 'invalid'],
-    computed: {
-        inputBind() {
-            return {
-                ...this.$attrs,
-                ...this.inputClasses
-            }
-        },
-        dropdownBind() {
-            return {
-                'root-class': this.computedClass('dropdownClasses.rootClass', 'o-tpck__dropdown'),
-                ...this.dropdownClasses
-            }
-        },
-        selectBind() {
-            return {
-                'select-class': this.computedClass('selectClasses.selectClass', 'o-tpck__select'),
-                'placeholder-class': this.computedClass('selectClasses.placeholderClass', 'o-tpck__select-placeholder'),
-                ...this.selectClasses
-            }
-        },
-        rootClasses() {
-            return [
-                this.computedClass('rootClass', 'o-tpck'),
-                { [this.computedClass('sizeClass', 'o-tpck--', this.size)]: this.size },
-                { [this.computedClass('mobileClass', 'o-tpck--mobile')]: this.isMatchMedia },
-            ]
-        },
-        boxClasses() {
-            return [
-                this.computedClass('boxClass', 'o-tpck__box')
-            ]
-        },
-        separatorClasses() {
-            return [
-                this.computedClass('separatorClass', 'o-tpck__separator')
-            ]
-        },
-        footerClasses() {
-            return [
-                this.computedClass('footerClass', 'o-tpck__footer')
-            ]
-        },
-        nativeStep() {
-            if (this.enableSeconds) return '1'
-            return null
-        }
-    }
-})
-</script>
