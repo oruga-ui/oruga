@@ -1,46 +1,12 @@
-<template>
-    <component
-        v-bind="$attrs"
-        :disabled="computedDisabled"
-        :is="computedTag"
-        :type="computedNativeType"
-        :class="rootClasses"
-    >
-        <span :class="elementsWrapperClasses">
-            <o-icon
-                v-if="iconLeft"
-                :pack="iconPack"
-                :icon="iconLeft"
-                :size="size"
-                :both="iconBoth"
-                :class="iconLeftClasses"
-            />
-            <span
-                v-if="label || $slots.default"
-                :class="labelClasses">
-                <slot>{{ label }}</slot>
-            </span>
-            <o-icon
-                v-if="iconRight"
-                :pack="iconPack"
-                :icon="iconRight"
-                :size="size"
-                :both="iconBoth"
-                :class="iconRightClasses"
-            />
-        </span>
-    </component>
-</template>
-
 <script lang="ts">
-import type { Component, PropType } from 'vue'
-import { defineComponent } from 'vue'
+import type { Component, PropType } from "vue";
+import { defineComponent } from "vue";
 
-import Icon from '../icon/Icon.vue'
+import Icon from "../icon/Icon.vue";
 
-import { getOptions } from '../../utils/config'
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import { getValueByPath } from '../../utils/helpers'
+import { getOptions } from "../../utils/config";
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { getValueByPath } from "../../utils/helpers";
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -48,18 +14,18 @@ import { getValueByPath } from '../../utils/helpers'
  * @style _button.scss
  */
 export default defineComponent({
-    name: 'OButton',
+    name: "OButton",
     components: {
-        [Icon.name]: Icon
+        [Icon.name]: Icon,
     },
-    configField: 'button',
+    configField: "button",
     mixins: [BaseComponentMixin],
     inheritAttrs: false,
     props: {
         /**
-        * Color of the control, optional
-        * @values primary, info, success, warning, danger, and any other custom color
-        */
+         * Color of the control, optional
+         * @values primary, info, success, warning, danger, and any other custom color
+         */
         variant: String,
         /**
          * Size of button, optional
@@ -91,7 +57,9 @@ export default defineComponent({
          */
         rounded: {
             type: Boolean,
-            default: () => { return getValueByPath(getOptions(), 'button.rounded', false) }
+            default: () => {
+                return getValueByPath(getOptions(), "button.rounded", false);
+            },
         },
         /**
          * Outlined style
@@ -111,14 +79,10 @@ export default defineComponent({
          */
         nativeType: {
             type: String,
-            default: 'button',
+            default: "button",
             validator: (value: string) => {
-                return [
-                    'button',
-                    'submit',
-                    'reset'
-                ].indexOf(value) >= 0
-            }
+                return ["button", "submit", "reset"].indexOf(value) >= 0;
+            },
         },
         /**
          * Button tag name
@@ -126,7 +90,7 @@ export default defineComponent({
          */
         tag: {
             type: [String, Object, Function] as PropType<string | Component>,
-            default: 'button'
+            default: "button",
         },
         /**
          * Button will be disabled
@@ -147,67 +111,134 @@ export default defineComponent({
         iconRightClass: [String, Function, Array],
         labelClass: [String, Function, Array],
         sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array]
+        variantClass: [String, Function, Array],
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-btn'),
-                { [this.computedClass('sizeClass', 'o-btn--', this.size)]: this.size },
-                { [this.computedClass('variantClass', 'o-btn--', this.variant)]: this.variant },
-                { [this.computedClass('outlinedClass', 'o-btn--outlined')]: this.outlined && !this.variant },
-                { [this.computedClass('invertedClass', 'o-btn--inverted')]: this.inverted && !this.variant },
-                { [this.computedClass('outlinedClass', 'o-btn--outlined-', this.variant)]: this.outlined && this.variant },
-                { [this.computedClass('invertedClass', 'o-btn--inverted-', this.variant)]: this.inverted && this.variant },
-                { [this.computedClass('expandedClass', 'o-btn--expanded')]: this.expanded },
-                { [this.computedClass('loadingClass', 'o-btn--loading')]: this.loading },
-                { [this.computedClass('roundedClass', 'o-btn--rounded')]: this.rounded },
-                { [this.computedClass('disabledClass', 'o-btn--disabled')]: this.disabled },
-            ]
+                this.computedClass("rootClass", "o-btn"),
+                {
+                    [this.computedClass("sizeClass", "o-btn--", this.size)]:
+                        this.size,
+                },
+                {
+                    [this.computedClass(
+                        "variantClass",
+                        "o-btn--",
+                        this.variant,
+                    )]: this.variant,
+                },
+                {
+                    [this.computedClass("outlinedClass", "o-btn--outlined")]:
+                        this.outlined && !this.variant,
+                },
+                {
+                    [this.computedClass("invertedClass", "o-btn--inverted")]:
+                        this.inverted && !this.variant,
+                },
+                {
+                    [this.computedClass(
+                        "outlinedClass",
+                        "o-btn--outlined-",
+                        this.variant,
+                    )]: this.outlined && this.variant,
+                },
+                {
+                    [this.computedClass(
+                        "invertedClass",
+                        "o-btn--inverted-",
+                        this.variant,
+                    )]: this.inverted && this.variant,
+                },
+                {
+                    [this.computedClass("expandedClass", "o-btn--expanded")]:
+                        this.expanded,
+                },
+                {
+                    [this.computedClass("loadingClass", "o-btn--loading")]:
+                        this.loading,
+                },
+                {
+                    [this.computedClass("roundedClass", "o-btn--rounded")]:
+                        this.rounded,
+                },
+                {
+                    [this.computedClass("disabledClass", "o-btn--disabled")]:
+                        this.disabled,
+                },
+            ];
         },
         labelClasses() {
-            return [
-                this.computedClass('labelClass', 'o-btn__label'),
-            ]
+            return [this.computedClass("labelClass", "o-btn__label")];
         },
         iconClasses() {
-            return [
-                this.computedClass('iconClass', 'o-btn__icon'),
-            ]
+            return [this.computedClass("iconClass", "o-btn__icon")];
         },
         iconLeftClasses() {
             return [
                 ...this.iconClasses,
-                this.computedClass('iconLeftClass', 'o-btn__icon-left')
-            ]
+                this.computedClass("iconLeftClass", "o-btn__icon-left"),
+            ];
         },
         iconRightClasses() {
             return [
                 ...this.iconClasses,
-                this.computedClass('iconRightClass', 'o-btn__icon-right')
-            ]
+                this.computedClass("iconRightClass", "o-btn__icon-right"),
+            ];
         },
         elementsWrapperClasses() {
             return [
-                this.computedClass('elementsWrapperClass', 'o-btn__wrapper'),
-            ]
+                this.computedClass("elementsWrapperClass", "o-btn__wrapper"),
+            ];
         },
         computedTag() {
-            if (typeof this.disabled !== 'undefined' && this.disabled !== false) {
-                return 'button'
+            if (
+                typeof this.disabled !== "undefined" &&
+                this.disabled !== false
+            ) {
+                return "button";
             }
-            return this.tag
+            return this.tag;
         },
         computedNativeType() {
-            if (this.tag === 'button' || this.tag === 'input') {
-                return this.nativeType
+            if (this.tag === "button" || this.tag === "input") {
+                return this.nativeType;
             }
-            return null
+            return null;
         },
         computedDisabled() {
-            if (this.disabled) return true
-            return null
-        }
-    }
-})
+            if (this.disabled) return true;
+            return null;
+        },
+    },
+});
 </script>
+
+<template>
+    <component
+        v-bind="$attrs"
+        :disabled="computedDisabled"
+        :is="computedTag"
+        :type="computedNativeType"
+        :class="rootClasses">
+        <span :class="elementsWrapperClasses">
+            <o-icon
+                v-if="iconLeft"
+                :pack="iconPack"
+                :icon="iconLeft"
+                :size="size"
+                :both="iconBoth"
+                :class="iconLeftClasses" />
+            <span v-if="label || $slots.default" :class="labelClasses">
+                <slot>{{ label }}</slot>
+            </span>
+            <o-icon
+                v-if="iconRight"
+                :pack="iconPack"
+                :icon="iconRight"
+                :size="size"
+                :both="iconBoth"
+                :class="iconRightClasses" />
+        </span>
+    </component>
+</template>

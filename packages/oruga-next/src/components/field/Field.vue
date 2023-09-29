@@ -1,53 +1,10 @@
-<template>
-    <div :class="rootClasses">
-        <div
-            v-if="horizontal"
-            :class="labelHorizontalClasses">
-            <label
-                v-if="hasLabel"
-                :for="labelFor"
-                :class="labelClasses">
-                <slot v-if="hasLabelSlot" name="label"/>
-                <template v-else>{{ label }}</template>
-            </label>
-        </div>
-        <template v-else>
-            <label
-                v-if="hasLabel"
-                :for="labelFor"
-                :class="labelClasses">
-                <slot v-if="hasLabelSlot" name="label"/>
-                <template v-else>{{ label }}</template>
-            </label>
-        </template>
-        <o-field-body v-if="horizontal">
-            <slot/>
-        </o-field-body>
-        <div v-else-if="hasInnerField" :class="bodyClasses">
-            <div :class="innerFieldClasses">
-                <slot/>
-            </div>
-        </div>
-        <template v-else>
-            <slot/>
-        </template>
-        <p
-            v-if="hasMessage && !horizontal"
-            :class="messageClasses"
-        >
-            <slot v-if="hasMessageSlot" name="message"/>
-            <template v-else>{{ newMessage }}</template>
-        </p>
-    </div>
-</template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import FieldBody from './FieldBody.vue'
+import FieldBody from "./FieldBody.vue";
 
-import BaseComponentMixin from '../../utils/BaseComponentMixin'
-import MatchMediaMixin from '../../utils/MatchMediaMixin'
+import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import MatchMediaMixin from "../../utils/MatchMediaMixin";
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -55,19 +12,19 @@ import MatchMediaMixin from '../../utils/MatchMediaMixin'
  * @style _field.scss
  */
 export default defineComponent({
-    name: 'OField',
+    name: "OField",
     components: {
-        [FieldBody.name]: FieldBody
+        [FieldBody.name]: FieldBody,
     },
-    configField: 'field',
+    configField: "field",
     mixins: [BaseComponentMixin, MatchMediaMixin],
     provide() {
         return {
-            $field: this
-        }
+            $field: this,
+        };
     },
     inject: {
-        $field: { from: '$field', default: false }
+        $field: { from: "$field", default: false },
     },
     props: {
         /**
@@ -104,9 +61,9 @@ export default defineComponent({
          */
         addons: {
             type: Boolean,
-            default: true
+            default: true,
         },
-         /**
+        /**
          * Vertical size of input, optional
          * @values small, medium, large
          */
@@ -126,120 +83,209 @@ export default defineComponent({
         variantLabelClass: [String, Function, Array],
         mobileClass: [String, Function, Array],
         focusedClass: [String, Function, Array],
-        filledClass: [String, Function, Array]
+        filledClass: [String, Function, Array],
     },
     data() {
         return {
             newVariant: this.variant,
             newMessage: this.message,
             isFocused: false,
-            isFilled: false
-        }
+            isFilled: false,
+        };
     },
     computed: {
         rootClasses() {
             return [
-                this.computedClass('rootClass', 'o-field'),
-                { [this.computedClass('horizontalClass', 'o-field--horizontal')]: this.horizontal },
-                { [this.computedClass('mobileClass', 'o-field--mobile')]: this.isMatchMedia },
-                { [this.computedClass('focusedClass', 'o-field--focused')]: this.isFocused },
-                { [this.computedClass('filledClass', 'o-field--filled')]: this.isFilled }
-            ]
+                this.computedClass("rootClass", "o-field"),
+                {
+                    [this.computedClass(
+                        "horizontalClass",
+                        "o-field--horizontal",
+                    )]: this.horizontal,
+                },
+                {
+                    [this.computedClass("mobileClass", "o-field--mobile")]:
+                        this.isMatchMedia,
+                },
+                {
+                    [this.computedClass("focusedClass", "o-field--focused")]:
+                        this.isFocused,
+                },
+                {
+                    [this.computedClass("filledClass", "o-field--filled")]:
+                        this.isFilled,
+                },
+            ];
         },
         messageClasses() {
             return [
-                this.computedClass('messageClass', 'o-field__message'),
-                { [this.computedClass('variantMessageClass', 'o-field__message-', this.newVariant)]: this.newVariant }
-            ]
+                this.computedClass("messageClass", "o-field__message"),
+                {
+                    [this.computedClass(
+                        "variantMessageClass",
+                        "o-field__message-",
+                        this.newVariant,
+                    )]: this.newVariant,
+                },
+            ];
         },
         labelClasses() {
             return [
-                this.computedClass('labelClass', 'o-field__label'),
-                { [this.computedClass('labelSizeClass', 'o-field__label-', this.labelSize)]: this.labelSize },
-                { [this.computedClass('variantLabelClass', 'o-field__label-', this.newVariant)]: this.newVariant }
-            ]
+                this.computedClass("labelClass", "o-field__label"),
+                {
+                    [this.computedClass(
+                        "labelSizeClass",
+                        "o-field__label-",
+                        this.labelSize,
+                    )]: this.labelSize,
+                },
+                {
+                    [this.computedClass(
+                        "variantLabelClass",
+                        "o-field__label-",
+                        this.newVariant,
+                    )]: this.newVariant,
+                },
+            ];
         },
         labelHorizontalClasses() {
             return [
-                this.computedClass('labelHorizontalClass', 'o-field__horizontal-label')
-            ]
+                this.computedClass(
+                    "labelHorizontalClass",
+                    "o-field__horizontal-label",
+                ),
+            ];
         },
         bodyClasses() {
-            return [
-                this.computedClass('bodyClass', 'o-field__body')
-            ]
+            return [this.computedClass("bodyClass", "o-field__body")];
         },
         bodyHorizontalClasses() {
             return [
-                this.computedClass('bodyHorizontalClass', 'o-field__horizontal-body')
-            ]
+                this.computedClass(
+                    "bodyHorizontalClass",
+                    "o-field__horizontal-body",
+                ),
+            ];
         },
         innerFieldClasses() {
             return [
-                this.computedClass('rootClass', 'o-field'),
-                { [this.computedClass('groupMultilineClass', 'o-field--grouped-multiline')]: this.groupMultiline },
-                { [this.computedClass('groupedClass', 'o-field--grouped')]: this.grouped },
-                { [this.computedClass('addonsClass', 'o-field--addons')]: !this.grouped && this.hasAddons() },
-            ]
+                this.computedClass("rootClass", "o-field"),
+                {
+                    [this.computedClass(
+                        "groupMultilineClass",
+                        "o-field--grouped-multiline",
+                    )]: this.groupMultiline,
+                },
+                {
+                    [this.computedClass("groupedClass", "o-field--grouped")]:
+                        this.grouped,
+                },
+                {
+                    [this.computedClass("addonsClass", "o-field--addons")]:
+                        !this.grouped && this.hasAddons(),
+                },
+            ];
         },
         parent() {
-            return this.$field
+            return this.$field;
         },
         hasLabelSlot() {
-            return this.$slots.label
+            return this.$slots.label;
         },
         hasMessageSlot() {
-            return this.$slots.message
+            return this.$slots.message;
         },
         hasLabel() {
-            return this.label || this.hasLabelSlot
+            return this.label || this.hasLabelSlot;
         },
         hasMessage() {
-            return ((!this.parent || !this.parent.hasInnerField) && this.newMessage) || this.hasMessageSlot
+            return (
+                ((!this.parent || !this.parent.hasInnerField) &&
+                    this.newMessage) ||
+                this.hasMessageSlot
+            );
         },
         hasInnerField() {
-            return this.grouped || this.groupMultiline || this.hasAddons()
-        }
+            return this.grouped || this.groupMultiline || this.hasAddons();
+        },
     },
     watch: {
         /**
-        * Set internal variant when prop change.
-        */
+         * Set internal variant when prop change.
+         */
         variant(value) {
-            this.newVariant = value
+            this.newVariant = value;
         },
 
         /**
-        * Set internal message when prop change.
-        */
+         * Set internal message when prop change.
+         */
         message(value) {
-            this.newMessage = value
+            this.newMessage = value;
         },
 
         /**
-        * Set parent message if we use Field in Field.
-        */
+         * Set parent message if we use Field in Field.
+         */
         newMessage(value) {
             if (this.parent && this.parent.hasInnerField) {
                 if (!this.parent.variant) {
-                    this.parent.newVariant = this.newVariant
+                    this.parent.newVariant = this.newVariant;
                 }
                 if (!this.parent.message) {
-                    this.parent.newMessage = value
+                    this.parent.newMessage = value;
                 }
             }
-        }
+        },
     },
     methods: {
         hasAddons() {
-            let renderedNode = 0
-            const slot = this.$slots.default()
+            let renderedNode = 0;
+            const slot = this.$slots.default();
             if (slot) {
-                const children = slot.length === 1 && Array.isArray(slot[0].children) ? slot[0].children : slot
-                renderedNode = children.reduce((i, node) => node ? i + 1 : i, 0)
+                const children =
+                    slot.length === 1 && Array.isArray(slot[0].children)
+                        ? slot[0].children
+                        : slot;
+                renderedNode = children.reduce(
+                    (i, node) => (node ? i + 1 : i),
+                    0,
+                );
             }
-            return renderedNode > 1 && this.addons && !this.horizontal
-        }
-    }
-})
+            return renderedNode > 1 && this.addons && !this.horizontal;
+        },
+    },
+});
 </script>
+
+<template>
+    <div :class="rootClasses">
+        <div v-if="horizontal" :class="labelHorizontalClasses">
+            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+                <slot v-if="hasLabelSlot" name="label" />
+                <template v-else>{{ label }}</template>
+            </label>
+        </div>
+        <template v-else>
+            <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+                <slot v-if="hasLabelSlot" name="label" />
+                <template v-else>{{ label }}</template>
+            </label>
+        </template>
+        <o-field-body v-if="horizontal">
+            <slot />
+        </o-field-body>
+        <div v-else-if="hasInnerField" :class="bodyClasses">
+            <div :class="innerFieldClasses">
+                <slot />
+            </div>
+        </div>
+        <template v-else>
+            <slot />
+        </template>
+        <p v-if="hasMessage && !horizontal" :class="messageClasses">
+            <slot v-if="hasMessageSlot" name="message" />
+            <template v-else>{{ newMessage }}</template>
+        </p>
+    </div>
+</template>
