@@ -1,8 +1,8 @@
 <script setup>
-import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
 import NotificationForm from "./_notification-form.vue";
 
-const { oruga } = useProgrammatic();
+const oruga = useOruga();
 
 function simple() {
     oruga.notification.open("Something happened");
