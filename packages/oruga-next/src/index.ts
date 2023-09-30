@@ -47,7 +47,7 @@ export default {
 };
 
 declare module "./types" {
-    interface OrugaPrgrammatic {
+    interface OrugaProgrammatic {
         config: typeof ConfigProgrammatic;
     }
 }

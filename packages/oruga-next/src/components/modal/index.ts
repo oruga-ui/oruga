@@ -12,7 +12,7 @@ import {
 import InstanceRegistry from "@/utils/InstanceRegistry";
 
 declare module "@/types" {
-    interface OrugaPrgrammatic {
+    interface OrugaProgrammatic {
         modal: typeof ModalProgrammatic;
     }
 }
