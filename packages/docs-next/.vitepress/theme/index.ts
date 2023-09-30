@@ -101,14 +101,14 @@ export default {
                 case "theme-bulma": {
                     bulmaConfig.iconPack = "fas";
                     bulmaConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useOruga();
+                    const oruga = useOruga();
                     oruga.config.setOptions(bulmaConfig);
                     break;
                 }
                 case "theme-bootstrap": {
                     bootstrapConfig.iconPack = "fas";
                     bootstrapConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useOruga();
+                    const oruga = useOruga();
                     oruga.config.setOptions(bootstrapConfig);
                     break;
                 }
