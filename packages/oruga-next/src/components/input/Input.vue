@@ -151,7 +151,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue
+     * @param value {string | number} updated modelValue prop
      */
     (e: "update:modelValue", value: string | number): void;
     /**

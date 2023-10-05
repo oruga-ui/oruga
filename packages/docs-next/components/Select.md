@@ -59,14 +59,14 @@ title: Select
 
 ### Events
 
-| Event name        | Properties | Description                     |
-| ----------------- | ---------- | ------------------------------- |
-| update:modelValue |            | modelValue prop two-way binding |
-| focus             |            | on input focus event            |
-| blur              |            | on input blur event             |
-| invalid           |            | on input invalid event          |
-| icon-click        |            | on icon click event             |
-| icon-right-click  |            | on icon right click event       |
+| Event name        | Properties                                             | Description                     |
+| ----------------- | ------------------------------------------------------ | ------------------------------- |
+| update:modelValue | **value** `string \| number` - updated modelValue prop | modelValue prop two-way binding |
+| focus             | **event** `Event` - native event                       | on input focus event            |
+| blur              | **event** `Event` - native event                       | on input blur event             |
+| invalid           | **event** `Event` - native event                       | on input invalid event          |
+| icon-click        | **event** `Event` - native event                       | on icon click event             |
+| icon-right-click  | **event** `Event` - native event                       | on icon right click event       |
 
 ### Slots
 

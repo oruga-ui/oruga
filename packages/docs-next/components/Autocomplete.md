@@ -83,20 +83,20 @@ title: Autocomplete
 
 ### Events
 
-| Event name        | Properties                                        | Description                                           |
-| ----------------- | ------------------------------------------------- | ----------------------------------------------------- |
-| icon-click        | **event** `Event` - native event                  | on icon click event                                   |
-| update:modelValue | **value** `string \| number` - updated modelValue | modelValue prop two-way binding                       |
-| input             | **value** `string \| number` - input value        | on input change event                                 |
-| select            | **value** `string \| number` - selected value     | selected element changed event                        |
-| select-header     | **event** `Event` - native event                  | header is selected                                    |
-| select-footer     | **event** `Event` - native event                  | footer is selected                                    |
-| focus             | **event** `Event` - native event                  | on input focus event                                  |
-| blur              | **event** `Event` - native event                  | on input blur event                                   |
-| invalid           | **event** `Event` - native event                  | on input invalid event                                |
-| icon-right-click  | **event** `Event` - native event                  | on icon right click event                             |
-| scroll-start      |                                                   | the scroll list inside the dropdown reached the start |
-| scroll-end        |                                                   | the scroll list inside the dropdown reached it's end  |
+| Event name        | Properties                                             | Description                                           |
+| ----------------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| icon-click        | **event** `Event` - native event                       | on icon click event                                   |
+| update:modelValue | **value** `string \| number` - updated modelValue prop | modelValue prop two-way binding                       |
+| input             | **value** `string \| number` - input value             | on input change event                                 |
+| select            | **value** `string \| number` - selected value          | selected element changed event                        |
+| select-header     | **event** `Event` - native event                       | header is selected                                    |
+| select-footer     | **event** `Event` - native event                       | footer is selected                                    |
+| focus             | **event** `Event` - native event                       | on input focus event                                  |
+| blur              | **event** `Event` - native event                       | on input blur event                                   |
+| invalid           | **event** `Event` - native event                       | on input invalid event                                |
+| icon-right-click  | **event** `Event` - native event                       | on icon right click event                             |
+| scroll-start      |                                                        | the scroll list inside the dropdown reached the start |
+| scroll-end        |                                                        | the scroll list inside the dropdown reached it's end  |
 
 ### Slots
 

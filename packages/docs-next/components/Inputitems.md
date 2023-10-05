@@ -73,19 +73,19 @@ title: Inputitems
 
 ### Events
 
-| Event name        | Properties                             | Description                                           |
-| ----------------- | -------------------------------------- | ----------------------------------------------------- |
-| scroll-start      |                                        | the scroll list inside the dropdown reached the start |
-| scroll-end        |                                        | the scroll list inside the dropdown reached it's end  |
-| icon-click        | **event** `Event` - native event       | on icon click event                                   |
-| icon-right-click  | **event** `Event` - native event       | on icon right click event                             |
-| update:modelValue | **value** `any[]` - updated modelValue | modelValue prop two-way binding                       |
-| input             | **value** `any` - input value          | on input change event                                 |
-| add               | **value** `any` - added item           | new item got added                                    |
-| remove            | **value** `any` - removed item         | item got removed                                      |
-| focus             | **event** `Event` - native event       | on input focus event                                  |
-| blur              | **event** `Event` - native event       | on input blur event                                   |
-| invalid           | **event** `Event` - native event       | on input invalid event                                |
+| Event name        | Properties                                  | Description                                           |
+| ----------------- | ------------------------------------------- | ----------------------------------------------------- |
+| scroll-start      |                                             | the scroll list inside the dropdown reached the start |
+| scroll-end        |                                             | the scroll list inside the dropdown reached it's end  |
+| icon-click        | **event** `Event` - native event            | on icon click event                                   |
+| icon-right-click  | **event** `Event` - native event            | on icon right click event                             |
+| update:modelValue | **value** `any[]` - updated modelValue prop | modelValue prop two-way binding                       |
+| input             | **value** `any` - input value               | on input change event                                 |
+| add               | **value** `any` - added item                | new item got added                                    |
+| remove            | **value** `any` - removed item              | item got removed                                      |
+| focus             | **event** `Event` - native event            | on input focus event                                  |
+| blur              | **event** `Event` - native event            | on input blur event                                   |
+| invalid           | **event** `Event` - native event            | on input invalid event                                |
 
 ### Slots
 
