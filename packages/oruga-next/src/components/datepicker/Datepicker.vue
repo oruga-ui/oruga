@@ -599,8 +599,8 @@ function next(): void {
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
 
+    if (!value) return "";
     const date = new Date(value);
-    if (!value || !isNaN(date.getTime())) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'
