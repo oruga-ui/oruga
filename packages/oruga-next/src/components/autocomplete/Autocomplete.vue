@@ -479,10 +479,10 @@ function setSelected(option, closeDropdown = true, event = undefined): void {
     emits("select", selectedOption.value, event);
     if (selectedOption.value !== null) {
         if (props.clearOnSelect) {
-            // const input = inputRef.value.$el.querySelector("input");
-            // input.value = "";
+            const input = inputRef.value.$el.querySelector("input");
+            input.value = "";
         } else {
-            // vmodel.value = getValue(selectedOption.value);
+            vmodel.value = getValue(selectedOption.value);
         }
         setHovered(null);
     }
