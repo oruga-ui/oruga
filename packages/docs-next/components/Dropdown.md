@@ -58,15 +58,15 @@ title: Dropdown
 | trapFocus    | Trap focus inside the dropdown.                                                                                                                                  | boolean             | -                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>         |
 | triggerTag   | Dropdown trigger tag name                                                                                                                                        | string \| Component | -                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;triggerTag: "div"<br>}</code>       |
 | triggers     | Dropdown will be triggered by any events                                                                                                                         | string[]            | `click`, `hover`, `contextmenu`, `focus`               | Default function (see source code)                                                                                                                         |
-| v-model      |                                                                                                                                                                  | T[]                 | -                                                      |                                                                                                                                                            |
+| v-model      |                                                                                                                                                                  | array               | -                                                      |                                                                                                                                                            |
 
 ### Events
 
-| Event name        | Properties                                                                   | Description                     |
-| ----------------- | ---------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** `String, Number, Boolean, Object, Array` - updated modelValue prop | modelValue prop two-way binding |
-| update:active     | **value** `boolean` - updated active prop                                    | active prop two-way binding     |
-| change            | **value** `any` - selected value                                             | change event                    |
+| Event name        | Properties                                  | Description                     |
+| ----------------- | ------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `Array` - updated modelValue prop | modelValue prop two-way binding |
+| update:active     | **value** `boolean` - updated active prop   | active prop two-way binding     |
+| change            | **value** `any` - selected value            | change event                    |
 
 ### Slots
 

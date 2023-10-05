@@ -1,12 +1,13 @@
 import { computed, inject, provide, type ComputedRef } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
 
 import Field from "./Field.vue";
 import { getOption } from "@/utils/config";
 
+export type FieldProps = InstanceType<typeof Field>["$props"];
+
 type FieldData = {
     $el: Element;
-    props: ComponentProps<typeof Field>;
+    props: FieldProps;
     hasInnerField: boolean;
     hasMessage: boolean;
     fieldVariant: string;

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T = any">
+<script setup lang="ts">
 import {
     computed,
     nextTick,
@@ -46,7 +46,7 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array] as PropType<T[]>,
+        type: Array,
         default: undefined,
     },
     /** The active state of the dropdown */
@@ -164,9 +164,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {String, Number, Boolean, Object, Array} updated modelValue prop
+     * @param value {Array} updated modelValue prop
      */
-    (e: "update:modelValue", value: T[]): void;
+    (e: "update:modelValue", value: Array<any>): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -183,7 +183,7 @@ const rootRef = ref();
 const menuRef = ref();
 const triggerRef = ref();
 
-const vmodel = useVModelBinding<T[]>(props, emits) as Ref<T[]>;
+const vmodel = useVModelBinding<any[]>(props, emits) as Ref<any[]>;
 const isActive = ref(props.active);
 
 /** toggle isActive value when prop is changed */
@@ -373,7 +373,7 @@ function toggle(): void {
  *   2. Emit input event to update the user v-model.
  *   3. Close the dropdown.
  */
-function selectItem(value: T): void {
+function selectItem(value: any): void {
     if (props.multiple) {
         if (vmodel.value) {
             if (vmodel.value.indexOf(value) === -1) {

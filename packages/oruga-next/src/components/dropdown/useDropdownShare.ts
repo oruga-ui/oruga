@@ -1,10 +1,11 @@
 import { inject, provide, type ComputedRef } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
 import Dropdown from "./Dropdown.vue";
+
+export type DropdownProps = InstanceType<typeof Dropdown>["$props"];
 
 type DropdownData<T> = {
     $el: Element;
-    props: ComponentProps<typeof Dropdown<any>>;
+    props: DropdownProps;
     selected: T[];
     selectItem: (value: T) => void;
 };
