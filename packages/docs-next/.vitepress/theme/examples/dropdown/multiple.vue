@@ -17,18 +17,9 @@ const selectedOptions = ref([]);
                 </o-button>
             </template>
 
-            <o-dropdown-item
-                value="option1"
-                aria-role="listitem"
-                label="Option 1" />
-            <o-dropdown-item
-                value="option2"
-                aria-role="listitem"
-                label="Option 2" />
-            <o-dropdown-item
-                value="option3"
-                aria-role="listitem"
-                label="Option 3" />
+            <o-dropdown-item value="option1" label="Option 1" />
+            <o-dropdown-item value="option2" label="Option 2" />
+            <o-dropdown-item value="option3" label="Option 3" />
         </o-dropdown>
     </section>
 </template>

@@ -1,129 +1,109 @@
-<script lang="ts">
-import type { Component, PropType } from "vue";
-import { defineComponent } from "vue";
-
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
+<script setup lang="ts" generic="T">
+import { computed, onMounted, type Component, type PropType } from "vue";
+import { useComputedClass, useClassProps } from "@/composables";
+import { getOption } from "@/utils/config";
+import { injectDropdown } from "./useDropdownShare";
+import { uuid } from "@/utils/helpers";
 
 /**
  * @displayName Dropdown Item
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "ODropdownItem",
-    mixins: [BaseComponentMixin],
     configField: "dropdown",
-    inject: ["$dropdown"],
-    emits: ["click"],
-    props: {
-        /**
-         * The value that will be returned on events and v-model
-         */
-        value: {
-            type: [String, Number, Boolean, Object, Array],
-        },
-        /**
-         * Item label, unnecessary when default slot is used
-         */
-        label: {
-            type: String,
-            default: undefined,
-        },
-        /**
-         * Item is disabled
-         */
-        disabled: Boolean,
-        /**
-         * Item is clickable and emit an event
-         */
-        clickable: {
-            type: Boolean,
-            default: true,
-        },
-        /**
-         * Dropdown item tag name
-         */
-        tag: {
-            type: [String, Object, Function] as PropType<string | Component>,
-            default: () => {
-                return getValueByPath(getOptions(), "dropdown.itemTag", "div");
-            },
-        },
-        tabindex: {
-            type: [Number, String],
-            default: 0,
-        },
-        ariaRole: {
-            type: String,
-            default: "",
-        },
-        itemClass: [String, Function, Array],
-        itemActiveClass: [String, Function, Array],
-        itemDisabledClass: [String, Function, Array],
-    },
-    computed: {
-        parent() {
-            return this.$dropdown;
-        },
-        rootClasses() {
-            return [
-                this.computedClass("itemClass", "o-drop__item"),
-                {
-                    [this.computedClass(
-                        "itemDisabledClass",
-                        "o-drop__item--disabled",
-                    )]: this.parent.disabled || this.disabled,
-                },
-                {
-                    [this.computedClass(
-                        "itemActiveClass",
-                        "o-drop__item--active",
-                    )]: this.isActive,
-                },
-            ];
-        },
-        ariaRoleItem() {
-            return this.ariaRole === "menuitem" || this.ariaRole === "listitem"
-                ? this.ariaRole
-                : null;
-        },
-        isClickable() {
-            return !this.parent.disabled && !this.disabled && this.clickable;
-        },
-        isActive() {
-            if (this.parent.selected === null) return false;
-            if (this.parent.multiple)
-                return this.parent.selected.indexOf(this.value) >= 0;
-            return this.value === this.parent.selected;
-        },
-    },
-    methods: {
-        /**
-         * Click listener, select the item.
-         */
-        selectItem() {
-            if (!this.isClickable) return;
-
-            this.parent.selectItem(this.value);
-            this.$emit("click");
-        },
-    },
-    created() {
-        if (!this.parent) {
-            throw new Error("You should wrap oDropdownItem on a oDropdown");
-        }
-    },
+    inheritAttrs: false,
 });
+
+const props = defineProps({
+    /** The value that will be returned on events and v-model */
+    value: {
+        type: [String, Number, Boolean, Object, Array] as PropType<T>,
+        default: () => uuid(),
+    },
+    /** Item label, unnecessary when default slot is used */
+    label: { type: String, default: undefined },
+    /** Item is disabled */
+    disabled: { type: Boolean, default: false },
+    /** Item is clickable and emit an event */
+    clickable: { type: Boolean, default: true },
+    /** Dropdown item tag name */
+    tag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: () => getOption("dropdown.itemTag", "div"),
+    },
+    /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
+    tabindex: { type: [Number, String], default: 0 },
+    /**
+     * Role attribute to be passed to the item container for better accessibility.
+     * Use menuitem only in situations where your dropdown is related to a navigation menu.
+     * @values listitem, menuitem
+     */
+    ariaRole: { type: String, default: "listitem" },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps(["itemClass", "itemActiveClass", "itemDisabledClass"]),
+});
+
+const emits = defineEmits<{
+    /**
+     * onclick event
+     * @param value {[String, Number, Boolean, Object, Array]} value prop data
+     * @param event {event} Native Event
+     */
+    (e: "click", value: T, event: Event): void;
+}>();
+
+// inject parent dropdown component if used inside one
+const { parentDropdown } = injectDropdown<T>();
+
+onMounted(() => {
+    if (!parentDropdown.value)
+        throw new Error("You should wrap oDropdownItem on a oDropdown");
+});
+
+const isClickable = computed(
+    () =>
+        !parentDropdown.value.props.disabled &&
+        !props.disabled &&
+        props.clickable,
+);
+
+const isActive = computed(() => {
+    if (parentDropdown.value.selected === null) return false;
+    if (parentDropdown.value.props.multiple)
+        return parentDropdown.value.selected.indexOf(props.value as T) >= 0;
+    return props.value === parentDropdown.value.selected;
+});
+
+/** Click listener, select the item. */
+function selectItem(event: Event): void {
+    if (!isClickable.value) return;
+    parentDropdown.value.selectItem(props.value as T);
+    emits("click", props.value as T, event);
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("itemClass", "o-drop__item"),
+    {
+        [useComputedClass("itemDisabledClass", "o-drop__item--disabled")]:
+            parentDropdown.value.props.disabled || props.disabled,
+    },
+    {
+        [useComputedClass("itemActiveClass", "o-drop__item--active")]:
+            isActive.value,
+    },
+]);
 </script>
 
 <template>
     <component
         :is="tag"
         :class="rootClasses"
-        @click="selectItem"
-        :role="ariaRoleItem"
-        :tabindex="tabindex">
+        :role="ariaRole"
+        :tabindex="tabindex"
+        @click="selectItem">
         <slot>{{ label }}</slot>
     </component>
 </template>
