@@ -38,29 +38,29 @@ title: Carousel
 
 | Prop name         | Description | Type    | Values | Default                                                                                                                                                        |
 | ----------------- | ----------- | ------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| arrow             |             | boolean | -      | true                                                                                                                                                           |
-| arrowHover        |             | boolean | -      | true                                                                                                                                                           |
-| asIndicator       |             | boolean | -      |                                                                                                                                                                |
-| autoplay          |             | boolean | -      | false                                                                                                                                                          |
-| breakpoints       |             | object  | -      | {}                                                                                                                                                             |
-| hasDrag           |             | boolean | -      | true                                                                                                                                                           |
+| arrow             |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
+| arrowHover        |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
+| asIndicator       |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
+| autoplay          |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| breakpoints       |             | object  | -      | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                       |
+| hasDrag           |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
 | iconNext          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconNext: "chevron-right", <br>}</code> |
-| iconPack          |             | string  | -      |                                                                                                                                                                |
+| iconPack          |             | string  | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
 | iconPrev          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconPrev: "chevron-left", <br>}</code>  |
-| iconSize          |             | string  | -      |                                                                                                                                                                |
-| indicator         |             | boolean | -      | true                                                                                                                                                           |
-| indicatorInside   |             | boolean | -      | false                                                                                                                                                          |
-| indicatorMode     |             | string  | -      | "click"                                                                                                                                                        |
-| indicatorPosition |             | string  | -      | "bottom"                                                                                                                                                       |
-| indicatorStyle    |             | string  | -      | "dots"                                                                                                                                                         |
+| iconSize          |             | string  | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
+| indicator         |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
+| indicatorInside   |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| indicatorMode     |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"click"</code>                                                                                                  |
+| indicatorPosition |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"bottom"</code>                                                                                                 |
+| indicatorStyle    |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"dots"</code>                                                                                                   |
 | interval          |             | number  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>              |
-| itemsToList       |             | number  | -      | 1                                                                                                                                                              |
-| itemsToShow       |             | number  | -      | 1                                                                                                                                                              |
-| modelValue        |             | number  | -      | 0                                                                                                                                                              |
-| overlay           |             | boolean | -      |                                                                                                                                                                |
-| override          |             | boolean | -      |                                                                                                                                                                |
-| pauseHover        |             | boolean | -      | false                                                                                                                                                          |
-| repeat            |             | boolean | -      | false                                                                                                                                                          |
+| itemsToList       |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                        |
+| itemsToShow       |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                        |
+| modelValue        |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
+| overlay           |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
+| override          |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
+| pauseHover        |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| repeat            |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
 
 ### Events
 

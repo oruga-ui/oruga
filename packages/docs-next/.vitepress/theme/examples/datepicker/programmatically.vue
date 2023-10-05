@@ -1,6 +1,6 @@
 <template>
     <section>
-        <o-field>
+        <o-field expanded>
             <o-datepicker
                 ref="datepicker"
                 expanded

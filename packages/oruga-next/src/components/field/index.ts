@@ -2,7 +2,7 @@ import type { App, Plugin } from "vue";
 
 import Field from "./Field.vue";
 
-import { registerComponent } from "../../utils/plugins";
+import { registerComponent } from "@/utils/plugins";
 
 export default {
     install(app: App) {

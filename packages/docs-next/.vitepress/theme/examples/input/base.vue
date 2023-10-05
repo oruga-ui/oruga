@@ -11,14 +11,14 @@ const name = ref("John Silver");
         </o-field>
 
         <o-field label="Email" variant="danger" message="This email is invalid">
-            <o-input type="email" value="john@" maxlength="30" />
+            <o-input type="email" value="john@" :maxlength="30" />
         </o-field>
 
         <o-field
             label="Username"
             variant="success"
             message="This username is available">
-            <o-input value="johnsilver" maxlength="30" />
+            <o-input value="johnsilver" :maxlength="30" />
         </o-field>
 
         <o-field label="Password">
@@ -26,7 +26,7 @@ const name = ref("John Silver");
         </o-field>
 
         <o-field label="Message">
-            <o-input maxlength="200" type="textarea" />
+            <o-input :maxlength="200" type="textarea" />
         </o-field>
 
         <o-field>

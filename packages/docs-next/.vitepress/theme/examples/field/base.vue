@@ -5,18 +5,18 @@
         </o-field>
 
         <o-field label="Email" variant="danger" message="This email is invalid">
-            <o-input type="email" model-value="john@" maxlength="30" />
+            <o-input type="email" model-value="john@" :maxlength="30" />
         </o-field>
 
         <o-field
             label="Username"
             variant="success"
             message="This username is available">
-            <o-input model-value="johnsilver" maxlength="30" />
+            <o-input model-value="johnsilver" :maxlength="30" />
         </o-field>
 
         <o-field label="Password" variant="warning">
-            <o-input model-value="123" type="password" maxlength="30" />
+            <o-input model-value="123" type="password" :maxlength="30" />
         </o-field>
 
         <o-field label="Subject">

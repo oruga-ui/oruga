@@ -39,6 +39,8 @@ async function getAsyncData(_name) {
         data.value = [...data.value, ..._data.results];
         page.value += 1;
         totalPages.value = _data.total_pages;
+    } catch (err) {
+        console.error(err);
     } finally {
         isFetching.value = false;
     }
@@ -57,11 +59,11 @@ function getMoreAsyncData() {
                 placeholder="e.g. Fight Club"
                 field="title"
                 :loading="isFetching"
-                check-infinite-scroll
-                :debounce-typing="500"
-                @typing="getAsyncData"
+                check-scroll
+                :debounce="500"
+                @input="getAsyncData"
                 @select="(option) => (selected = option)"
-                @infinite-scroll="getMoreAsyncData">
+                @scroll-end="getMoreAsyncData">
                 <template #default="props">
                     <div class="media">
                         <div class="media-left">

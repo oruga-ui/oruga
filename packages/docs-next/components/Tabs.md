@@ -39,10 +39,10 @@ title: Tabs
 | Prop name | Description                                     | Type    | Values            | Default                                                                                                                                       |
 | --------- | ----------------------------------------------- | ------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | animated  | Tab will have an animation                      | boolean | -                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
-| expanded  | Tabs will be expanded (full-width)              | boolean | -                 |                                                                                                                                               |
-| multiline | Show tab items multiline when there is no space | boolean | -                 |                                                                                                                                               |
-| override  |                                                 | boolean | -                 |                                                                                                                                               |
-| type      | Tab type                                        | string  | `boxed`, `toggle` | "default"                                                                                                                                     |
+| expanded  | Tabs will be expanded (full-width)              | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
+| multiline | Show tab items multiline when there is no space | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
+| override  |                                                 | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
+| type      | Tab type                                        | string  | `boxed`, `toggle` | <code style='white-space: nowrap; padding: 0;'>"default"</code>                                                                               |
 
 ### Slots
 
@@ -66,8 +66,8 @@ title: Tabs
 
 | Prop name | Description           | Type                | Values | Default                                                                                                                                          |
 | --------- | --------------------- | ------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| disabled  | Item will be disabled | boolean             | -      |                                                                                                                                                  |
-| override  |                       | boolean             | -      |                                                                                                                                                  |
+| disabled  | Item will be disabled | boolean             | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                           |
+| override  |                       | boolean             | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                           |
 | tag       | Tabs item tag name    | string \| Component | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code> |
 
 </div>

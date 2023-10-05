@@ -1,3 +1,5 @@
+import { unref } from "vue";
+
 /**
  * Generates a random string
  */
@@ -106,7 +108,8 @@ export function indexOf<T>(
 export const isObject = <T>(obj: T): boolean =>
     obj && typeof obj === "object" && !Array.isArray(obj);
 
-export const isDefined = <T>(d: T): boolean => d !== undefined;
+export const isDefined = <T>(d: T): boolean =>
+    unref(d) !== null && unref(d) !== undefined;
 
 export function blankIfUndefined(value: string): string {
     return typeof value !== "undefined" && value !== null ? value : "";
@@ -218,6 +221,9 @@ export function toCssDimension(width: string | number): string | number {
         : width + "px";
 }
 
+/**
+ * @deprecated use useDebounce composable instead
+ */
 export function debounce<A extends Array<unknown>>(
     func: (...args: A[]) => void,
     wait: number,
@@ -246,102 +252,8 @@ export function removeDiacriticsFromString(value: string): string {
 }
 
 /**
- * Return month names according to a specified locale
- * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
- * @param  {String} format long (ex. March), short (ex. Mar) or narrow (M)
- * @return {Array<String>} An array of month names
+ * @deprecated use ssr helper instead
  */
-
-type monthType =
-    | "numeric"
-    | "2-digit"
-    | "long"
-    | "short"
-    | "narrow"
-    | undefined;
-
-export function getMonthNames(
-    locale: string = undefined,
-    format: monthType = "long",
-): string[] {
-    const dates = [];
-    for (let i = 0; i < 12; i++) {
-        dates.push(new Date(2000, i, 15));
-    }
-    const dtf = new Intl.DateTimeFormat(locale, {
-        month: format,
-        // timeZone: 'UTC'
-    });
-    return dates.map((d) => dtf.format(d));
-}
-
-/**
- * Return weekday names according to a specified locale
- * @param  {String} locale A bcp47 localerouter. undefined will use the user browser locale
- * @param  {Number} first day of week index
- * @param  {String} format long (ex. Thursday), short (ex. Thu) or narrow (T)
- * @return {Array<String>} An array of weekday names
- */
-
-type weekdayType = "long" | "short" | "narrow" | undefined;
-
-export function getWeekdayNames(
-    locale: string = undefined,
-    firstDayOfWeek: number = 0,
-    format: weekdayType = "narrow",
-): string[] {
-    const dates = [];
-    for (let i = 1, j = 0; j < 7; i++) {
-        const d = new Date(2000, 0, i);
-        const day = d.getDay();
-        if (day === firstDayOfWeek || j > 0) {
-            dates.push(d);
-            j++;
-        }
-    }
-    const dtf = new Intl.DateTimeFormat(locale, {
-        weekday: format,
-        // timeZone: 'UTC'
-    });
-    return dates.map((d) => dtf.format(d));
-}
-
-/**
- * Accept a regex with group names and return an object
- * ex. matchWithGroups(/((?!=<year>)\d+)\/((?!=<month>)\d+)\/((?!=<day>)\d+)/, '2000/12/25')
- * will return { year: 2000, month: 12, day: 25 }
- * @param  {String} includes injections of (?!={groupname}) for each group
- * @param  {String} the string to run regex
- * @return {Object} an object with a property for each group having the group's match as the value
- */
-export function matchWithGroups(pattern: string, str: string): any {
-    const matches = str.match(pattern);
-    return (
-        pattern
-            // get the pattern as a string
-            .toString()
-            // suss out the groups
-            .match(/<(.+?)>/g)
-            // remove the braces
-            .map((group) => {
-                const groupMatches = group.match(/<(.+)>/);
-                if (!groupMatches || groupMatches.length <= 0) {
-                    return null;
-                }
-                return group.match(/<(.+)>/)[1];
-            })
-            // create an object with a property for each group having the group's match as the value
-            .reduce((acc, curr, index) => {
-                if (matches && matches.length > index) {
-                    acc[curr] = matches[index + 1];
-                } else {
-                    acc[curr] = null;
-                }
-                return acc;
-            }, {})
-    );
-}
-
 export function isClient(): boolean {
     return typeof window !== "undefined";
 }
@@ -350,53 +262,35 @@ export function isClient(): boolean {
  * Mobile detection
  * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
  */
-export const isMobile = {
-    Android: function () {
-        return (
-            typeof window !== "undefined" &&
-            window.navigator.userAgent.match(/Android/i)
-        );
-    },
-    BlackBerry: function () {
-        return (
-            typeof window !== "undefined" &&
-            window.navigator.userAgent.match(/BlackBerry/i)
-        );
-    },
-    iOS: function () {
-        return (
-            typeof window !== "undefined" &&
-            window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
-        );
-    },
-    Opera: function () {
-        return (
-            typeof window !== "undefined" &&
-            window.navigator.userAgent.match(/Opera Mini/i)
-        );
-    },
-    Windows: function () {
-        return (
-            typeof window !== "undefined" &&
-            window.navigator.userAgent.match(/IEMobile/i)
-        );
-    },
-    any: function () {
-        return (
-            isMobile.Android() ||
-            isMobile.BlackBerry() ||
-            isMobile.iOS() ||
-            isMobile.Opera() ||
-            isMobile.Windows()
-        );
-    },
+export const isMobileAgent = {
+    Android: (): boolean =>
+        typeof window !== "undefined" &&
+        !!window.navigator.userAgent.match(/Android/i),
+    BlackBerry: (): boolean =>
+        typeof window !== "undefined" &&
+        !!window.navigator.userAgent.match(/BlackBerry/i),
+    iOS: (): boolean =>
+        typeof window !== "undefined" &&
+        !!window.navigator.userAgent.match(/iPhone|iPad|iPod/i),
+    Opera: (): boolean =>
+        typeof window !== "undefined" &&
+        !!window.navigator.userAgent.match(/Opera Mini/i),
+    Windows: (): boolean =>
+        typeof window !== "undefined" &&
+        !!window.navigator.userAgent.match(/IEMobile/i),
+    any: (): boolean =>
+        isMobileAgent.Android() ||
+        isMobileAgent.BlackBerry() ||
+        isMobileAgent.iOS() ||
+        isMobileAgent.Opera() ||
+        isMobileAgent.Windows(),
 };
 
 // Microsoft Edge "pretends" to be all other major browsers, so we need to filter it out.
 // It doesn't use a very consistent string to represent its own name ("Edge", "Edg", "EdgA", etc.),
 // but it looks like WebKit never pretends to be Chrome, Edge does, and Chrome doesn't have the bug
 // that this flag is used to work around.
-export function isWebKit(): boolean {
+export function isWebKitAgent(): boolean {
     return (
         typeof window !== "undefined" &&
         window.navigator.userAgent.indexOf("AppleWebKit/") !== -1 &&

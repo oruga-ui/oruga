@@ -27,7 +27,7 @@ const locale = ref(); // Browser locale
                 </o-select>
             </o-field>
             <o-field>
-                <o-switch v-model="showWeekNumber">Show week number</o-switch>
+                <o-switch v-model="showWeekNumber" label="Show week number" />
             </o-field>
         </o-field>
 

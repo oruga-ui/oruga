@@ -36,11 +36,11 @@ title: Menu
 
 ### Props
 
-| Prop name | Description | Type    | Values | Default |
-| --------- | ----------- | ------- | ------ | ------- |
-| accordion |             | boolean | -      | true    |
-| activable |             | boolean | -      | true    |
-| override  |             | boolean | -      |         |
+| Prop name | Description | Type    | Values | Default                                                    |
+| --------- | ----------- | ------- | ------ | ---------------------------------------------------------- |
+| accordion |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code> |
+| activable |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code> |
+| override  |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>     |
 
 ### Slots
 
@@ -60,14 +60,14 @@ title: Menu
 
 ### Props
 
-| Prop name | Description         | Type    | Values                     | Default |
-| --------- | ------------------- | ------- | -------------------------- | ------- |
-| ariaRole  |                     | string  | -                          |         |
-| icon      |                     | string  | -                          |         |
-| iconPack  |                     | string  | -                          |         |
-| label     |                     | string  | -                          |         |
-| override  |                     | boolean | -                          |         |
-| size      | Icon size, optional | string  | `small`, `medium`, `large` |         |
+| Prop name | Description         | Type    | Values                     | Default                                                |
+| --------- | ------------------- | ------- | -------------------------- | ------------------------------------------------------ |
+| ariaRole  |                     | string  | -                          | <code style='white-space: nowrap; padding: 0;'></code> |
+| icon      |                     | string  | -                          | <code style='white-space: nowrap; padding: 0;'></code> |
+| iconPack  |                     | string  | -                          | <code style='white-space: nowrap; padding: 0;'></code> |
+| label     |                     | string  | -                          | <code style='white-space: nowrap; padding: 0;'></code> |
+| override  |                     | boolean | -                          | <code style='white-space: nowrap; padding: 0;'></code> |
+| size      | Icon size, optional | string  | `small`, `medium`, `large` | <code style='white-space: nowrap; padding: 0;'></code> |
 
 ### Slots
 
@@ -92,19 +92,19 @@ title: Menu
 
 ### Props
 
-| Prop name | Description         | Type                | Values                     | Default |
-| --------- | ------------------- | ------------------- | -------------------------- | ------- |
-| active    |                     | boolean             | -                          |         |
-| animation |                     | string              | -                          | "slide" |
-| ariaRole  |                     | string              | -                          | ""      |
-| disabled  |                     | boolean             | -                          |         |
-| expanded  |                     | boolean             | -                          |         |
-| icon      |                     | string              | -                          |         |
-| iconPack  |                     | string              | -                          |         |
-| label     |                     | string              | -                          |         |
-| override  |                     | boolean             | -                          |         |
-| size      | Icon size, optional | string              | `small`, `medium`, `large` |         |
-| tag       |                     | string \| Component | -                          | "a"     |
+| Prop name | Description         | Type                | Values                     | Default                                                       |
+| --------- | ------------------- | ------------------- | -------------------------- | ------------------------------------------------------------- |
+| active    |                     | boolean             | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| animation |                     | string              | -                          | <code style='white-space: nowrap; padding: 0;'>"slide"</code> |
+| ariaRole  |                     | string              | -                          | <code style='white-space: nowrap; padding: 0;'>""</code>      |
+| disabled  |                     | boolean             | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| expanded  |                     | boolean             | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| icon      |                     | string              | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| iconPack  |                     | string              | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| label     |                     | string              | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| override  |                     | boolean             | -                          | <code style='white-space: nowrap; padding: 0;'></code>        |
+| size      | Icon size, optional | string              | `small`, `medium`, `large` | <code style='white-space: nowrap; padding: 0;'></code>        |
+| tag       |                     | string \| Component | -                          | <code style='white-space: nowrap; padding: 0;'>"a"</code>     |
 
 ### Events
 

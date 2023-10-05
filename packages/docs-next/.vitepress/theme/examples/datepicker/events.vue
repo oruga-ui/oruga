@@ -54,7 +54,7 @@ const events = [
 <template>
     <section>
         <o-field>
-            <o-switch v-model="bars">Bars</o-switch>
+            <o-switch v-model="bars" label="Bars" />
         </o-field>
 
         <o-datepicker

@@ -17,6 +17,7 @@ const maxTime = ref(max);
         <o-field label="Select time">
             <o-timepicker
                 placeholder="Click to select..."
+                rounded
                 :min-time="minTime"
                 :max-time="maxTime" />
         </o-field>

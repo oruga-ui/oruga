@@ -43,7 +43,6 @@ const locale = ref(); // Browser locale
         <o-field label="Select time">
             <o-timepicker
                 v-model="selected"
-                rounded
                 placeholder="Click to select..."
                 icon="clock"
                 :enable-seconds="enableSeconds"
