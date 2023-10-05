@@ -11,6 +11,7 @@ import {
     useClassProps,
     useVModelBinding,
     useMatchMedia,
+    usePropBinding,
 } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerShare";
@@ -32,6 +33,8 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: { type: Date as PropType<Date>, default: undefined },
+    /** The active state of the dropdown */
+    active: { type: Boolean, default: false },
     /** Min time to select */
     minTime: { type: Date as PropType<Date>, default: undefined },
     /** Max time to select */
@@ -178,14 +181,14 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date} updated modelValue
+     * @param value {Date} updated modelValue prop
      */
     (e: "update:modelValue", value: Date): void;
     /**
-     * on active state change event
-     * @param value {boolean} active state
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
      */
-    (e: "active-change", value: boolean): void;
+    (e: "update:active", value: boolean): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -215,10 +218,6 @@ const emits = defineEmits<{
 
 const { isMobile } = useMatchMedia();
 
-// use form input functionality
-// const { checkHtml5Validity, onBlur, onFocus, onInvalid, isValid } =
-//     useFormInput(inputRef, emits);
-
 const {
     defaultTimeFormatter,
     defaultTimeParser,
@@ -232,6 +231,9 @@ const {
 } = useTimepickerMixins(props);
 
 const vmodel = useVModelBinding<Date>(props, emits);
+
+/** Dropdown active state */
+const isActive = usePropBinding<boolean>("active", props, emits);
 
 const hoursSelected = ref();
 const minutesSelected = ref();
@@ -689,10 +691,22 @@ const separatorClasses = computed(() => [
 const footerClasses = computed(() => [
     useComputedClass("footerClass", "o-tpck__footer"),
 ]);
+
+// --- Expose Public Functionalities ---
+
+const wrapperRef = ref<typeof OPickerWrapper>();
+defineExpose({
+    // expose the html root element of this component
+    $el: computed(() => wrapperRef.value.$el),
+    // expose the input element
+    $inputRef: computed(() => wrapperRef.value.$inputRef),
+});
 </script>
 
 <template>
     <OPickerWrapper
+        ref="wrapperRef"
+        v-model:active="isActive"
         v-bind="$attrs"
         :value="vmodel"
         :picker-props="props"
@@ -707,7 +721,6 @@ const footerClasses = computed(() => [
         :box-classes="boxClasses"
         @change="onChange"
         @native-change="onChangeNativePicker"
-        @active-change="$emit('active-change', $event)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"

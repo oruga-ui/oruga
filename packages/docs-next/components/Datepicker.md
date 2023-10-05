@@ -38,6 +38,7 @@ title: Datepicker
 
 | Prop name                 | Description                                                             | Type                                   | Values                                            | Default                                                                                                                                                               |
 | ------------------------- | ----------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active                    | The active state of the dropdown                                        | boolean                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                           |
 | appendToBody              | Append autocomplete content to body                                     | boolean                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;appendToBody: false<br>}</code>              |
 | ariaNextLabel             | A11y next button aria label                                             | string                                 | -                                                 | <code style='white-space: nowrap; padding: 0;'>"Next Page"</code>                                                                                                     |
 | ariaPreviousLabel         | A11y previous button aria label                                         | string                                 | -                                                 | <code style='white-space: nowrap; padding: 0;'>"Previous Page"</code>                                                                                                 |
@@ -90,19 +91,19 @@ title: Datepicker
 
 ### Events
 
-| Event name        | Properties                                      | Description                      |
-| ----------------- | ----------------------------------------------- | -------------------------------- |
-| active-change     | **value** `boolean` - active state              | on active state change event     |
-| focus             | **event** `Event` - native event                | on input focus event             |
-| blur              | **event** `Event` - native event                | on input blur event              |
-| invalid           | **event** `Event` - native event                | on input invalid event           |
-| icon-click        | **event** `Event` - native event                | on icon click event              |
-| icon-right-click  | **event** `Event` - native event                | on icon right click event        |
-| range-start       | **value** `Date` - range start date             | on range start is selected event |
-| range-end         | **value** `Date` - range end date               | on range end is selected event   |
-| update:modelValue | **value** `Date \| Date[]` - updated modelValue | modelValue prop two-way binding  |
-| change-month      | **value** `number` - month number               | on month change event            |
-| change-year       | **value** `number` - year number                | on year change event             |
+| Event name        | Properties                                           | Description                      |
+| ----------------- | ---------------------------------------------------- | -------------------------------- |
+| focus             | **event** `Event` - native event                     | on input focus event             |
+| blur              | **event** `Event` - native event                     | on input blur event              |
+| invalid           | **event** `Event` - native event                     | on input invalid event           |
+| icon-click        | **event** `Event` - native event                     | on icon click event              |
+| icon-right-click  | **event** `Event` - native event                     | on icon right click event        |
+| range-start       | **value** `Date` - range start date                  | on range start is selected event |
+| range-end         | **value** `Date` - range end date                    | on range end is selected event   |
+| update:modelValue | **value** `Date \| Date[]` - updated modelValue prop | modelValue prop two-way binding  |
+| update:active     | **value** `boolean` - updated active prop            | active prop two-way binding      |
+| change-month      | **value** `number` - month number                    | on month change event            |
+| change-year       | **value** `number` - year number                     | on year change event             |
 
 ### Slots
 

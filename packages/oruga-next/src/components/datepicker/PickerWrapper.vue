@@ -5,7 +5,11 @@ import type { ComponentExposed } from "vue-component-type-helpers";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 import OInput from "../input/Input.vue";
-import { useEventListener, useInputHandler } from "@/composables";
+import {
+    useEventListener,
+    useInputHandler,
+    usePropBinding,
+} from "@/composables";
 import { isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import type { BindProp } from "@/types";
@@ -21,7 +25,10 @@ defineOptions({
 const props = defineProps({
     /** parent picker component props  */
     pickerProps: { type: Object, required: true },
+    /** The input value */
     value: { type: [Date, Array], default: undefined },
+    /** The active state of the dropdown */
+    active: { type: Boolean, default: false },
     formattedValue: { type: String, default: undefined },
     nativeType: { type: String, required: true },
     nativeStep: { type: String, default: undefined },
@@ -41,12 +48,15 @@ const props = defineProps({
 });
 
 const emits = defineEmits<{
+    /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    (e: "update:active", value: boolean): void;
     /** on value change event */
     (e: "change", value: string): void;
     /** on natvie value change event */
     (e: "native-change", value: string): void;
-    /** on active state change event */
-    (e: "active-change", value: boolean): void;
     /** on input focus event */
     (e: "focus", evt: Event): void;
     /** on input blur event */
@@ -93,12 +103,15 @@ watch(
     },
 );
 
+const isActive = usePropBinding<boolean>("active", props, emits, {
+    passive: true,
+});
+
+watch(isActive, onActiveChange);
+
 const ariaRole = computed(() => (!picker.value.inline ? "dialog" : undefined));
 
 const triggers = computed(() => (picker.value.openOnFocus ? ["click"] : []));
-
-const isActive = ref(false);
-watch(isActive, onActiveChange);
 
 if (isClient) useEventListener("keyup", onKeyPress);
 
@@ -131,7 +144,6 @@ function onInputClick(event): void {
 function onActiveChange(value: boolean): void {
     if (value) onFocus();
     else if (!value) onBlur();
-    emits("active-change", value);
 }
 
 // --- Computed Component Classes ---
@@ -155,10 +167,6 @@ defineExpose({
     $el: computed(() => rootRef.value),
     // expose the input element
     $inputRef: computed(() => elementRef.value),
-    // expose programmatic toggle
-    togglePicker,
-    // expose state
-    isActive: isActive.value,
 });
 </script>
 

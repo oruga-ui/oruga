@@ -14,6 +14,7 @@ import {
     useClassProps,
     useVModelBinding,
     useMatchMedia,
+    usePropBinding,
 } from "@/composables";
 
 import { getMonthNames, getWeekdayNames } from "./datepickerUtils";
@@ -44,6 +45,8 @@ const props = defineProps({
         type: [Date, Array] as PropType<Date | Date[]>,
         default: undefined,
     },
+    /** The active state of the dropdown */
+    active: { type: Boolean, default: false },
     /**
      * Define picker mode
      * @values date, month
@@ -311,9 +314,14 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date | Date[]} updated modelValue
+     * @param value {Date | Date[]} updated modelValue prop
      */
     (e: "update:modelValue", value: Date | Date[]): void;
+    /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    (e: "update:active", value: boolean): void;
     /**
      * on range start is selected event
      * @param value {Date} range start date
@@ -334,11 +342,6 @@ const emits = defineEmits<{
      * @param value {number} year number
      */
     (e: "change-year", value: number): void;
-    /**
-     * on active state change event
-     * @param value {boolean} active state
-     */
-    (e: "active-change", value: boolean): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -371,6 +374,9 @@ const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
 const { isMobile } = useMatchMedia();
 
 const vmodel = useVModelBinding<Date | Date[]>(props, emits, { passive: true });
+
+/** Dropdown active state */
+const isActive = usePropBinding<boolean>("active", props, emits);
 
 /** modelValue formated into string */
 const formattedValue = computed(() =>
@@ -714,15 +720,6 @@ defineExpose({
     $el: computed(() => wrapperRef.value.$el),
     // expose the input element
     $inputRef: computed(() => wrapperRef.value.$inputRef),
-    // expose programmatic toggle
-    toggle: (active: boolean) =>
-        wrapperRef.value.togglePicker(
-            typeof active !== "undefined"
-                ? active
-                : !wrapperRef.value?.isActive,
-        ),
-    // expose state
-    isActive: computed(() => wrapperRef.value.isActive),
 });
 </script>
 
@@ -730,6 +727,7 @@ defineExpose({
     <OPickerWrapper
         ref="wrapperRef"
         v-bind="$attrs"
+        v-model:active="isActive"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"
@@ -743,7 +741,6 @@ defineExpose({
         :box-classes="boxClasses"
         @change="onChange"
         @native-change="onChangeNativePicker"
-        @active-change="$emit('active-change', $event)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @invalid="$emit('invalid', $event)"

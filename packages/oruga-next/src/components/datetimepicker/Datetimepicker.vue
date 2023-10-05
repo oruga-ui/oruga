@@ -9,6 +9,7 @@ import {
     useComputedClass,
     useClassProps,
     useInputHandler,
+    usePropBinding,
 } from "@/composables";
 import { isMobileAgent } from "@/utils/helpers";
 import { matchWithGroups } from "../datepicker/datepickerUtils";
@@ -29,12 +30,15 @@ defineOptions({
 
 const AM = "AM";
 const PM = "PM";
+const HOUR_FORMAT_24 = "24";
 
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
     /** @model */
     modelValue: { type: Date, default: undefined },
+    /** The active state of the dropdown */
+    active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */
     datepicker: {
         type: Object as PropType<DatepickerProps>,
@@ -146,9 +150,14 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Date | Date[]} updated modelValue
+     * @param value {Date | Date[]} updated modelValue prop
      */
     (e: "update:modelValue", value: Date | Date[]): void;
+    /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    (e: "update:active", value: boolean): void;
     /**
      * on range start is selected event
      * @param value {Date} range start date
@@ -169,11 +178,6 @@ const emits = defineEmits<{
      * @param value {number} year number
      */
     (e: "change-year", value: number): void;
-    /**
-     * on active state change event
-     * @param value {boolean} active state
-     */
-    (e: "active-change", value: boolean): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -201,12 +205,20 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const datepickerRef = ref();
-const timepickerRef = ref();
-const inputRef = ref();
+const datepickerRef = ref<InstanceType<typeof ODatepicker>>();
+const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
+const nativeInputRef = ref<InstanceType<typeof OInput>>();
+
+const elementRef = computed(() =>
+    isMobileNative.value ? nativeInputRef.value : datepickerRef.value.$inputRef,
+);
 
 // use form input functionality for native input
-const { onBlur, onFocus, onInvalid } = useInputHandler(inputRef, emits, props);
+const { onBlur, onFocus, onInvalid } = useInputHandler(
+    elementRef,
+    emits,
+    props,
+);
 
 const isMobileNative = computed(
     () => props.mobileNative && isMobileAgent.any(),
@@ -216,6 +228,9 @@ watch([() => isMobileNative.value, () => props.inline], () => {
     // $refs attached, it's time to refresh datepicker (input)
     if (datepickerRef.value) datepickerRef.value.$forceUpdate();
 });
+
+/** Dropdown active state */
+const isActive = usePropBinding<boolean>("active", props, emits);
 
 const vmodel = computed({
     get() {
@@ -378,10 +393,10 @@ const localeOptions = computed(
         }).resolvedOptions() as Intl.DateTimeFormatOptions,
 );
 
-const isHourFormat24 = computed(() =>
-    timepickerRef.value
-        ? timepickerRef.value.isHourFormat24
-        : !localeOptions.value.hour12,
+const isHourFormat24 = computed(
+    () =>
+        props.timepicker.hourFormat === HOUR_FORMAT_24 ||
+        !localeOptions.value.hour12,
 );
 
 const dtf = computed(
@@ -399,6 +414,38 @@ const dtf = computed(
         }),
 );
 
+const amString = computed(() => {
+    if (
+        dtf.value.formatToParts &&
+        typeof dtf.value.formatToParts === "function"
+    ) {
+        const d = props.datetimeCreator(new Date());
+        d.setHours(10);
+        const dayPeriod = dtf.value
+            .formatToParts(d)
+            .find((part) => part.type === "dayPeriod");
+        if (dayPeriod) return dayPeriod.value;
+    }
+    return AM;
+});
+
+const pmString = computed(() => {
+    if (
+        dtf.value.formatToParts &&
+        typeof dtf.value.formatToParts === "function"
+    ) {
+        const d = props.datetimeCreator(new Date());
+        d.setHours(20);
+        const dayPeriod = dtf.value
+            .formatToParts(d)
+            .find((part) => part.type === "dayPeriod");
+        if (dayPeriod) {
+            return dayPeriod.value;
+        }
+    }
+    return PM;
+});
+
 function defaultDatetimeParser(value: string): Date {
     function defaultParser(date: string): Date {
         if (
@@ -407,8 +454,8 @@ function defaultDatetimeParser(value: string): Date {
         ) {
             const dayPeriods = [AM, PM, AM.toLowerCase(), PM.toLowerCase()];
             if (timepickerRef.value) {
-                dayPeriods.push(timepickerRef.value.amString);
-                dayPeriods.push(timepickerRef.value.pmString);
+                dayPeriods.push(amString.value);
+                dayPeriods.push(pmString.value);
             }
             const parts = this.dtf.formatToParts(new Date());
             const formatRegex = parts
@@ -500,6 +547,15 @@ const datepickerWrapperClasses = computed(() => [
 const timepickerWrapperClasses = computed(() => [
     useComputedClass("timepickerWrapperClass", "o-dtpck__time"),
 ]);
+
+// --- Expose Public Functionalities ---
+
+defineExpose({
+    // expose the html root element of this component
+    $el: computed(() => datepickerRef.value.$el),
+    // expose the input element
+    $inputRef: computed(() => elementRef.value),
+});
 </script>
 
 <template>
@@ -507,6 +563,7 @@ const timepickerWrapperClasses = computed(() => [
         v-if="!isMobileNative || inline"
         ref="datepickerRef"
         v-model="vmodel"
+        v-model:active="isActive"
         v-bind="datepicker"
         :class="datepickerWrapperClasses"
         :rounded="rounded"
@@ -533,7 +590,6 @@ const timepickerWrapperClasses = computed(() => [
         :append-to-body="appendToBody"
         @focus="onFocus"
         @blur="onBlur"
-        @active-change="$emit('active-change', $event)"
         @change-month="$emit('change-month', $event)"
         @change-year="$emit('change-year', $event)"
         @icon-click="$emit('icon-click', $event)"
@@ -562,7 +618,7 @@ const timepickerWrapperClasses = computed(() => [
     <!-- Native Picker -->
     <o-input
         v-else
-        ref="inputRef"
+        ref="nativeInputRef"
         type="datetime-local"
         autocomplete="off"
         :value="formatNative(vmodel)"

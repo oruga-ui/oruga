@@ -62,12 +62,11 @@ title: Dropdown
 
 ### Events
 
-| Event name        | Properties                                                              | Description                       |
-| ----------------- | ----------------------------------------------------------------------- | --------------------------------- |
-| update:modelValue | **value** `String, Number, Boolean, Object, Array` - updated modelValue | modelValue prop two-way binding   |
-| update:active     | **value** `boolean` - updated active                                    | active prop two-way binding       |
-| change            | **value** `any` - selected value                                        | change event                      |
-| active-change     |                                                                         | Legacy, use update:active instead |
+| Event name        | Properties                                                                   | Description                     |
+| ----------------- | ---------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `String, Number, Boolean, Object, Array` - updated modelValue prop | modelValue prop two-way binding |
+| update:active     | **value** `boolean` - updated active prop                                    | active prop two-way binding     |
+| change            | **value** `any` - selected value                                             | change event                    |
 
 ### Slots
 

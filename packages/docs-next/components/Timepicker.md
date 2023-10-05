@@ -38,6 +38,7 @@ title: Timepicker
 
 | Prop name             | Description                                                 | Type                                   | Values                                            | Default                                                                                                                                                            |
 | --------------------- | ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| active                | The active state of the dropdown                            | boolean                                | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                        |
 | appendToBody          | Append autocomplete content to body                         | boolean                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>datepicker: {<br>&nbsp;&nbsp;appendToBody: false<br>}</code>           |
 | closeOnClick          |                                                             | boolean                                | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>timepicker: {<br>&nbsp;&nbsp;closeOnClick: true<br>}</code>            |
 | defaultMinutes        |                                                             | number                                 | -                                                 |                                                                                                                                                                    |
@@ -77,15 +78,15 @@ title: Timepicker
 
 ### Events
 
-| Event name        | Properties                            | Description                     |
-| ----------------- | ------------------------------------- | ------------------------------- |
-| active-change     | **value** `boolean` - active state    | on active state change event    |
-| focus             | **event** `Event` - native event      | on input focus event            |
-| blur              | **event** `Event` - native event      | on input blur event             |
-| invalid           | **event** `Event` - native event      | on input invalid event          |
-| icon-click        | **event** `Event` - native event      | on icon click event             |
-| icon-right-click  | **event** `Event` - native event      | on icon right click event       |
-| update:modelValue | **value** `Date` - updated modelValue | modelValue prop two-way binding |
+| Event name        | Properties                                 | Description                     |
+| ----------------- | ------------------------------------------ | ------------------------------- |
+| focus             | **event** `Event` - native event           | on input focus event            |
+| blur              | **event** `Event` - native event           | on input blur event             |
+| invalid           | **event** `Event` - native event           | on input invalid event          |
+| icon-click        | **event** `Event` - native event           | on icon click event             |
+| icon-right-click  | **event** `Event` - native event           | on icon right click event       |
+| update:modelValue | **value** `Date` - updated modelValue prop | modelValue prop two-way binding |
+| update:active     | **value** `boolean` - updated active prop  | active prop two-way binding     |
 
 ### Slots
 

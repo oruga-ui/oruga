@@ -18,7 +18,6 @@ import {
     useClassProps,
     useVModelBinding,
     useMatchMedia,
-    usePropBinding,
     useEventListener,
 } from "@/composables";
 import { vTrapFocus } from "../../directives/trapFocus";
@@ -165,12 +164,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {String, Number, Boolean, Object, Array} updated modelValue
+     * @param value {String, Number, Boolean, Object, Array} updated modelValue prop
      */
     (e: "update:modelValue", value: T[]): void;
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active
+     * @param value {boolean} updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
@@ -178,11 +177,6 @@ const emits = defineEmits<{
      * @param value {any} selected value
      */
     (e: "change", value: any): void;
-    /**
-     * Legacy, use update:active instead
-     * @deprecated
-     */
-    (e: "active-change", value: boolean): void;
 }>();
 
 const rootRef = ref();
@@ -190,10 +184,26 @@ const menuRef = ref();
 const triggerRef = ref();
 
 const vmodel = useVModelBinding<T[]>(props, emits) as Ref<T[]>;
-const isActive = usePropBinding("active", props, emits, { passive: true });
+const isActive = ref(props.active);
+
+/** toggle isActive value when prop is changed */
+watch(
+    () => props.active,
+    (value) => {
+        if (!value) isActive.value = value;
+        // if not active, toggle after clickOutside event
+        // this fixes toggling programmatic
+        else setTimeout(() => (isActive.value = value));
+    },
+);
+
+/** emit event when isActive value is changed */
+watch(isActive, (value) => {
+    emits("update:active", value);
+    if (props.appendToBody) nextTick(() => updateAppendToBody());
+});
 
 const isHovered = ref(false);
-const bodyEl = ref(undefined); // Used to append to body
 
 const { isMobile } = useMatchMedia();
 
@@ -202,6 +212,7 @@ if (isClient) {
     useEventListener("keyup", keyPress);
 }
 
+const bodyEl = ref(undefined); // Used to append to body
 onMounted(() => {
     if (props.appendToBody) {
         bodyEl.value = createAbsoluteElement(menuRef.value);
@@ -213,13 +224,6 @@ onUnmounted(() => {
     if (props.appendToBody) {
         removeElement(bodyEl.value);
     }
-});
-
-/** Emit event when isActive value is changed. */
-watch(isActive, (value) => {
-    // TODO: remove when all components are updated
-    emits("active-change", value);
-    if (props.appendToBody) nextTick(() => updateAppendToBody());
 });
 
 const isMobileModal = computed(() => props.mobileModal && !props.inline);
@@ -314,8 +318,8 @@ function updateAppendToBody(): void {
 
 /** Close dropdown if clicked outside. */
 function clickedOutside(event): void {
-    if (cancelOptions.value.indexOf("outside") < 0) return;
     if (props.inline) return;
+    if (cancelOptions.value.indexOf("outside") < 0) return;
     if (!isInWhiteList(event.target)) isActive.value = false;
 }
 
@@ -355,11 +359,10 @@ function onFocus(): void {
 /** Toggle dropdown if it's not disabled. */
 function toggle(): void {
     if (props.disabled) return;
-    if (!isActive.value)
-        // if not active, toggle after clickOutside event
-        // this fixes toggling programmatic
-        nextTick(() => (isActive.value = !isActive.value));
-    else isActive.value = !isActive.value;
+    if (isActive.value) isActive.value = !isActive.value;
+    // if not active, toggle after clickOutside event
+    // this fixes toggling programmatic
+    else nextTick(() => (isActive.value = !isActive.value));
 }
 
 // --- Field Dependency Injection Feature ---
