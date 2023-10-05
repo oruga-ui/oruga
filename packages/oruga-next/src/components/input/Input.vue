@@ -42,10 +42,7 @@ const props = defineProps({
      * Input type, like native
      * @values Any native input type, and textarea
      */
-    type: {
-        type: String,
-        default: "text",
-    },
+    type: { type: String, default: "text" },
     /**
      * Size of the control, optional
      * @values small, medium, large
@@ -299,6 +296,12 @@ function rightIconClick(event: Event): void {
 
 const isPasswordVisible = ref(false);
 const inputType = ref(props.type);
+
+// update inputType on type prop change
+watch(
+    () => props.type,
+    (type) => (inputType.value = type),
+);
 
 /** Current password-reveal icon name. */
 const passwordVisibleIcon = computed(() =>
