@@ -46,7 +46,7 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: {
-        type: Array,
+        type: [String, Number, Boolean, Object, Array],
         default: undefined,
     },
     /** The active state of the dropdown */
@@ -164,9 +164,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {Array} updated modelValue prop
+     * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
      */
-    (e: "update:modelValue", value: Array<any>): void;
+    (
+        e: "update:modelValue",
+        value: [string, number, boolean, object, Array<any>],
+    ): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -183,7 +186,10 @@ const rootRef = ref();
 const menuRef = ref();
 const triggerRef = ref();
 
-const vmodel = useVModelBinding<any[]>(props, emits) as Ref<any[]>;
+const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
+    props,
+    emits,
+) as Ref<any>;
 const isActive = ref(props.active);
 
 /** toggle isActive value when prop is changed */
@@ -375,7 +381,7 @@ function toggle(): void {
  */
 function selectItem(value: any): void {
     if (props.multiple) {
-        if (vmodel.value) {
+        if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // Add value
                 vmodel.value = [...vmodel.value, value];
@@ -384,12 +390,14 @@ function selectItem(value: any): void {
                 vmodel.value = vmodel.value.filter((val) => val !== value);
             }
         } else {
+            // Init value array
             vmodel.value = [value];
         }
         emits("change", vmodel.value);
     } else {
         if (vmodel.value !== value) {
-            vmodel.value = [value];
+            // Upodate value
+            vmodel.value = value;
             emits("change", vmodel.value);
         }
     }
