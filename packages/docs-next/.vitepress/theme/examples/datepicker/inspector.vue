@@ -367,31 +367,11 @@ const inspectData = [
         },
     },
     {
-        class: "monthRowClass",
-        description: "Class of the table row when type is month",
-        action: (cmp, data) => {
-            data.type = "month";
-            data.monthClass = "datepicker__,table__month";
-            openDatePicker();
-        },
-    },
-    {
         class: "monthCellClass",
         description: "Class of the table cell when type is month",
         action: (cmp, data) => {
             data.type = "month";
             data.monthClass = "datepicker__,table__month";
-            openDatePicker();
-        },
-    },
-    {
-        class: "monthCellInvisibleClass",
-        description:
-            "Class of the table cell when nearby month days are hidden when type is month",
-        action: (cmp, data) => {
-            data.type = "month";
-            data.monthClass = "datepicker__,table__month";
-            data.nearbyMonthDays = false;
             openDatePicker();
         },
     },
