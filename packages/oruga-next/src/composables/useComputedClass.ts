@@ -46,11 +46,10 @@ const getContext = (vm: ComponentInternalInstance): ComponentContext => {
 /**
  * Compute a class by field name
  */
-export function useComputedClass<P extends { override: boolean }>(
+export function useComputedClass(
     field: string,
     defaultValue?: string,
     suffix = "",
-    props?: P,
 ): string {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -59,7 +58,7 @@ export function useComputedClass<P extends { override: boolean }>(
             "useComputedClass must be called within a component setup function.",
         );
     // get component props
-    if (!props) props = vm.props as P;
+    const props = vm.props;
 
     const configField = vm.proxy?.$options.configField;
     if (!configField)
