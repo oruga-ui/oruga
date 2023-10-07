@@ -7,9 +7,10 @@ import {
     onMounted,
     onBeforeUpdate,
     onUnmounted,
+    useAttrs,
+    toRaw,
     type PropType,
     type Component,
-    useAttrs,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -31,6 +32,7 @@ import {
     toCssDimension,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
+import type { BindProp } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -555,7 +557,7 @@ function navigateItem(direction: 1 | -1): void {
     let index;
     if (headerHovered.value) index = 0 + direction;
     else if (footerHovered.value) index = data.length - 1 + direction;
-    else index = data.indexOf(hoveredOption.value) + direction;
+    else index = data.indexOf(toRaw(hoveredOption.value)) + direction;
 
     // check if index overflow
     index = index > data.length - 1 ? data.length - 1 : index;
@@ -883,12 +885,12 @@ const itemFooterClasses = computed(() => [
     },
 ]);
 
-function itemOptionClasses(option) {
+function itemOptionClasses(option): BindProp {
     return [
         ...itemClasses.value,
         {
             [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-                option === hoveredOption.value,
+                toRaw(option) === toRaw(hoveredOption.value),
         },
     ];
 }
