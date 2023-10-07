@@ -189,6 +189,7 @@ const triggerRef = ref();
 const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
     props,
     emits,
+    { passive: true },
 ) as Ref<any>;
 const isActive = ref(props.active);
 
