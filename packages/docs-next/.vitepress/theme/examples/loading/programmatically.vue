@@ -1,15 +1,17 @@
 <script setup>
 import { ref } from "vue";
-import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
+
+const oruga = useOruga();
+
+const elementRef = ref();
 
 const isFullPage = ref(true);
-
-const { oruga } = useProgrammatic();
 
 function openLoading() {
     const loadingComponent = oruga.loading.open({
         fullPage: isFullPage.value,
-        container: isFullPage.value ? null : this.$refs.element,
+        container: isFullPage.value ? null : elementRef.value,
     });
     setTimeout(() => loadingComponent.close(), 3 * 1000);
 }
@@ -29,7 +31,7 @@ function openLoading() {
                 Display loader over full page
             </o-switch>
         </o-field>
-        <p ref="element" style="position: relative">
+        <p ref="elementRef" style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
             fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit
             sapien laoreet elit

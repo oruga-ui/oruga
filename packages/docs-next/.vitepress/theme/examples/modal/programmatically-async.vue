@@ -1,8 +1,8 @@
 <script setup>
-import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
 import ModalForm from "./_modal-form-async.vue";
 
-const { oruga } = useProgrammatic();
+const oruga = useOruga();
 
 const promptModal = async () => {
     const instance = oruga.modal.open({

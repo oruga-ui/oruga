@@ -3,17 +3,23 @@ import { createVNode, render } from "vue";
 
 import Modal from "./Modal.vue";
 
-import { VueInstance } from "../../utils/config";
-import { merge } from "../../utils/helpers";
+import { VueInstance } from "@/utils/config";
+import { merge } from "@/utils/helpers";
 import {
     registerComponent,
     registerComponentProgrammatic,
-} from "../../utils/plugins";
-import InstanceRegistry from "../../utils/InstanceRegistry";
+} from "@/utils/plugins";
+import InstanceRegistry from "@/utils/InstanceRegistry";
+
+declare module "@/types" {
+    interface OrugaProgrammatic {
+        modal: typeof ModalProgrammatic;
+    }
+}
 
 let localVueInstance: App;
 
-const instances = new InstanceRegistry();
+const instances = new InstanceRegistry<typeof Modal>();
 
 const ModalProgrammatic = {
     open(params: OModal | string): InstanceType<typeof Modal> {
@@ -26,33 +32,31 @@ const ModalProgrammatic = {
             newParams = params;
         }
 
-        const defaultParam = {
+        const defaultParams = {
             programmatic: { instances },
         };
+
         let slot;
         if (Array.isArray(newParams.content)) {
             slot = newParams.content;
             delete newParams.content;
         }
-        const propsData = merge(defaultParam, newParams);
+
+        const propsData = merge(defaultParams, newParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;
         });
+        const defaultSlot = () => slot;
 
         const app = localVueInstance || VueInstance;
-        const defaultSlot = () => {
-            return slot;
-        };
         const vnode = createVNode(Modal, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         return vnode.component.proxy as InstanceType<typeof Modal>;
     },
-    closeAll(...args: any[]) {
-        instances.walk((entry) => {
-            entry.close(...args);
-        });
+    closeAll(...args: any[]): void {
+        instances.walk((entry) => entry.close(...args));
     },
 };
 

@@ -1,9 +1,9 @@
 <script setup>
 import { h } from "vue";
-import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
 import ModalForm from "./_modal-form.vue";
 
-const { oruga } = useProgrammatic();
+const oruga = useOruga();
 
 function imageModal() {
     const vnode = h("p", { style: { "text-align": "center" } }, [

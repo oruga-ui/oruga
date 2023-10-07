@@ -3,7 +3,7 @@ import MessageMixin from "../../utils/MessageMixin";
 import BaseComponentMixin from "../../utils/BaseComponentMixin";
 import { getValueByPath } from "../../utils/helpers";
 import { getOptions } from "../../utils/config";
-import { defineComponent } from "vue";
+import { defineComponent, type Component, type PropType } from "vue";
 
 /**
  * Bold notification blocks to alert your users of something
@@ -15,7 +15,6 @@ export default defineComponent({
     name: "ONotification",
     configField: "notification",
     mixins: [BaseComponentMixin, MessageMixin],
-    emits: ["update:active", "close"],
     props: {
         /**
          * Which position the notification will appear when programmatically
@@ -46,7 +45,7 @@ export default defineComponent({
             default: "fade",
         },
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
-        component: [Object, Function],
+        component: [Object, Function] as PropType<Component>,
         /** Props to be binded to the injected component */
         props: Object,
         /** Events to be binded to the injected component */
@@ -73,6 +72,7 @@ export default defineComponent({
         variantClass: [String, Function, Array],
         wrapperClass: [String, Function, Array],
     },
+    emits: ["update:active", "close"],
     computed: {
         rootClasses() {
             return [
@@ -120,8 +120,8 @@ export default defineComponent({
                 v-if="closable"
                 :class="closeClasses"
                 type="button"
-                @click="close({ action: 'close', method: 'x' })"
-                :aria-label="ariaCloseLabel">
+                :aria-label="ariaCloseLabel"
+                @click="close({ action: 'close', method: 'x' })">
                 <o-icon
                     clickable
                     :pack="iconPack"
@@ -130,16 +130,16 @@ export default defineComponent({
                     :size="closeIconSize" />
             </button>
             <component
-                v-if="component"
                 v-bind="props"
-                v-on="events"
                 :is="component"
+                v-if="component"
+                v-on="events"
                 @close="close" />
-            <div :class="wrapperClasses" v-if="$slots.default || message">
+            <div v-if="$slots.default || message" :class="wrapperClasses">
                 <o-icon
+                    v-if="computedIcon"
                     :icon="computedIcon"
                     :pack="iconPack"
-                    v-if="computedIcon"
                     :class="iconClasses"
                     both
                     :size="iconSize"
@@ -149,7 +149,7 @@ export default defineComponent({
                         <span v-html="message" />
                     </template>
                     <template v-else>
-                        <slot v-bind:closeNotification="close" />
+                        <slot :close-notification="close" />
                     </template>
                 </div>
             </div>

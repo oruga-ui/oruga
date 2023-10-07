@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, type Component, type PropType } from "vue";
 
 import BaseComponentMixin from "../../utils/BaseComponentMixin";
 import MatchMediaMixin from "../../utils/MatchMediaMixin";
@@ -33,7 +33,7 @@ export default defineComponent({
         /** Whether modal is active or not, use v-model:active to make it two-way binding */
         active: Boolean,
         /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
-        component: [Object, Function],
+        component: [Object, Function] as PropType<Component>,
         /** Text content */
         content: String,
         /** @ignore */
