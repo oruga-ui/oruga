@@ -83,9 +83,9 @@ const props = defineProps({
     },
     /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
     field: { type: String, default: "value" },
-    /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
+    /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
-    /** Property of the object (if <code>data</code> is array of objects) to use as key to get items array of each group, optional */
+    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group, optional */
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display in the input (as alternative to field prop) */
     formatter: {
@@ -155,7 +155,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("autocomplete.animation", "fade"),
     },
-    /** Trigger the select event for the first pre-selected option when clicking outside and <code>keep-first</code> is enabled */
+    /** Trigger the select event for the first pre-selected option when clicking outside and `keep-first` is enabled */
     selectOnClickOutside: { type: Boolean, default: false },
     /** Allows the header in the autocomplete to be selectable */
     selectableHeader: { type: Boolean, default: false },
