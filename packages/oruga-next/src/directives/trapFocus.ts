@@ -66,3 +66,5 @@ const directive = {
 };
 
 export default directive;
+
+export const vTrapFocus = directive; // export composition api directive

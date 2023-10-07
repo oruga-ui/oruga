@@ -1,3 +1,5 @@
+import type { ValidatableFormElement } from "@/composables";
+
 export type ComponentContext = {
     props: Record<string, any>;
     data: Record<string, any>;
@@ -20,13 +22,20 @@ export type TransformFunction = (classes: string) => string;
 export type FieldDefinition = undefined | string | FieldFunction | FieldObject;
 
 export type OrugaOptions = {
-    iconPack: string;
-    useHtml5Validation: boolean;
-    statusIcon: boolean;
+    /** Define the icon pack be used */
+    iconPack?: string;
+    /** Enable HTML5 validation */
+    useHtml5Validation?: boolean;
+    /** Custom HTML5 validation invalid handler */
+    invalidHandler?: (
+        validatable: ValidatableFormElement,
+        fieldElement: Element,
+    ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
     transformClasses?: TransformFunction;
     [key: string]:
         | boolean
+        | Function
         | FieldDefinition
         | {
               /**
@@ -39,3 +48,14 @@ export type OrugaOptions = {
               [key: string]: FieldDefinition | boolean;
           };
 };
+
+/** Vue native type which a v-bind prop must have */
+export type BindProp = (
+    | string
+    | {
+          [x: string]: string;
+      }
+    | {
+          [x: string]: boolean;
+      }
+)[];

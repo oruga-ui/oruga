@@ -10,6 +10,9 @@ import ScrollableCode from "./scrollable.vue?raw";
 
 import Position from "./position.vue";
 import PositionCode from "./position.vue?raw";
+
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 </script>
 
 <template>
@@ -24,4 +27,7 @@ import PositionCode from "./position.vue?raw";
 
     <h3 id="position">Position</h3>
     <ExampleViewer :component="Position" :code="PositionCode" />
+
+    <h3 id="programmatically">Programmatically</h3>
+    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>

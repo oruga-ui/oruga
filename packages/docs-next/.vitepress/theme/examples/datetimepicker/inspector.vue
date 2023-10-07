@@ -1,8 +1,20 @@
 <script setup>
+import { getCurrentInstance, ref } from "vue";
+
+const datetimepicker = ref();
+
+// get programmatic oruga access
+const app = getCurrentInstance();
+const oruga = app.appContext.config.globalProperties.$oruga;
+
+const triggerClass = oruga?.config
+    ? oruga.config.getOption("dropdown.triggerClass", "o-drop__trigger")
+    : "o-drop__trigger";
+
 function openDatetimePicker() {
     setTimeout(() => {
-        this.$refs.datetimepicker.$el
-            .getElementsByClassName("o-drop__trigger")[0]
+        datetimepicker.value.$el
+            .getElementsByClassName(triggerClass)[0]
             .click();
     }, 500);
 }

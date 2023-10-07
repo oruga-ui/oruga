@@ -1,18 +1,33 @@
-<script lang="ts">
-import type { Component, PropType } from "vue";
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import {
+    computed,
+    nextTick,
+    ref,
+    watch,
+    onMounted,
+    onUnmounted,
+    type Component,
+    type PropType,
+    type Ref,
+} from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
-
-import trapFocus from "../../directives/trapFocus";
-import { getOptions } from "../../utils/config";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useComputedClass,
+    useClassProps,
+    useVModelBinding,
+    useMatchMedia,
+    useEventListener,
+} from "@/composables";
+import { vTrapFocus } from "../../directives/trapFocus";
 import {
     removeElement,
     createAbsoluteElement,
     toCssDimension,
-    getValueByPath,
-} from "../../utils/helpers";
+} from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
+import { provideDropdown } from "./useDropdownShare";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -20,491 +35,450 @@ import {
  * @requires ./DropdownItem.vue
  * @style _dropdown.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "ODropdown",
-    directives: {
-        trapFocus,
-    },
     configField: "dropdown",
-    mixins: [BaseComponentMixin, MatchMediaMixin],
-    provide() {
-        return {
-            $dropdown: this,
-        };
-    },
-    emits: ["update:modelValue", "active-change", "change"],
-    props: {
-        /** @model */
-        modelValue: {
-            type: [String, Number, Boolean, Object, Array],
-            default: null,
-        },
-        /**
-         * Trigger label, unnecessary when trgger slot is used
-         */
-        label: {
-            type: String,
-            default: undefined,
-        },
-        /**
-         * Dropdown disabled
-         */
-        disabled: Boolean,
-        /**
-         * Dropdown content (items) are shown inline, trigger is removed
-         */
-        inline: Boolean,
-        /**
-         * Dropdown content will be scrollable
-         */
-        scrollable: Boolean,
-        /**
-         * Max height of dropdown content
-         */
-        maxHeight: {
-            type: [String, Number],
-            default: () => {
-                return getValueByPath(getOptions(), "dropdown.maxHeight", 200);
-            },
-        },
-        /**
-         * Optional, position of the dropdown relative to the trigger
-         * @values top-right, top-left, bottom-left
-         */
-        position: {
-            type: String,
-            validator: (value: string) => {
-                return (
-                    [
-                        "top-right",
-                        "top-left",
-                        "bottom-left",
-                        "bottom-right",
-                    ].indexOf(value) > -1
-                );
-            },
-        },
-        /**
-         * Dropdown content (items) are shown into a modal on mobile
-         */
-        mobileModal: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "dropdown.mobileModal",
-                    true,
-                );
-            },
-        },
-        /**
-         * Role attribute to be passed to list container for better accessibility. Use menu only in situations where your dropdown is related to navigation menus
-         * @values list, menu, dialog
-         */
-        ariaRole: {
-            type: String,
-            validator: (value: string) => {
-                return ["menu", "list", "dialog"].indexOf(value) > -1;
-            },
-            default: null,
-        },
-        /**
-         * Custom animation (transition name)
-         */
-        animation: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "dropdown.animation",
-                    "fade",
-                );
-            },
-        },
-        /**
-         * Allows multiple selections
-         */
-        multiple: Boolean,
-        /**
-         * Trap focus inside the dropdown.
-         */
-        trapFocus: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "dropdown.trapFocus", true);
-            },
-        },
-        /**
-         * Close dropdown when content is clicked
-         */
-        closeOnClick: {
-            type: Boolean,
-            default: true,
-        },
-        /**
-         * Can close dropdown by pressing escape or by clicking outside
-         * @values escape, outside
-         */
-        canClose: {
-            type: [Array, Boolean],
-            default: true,
-        },
-        /**
-         * Dropdown will be expanded (full-width)
-         */
-        expanded: Boolean,
-        /**
-         * Dropdown will be triggered by any events
-         * @values click, hover, contextmenu, focus
-         */
-        triggers: {
-            type: Array,
-            default: () => ["click"],
-        },
-        /**
-         * Dropdown menu tag name
-         */
-        menuTag: {
-            type: [String, Object, Function] as PropType<string | Component>,
-            default: () => {
-                return getValueByPath(getOptions(), "dropdown.menuTag", "div");
-            },
-        },
-        /**
-         * Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)
-         */
-        triggerTabindex: {
-            type: Number,
-            default: 0,
-        },
-        /**
-         * Append dropdown content to body
-         */
-        appendToBody: Boolean,
-        /**
-         * @ignore
-         */
-        appendToBodyCopyParent: Boolean,
-        rootClass: [String, Function, Array],
-        triggerClass: [String, Function, Array],
-        inlineClass: [String, Function, Array],
-        menuMobileOverlayClass: [String, Function, Array],
-        menuClass: [String, Function, Array],
-        menuPositionClass: [String, Function, Array],
-        menuActiveClass: [String, Function, Array],
-        mobileClass: [String, Function, Array],
-        disabledClass: [String, Function, Array],
-        expandedClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            selected: this.modelValue,
-            isActive: false,
-            isHoverable: false,
-            bodyEl: undefined, // Used to append to body
-        };
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-drop"),
-                {
-                    [this.computedClass("disabledClass", "o-drop--disabled")]:
-                        this.disabled,
-                },
-                {
-                    [this.computedClass("expandedClass", "o-drop--expanded")]:
-                        this.expanded,
-                },
-                {
-                    [this.computedClass("inlineClass", "o-drop--inline")]:
-                        this.inline,
-                },
-                {
-                    [this.computedClass("mobileClass", "o-drop--mobile")]:
-                        this.isMobileModal &&
-                        this.isMatchMedia &&
-                        !this.hoverable,
-                },
-            ];
-        },
-        triggerClasses() {
-            return [this.computedClass("triggerClass", "o-drop__trigger")];
-        },
-        menuMobileOverlayClasses() {
-            return [
-                this.computedClass("menuMobileOverlayClass", "o-drop__overlay"),
-            ];
-        },
-        menuClasses() {
-            return [
-                this.computedClass("menuClass", "o-drop__menu"),
-                {
-                    [this.computedClass(
-                        "menuPositionClass",
-                        "o-drop__menu--",
-                        this.position,
-                    )]: this.position,
-                },
-                {
-                    [this.computedClass(
-                        "menuActiveClass",
-                        "o-drop__menu--active",
-                    )]: this.isActive || this.inline,
-                },
-            ];
-        },
-        isMobileModal() {
-            return this.mobileModal && !this.inline;
-        },
-        cancelOptions() {
-            return typeof this.canClose === "boolean"
-                ? this.canClose
-                    ? ["escape", "outside"]
-                    : []
-                : this.canClose;
-        },
-        menuStyle() {
-            return {
-                maxHeight: this.scrollable
-                    ? toCssDimension(this.maxHeight)
-                    : null,
-                overflow: this.scrollable ? "auto" : null,
-            };
-        },
-        hoverable() {
-            return this.triggers.indexOf("hover") >= 0;
-        },
-    },
-    watch: {
-        /**
-         * When v-model is changed set the new selected item.
-         */
-        modelValue(value) {
-            this.selected = value;
-        },
-        /**
-         * Emit event when isActive value is changed.
-         */
-        isActive(value) {
-            this.$emit("active-change", value);
-            if (this.appendToBody) {
-                this.$nextTick(() => {
-                    this.updateAppendToBody();
-                });
-            }
-        },
-    },
-    methods: {
-        /**
-         * Click listener from DropdownItem.
-         *   1. Set new selected item.
-         *   2. Emit input event to update the user v-model.
-         *   3. Close the dropdown.
-         */
-        selectItem(value) {
-            if (this.multiple) {
-                if (this.selected) {
-                    if (this.selected.indexOf(value) === -1) {
-                        // Add value
-                        this.selected = [...this.selected, value];
-                    } else {
-                        // Remove value
-                        this.selected = this.selected.filter(
-                            (val) => val !== value,
-                        );
-                    }
-                } else {
-                    this.selected = [value];
-                }
-                this.$emit("change", this.selected);
-            } else {
-                if (this.selected !== value) {
-                    this.selected = value;
-                    this.$emit("change", this.selected);
-                }
-            }
-            this.$emit("update:modelValue", this.selected);
-            if (!this.multiple) {
-                this.isActive = !this.closeOnClick;
-                if (this.hoverable && this.closeOnClick) {
-                    this.isHoverable = false;
-                }
-            }
-        },
-
-        /**
-         * White-listed items to not close when clicked.
-         */
-        isInWhiteList(el) {
-            if (el === this.$refs.dropdownMenu) return true;
-            if (el === this.$refs.trigger) return true;
-            // All chidren from dropdown
-            if (this.$refs.dropdownMenu !== undefined) {
-                const children = this.$refs.dropdownMenu.querySelectorAll("*");
-                for (const child of children) {
-                    if (el === child) {
-                        return true;
-                    }
-                }
-            }
-            // All children from trigger
-            if (this.$refs.trigger !== undefined) {
-                const children = this.$refs.trigger.querySelectorAll("*");
-                for (const child of children) {
-                    if (el === child) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        },
-
-        /**
-         * Close dropdown if clicked outside.
-         */
-        clickedOutside(event) {
-            if (this.cancelOptions.indexOf("outside") < 0) return;
-            if (this.inline) return;
-
-            if (!this.isInWhiteList(event.target)) this.isActive = false;
-        },
-
-        /**
-         * Keypress event that is bound to the document
-         */
-        keyPress({ key }) {
-            if (this.isActive && (key === "Escape" || key === "Esc")) {
-                if (this.cancelOptions.indexOf("escape") < 0) return;
-                this.isActive = false;
-            }
-        },
-
-        onClick() {
-            if (this.triggers.indexOf("click") < 0) return;
-            this.toggle();
-        },
-        onContextMenu() {
-            if (this.triggers.indexOf("contextmenu") < 0) return;
-            this.toggle();
-        },
-        onHover() {
-            if (this.triggers.indexOf("hover") < 0) return;
-            this.isHoverable = true;
-        },
-        onFocus() {
-            if (this.triggers.indexOf("focus") < 0) return;
-            this.toggle();
-        },
-
-        /**
-         * Toggle dropdown if it's not disabled.
-         */
-        toggle() {
-            if (this.disabled) return;
-
-            if (!this.isActive) {
-                // if not active, toggle after clickOutside event
-                // this fixes toggling programmatic
-                this.$nextTick(() => {
-                    const value = !this.isActive;
-                    this.isActive = value;
-                    // Vue 2.6.x ???
-                    setTimeout(() => (this.isActive = value));
-                });
-            } else {
-                this.isActive = !this.isActive;
-            }
-        },
-
-        updateAppendToBody() {
-            const dropdownMenu = this.$refs.dropdownMenu;
-            const trigger = this.$refs.trigger;
-            if (dropdownMenu && trigger) {
-                // update wrapper dropdown
-                const dropdown = this.$data.bodyEl.children[0];
-                dropdown.classList.forEach((item) =>
-                    dropdown.classList.remove(...item.split(" ")),
-                );
-                this.rootClasses.forEach((item) => {
-                    if (item) {
-                        if (typeof item === "object") {
-                            Object.keys(item)
-                                .filter((key) => key && item[key])
-                                .forEach((key) => dropdown.classList.add(key));
-                        } else {
-                            dropdown.classList.add(...item.split(" "));
-                        }
-                    }
-                });
-                if (this.appendToBodyCopyParent) {
-                    const parentNode = this.$refs.dropdown.parentNode;
-                    const parent = this.$data.bodyEl;
-                    parent.classList.forEach((item) =>
-                        parent.classList.remove(...item.split(" ")),
-                    );
-                    parentNode.classList.forEach((item) =>
-                        parent.classList.add(...item.split(" ")),
-                    );
-                }
-                const rect = trigger.getBoundingClientRect();
-                let top = rect.top + window.scrollY;
-                let left = rect.left + window.scrollX;
-                if (!this.position || this.position.indexOf("bottom") >= 0) {
-                    top += trigger.clientHeight;
-                } else {
-                    top -= dropdownMenu.clientHeight;
-                }
-                if (this.position && this.position.indexOf("left") >= 0) {
-                    left -= dropdownMenu.clientWidth - trigger.clientWidth;
-                }
-                dropdownMenu.style.position = "absolute";
-                dropdownMenu.style.top = `${top}px`;
-                dropdownMenu.style.left = `${left}px`;
-                dropdownMenu.style.zIndex = "9999";
-            }
-        },
-    },
-    mounted() {
-        if (this.appendToBody) {
-            this.$data.bodyEl = createAbsoluteElement(this.$refs.dropdownMenu);
-            this.updateAppendToBody();
-        }
-    },
-    created() {
-        if (typeof window !== "undefined") {
-            document.addEventListener("click", this.clickedOutside);
-            document.addEventListener("keyup", this.keyPress);
-        }
-    },
-    beforeUnmount() {
-        if (typeof window !== "undefined") {
-            document.removeEventListener("click", this.clickedOutside);
-            document.removeEventListener("keyup", this.keyPress);
-        }
-        if (this.appendToBody) {
-            removeElement(this.$data.bodyEl);
-        }
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** @model */
+    modelValue: {
+        type: [String, Number, Boolean, Object, Array],
+        default: undefined,
+    },
+    /** The active state of the dropdown */
+    active: { type: Boolean, default: false },
+    /** Trigger label, unnecessary when trgger slot is used */
+    label: { type: String, default: undefined },
+    /** Dropdown is disabled */
+    disabled: { type: Boolean, default: false },
+    /** Dropdown content (items) are shown inline, trigger is removed */
+    inline: { type: Boolean, default: false },
+    /** Dropdown content will be scrollable */
+    scrollable: { type: Boolean, default: false },
+    /** Max height of dropdown content */
+    maxHeight: {
+        type: Number,
+        default: () => getOption("dropdown.maxHeight", 200),
+    },
+    /**
+     * Optional, position of the dropdown relative to the trigger
+     * @values top-right, top-left, bottom-left, bottom-right
+     */
+    position: {
+        type: String,
+        validator: (value: string) =>
+            ["top-right", "top-left", "bottom-left", "bottom-right"].indexOf(
+                value,
+            ) > -1,
+        default: undefined,
+    },
+    /** Dropdown content (items) are shown into a modal on mobile */
+    mobileModal: {
+        type: Boolean,
+        default: () => getOption("dropdown.mobileModal", true),
+    },
+    /** Custom animation (transition name) */
+    animation: {
+        type: String,
+        default: () => getOption("dropdown.animation", "fade"),
+    },
+    /** Allows multiple selections */
+    multiple: { type: Boolean, default: false },
+    /** Trap focus inside the dropdown. */
+    trapFocus: {
+        type: Boolean,
+        default: () => getOption("dropdown.trapFocus", true),
+    },
+    /**  Close dropdown when content is clicked */
+    closeOnClick: { type: Boolean, default: true },
+    /**
+     * Can close dropdown by pressing escape or by clicking outside
+     * @values escape, outside
+     */
+    canClose: { type: [Array, Boolean], default: true },
+    /** Dropdown will be expanded (full-width) */
+    expanded: { type: Boolean, default: false },
+    /** Dropdown menu tag name */
+    menuTag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: () => getOption("dropdown.menuTag", "div"),
+    },
+    /** Dropdown trigger tag name */
+    triggerTag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: () => getOption("dropdown.triggerTag", "div"),
+    },
+    /**
+     * Dropdown will be triggered by any events
+     * @values click, hover, contextmenu, focus
+     */
+    triggers: {
+        type: Array as PropType<string[]>,
+        validator: (values: string[]) =>
+            values.filter(
+                (value) =>
+                    ["click", "hover", "contextmenu", "focus"].indexOf(value) >
+                    -1,
+            ).length === values.length,
+        default: () => ["click"],
+    },
+    /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
+    tabindex: { type: Number, default: 0 },
+    /**
+     * Role attribute to be passed to the list container for better accessibility.
+     * Use menu only in situations where your dropdown is related to a navigation menu.
+     * @values list, menu, dialog
+     */
+    ariaRole: {
+        type: String,
+        validator: (value: string) =>
+            ["menu", "list", "dialog"].indexOf(value) > -1,
+        default: "list",
+    },
+    /** Append dropdown content to body */
+    appendToBody: {
+        type: Boolean,
+        default: () => getOption("autocomplete.appendToBody", false),
+    },
+    /** @ignore */
+    appendToBodyCopyParent: Boolean,
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "triggerClass",
+        "inlineClass",
+        "menuMobileOverlayClass",
+        "menuClass",
+        "menuPositionClass",
+        "menuActiveClass",
+        "mobileClass",
+        "disabledClass",
+        "expandedClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * modelValue prop two-way binding
+     * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
+     */
+    (
+        e: "update:modelValue",
+        value: [string, number, boolean, object, Array<any>],
+    ): void;
+    /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    (e: "update:active", value: boolean): void;
+    /**
+     * change event
+     * @param value {any} selected value
+     */
+    (e: "change", value: any): void;
+}>();
+
+const rootRef = ref();
+const menuRef = ref();
+const triggerRef = ref();
+
+const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
+    props,
+    emits,
+    { passive: true },
+) as Ref<any>;
+const isActive = ref(props.active);
+
+/** toggle isActive value when prop is changed */
+watch(
+    () => props.active,
+    (value) => {
+        if (!value) isActive.value = value;
+        // if not active, toggle after clickOutside event
+        // this fixes toggling programmatic
+        else setTimeout(() => (isActive.value = value));
+    },
+);
+
+/** emit event when isActive value is changed */
+watch(isActive, (value) => {
+    emits("update:active", value);
+    if (props.appendToBody) nextTick(() => updateAppendToBody());
+});
+
+const isHovered = ref(false);
+
+const { isMobile } = useMatchMedia();
+
+if (isClient) {
+    useEventListener("click", clickedOutside);
+    useEventListener("keyup", keyPress);
+}
+
+const bodyEl = ref(undefined); // Used to append to body
+onMounted(() => {
+    if (props.appendToBody) {
+        bodyEl.value = createAbsoluteElement(menuRef.value);
+        updateAppendToBody();
+    }
+});
+
+onUnmounted(() => {
+    if (props.appendToBody) {
+        removeElement(bodyEl.value);
+    }
+});
+
+const isMobileModal = computed(() => props.mobileModal && !props.inline);
+
+const cancelOptions = computed(() =>
+    typeof props.canClose === "boolean"
+        ? props.canClose
+            ? ["escape", "outside"]
+            : []
+        : props.canClose,
+);
+
+const menuStyle = computed(() => ({
+    maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
+    overflow: props.scrollable ? "auto" : null,
+}));
+
+const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
+
+/** White-listed items to not close when clicked. */
+function isInWhiteList(el): boolean {
+    if (el === menuRef.value) return true;
+    if (el === triggerRef.value) return true;
+    // All chidren from dropdown
+    if (menuRef.value !== undefined) {
+        const children = menuRef.value.querySelectorAll("*");
+        for (const child of children) {
+            if (el === child) {
+                return true;
+            }
+        }
+    }
+    // All children from trigger
+    if (triggerRef.value !== undefined) {
+        const children = triggerRef.value.querySelectorAll("*");
+        for (const child of children) {
+            if (el === child) return true;
+        }
+    }
+    return false;
+}
+
+function updateAppendToBody(): void {
+    const dropdownMenu = menuRef.value;
+    const trigger = triggerRef.value;
+    if (dropdownMenu && trigger) {
+        // update wrapper dropdown
+        const dropdown = bodyEl.value.children[0];
+        dropdown.classList.forEach((item) =>
+            dropdown.classList.remove(...item.split(" ")),
+        );
+        rootClasses.value.forEach((item) => {
+            if (item) {
+                if (typeof item === "object") {
+                    Object.keys(item)
+                        .filter((key) => key && item[key])
+                        .forEach((key) => dropdown.classList.add(key));
+                } else {
+                    dropdown.classList.add(...item.split(" "));
+                }
+            }
+        });
+        if (props.appendToBodyCopyParent) {
+            const parentNode = rootRef.value.parentNode;
+            const parent = bodyEl.value;
+            parent.classList.forEach((item) =>
+                parent.classList.remove(...item.split(" ")),
+            );
+            parentNode.classList.forEach((item) =>
+                parent.classList.add(...item.split(" ")),
+            );
+        }
+        const rect = trigger.getBoundingClientRect();
+        let top = rect.top + window.scrollY;
+        let left = rect.left + window.scrollX;
+        if (!props.position || props.position.indexOf("bottom") >= 0) {
+            top += trigger.clientHeight;
+        } else {
+            top -= dropdownMenu.clientHeight;
+        }
+        if (props.position && props.position.indexOf("left") >= 0) {
+            left -= dropdownMenu.clientWidth - trigger.clientWidth;
+        }
+        dropdownMenu.style.position = "absolute";
+        dropdownMenu.style.top = `${top}px`;
+        dropdownMenu.style.left = `${left}px`;
+        dropdownMenu.style.zIndex = "9999";
+    }
+}
+
+// --- Event Handler ---
+
+/** Close dropdown if clicked outside. */
+function clickedOutside(event): void {
+    if (props.inline) return;
+    if (cancelOptions.value.indexOf("outside") < 0) return;
+    if (!isInWhiteList(event.target)) isActive.value = false;
+}
+
+/** Keypress event that is bound to the document */
+function keyPress(event: KeyboardEvent): void {
+    if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
+        if (cancelOptions.value.indexOf("escape") < 0) return;
+        isActive.value = false;
+    }
+}
+
+function onClick(): void {
+    if (props.triggers.indexOf("click") >= 0) toggle();
+}
+function onContextMenu(event: MouseEvent): void {
+    if (props.triggers.indexOf("contextmenu") >= 0) {
+        event.preventDefault();
+        toggle();
+    }
+}
+function onHover(): void {
+    if (props.triggers.indexOf("hover") >= 0) {
+        isHovered.value = true;
+        toggle();
+    }
+}
+function onHoverLeave(): void {
+    if (isHovered.value) {
+        toggle();
+        isHovered.value = false;
+    }
+}
+function onFocus(): void {
+    if (props.triggers.indexOf("focus") >= 0) toggle();
+}
+
+/** Toggle dropdown if it's not disabled. */
+function toggle(): void {
+    if (props.disabled) return;
+    if (isActive.value) isActive.value = !isActive.value;
+    // if not active, toggle after clickOutside event
+    // this fixes toggling programmatic
+    else nextTick(() => (isActive.value = !isActive.value));
+}
+
+// --- Field Dependency Injection Feature ---
+
+/**
+ * Click listener from DropdownItem.
+ *   1. Set new selected item.
+ *   2. Emit input event to update the user v-model.
+ *   3. Close the dropdown.
+ */
+function selectItem(value: any): void {
+    if (props.multiple) {
+        if (vmodel.value && Array.isArray(vmodel.value)) {
+            if (vmodel.value.indexOf(value) === -1) {
+                // Add value
+                vmodel.value = [...vmodel.value, value];
+            } else {
+                // Remove value
+                vmodel.value = vmodel.value.filter((val) => val !== value);
+            }
+        } else {
+            // Init value array
+            vmodel.value = [value];
+        }
+        emits("change", vmodel.value);
+    } else {
+        if (vmodel.value !== value) {
+            // Upodate value
+            vmodel.value = value;
+            emits("change", vmodel.value);
+        }
+    }
+    if (!props.multiple) {
+        isActive.value = !props.closeOnClick;
+        if (hoverable.value && props.closeOnClick) isHovered.value = false;
+    }
+}
+
+// Provided data is a computed ref to enjure reactivity.
+const provideData = computed(() => ({
+    $el: rootRef.value,
+    props,
+    selected: vmodel.value,
+    selectItem,
+}));
+
+// Provide field component data via dependency injection.
+provideDropdown(provideData);
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-drop"),
+    {
+        [useComputedClass("disabledClass", "o-drop--disabled")]: props.disabled,
+    },
+    {
+        [useComputedClass("expandedClass", "o-drop--expanded")]: props.expanded,
+    },
+    {
+        [useComputedClass("inlineClass", "o-drop--inline")]: props.inline,
+    },
+    {
+        [useComputedClass("mobileClass", "o-drop--mobile")]:
+            isMobileModal.value && isMobile.value && !hoverable.value,
+    },
+]);
+
+const triggerClasses = computed(() => [
+    useComputedClass("triggerClass", "o-drop__trigger"),
+]);
+
+const menuMobileOverlayClasses = computed(() => [
+    useComputedClass("menuMobileOverlayClass", "o-drop__overlay"),
+]);
+
+const menuClasses = computed(() => [
+    useComputedClass("menuClass", "o-drop__menu"),
+    {
+        [useComputedClass(
+            "menuPositionClass",
+            "o-drop__menu--",
+            props.position,
+        )]: props.position,
+    },
+    {
+        [useComputedClass("menuActiveClass", "o-drop__menu--active")]:
+            isActive.value || props.inline,
+    },
+]);
 </script>
 
 <template>
-    <div ref="dropdown" :class="rootClasses" @mouseleave="isHoverable = false">
-        <div
+    <div ref="rootRef" :class="rootClasses" @mouseleave="onHoverLeave">
+        <component
+            :is="triggerTag"
             v-if="!inline"
-            :tabindex="disabled ? null : triggerTabindex"
-            ref="trigger"
+            ref="triggerRef"
+            :tabindex="disabled ? null : tabindex"
             :class="triggerClasses"
+            aria-haspopup="true"
             @click="onClick"
-            @contextmenu.prevent="onContextMenu"
+            @contextmenu="onContextMenu"
             @mouseenter="onHover"
-            @focus.capture="onFocus"
-            aria-haspopup="true">
+            @focus.capture="onFocus">
             <slot name="trigger" :active="isActive">
                 {{ label }}
             </slot>
-        </div>
+        </component>
 
         <transition :name="animation">
             <div
@@ -515,15 +489,15 @@ export default defineComponent({
         </transition>
         <transition :name="animation">
             <component
-                v-show="(!disabled && (isActive || isHoverable)) || inline"
-                ref="dropdownMenu"
                 :is="menuTag"
+                v-show="(!disabled && (isActive || isHovered)) || inline"
+                ref="menuRef"
+                v-trap-focus="trapFocus"
                 :class="menuClasses"
                 :aria-hidden="!isActive"
                 :role="ariaRole"
                 :aria-modal="!inline"
-                :style="menuStyle"
-                v-trap-focus="trapFocus">
+                :style="menuStyle">
                 <slot />
             </component>
         </transition>

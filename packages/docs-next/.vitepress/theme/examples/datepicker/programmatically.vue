@@ -1,14 +1,20 @@
+<script setup>
+import { ref } from "vue";
+
+const active = ref(false);
+</script>
+
 <template>
     <section>
-        <o-field>
+        <o-field expanded>
             <o-datepicker
-                ref="datepicker"
+                v-model:active="active"
                 expanded
                 placeholder="Select a date" />
             <o-button
                 icon-left="calendar"
                 type="primary"
-                @click="$refs.datepicker.toggle()" />
+                @click="active = !active" />
         </o-field>
     </section>
 </template>

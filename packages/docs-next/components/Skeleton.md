@@ -36,18 +36,18 @@ title: Skeleton
 
 ### Props
 
-| Prop name | Description                                  | Type           | Values                      | Default |
-| --------- | -------------------------------------------- | -------------- | --------------------------- | ------- |
-| active    | Show or hide loader                          | boolean        | -                           | true    |
-| animated  | Show a loading animation                     | boolean        | -                           | true    |
-| circle    | Show a circle shape                          | boolean        | -                           |         |
-| count     | Number of shapes to display                  | number         | -                           | 1       |
-| height    | Custom height                                | number\|string | -                           |         |
-| override  |                                              | boolean        | -                           |         |
-| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | "left"  |
-| rounded   | Rounded style                                | boolean        | -                           | true    |
-| size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
-| width     | Custom width                                 | number\|string | -                           |         |
+| Prop name | Description                                  | Type           | Values                      | Default                                                      |
+| --------- | -------------------------------------------- | -------------- | --------------------------- | ------------------------------------------------------------ |
+| active    | Show or hide loader                          | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>   |
+| animated  | Show a loading animation                     | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>   |
+| circle    | Show a circle shape                          | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'></code>       |
+| count     | Number of shapes to display                  | number         | -                           | <code style='white-space: nowrap; padding: 0;'>1</code>      |
+| height    | Custom height                                | number\|string | -                           | <code style='white-space: nowrap; padding: 0;'></code>       |
+| override  |                                              | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'></code>       |
+| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | <code style='white-space: nowrap; padding: 0;'>"left"</code> |
+| rounded   | Rounded style                                | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>   |
+| size      | Size of skeleton                             | string         | `small`, `medium`, `large`  | <code style='white-space: nowrap; padding: 0;'></code>       |
+| width     | Custom width                                 | number\|string | -                           | <code style='white-space: nowrap; padding: 0;'></code>       |
 
 </div>
 

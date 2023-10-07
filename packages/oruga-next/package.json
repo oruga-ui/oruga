@@ -37,13 +37,13 @@
   "scripts": {
     "dev": "vite",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
-    "build:vue:watch": "vite build --watch",
+    "build:vue:watch": "vite build --mode minify --watch",
     "build:style": "npm run build:scss && npm run build:scss-vars && npm run build:scss-full",
     "build:scss-vars": "sass --no-charset ../oruga/src/scss/oruga-full-vars.scss | node ../oruga/build/banner.js > dist/oruga-full-vars.css && cleancss -o dist/oruga-full-vars.min.css dist/oruga-full-vars.css",
     "build:scss-full": "sass --no-charset ../oruga/src/scss/oruga-full.scss | node ../oruga/build/banner.js > dist/oruga-full.css && cleancss -o dist/oruga-full.min.css dist/oruga-full.css",
     "build:scss": "sass --no-charset ../oruga/src/scss/oruga.scss | node ../oruga/build/banner.js > dist/oruga.css && cleancss -o dist/oruga.min.css dist/oruga.css",
     "build:style:watch": "concurrently \"sass ../oruga/src/scss/oruga-full-vars.scss dist/oruga-full-vars.css --watch\" \"sass ../oruga/src/scss/oruga.scss dist/oruga.css --watch\"",
-    "build:lib": "rimraf dist && npm run build:vue && npm run build:style",
+    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue && npm run build:style",
     "build:lib:watch": "npm link && concurrently \"npm run build:vue:watch\" \"npm run build:style:watch\"",
     "publish:lib": "cp -R ../oruga/src/scss ./src && cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
@@ -76,7 +76,6 @@
     "@types/jest": "24.0.19",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.3.4",
-    "@vue/compiler-sfc": "^3.2.45",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^12.0.0",
@@ -106,7 +105,7 @@
     "vite-plugin-dts": "^3.5.4",
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "vue": "^3.2.45",
+    "vue": "^3.3.4",
     "vue-tsc": "^1.8.11"
   },
   "nyc": {

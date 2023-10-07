@@ -5,7 +5,7 @@ import {
     createAbsoluteElement,
     removeElement,
     getValueByPath,
-    isWebKit,
+    isWebKitAgent,
 } from "../../utils/helpers";
 import type { PropType } from "vue";
 import { defineComponent } from "vue";
@@ -219,7 +219,7 @@ export default defineComponent({
                 let viewRect: DOMRect;
                 const viewport = (window as any).visualViewport; // Not available with our current types package
                 if (viewport != undefined) {
-                    if (isWebKit()) {
+                    if (isWebKitAgent()) {
                         // On WebKit, getBoundingClientRect offsets relative to the the visual viewport's origin, not the layout viewport's.
                         // See https://bugs.webkit.org/show_bug.cgi?id=170981
                         viewRect = new DOMRect(

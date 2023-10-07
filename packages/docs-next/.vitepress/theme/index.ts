@@ -65,6 +65,43 @@ export default {
         app.component("Expo", Expo);
         app.component("Carbon", Carbon);
 
+        // import oruga component with theme config
+        app.use(Oruga, {
+            iconPack: "fas",
+            iconComponent: "vue-fontawesome",
+        });
+
+        const oruga = useOruga();
+
+        // set oruga as global prop for docs
+        app.config.globalProperties.$oruga = oruga;
+
+        if (typeof window !== "undefined") {
+            const theme = loadTheme();
+
+            // update oruga config by theme config
+            switch (theme.key) {
+                case "theme-bulma": {
+                    bulmaConfig.iconPack = "fas";
+                    bulmaConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bulmaConfig);
+                    break;
+                }
+                case "theme-bootstrap": {
+                    bootstrapConfig.iconPack = "fas";
+                    bootstrapConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bootstrapConfig);
+                    break;
+                }
+            }
+
+            // add theme style
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = theme.cdn;
+            document.head.appendChild(link);
+        }
+
         // import example components
         const examples = import.meta.glob<DefineComponent>(
             "./examples/**/index.vue",
@@ -86,39 +123,6 @@ export default {
                 "inspector-" + v[2] + "-viewer",
                 markRaw(inspectors[path].default),
             );
-        }
-
-        app.use(Oruga, {
-            iconPack: "fas",
-            iconComponent: "vue-fontawesome",
-        });
-
-        if (typeof window !== "undefined") {
-            const theme = loadTheme();
-
-            // update oruga config by theme config
-            switch (theme.key) {
-                case "theme-bulma": {
-                    bulmaConfig.iconPack = "fas";
-                    bulmaConfig.iconComponent = "vue-fontawesome";
-                    const oruga = useOruga();
-                    oruga.config.setOptions(bulmaConfig);
-                    break;
-                }
-                case "theme-bootstrap": {
-                    bootstrapConfig.iconPack = "fas";
-                    bootstrapConfig.iconComponent = "vue-fontawesome";
-                    const oruga = useOruga();
-                    oruga.config.setOptions(bootstrapConfig);
-                    break;
-                }
-            }
-
-            // add theme style
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = theme.cdn;
-            document.head.appendChild(link);
         }
     },
 };

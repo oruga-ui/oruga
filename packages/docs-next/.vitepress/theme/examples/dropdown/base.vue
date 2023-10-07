@@ -1,6 +1,6 @@
 <template>
     <section class="odocs-spaced">
-        <o-dropdown aria-role="list">
+        <o-dropdown>
             <template #trigger="{ active }">
                 <o-button
                     variant="primary"
@@ -8,12 +8,12 @@
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem" label="Action" />
-            <o-dropdown-item aria-role="listitem" label="Another action" />
-            <o-dropdown-item aria-role="listitem" label="Something else" />
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
         </o-dropdown>
 
-        <o-dropdown :triggers="['hover']" aria-role="list">
+        <o-dropdown :triggers="['hover']">
             <template #trigger="{ active }">
                 <o-button
                     variant="info"
@@ -21,24 +21,24 @@
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem" label="Action" />
-            <o-dropdown-item aria-role="listitem" label="Another action" />
-            <o-dropdown-item aria-role="listitem" label="Something else" />
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
         </o-dropdown>
 
-        <o-dropdown disabled aria-role="list">
+        <o-dropdown disabled>
             <template #trigger="{ active }">
                 <o-button
                     label="Disabled"
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
 
-            <o-dropdown-item aria-role="listitem" label="Action" />
-            <o-dropdown-item aria-role="listitem" label="Another action" />
-            <o-dropdown-item aria-role="listitem" label="Something else" />
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
         </o-dropdown>
 
-        <o-dropdown aria-role="list">
+        <o-dropdown>
             <template #trigger>
                 <div>
                     Custom
@@ -46,19 +46,19 @@
                 </div>
             </template>
 
-            <o-dropdown-item aria-role="listitem" label="Action" />
-            <o-dropdown-item aria-role="listitem" label="Another action" />
-            <o-dropdown-item aria-role="listitem" label="Something else" />
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
         </o-dropdown>
 
-        <o-dropdown :triggers="['contextmenu']" aria-role="list">
+        <o-dropdown :triggers="['contextmenu']">
             <template #trigger>
                 <o-button label="Right click" role="button" />
             </template>
 
-            <o-dropdown-item aria-role="listitem" label="Action" />
-            <o-dropdown-item aria-role="listitem" label="Another action" />
-            <o-dropdown-item aria-role="listitem" label="Something else" />
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
         </o-dropdown>
     </section>
 </template>

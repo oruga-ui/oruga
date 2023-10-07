@@ -25,8 +25,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
         <o-dropdown
             v-model="currentMenu"
             :scrollable="isScrollable"
-            :max-height="maxHeight"
-            aria-role="list">
+            :max-height="maxHeight">
             <template #trigger>
                 <o-button
                     variant="primary"
@@ -39,8 +38,7 @@ const currentMenu = ref({ icon: "users", text: "People" });
             <o-dropdown-item
                 v-for="(menu, index) in menus"
                 :key="index"
-                :value="menu"
-                aria-role="listitem">
+                :value="menu">
                 <div class="media">
                     <o-icon class="media-left" :icon="menu.icon" />
                     <div class="media-content">{{ menu.text }}</div>

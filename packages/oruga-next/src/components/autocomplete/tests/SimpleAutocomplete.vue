@@ -3,6 +3,10 @@ import { defineComponent } from "vue";
 import OAutocomplete from "../Autocomplete.vue";
 import OField from "../../field/Field.vue";
 export default defineComponent({
+    components: {
+        [OAutocomplete.name]: OAutocomplete,
+        [OField.name]: OField,
+    },
     data() {
         return {
             data: [
@@ -22,10 +26,6 @@ export default defineComponent({
             name: "",
             selected: null,
         };
-    },
-    components: {
-        [OAutocomplete.name]: OAutocomplete,
-        [OField.name]: OField,
     },
     computed: {
         filteredDataArray(): string[] {
@@ -51,8 +51,8 @@ export default defineComponent({
     <p class="content"><b>Selected:</b> {{ selected }}</p>
     <o-field label="Find a JS framework">
         <o-autocomplete
-            rounded
             v-model="name"
+            rounded
             :data="filteredDataArray"
             placeholder="e.g. jQuery"
             icon="search"
