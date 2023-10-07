@@ -85,8 +85,18 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, isValid } =
+const { checkHtml5Validity, onBlur, onFocus, onInvalid, isValid, isFocused } =
     useInputHandler(elementRef, emits, picker.value);
+
+/**
+ * Show input as text for placeholder,
+ * when placeholder and native value is given and input is not focused.
+ */
+const computedNativeType = computed(() =>
+    !picker.value.placeholder || props.nativeValue || isFocused.value
+        ? props.nativeType
+        : "text",
+);
 
 /**
  * When v-model is changed:
@@ -230,7 +240,7 @@ defineExpose({
             v-else
             ref="nativeInputRef"
             v-bind="inputBind"
-            :type="nativeType"
+            :type="computedNativeType"
             autocomplete="off"
             :model-value="nativeValue"
             :min="nativeMin"

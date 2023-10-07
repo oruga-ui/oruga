@@ -15,7 +15,7 @@ export type FocusedDate = {
     year: number;
 };
 
-export function useDatepickerMixins(props: DatepickerProps) {
+export function useDatepickerShare(props: DatepickerProps) {
     /**
      * Check that selected date is within earliest/latest params and
      * is within a given month

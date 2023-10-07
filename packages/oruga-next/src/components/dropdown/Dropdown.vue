@@ -190,8 +190,8 @@ const triggerRef = ref();
 const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
     props,
     emits,
+    { passive: true },
 ) as Ref<any>;
-
 const isActive = ref(props.active);
 
 /** toggle isActive value when prop is changed */
@@ -210,6 +210,8 @@ watch(isActive, (value) => {
     emits("update:active", value);
     if (props.appendToBody) nextTick(() => updateAppendToBody());
 });
+
+const isHovered = ref(false);
 
 const { isMobile } = useMatchMedia();
 

@@ -20,7 +20,7 @@ import {
 import { getMonthNames, getWeekdayNames } from "./datepickerUtils";
 
 import {
-    useDatepickerMixins,
+    useDatepickerShare,
     type DatepickerEvent,
     type FocusedDate,
 } from "./useDatepickerShare";
@@ -369,7 +369,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
+const { defaultDateFormatter, defaultDateParser } = useDatepickerShare(props);
 
 const { isMobile } = useMatchMedia();
 
@@ -599,8 +599,8 @@ function next(): void {
 function formatNative(value: Date | Date[]): string {
     if (Array.isArray(value)) value = value[0];
 
+    if (!value) return "";
     const date = new Date(value);
-    if (!value || !isNaN(date.getTime())) return "";
 
     if (isTypeMonth.value) {
         // Format date into string 'YYYY-MM'

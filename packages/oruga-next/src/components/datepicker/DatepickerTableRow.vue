@@ -9,7 +9,7 @@ import {
 } from "vue";
 import { useComputedClass } from "@/composables";
 import {
-    useDatepickerMixins,
+    useDatepickerShare,
     type DatepickerProps,
     type DatepickerEvent,
 } from "./useDatepickerShare";
@@ -44,7 +44,7 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerMixins(props);
+const { isDateSelectable } = useDatepickerShare(props.pickerProps);
 
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
@@ -151,9 +151,7 @@ function onKeydown(event: KeyboardEvent, weekDay: Date): void {
     if (preventDefault) event.preventDefault();
 }
 
-/*
- * Emit select event with chosen date as payload
- */
+/** Emit select event with chosen date as payload */
 function selectDate(date: Date): void {
     if (datepicker.value.disabled) return;
     if (isDateSelectable(date, props.month)) emits("select", date);

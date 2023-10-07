@@ -35,9 +35,9 @@ const props = defineProps({
     data: { type: Array, default: () => [] },
     /** Property of the object (if data is array of objects) to use as display text */
     field: { type: String, default: "value" },
-    /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
+    /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
-    /** Property of the object (if <code>data</code> is array of objects) to use as key to get items array of each group, optional */
+    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group, optional */
     groupOptions: { type: String, default: undefined },
     /**
      * Vertical size of the input control, optional

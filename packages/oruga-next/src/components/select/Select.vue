@@ -31,7 +31,7 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: {
-        type: [String, Number],
+        type: [String, Number, Boolean, Object, Array],
         default: null,
     },
     /**
@@ -124,9 +124,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {string | number} updated modelValue prop
+     * @param value { [String, Number, Boolean, Object, Array]} updated modelValue prop
      */
-    (e: "update:modelValue", value: string | number): void;
+    (
+        e: "update:modelValue",
+        value: [string, number, boolean, object, Array<any>],
+    ): void;
     /**
      * on input focus event
      * @param event {Event} native event
@@ -163,7 +166,11 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<string | number>(props, emits);
+const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
+    props,
+    emits,
+    { passive: true },
+);
 
 const placeholderVisible = computed(() => vmodel.value === null);
 

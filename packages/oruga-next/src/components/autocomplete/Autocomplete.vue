@@ -7,9 +7,10 @@ import {
     onMounted,
     onBeforeUpdate,
     onUnmounted,
+    useAttrs,
+    toRaw,
     type PropType,
     type Component,
-    useAttrs,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -31,6 +32,7 @@ import {
     toCssDimension,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
+import type { BindProp } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -81,9 +83,9 @@ const props = defineProps({
     },
     /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
     field: { type: String, default: "value" },
-    /** Property of the object (if <code>data</code> is array of objects) to use as display text of group */
+    /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
-    /** Property of the object (if <code>data</code> is array of objects) to use as key to get items array of each group, optional */
+    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group, optional */
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display in the input (as alternative to field prop) */
     formatter: {
@@ -153,7 +155,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("autocomplete.animation", "fade"),
     },
-    /** Trigger the select event for the first pre-selected option when clicking outside and <code>keep-first</code> is enabled */
+    /** Trigger the select event for the first pre-selected option when clicking outside and `keep-first` is enabled */
     selectOnClickOutside: { type: Boolean, default: false },
     /** Allows the header in the autocomplete to be selectable */
     selectableHeader: { type: Boolean, default: false },
@@ -479,10 +481,10 @@ function setSelected(option, closeDropdown = true, event = undefined): void {
     emits("select", selectedOption.value, event);
     if (selectedOption.value !== null) {
         if (props.clearOnSelect) {
-            // const input = inputRef.value.$el.querySelector("input");
-            // input.value = "";
+            const input = inputRef.value.$el.querySelector("input");
+            input.value = "";
         } else {
-            // vmodel.value = getValue(selectedOption.value);
+            vmodel.value = getValue(selectedOption.value);
         }
         setHovered(null);
     }
@@ -555,7 +557,7 @@ function navigateItem(direction: 1 | -1): void {
     let index;
     if (headerHovered.value) index = 0 + direction;
     else if (footerHovered.value) index = data.length - 1 + direction;
-    else index = data.indexOf(hoveredOption.value) + direction;
+    else index = data.indexOf(toRaw(hoveredOption.value)) + direction;
 
     // check if index overflow
     index = index > data.length - 1 ? data.length - 1 : index;
@@ -883,12 +885,12 @@ const itemFooterClasses = computed(() => [
     },
 ]);
 
-function itemOptionClasses(option) {
+function itemOptionClasses(option): BindProp {
     return [
         ...itemClasses.value,
         {
             [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-                option === hoveredOption.value,
+                toRaw(option) === toRaw(hoveredOption.value),
         },
     ];
 }

@@ -1,5 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { getCurrentInstance, ref } from "vue";
+
+const datepicker = ref();
+
+// get programmatic oruga access
+const app = getCurrentInstance();
+const oruga = app.appContext.config.globalProperties.$oruga;
+
+const triggerClass = oruga?.config
+    ? oruga.config.getOption("input.iconLeftClass", "o-input__icon-left")
+    : "o-input__icon-left";
 
 const events = ref([
     {
@@ -14,9 +24,7 @@ const events = ref([
 
 function openDatePicker() {
     setTimeout(() => {
-        this.$refs.datepicker.$el
-            .getElementsByClassName("o-input-iconspace-left")[0]
-            .click();
+        datepicker.value.$el.getElementsByClassName(triggerClass)[0].click();
     }, 500);
 }
 
@@ -367,31 +375,11 @@ const inspectData = [
         },
     },
     {
-        class: "monthRowClass",
-        description: "Class of the table row when type is month",
-        action: (cmp, data) => {
-            data.type = "month";
-            data.monthClass = "datepicker__,table__month";
-            openDatePicker();
-        },
-    },
-    {
         class: "monthCellClass",
         description: "Class of the table cell when type is month",
         action: (cmp, data) => {
             data.type = "month";
             data.monthClass = "datepicker__,table__month";
-            openDatePicker();
-        },
-    },
-    {
-        class: "monthCellInvisibleClass",
-        description:
-            "Class of the table cell when nearby month days are hidden when type is month",
-        action: (cmp, data) => {
-            data.type = "month";
-            data.monthClass = "datepicker__,table__month";
-            data.nearbyMonthDays = false;
             openDatePicker();
         },
     },

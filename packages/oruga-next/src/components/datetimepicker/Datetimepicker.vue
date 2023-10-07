@@ -332,21 +332,15 @@ const maxTime = computed(() => {
 });
 
 const datepickerSize = computed(() =>
-    props.datepicker && props.datepicker.size
-        ? props.datepicker.size
-        : props.size,
+    props.datepicker?.size ? props.datepicker.size : props.size,
 );
 
 const timepickerSize = computed(() =>
-    props.timepicker && props.timepicker.size
-        ? props.timepicker.size
-        : props.size,
+    props.timepicker?.size ? props.timepicker.size : props.size,
 );
 
 const timepickerDisabled = computed(() =>
-    props.timepicker && props.timepicker.disabled
-        ? props.timepicker.disabled
-        : props.disabled,
+    props.timepicker?.disabled ? props.timepicker.disabled : props.disabled,
 );
 
 function formatNative(value: Date): string {
@@ -378,7 +372,9 @@ function formatNative(value: Date): string {
 // --- Time Format Feature ---
 
 const enableSeconds = computed(() =>
-    timepickerRef.value ? timepickerRef.value.enableSeconds : false,
+    timepickerRef.value?.enableSeconds
+        ? timepickerRef.value.enableSeconds
+        : false,
 );
 
 const localeOptions = computed(
@@ -395,7 +391,7 @@ const localeOptions = computed(
 
 const isHourFormat24 = computed(
     () =>
-        props.timepicker.hourFormat === HOUR_FORMAT_24 ||
+        props.timepicker?.hourFormat === HOUR_FORMAT_24 ||
         !localeOptions.value.hour12,
 );
 
@@ -514,7 +510,7 @@ function defaultDatetimeParser(value: string): Date {
 
 function defaultDatetimeFormatter(date: Date): string {
     return (props.datetimeFormatter as any)(date, (date: Date) =>
-        dtf.value.format(date),
+        date ? dtf.value.format(date) : "",
     );
 }
 
