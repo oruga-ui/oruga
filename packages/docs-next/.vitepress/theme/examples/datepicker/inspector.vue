@@ -1,5 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { getCurrentInstance, ref } from "vue";
+
+const datepicker = ref();
+
+// get programmatic oruga access
+const app = getCurrentInstance();
+const oruga = app.appContext.config.globalProperties.$oruga;
+
+const triggerClass = oruga?.config
+    ? oruga.config.getOption("input.iconLeftClass", "o-input__icon-left")
+    : "o-input__icon-left";
 
 const events = ref([
     {
@@ -14,9 +24,7 @@ const events = ref([
 
 function openDatePicker() {
     setTimeout(() => {
-        this.$refs.datepicker.$el
-            .getElementsByClassName("o-input-iconspace-left")[0]
-            .click();
+        datepicker.value.$el.getElementsByClassName(triggerClass)[0].click();
     }, 500);
 }
 
