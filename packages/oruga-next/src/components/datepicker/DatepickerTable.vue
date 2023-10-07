@@ -3,7 +3,7 @@ import { computed, ref, type PropType } from "vue";
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
 import { useComputedClass } from "@/composables";
 import {
-    useDatepickerMixins,
+    useDatepickerShare,
     type DatepickerProps,
     type DatepickerEvent,
     type FocusedDate,
@@ -40,7 +40,7 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
+const { isDateSelectable } = useDatepickerShare(props.pickerProps);
 
 const selectedBeginDate = ref<Date>();
 const selectedEndDate = ref<Date>();

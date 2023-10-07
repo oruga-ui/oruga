@@ -510,7 +510,7 @@ function defaultDatetimeParser(value: string): Date {
 
 function defaultDatetimeFormatter(date: Date): string {
     return (props.datetimeFormatter as any)(date, (date: Date) =>
-        dtf.value.format(date),
+        date ? dtf.value.format(date) : "",
     );
 }
 
