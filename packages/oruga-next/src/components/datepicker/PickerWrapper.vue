@@ -45,6 +45,7 @@ const props = defineProps({
         type: [String, Object] as PropType<BindProp>,
         required: true,
     },
+    wrapperBind: { type: Object, default: undefined },
 });
 
 const emits = defineEmits<{
@@ -85,8 +86,16 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, isValid, isFocused } =
-    useInputHandler(elementRef, emits, picker.value);
+const {
+    checkHtml5Validity,
+    setFocus,
+    doClick,
+    onBlur,
+    onFocus,
+    onInvalid,
+    isValid,
+    isFocused,
+} = useInputHandler(elementRef, emits, picker.value);
 
 /**
  * Show input as text for placeholder,
@@ -136,9 +145,8 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Toggle picker */
 function togglePicker(active: boolean): void {
     if (isMobileNative.value) {
-        const input = elementRef.value;
-        input.$inputRef.focus();
-        input.$inputRef.click();
+        setFocus(); // focus the underlaying input element
+        doClick(); // click to open the underlaying input element
     } else if (dropdownRef.value) {
         if (active || picker.value.closeOnClick)
             nextTick(() => (isActive.value = active));
@@ -168,20 +176,10 @@ const dropdownBind = computed(() => ({
     "root-class": props.dropdownClass,
     ...picker.value.dropdownClasses,
 }));
-
-// --- Expose Public Functionalities ---
-
-const rootRef = ref();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => rootRef.value),
-    // expose the input element
-    $inputRef: computed(() => elementRef.value),
-});
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div data-oruga="picker" :class="rootClasses" v-bind="wrapperBind">
         <o-dropdown
             v-if="!isMobileNative || picker.inline"
             ref="dropdownRef"

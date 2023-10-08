@@ -288,6 +288,7 @@ const iconRightClasses = computed(() => [
             v-bind="$attrs"
             ref="selectRef"
             v-model="vmodel"
+            data-oruga-input="select"
             :class="selectClasses"
             :autocomplete="autocomplete"
             :multiple="multiple"

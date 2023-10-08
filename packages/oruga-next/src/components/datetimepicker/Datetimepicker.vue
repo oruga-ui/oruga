@@ -210,7 +210,7 @@ const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
 const nativeInputRef = ref<InstanceType<typeof OInput>>();
 
 const elementRef = computed(() =>
-    isMobileNative.value ? nativeInputRef.value : datepickerRef.value.$inputRef,
+    isMobileNative.value ? nativeInputRef.value : datepickerRef.value,
 );
 
 // use form input functionality for native input
@@ -543,15 +543,6 @@ const datepickerWrapperClasses = computed(() => [
 const timepickerWrapperClasses = computed(() => [
     useComputedClass("timepickerWrapperClass", "o-dtpck__time"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => datepickerRef.value.$el),
-    // expose the input element
-    $inputRef: computed(() => elementRef.value),
-});
 </script>
 
 <template>
@@ -560,7 +551,7 @@ defineExpose({
         ref="datepickerRef"
         v-model="vmodel"
         v-model:active="isActive"
-        v-bind="datepicker"
+        v-bind="{ ...{ 'data-oruga': 'datetimepicker' }, ...datepicker }"
         :class="datepickerWrapperClasses"
         :rounded="rounded"
         :open-on-focus="openOnFocus"

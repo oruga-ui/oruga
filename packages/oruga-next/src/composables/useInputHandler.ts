@@ -36,6 +36,10 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
         : null;
 }
 
+function unwrapDomElement(el: Ref | ComputedRef): HTMLElement {
+    return el.value?.$el ? el.value?.$el : el.value;
+}
+
 /**
  * Form input handler functionalities
  */
@@ -67,28 +71,36 @@ export function useInputHandler(
     const { parentField } = injectField();
 
     const element = computed<ValidatableFormElement>(() => {
-        let el = inputRef.value;
-        // if element does not have any refs return element
-        if (el && !el["$inputRef"]) return el as ValidatableFormElement;
+        const el = unwrapDomElement(inputRef) as ValidatableFormElement;
+        if (el.getAttribute("data-oruga-input"))
+            // if element is the input element
+            return el as ValidatableFormElement;
 
-        // go deep to get the internal input element defined by $elementRef
-        while (el && el["$inputRef"]) {
-            el = el["$inputRef"];
+        const inputs = el.querySelectorAll("[data-oruga-input]");
+
+        if (!inputs || !inputs[0]) {
+            console.warn("Underlaying Oruga input not found");
+            return undefined;
         }
-
-        return el as ValidatableFormElement;
+        // return underlaying the input element
+        return inputs[0] as ValidatableFormElement;
     });
 
     // --- Input Focus Feature ---
 
     const isFocused = ref(false);
 
-    /**
-     * Focus method that work dynamically depending on the component.
-     */
+    /** Focus the underlaying input element. */
     function setFocus(): void {
         nextTick(() => {
             if (element.value) element.value.focus();
+        });
+    }
+
+    /** Click the underlaying input element. */
+    function doClick(): void {
+        nextTick(() => {
+            if (element.value) element.value.click();
         });
     }
 
@@ -198,6 +210,7 @@ export function useInputHandler(
         isFocused,
         isValid,
         setFocus,
+        doClick,
         onFocus,
         onBlur,
         checkHtml5Validity,

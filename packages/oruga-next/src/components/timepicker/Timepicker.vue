@@ -691,16 +691,6 @@ const separatorClasses = computed(() => [
 const footerClasses = computed(() => [
     useComputedClass("footerClass", "o-tpck__footer"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-const wrapperRef = ref<typeof OPickerWrapper>();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => wrapperRef.value.$el),
-    // expose the input element
-    $inputRef: computed(() => wrapperRef.value.$inputRef),
-});
 </script>
 
 <template>
@@ -708,6 +698,7 @@ defineExpose({
         ref="wrapperRef"
         v-model:active="isActive"
         v-bind="$attrs"
+        :wrapper-bind="{ 'data-oruga': 'timepicker' }"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"
