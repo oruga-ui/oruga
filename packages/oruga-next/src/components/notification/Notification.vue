@@ -26,7 +26,7 @@ const props = defineProps({
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: true },
     /**
-     * Type (color) of the notification, optional.
+     * Type (color) of the notification, optional
      * @values info, success, warning, danger
      */
     type: {
@@ -45,7 +45,7 @@ const props = defineProps({
         default: () => getOption("notification.variant"),
     },
     /**
-     * Which position the notification will appear when programmatically.
+     * Which position the notification will appear when programmatically
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position: {
@@ -61,12 +61,12 @@ const props = defineProps({
                 "bottom-left",
             ].indexOf(value) > -1,
     },
-    /** Message text (can contain HTML). */
+    /** Message text (can contain HTML), unnecessary when default slot is used */
     message: {
         type: [String, Array] as PropType<string | string[]>,
         default: undefined,
     },
-    /** Custom animation (transition name). */
+    /** Custom animation (transition name) */
     animation: {
         type: String,
         default: () => getOption("notification.animation", "fade"),
@@ -109,7 +109,7 @@ const props = defineProps({
     iconSize: { type: String, default: "large" },
     /**
      * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close')
+     * Close notification within the component by emitting a 'close' event — $emit('close').
      */
     component: {
         type: [Object, Function] as PropType<Component>,

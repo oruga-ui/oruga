@@ -35,7 +35,7 @@ const props = defineProps({
         default: () => {},
     },
     /**
-     * Which position the notification will appear when programmatically.
+     * Which position the notification will appear when programmatically
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position: {
@@ -58,7 +58,7 @@ const props = defineProps({
     },
     /** Show the Notification indefinitely until it is dismissed */
     indefinite: { type: Boolean, default: false },
-    /** If should queue with others notices (snackbar/toast/notification). */
+    /** If should queue with others notices (snackbar/toast/notification) */
     queue: {
         type: Boolean,
         default: () => getOption("notification.noticeQueue", undefined),
