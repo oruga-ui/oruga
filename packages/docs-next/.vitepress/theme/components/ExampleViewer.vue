@@ -6,24 +6,13 @@ import MarkdownItHighlightjs from "markdown-it-highlightjs";
 const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
 
 const props = defineProps({
-    code: {
-        type: String,
-        required: true,
-    },
-    component: {
-        type: Object,
-        default: () => ({}),
-    },
-    showCode: {
-        type: Boolean,
-        default: () => true,
-    },
+    code: { type: String, required: true },
+    component: { type: Object, default: () => undefined },
+    showCode: { type: Boolean, default: () => true },
+    open: { type: Boolean, default: false },
 });
 
 const uid = Date.now().toString(36) + Math.random().toString(36).substring(2);
-
-const isOpen = ref(false);
-const tab = ref("HTML");
 
 const codeComputed = computed(() => {
     const code = props.code;
@@ -43,15 +32,18 @@ const scriptCode = computed(() =>
 );
 
 const templateCode = computed(() =>
-    codeComputed.value
-        .substring(
-            codeComputed.value.indexOf("<template>") + "<template>".length,
-            codeComputed.value.lastIndexOf("</template>"),
-        )
-        // remove prefix whitespace
-        .split(/(\r\n|\n|\r)/gm)
-        .map((l) => l.replace("    ", ""))
-        .join(""),
+    codeComputed.value.includes("<template>")
+        ? codeComputed.value
+              .substring(
+                  codeComputed.value.indexOf("<template>") +
+                      "<template>".length,
+                  codeComputed.value.lastIndexOf("</template>"),
+              )
+              // remove prefix whitespace
+              .split(/(\r\n|\n|\r)/gm)
+              .map((l) => l.replace("    ", ""))
+              .join("")
+        : "",
 );
 
 const styleCode = computed(() =>
@@ -67,6 +59,10 @@ const styleCode = computed(() =>
         : "",
 );
 
+const isOpen = ref(props.open);
+const tab = ref(
+    templateCode.value ? "HTML" : scriptCode.value ? "JS" : "STYLE",
+);
 const nodeRef = ref<any>(null);
 
 onMounted(() => {
@@ -90,7 +86,7 @@ function copy(val: string) {
 </script>
 
 <template>
-    <div ref="nodeRef" class="odocs-example odocs-mt">
+    <div v-if="component" ref="nodeRef" class="odocs-example odocs-mt">
         <component :is="component" />
     </div>
     <div v-if="showCode" class="vp-doc odocs-mt">
@@ -103,12 +99,14 @@ function copy(val: string) {
 
             <div class="vp-code-group">
                 <div class="tabs">
-                    <input
-                        :id="`tab-tempalte-${uid}`"
-                        v-model="tab"
-                        type="radio"
-                        value="TEMPLATE" />
-                    <label :for="`tab-tempalte-${uid}`">HTML</label>
+                    <template v-if="templateCode">
+                        <input
+                            :id="`tab-tempalte-${uid}`"
+                            v-model="tab"
+                            type="radio"
+                            value="HTML" />
+                        <label :for="`tab-tempalte-${uid}`">HTML</label>
+                    </template>
                     <template v-if="scriptCode">
                         <input
                             v-if="scriptCode"
