@@ -30,6 +30,8 @@ title: Steps
 
 ## Steps component
 
+> Responsive horizontal process steps
+
 ```html
 <o-steps></o-steps>
 ```

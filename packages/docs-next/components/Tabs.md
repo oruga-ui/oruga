@@ -30,6 +30,8 @@ title: Tabs
 
 ## Tabs component
 
+> Responsive horizontal navigation tabs, switch between contents with ease
+
 ```html
 <o-tabs></o-tabs>
 ```

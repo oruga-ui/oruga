@@ -30,6 +30,8 @@ title: Loading
 
 ## Loading component
 
+> A simple loading overlay
+
 ```html
 <o-loading></o-loading>
 ```

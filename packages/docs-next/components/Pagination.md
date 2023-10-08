@@ -30,6 +30,8 @@ title: Pagination
 
 ## Pagination component
 
+> A responsive and flexible pagination
+
 ```html
 <o-pagination></o-pagination>
 ```

@@ -30,6 +30,8 @@ title: Sidebar
 
 ## Sidebar component
 
+> A sidebar to use as left/right overlay or static
+
 ```html
 <o-sidebar></o-sidebar>
 ```

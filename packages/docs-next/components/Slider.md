@@ -30,6 +30,8 @@ title: Slider
 
 ## Slider component
 
+> A slider to select a value or range from a given range
+
 ```html
 <o-slider></o-slider>
 ```

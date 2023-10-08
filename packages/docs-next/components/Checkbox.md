@@ -30,6 +30,8 @@ title: Checkbox
 
 ## Checkbox component
 
+> Select a single or grouped options
+
 ```html
 <o-checkbox></o-checkbox>
 ```

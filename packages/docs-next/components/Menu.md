@@ -30,6 +30,8 @@ title: Menu
 
 ## Menu component
 
+> A simple menu
+
 ```html
 <o-menu></o-menu>
 ```

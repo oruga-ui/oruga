@@ -107,7 +107,7 @@ ${tmplClassProps(config, component)}
 ` : ""
 }
 <div class="vp-doc">
-${tmplProps(renderedUsage.props, component)}
+${tmplProps(renderedUsage.props, component, description)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
@@ -142,10 +142,11 @@ function tmplClassProps(config, name) {
     }
 }
 
-function tmplProps(props, name) {
+function tmplProps(props, name, description) {
     const tag  = name.match(/[A-Z][a-z]+/g).join("-").toLowerCase();
     let ret = `
 ## ${name} component
+${description ? "> " + description : ""}
 
 \`\`\`html
 <o-${tag}></o-${tag}> 

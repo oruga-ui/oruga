@@ -30,6 +30,8 @@ title: Inputitems
 
 ## Inputitems component
 
+> A simple tag input field that can have autocomplete functionality
+
 ```html
 <o-inputitems></o-inputitems>
 ```

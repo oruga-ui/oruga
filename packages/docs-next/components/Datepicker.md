@@ -30,6 +30,8 @@ title: Datepicker
 
 ## Datepicker component
 
+> An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
+
 ```html
 <o-datepicker></o-datepicker>
 ```

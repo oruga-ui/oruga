@@ -30,6 +30,8 @@ title: Radio
 
 ## Radio component
 
+> Select an option from a set
+
 ```html
 <o-radio></o-radio>
 ```

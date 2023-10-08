@@ -30,6 +30,8 @@ title: Icon
 
 ## Icon component
 
+> Icons take an important role of any application
+
 ```html
 <o-icon></o-icon>
 ```

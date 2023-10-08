@@ -30,6 +30,8 @@ title: Dropdown
 
 ## Dropdown component
 
+> Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
+
 ```html
 <o-dropdown></o-dropdown>
 ```
