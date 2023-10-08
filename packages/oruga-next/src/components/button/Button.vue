@@ -30,7 +30,7 @@ const props = defineProps({
         default: "button",
     },
     /**
-     * Color of the control, optional
+     * Color variant of the control, optional
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -38,7 +38,7 @@ const props = defineProps({
         default: () => getOption("button.variant"),
     },
     /**
-     * Size of button, optional
+     * Size of the control, optional
      * @values small, medium, large
      */
     size: {
@@ -69,11 +69,11 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Button will be disabled */
     disabled: { type: Boolean, default: false },
-    /** Outlined style */
+    /** Enable outlined style */
     outlined: { type: Boolean, default: false },
-    /** Loading style */
+    /** Enable loading style */
     loading: { type: Boolean, default: false },
-    /** Inverted style */
+    /** Enable inverted style */
     inverted: { type: Boolean, default: false },
     /** Button type, like native */
     nativeType: {

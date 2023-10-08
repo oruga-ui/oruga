@@ -33,7 +33,7 @@ const props = defineProps({
     height: { type: [Number, String], default: undefined },
     /** Show a circle shape */
     circle: { type: Boolean, default: false },
-    /** Rounded style */
+    /** Enable rounded style */
     rounded: {
         type: Boolean,
         default: () => getOption("skeleton.rounded", true),
