@@ -2,6 +2,9 @@
 import { defineComponent } from "vue";
 import OCollapse from "../Collapse.vue";
 export default defineComponent({
+    components: {
+        [OCollapse.name]: OCollapse,
+    },
     data() {
         return {
             isOpen: 0,
@@ -21,19 +24,16 @@ export default defineComponent({
             ],
         };
     },
-    components: {
-        [OCollapse.name]: OCollapse,
-    },
 });
 </script>
 
 <template>
     <section>
         <o-collapse
-            class="card"
-            animation="slide"
             v-for="(collapse, index) of collapses"
             :key="index"
+            class="card"
+            animation="slide"
             :open="isOpen == index"
             @open="isOpen = index">
             <template #trigger="props">

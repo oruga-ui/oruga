@@ -1,110 +1,94 @@
-<script lang="ts">
-import { defineComponent, h, Transition, vShow, withDirectives } from "vue";
+<script setup lang="ts">
+import { computed, type PropType } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import { useComputedClass, useClassProps, usePropBinding } from "@/composables";
+import { uuid } from "@/utils/helpers";
 
 /**
  * An easy way to toggle what you want
  * @displayName Collapse
  * @style _collapse.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OCollapse",
-    mixins: [BaseComponentMixin],
     configField: "collapse",
-    emits: ["update:open", "open", "close"],
-    props: {
-        /**
-         * Whether collapse is open or not, v-model:open to make it two-way binding
-         */
-        open: {
-            type: Boolean,
-            default: true,
-        },
-        /**
-         * Custom animation (transition name)
-         */
-        animation: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "collapse.animation",
-                    "fade",
-                );
-            },
-        },
-        ariaId: {
-            type: String,
-            default: "",
-        },
-        /**
-         * Trigger position
-         * @values top, bottom
-         */
-        position: {
-            type: String,
-            default: "top",
-            validator: (value: string) => {
-                return ["top", "bottom"].indexOf(value) > -1;
-            },
-        },
-        rootClass: [String, Function, Array],
-        triggerClass: [String, Function, Array],
-        contentClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            isOpen: this.open,
-        };
-    },
-    watch: {
-        open(value) {
-            this.isOpen = value;
-        },
-    },
-    methods: {
-        /**
-         * Toggle and emit events
-         */
-        toggle() {
-            this.isOpen = !this.isOpen;
-            this.$emit("update:open", this.isOpen);
-            this.$emit(this.isOpen ? "open" : "close");
-        },
-    },
-    render() {
-        const trigger = h(
-            "div",
-            {
-                class: this.computedClass("triggerClass", "o-clps__trigger"),
-                onClick: this.toggle,
-            },
-            this.$slots.trigger({ open: this.isOpen }),
-        );
-        const content = h(Transition, { name: this.animation }, () =>
-            withDirectives(
-                h(
-                    "div",
-                    {
-                        class: this.computedClass(
-                            "contentClass",
-                            "o-clps__content",
-                        ),
-                        id: this.ariaId,
-                    },
-                    this.$slots.default(),
-                ),
-                [[vShow, this.isOpen]],
-            ),
-        );
-        return h(
-            "div",
-            { class: this.computedClass("rootClass", "o-clps") },
-            this.position === "top" ? [trigger, content] : [content, trigger],
-        );
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Whether collapse is open or not, use v-model:open to make it two-way binding */
+    open: { type: Boolean, default: true },
+    /** Custom animation (transition name) */
+    animation: {
+        type: String,
+        default: () => getOption("collapse.animation", "fade"),
+    },
+    /** Id property of the content container */
+    contentId: { type: String, default: () => uuid() },
+    /**
+     * Trigger position
+     * @values top, bottom
+     */
+    position: {
+        type: String as PropType<"top" | "bottom">,
+        default: () => getOption("collapse.position", "top"),
+        validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps(["rootClass", "triggerClass", "contentClass"]),
+});
+
+const emits = defineEmits<{
+    /**
+     * open prop two-way binding
+     * @param value {boolean} updated modelValue open
+     */
+    (e: "update:open", value: boolean): void;
+    /** on collapse opened */
+    (e: "open"): void;
+    /** on collapse closed */
+    (e: "close"): void;
+}>();
+
+const isOpen = usePropBinding<boolean>("open", props, emits, { passive: true });
+
+/** Toggle and emit events */
+function toggle(): void {
+    isOpen.value = !isOpen.value;
+    isOpen.value ? emits("open") : emits("close");
+}
+
+// --- Computed Component Classes ---
+
+const rootClass = computed(() => [useComputedClass("rootClass", "o-clps")]);
+
+const triggerClass = computed(() => [
+    useComputedClass("triggerClass", "o-clps__trigger"),
+]);
+
+const contentClass = computed(() => [
+    useComputedClass("contentClass", "o-clps__content"),
+]);
 </script>
+
+<template>
+    <div :class="rootClass">
+        <div v-if="position === 'top'" :class="triggerClass" @click="toggle">
+            <slot name="trigger" :open="isOpen" />
+        </div>
+
+        <Transition :name="animation">
+            <div v-show="isOpen" :id="contentId" :class="contentClass">
+                <slot />
+            </div>
+        </Transition>
+
+        <div v-if="position === 'bottom'" :class="triggerClass" @click="toggle">
+            <slot name="trigger" :open="isOpen" />
+        </div>
+    </div>
+</template>
