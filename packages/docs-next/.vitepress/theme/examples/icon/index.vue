@@ -38,7 +38,7 @@ app.use(Oruga, {
 
 const faIconConfigCode = ref(
     `<script setup>
-    import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {
     faCheck,
