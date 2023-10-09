@@ -133,16 +133,12 @@ const computedVariant = computed(() => {
 /** Equivalent icon name of the MDI. */
 function getEquivalentIconOf(value): string {
     // Only transform the class if the both prop is set to true
-    if (!this.both) {
-        return value;
-    }
+    if (!props.both) return value;
     if (
-        this.iconConfig &&
-        this.iconConfig.internalIcons &&
-        this.iconConfig.internalIcons[value]
-    ) {
-        return this.iconConfig.internalIcons[value];
-    }
+        iconConfig.value?.internalIcons &&
+        iconConfig.value?.internalIcons[value]
+    )
+        return iconConfig.value.internalIcons[value];
     return value;
 }
 
