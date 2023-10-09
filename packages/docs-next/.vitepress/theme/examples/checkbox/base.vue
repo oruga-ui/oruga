@@ -29,5 +29,8 @@ const checkboxCustom = ref("Yes");
         <o-field>
             <o-checkbox label="Disabled" disabled />
         </o-field>
+        <o-field>
+            <o-checkbox label="Required" required />
+        </o-field>
     </section>
 </template>

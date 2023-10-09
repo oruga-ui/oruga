@@ -1,219 +1,228 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, ref } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import { uuid } from "@/utils/helpers";
+import {
+    useComputedClass,
+    useClassProps,
+    useVModelBinding,
+    useInputHandler,
+} from "@/composables";
 
 /**
  * Switch between two opposing states
  * @displayName Switch
  * @style _switch.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OSwitch",
-    mixins: [BaseComponentMixin],
     configField: "switch",
-    emits: ["update:modelValue"],
-    props: {
-        /** @model */
-        modelValue: [String, Number, Boolean],
-        /**
-         * Same as native value
-         */
-        nativeValue: [String, Number, Boolean],
-        /**
-         * Input label, unnecessary when default slot is used
-         */
-        label: {
-            type: String,
-            default: undefined,
-        },
-        disabled: Boolean,
-        /**
-         * Color of the switch, optional
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        variant: String,
-        /**
-         * Color of the switch when is passive, optional
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        passiveVariant: String,
-        /** Name attribute on native checkbox */
-        name: String,
-        required: Boolean,
-        /**
-         * Vertical size of switch, optional
-         * @values small, medium, large
-         */
-        size: String,
-        /**
-         * Overrides the returned value when it's checked
-         */
-        trueValue: {
-            type: [String, Number, Boolean],
-            default: true,
-        },
-        /**
-         * Overrides the returned value when it's not checked
-         */
-        falseValue: {
-            type: [String, Number, Boolean],
-            default: false,
-        },
-        /** Rounded style */
-        rounded: {
-            type: Boolean,
-            default: true,
-        },
-        /** Label position */
-        position: {
-            type: String,
-            default: "right",
-        },
-        /** Accessibility label to establish relationship between the switch and control label' */
-        ariaLabelledby: String,
-        rootClass: [String, Function, Array],
-        disabledClass: [String, Function, Array],
-        checkClass: [String, Function, Array],
-        checkCheckedClass: [String, Function, Array],
-        checkSwitchClass: [String, Function, Array],
-        roundedClass: [String, Function, Array],
-        labelClass: [String, Function, Array],
-        sizeClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
-        elementsWrapperClass: [String, Function, Array],
-        passiveVariantClass: [String, Function, Array],
-        positionClass: [String, Function, Array],
-        inputClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            newValue: this.modelValue,
-            isMouseDown: false,
-        };
-    },
-    computed: {
-        getLabel() {
-            return this.$refs.label;
-        },
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-switch"),
-                {
-                    [this.computedClass("sizeClass", "o-switch--", this.size)]:
-                        this.size,
-                },
-                {
-                    [this.computedClass("disabledClass", "o-switch--disabled")]:
-                        this.disabled,
-                },
-                {
-                    [this.computedClass(
-                        "variantClass",
-                        "o-switch--",
-                        this.variant,
-                    )]: this.variant,
-                },
-                {
-                    [this.computedClass(
-                        "positionClass",
-                        "o-switch--",
-                        this.position,
-                    )]: this.position,
-                },
-                {
-                    [this.computedClass(
-                        "passiveVariantClass",
-                        "o-switch--",
-                        this.passiveVariant + "-passive",
-                    )]: this.passiveVariant,
-                },
-            ];
-        },
-        inputClasses() {
-            return [this.computedClass("inputClass", "o-switch__input")];
-        },
-        checkClasses() {
-            return [
-                this.computedClass("checkClass", "o-switch__check"),
-                {
-                    [this.computedClass(
-                        "checkCheckedClass",
-                        "o-switch__check--checked",
-                    )]: this.newValue === this.trueValue,
-                },
-                {
-                    [this.computedClass("roundedClass", "o-switch--rounded")]:
-                        this.rounded,
-                },
-            ];
-        },
-        checkSwitchClasses() {
-            return [
-                this.computedClass(
-                    "checkSwitchClass",
-                    "o-switch__check-switch",
-                ),
-                {
-                    [this.computedClass("roundedClass", "o-switch--rounded")]:
-                        this.rounded,
-                },
-            ];
-        },
-        labelClasses() {
-            return [this.computedClass("labelClass", "o-switch__label")];
-        },
-        computedValue: {
-            get() {
-                return this.newValue;
-            },
-            set(value) {
-                this.newValue = value;
-                this.$emit("update:modelValue", this.newValue);
-            },
-        },
-    },
-    watch: {
-        /**
-         * When v-model change, set internal value.
-         */
-        modelValue(value) {
-            this.newValue = value;
-        },
-    },
-    methods: {
-        focus() {
-            // MacOS FireFox and Safari do not focus when clicked
-            this.$refs.input.focus();
-        },
-    },
+    inheritAttrs: false,
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** @model */
+    modelValue: { type: [String, Number, Boolean], default: undefined },
+    /**
+     * Color of the control, optional
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant: {
+        type: String,
+        default: () => getOption("switch.variant"),
+    },
+    /**
+     * Color of the switch when is passive, optional
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    passiveVariant: {
+        type: String,
+        default: () => getOption("switch.passiveVariant"),
+    },
+    /**
+     * Size of the control
+     * @values small, medium, large
+     */
+    size: {
+        type: String,
+        default: () => getOption("switch.size"),
+    },
+    /** Input label, unnecessary when default slot is used */
+    label: { type: String, default: undefined },
+    /** Same as native value */
+    nativeValue: { type: [String, Number, Boolean], default: undefined },
+    /** Same as native disabled */
+    disabled: { type: Boolean, default: false },
+    /** Same as native required */
+    required: { type: Boolean, default: false },
+    /** Name attribute on native checkbox */
+    name: { type: String, default: undefined },
+    /** Overrides the returned value when it's checked */
+    trueValue: { type: [String, Number, Boolean], default: true },
+    /** Overrides the returned value when it's not checked */
+    falseValue: { type: [String, Number, Boolean], default: false },
+    /** Rounded style */
+    rounded: { type: Boolean, default: true },
+    /** Label position */
+    position: { type: String, default: "right" },
+    /** Accessibility label to establish relationship between the switch and control label' */
+    ariaLabelledby: { type: String, default: () => uuid() },
+    /** Same as native autocomplete options to use in HTML5 validation */
+    autocomplete: {
+        type: String,
+        default: () => getOption("switch.autocomplete", "off"),
+    },
+    /** Enable html 5 native validation */
+    useHtml5Validation: {
+        type: Boolean,
+        default: () => getOption("useHtml5Validation", true),
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "disabledClass",
+        "checkClass",
+        "checkCheckedClass",
+        "checkSwitchClass",
+        "roundedClass",
+        "elementsWrapperClass",
+        "passiveVariantClass",
+        "positionClass",
+        "inputClass",
+        "labelClass",
+        "sizeClass",
+        "variantClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * modelValue prop two-way binding
+     * @param value {string | number | boolean} updated modelValue prop
+     */
+    (e: "update:modelValue", value: string | number | boolean): void;
+    /**
+     * on input focus event
+     * @param event {Event} native event
+     */
+    (e: "focus", event: Event): void;
+    /**
+     * on input blur event
+     * @param event {Event} native event
+     */
+    (e: "blur", event: Event): void;
+    /**
+     * on input invalid event
+     * @param event {Event} native event
+     */
+    (e: "invalid", event: Event): void;
+}>();
+
+const inputRef = ref();
+
+// use form input functionalities
+const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
+    inputRef,
+    emits,
+    props,
+);
+
+const vmodel = useVModelBinding<string | number | boolean>(props, emits, {
+    passive: true,
+});
+
+const isChecked = computed(
+    () =>
+        vmodel.value === props.trueValue ||
+        (Array.isArray(vmodel.value) &&
+            vmodel.value.indexOf(props.nativeValue) !== -1),
+);
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-switch"),
+    {
+        [useComputedClass("sizeClass", "o-switch--", props.size)]: props.size,
+    },
+    {
+        [useComputedClass("disabledClass", "o-switch--disabled")]:
+            props.disabled,
+    },
+    {
+        [useComputedClass("variantClass", "o-switch--", props.variant)]:
+            props.variant,
+    },
+    {
+        [useComputedClass("positionClass", "o-switch--", props.position)]:
+            props.position,
+    },
+    {
+        [useComputedClass(
+            "passiveVariantClass",
+            "o-switch--",
+            props.passiveVariant + "-passive",
+        )]: props.passiveVariant,
+    },
+]);
+
+const inputClasses = computed(() => [
+    useComputedClass("inputClass", "o-switch__input"),
+]);
+
+const checkClasses = computed(() => [
+    useComputedClass("checkClass", "o-switch__check"),
+    {
+        [useComputedClass("checkCheckedClass", "o-switch__check--checked")]:
+            isChecked.value,
+    },
+    {
+        [useComputedClass("roundedClass", "o-switch--rounded")]: props.rounded,
+    },
+]);
+
+const checkSwitchClasses = computed(() => [
+    useComputedClass("checkSwitchClass", "o-switch__check-switch"),
+    {
+        [useComputedClass("roundedClass", "o-switch--rounded")]: props.rounded,
+    },
+]);
+
+const labelClasses = computed(() => [
+    useComputedClass("labelClass", "o-switch__label"),
+]);
 </script>
 
 <template>
     <label
-        :class="rootClasses"
         ref="label"
-        @click="focus"
-        @keydown.prevent.enter="getLabel.click()"
-        @mousedown="isMouseDown = true"
-        @mouseup="isMouseDown = false"
-        @mouseout="isMouseDown = false"
-        @blur="isMouseDown = false">
+        :class="rootClasses"
+        @click="setFocus"
+        @keydown.prevent.enter="setFocus">
         <input
-            v-model="computedValue"
+            v-bind="$attrs"
+            ref="inputRef"
+            v-model="vmodel"
             type="checkbox"
-            ref="input"
             role="switch"
             :class="inputClasses"
-            @click.stop
             :disabled="disabled"
-            :name="name"
             :required="required"
+            :name="name"
+            :autocomplete="autocomplete"
             :value="nativeValue"
             :true-value="trueValue"
             :false-value="falseValue"
-            :aria-labelledby="ariaLabelledby" />
+            :aria-labelledby="ariaLabelledby"
+            @click.stop
+            @blur="onBlur"
+            @focus="onFocus"
+            @invalid="onInvalid" />
         <span :class="checkClasses">
             <span :class="checkSwitchClasses"></span>
         </span>
