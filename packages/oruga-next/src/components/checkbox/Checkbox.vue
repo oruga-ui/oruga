@@ -129,7 +129,8 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 
 const vmodel = useVModelBinding<
     string | number | boolean | Array<string | number | boolean>
->(props, emits);
+>(props, emits, { passive: true });
+
 const isIndeterminate = usePropBinding<boolean>("indeterminate", props, emits);
 
 const isChecked = computed(
