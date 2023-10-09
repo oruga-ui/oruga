@@ -36,21 +36,20 @@ title: Collapse
 
 ### Props
 
-| Prop name | Description                                                              | Type    | Values          | Default                                                                                                                                                |
-| --------- | ------------------------------------------------------------------------ | ------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| animation | Custom animation (transition name)                                       | string  | -               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;animation: "fade", <br>}</code> |
-| ariaId    |                                                                          | string  | -               | <code style='white-space: nowrap; padding: 0;'>""</code>                                                                                               |
-| open      | Whether collapse is open or not, v-model:open to make it two-way binding | boolean | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                             |
-| override  |                                                                          | boolean | -               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                 |
-| position  | Trigger position                                                         | string  | `top`, `bottom` | <code style='white-space: nowrap; padding: 0;'>"top"</code>                                                                                            |
+| Prop name | Description                                                                  | Type    | Values          | Default                                                                                                                                              |
+| --------- | ---------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animation | Custom animation (transition name)                                           | string  | -               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code> |
+| contentId | Id property of the content container                                         | string  | -               | Default function (see source code)                                                                                                                   |
+| open      | Whether collapse is open or not, use v-model:open to make it two-way binding | boolean | -               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                           |
+| position  | Trigger position                                                             | string  | `top`, `bottom` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>collapse: {<br>&nbsp;&nbsp;position: "top"<br>}</code>   |
 
 ### Events
 
-| Event name  | Properties | Description |
-| ----------- | ---------- | ----------- |
-| update:open |            |
-| open        |            |
-| close       |            |
+| Event name  | Properties                                    | Description               |
+| ----------- | --------------------------------------------- | ------------------------- |
+| update:open | **value** `boolean` - updated modelValue open | open prop two-way binding |
+| open        |                                               | on collapse opened        |
+| close       |                                               | on collapse closed        |
 
 ### Slots
 

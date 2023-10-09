@@ -1,7 +1,9 @@
-<script lang="ts">
-import { defineComponent, h } from "vue";
+<script setup lang="ts">
+import { computed, ref, type PropType } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import { useComputedClass, useClassProps } from "@/composables";
 import { toCssDimension } from "../../utils/helpers";
 
 /**
@@ -9,115 +11,106 @@ import { toCssDimension } from "../../utils/helpers";
  * @displayName Skeleton
  * @style _skeleton.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OSkeleton",
-    mixins: [BaseComponentMixin],
     configField: "skeleton",
-    props: {
-        /** Show or hide loader	 */
-        active: {
-            type: Boolean,
-            default: true,
-        },
-        /** Show a loading animation */
-        animated: {
-            type: Boolean,
-            default: true,
-        },
-        /** Custom width */
-        width: [Number, String],
-        /** Custom height */
-        height: [Number, String],
-        /** Show a circle shape */
-        circle: Boolean,
-        /** Rounded style */
-        rounded: {
-            type: Boolean,
-            default: true,
-        },
-        /** Number of shapes to display */
-        count: {
-            type: Number,
-            default: 1,
-        },
-        /**
-         * Skeleton position in relation to the element
-         * @values left, centered, right
-         */
-        position: {
-            type: String,
-            default: "left",
-            validator(value: string) {
-                return ["left", "centered", "right"].indexOf(value) > -1;
-            },
-        },
-        /**
-         * Size of skeleton
-         * @values small, medium, large
-         */
-        size: String,
-        rootClass: [String, Function, Array],
-        animationClass: [String, Function, Array],
-        positionClass: [String, Function, Array],
-        itemClass: [String, Function, Array],
-        itemRoundedClass: [String, Function, Array],
-        sizeClass: [String, Function, Array],
-    },
-    render() {
-        if (!this.active) return;
-        const items = [];
-        const width = this.width;
-        const height = this.height;
-        for (let i = 0; i < this.count; i++) {
-            items.push(
-                h("div", {
-                    class: [
-                        this.computedClass("itemClass", "o-sklt__item"),
-                        {
-                            [this.computedClass(
-                                "itemRoundedClass",
-                                "o-sklt__item--rounded",
-                            )]: this.rounded,
-                        },
-                        {
-                            [this.computedClass(
-                                "animationClass",
-                                "o-sklt__item--animated",
-                            )]: this.animated,
-                        },
-                        {
-                            [this.computedClass(
-                                "sizeClass",
-                                "o-sklt__item--",
-                                this.size,
-                            )]: this.size,
-                        },
-                    ],
-                    key: i,
-                    style: {
-                        height: toCssDimension(height),
-                        width: toCssDimension(width),
-                        borderRadius: this.circle ? "50%" : null,
-                    },
-                }),
-            );
-        }
-        return h(
-            "div",
-            {
-                class: [
-                    this.computedClass("rootClass", "o-sklt"),
-                    {
-                        [this.computedClass(
-                            "positionClass",
-                            "o-sklt--",
-                            this.position,
-                        )]: this.position,
-                    },
-                ],
-            },
-            items,
-        );
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Show or hide loader	 */
+    active: { type: Boolean, default: true },
+    /** Show a loading animation */
+    animated: {
+        type: Boolean,
+        default: () => getOption("skeleton.animated", true),
+    },
+    /** Custom width */
+    width: { type: [Number, String], default: undefined },
+    /** Custom height */
+    height: { type: [Number, String], default: undefined },
+    /** Show a circle shape */
+    circle: { type: Boolean, default: false },
+    /** Enable rounded style */
+    rounded: {
+        type: Boolean,
+        default: () => getOption("skeleton.rounded", true),
+    },
+    /** Number of shapes to display */
+    count: { type: Number, default: 1 },
+    /**
+     * Size of skeleton
+     * @values small, medium, large
+     */
+    size: { type: String, default: undefined },
+    /**
+     * Skeleton position in relation to the element
+     * @values left, centered, right
+     */
+    position: {
+        type: String as PropType<"left" | "centered" | "right">,
+        default: "left",
+        validator: (value: string) =>
+            ["left", "centered", "right"].indexOf(value) > -1,
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "animationClass",
+        "positionClass",
+        "itemClass",
+        "itemRoundedClass",
+        "sizeClass",
+    ]),
+});
+
+const rootRef = ref();
+
+const itemStyle = computed(() =>
+    rootRef.value
+        ? {
+              height: toCssDimension(rootRef.value.height),
+              width: toCssDimension(rootRef.value.width),
+              borderRadius: props.circle ? "50%" : null,
+          }
+        : {},
+);
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-sklt"),
+    {
+        [useComputedClass("positionClass", "o-sklt--", props.position)]:
+            props.position,
+    },
+]);
+
+const itemClasses = computed(() => [
+    useComputedClass("itemClass", "o-sklt__item"),
+    {
+        [useComputedClass("itemRoundedClass", "o-sklt__item--rounded")]:
+            props.rounded,
+    },
+    {
+        [useComputedClass("animationClass", "o-sklt__item--animated")]:
+            props.animated,
+    },
+    {
+        [useComputedClass("sizeClass", "o-sklt__item--", props.size)]:
+            props.size,
+    },
+]);
 </script>
+
+<template>
+    <div v-if="active" ref="rootRef" :class="rootClasses" const>
+        <div
+            v-for="i in count"
+            :key="i"
+            :class="itemClasses"
+            :style="itemStyle" />
+    </div>
+</template>
