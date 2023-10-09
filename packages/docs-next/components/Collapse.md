@@ -30,6 +30,8 @@ title: Collapse
 
 ## Collapse component
 
+> An easy way to toggle what you want
+
 ```html
 <o-collapse></o-collapse>
 ```

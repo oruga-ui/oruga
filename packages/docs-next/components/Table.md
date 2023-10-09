@@ -30,6 +30,8 @@ title: Table
 
 ## Table component
 
+> Tabulated data are sometimes needed, it's even better when it's responsive
+
 ```html
 <o-table></o-table>
 ```

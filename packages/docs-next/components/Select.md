@@ -30,6 +30,8 @@ title: Select
 
 ## Select component
 
+> Select an item in a dropdown list. Use with Field to access all functionalities
+
 ```html
 <o-select></o-select>
 ```

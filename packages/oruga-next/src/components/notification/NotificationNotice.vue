@@ -1,58 +1,276 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import {
+    computed,
+    ref,
+    onMounted,
+    onBeforeMount,
+    type PropType,
+    watch,
+} from "vue";
 
-import NoticeMixin from "../../utils/NoticeMixin";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import { useComputedClass, useClassProps } from "@/composables";
+import { isDefined, removeElement } from "@/utils/helpers";
+import type { BindProp, ProgrammaticInstance } from "@/types";
+
+import type { NotifcationProps } from "./index";
 
 /**
+ * Notification Notice is used for the programmatic usage
  * @displayName Notification Notice
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "ONotificationNotice",
     configField: "notification",
-    mixins: [BaseComponentMixin, NoticeMixin],
-    props: {
-        propsNotification: Object,
-        noticeClass: [String, Function, Array],
-        noticePositionClass: [String, Function, Array],
-        noticeCustomContainerClass: [String, Function, Array],
-    },
-    emits: ["update:active", "close"],
-    methods: {
-        rootClasses() {
-            return [this.computedClass("noticeClass", "o-notices")];
-        },
-        positionClasses(position) {
-            return [
-                this.computedClass(
-                    "noticePositionClass",
-                    "o-notices--",
-                    position,
-                ),
-            ];
-        },
-        noticeCustomContainerClasses() {
-            return [
-                this.computedClass(
-                    "noticeCustomContainerClass",
-                    "o-notices__custom-container",
-                ),
-            ];
-        },
-        timeoutCallback() {
-            return this.$refs.notification.close({
-                action: "close",
-                method: "timeout",
-            });
-        },
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Props passed to the internal notification component */
+    notification: {
+        type: Object as PropType<NotifcationProps>,
+        default: () => {},
+    },
+    /**
+     * Which position the notification will appear when programmatically
+     * @values top-right, top, top-left, bottom-right, bottom, bottom-left
+     */
+    position: {
+        type: String,
+        default: () => getOption("notification.position", "top"),
+        validator: (value: string) =>
+            [
+                "top-right",
+                "top",
+                "top-left",
+                "bottom-right",
+                "bottom",
+                "bottom-left",
+            ].indexOf(value) > -1,
+    },
+    /** Hide notification after duration (in miliseconds) */
+    duration: {
+        type: Number,
+        default: () => getOption("notification.duration", 2000),
+    },
+    /** Show the Notification indefinitely until it is dismissed */
+    indefinite: { type: Boolean, default: false },
+    /** If should queue with others notices (snackbar/toast/notification) */
+    queue: {
+        type: Boolean,
+        default: () => getOption("notification.noticeQueue", undefined),
+    },
+    /** Callback function to call after close (programmatically close or user canceled) */
+    onClose: { type: Function, default: () => {} },
+    /**
+     * DOM element the toast will be created on.
+     * Note that this also changes the position of the toast from fixed to absolute.
+     * Meaning that the container should be fixed.
+     */
+    container: {
+        type: String,
+        default: () => getOption("notification.containerElement", undefined),
+    },
+    /**
+     * This is used internally for programmatic usage
+     * @ignore
+     */
+    programmatic: {
+        type: Object as PropType<ProgrammaticInstance<typeof this>>,
+        default: undefined,
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "noticeClass",
+        "noticePositionClass",
+        "noticeCustomContainerClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * active prop two-way binding
+     * @param value {boolean} updated active prop
+     */
+    (e: "update:active", value: boolean): void;
+    /**
+     * on notification close event
+     * @param value {any}
+     */
+    (e: "close", ...args: any[]): void;
+}>();
+
+const notificationRef = ref();
+
+const isActive = ref(false);
+
+const domContainer = ref(props.container);
+const parentTop = ref(null);
+const parentBottom = ref(null);
+
+const timer = ref();
+
+watch(
+    () => isActive,
+    (value) => {
+        if (value) setAutoClose();
+        else if (timer.value) clearTimeout(timer.value);
+    },
+);
+
+onBeforeMount(() => setupContainer());
+
+onMounted(() => {
+    if (props.programmatic?.instances) props.programmatic.instances.add(this);
+    showNotice();
+    setAutoClose();
+});
+
+/** Create or inject notice dom container elements. */
+function setupContainer(): void {
+    if (
+        rootClasses.value &&
+        positionClasses("top") &&
+        positionClasses("bottom")
+    ) {
+        parentTop.value = document.querySelector(
+            (domContainer.value ? domContainer.value : "body") +
+                `>.${rootClasses.value.join(".")}.${positionClasses("top").join(
+                    ".",
+                )}`,
+        );
+        parentBottom.value = document.querySelector(
+            (domContainer.value ? domContainer.value : "body") +
+                `>.${rootClasses.value.join(".")}.${positionClasses(
+                    "bottom",
+                ).join(".")}`,
+        );
+
+        if (parentTop.value && parentBottom.value) return;
+
+        if (!parentTop.value) {
+            parentTop.value = document.createElement("div");
+            parentTop.value.className = `${rootClasses.value.join(
+                " ",
+            )} ${positionClasses("top").join(" ")}`;
+        }
+
+        if (!parentBottom.value) {
+            parentBottom.value = document.createElement("div");
+            parentBottom.value.className = `${rootClasses.value.join(
+                " ",
+            )} ${positionClasses("bottom").join(" ")}`;
+        }
+
+        const container =
+            document.querySelector(domContainer.value) || document.body;
+
+        container.appendChild(parentTop.value);
+        container.appendChild(parentBottom.value);
+
+        if (domContainer.value) {
+            const classes = noticeCustomContainerClasses.value;
+            if (classes && classes.length) {
+                classes.filter(isDefined).forEach((c: string) => {
+                    parentTop.value.classList.add(c);
+                    parentBottom.value.classList.add(c);
+                });
+            }
+        }
+    }
+}
+
+const correctParent = computed(() => {
+    switch (props.position) {
+        case "top-right":
+        case "top":
+        case "top-left":
+            return parentTop.value;
+
+        case "bottom-right":
+        case "bottom":
+        case "bottom-left":
+            return parentBottom.value;
+        default:
+            return null;
+    }
+});
+
+const shouldQueue = computed(() =>
+    props.queue
+        ? parentTop.value.childElementCount > 0 ||
+          parentBottom.value.childElementCount > 0
+        : false,
+);
+
+function showNotice(): void {
+    if (shouldQueue.value) correctParent.value.innerHTML = "";
+    correctParent.value.insertAdjacentElement(
+        "afterbegin",
+        notificationRef.value.$el,
+    );
+    isActive.value = true;
+}
+
+/** Set timer to auto close message */
+function setAutoClose(): void {
+    if (!props.indefinite) {
+        // clear old timer
+        if (timer.value) clearTimeout(timer.value);
+        // set new timer
+        timer.value = setTimeout(() => {
+            if (isActive.value) close({ action: "close", method: "timeout" });
+        }, props.duration);
+    }
+}
+
+function close(...args: any[]): void {
+    clearTimeout(timer.value);
+    emits("close", ...args);
+    props.onClose.apply(null, args);
+
+    if (props.programmatic) {
+        if (props.programmatic.instances)
+            props.programmatic.instances.remove(this);
+
+        if (props.programmatic.resolve)
+            props.programmatic.resolve.apply(null, args);
+    }
+
+    // Timeout for the animation complete before destroying
+    setTimeout(() => {
+        isActive.value = false;
+        removeElement(notificationRef.value.$el);
+    }, 150);
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("noticeClass", "o-notices"),
+]);
+
+function positionClasses(position): BindProp {
+    return [useComputedClass("noticePositionClass", "o-notices--", position)];
+}
+
+const noticeCustomContainerClasses = computed(() => [
+    useComputedClass(
+        "noticeCustomContainerClass",
+        "o-notices__custom-container",
+    ),
+]);
 </script>
 
 <template>
     <o-notification
-        v-bind="propsNotification"
-        ref="notification"
+        v-bind="notification"
+        ref="notificationRef"
+        v-model:active="isActive"
+        :position="position"
         @close="close">
         <slot />
     </o-notification>

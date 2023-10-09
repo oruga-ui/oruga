@@ -30,6 +30,8 @@ title: Upload
 
 ## Upload component
 
+> Upload one or more files
+
 ```html
 <o-upload></o-upload>
 ```

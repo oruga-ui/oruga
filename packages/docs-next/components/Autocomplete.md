@@ -30,6 +30,8 @@ title: Autocomplete
 
 ## Autocomplete component
 
+> Extended input that provide suggestions while the user types
+
 ```html
 <o-autocomplete></o-autocomplete>
 ```

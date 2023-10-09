@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-notification
-            v-slot="{ closeNotification }"
+            v-slot="{ close }"
             aria-close-label="Close notification">
             <div class="notification-content">
                 <span>
@@ -13,7 +13,7 @@
                     label="Cancel"
                     variant="primary"
                     size="small"
-                    @click="closeNotification" />
+                    @click="close" />
             </div>
         </o-notification>
     </section>

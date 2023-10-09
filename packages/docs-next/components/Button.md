@@ -30,6 +30,8 @@ title: Button
 
 ## Button component
 
+> The classic button, in different colors, sizes, and states
+
 ```html
 <o-button></o-button>
 ```

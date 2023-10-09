@@ -30,6 +30,8 @@ title: Carousel
 
 ## Carousel component
 
+> A Slideshow for cycling images in confined spaces
+
 ```html
 <o-carousel></o-carousel>
 ```

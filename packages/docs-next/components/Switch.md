@@ -30,6 +30,8 @@ title: Switch
 
 ## Switch component
 
+> Switch between two opposing states
+
 ```html
 <o-switch></o-switch>
 ```

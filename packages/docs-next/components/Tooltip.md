@@ -30,6 +30,8 @@ title: Tooltip
 
 ## Tooltip component
 
+> Display a brief helper text to your user
+
 ```html
 <o-tooltip></o-tooltip>
 ```

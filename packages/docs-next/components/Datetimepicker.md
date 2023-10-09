@@ -30,6 +30,8 @@ title: Datetimepicker
 
 ## Datetimepicker component
 
+> An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
+
 ```html
 <o-datetimepicker></o-datetimepicker>
 ```

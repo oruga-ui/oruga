@@ -30,6 +30,8 @@ title: Skeleton
 
 ## Skeleton component
 
+> A placeholder for content to load
+
 ```html
 <o-skeleton></o-skeleton>
 ```
