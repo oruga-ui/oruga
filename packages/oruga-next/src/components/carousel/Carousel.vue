@@ -36,7 +36,6 @@ defineOptions({
     isOruga: true,
     name: "OCarousel",
     configField: "carousel",
-    inheritAttrs: false,
 });
 
 const props = defineProps({
