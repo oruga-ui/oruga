@@ -31,14 +31,14 @@ const instances = new InstanceRegistry<typeof NotificationNotice>();
 
 const NotificationProgrammatic = {
     open(
-        params: string | (NotifcationNoticeProps & NotifcationProps),
+        params: Readonly<string | (NotifcationNoticeProps & NotifcationProps)>,
     ): InstanceType<typeof NotificationNotice> {
         const componentParams =
             typeof params === "string"
                 ? {
                       message: params,
                   }
-                : params;
+                : { ...params };
 
         let slot;
         if (Array.isArray(componentParams.message)) {
@@ -66,7 +66,10 @@ const NotificationProgrammatic = {
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return vnode.component.proxy as InstanceType<typeof NotificationNotice>;
+        return {
+            ...vnode.component.proxy,
+            ...vnode.component.exposed,
+        } as InstanceType<typeof NotificationNotice>;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.close(...args));
