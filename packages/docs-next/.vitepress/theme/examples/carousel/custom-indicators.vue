@@ -4,6 +4,7 @@ import { reactive, ref } from "vue";
 const gallery = ref(false);
 
 const settings = reactive({
+    indicators: false,
     itemsToShow: 2,
     breakpoints: {
         768: {
@@ -69,11 +70,11 @@ function switchGallery(value) {
                 <o-carousel
                     :model-value="active"
                     v-bind="settings"
-                    as-indicator
                     @update:model-value="switchTo($event)">
                     <o-carousel-item
                         v-for="(item, i) in items"
                         :key="i"
+                        clickable
                         item-class="img-indicator"
                         item-active-class="img-indicator-active">
                         <img :src="item.image" />

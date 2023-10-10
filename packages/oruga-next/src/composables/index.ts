@@ -5,3 +5,4 @@ export * from "./useEventListener";
 export * from "./useMatchMedia";
 export * from "./useInputHandler";
 export * from "./useDebounce";
+export * from "./useParentProvider";
