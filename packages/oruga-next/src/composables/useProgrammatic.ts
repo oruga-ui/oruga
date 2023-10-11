@@ -15,14 +15,12 @@ type ProgrammaticProps<T> = {
     onClose: (...args: any[]) => void;
     /** DOM element where the programmatic component will be mounted on. */
     container?: HTMLElement | string;
-    /** This defines the programmatic usage */
+    /** This defines the programmatic usage. */
     programmatic?: ProgrammaticInstance<T>;
 };
 
 export interface ProgrammaticOptions {
-    /**
-     * Options with which method cancel is posible.
-     */
+    /** Method options that allow the component to be cancelled. */
     cancelOptions?: string[];
 }
 
