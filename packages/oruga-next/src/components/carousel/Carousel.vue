@@ -384,7 +384,7 @@ function checkPause(): void {
     if (props.pauseHover && props.autoplay) pauseTimer();
 }
 
-// --- Drag & Drop Feature
+// --- Drag & Drop Feature ---
 
 const isTouch = ref(false);
 const dragX = ref();
