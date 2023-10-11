@@ -11,7 +11,7 @@ import {
 } from "@/utils/plugins";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 
-export type NotifcationProps = InstanceType<typeof Loading>["$props"];
+export type LoadingProps = InstanceType<typeof Loading>["$props"];
 
 declare module "@/types" {
     interface OrugaProgrammatic {
@@ -24,7 +24,7 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {
-    open(params: Readonly<NotifcationProps>): InstanceType<typeof Loading> {
+    open(params: Readonly<LoadingProps>): InstanceType<typeof Loading> {
         const defaultParams = {
             programmatic: { instances },
             active: true,
