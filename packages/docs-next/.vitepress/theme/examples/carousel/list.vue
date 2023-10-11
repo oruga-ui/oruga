@@ -4,9 +4,9 @@ import { reactive, ref } from "vue";
 const carousel = ref(1);
 
 const settings = reactive({
-    arrow: true,
-    arrowHover: true,
-    hasDrag: true,
+    arrows: true,
+    arrowsHover: true,
+    dragable: true,
     itemsToShow: 4,
     itemsToList: 1,
     repeat: false,
@@ -48,40 +48,42 @@ const items = [
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.arrow">Arrow</o-switch>
+                <o-switch v-model="settings.arrows" label="Arrow" />
             </o-field>
             <o-field>
                 <o-switch
-                    v-model="settings.arrowHover"
-                    :disabled="!settings.arrow">
-                    Arrow on hover
-                </o-switch>
+                    v-model="settings.arrowsHover"
+                    :disabled="!settings.arrows"
+                    label="Arrow on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.hasDrag">Drag event</o-switch>
+                <o-switch v-model="settings.dragable" label="Drag event" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.repeat">Repeat</o-switch>
+                <o-switch v-model="settings.repeat" label="Repeat" />
             </o-field>
         </o-field>
         <o-field grouped>
             <o-field label="Items to Show">
                 <o-input
-                    v-model.number="settings.itemsToShow"
+                    v-model="settings.itemsToShow"
                     type="number"
                     min="1"
                     :max="items.length" />
             </o-field>
             <o-field label="Items to List">
                 <o-input
-                    v-model.number="settings.itemsToList"
+                    v-model="settings.itemsToList"
                     type="number"
                     min="1"
                     :max="items.length - 1" />
             </o-field>
         </o-field>
 
-        <o-carousel v-model="carousel" v-bind="settings">
+        <o-carousel
+            v-bind="settings"
+            :key="settings.itemsToList + settings.itemsToShow"
+            v-model="carousel">
             <o-carousel-item v-for="(item, i) in items" :key="i">
                 <img :src="item.image" />
             </o-carousel-item>

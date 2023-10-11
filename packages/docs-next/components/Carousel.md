@@ -38,52 +38,77 @@ title: Carousel
 
 ### Props
 
-| Prop name         | Description | Type    | Values | Default                                                                                                                                                        |
-| ----------------- | ----------- | ------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| arrow             |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
-| arrowHover        |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
-| asIndicator       |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| autoplay          |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
-| breakpoints       |             | object  | -      | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                       |
-| hasDrag           |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
-| iconNext          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconNext: "chevron-right", <br>}</code> |
-| iconPack          |             | string  | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| iconPrev          |             | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconPrev: "chevron-left", <br>}</code>  |
-| iconSize          |             | string  | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| indicator         |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
-| indicatorInside   |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
-| indicatorMode     |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"click"</code>                                                                                                  |
-| indicatorPosition |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"bottom"</code>                                                                                                 |
-| indicatorStyle    |             | string  | -      | <code style='white-space: nowrap; padding: 0;'>"dots"</code>                                                                                                   |
-| interval          |             | number  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>              |
-| itemsToList       |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                        |
-| itemsToShow       |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                        |
-| modelValue        |             | number  | -      | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
-| overlay           |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| override          |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                         |
-| pauseHover        |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
-| repeat            |             | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| Prop name         | Description                                       | Type                      | Values                                            | Default                                                                                                                                                        |
+| ----------------- | ------------------------------------------------- | ------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| arrows            | Show next / prev arrows                           | boolean                   | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;arrows: true<br>}</code>                |
+| arrowsHover       | Show next / prev arrows only on hover             | boolean                   | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;arrowHover: true<br>}</code>            |
+| autoplay          | Move item automaticalls after `interval`          | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| breakpoints       | Define these props for different screen sizes     | Record&lt;number, any&gt; | -                                                 | Default function (see source code)                                                                                                                             |
+| dragable          | Enable drag mode                                  | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
+| iconNext          | Icon name for next icon                           | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code>   |
+| iconPack          | Icon pack to use                                  | string                    | `mdi`, `fa`, `fas and any other custom icon pack` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>         |
+| iconPrev          | Icon name for previous icon                       | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconPrev: "chevron-left"<br>}</code>    |
+| iconSize          | Icon size                                         | string                    | `small`, `medium`, `large`                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;iconSize: undefined<br>}</code>         |
+| indicatorInside   | Place indicators inside the carousel              | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| indicatorMode     | Indicator interaction mode                        | string                    | `click`, `hover`                                  | <code style='white-space: nowrap; padding: 0;'>"click"</code>                                                                                                  |
+| indicatorPosition | Position of the indicator - depends on used theme | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;indicatorPosition: "bottom"<br>}</code> |
+| indicatorStyle    | Style of the indicator - depends on used theme    | string                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;indicatorStyle: "dots"<br>}</code>      |
+| indicators        | Enable indicators                                 | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                     |
+| interval          | Timer interval for `autoplay`                     | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;interval: 3500<br>}</code>              |
+| itemsToList       | Number of items to switch at once                 | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToList: 1<br>}</code>              |
+| itemsToShow       | Number of items to show at once                   | number                    | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;itemsToShow: 1<br>}</code>              |
+| overlay           | Show an overlay                                   | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| pauseHover        | Pause autoplay on hover                           | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| repeat            | Repeat from the beginning after reaching the end  | boolean                   | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                    |
+| v-model           |                                                   | number                    | -                                                 | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                        |
 
 ### Events
 
-| Event name        | Properties | Description |
-| ----------------- | ---------- | ----------- |
-| update:modelValue |            |
-| scroll            |            |
-| click             |            |
+| Event name        | Properties                                   | Description                     |
+| ----------------- | -------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `number` - updated modelValue prop | modelValue prop two-way binding |
+| scroll            | **value** `number` - scroll index            | on carousel scroll event        |
+| click             | **event** `event` - native event             | on item click event             |
 
 ### Slots
 
-| Name       | Description | Bindings        |
-| ---------- | ----------- | --------------- |
-| default    |             |                 |
-| arrow      |             | <br/><br/><br/> |
-| indicators |             | <br/><br/>      |
-| indicator  |             |                 |
-| overlay    |             |                 |
+| Name       | Description           | Bindings                                                                                                                                                                                                        |
+| ---------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | display carousel item |                                                                                                                                                                                                                 |
+| arrow      | Arrows section        | **has-prev** `boolean` - has prev arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**has-next** `boolean` - has next arrow button<br/>**next** `(): void` - switch to next item function |
+| indicators | Indicators section    | **active** `number` - active index<br/>**switch-to** `(idx: number): void` - switch to item function<br/>**indicator-index** `number` - current indicator index                                                 |
+| indicator  | Indicator element     | **index** `index` - indicator index                                                                                                                                                                             |
+| overlay    | Overlay element       |                                                                                                                                                                                                                 |
 
 </div>
 
+<div class="vp-doc">
+
+## CarouselItem component
+
+> A Slideshow item used by the carousel
+
+```html
+<o-carousel-item></o-carousel-item>
+```
+
+### Props
+
+| Prop name | Description         | Type    | Values | Default                                                     |
+| --------- | ------------------- | ------- | ------ | ----------------------------------------------------------- |
+| clickable | Make item clickable | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
+
+</div>
+
+<div class="vp-doc">
+
+</div>
 <div class="vp-doc">
 
 ## Sass variables
