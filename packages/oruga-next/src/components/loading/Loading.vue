@@ -8,11 +8,8 @@ import { getOption } from "@/utils/config";
 import {
     useComputedClass,
     useClassProps,
-    usePropBinding,
-    useEventListener,
+    useProgrammaticComponent,
 } from "@/composables";
-import { removeElement } from "@/utils/helpers";
-import { HTMLElement, isClient } from "@/utils/ssr";
 import type { ProgrammaticInstance } from "@/types";
 
 /**
@@ -44,7 +41,9 @@ const props = defineProps({
     /** Can cancle Loading by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
     /** Callback function to call after user canceled (pressed escape / clicked outside). */
-    onCancle: { type: Function, default: () => {} },
+    onCancel: { type: Function as PropType<() => void>, default: () => {} },
+    /** Callback function to call after close (programmatically close or user canceled). */
+    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /** Icon name to show, unnecessary when default slot is used. */
     icon: {
         type: String,
@@ -64,10 +63,13 @@ const props = defineProps({
         default: () => getOption("loading.iconSize", "medium"),
     },
     /**
-     * DOM element where the loading component will be created on.
+     * DOM element where the loading component will be created on (for programmatic usage).
      * Note that this also changes fullPage to false.
      */
-    container: { type: HTMLElement, default: undefined },
+    container: {
+        type: [HTMLElement, String],
+        default: () => getOption("loading.container", document.body),
+    },
     /**
      * This is used internally for programmatic usage
      * @ignore
@@ -101,60 +103,28 @@ const emits = defineEmits<{
 
 const rootRef = ref();
 
-const isActive = usePropBinding("active", props, emits);
-const displayInFullPage = usePropBinding("fullPage", props, emits);
+const displayInFullPage = ref(props.fullPage);
 
-if (isClient)
-    useEventListener("keyup", onKeyPress, props.container || document);
+/** add programmatic usage to this component */
+const { isActive, close, cancel } = useProgrammaticComponent(
+    rootRef,
+    props,
+    emits,
+    {
+        cancelOptions: getOption("modal.cancelable", [
+            "escape",
+            "x",
+            "outside",
+            "button",
+        ]),
+    },
+);
 
 onMounted(() => {
-    if (props.programmatic) {
-        if (props.programmatic.instances) {
-            props.programmatic.instances.add(this);
-        }
-        // Insert the Loading component in body tag
-        // only if it's programmatic
-        if (!props.container) {
-            document.body.appendChild(rootRef.value);
-        } else {
-            displayInFullPage.value = false;
-            props.container.appendChild(rootRef.value);
-        }
-        isActive.value = true;
+    if (props.programmatic && props.container) {
+        displayInFullPage.value = false;
     }
 });
-
-/** Close the Modal if canCancel. */
-function cancel(method: string): void {
-    if (!props.cancelable || !isActive.value) return;
-    close({ action: "cancel", method });
-}
-
-/** Emit events, and destroy modal if it's programmatic. */
-function close(...args: any[]): void {
-    emits("close");
-    props.onCancle.apply(null, args);
-
-    // Timeout for the animation complete before destroying
-    if (props.programmatic) {
-        if (props.programmatic.instances)
-            props.programmatic.instances.remove(this);
-
-        if (props.programmatic.resolve)
-            props.programmatic.resolve.apply(null, args);
-
-        // Timeout for the animation complete before destroying
-        setTimeout(() => {
-            isActive.value = false;
-            window.requestAnimationFrame(() => removeElement(rootRef.value));
-        });
-    } else isActive.value = false;
-}
-
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
-}
 
 // --- Computed Component Classes ---
 

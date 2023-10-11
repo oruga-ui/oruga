@@ -11,8 +11,11 @@ import {
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps } from "@/composables";
-import { isDefined, removeElement } from "@/utils/helpers";
+import {
+    useComputedClass,
+    useClassProps,
+    useProgrammaticComponent,
+} from "@/composables";
 import type { BindProp, ProgrammaticInstance } from "@/types";
 
 import type { NotifcationProps } from "./index";
@@ -25,18 +28,21 @@ defineOptions({
     isOruga: true,
     name: "ONotificationNotice",
     configField: "notification",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
-    /** Props passed to the internal notification component */
+    /** Whether notification is active or not, use v-model:active to make it two-way binding. */
+    active: { type: Boolean, default: true },
+    /** Props passed to the internal notification component. */
     notification: {
         type: Object as PropType<NotifcationProps>,
         default: () => {},
     },
     /**
-     * Which position the notification will appear when programmatically
+     * Which position the notification will appear when programmatically.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
      */
     position: {
@@ -57,32 +63,17 @@ const props = defineProps({
         type: Number,
         default: () => getOption("notification.duration", 2000),
     },
-    /** Show the Notification indefinitely until it is dismissed */
+    /** Show the Notification indefinitely until it is dismissed. */
     indefinite: { type: Boolean, default: false },
-    /** If should queue with others notices (snackbar/toast/notification) */
+    /** If notice should queue with others notices (snackbar/toast/notification). */
     queue: {
         type: Boolean,
         default: () => getOption("notification.noticeQueue", undefined),
     },
-    /** Callback function to call after close (programmatically close or user canceled) */
-    onClose: { type: Function, default: () => {} },
-    /**
-     * DOM element the toast will be created on.
-     * Note that this also changes the position of the toast from fixed to absolute.
-     * Meaning that the container should be fixed.
-     */
-    container: {
-        type: String,
-        default: () => getOption("notification.containerElement", undefined),
-    },
-    /**
-     * This is used internally for programmatic usage
-     * @ignore
-     */
-    programmatic: {
-        type: Object as PropType<ProgrammaticInstance<typeof this>>,
-        default: undefined,
-    },
+    /** Callback function to call after user canceled (pressed escape / clicked outside). */
+    onCancel: { type: Function as PropType<() => void>, default: () => {} },
+    /** Callback function to call after close (programmatically close or user canceled). */
+    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /**
      * Component to be injected.
      * Close notification within the component by emitting a 'close' event — $emit('close').
@@ -91,10 +82,27 @@ const props = defineProps({
         type: [Object, Function] as PropType<Component>,
         default: undefined,
     },
-    /** Props to be binded to the injected component */
+    /** Props to be binded to the injected component. */
     props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component */
+    /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
+    /**
+     * DOM element the toast will be created on (for programmatic usage).
+     * Note that this also changes the position of the toast from fixed to absolute.
+     * Meaning that the container should be fixed.
+     */
+    container: {
+        type: [HTMLElement, String],
+        default: () => getOption("notification.container", document.body),
+    },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    programmatic: {
+        type: Object as PropType<ProgrammaticInstance<typeof this>>,
+        default: undefined,
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "noticeClass",
@@ -118,9 +126,21 @@ const emits = defineEmits<{
 
 const notificationRef = ref();
 
-const isActive = ref(false);
+/** add programmatic usage to this component */
+const { isActive, close, container } = useProgrammaticComponent(
+    () => notificationRef.value.$el,
+    props,
+    emits,
+    {
+        cancelOptions: getOption("modal.cancelable", [
+            "escape",
+            "x",
+            "outside",
+            "button",
+        ]),
+    },
+);
 
-const domContainer = ref(props.container);
 const parentTop = ref(null);
 const parentBottom = ref(null);
 
@@ -134,32 +154,22 @@ watch(
     },
 );
 
-onBeforeMount(() => setupContainer());
-
-onMounted(() => {
-    if (props.programmatic?.instances) props.programmatic.instances.add(this);
-    showNotice();
-    setAutoClose();
-});
-
 /** Create or inject notice dom container elements. */
-function setupContainer(): void {
+onBeforeMount(() => {
     if (
         rootClasses.value &&
         positionClasses("top") &&
         positionClasses("bottom")
     ) {
-        parentTop.value = document.querySelector(
-            (domContainer.value ? domContainer.value : "body") +
-                `>.${rootClasses.value.join(".")}.${positionClasses("top").join(
-                    ".",
-                )}`,
+        parentTop.value = container.value.querySelector(
+            `&>.${rootClasses.value.join(".")}.${positionClasses("top").join(
+                ".",
+            )}`,
         );
-        parentBottom.value = document.querySelector(
-            (domContainer.value ? domContainer.value : "body") +
-                `>.${rootClasses.value.join(".")}.${positionClasses(
-                    "bottom",
-                ).join(".")}`,
+        parentBottom.value = container.value.querySelector(
+            `&>.${rootClasses.value.join(".")}.${positionClasses("bottom").join(
+                ".",
+            )}`,
         );
 
         if (parentTop.value && parentBottom.value) return;
@@ -178,23 +188,25 @@ function setupContainer(): void {
             )} ${positionClasses("bottom").join(" ")}`;
         }
 
-        const container =
-            document.querySelector(domContainer.value) || document.body;
+        container.value.appendChild(parentTop.value);
+        container.value.appendChild(parentBottom.value);
 
-        container.appendChild(parentTop.value);
-        container.appendChild(parentBottom.value);
-
-        if (domContainer.value) {
-            const classes = noticeCustomContainerClasses.value;
-            if (classes && classes.length) {
-                classes.filter(isDefined).forEach((c: string) => {
+        const classes = noticeCustomContainerClasses.value;
+        if (classes && classes.length) {
+            classes
+                .filter((c) => !!c)
+                .forEach((c: string) => {
                     parentTop.value.classList.add(c);
                     parentBottom.value.classList.add(c);
                 });
-            }
         }
     }
-}
+});
+
+onMounted(() => {
+    showNotice();
+    setAutoClose();
+});
 
 const correctParent = computed(() => {
     switch (props.position) {
@@ -235,31 +247,15 @@ function setAutoClose(): void {
         if (timer.value) clearTimeout(timer.value);
         // set new timer
         timer.value = setTimeout(() => {
-            if (isActive.value) close({ action: "close", method: "timeout" });
+            if (isActive.value)
+                handleClose({ action: "close", method: "timeout" });
         }, props.duration);
     }
 }
 
-function close(...args: any[]): void {
+function handleClose(...args: any[]): void {
     clearTimeout(timer.value);
-    emits("close", ...args);
-    props.onClose.apply(null, args);
-
-    if (props.programmatic) {
-        if (props.programmatic.instances)
-            props.programmatic.instances.remove(this);
-
-        if (props.programmatic.resolve)
-            props.programmatic.resolve.apply(null, args);
-    }
-
-    // Timeout for the animation complete before destroying
-    setTimeout(() => {
-        isActive.value = false;
-        window.requestAnimationFrame(() =>
-            removeElement(notificationRef.value.$el),
-        );
-    }, 150);
+    close(args);
 }
 
 // --- Computed Component Classes ---
@@ -282,7 +278,7 @@ const noticeCustomContainerClasses = computed(() => [
 // --- Expose Public Functionality ---
 
 /** expose close function for programmatic usage */
-defineExpose({ close });
+defineExpose({ close: handleClose });
 </script>
 
 <template>
@@ -291,8 +287,9 @@ defineExpose({ close });
         ref="notificationRef"
         v-model:active="isActive"
         :position="position"
-        @close="close">
-        <template #inner="close">
+        @close="handleClose">
+        <template #inner="{ close }">
+            <!-- injected component for programmatic usage -->
             <component
                 v-bind="props"
                 :is="component"
