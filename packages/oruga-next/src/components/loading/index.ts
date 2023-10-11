@@ -1,4 +1,4 @@
-import type { App, ComponentPropsOptions, Plugin } from "vue";
+import type { App, Plugin } from "vue";
 import { createVNode, render } from "vue";
 
 import Loading from "./Loading.vue";
@@ -11,6 +11,8 @@ import {
 } from "@/utils/plugins";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 
+export type LoadingProps = InstanceType<typeof Loading>["$props"];
+
 declare module "@/types" {
     interface OrugaProgrammatic {
         loading: typeof LoadingProgrammatic;
@@ -22,9 +24,7 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {
-    open(
-        params: Readonly<ComponentPropsOptions>,
-    ): InstanceType<typeof Loading> {
+    open(params: Readonly<LoadingProps>): InstanceType<typeof Loading> {
         const defaultParams = {
             programmatic: { instances },
             active: true,
@@ -40,7 +40,10 @@ const LoadingProgrammatic = {
         const vnode = createVNode(Loading, propsData);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return vnode.component.proxy as InstanceType<typeof Loading>;
+        return {
+            ...vnode.component.proxy,
+            ...vnode.component.exposed,
+        } as InstanceType<typeof Loading>;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.close(...args));

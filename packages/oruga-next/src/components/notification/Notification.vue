@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Component, type PropType, computed } from "vue";
+import { computed, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -85,6 +85,16 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.iconPack", undefined),
     },
+    /** Icon name to use */
+    icon: { type: String, default: undefined },
+    /**
+     * Icon size
+     * @values small, medium, large
+     */
+    iconSize: {
+        type: String,
+        default: () => getOption("notification.iconSize", "large"),
+    },
     /** Add close/delete button to the item that closes the notification*/
     closable: { type: Boolean, default: false },
     /** Close icon name */
@@ -100,25 +110,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.closeIconSize"),
     },
-    /** Icon name to use */
-    icon: { type: String, default: undefined },
-    /**
-     * Icon size
-     * @values small, medium, large
-     */
-    iconSize: { type: String, default: "large" },
-    /**
-     * Component to be injected.
-     * Close notification within the component by emitting a 'close' event — $emit('close').
-     */
-    component: {
-        type: [Object, Function] as PropType<Component>,
-        default: undefined,
-    },
-    /** Props to be binded to the injected component */
-    props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component */
-    events: { type: Object, default: () => ({}) },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -220,12 +211,11 @@ const closeClasses = computed(() => [
                     :size="closeIconSize" />
             </button>
 
-            <component
-                v-bind="props"
-                :is="component"
-                v-if="component"
-                v-on="events"
-                @close="close" />
+            <!--
+                @slot Notification inner content, outside of the message container
+                @binding {close} close function to close the notification
+            -->
+            <slot name="inner" :close="close" />
 
             <div v-if="$slots.default || message" :class="wrapperClasses">
                 <o-icon
@@ -237,12 +227,13 @@ const closeClasses = computed(() => [
                     :size="iconSize"
                     aria-hidden />
                 <div :class="contentClasses">
-                    <span v-if="message" v-html="message" />
                     <!--
-                        @slot Notification default content 
-                            @binding {close} close function to close the notification
-                        -->
-                    <slot v-else :close="close" />
+                        @slot Notification default content, message prop is default
+                        @binding {close} close function to close the notification
+                    -->
+                    <slot :close="close">
+                        <span v-if="message" v-html="message" />
+                    </slot>
                 </div>
             </div>
         </article>

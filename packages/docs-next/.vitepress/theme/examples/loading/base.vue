@@ -6,9 +6,7 @@ const isFullPage = ref(true);
 
 function openLoading() {
     isLoading.value = true;
-    setTimeout(() => {
-        isLoading.value = false;
-    }, 10 * 1000);
+    setTimeout(() => (isLoading.value = false), 10 * 1000);
 }
 </script>
 
@@ -22,9 +20,9 @@ function openLoading() {
                 @click="openLoading" />
         </o-field>
         <o-field>
-            <o-switch v-model="isFullPage">
-                Display loader over full page
-            </o-switch>
+            <o-switch
+                v-model="isFullPage"
+                label="Display loader over full page" />
         </o-field>
         <p style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id
@@ -33,7 +31,8 @@ function openLoading() {
             <o-loading
                 v-model:active="isLoading"
                 :full-page="isFullPage"
-                :can-cancel="true" />
+                label="Loading..."
+                :cancelable="true" />
         </p>
     </section>
 </template>

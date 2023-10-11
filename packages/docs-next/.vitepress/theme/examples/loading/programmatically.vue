@@ -27,9 +27,9 @@ function openLoading() {
                 @click="openLoading" />
         </o-field>
         <o-field>
-            <o-switch v-model="isFullPage">
-                Display loader over full page
-            </o-switch>
+            <o-switch
+                v-model="isFullPage"
+                label="Display loader over full page" />
         </o-field>
         <p ref="elementRef" style="position: relative">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id

@@ -6,6 +6,7 @@ import {
     onBeforeMount,
     type PropType,
     watch,
+    type Component,
 } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
@@ -82,6 +83,18 @@ const props = defineProps({
         type: Object as PropType<ProgrammaticInstance<typeof this>>,
         default: undefined,
     },
+    /**
+     * Component to be injected.
+     * Close notification within the component by emitting a 'close' event — $emit('close').
+     */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component */
+    props: { type: Object, default: undefined },
+    /** Events to be binded to the injected component */
+    events: { type: Object, default: () => ({}) },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "noticeClass",
@@ -243,7 +256,9 @@ function close(...args: any[]): void {
     // Timeout for the animation complete before destroying
     setTimeout(() => {
         isActive.value = false;
-        removeElement(notificationRef.value.$el);
+        window.requestAnimationFrame(() =>
+            removeElement(notificationRef.value.$el),
+        );
     }, 150);
 }
 
@@ -263,6 +278,11 @@ const noticeCustomContainerClasses = computed(() => [
         "o-notices__custom-container",
     ),
 ]);
+
+// --- Expose Public Functionality ---
+
+/** expose close function for programmatic usage */
+defineExpose({ close });
 </script>
 
 <template>
@@ -272,6 +292,14 @@ const noticeCustomContainerClasses = computed(() => [
         v-model:active="isActive"
         :position="position"
         @close="close">
+        <template #inner="close">
+            <component
+                v-bind="props"
+                :is="component"
+                v-if="component"
+                v-on="events"
+                @close="close" />
+        </template>
         <slot />
     </o-notification>
 </template>
