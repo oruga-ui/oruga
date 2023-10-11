@@ -278,6 +278,11 @@ const noticeCustomContainerClasses = computed(() => [
         "o-notices__custom-container",
     ),
 ]);
+
+// --- Expose Public Functionality ---
+
+/** expose close function for programmatic usage */
+defineExpose({ close });
 </script>
 
 <template>
