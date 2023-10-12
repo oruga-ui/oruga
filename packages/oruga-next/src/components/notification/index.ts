@@ -66,10 +66,10 @@ const NotificationProgrammatic = {
         const vnode = createVNode(NotificationNotice, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return {
-            ...vnode.component.proxy,
-            ...vnode.component.exposed,
-        } as InstanceType<typeof NotificationNotice>;
+        // return exposed functionalities
+        return vnode.component.exposed as InstanceType<
+            typeof NotificationNotice
+        >;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.close(...args));

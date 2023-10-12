@@ -54,10 +54,8 @@ const ModalProgrammatic = {
         const vnode = createVNode(Modal, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return {
-            ...vnode.component.proxy,
-            ...vnode.component.exposed,
-        } as InstanceType<typeof Modal>;
+        // return exposed functionalities
+        return vnode.component.exposed as InstanceType<typeof Modal>;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.close(...args));

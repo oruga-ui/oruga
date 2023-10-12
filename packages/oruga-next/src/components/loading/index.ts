@@ -40,10 +40,8 @@ const LoadingProgrammatic = {
         const vnode = createVNode(Loading, propsData);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return {
-            ...vnode.component.proxy,
-            ...vnode.component.exposed,
-        } as InstanceType<typeof Loading>;
+        // return exposed functionalities
+        return vnode.component.exposed as InstanceType<typeof Loading>;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.close(...args));

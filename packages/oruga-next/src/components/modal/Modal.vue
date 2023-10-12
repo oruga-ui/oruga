@@ -144,7 +144,7 @@ const props = defineProps({
      * @ignore
      */
     programmatic: {
-        type: Object as PropType<ProgrammaticInstance<typeof this>>,
+        type: Object as PropType<ProgrammaticInstance<any>>,
         default: undefined,
     },
     // add class props (will not be displayed in the docs)
