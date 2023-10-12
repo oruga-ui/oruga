@@ -132,12 +132,7 @@ const { isActive, close, container } = useProgrammaticComponent(
     props,
     emits,
     {
-        cancelOptions: getOption("modal.cancelable", [
-            "escape",
-            "x",
-            "outside",
-            "button",
-        ]),
+        cancelOptions: ["escape", "x"],
     },
 );
 

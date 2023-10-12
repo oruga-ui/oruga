@@ -55,7 +55,7 @@ const props = defineProps({
         default: () => getOption("modal.animation", "zoom-out"),
     },
     /**
-     * Can close Modal by clicking 'X', pressing escape or clicking outside.
+     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
      * @values escape, x, outside, button, true
      */
     cancelable: {

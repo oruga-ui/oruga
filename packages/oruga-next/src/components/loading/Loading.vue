@@ -38,7 +38,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("loading.animation", "fade"),
     },
-    /** Can cancle Loading by pressing escape or clicking outside. */
+    /** Is Loading cancable by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
     /** Callback function to call after user canceled (pressed escape / clicked outside). */
     onCancel: { type: Function as PropType<() => void>, default: () => {} },
@@ -111,12 +111,7 @@ const { isActive, close, cancel } = useProgrammaticComponent(
     props,
     emits,
     {
-        cancelOptions: getOption("modal.cancelable", [
-            "escape",
-            "x",
-            "outside",
-            "button",
-        ]),
+        cancelOptions: ["escape", "outside"],
     },
 );
 
