@@ -22,6 +22,8 @@ type ProgrammaticProps = {
 export interface ProgrammaticOptions {
     /** Method options that allow the component to be cancelled. */
     cancelOptions?: string[];
+    /** Destroy the component on hide. Default is `true`. */
+    destroyOnHide?: boolean;
 }
 
 /**
@@ -66,11 +68,12 @@ export function useProgrammaticComponent(
             : elementRef.value;
     }
 
-    const container = computed((): HTMLElement => {
-        if (typeof props.container === "string")
-            return document.querySelector<HTMLElement>(props.container);
-        return props.container || document.body;
-    });
+    const container = computed(
+        (): HTMLElement =>
+            typeof props.container === "string"
+                ? document.querySelector<HTMLElement>(props.container)
+                : props.container || document.body,
+    );
 
     onMounted(() => {
         if (props.programmatic) {
@@ -107,9 +110,12 @@ export function useProgrammaticComponent(
         close({ action: "cancel", method });
     }
 
-    /** Emit events, and destroy the component if it's programmatic. */
+    /**
+     * Emit events, and destroy the component if it's programmatic.
+     * Can get called outside of a setup scope.
+     */
     function close(...args: any[]): void {
-        emits("close");
+        vm.emit("close");
         props.onClose.apply(null, args);
 
         if (props.programmatic) {
@@ -121,16 +127,20 @@ export function useProgrammaticComponent(
 
             // Timeout for the animation complete before destroying
             setTimeout(() => {
-                isActive.value = false;
-                window.requestAnimationFrame(() => {
-                    // remove the component from the container or the body tag
-                    const el = getElement();
-                    if (el) removeElement(el);
-                });
+                vm.props.active = false; // set active state of current instance
+                if (
+                    typeof options.destroyOnHide === "undefined" ||
+                    options.destroyOnHide
+                )
+                    window.requestAnimationFrame(() => {
+                        // remove the component from the container or the body tag
+                        const el = getElement();
+                        if (el) removeElement(el);
+                    });
             });
-            return;
+        } else {
+            vm.props.active = false; // set active state of current instance
         }
-        isActive.value = false;
     }
 
     return { close, cancel, isActive, container };
