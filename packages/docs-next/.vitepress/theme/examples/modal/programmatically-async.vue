@@ -40,9 +40,7 @@ const promptModalCloseAll = async () => {
 
     setTimeout(() => oruga.modal.closeAll({ action: "closeAll" }), 3 * 1000);
 
-    // Note utilizing the promise requires Promise be supported by the browser
-    // If you are running Vue 2 on IE 11 this will not be the case unless you
-    // add a polyfill in your build.
+    // wait until the modal got closed
     const result = await instance.promise;
 
     oruga.notification.open({

@@ -75,9 +75,14 @@ const props = defineProps({
      * @ignore
      */
     programmatic: {
-        type: Object as PropType<ProgrammaticInstance<any>>,
+        type: Object as PropType<ProgrammaticInstance>,
         default: undefined,
     },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -91,12 +96,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on loading close event
-     * @param value {any}
+     * on component close event
+     * @param value {any} - close event data
      */
     (e: "close", ...args: any[]): void;
 }>();
@@ -145,16 +150,19 @@ const labelClasses = computed(() => [
 
 // --- Expose Public Functionality ---
 
-/** expose close function for programmatic usage */
-defineExpose({ close });
+/** expose functionalities for programmatic usage */
+defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
     <transition :name="animation">
         <div v-if="isActive" ref="rootRef" :class="rootClasses">
             <div :class="overlayClasses" @click="cancel('outside')" />
-            <!-- @slot Override icon and label -->
-            <slot>
+            <!-- 
+                @slot Override icon and label
+                @binding {close} close - function to close the component
+            -->
+            <slot :close="close">
                 <o-icon
                     :icon="icon"
                     :spin="iconSpin"

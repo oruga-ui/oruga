@@ -52,7 +52,7 @@ title: Modal
 | component     | Component to be injected, used to open a component modal programmatically.<br/>Close modal within the component by emitting a 'close' event — emits('close')                        | Component           | -                                          |                                                                                                                                                          |
 | container     | DOM element where the modal component will be created on (for programmatic usage).<br/>Note that this also changes fullPage to false.                                               | HTMLElement\|string | -                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;container: document.body<br>}</code> |
 | content       | Text content, unnecessary when default slot is used.                                                                                                                                | string              | -                                          |                                                                                                                                                          |
-| destroyOnHide | Destroy modal on hide                                                                                                                                                               | boolean             | -                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;destroyOnHide: true<br>}</code>      |
+| destroyOnHide | Destroy modal on hide                                                                                                                                                               | boolean             | -                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>modal: {<br>&nbsp;&nbsp;destroyOnHide: false<br>}</code>     |
 | events        | Events to be binded to the injected component.                                                                                                                                      | object              | -                                          | <code style='white-space: nowrap; padding: 0;'>{}</code>                                                                                                 |
 | fullScreen    | Display modal as full screen                                                                                                                                                        | boolean             | -                                          | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                              |
 | onCancel      | Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside)                                                                                      | () =&gt; void       | -                                          | Default function (see source code)                                                                                                                       |
@@ -67,13 +67,13 @@ title: Modal
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `any` -                         | on modal close event        |
+| close         | **value** `any` - close event data        | on component close event    |
 
 ### Slots
 
-| Name    | Description                                    | Bindings                                        |
-| ------- | ---------------------------------------------- | ----------------------------------------------- |
-| default | Modal default content, content prop is default | **close** `close` - function to close the modal |
+| Name    | Description                                    | Bindings                                            |
+| ------- | ---------------------------------------------- | --------------------------------------------------- |
+| default | Modal default content, prop content is default | **close** `close` - function to close the component |
 
 </div>
 

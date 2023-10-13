@@ -10,6 +10,7 @@ import {
     registerComponentProgrammatic,
 } from "@/utils/plugins";
 import InstanceRegistry from "@/utils/InstanceRegistry";
+import type { ProgrammaticExpose } from "@/types";
 
 export type LoadingProps = InstanceType<typeof Loading>["$props"];
 
@@ -24,7 +25,9 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {
-    open(params: Readonly<LoadingProps>): InstanceType<typeof Loading> {
+    open(
+        params: Readonly<LoadingProps>,
+    ): InstanceType<typeof Loading> & ProgrammaticExpose {
         const defaultParams = {
             programmatic: { instances },
             active: true,
@@ -41,10 +44,11 @@ const LoadingProgrammatic = {
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         // return exposed functionalities
-        return vnode.component.exposed as InstanceType<typeof Loading>;
+        return vnode.component.proxy as InstanceType<typeof Loading> &
+            ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
-        instances.walk((entry) => entry.close(...args));
+        instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 

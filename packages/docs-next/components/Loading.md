@@ -57,13 +57,13 @@ title: Loading
 | Event name    | Properties                                | Description                 |
 | ------------- | ----------------------------------------- | --------------------------- |
 | update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         | **value** `any` -                         | on loading close event      |
+| close         | **value** `any` - close event data        | on component close event    |
 
 ### Slots
 
-| Name    | Description             | Bindings |
-| ------- | ----------------------- | -------- |
-| default | Override icon and label |          |
+| Name    | Description             | Bindings                                            |
+| ------- | ----------------------- | --------------------------------------------------- |
+| default | Override icon and label | **close** `close` - function to close the component |
 
 </div>
 

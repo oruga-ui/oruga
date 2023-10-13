@@ -1,11 +1,11 @@
-import { computed, onMounted, type Ref } from "vue";
+import { computed, getCurrentInstance, onMounted, type Ref } from "vue";
 import type { ProgrammaticInstance } from "..";
 import { isClient } from "@/utils/ssr";
 import { usePropBinding } from "./usePropValue";
 import { useEventListener } from "./useEventListener";
 import { removeElement } from "@/utils/helpers";
 
-type ProgrammaticProps<T> = {
+type ProgrammaticProps = {
     active: boolean;
     /** Define if the component is cancelable at all or by specific events. */
     cancelable?: boolean | string[];
@@ -16,7 +16,7 @@ type ProgrammaticProps<T> = {
     /** DOM element where the programmatic component will be mounted on. */
     container?: HTMLElement | string;
     /** This defines the programmatic usage. */
-    programmatic?: ProgrammaticInstance<T>;
+    programmatic?: ProgrammaticInstance;
 };
 
 export interface ProgrammaticOptions {
@@ -34,15 +34,22 @@ export interface ProgrammaticOptions {
  * @param emits ["update:active", "close"]
  * @param options
  */
-export function useProgrammaticComponent<T>(
+export function useProgrammaticComponent(
     elementRef: Ref<HTMLElement> | (() => HTMLElement),
-    props: ProgrammaticProps<T>,
+    props: ProgrammaticProps,
     emits: {
         (e: "update:active", value: boolean): void;
         (e: "close", ...args: any[]): void;
     },
     options: ProgrammaticOptions = { cancelOptions: ["escape", "outside"] },
 ) {
+    // getting a hold of the internal instance in setup()
+    const vm = getCurrentInstance();
+    if (!vm)
+        throw new Error(
+            "useProgrammaticComponent must be called within a component setup function.",
+        );
+
     const isActive = usePropBinding("active", props, emits);
 
     const cancelOptions = computed(() =>
@@ -68,11 +75,12 @@ export function useProgrammaticComponent<T>(
     onMounted(() => {
         if (props.programmatic) {
             if (props.programmatic.instances) {
-                props.programmatic.instances.add(this);
+                props.programmatic.instances.add(vm);
             }
             // Insert the component in the container or the body tag
             // only if it's programmatic
-            container.value.appendChild(getElement());
+            const el = getElement();
+            container.value.appendChild(el);
 
             isActive.value = true;
         }
@@ -106,7 +114,7 @@ export function useProgrammaticComponent<T>(
 
         if (props.programmatic) {
             if (props.programmatic.instances)
-                props.programmatic.instances.remove(this);
+                props.programmatic.instances.remove(vm);
 
             if (props.programmatic.resolve)
                 props.programmatic.resolve.apply(null, args);
@@ -114,12 +122,15 @@ export function useProgrammaticComponent<T>(
             // Timeout for the animation complete before destroying
             setTimeout(() => {
                 isActive.value = false;
-                window.requestAnimationFrame(() =>
+                window.requestAnimationFrame(() => {
                     // remove the component from the container or the body tag
-                    removeElement(getElement()),
-                );
+                    const el = getElement();
+                    if (el) removeElement(el);
+                });
             });
-        } else isActive.value = false;
+            return;
+        }
+        isActive.value = false;
     }
 
     return { close, cancel, isActive, container };

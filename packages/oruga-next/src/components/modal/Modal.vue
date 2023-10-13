@@ -99,7 +99,7 @@ const props = defineProps({
     /** Destroy modal on hide */
     destroyOnHide: {
         type: Boolean,
-        default: () => getOption("modal.destroyOnHide", true),
+        default: () => getOption("modal.destroyOnHide", false),
     },
     /** Automatically focus modal when active */
     autoFocus: {
@@ -144,9 +144,14 @@ const props = defineProps({
      * @ignore
      */
     programmatic: {
-        type: Object as PropType<ProgrammaticInstance<any>>,
+        type: Object as PropType<ProgrammaticInstance>,
         default: undefined,
     },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -163,12 +168,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on modal close event
-     * @param value {any}
+     * on component close event
+     * @param value {any} - close event data
      */
     (e: "close", ...args: any[]): void;
 }>();
@@ -195,15 +200,16 @@ const { isMobile } = useMatchMedia();
 const savedScrollTop = ref(null);
 const modalWidth = ref(toCssDimension(props.width));
 const animating = ref(!props.active);
-const isDestroyed = ref(!props.active); // mark the modal as destoyed after it get closed
+const isDestroyed = ref(false); // mark the modal as destoyed after it get closed
 
 watch(isActive, (value) => {
-    // mark the modal as destoyed after it get closed
-    if (value && props.destroyOnHide) isDestroyed.value = false;
     handleScroll();
-    nextTick(() => {
-        if (value && rootRef.value && props.autoFocus) rootRef.value.focus();
-    });
+    if (value && rootRef.value && props.autoFocus)
+        nextTick(() => rootRef.value.focus());
+    // mark the modal as destoyed after it get closed
+    if (!value && props.destroyOnHide)
+        // wait for transition finish
+        setTimeout(() => (isDestroyed.value = true));
 });
 
 const showX = computed(() =>
@@ -239,8 +245,8 @@ function handleScroll(): void {
             if (isActive.value)
                 document.documentElement.classList.add(scrollClass.value);
             else document.documentElement.classList.remove(scrollClass.value);
-            return;
         }
+        return;
     }
 
     savedScrollTop.value = savedScrollTop.value
@@ -302,11 +308,13 @@ const scrollClass = computed(() =>
         ? useComputedClass("scrollClipClass", "o-clipped")
         : useComputedClass("noScrollClass", "o-noscroll"),
 );
+// computed ref must be computed at least once for programmatic usage
+scrollClass.value;
 
 // --- Expose Public Functionality ---
 
-/** expose close function for programmatic usage */
-defineExpose({ close });
+/** expose functionalities for programmatic usage */
+defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
@@ -328,14 +336,14 @@ defineExpose({ close });
             <div :class="contentClasses" :style="customStyle">
                 <!-- injected component for programmatic usage -->
                 <component
-                    v-bind="props"
+                    v-bind="$props.props"
                     :is="component"
                     v-if="component"
-                    v-on="events"
+                    v-on="$props.events"
                     @close="close" />
                 <!--
-                    @slot Modal default content, content prop is default
-                    @binding {close} close function to close the modal
+                    @slot Modal default content, prop content is default
+                    @binding {close} close - function to close the component
                 -->
                 <slot v-else :close="close">
                     <div v-if="content">{{ content }}</div>

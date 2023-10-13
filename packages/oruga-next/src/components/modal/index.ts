@@ -10,6 +10,7 @@ import {
     registerComponentProgrammatic,
 } from "@/utils/plugins";
 import InstanceRegistry from "@/utils/InstanceRegistry";
+import type { ProgrammaticExpose } from "@/types";
 
 export type ModalProps = InstanceType<typeof Modal>["$props"];
 
@@ -24,7 +25,9 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Modal>();
 
 const ModalProgrammatic = {
-    open(params: Readonly<string | ModalProps>): InstanceType<typeof Modal> {
+    open(
+        params: Readonly<string | ModalProps>,
+    ): InstanceType<typeof Modal> & ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
@@ -55,10 +58,11 @@ const ModalProgrammatic = {
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         // return exposed functionalities
-        return vnode.component.exposed as InstanceType<typeof Modal>;
+        return vnode.component.proxy as InstanceType<typeof Modal> &
+            ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
-        instances.walk((entry) => entry.close(...args));
+        instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 

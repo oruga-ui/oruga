@@ -13,6 +13,7 @@ import {
 import type { ProgrammaticInstance } from "@/types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
+import type { ProgrammaticExpose } from "@/types";
 
 export type NotifcationProps = InstanceType<typeof Notification>["$props"];
 export type NotifcationNoticeProps = InstanceType<
@@ -32,7 +33,7 @@ const instances = new InstanceRegistry<typeof NotificationNotice>();
 const NotificationProgrammatic = {
     open(
         params: Readonly<string | (NotifcationNoticeProps & NotifcationProps)>,
-    ): InstanceType<typeof NotificationNotice> {
+    ): InstanceType<typeof NotificationNotice> & ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
@@ -67,12 +68,13 @@ const NotificationProgrammatic = {
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         // return exposed functionalities
-        return vnode.component.exposed as InstanceType<
+        return vnode.component.proxy as InstanceType<
             typeof NotificationNotice
-        >;
+        > &
+            ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
-        instances.walk((entry) => entry.close(...args));
+        instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 

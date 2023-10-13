@@ -100,9 +100,14 @@ const props = defineProps({
      * @ignore
      */
     programmatic: {
-        type: Object as PropType<ProgrammaticInstance<any>>,
+        type: Object as PropType<ProgrammaticInstance>,
         default: undefined,
     },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "noticeClass",
@@ -114,12 +119,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on notification close event
-     * @param value {any}
+     * on component close event
+     * @param value {any} - close event data
      */
     (e: "close", ...args: any[]): void;
 }>();
@@ -250,7 +255,7 @@ function setAutoClose(): void {
 
 function handleClose(...args: any[]): void {
     clearTimeout(timer.value);
-    close(args);
+    close(...args);
 }
 
 // --- Computed Component Classes ---
@@ -272,8 +277,8 @@ const noticeCustomContainerClasses = computed(() => [
 
 // --- Expose Public Functionality ---
 
-/** expose close function for programmatic usage */
-defineExpose({ close: handleClose });
+/** expose functionalities for programmatic usage */
+defineExpose({ close: handleClose, promise: props.promise });
 </script>
 
 <template>
@@ -286,10 +291,10 @@ defineExpose({ close: handleClose });
         <template #inner="{ close }">
             <!-- injected component for programmatic usage -->
             <component
-                v-bind="props"
+                v-bind="$props.props"
                 :is="component"
                 v-if="component"
-                v-on="events"
+                v-on="$props.events"
                 @close="close" />
         </template>
         <slot />
