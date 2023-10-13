@@ -95,7 +95,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.iconSize", "large"),
     },
-    /** Add close button to the item that closes the notification*/
+    /** Add close button to the item that closes the notification */
     closable: { type: Boolean, default: false },
     /** Close icon name */
     closeIcon: {
