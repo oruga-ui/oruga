@@ -319,11 +319,11 @@ defineExpose({ close, promise: props.promise });
 
 <template>
     <transition
+        v-if="!isDestroyed"
         :name="animation"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
         <div
-            v-if="!isDestroyed"
             v-show="isActive"
             ref="rootRef"
             v-trap-focus="trapFocus"
