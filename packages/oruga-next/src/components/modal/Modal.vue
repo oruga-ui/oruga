@@ -19,7 +19,7 @@ import {
     useProgrammaticComponent,
 } from "@/composables";
 import { vTrapFocus } from "../../directives/trapFocus";
-import { toCssDimension } from "../../utils/helpers";
+import { removeElement, toCssDimension } from "../../utils/helpers";
 import { isClient } from "@/utils/ssr";
 import type { ProgrammaticInstance } from "@/types";
 import { nextTick } from "process";
@@ -200,7 +200,6 @@ const { isMobile } = useMatchMedia();
 const savedScrollTop = ref(null);
 const modalWidth = ref(toCssDimension(props.width));
 const animating = ref(!props.active);
-const isDestroyed = ref(false); // mark the modal as destoyed after it get closed
 
 watch(isActive, (value) => {
     handleScroll();
@@ -209,7 +208,7 @@ watch(isActive, (value) => {
     // mark the modal as destoyed after it get closed
     if (!value && props.destroyOnHide)
         // wait for transition finish
-        setTimeout(() => (isDestroyed.value = true));
+        setTimeout(() => removeElement(rootRef.value));
 });
 
 const showX = computed(() =>
@@ -319,7 +318,6 @@ defineExpose({ close, promise: props.promise });
 
 <template>
     <transition
-        v-if="!isDestroyed"
         :name="animation"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
