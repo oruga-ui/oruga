@@ -51,6 +51,7 @@ const NotificationProgrammatic = {
             programmatic: { instances } as ProgrammaticInstance<
                 typeof NotificationNotice
             >,
+            active: true, // set the active state to true
             position: getOption("notification.position", "top-right"),
         };
 
