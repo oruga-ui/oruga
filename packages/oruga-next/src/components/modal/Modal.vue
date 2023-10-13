@@ -155,6 +155,7 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
+        "activeClass",
         "overlayClass",
         "contentClass",
         "closeClass",
@@ -186,6 +187,7 @@ const { isActive, close, cancel } = useProgrammaticComponent(
     props,
     emits,
     {
+        destroyOnHide: props.destroyOnHide,
         cancelOptions: getOption("modal.cancelable", [
             "escape",
             "x",
@@ -283,6 +285,9 @@ const rootClasses = computed(() => [
     useComputedClass("rootClass", "o-modal"),
     {
         [useComputedClass("mobileClass", "o-modal--mobile")]: isMobile.value,
+    },
+    {
+        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
     },
 ]);
 

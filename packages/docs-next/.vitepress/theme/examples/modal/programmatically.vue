@@ -13,6 +13,7 @@ function imageModal() {
     ]);
     oruga.modal.open({
         content: [vnode],
+        destroyOnHide: true,
     });
 }
 
@@ -20,6 +21,7 @@ function cardModal() {
     oruga.modal.open({
         component: ModalForm,
         trapFocus: true,
+        destroyOnHide: false,
     });
 }
 </script>
