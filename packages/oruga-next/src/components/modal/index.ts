@@ -25,9 +25,7 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Modal>();
 
 const ModalProgrammatic = {
-    open(
-        params: Readonly<string | ModalProps>,
-    ): InstanceType<typeof Modal> & ProgrammaticExpose {
+    open(params: Readonly<string | ModalProps>): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
@@ -58,8 +56,7 @@ const ModalProgrammatic = {
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         // return exposed functionalities
-        return vnode.component.proxy as InstanceType<typeof Modal> &
-            ProgrammaticExpose;
+        return vnode.component.exposed as ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.exposed.close(...args));

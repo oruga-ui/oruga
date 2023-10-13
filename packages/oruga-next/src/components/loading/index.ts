@@ -25,9 +25,7 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {
-    open(
-        params: Readonly<LoadingProps>,
-    ): InstanceType<typeof Loading> & ProgrammaticExpose {
+    open(params: Readonly<LoadingProps>): ProgrammaticExpose {
         const defaultParams = {
             programmatic: { instances },
             active: true,
@@ -44,8 +42,7 @@ const LoadingProgrammatic = {
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
         // return exposed functionalities
-        return vnode.component.proxy as InstanceType<typeof Loading> &
-            ProgrammaticExpose;
+        return vnode.component.exposed as ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
         instances.walk((entry) => entry.exposed.close(...args));
