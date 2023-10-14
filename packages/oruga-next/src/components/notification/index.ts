@@ -56,7 +56,7 @@ const NotificationProgrammatic = {
         };
 
         const propsData = merge(defaultParams, componentParams);
-        propsData.notification = Object.assign({}, propsData);
+        propsData.notification = Object.assign({}, componentParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;

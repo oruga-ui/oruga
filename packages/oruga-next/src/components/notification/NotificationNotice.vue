@@ -191,14 +191,16 @@ onBeforeMount(() => {
         container.value.appendChild(parentTop.value);
         container.value.appendChild(parentBottom.value);
 
-        const classes = noticeCustomContainerClasses.value;
-        if (classes && classes.length) {
-            classes
-                .filter((c) => !!c)
-                .forEach((c: string) => {
-                    parentTop.value.classList.add(c);
-                    parentBottom.value.classList.add(c);
-                });
+        if (container.value.tagName !== "BODY") {
+            const classes = noticeCustomContainerClasses.value;
+            if (classes && classes.length) {
+                classes
+                    .filter((c) => !!c)
+                    .forEach((c: string) => {
+                        parentTop.value.classList.add(c);
+                        parentBottom.value.classList.add(c);
+                    });
+            }
         }
     }
 });
