@@ -92,8 +92,8 @@ const props = defineProps({
      * Meaning that the container should be fixed.
      */
     container: {
-        type: [HTMLElement, String],
-        default: () => getOption("notification.container", document.body),
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("notification.container", "body"),
     },
     /**
      * This is used internally for programmatic usage.

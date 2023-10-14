@@ -1,6 +1,6 @@
 import { computed, getCurrentInstance, onMounted, type Ref } from "vue";
 import type { ProgrammaticInstance } from "..";
-import { isClient } from "@/utils/ssr";
+import { isClient, HTMLElement } from "@/utils/ssr";
 import { usePropBinding } from "./usePropValue";
 import { useEventListener } from "./useEventListener";
 import { removeElement } from "@/utils/helpers";
@@ -14,7 +14,7 @@ type ProgrammaticProps = {
     /** Callback function to call after close (programmatically close or user canceled). */
     onClose: (...args: any[]) => void;
     /** DOM element where the programmatic component will be mounted on. */
-    container?: HTMLElement | string;
+    container?: string | HTMLElement;
     /** This defines the programmatic usage. */
     programmatic?: ProgrammaticInstance;
 };
@@ -72,7 +72,7 @@ export function useProgrammaticComponent(
         (): HTMLElement =>
             typeof props.container === "string"
                 ? document.querySelector<HTMLElement>(props.container)
-                : props.container || document.body,
+                : (props.container as HTMLElement) || document.body,
     );
 
     onMounted(() => {

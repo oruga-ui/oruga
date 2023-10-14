@@ -136,8 +136,8 @@ const props = defineProps({
      * Note that this also changes fullPage to false.
      */
     container: {
-        type: [HTMLElement, String],
-        default: () => getOption("modal.container", document.body),
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("modal.container", "body"),
     },
     /**
      * This is used internally for programmatic usage.
