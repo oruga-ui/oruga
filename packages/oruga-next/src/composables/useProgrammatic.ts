@@ -103,7 +103,6 @@ export function useProgrammaticComponent(
      * @param method Cancel method
      */
     function cancel(method: string): void {
-        console.log("cancel", method, isActive.value);
         if (!props.cancelable || !isActive.value) return;
         // check if method is in options
         if (cancelOptions.value.indexOf(method) < 0) return;

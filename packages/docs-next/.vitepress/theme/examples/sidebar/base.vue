@@ -17,7 +17,7 @@ const right = ref(false);
             <o-switch v-model="right" label="Right" />
         </o-field>
 
-        <o-button label="Show" @click="() => (active = true)" />
+        <o-button label="Show" @click="active = true" />
 
         <o-sidebar
             v-slot="{ close }"
