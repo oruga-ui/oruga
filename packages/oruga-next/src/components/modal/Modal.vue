@@ -1,366 +1,324 @@
-<script lang="ts">
-import { defineComponent, type Component, type PropType } from "vue";
-
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
-
-import trapFocus from "../../directives/trapFocus";
+<script setup lang="ts">
 import {
-    removeElement,
-    getValueByPath,
-    toCssDimension,
-} from "../../utils/helpers";
-import { getOptions } from "../../utils/config";
+    ref,
+    computed,
+    watch,
+    onBeforeUnmount,
+    type Component,
+    type PropType,
+} from "vue";
 
-import Icon from "../icon/Icon.vue";
+import OIcon from "../icon/Icon.vue";
+
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useComputedClass,
+    useClassProps,
+    useMatchMedia,
+    useProgrammaticComponent,
+} from "@/composables";
+import { vTrapFocus } from "../../directives/trapFocus";
+import { removeElement, toCssDimension } from "../../utils/helpers";
+import { isClient } from "@/utils/ssr";
+import type { ProgrammaticInstance } from "@/types";
+import { nextTick } from "process";
 
 /**
  * Classic modal overlay to include any content you may need
  * @displayName Modal
  * @style _modal.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OModal",
-    components: {
-        [Icon.name]: Icon,
-    },
     configField: "modal",
-    directives: {
-        trapFocus,
-    },
-    mixins: [BaseComponentMixin, MatchMediaMixin],
-    props: {
-        /** Whether modal is active or not, use v-model:active to make it two-way binding */
-        active: Boolean,
-        /** Component to be injected, used to open a component modal programmatically. Close modal within the component by emitting a 'close' event — this.$emit('close') */
-        component: [Object, Function] as PropType<Component>,
-        /** Text content */
-        content: String,
-        /** @ignore */
-        programmatic: Object,
-        /** @ignore */
-        promise: Promise,
-        /** Props to be binded to the injected component */
-        props: Object,
-        /** Events to be binded to the injected component */
-        events: Object,
-        /** Width of the Modal */
-        width: {
-            type: [String, Number],
-            default: () => {
-                return getValueByPath(getOptions(), "modal.width", 960);
-            },
-        },
-        /** Custom animation (transition name) */
-        animation: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "modal.animation",
-                    "zoom-out",
-                );
-            },
-        },
-        /**
-         * Can close Modal by clicking 'X', pressing escape or clicking outside
-         * @values escape, x, outside, button
-         */
-        canCancel: {
-            type: [Array, Boolean],
-            default: () => {
-                return getValueByPath(getOptions(), "modal.canCancel", [
-                    "escape",
-                    "x",
-                    "outside",
-                    "button",
-                ]);
-            },
-        },
-        /** Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside) */
-        onCancel: {
-            type: Function,
-            default: () => {},
-        },
-        /** Callback function to call after close (programmatically close or user canceled) */
-        onClose: {
-            type: Function,
-            default: () => {},
-        },
-        /**
-         * clip to remove the body scrollbar, keep to have a non scrollable scrollbar to avoid shifting background, but will set body to position fixed, might break some layouts
-         * @values keep, clip
-         */
-        scroll: {
-            type: String,
-            default: () => {
-                return getValueByPath(getOptions(), "modal.scroll", "keep");
-            },
-        },
-        /** Display modal as full screen */
-        fullScreen: Boolean,
-        /** Trap focus inside the modal. */
-        trapFocus: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "modal.trapFocus", true);
-            },
-        },
-        ariaRole: {
-            type: String,
-            validator: (value: string) => {
-                return ["dialog", "alertdialog"].indexOf(value) >= 0;
-            },
-        },
-        ariaModal: Boolean,
-        ariaLabel: String,
-        /** Destroy modal on hide */
-        destroyOnHide: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "modal.destroyOnHide",
-                    true,
-                );
-            },
-        },
-        /** Automatically focus modal when active */
-        autoFocus: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "modal.autoFocus", true);
-            },
-        },
-        /** Icon name */
-        closeIcon: {
-            type: String,
-            default: () => {
-                return getValueByPath(getOptions(), "modal.closeIcon", "close");
-            },
-        },
-        closeIconSize: {
-            type: String,
-            default: "medium",
-        },
-        rootClass: [String, Function, Array],
-        overlayClass: [String, Function, Array],
-        contentClass: [String, Function, Array],
-        closeClass: [String, Function, Array],
-        fullScreenClass: [String, Function, Array],
-        mobileClass: [String, Function, Array],
-        scrollClipClass: [String, Function, Array],
-        noScrollClass: [String, Function, Array],
-    },
-    emits: ["update:active", "close"],
-    data() {
-        return {
-            isActive: this.active || false,
-            savedScrollTop: null,
-            newWidth: toCssDimension(this.width),
-            animating: !this.active,
-            destroyed: !this.active,
-        };
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-modal"),
-                {
-                    [this.computedClass("mobileClass", "o-modal--mobile")]:
-                        this.isMatchMedia,
-                },
-            ];
-        },
-        overlayClasses() {
-            return [this.computedClass("overlayClass", "o-modal__overlay")];
-        },
-        contentClasses() {
-            return [
-                this.computedClass("contentClass", "o-modal__content"),
-                {
-                    [this.computedClass(
-                        "fullScreenClass",
-                        "o-modal__content--full-screen",
-                    )]: this.fullScreen,
-                },
-            ];
-        },
-        closeClasses() {
-            return [this.computedClass("closeClass", "o-modal__close")];
-        },
-        scrollClass() {
-            if (this.scroll === "clip") {
-                return this.computedClass("scrollClipClass", "o-clipped");
-            }
-            return this.computedClass("noScrollClass", "o-noscroll");
-        },
-        cancelOptions() {
-            return typeof this.canCancel === "boolean"
-                ? this.canCancel
-                    ? getValueByPath(getOptions(), "modal.canCancel", [
-                          "escape",
-                          "x",
-                          "outside",
-                          "button",
-                      ])
-                    : []
-                : this.canCancel;
-        },
-        showX() {
-            return this.cancelOptions.indexOf("x") >= 0;
-        },
-        customStyle() {
-            if (!this.fullScreen) {
-                return { maxWidth: this.newWidth };
-            }
-            return null;
-        },
-    },
-    watch: {
-        active(value) {
-            this.isActive = value;
-        },
-        isActive(value) {
-            if (value) this.destroyed = false;
-            this.handleScroll();
-            this.$nextTick(() => {
-                if (value && this.$el && this.$el.focus && this.autoFocus) {
-                    this.$el.focus();
-                }
-            });
-        },
-    },
-    created() {
-        if (typeof window !== "undefined") {
-            document.addEventListener("keyup", this.keyPress);
-        }
-    },
-    mounted() {
-        if (this.programmatic) {
-            if (this.programmatic.instances) {
-                this.programmatic.instances.add(this);
-            }
-            // Insert the Modal component in body tag
-            // only if it's programmatic
-            document.body.appendChild(this.$el);
-            this.isActive = true;
-        } else if (this.isActive) this.handleScroll();
-    },
-    beforeUnmount() {
-        if (typeof window !== "undefined") {
-            document.removeEventListener("keyup", this.keyPress);
-            // reset scroll
-            const savedScrollTop = !this.savedScrollTop
-                ? document.documentElement.scrollTop
-                : this.savedScrollTop;
-            if (this.scrollClass) {
-                document.body.classList.remove(this.scrollClass);
-                document.documentElement.classList.remove(this.scrollClass);
-            }
-            document.documentElement.scrollTop = savedScrollTop;
-            document.body.style.top = null;
-        }
-    },
-    methods: {
-        handleScroll() {
-            if (typeof window === "undefined") return;
-
-            if (this.scroll === "clip") {
-                if (this.scrollClass) {
-                    if (this.isActive) {
-                        document.documentElement.classList.add(
-                            this.scrollClass,
-                        );
-                    } else {
-                        document.documentElement.classList.remove(
-                            this.scrollClass,
-                        );
-                    }
-                    return;
-                }
-            }
-
-            this.savedScrollTop = !this.savedScrollTop
-                ? document.documentElement.scrollTop
-                : this.savedScrollTop;
-
-            if (this.scrollClass) {
-                if (this.isActive) {
-                    document.body.classList.add(this.scrollClass);
-                } else {
-                    document.body.classList.remove(this.scrollClass);
-                }
-            }
-
-            if (this.isActive) {
-                document.body.style.top = `-${this.savedScrollTop}px`;
-                return;
-            }
-
-            document.documentElement.scrollTop = this.savedScrollTop;
-            document.body.style.top = null;
-            this.savedScrollTop = null;
-        },
-
-        /**
-         * Close the Modal if canCancel and call the onCancel prop (function).
-         */
-        cancel(method) {
-            if (this.cancelOptions.indexOf(method) < 0) return;
-
-            this.onCancel.apply(null);
-            this.close({ action: "cancel", method });
-        },
-
-        /**
-         * Emit events, and destroy modal if it's programmatic.
-         */
-        close(...args: any[]) {
-            this.isActive = false;
-            if (this.destroyOnHide) {
-                this.destroyed = true;
-            }
-            this.$emit("update:active", false);
-            this.onClose.apply(null, args);
-
-            // Waiting for the animation complete before destroying
-            if (this.programmatic) {
-                if (this.programmatic.instances) {
-                    this.programmatic.instances.remove(this);
-                }
-                if (this.programmatic.resolve) {
-                    this.programmatic.resolve.apply(null, args);
-                }
-                window.requestAnimationFrame(() => {
-                    removeElement(this.$el);
-                });
-            }
-        },
-
-        /**
-         * Keypress event that is bound to the document.
-         */
-        keyPress({ key }) {
-            if (this.isActive && (key === "Escape" || key === "Esc"))
-                this.cancel("escape");
-        },
-
-        /**
-         * Transition after-enter hook
-         */
-        afterEnter() {
-            this.animating = false;
-        },
-
-        /**
-         * Transition before-leave hook
-         */
-        beforeLeave() {
-            this.animating = true;
-        },
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Whether modal is active or not, use v-model:active to make it two-way binding. */
+    active: { type: Boolean, default: false },
+    /** Display modal as full screen */
+    fullScreen: { type: Boolean, default: false },
+    /** Text content, unnecessary when default slot is used. */
+    content: { type: String, default: undefined },
+    /** Width of the Modal */
+    width: {
+        type: [String, Number],
+        default: () => getOption("modal.width", 960),
+    },
+    /** Custom animation (transition name) */
+    animation: {
+        type: String,
+        default: () => getOption("modal.animation", "zoom-out"),
+    },
+    /**
+     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
+     * @values escape, x, outside, button, true
+     */
+    cancelable: {
+        type: [Array, Boolean] as PropType<string[] | boolean>,
+        default: () =>
+            getOption("modal.cancelable", ["escape", "x", "outside", "button"]),
+    },
+    /** Callback function to call after user canceled (clicked 'X' / pressed escape / clicked outside) */
+    onCancel: { type: Function as PropType<() => void>, default: () => {} },
+    /** Callback function to call after close (programmatically close or user canceled) */
+    onClose: { type: Function as PropType<() => void>, default: () => {} },
+    /**
+     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+     * but will set body to position fixed, might break some layouts.
+     * @values keep, clip
+     */
+    scroll: {
+        type: String,
+        default: () => getOption("modal.scroll", "keep"),
+        validator: (value: string) => ["keep", "clip"].indexOf(value) >= 0,
+    },
+    /** Trap focus inside the modal. */
+    trapFocus: {
+        type: Boolean,
+        default: () => getOption("modal.trapFocus", true),
+    },
+    /**
+     * Role attribute to be passed to the div wrapper for better accessibility.
+     * @values dialog, alertdialog
+     */
+    ariaRole: {
+        type: String,
+        default: () => getOption("modal.ariaRole"),
+        validator: (value: string) =>
+            ["dialog", "alertdialog"].indexOf(value) >= 0,
+    },
+    /** Accessibility aria-modal to be passed to the div wrapper element. */
+    ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
+    /** Accessibility aria-labelto to be passed to the div wrapper element. */
+    ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
+    /** Destroy modal on hide */
+    destroyOnHide: {
+        type: Boolean,
+        default: () => getOption("modal.destroyOnHide", false),
+    },
+    /** Automatically focus modal when active */
+    autoFocus: {
+        type: Boolean,
+        default: () => getOption("modal.autoFocus", true),
+    },
+    /** Close icon name */
+    closeIcon: {
+        type: String,
+        default: () => getOption("modal.closeIcon", "close"),
+    },
+    /**
+     * Size of close icon
+     * @values small, medium, large
+     */
+    closeIconSize: {
+        type: String,
+        default: () => getOption("modal.closeIconSize", "medium"),
+    },
+    /**
+     * Component to be injected, used to open a component modal programmatically.
+     * Close modal within the component by emitting a 'close' event — emits('close')
+     */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component. */
+    props: { type: Object, default: undefined },
+    /** Events to be binded to the injected component. */
+    events: { type: Object, default: () => ({}) },
+    /**
+     * DOM element where the modal component will be created on (for programmatic usage).
+     * Note that this also changes fullPage to false.
+     */
+    container: {
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("modal.container", "body"),
+    },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    programmatic: {
+        type: Object as PropType<ProgrammaticInstance>,
+        default: undefined,
+    },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "activeClass",
+        "overlayClass",
+        "contentClass",
+        "closeClass",
+        "fullScreenClass",
+        "mobileClass",
+        "scrollClipClass",
+        "noScrollClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * active prop two-way binding
+     * @param value {boolean} - updated active prop
+     */
+    (e: "update:active", value: boolean): void;
+    /**
+     * on component close event
+     * @param value {any} - close event data
+     */
+    (e: "close", ...args: any[]): void;
+}>();
+
+const rootRef = ref();
+
+/** add programmatic usage to this component */
+const { isActive, close, cancel } = useProgrammaticComponent(
+    rootRef,
+    props,
+    emits,
+    {
+        destroyOnHide: props.destroyOnHide,
+        cancelOptions: getOption("modal.cancelable", [
+            "escape",
+            "x",
+            "outside",
+            "button",
+        ]),
+    },
+);
+
+const { isMobile } = useMatchMedia();
+
+const savedScrollTop = ref(null);
+const modalWidth = ref(toCssDimension(props.width));
+const animating = ref(!props.active);
+
+watch(isActive, (value) => {
+    handleScroll();
+    if (value && rootRef.value && props.autoFocus)
+        nextTick(() => rootRef.value.focus());
+    // mark the modal as destoyed after it get closed
+    if (!value && props.destroyOnHide)
+        // wait for transition finish
+        setTimeout(() => removeElement(rootRef.value));
+});
+
+const showX = computed(() =>
+    Array.isArray(props.cancelable)
+        ? props.cancelable.indexOf("x") >= 0
+        : props.cancelable,
+);
+
+const customStyle = computed(() =>
+    !props.fullScreen ? { maxWidth: modalWidth.value } : null,
+);
+
+onBeforeUnmount(() => {
+    if (isClient) {
+        // reset scroll
+        const scrollto = savedScrollTop.value
+            ? savedScrollTop.value
+            : document.documentElement.scrollTop;
+        if (scrollClass.value) {
+            document.body.classList.remove(scrollClass.value);
+            document.documentElement.classList.remove(scrollClass.value);
+        }
+        document.documentElement.scrollTop = scrollto;
+        document.body.style.top = null;
+    }
+});
+
+function handleScroll(): void {
+    if (!isClient) return;
+
+    if (props.scroll === "clip") {
+        if (scrollClass.value) {
+            if (isActive.value)
+                document.documentElement.classList.add(scrollClass.value);
+            else document.documentElement.classList.remove(scrollClass.value);
+        }
+        return;
+    }
+
+    savedScrollTop.value = savedScrollTop.value
+        ? savedScrollTop.value
+        : document.documentElement.scrollTop;
+
+    if (scrollClass.value) {
+        if (isActive.value) document.body.classList.add(scrollClass.value);
+        else document.body.classList.remove(scrollClass.value);
+    }
+
+    if (isActive.value) {
+        document.body.style.top = `-${savedScrollTop.value}px`;
+        return;
+    }
+
+    document.documentElement.scrollTop = savedScrollTop.value;
+    document.body.style.top = null;
+    savedScrollTop.value = null;
+}
+
+/** Transition after-enter hook */
+function afterEnter(): void {
+    animating.value = false;
+}
+
+/** Transition before-leave hook */
+function beforeLeave(): void {
+    animating.value = true;
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-modal"),
+    {
+        [useComputedClass("mobileClass", "o-modal--mobile")]: isMobile.value,
+    },
+    {
+        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
+    },
+]);
+
+const overlayClasses = computed(() => [
+    useComputedClass("overlayClass", "o-modal__overlay"),
+]);
+
+const contentClasses = computed(() => [
+    useComputedClass("contentClass", "o-modal__content"),
+    {
+        [useComputedClass("fullScreenClass", "o-modal__content--full-screen")]:
+            props.fullScreen,
+    },
+]);
+
+const closeClasses = computed(() => [
+    useComputedClass("closeClass", "o-modal__close"),
+]);
+
+const scrollClass = computed(() =>
+    props.scroll === "clip"
+        ? useComputedClass("scrollClipClass", "o-clipped")
+        : useComputedClass("noScrollClass", "o-noscroll"),
+);
+// computed ref must be computed at least once for programmatic usage
+scrollClass.value;
+
+// --- Expose Public Functionality ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
@@ -369,8 +327,8 @@ export default defineComponent({
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
         <div
-            v-if="!destroyed"
             v-show="isActive"
+            ref="rootRef"
             v-trap-focus="trapFocus"
             :class="rootClasses"
             :tabindex="-1"
@@ -379,14 +337,21 @@ export default defineComponent({
             :aria-modal="ariaModal">
             <div :class="overlayClasses" @click="cancel('outside')" />
             <div :class="contentClasses" :style="customStyle">
+                <!-- injected component for programmatic usage -->
                 <component
-                    v-bind="props"
+                    v-bind="$props.props"
                     :is="component"
                     v-if="component"
-                    v-on="events || {}"
+                    v-on="$props.events"
                     @close="close" />
-                <div v-else-if="content">{{ content }}</div>
-                <slot v-else />
+                <!--
+                    @slot Modal default content, prop content is default
+                    @binding {close} close - function to close the component
+                -->
+                <slot v-else :close="close">
+                    <div v-if="content">{{ content }}</div>
+                </slot>
+
                 <o-icon
                     v-if="showX"
                     v-show="!animating"

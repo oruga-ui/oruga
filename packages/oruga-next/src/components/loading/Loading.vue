@@ -8,11 +8,8 @@ import { getOption } from "@/utils/config";
 import {
     useComputedClass,
     useClassProps,
-    usePropBinding,
-    useEventListener,
+    useProgrammaticComponent,
 } from "@/composables";
-import { removeElement } from "@/utils/helpers";
-import { HTMLElement, isClient } from "@/utils/ssr";
 import type { ProgrammaticInstance } from "@/types";
 
 /**
@@ -41,10 +38,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("loading.animation", "fade"),
     },
-    /** Can cancle Loading by pressing escape or clicking outside. */
+    /** Is Loading cancable by pressing escape or clicking outside. */
     cancelable: { type: Boolean, default: false },
     /** Callback function to call after user canceled (pressed escape / clicked outside). */
-    onCancle: { type: Function, default: () => {} },
+    onCancel: { type: Function as PropType<() => void>, default: () => {} },
+    /** Callback function to call after close (programmatically close or user canceled). */
+    onClose: { type: Function as PropType<() => void>, default: () => {} },
     /** Icon name to show, unnecessary when default slot is used. */
     icon: {
         type: String,
@@ -64,18 +63,26 @@ const props = defineProps({
         default: () => getOption("loading.iconSize", "medium"),
     },
     /**
-     * DOM element where the loading component will be created on.
+     * DOM element where the loading component will be created on (for programmatic usage).
      * Note that this also changes fullPage to false.
      */
-    container: { type: HTMLElement, default: undefined },
+    container: {
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("loading.container", "body"),
+    },
     /**
      * This is used internally for programmatic usage
      * @ignore
      */
     programmatic: {
-        type: Object as PropType<ProgrammaticInstance<typeof this>>,
+        type: Object as PropType<ProgrammaticInstance>,
         default: undefined,
     },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -89,72 +96,35 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on loading close event
-     * @param value {any}
+     * on component close event
+     * @param value {any} - close event data
      */
     (e: "close", ...args: any[]): void;
 }>();
 
 const rootRef = ref();
 
-const isActive = usePropBinding("active", props, emits);
-const displayInFullPage = usePropBinding("fullPage", props, emits);
+const displayInFullPage = ref(props.fullPage);
 
-if (isClient)
-    useEventListener("keyup", onKeyPress, props.container || document);
+/** add programmatic usage to this component */
+const { isActive, close, cancel } = useProgrammaticComponent(
+    rootRef,
+    props,
+    emits,
+    {
+        cancelOptions: ["escape", "outside"],
+    },
+);
 
 onMounted(() => {
-    if (props.programmatic) {
-        if (props.programmatic.instances) {
-            props.programmatic.instances.add(this);
-        }
-        // Insert the Loading component in body tag
-        // only if it's programmatic
-        if (!props.container) {
-            document.body.appendChild(rootRef.value);
-        } else {
-            displayInFullPage.value = false;
-            props.container.appendChild(rootRef.value);
-        }
-        isActive.value = true;
+    if (props.programmatic && props.container) {
+        displayInFullPage.value = false;
     }
 });
-
-/** Close the Modal if canCancel. */
-function cancel(method: string): void {
-    if (!props.cancelable || !isActive.value) return;
-    close({ action: "cancel", method });
-}
-
-/** Emit events, and destroy modal if it's programmatic. */
-function close(...args: any[]): void {
-    emits("close");
-    props.onCancle.apply(null, args);
-
-    // Timeout for the animation complete before destroying
-    if (props.programmatic) {
-        if (props.programmatic.instances)
-            props.programmatic.instances.remove(this);
-
-        if (props.programmatic.resolve)
-            props.programmatic.resolve.apply(null, args);
-
-        // Timeout for the animation complete before destroying
-        setTimeout(() => {
-            isActive.value = false;
-            window.requestAnimationFrame(() => removeElement(rootRef.value));
-        });
-    } else isActive.value = false;
-}
-
-/** Keypress event that is bound to the document. */
-function onKeyPress(event: KeyboardEvent): void {
-    if (event.key === "Escape" || event.key === "Esc") cancel("escape");
-}
 
 // --- Computed Component Classes ---
 
@@ -180,16 +150,19 @@ const labelClasses = computed(() => [
 
 // --- Expose Public Functionality ---
 
-/** expose close function for programmatic usage */
-defineExpose({ close });
+/** expose functionalities for programmatic usage */
+defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
     <transition :name="animation">
         <div v-if="isActive" ref="rootRef" :class="rootClasses">
             <div :class="overlayClasses" @click="cancel('outside')" />
-            <!-- @slot Override icon and label -->
-            <slot>
+            <!-- 
+                @slot Override icon and label
+                @binding {close} close - function to close the component
+            -->
+            <slot :close="close">
                 <o-icon
                     :icon="icon"
                     :spin="iconSpin"

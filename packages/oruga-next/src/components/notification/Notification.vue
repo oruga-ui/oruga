@@ -95,7 +95,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.iconSize", "large"),
     },
-    /** Add close/delete button to the item that closes the notification*/
+    /** Add close button to the item that closes the notification */
     closable: { type: Boolean, default: false },
     /** Close icon name */
     closeIcon: {
@@ -125,12 +125,12 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * active prop two-way binding
-     * @param value {boolean} updated active prop
+     * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
     /**
-     * on notification close event
-     * @param value {any}
+     * on component close event
+     * @param value {any} - close event data
      */
     (e: "close", ...args: any[]): void;
 }>();
@@ -213,7 +213,7 @@ const closeClasses = computed(() => [
 
             <!--
                 @slot Notification inner content, outside of the message container
-                @binding {close} close function to close the notification
+                @binding {close} close - function to close the notification
             -->
             <slot name="inner" :close="close" />
 
@@ -229,7 +229,7 @@ const closeClasses = computed(() => [
                 <div :class="contentClasses">
                     <!--
                         @slot Notification default content, message prop is default
-                        @binding {close} close function to close the notification
+                        @binding {close} close - function to close the notification
                     -->
                     <slot :close="close">
                         <span v-if="message" v-html="message" />
