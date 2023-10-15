@@ -77,10 +77,6 @@ export default defineConfig({
             {
                 text: "Support",
                 items: [
-                    {
-                        text: "Liberapay",
-                        link: "https://liberapay.com/oruga-ui",
-                    },
                     { text: "Ko-fi", link: "https://ko-fi.com/orugaui" },
                 ],
             },
