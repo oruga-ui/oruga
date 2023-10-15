@@ -29,12 +29,6 @@ module.exports = {
   ],
   plugins: [
     [
-      '@vuepress/google-analytics',
-      {
-        ga: 'UA-171490794-1'
-      }
-    ],
-    [
       'demo-block',
       {
         settings: {
@@ -76,8 +70,7 @@ module.exports = {
       { text: 'Documentation', link: '/documentation/' },
       { text: 'Expo', link: '/expo/' },
       { text: 'Donate ☕️', items: [
-          {text:'Ko-fi', link: 'https://ko-fi.com/orugaui' },
-          {text:'Liberapay', link: 'https://liberapay.com/oruga-ui' }
+          {text:'Ko-fi', link: 'https://ko-fi.com/orugaui' }
         ]
       },
       // { text: '🎃 Hacktoberfest', link: '/hacktoberfest/' },

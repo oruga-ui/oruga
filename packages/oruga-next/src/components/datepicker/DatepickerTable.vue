@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
-import { useComputedClass } from "@/composables";
+import { useComputedClass, usePropBinding } from "@/composables";
 import {
     useDatepickerShare,
     type DatepickerProps,
@@ -48,6 +48,8 @@ const hoveredEndDate = ref<Date>();
 
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
+const focusedDate = usePropBinding<FocusedDate>("focusedDate", props, emits);
+
 const visibleDayNames = computed(() => {
     const visibleDayNames = [];
     let index = datepicker.value.firstDayOfWeek;
@@ -69,16 +71,16 @@ const eventsInThisMonth = computed(() => {
         )
         .filter(
             (event) =>
-                event.date.getMonth() === props.focusedDate.month &&
-                event.date.getFullYear() === props.focusedDate.year,
+                event.date.getMonth() === focusedDate.value.month &&
+                event.date.getFullYear() === focusedDate.value.year,
         );
 });
 
 /** Return array of all weeks in the specified month */
 const weeksInThisMonth = computed(() => {
     validateFocusedDay();
-    const month = props.focusedDate.month;
-    const year = props.focusedDate.year;
+    const month = focusedDate.value.month;
+    const year = focusedDate.value.year;
     const weeksInThisMonth = [];
 
     let startingDay = 1;
@@ -117,36 +119,34 @@ const hoveredDateRange = computed(() => {
 });
 
 function validateFocusedDay(): void {
-    const focusedDate = new Date(
-        props.focusedDate.year,
-        props.focusedDate.month,
-        props.focusedDate.day,
+    const currentDate = new Date(
+        focusedDate.value.year,
+        focusedDate.value.month,
+        focusedDate.value.day,
     );
-    if (isDateSelectable(focusedDate, props.focusedDate.month)) return;
+    if (isDateSelectable(currentDate, focusedDate.value.month)) return;
 
     let day = 0;
     // Number of days in the current month
     const monthDays = new Date(
-        props.focusedDate.year,
-        props.focusedDate.month + 1,
+        focusedDate.value.year,
+        focusedDate.value.month + 1,
         0,
     ).getDate();
     let firstFocusable = null;
     while (!firstFocusable && ++day < monthDays) {
         const date = new Date(
-            props.focusedDate.year,
-            props.focusedDate.month,
+            focusedDate.value.year,
+            focusedDate.value.month,
             day,
         );
-        if (isDateSelectable(date, props.focusedDate.month)) {
-            firstFocusable = focusedDate;
-
-            const focused = {
+        if (isDateSelectable(date, focusedDate.value.month)) {
+            firstFocusable = currentDate;
+            focusedDate.value = {
                 day: date.getDate(),
                 month: date.getMonth(),
                 year: date.getFullYear(),
             };
-            emits("update:focusedDate", focused);
         }
     }
 }
@@ -222,12 +222,11 @@ function onRangeHoverEndDate(date: Date): void {
 }
 
 function onChangeFocus(date: Date): void {
-    const focused = {
+    focusedDate.value = {
         day: date.getDate(),
         month: date.getMonth(),
         year: date.getFullYear(),
     };
-    emits("update:focusedDate", focused);
 }
 
 // --- Computed Component Classes ---
