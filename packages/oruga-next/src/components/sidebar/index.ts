@@ -8,7 +8,7 @@ import { merge } from "@/utils/helpers";
 import {
     registerComponent,
     registerComponentProgrammatic,
-} from "../../utils/plugins";
+} from "@/utils/plugins";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import type { ProgrammaticExpose } from "@/types";
