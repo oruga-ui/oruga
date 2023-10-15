@@ -103,6 +103,7 @@ export function useProgrammaticComponent(
      * @param method Cancel method
      */
     function cancel(method: string): void {
+        console.log("cancel", method, isActive.value);
         if (!props.cancelable || !isActive.value) return;
         // check if method is in options
         if (cancelOptions.value.indexOf(method) < 0) return;
@@ -127,7 +128,9 @@ export function useProgrammaticComponent(
 
             // Timeout for the animation complete before destroying
             setTimeout(() => {
-                vm.props.active = false; // set active state of current instance
+                // set active state of current instance
+                vm.props.active = false;
+                vm.emit("update:active", false);
                 if (
                     typeof options.destroyOnHide === "undefined" ||
                     options.destroyOnHide
@@ -139,7 +142,9 @@ export function useProgrammaticComponent(
                     });
             });
         } else {
-            vm.props.active = false; // set active state of current instance
+            // set active state of current instance
+            vm.props.active = false;
+            vm.emit("update:active", false);
         }
     }
 

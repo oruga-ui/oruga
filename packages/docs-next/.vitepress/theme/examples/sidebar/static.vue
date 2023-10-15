@@ -14,7 +14,7 @@ const reduce = ref(false);
                 :mobile="mobile"
                 :expand-on-hover="expandOnHover"
                 :reduce="reduce"
-                open>
+                active>
                 <img
                     width="128"
                     src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
@@ -31,10 +31,10 @@ const reduce = ref(false);
 
         <div class="sidebar-layout">
             <o-field>
-                <o-switch v-model="reduce">Reduced</o-switch>
+                <o-switch v-model="reduce" label="Reduced" />
             </o-field>
             <o-field>
-                <o-switch v-model="expandOnHover">Expand on hover</o-switch>
+                <o-switch v-model="expandOnHover" label="Expand on hover" />
             </o-field>
             <br />
             <o-field label="Mobile Layout">

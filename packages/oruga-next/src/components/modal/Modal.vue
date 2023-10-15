@@ -3,6 +3,7 @@ import {
     ref,
     computed,
     watch,
+    nextTick,
     onBeforeUnmount,
     type Component,
     type PropType,
@@ -18,11 +19,10 @@ import {
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
-import { vTrapFocus } from "../../directives/trapFocus";
-import { removeElement, toCssDimension } from "../../utils/helpers";
+import { vTrapFocus } from "@/directives/trapFocus";
+import { removeElement, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import type { ProgrammaticInstance } from "@/types";
-import { nextTick } from "process";
 
 /**
  * Classic modal overlay to include any content you may need
@@ -56,7 +56,7 @@ const props = defineProps({
     },
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
-     * @values escape, x, outside, button, true
+     * @values 'escape', 'x', 'outside', 'button', true, false
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
@@ -201,7 +201,7 @@ const { isMobile } = useMatchMedia();
 
 const savedScrollTop = ref(null);
 const modalWidth = ref(toCssDimension(props.width));
-const animating = ref(!props.active);
+const isAnimating = ref(!props.active);
 
 watch(isActive, (value) => {
     handleScroll();
@@ -271,12 +271,12 @@ function handleScroll(): void {
 
 /** Transition after-enter hook */
 function afterEnter(): void {
-    animating.value = false;
+    isAnimating.value = false;
 }
 
 /** Transition before-leave hook */
 function beforeLeave(): void {
-    animating.value = true;
+    isAnimating.value = true;
 }
 
 // --- Computed Component Classes ---
@@ -354,7 +354,7 @@ defineExpose({ close, promise: props.promise });
 
                 <o-icon
                     v-if="showX"
-                    v-show="!animating"
+                    v-show="!isAnimating"
                     clickable
                     both
                     :class="closeClasses"
