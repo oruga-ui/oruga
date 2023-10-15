@@ -102,7 +102,7 @@ const props = defineProps({
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () => getOption("sidebar.canCancel", ["escape", "outside"]),
+        default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
     },
     /** Callback function to call after user canceled (pressed escape / clicked outside) */
     onCancel: { type: Function as PropType<() => void>, default: () => {} },
