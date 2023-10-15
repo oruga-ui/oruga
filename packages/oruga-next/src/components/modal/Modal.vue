@@ -131,10 +131,7 @@ const props = defineProps({
     props: { type: Object, default: undefined },
     /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
-    /**
-     * DOM element where the modal component will be created on (for programmatic usage).
-     * Note that this also changes fullPage to false.
-     */
+    /** DOM element where the modal component will be created on (for programmatic usage). */
     container: {
         type: [Object, String] as PropType<string | HTMLElement>,
         default: () => getOption("modal.container", "body"),

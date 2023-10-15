@@ -121,7 +121,7 @@ const props = defineProps({
     /** Destroy sidebar on hide */
     destroyOnHide: {
         type: Boolean,
-        default: () => getOption("modal.destroyOnHide", false),
+        default: () => getOption("sidebar.destroyOnHide", false),
     },
     /**
      * Component to be injected, used to open a component sidebar programmatically.
@@ -135,6 +135,11 @@ const props = defineProps({
     props: { type: Object, default: undefined },
     /** Events to be binded to the injected component. */
     events: { type: Object, default: () => ({}) },
+    /** DOM element where the sidebar component will be created on (for programmatic usage). */
+    container: {
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("sidebar.container", "body"),
+    },
     /**
      * This is used internally for programmatic usage.
      * @ignore
