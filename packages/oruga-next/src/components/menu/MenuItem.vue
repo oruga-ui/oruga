@@ -37,9 +37,9 @@ const props = defineProps({
     active: { type: Boolean, default: false },
     /** Menu item label */
     label: { type: String, default: undefined },
-    /** Menu ite will be expanded */
+    /** Menu item will be expanded */
     expanded: { type: Boolean, default: false },
-    /** Menu ite will be disabled */
+    /** Menu item will be disabled */
     disabled: { type: Boolean, default: false },
     /** Icon name to be shown */
     icon: { type: String, default: undefined },
@@ -67,7 +67,7 @@ const props = defineProps({
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<string | Component>,
-        default: () => getOption("dropdown.menuTag", "a"),
+        default: () => getOption("menu.menuTag", "a"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -75,7 +75,7 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
-        default: getOption("dropdown.itemAriaRole", "menuitem"),
+        default: getOption("menu.itemAriaRole", "menuitem"),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
