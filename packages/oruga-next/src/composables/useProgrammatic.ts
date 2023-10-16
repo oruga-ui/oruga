@@ -127,7 +127,9 @@ export function useProgrammaticComponent(
 
             // Timeout for the animation complete before destroying
             setTimeout(() => {
-                vm.props.active = false; // set active state of current instance
+                // set active state of current instance
+                vm.props.active = false;
+                vm.emit("update:active", false);
                 if (
                     typeof options.destroyOnHide === "undefined" ||
                     options.destroyOnHide
@@ -139,7 +141,9 @@ export function useProgrammaticComponent(
                     });
             });
         } else {
-            vm.props.active = false; // set active state of current instance
+            // set active state of current instance
+            vm.props.active = false;
+            vm.emit("update:active", false);
         }
     }
 

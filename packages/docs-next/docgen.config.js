@@ -211,10 +211,10 @@ ${description ? "> " + description : ""}
                 // remove function prop invokation
                if(f.lastIndexOf('(') > 0) f = f.substring(0, f.lastIndexOf('('));
                if(f.lastIndexOf(')') > 0) f = f.substring(0, f.lastIndexOf(')'));
-                const params = f.split(",");
-                if (params.length > 3) {
+                const params = f.split(", ");
+                if (params.length >= 3) {
                     // In case last param contains a ','
-                    params[2] = params.slice(2).join(",");
+                    params[1] = params.slice(1).join(",");
                 }
                 if (params[0]) {
                     configParts = params[0].trim().split(".");
