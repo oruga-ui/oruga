@@ -146,9 +146,8 @@ const props = defineProps({
     menuPosition: {
         type: String,
         default: () => getOption("autocomplete.menuPosition", "auto"),
-        validator: (value: string) => {
-            return ["auto", "top", "bottom"].indexOf(value) >= 0;
-        },
+        validator: (value: string) =>
+            ["auto", "top", "bottom"].indexOf(value) >= 0,
     },
     /** Transition name to apply on dropdown list */
     animation: {

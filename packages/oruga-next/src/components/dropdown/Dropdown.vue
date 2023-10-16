@@ -50,7 +50,7 @@ const props = defineProps({
         type: [String, Number, Boolean, Object, Array],
         default: undefined,
     },
-    /** The active state of the dropdown */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },
@@ -94,13 +94,15 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("dropdown.trapFocus", true),
     },
-    /**  Close dropdown when content is clicked */
-    closeOnClick: { type: Boolean, default: true },
     /**
-     * Can close dropdown by pressing escape or by clicking outside
-     * @values escape, outside
+     * Can close dropdown by pressing escape, clicking the content or outside
+     * @values escape, outside, content
      */
-    canClose: { type: [Array, Boolean], default: true },
+    closeable: {
+        type: [Array, Boolean] as PropType<string[] | boolean>,
+        default: () =>
+            getOption("dropdown.closeable", ["escape", "outside", "content"]),
+    },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
     /** Dropdown menu tag name */
@@ -136,14 +138,14 @@ const props = defineProps({
      */
     ariaRole: {
         type: String,
+        default: getOption("dropdown.ariaRole", "list"),
         validator: (value: string) =>
             ["menu", "list", "dialog"].indexOf(value) > -1,
-        default: "list",
     },
     /** Append dropdown content to body */
     appendToBody: {
         type: Boolean,
-        default: () => getOption("autocomplete.appendToBody", false),
+        default: () => getOption("dropdown.appendToBody", false),
     },
     /** @ignore */
     appendToBodyCopyParent: Boolean,
@@ -240,11 +242,11 @@ const isMobileModal = computed(() => props.mobileModal && !props.inline);
 const isMobileNative = computed(() => props.mobileModal && isMobileAgent.any());
 
 const cancelOptions = computed(() =>
-    typeof props.canClose === "boolean"
-        ? props.canClose
-            ? ["escape", "outside"]
+    typeof props.closeable === "boolean"
+        ? props.closeable
+            ? ["escape", "outside", "content"]
             : []
-        : props.canClose,
+        : props.closeable,
 );
 
 const menuStyle = computed(() => ({
@@ -409,8 +411,9 @@ function selectItem(value: any): void {
         }
     }
     if (!props.multiple) {
-        isActive.value = !props.closeOnClick;
-        if (hoverable.value && props.closeOnClick) isHovered.value = false;
+        if (cancelOptions.value.indexOf("content") < 0) return;
+        isActive.value = false;
+        isHovered.value = false;
     }
 }
 
@@ -481,6 +484,10 @@ const menuClasses = computed(() => [
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
             @focus.capture="onFocus">
+            <!--
+                @slot Override the trigger element, default is label prop 
+                @binding {active} active is active state representation
+            -->
             <slot name="trigger" :active="isActive">
                 {{ label }}
             </slot>
@@ -504,7 +511,12 @@ const menuClasses = computed(() => [
                 :role="ariaRole"
                 :aria-modal="!inline"
                 :style="menuStyle">
-                <slot />
+                <!--
+                    @slot Place dropdown items here 
+                    @binding {active} active is active state representation
+                    @binding {toggle} toggle toggle active state function
+                -->
+                <slot :active="isActive" :toggle="toggle" />
             </component>
         </transition>
     </div>
