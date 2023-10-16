@@ -28,15 +28,15 @@ const props = defineProps({
 });
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<Ref<any>>("carousel");
+const { parent, item } = useProviderChild<Ref<any>>();
 
-const isActive = computed(() => parent.value.activeIndex === item.index);
+const isActive = computed(() => parent.value.activeIndex === item.value.index);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
 function onClick(event: MouseEvent): void {
     if (isActive.value) parent.value.onClick(event);
-    if (props.clickable) parent.value.setActive(item.index);
+    if (props.clickable) parent.value.setActive(item.value.index);
 }
 
 // --- Computed Component Classes ---
@@ -54,7 +54,7 @@ const itemClasses = computed(() => [
     <div
         :class="itemClasses"
         :style="itemStyle"
-        :data-if="`carousel-${item.value}`"
+        :data-id="`carousel-${item.identifier}`"
         @click="onClick">
         <slot />
     </div>
