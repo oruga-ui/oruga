@@ -82,6 +82,11 @@ const props = defineProps({
         validator: (value: string) =>
             ["button", "submit", "reset"].indexOf(value) >= 0,
     },
+    /** Accessibility Role attribute to be passed to the button. */
+    role: {
+        type: String,
+        default: () => getOption("button.role", "button"),
+    },
     /**
      * This is used internally
      * @ignore
@@ -187,7 +192,8 @@ const elementsWrapperClasses = computed(() => [
         :is="computedTag"
         :disabled="computedDisabled"
         :type="computedNativeType"
-        :class="rootClasses">
+        :class="rootClasses"
+        :role="role">
         <span :class="elementsWrapperClasses">
             <o-icon
                 v-if="iconLeft"
