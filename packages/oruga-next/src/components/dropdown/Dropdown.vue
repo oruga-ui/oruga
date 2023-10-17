@@ -67,7 +67,7 @@ const props = defineProps({
     },
     /**
      * Optional, position of the dropdown relative to the trigger
-     * @values top-right, top-left, bottom-left, bottom-right
+     * @values 'top-right', 'top-left', 'bottom-left', 'bottom-right'
      */
     position: {
         type: String,
@@ -117,17 +117,17 @@ const props = defineProps({
     },
     /**
      * Dropdown will be triggered by any events
-     * @values click, hover, contextmenu, focus
+     * @values 'click', 'hover', 'contextmenu', 'focus'
      */
     triggers: {
         type: Array as PropType<string[]>,
+        default: () => getOption("dropdown.triggers", ["click"]),
         validator: (values: string[]) =>
             values.filter(
                 (value) =>
                     ["click", "hover", "contextmenu", "focus"].indexOf(value) >
                     -1,
             ).length === values.length,
-        default: () => ["click"],
     },
     /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
     tabindex: { type: Number, default: 0 },
@@ -217,11 +217,12 @@ watch(isActive, (value) => {
 const { isMobile } = useMatchMedia();
 
 if (isClient) {
-    useEventListener("click", clickedOutside);
-    useEventListener("keyup", keyPress);
+    useEventListener("click", onClickedOutside);
+    useEventListener("keyup", onKeyPress);
 }
 
-const bodyEl = ref(undefined); // Used to append to body
+const bodyEl = ref<HTMLDivElement>(); // Used to append to body
+
 onMounted(() => {
     if (props.appendToBody) {
         bodyEl.value = createAbsoluteElement(menuRef.value);
@@ -241,14 +242,6 @@ const isMobileModal = computed(() => props.mobileModal && !props.inline);
 // check if client is mobile native
 const isMobileNative = computed(() => props.mobileModal && isMobileAgent.any());
 
-const cancelOptions = computed(() =>
-    typeof props.closeable === "boolean"
-        ? props.closeable
-            ? ["escape", "outside", "content"]
-            : []
-        : props.closeable,
-);
-
 const menuStyle = computed(() => ({
     maxHeight: props.scrollable ? toCssDimension(props.maxHeight) : null,
     overflow: props.scrollable ? "auto" : null,
@@ -257,7 +250,7 @@ const menuStyle = computed(() => ({
 const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 
 /** White-listed items to not close when clicked. */
-function isInWhiteList(el): boolean {
+function isInWhiteList(el: Element): boolean {
     if (el === menuRef.value) return true;
     if (el === triggerRef.value) return true;
     // All chidren from dropdown
@@ -279,6 +272,7 @@ function isInWhiteList(el): boolean {
     return false;
 }
 
+/** Append element to body feature */
 function updateAppendToBody(): void {
     const dropdownMenu = menuRef.value;
     const trigger = triggerRef.value;
@@ -329,15 +323,23 @@ function updateAppendToBody(): void {
 
 // --- Event Handler ---
 
+const cancelOptions = computed(() =>
+    typeof props.closeable === "boolean"
+        ? props.closeable
+            ? ["escape", "outside", "content"]
+            : []
+        : props.closeable,
+);
+
 /** Close dropdown if clicked outside. */
-function clickedOutside(event): void {
+function onClickedOutside(event: MouseEvent): void {
     if (props.inline) return;
     if (cancelOptions.value.indexOf("outside") < 0) return;
-    if (!isInWhiteList(event.target)) isActive.value = false;
+    if (!isInWhiteList(event.target as Element)) isActive.value = false;
 }
 
 /** Keypress event that is bound to the document */
-function keyPress(event: KeyboardEvent): void {
+function onKeyPress(event: KeyboardEvent): void {
     if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
         if (cancelOptions.value.indexOf("escape") < 0) return;
         isActive.value = false;
@@ -347,6 +349,7 @@ function keyPress(event: KeyboardEvent): void {
 function onClick(): void {
     if (props.triggers.indexOf("click") >= 0 || isMobileNative.value) toggle();
 }
+
 function onContextMenu(event: MouseEvent): void {
     if (props.triggers.indexOf("contextmenu") >= 0) {
         event.preventDefault();
@@ -495,11 +498,12 @@ const menuClasses = computed(() => [
 
         <transition :name="animation">
             <div
-                v-if="isMobileModal"
+                v-if="isMobileNative"
                 v-show="isActive"
                 :class="menuMobileOverlayClasses"
                 :aria-hidden="!isActive" />
         </transition>
+
         <transition :name="animation">
             <component
                 :is="menuTag"
