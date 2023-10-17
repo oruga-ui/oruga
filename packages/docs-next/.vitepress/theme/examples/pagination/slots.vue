@@ -57,21 +57,25 @@ function convertToRoman(num) {
     <section>
         <o-pagination v-model:current="current" :total="200" :per-page="10">
             <template #default="props">
-                <o-pagination-button
-                    :id="`page${props.page.number}`"
-                    :page="props.page">
-                    {{ convertToRoman(props.page.number) }}
-                </o-pagination-button>
+                <o-button
+                    :label="convertToRoman(props.number)"
+                    :disabled="props.isCurrent"
+                    :aria-label="props.ariaLabel"
+                    @click="props.click" />
             </template>
             <template #previous="props">
-                <o-pagination-button :page="props.page">
-                    Previous
-                </o-pagination-button>
+                <o-button
+                    label="Previous"
+                    :disabled="props.isCurrent"
+                    :aria-label="props.ariaLabel"
+                    @click="props.click" />
             </template>
             <template #next="props">
-                <o-pagination-button :page="props.page">
-                    Next
-                </o-pagination-button>
+                <o-button
+                    label="Next"
+                    :disabled="props.isCurrent"
+                    :aria-label="props.ariaLabel"
+                    @click="props.click" />
             </template>
         </o-pagination>
     </section>
