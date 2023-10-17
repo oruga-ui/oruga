@@ -64,8 +64,8 @@ title: Tooltip
 
 | Name    | Description                            | Bindings |
 | ------- | -------------------------------------- | -------- |
-| content | Tooltop content, prop label is default |          |
-| default | Tooltop trigger slot                   |          |
+| content | Tooltip content, prop label is default |          |
+| default | Tooltip trigger slot                   |          |
 
 </div>
 

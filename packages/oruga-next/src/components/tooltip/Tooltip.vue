@@ -466,7 +466,7 @@ const contentClasses = computed(() => [
                 <span :class="arrowClasses"></span>
 
                 <!--
-                    @slot Tooltop content, prop label is default
+                    @slot Tooltip content, prop label is default
                 -->
                 <slot name="content">{{ label }}</slot>
             </div>
@@ -482,7 +482,7 @@ const contentClasses = computed(() => [
             @blur.capture="onClose"
             @mouseleave="onClose">
             <!--
-                @slot Tooltop trigger slot
+                @slot Tooltip trigger slot
             -->
             <slot />
         </div>
