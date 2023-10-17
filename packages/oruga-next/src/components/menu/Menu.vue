@@ -50,7 +50,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("menu.iconPack", undefined),
+        default: () => getOption("menu.iconPack"),
     },
     /**
      * Icon size, optional

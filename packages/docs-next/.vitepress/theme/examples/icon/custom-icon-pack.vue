@@ -41,8 +41,8 @@ const docsIcon = ref();
 const oruga = useOruga();
 
 onBeforeMount(() => {
-    docsIcon.value = oruga.config.getOptions().iconComponent;
-    oruga.config.setOptions(customIconConfig);
+    docsIcon.value = oruga.config.getOption("iconComponent");
+    oruga.config.setOption("customIconPacks", customIconConfig);
 });
 
 onBeforeUnmount(() => {

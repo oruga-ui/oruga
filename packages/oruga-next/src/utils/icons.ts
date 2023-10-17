@@ -1,5 +1,5 @@
-import { getOptions } from "./config";
-import { merge, getValueByPath } from "./helpers";
+import { getOption } from "./config";
+import { merge } from "./helpers";
 
 const mdiIcons = {
     sizes: {
@@ -12,14 +12,14 @@ const mdiIcons = {
 };
 
 const faIcons = () => {
-    const iconComponent = getValueByPath(getOptions(), "iconComponent");
+    const iconComponent = getOption("iconComponent");
     const faIconPrefix = iconComponent ? "" : "fa-";
     return {
         sizes: {
             default: null,
             small: null,
             medium: faIconPrefix + "lg",
-            large: faIconPrefix + "2x",
+            large: faIconPrefix + "2xl",
         },
         iconPrefix: faIconPrefix,
         internalIcons: {
@@ -54,10 +54,8 @@ const getIcons = () => {
         fal: faIcons(),
     };
 
-    const customIconPacks = getValueByPath(getOptions(), "customIconPacks");
-    if (customIconPacks) {
-        icons = merge(icons, customIconPacks, true);
-    }
+    const customIconPacks = getOption("customIconPacks");
+    if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;
 };

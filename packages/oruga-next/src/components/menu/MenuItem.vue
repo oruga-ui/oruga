@@ -2,10 +2,10 @@
 import {
     ref,
     computed,
+    toRaw,
     type Component,
     type PropType,
     type Ref,
-    toRaw,
 } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
@@ -49,7 +49,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("menu.iconPack", undefined),
+        default: () => getOption("menu.iconPack"),
     },
     /**
      * Icon size, optional
