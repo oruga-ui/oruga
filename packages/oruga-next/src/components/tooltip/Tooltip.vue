@@ -60,7 +60,7 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /**
      * Color of the tooltip
-     * @values primary, info, success, warning, danger, and any other custom color
+     * @values 'primary', 'info', 'success', 'warning', 'danger', and any other custom color
      */
     variant: {
         type: String,
@@ -68,7 +68,7 @@ const props = defineProps({
     },
     /**
      * Tooltip position in relation to the element
-     * @values top, bottom, left, right, auto
+     * @values 'top', 'bottom', 'left', 'right', 'auto'
      */
     position: {
         type: String as PropType<Position | "auto">,
@@ -78,7 +78,7 @@ const props = defineProps({
     },
     /**
      * Tooltip trigger events
-     * @values hover, click, focus, contextmenu
+     * @values 'hover', 'click', 'focus', 'contextmenu'
      */
     triggers: {
         type: Array as PropType<string[]>,
@@ -255,6 +255,28 @@ const coputedPosition = computed((): Position => {
     return bestPosition;
 });
 
+/** White-listed items to not close when clicked. */
+function isInWhiteList(el: Element): boolean {
+    if (el === contentRef.value) return true;
+    if (el === triggerRef.value) return true;
+    // All chidren from content
+    if (contentRef.value !== undefined) {
+        const children = contentRef.value.querySelectorAll("*");
+        for (const child of children) {
+            if (el === child) return true;
+        }
+    }
+    // All children from trigger
+    if (triggerRef.value !== undefined) {
+        const children = triggerRef.value.querySelectorAll("*");
+        for (const child of children) {
+            if (el === child) return true;
+        }
+    }
+    return false;
+}
+
+/** Append element to body feature */
 function updateAppendToBody(): void {
     if (rootRef.value && triggerRef.value) {
         // update wrapper tooltip
@@ -288,6 +310,36 @@ function updateAppendToBody(): void {
 }
 
 // --- Event Handler ---
+
+const cancelOptions = computed<string[]>(() =>
+    typeof props.autoClose === "boolean"
+        ? props.autoClose
+            ? ["escape", "inside", "outside"]
+            : []
+        : props.autoClose,
+);
+
+/** Close tooltip if clicked outside. */
+function onClickedOutside(event: MouseEvent): void {
+    if (props.always) return;
+    if (!isActive.value) return;
+
+    if (
+        (cancelOptions.value.indexOf("outside") >= 0 &&
+            !isInWhiteList(event.target as Element)) ||
+        (cancelOptions.value.indexOf("inside") >= 0 &&
+            isInWhiteList(event.target as Element))
+    )
+        isActive.value = false;
+}
+
+/** Keypress event that is bound to the document */
+function onKeyPress(event: KeyboardEvent): void {
+    if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
+        if (cancelOptions.value.indexOf("escape") < 0) return;
+        isActive.value = false;
+    }
+}
 
 function onClick(): void {
     if (props.triggers.indexOf("click") < 0) return;
@@ -328,50 +380,7 @@ function onClose(): void {
     if (timer.value && props.autoClose) clearTimeout(timer.value);
 }
 
-/** Close tooltip if clicked outside. */
-function onClickedOutside(event: MouseEvent): void {
-    if (isActive.value && !props.always && Array.isArray(props.autoClose)) {
-        if (
-            (props.autoClose.indexOf("outside") >= 0 &&
-                !isInWhiteList(event.target as HTMLElement)) ||
-            (props.autoClose.indexOf("inside") >= 0 &&
-                isInWhiteList(event.target as HTMLElement))
-        )
-            isActive.value = false;
-    }
-}
-
-/** Keypress event that is bound to the document */
-function onKeyPress(event: KeyboardEvent): void {
-    if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
-        if (Array.isArray(props.autoClose)) {
-            if (props.autoClose.indexOf("escape") >= 0) isActive.value = false;
-        }
-    }
-}
-
 // --- Helper Functions ---
-
-/** White-listed items to not close when clicked. */
-function isInWhiteList(el: HTMLElement): boolean {
-    if (el === contentRef.value) return true;
-    if (el === triggerRef.value) return true;
-    // All chidren from content
-    if (contentRef.value !== undefined) {
-        const children = contentRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) return true;
-        }
-    }
-    // All children from trigger
-    if (triggerRef.value !== undefined) {
-        const children = triggerRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) return true;
-        }
-    }
-    return false;
-}
 
 function intersectionArea(a: DOMRect, b: DOMRect): number {
     const left = Math.max(a.left, b.left);

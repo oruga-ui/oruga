@@ -9,7 +9,7 @@
         </o-tooltip>
 
         <o-tooltip label="I'm on body" append-to-body>
-            <o-button variant="primary" label="Append on body" />
+            <o-button variant="info" label="Append on body" />
         </o-tooltip>
     </section>
 </template>
