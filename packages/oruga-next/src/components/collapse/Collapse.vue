@@ -45,7 +45,7 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * open prop two-way binding
-     * @param value {boolean} updated modelValue open
+     * @param value {boolean} updated open prop
      */
     (e: "update:open", value: boolean): void;
     /** on collapse opened */

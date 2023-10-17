@@ -47,11 +47,11 @@ title: Collapse
 
 ### Events
 
-| Event name  | Properties                                    | Description               |
-| ----------- | --------------------------------------------- | ------------------------- |
-| update:open | **value** `boolean` - updated modelValue open | open prop two-way binding |
-| open        |                                               | on collapse opened        |
-| close       |                                               | on collapse closed        |
+| Event name  | Properties                              | Description               |
+| ----------- | --------------------------------------- | ------------------------- |
+| update:open | **value** `boolean` - updated open prop | open prop two-way binding |
+| open        |                                         | on collapse opened        |
+| close       |                                         | on collapse closed        |
 
 ### Slots
 
