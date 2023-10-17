@@ -49,13 +49,11 @@ const props = defineProps({
      */
     size: {
         type: String,
-        default: () => getOption("icon.size", undefined),
-        validator: (value: string) =>
-            ["small", "medium", "large", undefined].indexOf(value) >= 0,
+        default: () => getOption("icon.size"),
     },
     /**
      * Overrides icon font size, optional
-     * @values Depends on library: null (smallest), fa-lg, fa-2x, fa-3x, fa-4x, fa-5x, mdi-18px, mdi-24px, mdi-36px, mdi-48px
+     * @values Depends on library: null (smallest), fa-sm, fa-lg, fa-xl, mdi-18px, mdi-24px, mdi-36px, mdi-48px
      */
     customSize: { type: String, default: undefined },
     /** Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes */
@@ -70,7 +68,7 @@ const props = defineProps({
      * This is used internally
      * @ignore
      */
-    both: Boolean,
+    both: { type: Boolean, default: false },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",

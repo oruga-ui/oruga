@@ -107,7 +107,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("carousel.iconPack", undefined),
+        default: () => getOption("carousel.iconPack"),
     },
     /**
      * Icon size
@@ -115,7 +115,7 @@ const props = defineProps({
      */
     iconSize: {
         type: String,
-        default: () => getOption("carousel.iconSize", undefined),
+        default: () => getOption("carousel.iconSize"),
     },
     /** Icon name for previous icon */
     iconPrev: {

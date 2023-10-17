@@ -83,7 +83,7 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("notification.iconPack", undefined),
+        default: () => getOption("notification.iconPack"),
     },
     /** Icon name to use */
     icon: { type: String, default: undefined },

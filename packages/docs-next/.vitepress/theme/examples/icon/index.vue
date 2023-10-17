@@ -5,11 +5,6 @@ import BaseCode from "./base.vue?raw";
 import CustomIconPack from "./custom-icon-pack.vue";
 import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 
-import MarkdownIt from "markdown-it";
-import MarkdownItHighlightjs from "markdown-it-highlightjs";
-
-const markdown = new MarkdownIt().use(MarkdownItHighlightjs);
-
 import { ref } from "vue";
 
 const customIconConfigCode = ref(
@@ -21,7 +16,7 @@ const customIconConfig = {
                 default: null,
                 small: null,
                 medium: "fa-lg",
-                large: "fa-2x"
+                large: "fa-xl"
             }
         }
     }
