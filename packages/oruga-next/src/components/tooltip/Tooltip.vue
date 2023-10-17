@@ -22,6 +22,7 @@ import {
     isWebKitAgent,
 } from "../../utils/helpers";
 import { isClient } from "@/utils/ssr";
+import type { BindProp } from "@/types";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -264,7 +265,7 @@ function updateAppendToBody(): void {
         rootClasses.value.forEach((item) => {
             if (typeof item === "object") {
                 Object.keys(item)
-                    .filter((key) => key && item && item[key])
+                    .filter((key) => key && item[key])
                     .forEach((key) => tooltipEl.classList.add(key));
             } else {
                 tooltipEl.classList.add(...item.split(" "));
@@ -328,8 +329,8 @@ function onClose(): void {
 }
 
 /** Close tooltip if clicked outside. */
-function onClickedOutside(event: Event): void {
-    if (isActive.value && Array.isArray(props.autoClose)) {
+function onClickedOutside(event: MouseEvent): void {
+    if (isActive.value && !props.always && Array.isArray(props.autoClose)) {
         if (
             (props.autoClose.indexOf("outside") >= 0 &&
                 !isInWhiteList(event.target as HTMLElement)) ||
@@ -354,9 +355,17 @@ function onKeyPress(event: KeyboardEvent): void {
 /** White-listed items to not close when clicked. */
 function isInWhiteList(el: HTMLElement): boolean {
     if (el === contentRef.value) return true;
+    if (el === triggerRef.value) return true;
     // All chidren from content
     if (contentRef.value !== undefined) {
         const children = contentRef.value.querySelectorAll("*");
+        for (const child of children) {
+            if (el === child) return true;
+        }
+    }
+    // All children from trigger
+    if (triggerRef.value !== undefined) {
+        const children = triggerRef.value.querySelectorAll("*");
         for (const child of children) {
             if (el === child) return true;
         }
@@ -385,7 +394,9 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-tip")]);
+const rootClasses = computed<BindProp>(() => [
+    useComputedClass("rootClass", "o-tip"),
+]);
 
 const triggerClasses = computed(() => [
     useComputedClass("triggerClass", "o-tip__trigger"),
@@ -434,14 +445,14 @@ const contentClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="tooltip" :class="rootClasses">
+    <div ref="rootRef" :class="rootClasses">
         <transition
             :name="animation"
             @after-leave="metrics = null"
             @enter-cancelled="metrics = null">
             <div
                 v-show="isActive || always"
-                ref="content"
+                ref="contentRef"
                 :class="contentClasses">
                 <span :class="arrowClasses"></span>
 
@@ -452,7 +463,7 @@ const contentClasses = computed(() => [
             </div>
         </transition>
         <div
-            ref="trigger"
+            ref="triggerRef"
             :class="triggerClasses"
             :style="triggerStyle"
             @click="onClick"
