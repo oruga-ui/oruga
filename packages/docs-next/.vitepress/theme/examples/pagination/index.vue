@@ -8,8 +8,8 @@ import SlotsCode from "./slots.vue?raw";
 
 <template>
     <h3 id="base">Base</h3>
-
     <ExampleViewer :component="Base" :code="BaseCode" />
+
     <h3 id="slots">Slots</h3>
     <ExampleViewer :component="Slots" :code="SlotsCode" />
 </template>

@@ -9,30 +9,52 @@ import {
     type Ref,
 } from "vue";
 
-type Item = {
+export type ProviderItem = {
     index: number;
-    value: string;
+    data: any;
+    identifier: string;
 };
 
 type PovidedData<T> = {
-    registerItem: (value: string) => Item;
-    unregisterItem: (item: Item) => void;
-    nextSequence: () => string;
+    registerItem: (value: string) => ProviderItem;
+    unregisterItem: (item: ProviderItem) => void;
     data?: T;
+};
+
+type ProviderParentOptions = {
+    /**
+     * Override the provide/inject key.
+     * Default is the component configField attribute
+     */
+    key?: string;
+    /**
+     * Additional data provided for the child to the item
+     */
+    data?: any;
 };
 
 /**
  * Provide functionalities and data to child components
- * @param componentName Name of the provider component
  * @param rootRef Root element of the provider component
  * @param data Additional data to provide
+ * @param options additional options
  */
 export function useProviderParent<T>(
-    componentName: string,
     rootRef: Ref<HTMLElement>,
     data?: T,
+    options?: ProviderParentOptions,
 ) {
-    const childItems = ref<Item[]>([]);
+    // getting a hold of the internal instance in setup()
+    const vm = getCurrentInstance();
+    if (!vm)
+        throw new Error(
+            "useProviderChild must be called within a component setup function.",
+        );
+
+    const configField = vm.proxy?.$options.configField;
+    const key = options?.key ? options.key : configField;
+
+    const childItems = ref<ProviderItem[]>([]);
     const sequence = ref(1);
 
     /**
@@ -42,29 +64,31 @@ export function useProviderParent<T>(
         childItems.value.slice().sort((a, b) => a.index - b.index),
     );
 
-    function registerItem(value: string): Item {
+    function registerItem(data?: any): ProviderItem {
         const index = childItems.value.length;
-        const item = { index, value };
+        const identifier = nextSequence();
+        const item = { index, data, identifier };
         childItems.value.push(item);
         if (rootRef.value) {
             nextTick(() => {
                 const ids = childItems.value
-                    .map((item) => `[data-id="${componentName}-${item.value}"]`)
+                    .map((item) => `[data-id="${key}-${item.identifier}"]`)
                     .join(",");
                 const elements = rootRef.value.querySelectorAll(ids);
                 const sortedIds = Array.from(elements).map((el: any) =>
-                    el.getAttribute("data-id").replace(`${componentName}-`, ""),
+                    el.getAttribute("data-id").replace(`${key}-`, ""),
                 );
 
                 childItems.value.forEach(
-                    (item) => (item.index = sortedIds.indexOf(`${item.value}`)),
+                    (item) =>
+                        (item.index = sortedIds.indexOf(`${item.identifier}`)),
                 );
             });
         }
         return item;
     }
 
-    function unregisterItem(item: Item): void {
+    function unregisterItem(item: ProviderItem): void {
         childItems.value = childItems.value.filter((i) => i !== item);
     }
 
@@ -73,10 +97,9 @@ export function useProviderParent<T>(
     }
 
     /** Provide functionality for child components via dependency injection. */
-    provide<PovidedData<T>>("o" + componentName, {
+    provide<PovidedData<T>>("$o-" + key, {
         registerItem,
         unregisterItem,
-        nextSequence,
         data: data,
     });
 
@@ -86,33 +109,59 @@ export function useProviderParent<T>(
     };
 }
 
+type ProviderChildOptions = {
+    /**
+     * Override the provide/inject key.
+     * Default is the component configField attribute
+     */
+    key?: string;
+    /**
+     * Does the child need the be below the parent?
+     * @default true
+     */
+    needParent?: boolean;
+    /**
+     * Additional data appended to the item
+     */
+    data?: any;
+};
+
 /**
  * Inject functionalities and data from parent components
- * @param componentName Name of the provider component
- * @param value special identifier value
+ * @param options additional options
  */
 export function useProviderChild<T>(
-    componentName: string,
-    value?: string,
-): { parent: T; item: Item } {
-    /** Inject parent component functionality if used inside one **/
-    const parent = inject<PovidedData<T>>("o" + componentName, undefined);
-
-    const item = ref<Item>();
-
-    if (parent) {
-        const identifier = value ? value : parent.nextSequence();
-        item.value = parent.registerItem(identifier);
-    } else {
-        const vm = getCurrentInstance();
+    options: ProviderChildOptions = { needParent: true },
+): { parent: T; item: Ref<ProviderItem> } {
+    // getting a hold of the internal instance in setup()
+    const vm = getCurrentInstance();
+    if (!vm)
         throw new Error(
-            `You should wrap ${vm.proxy.$options.name} in a ${componentName}`,
+            "useProviderChild must be called within a component setup function.",
+        );
+
+    const configField = vm.proxy?.$options.configField;
+    const key = options?.key ? options.key : configField;
+
+    /** Inject parent component functionality if used inside one **/
+    const parent = inject<PovidedData<T>>("$o-" + key, undefined);
+
+    const needParent =
+        typeof options.needParent === "undefined" || options.needParent;
+
+    if (needParent && !parent) {
+        throw new Error(
+            `You should wrap ${vm.proxy.$options.name} in a ${key} component`,
         );
     }
+
+    const item = ref<ProviderItem>();
+
+    if (parent) item.value = parent.registerItem(options.data);
 
     onUnmounted(() => {
         if (parent && item.value) parent.unregisterItem(item.value);
     });
 
-    return { parent: parent?.data, item: item.value };
+    return { parent: parent?.data, item: item };
 }

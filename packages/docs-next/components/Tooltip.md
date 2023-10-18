@@ -38,35 +38,34 @@ title: Tooltip
 
 ### Props
 
-| Prop name    | Description                                                                     | Type                | Values                                                                          | Default                                                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| active       | Whether tooltip is active or not, use v-model:active to make it two-way binding | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                              |
-| always       | Tooltip will be always active                                                   | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| animated     | Tooltip will have an animation                                                  | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                              |
-| animation    | Tooltip default animation                                                       | string              | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;animation: "fade", <br>}</code>   |
-| appendToBody | Append tooltip content to body                                                  | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| autoClose    | Tooltip auto close options                                                      | array\|boolean      | `true`, `false`, `'inside'`, `'outside'`                                        | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                              |
-| delay        | Tooltip delay before it appears (number in ms)                                  | number              | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| label        | Tooltip text                                                                    | string              | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| multiline    | Tooltip will be multilined                                                      | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| override     |                                                                                 | boolean             | -                                                                               | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
-| position     | Tooltip position in relation to the element                                     | Position \| "auto"  | `top`, `bottom`, `left`, `right`, ``                                            | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;position: "top"<br>}</code>       |
-| triggers     | Tooltip trigger events                                                          | array               | `hover`, `click`, `focus`, `contextmenu`                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;triggers: [ "hover",]<br>}</code> |
-| variant      | Color of the tooltip                                                            | string\|func\|array | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <code style='white-space: nowrap; padding: 0;'></code>                                                                                                  |
+| Prop name    | Description                                                                     | Type                | Values                                                                                    | Default                                                                                                                                               |
+| ------------ | ------------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active       | Whether tooltip is active or not, use v-model:active to make it two-way binding | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| always       | Tooltip will be always active                                                   | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| animation    | Tooltip default animation                                                       | string              | -                                                                                         | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;animation: "fade"<br>}</code>   |
+| appendToBody | Append tooltip content to body                                                  | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| autoClose    | Tooltip auto close options                                                      | string[] \| boolean | `true`, `false`, `'inside'`, `'outside'`, `'escape'`                                      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                            |
+| delay        | Tooltip delay before it appears (number in ms)                                  | number              | -                                                                                         |                                                                                                                                                       |
+| label        | Tooltip text, unnecessary when content slot is used                             | string              | -                                                                                         |                                                                                                                                                       |
+| multiline    | Tooltip will be multilined                                                      | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
+| position     | Tooltip position in relation to the element                                     | Position \| "auto"  | `'top'`, `'bottom'`, `'left'`, `'right'`, `'auto'`                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;position: "top"<br>}</code>     |
+| triggers     | Tooltip trigger events                                                          | string[]            | `'hover'`, `'click'`, `'focus'`, `'contextmenu'`                                          | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;triggers: ["hover"]<br>}</code> |
+| variant      | Color of the tooltip                                                            | string              | `'primary'`, `'info'`, `'success'`, `'warning'`, `'danger'`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
 
 ### Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| open       |            |
-| close      |            |
+| Event name    | Properties                                | Description                 |
+| ------------- | ----------------------------------------- | --------------------------- |
+| update:active | **value** `boolean` - updated active prop | active prop two-way binding |
+| close         |                                           | on tooltip close event      |
+| open          |                                           | on tooltip close event      |
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| content |             |          |
-| default |             |          |
+| Name    | Description                            | Bindings |
+| ------- | -------------------------------------- | -------- |
+| content | Tooltip content, prop label is default |          |
+| default | Tooltip trigger slot                   |          |
 
 </div>
 

@@ -1,411 +1,443 @@
-<script lang="ts">
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+<script setup lang="ts">
+import {
+    ref,
+    computed,
+    watch,
+    onMounted,
+    onBeforeUnmount,
+    type Component,
+    type PropType,
+} from "vue";
 
-import { getOptions } from "../../utils/config";
-import { removeElement, getValueByPath } from "../../utils/helpers";
-import { defineComponent } from "vue";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useComputedClass,
+    useClassProps,
+    useMatchMedia,
+    useProgrammaticComponent,
+} from "@/composables";
+import type { ProgrammaticInstance } from "@/index";
+import { isClient } from "@/utils/ssr";
 
 /**
  * A sidebar to use as left/right overlay or static
  * @displayName Sidebar
  * @style _sidebar.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OSidebar",
-    mixins: [BaseComponentMixin, MatchMediaMixin],
     configField: "sidebar",
-    props: {
-        /** To control the behaviour of the sidebar programmatically, use the v-model:open to make it two-way binding */
-        open: Boolean,
-        /**
-         * Color of the sidebar, optional
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        variant: [String, Object],
-        /** Show an overlay like modal */
-        overlay: Boolean,
-        /**
-         * Skeleton position in relation to the window
-         * @values fixed, absolute, static
-         */
-        position: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "sidebar.position",
-                    "fixed",
-                );
-            },
-            validator: (value: string) => {
-                return ["fixed", "absolute", "static"].indexOf(value) >= 0;
-            },
-        },
-        /** Show sidebar in fullheight */
-        fullheight: Boolean,
-        /** Show sidebar in fullwidth */
-        fullwidth: Boolean,
-        /** Show the sidebar on right */
-        right: Boolean,
-        /**
-         * Custom layout on mobile
-         * @values fullwidth, reduced, hidden
-         */
-        mobile: {
-            type: String,
-            validator: (value: string) => {
-                return (
-                    ["", "fullwidth", "reduced", "hidden"].indexOf(value) >= 0
-                );
-            },
-        },
-        /** Show a small sidebar */
-        reduce: Boolean,
-        /** Expand sidebar on hover when reduced or mobile is reduce */
-        expandOnHover: Boolean,
-        /** Expand sidebar on hover with fixed position when reduced or mobile is reduce */
-        expandOnHoverFixed: Boolean,
-        /**
-         * Sidebar cancel options
-         * @values true, false, 'escape', 'outside'
-         */
-        canCancel: {
-            type: [Array, Boolean],
-            default: () => {
-                return getValueByPath(getOptions(), "sidebar.canCancel", [
-                    "escape",
-                    "outside",
-                ]);
-            },
-        },
-        /**
-         * Callback on cancel
-         */
-        onCancel: {
-            type: Function,
-            default: () => {},
-        },
-        scroll: {
-            type: String,
-            default: () => {
-                return getValueByPath(getOptions(), "sidebar.scroll", "clip");
-            },
-            validator: (value: string) => {
-                return ["clip", "keep"].indexOf(value) >= 0;
-            },
-        },
-        rootClass: [String, Function, Array],
-        overlayClass: [String, Function, Array],
-        contentClass: [String, Function, Array],
-        fixedClass: [String, Function, Array],
-        staticClass: [String, Function, Array],
-        absoluteClass: [String, Function, Array],
-        fullheightClass: [String, Function, Array],
-        fullwidthClass: [String, Function, Array],
-        rightClass: [String, Function, Array],
-        reduceClass: [String, Function, Array],
-        expandOnHoverClass: [String, Function, Array],
-        expandOnHoverFixedClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
-        mobileClass: [String, Function, Array],
-        scrollClipClass: [String, Function, Array],
-        noScrollClass: [String, Function, Array],
-        hiddenClass: [String, Function, Array],
-        visibleClass: [String, Function, Array],
-    },
-    emits: ["update:open", "close"],
-    data() {
-        return {
-            isOpen: this.open,
-            transitionName: null,
-            animating: true,
-            savedScrollTop: null,
-        };
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-side"),
-                {
-                    [this.computedClass("mobileClass", "o-side--mobile")]:
-                        this.isMatchMedia,
-                },
-            ];
-        },
-        overlayClasses() {
-            return [this.computedClass("overlayClass", "o-side__overlay")];
-        },
-        contentClasses() {
-            return [
-                this.computedClass("contentClass", "o-side__content"),
-                {
-                    [this.computedClass(
-                        "variantClass",
-                        "o-side__content--",
-                        this.variant,
-                    )]: this.variant,
-                },
-                {
-                    [this.computedClass(
-                        "fixedClass",
-                        "o-side__content--fixed",
-                    )]: this.isFixed,
-                },
-                {
-                    [this.computedClass(
-                        "staticClass",
-                        "o-side__content--static",
-                    )]: this.isStatic,
-                },
-                {
-                    [this.computedClass(
-                        "absoluteClass",
-                        "o-side__content--absolute",
-                    )]: this.isAbsolute,
-                },
-                {
-                    [this.computedClass(
-                        "fullheightClass",
-                        "o-side__content--fullheight",
-                    )]: this.fullheight,
-                },
-                {
-                    [this.computedClass(
-                        "fullwidthClass",
-                        "o-side__content--fullwidth",
-                    )]:
-                        this.fullwidth ||
-                        (this.mobile === "fullwidth" && this.isMatchMedia),
-                },
-                {
-                    [this.computedClass(
-                        "rightClass",
-                        "o-side__content--right",
-                    )]: this.right,
-                },
-                {
-                    [this.computedClass(
-                        "reduceClass",
-                        "o-side__content--mini",
-                    )]:
-                        this.reduce ||
-                        (this.mobile === "reduced" && this.isMatchMedia),
-                },
-                {
-                    [this.computedClass(
-                        "expandOnHoverClass",
-                        "o-side__content--mini-expand",
-                    )]: this.expandOnHover && this.mobile !== "fullwidth",
-                },
-                {
-                    [this.computedClass(
-                        "expandOnHoverFixedClass",
-                        "o-side__content--expand-mini-hover-fixed",
-                    )]:
-                        this.expandOnHover &&
-                        this.expandOnHoverFixed &&
-                        this.mobile !== "fullwidth",
-                },
-                {
-                    [this.computedClass(
-                        "visibleClass",
-                        "o-side__content--visible",
-                    )]: this.isOpen,
-                },
-                {
-                    [this.computedClass(
-                        "hiddenClass",
-                        "o-side__content--hidden",
-                    )]: !this.isOpen,
-                },
-            ];
-        },
-        scrollClass() {
-            if (this.scroll === "clip") {
-                return this.computedClass("scrollClipClass", "o-clipped");
-            }
-            return this.computedClass("noScrollClass", "o-noscroll");
-        },
-        cancelOptions() {
-            return typeof this.canCancel === "boolean"
-                ? this.canCancel
-                    ? getValueByPath(getOptions(), "sidebar.canCancel", [
-                          "escape",
-                          "outside",
-                      ])
-                    : []
-                : this.canCancel;
-        },
-        isStatic() {
-            return this.position === "static";
-        },
-        isFixed() {
-            return this.position === "fixed";
-        },
-        isAbsolute() {
-            return this.position === "absolute";
-        },
-        hideOnMobile() {
-            return this.mobile === "hidden" && this.isMatchMedia;
-        },
-    },
-    watch: {
-        open: {
-            handler(value) {
-                this.isOpen = value;
-                if (this.overlay) {
-                    this.handleScroll();
-                }
-                const open = this.right ? !value : value;
-                this.transitionName = !open ? "slide-prev" : "slide-next";
-            },
-            immediate: true,
-        },
-    },
-    created() {
-        if (typeof window !== "undefined") {
-            document.addEventListener("keyup", this.keyPress);
-            document.addEventListener("click", this.clickedOutside);
-        }
-    },
-    mounted() {
-        if (typeof window !== "undefined") {
-            if (this.isFixed) {
-                document.body.appendChild(this.$el);
-            }
-            if (this.overlay && this.open) {
-                this.handleScroll();
-            }
-        }
-    },
-    beforeUnmount() {
-        if (typeof window !== "undefined") {
-            document.removeEventListener("keyup", this.keyPress);
-            document.removeEventListener("click", this.clickedOutside);
-            if (this.overlay) {
-                // reset scroll
-                const savedScrollTop = !this.savedScrollTop
-                    ? document.documentElement.scrollTop
-                    : this.savedScrollTop;
-                if (this.scrollClass) {
-                    document.body.classList.remove(this.scrollClass);
-                    document.documentElement.classList.remove(this.scrollClass);
-                }
-                document.documentElement.scrollTop = savedScrollTop;
-                document.body.style.top = null;
-            }
-        }
-        if (this.isFixed) {
-            removeElement(this.$el);
-        }
-    },
-    methods: {
-        /**
-         * Keypress event that is bound to the document.
-         */
-        keyPress({ key }) {
-            if (this.isFixed) {
-                if (this.isOpen && (key === "Escape" || key === "Esc"))
-                    this.cancel("escape");
-            }
-        },
-
-        /**
-         * Close the Sidebar if canCancel and call the onCancel prop (function).
-         */
-        cancel(method, ...args: any[]) {
-            if (this.cancelOptions.indexOf(method) < 0) return;
-            if (this.isStatic) return;
-
-            this.onCancel.apply(null, args);
-            this.close();
-        },
-
-        /**
-         * Call the onCancel prop (function) and emit events
-         */
-        close() {
-            this.isOpen = false;
-            this.$emit("close");
-            this.$emit("update:open", false);
-        },
-
-        /**
-         * Close fixed sidebar if clicked outside.
-         */
-        clickedOutside(event) {
-            if (!this.isFixed || !this.isOpen || this.animating) {
-                return;
-            }
-            if (!event.composedPath().includes(this.$refs.sidebarContent)) {
-                this.cancel("outside");
-            }
-        },
-
-        /**
-         * Transition before-enter hook
-         */
-        beforeEnter() {
-            this.animating = true;
-        },
-
-        /**
-         * Transition after-leave hook
-         */
-        afterEnter() {
-            this.animating = false;
-        },
-
-        handleScroll() {
-            if (typeof window === "undefined") return;
-
-            if (this.scroll === "clip") {
-                if (this.scrollClass) {
-                    if (this.open) {
-                        document.documentElement.classList.add(
-                            this.scrollClass,
-                        );
-                    } else {
-                        document.documentElement.classList.remove(
-                            this.scrollClass,
-                        );
-                    }
-                    return;
-                }
-            }
-            this.savedScrollTop = !this.savedScrollTop
-                ? document.documentElement.scrollTop
-                : this.savedScrollTop;
-            if (this.scrollClass) {
-                if (this.open) {
-                    document.body.classList.add(this.scrollClass);
-                } else {
-                    document.body.classList.remove(this.scrollClass);
-                }
-            }
-            if (this.open) {
-                document.body.style.top = `-${this.savedScrollTop}px`;
-                return;
-            }
-            document.documentElement.scrollTop = this.savedScrollTop;
-            document.body.style.top = null;
-            this.savedScrollTop = null;
-        },
-    },
+    inheritAttrs: false,
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Whether siedbar is active or not, use v-model:active to make it two-way binding. */
+    active: { type: Boolean, default: false },
+    /**
+     * Color of the sidebar, optional
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant: {
+        type: String,
+        default: () => getOption("sidebar.variant"),
+    },
+    /** Show an overlay like modal */
+    overlay: { type: Boolean, default: getOption("sidebar.overlay", false) },
+    /**
+     * Skeleton position in relation to the window
+     * @values fixed, absolute, static
+     */
+    position: {
+        type: String,
+        default: () => getOption("sidebar.position", "fixed"),
+        validator: (value: string) =>
+            ["fixed", "absolute", "static"].indexOf(value) >= 0,
+    },
+    /** Show sidebar in fullheight */
+    fullheight: {
+        type: Boolean,
+        default: getOption("sidebar.fullheight", false),
+    },
+    /** Show sidebar in fullwidth */
+    fullwidth: {
+        type: Boolean,
+        default: getOption("sidebar.fullwidth", false),
+    },
+    /** Show the sidebar on right */
+    right: { type: Boolean, default: getOption("sidebar.right", false) },
+    /** Show a small sidebar */
+    reduce: { type: Boolean, default: getOption("sidebar.reduce", false) },
+    /**
+     * Custom layout on mobile
+     * @values fullwidth, reduced, hidden
+     */
+    mobile: {
+        type: String,
+        default: getOption("sidebar.mobile"),
+        validator: (value: string) =>
+            ["fullwidth", "reduced", "hidden"].indexOf(value) >= 0,
+    },
+    /** Expand sidebar on hover when reduced or mobile is reduce */
+    expandOnHover: {
+        type: Boolean,
+        default: getOption("sidebar.expandOnHover", false),
+    },
+    /** Expand sidebar on hover with fixed position when reduced or mobile is reduce */
+    expandOnHoverFixed: {
+        type: Boolean,
+        default: getOption("sidebar.expandOnHoverFixed", false),
+    },
+    /** Custom animation (transition name) */
+    animation: {
+        type: String,
+        default: () => getOption("sidebar.animation"),
+    },
+    /**
+     * Is Sidebar cancleable by pressing escape or clicking outside.
+     * @values 'escape', 'outside', true, false
+     */
+    cancelable: {
+        type: [Array, Boolean] as PropType<string[] | boolean>,
+        default: () => getOption("sidebar.cancelable", ["escape", "outside"]),
+    },
+    /** Callback function to call after user canceled (pressed escape / clicked outside) */
+    onCancel: { type: Function as PropType<() => void>, default: () => {} },
+    /** Callback function to call after close (programmatically close or user canceled) */
+    onClose: { type: Function as PropType<() => void>, default: () => {} },
+    /**
+     * Use `clip` to remove the body scrollbar, `keep` to have a non scrollable scrollbar to avoid shifting background,
+     * but will set body to position fixed, might break some layouts.
+     * @values keep, clip
+     */
+    scroll: {
+        type: String,
+        default: () => getOption("sidebar.scroll", "clip"),
+        validator: (value: string) => ["clip", "keep"].indexOf(value) >= 0,
+    },
+    /** Destroy sidebar on hide */
+    destroyOnHide: {
+        type: Boolean,
+        default: () => getOption("sidebar.destroyOnHide", false),
+    },
+    /**
+     * Component to be injected, used to open a component sidebar programmatically.
+     * Close sidebar within the component by emitting a 'close' event — emits('close')
+     */
+    component: {
+        type: [Object, Function] as PropType<Component>,
+        default: undefined,
+    },
+    /** Props to be binded to the injected component. */
+    props: { type: Object, default: undefined },
+    /** Events to be binded to the injected component. */
+    events: { type: Object, default: () => ({}) },
+    /** DOM element where the sidebar component will be created on (for programmatic usage). */
+    container: {
+        type: [Object, String] as PropType<string | HTMLElement>,
+        default: () => getOption("sidebar.container", "body"),
+    },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    programmatic: {
+        type: Object as PropType<ProgrammaticInstance>,
+        default: undefined,
+    },
+    /**
+     * This is used internally for programmatic usage.
+     * @ignore
+     */
+    promise: { type: Promise, default: undefined },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "activeClass",
+        "overlayClass",
+        "contentClass",
+        "fixedClass",
+        "staticClass",
+        "absoluteClass",
+        "fullheightClass",
+        "fullwidthClass",
+        "rightClass",
+        "reduceClass",
+        "expandOnHoverClass",
+        "expandOnHoverFixedClass",
+        "variantClass",
+        "mobileClass",
+        "scrollClipClass",
+        "noScrollClass",
+        "hiddenClass",
+        "visibleClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * active prop two-way binding
+     * @param value {boolean} - updated active prop
+     */
+    (e: "update:active", value: boolean): void;
+    /**
+     * on component close event
+     * @param value {any} - close event data
+     */
+    (e: "close", ...args: any[]): void;
+}>();
+
+const rootRef = ref();
+const sidebarContent = ref();
+
+/** add programmatic usage to this component */
+const { isActive, close, cancel } = useProgrammaticComponent(
+    rootRef,
+    props,
+    emits,
+    {
+        destroyOnHide: props.destroyOnHide,
+        cancelOptions: getOption("sidebar.cancelable", ["escape", "outside"]),
+    },
+);
+
+const { isMobile } = useMatchMedia();
+
+const savedScrollTop = ref(null);
+const isAnimating = ref(!props.active);
+
+watch(isActive, (value) => {
+    if (props.overlay) handleScroll();
+    if (value) addHandler();
+    else removeHandler();
+});
+
+const transitionName = computed(() => {
+    if (props.animation) return props.animation;
+
+    const open = props.right ? !isActive.value : isActive.value;
+    return !open ? "slide-prev" : "slide-next";
+});
+
+const isStatic = computed(() => props.position === "static");
+const isFixed = computed(() => props.position === "fixed");
+const isAbsolute = computed(() => props.position === "absolute");
+
+const hideOnMobile = computed(
+    () => props.mobile === "hidden" && isMobile.value,
+);
+
+onMounted(() => {
+    if (props.active) addHandler();
+});
+
+onBeforeUnmount(() => {
+    removeHandler();
+    if (isClient) {
+        if (props.overlay) {
+            // reset scroll
+            const scrollto = savedScrollTop.value
+                ? savedScrollTop.value
+                : document.documentElement.scrollTop;
+            if (scrollClass.value) {
+                document.body.classList.remove(scrollClass.value);
+                document.documentElement.classList.remove(scrollClass.value);
+            }
+            document.documentElement.scrollTop = scrollto;
+            document.body.style.top = null;
+        }
+    }
+});
+
+/** add outside click event listener */
+function addHandler(): void {
+    if (isClient && !props.overlay)
+        setTimeout(() => document.addEventListener("click", clickedOutside));
+}
+
+/** remove outside click event listener */
+function removeHandler(): void {
+    document.removeEventListener("click", clickedOutside);
+}
+
+/** Close fixed sidebar if clicked outside. */
+function clickedOutside(event: Event): void {
+    if (!isFixed.value || !isActive.value || isAnimating.value) return;
+    console.log(event.target, isActive.value);
+
+    if (props.overlay || !event.composedPath().includes(sidebarContent.value))
+        if (!isStatic.value) {
+            event.preventDefault();
+            cancel("outside");
+        }
+}
+
+function handleScroll(): void {
+    if (!isClient) return;
+
+    if (props.scroll === "clip") {
+        if (scrollClass.value) {
+            if (isActive.value)
+                document.documentElement.classList.add(scrollClass.value);
+            else document.documentElement.classList.remove(scrollClass.value);
+        }
+        return;
+    }
+
+    savedScrollTop.value = savedScrollTop.value
+        ? savedScrollTop.value
+        : document.documentElement.scrollTop;
+
+    if (scrollClass.value) {
+        if (isActive.value) document.body.classList.add(scrollClass.value);
+        else document.body.classList.remove(scrollClass.value);
+    }
+
+    if (isActive.value) {
+        document.body.style.top = `-${savedScrollTop.value}px`;
+        return;
+    }
+
+    document.documentElement.scrollTop = savedScrollTop.value;
+    document.body.style.top = null;
+    savedScrollTop.value = null;
+}
+
+/** Transition after-enter hook */
+function afterEnter(): void {
+    isAnimating.value = false;
+}
+
+/** Transition before-leave hook */
+function beforeLeave(): void {
+    isAnimating.value = true;
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-side"),
+    {
+        [useComputedClass("mobileClass", "o-side--mobile")]: isMobile.value,
+    },
+    {
+        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
+    },
+]);
+
+const overlayClasses = computed(() => [
+    useComputedClass("overlayClass", "o-side__overlay"),
+]);
+
+const contentClasses = computed(() => [
+    useComputedClass("contentClass", "o-side__content"),
+    {
+        [useComputedClass("variantClass", "o-side__content--", props.variant)]:
+            props.variant,
+    },
+    {
+        [useComputedClass("fixedClass", "o-side__content--fixed")]:
+            isFixed.value,
+    },
+    {
+        [useComputedClass("staticClass", "o-side__content--static")]:
+            isStatic.value,
+    },
+    {
+        [useComputedClass("absoluteClass", "o-side__content--absolute")]:
+            isAbsolute.value,
+    },
+    {
+        [useComputedClass("fullheightClass", "o-side__content--fullheight")]:
+            props.fullheight,
+    },
+    {
+        [useComputedClass("fullwidthClass", "o-side__content--fullwidth")]:
+            props.fullwidth || (props.mobile === "fullwidth" && isMobile.value),
+    },
+    {
+        [useComputedClass("rightClass", "o-side__content--right")]: props.right,
+    },
+    {
+        [useComputedClass("reduceClass", "o-side__content--mini")]:
+            props.reduce || (props.mobile === "reduced" && isMobile.value),
+    },
+    {
+        [useComputedClass(
+            "expandOnHoverClass",
+            "o-side__content--mini-expand",
+        )]: props.expandOnHover && props.mobile !== "fullwidth",
+    },
+    {
+        [useComputedClass(
+            "expandOnHoverFixedClass",
+            "o-side__content--expand-mini-hover-fixed",
+        )]:
+            props.expandOnHover &&
+            props.expandOnHoverFixed &&
+            props.mobile !== "fullwidth",
+    },
+    {
+        [useComputedClass("visibleClass", "o-side__content--visible")]:
+            isActive.value,
+    },
+    {
+        [useComputedClass("hiddenClass", "o-side__content--hidden")]:
+            !isActive.value,
+    },
+]);
+
+const scrollClass = computed(() =>
+    props.scroll === "clip"
+        ? useComputedClass("scrollClipClass", "o-clipped")
+        : useComputedClass("noScrollClass", "o-noscroll"),
+);
+// computed ref must be computed at least once for programmatic usage
+scrollClass.value;
+
+// --- Expose Public Functionality ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
-    <div v-show="!hideOnMobile" :class="rootClasses">
-        <div v-if="overlay && isOpen" :class="overlayClasses" />
-        <transition
-            :name="transitionName"
-            @before-enter="beforeEnter"
-            @after-enter="afterEnter">
-            <div v-show="isOpen" ref="sidebarContent" :class="contentClasses">
-                <slot />
-            </div>
-        </transition>
-    </div>
+    <Teleport to="body" :disabled="!isFixed">
+        <div
+            v-show="!hideOnMobile"
+            ref="rootRef"
+            v-bind="$attrs"
+            :class="rootClasses">
+            <div
+                v-if="overlay && isActive"
+                :class="overlayClasses"
+                @click="(evt) => clickedOutside(evt)" />
+            <transition
+                :name="transitionName"
+                @after-enter="afterEnter"
+                @before-leave="beforeLeave">
+                <div
+                    v-show="isActive"
+                    ref="sidebarContent"
+                    :class="contentClasses">
+                    <!--
+                        @slot Sidebar default content, prop component is default
+                        @binding {close} close - function to close the component
+                    -->
+                    <slot :close="close">
+                        <!-- injected component for programmatic usage -->
+                        <component
+                            v-bind="$props.props"
+                            :is="component"
+                            v-if="component"
+                            v-on="$props.events"
+                            @close="close" />
+                    </slot>
+                </div>
+            </transition>
+        </div>
+    </Teleport>
 </template>

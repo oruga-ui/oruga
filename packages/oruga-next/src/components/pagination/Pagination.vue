@@ -1,430 +1,377 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, watch, nextTick } from "vue";
 
-import PaginationButton from "./PaginationButton.vue";
-import Icon from "../icon/Icon.vue";
+import OPaginationButton from "./PaginationButton.vue";
+import OIcon from "../icon/Icon.vue";
 
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
-
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import MatchMediaMixin from "../../utils/MatchMediaMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useComputedClass,
+    useClassProps,
+    useMatchMedia,
+    usePropBinding,
+} from "@/composables";
 
 /**
  * A responsive and flexible pagination
  * @displayName Pagination
  * @style _pagination.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OPagination",
-    components: {
-        [Icon.name]: Icon,
-        [PaginationButton.name]: PaginationButton,
-    },
     configField: "pagination",
-    mixins: [BaseComponentMixin, MatchMediaMixin],
-    provide() {
-        return {
-            $pagination: this,
-        };
-    },
-    emits: ["update:active", "change", "update:current"],
-    props: {
-        /** Total count of items */
-        total: Number,
-        /** Items count for each page */
-        perPage: {
-            type: Number,
-            default: () => {
-                return getValueByPath(getOptions(), "pagination.perPage", 20);
-            },
-        },
-        /** Current page number, use v-model:current to make it two-way binding */
-        current: {
-            type: Number,
-            default: 1,
-        },
-        /** Number of pagination items to show before current page */
-        rangeBefore: {
-            type: Number,
-            default: 1,
-        },
-        /** Number of pagination items to show after current page */
-        rangeAfter: {
-            type: Number,
-            default: 1,
-        },
-        /**
-         * Pagination size, optional
-         * @values small, medium, large
-         */
-        size: String,
-        /** Simple style */
-        simple: Boolean,
-        /** Rounded button styles */
-        rounded: Boolean,
-        /**
-         * Buttons order, optional
-         * @values centered, right, left
-         */
-        order: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "pagination.order",
-                    "right",
-                );
-            },
-        },
-        /**
-         * Icon pack to use
-         * @values mdi, fa, fas and any other custom icon pack
-         */
-        iconPack: String,
-        /** Icon to use for previous button */
-        iconPrev: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "pagination.iconPrev",
-                    "chevron-left",
-                );
-            },
-        },
-        /** Icon to use for next button */
-        iconNext: {
-            type: String,
-            default: () => {
-                return getValueByPath(
-                    getOptions(),
-                    "pagination.iconNext",
-                    "chevron-right",
-                );
-            },
-        },
-        ariaNextLabel: String,
-        ariaPreviousLabel: String,
-        ariaPageLabel: String,
-        ariaCurrentLabel: String,
-        rootClass: [String, Function, Array],
-        prevBtnClass: [String, Function, Array],
-        nextBtnClass: [String, Function, Array],
-        listItemClass: [String, Function, Array],
-        listClass: [String, Function, Array],
-        linkClass: [String, Function, Array],
-        linkCurrentClass: [String, Function, Array],
-        ellipsisClass: [String, Function, Array],
-        infoClass: [String, Function, Array],
-        orderClass: [String, Function, Array],
-        simpleClass: [String, Function, Array],
-        roundedClass: [String, Function, Array],
-        linkDisabledClass: [String, Function, Array],
-        sizeClass: [String, Function, Array],
-        mobileClass: [String, Function, Array],
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-pag"),
-                {
-                    [this.computedClass("orderClass", "o-pag--", this.order)]:
-                        this.order,
-                },
-                {
-                    [this.computedClass("sizeClass", "o-pag--", this.size)]:
-                        this.size,
-                },
-                {
-                    [this.computedClass("simpleClass", "o-pag--simple")]:
-                        this.simple,
-                },
-                {
-                    [this.computedClass("mobileClass", "o-pag--mobile")]:
-                        this.isMatchMedia,
-                },
-            ];
-        },
-        prevBtnClasses() {
-            return [
-                this.computedClass("prevBtnClass", "o-pag__previous"),
-                {
-                    [this.computedClass(
-                        "linkDisabledClass",
-                        "o-pag__link--disabled",
-                    )]: !this.hasPrev,
-                },
-            ];
-        },
-        nextBtnClasses() {
-            return [
-                this.computedClass("nextBtnClass", "o-pag__next"),
-                {
-                    [this.computedClass(
-                        "linkDisabledClass",
-                        "o-pag__link--disabled",
-                    )]: !this.hasNext,
-                },
-            ];
-        },
-        infoClasses() {
-            return [this.computedClass("infoClass", "o-pag__info")];
-        },
-        ellipsisClasses() {
-            return [this.computedClass("ellipsisClass", "o-pag__ellipsis")];
-        },
-        listClasses() {
-            return [this.computedClass("listClass", "o-pag__list")];
-        },
-        linkClasses() {
-            return [
-                this.computedClass("linkClass", "o-pag__link"),
-                {
-                    [this.computedClass(
-                        "roundedClass",
-                        "o-pag__link--rounded",
-                    )]: this.rounded,
-                },
-            ];
-        },
-        linkCurrentClasses() {
-            return [
-                this.computedClass("linkCurrentClass", "o-pag__link--current"),
-            ];
-        },
-
-        beforeCurrent() {
-            return parseInt(this.rangeBefore);
-        },
-
-        afterCurrent() {
-            return parseInt(this.rangeAfter);
-        },
-
-        /**
-         * Total page size (count).
-         */
-        pageCount() {
-            return Math.ceil(this.total / this.perPage);
-        },
-
-        /**
-         * First item of the page (count).
-         */
-        firstItem() {
-            const firstItem = this.current * this.perPage - this.perPage + 1;
-            return firstItem >= 0 ? firstItem : 0;
-        },
-
-        /**
-         * Check if previous button is available.
-         */
-        hasPrev() {
-            return this.current > 1;
-        },
-
-        /**
-         * Check if first page button should be visible.
-         */
-        hasFirst() {
-            return this.current >= 2 + this.beforeCurrent;
-        },
-
-        /**
-         * Check if first ellipsis should be visible.
-         */
-        hasFirstEllipsis() {
-            return this.current >= this.beforeCurrent + 4;
-        },
-
-        /**
-         * Check if last page button should be visible.
-         */
-        hasLast() {
-            return this.current <= this.pageCount - (1 + this.afterCurrent);
-        },
-
-        /**
-         * Check if last ellipsis should be visible.
-         */
-        hasLastEllipsis() {
-            return this.current < this.pageCount - (2 + this.afterCurrent);
-        },
-
-        /**
-         * Check if next button is available.
-         */
-        hasNext() {
-            return this.current < this.pageCount;
-        },
-
-        /**
-         * Get near pages, 1 before and 1 after the current.
-         * Also add the click event to the array.
-         */
-        pagesInRange() {
-            if (this.simple) return;
-
-            let left = Math.max(1, this.current - this.beforeCurrent);
-            if (left - 1 === 2) {
-                left--; // Do not show the ellipsis if there is only one to hide
-            }
-            let right = Math.min(
-                this.current + this.afterCurrent,
-                this.pageCount,
-            );
-            if (this.pageCount - right === 2) {
-                right++; // Do not show the ellipsis if there is only one to hide
-            }
-
-            const pages = [];
-            for (let i = left; i <= right; i++) {
-                pages.push(this.getPage(i));
-            }
-            return pages;
-        },
-
-        hasDefaultSlot() {
-            return this.$slots.default;
-        },
-        hasPreviousSlot() {
-            return this.$slots.previous;
-        },
-        hasNextSlot() {
-            return this.$slots.next;
-        },
-    },
-    watch: {
-        /**
-         * If current page is trying to be greater than page count, set to last.
-         */
-        pageCount(value) {
-            if (this.current > value) this.last();
-        },
-    },
-    methods: {
-        /**
-         * Previous button click listener.
-         */
-        prev(event) {
-            this.changePage(this.current - 1, event);
-        },
-        /**
-         * Next button click listener.
-         */
-        next(event) {
-            this.changePage(this.current + 1, event);
-        },
-        /**
-         * First button click listener.
-         */
-        first(event) {
-            this.changePage(1, event);
-        },
-        /**
-         * Last button click listener.
-         */
-        last(event) {
-            this.changePage(this.pageCount, event);
-        },
-
-        changePage(num, event) {
-            if (this.current === num || num < 1 || num > this.pageCount) return;
-            this.$emit("change", num);
-            this.$emit("update:current", num);
-
-            // Set focus on element to keep tab order
-            if (event && event.target) {
-                this.$nextTick(() => event.target.focus());
-            }
-        },
-
-        getPage(num, options: any = {}) {
-            return {
-                number: num,
-                isCurrent: this.current === num,
-                click: (event) => this.changePage(num, event),
-                disabled: options.disabled || false,
-                class: options.class || "",
-                "aria-label":
-                    options["aria-label"] ||
-                    this.getAriaPageLabel(num, this.current === num),
-            };
-        },
-
-        /**
-         * Get text for aria-label according to page number.
-         */
-        getAriaPageLabel(pageNumber, isCurrent) {
-            if (this.ariaPageLabel && (!isCurrent || !this.ariaCurrentLabel)) {
-                return this.ariaPageLabel + " " + pageNumber + ".";
-            } else if (
-                this.ariaPageLabel &&
-                isCurrent &&
-                this.ariaCurrentLabel
-            ) {
-                return (
-                    this.ariaCurrentLabel +
-                    ", " +
-                    this.ariaPageLabel +
-                    " " +
-                    pageNumber +
-                    "."
-                );
-            }
-            return null;
-        },
-    },
+    inheritAttrs: false,
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Total count of items */
+    total: { type: Number, default: undefined },
+    /** Items count for each page */
+    perPage: {
+        type: Number,
+        default: () => getOption("pagination.perPage", 20),
+    },
+    /** Current page number, use v-model:current to make it two-way binding. */
+    current: { type: Number, default: 1 },
+    /** Number of pagination items to show before current page. */
+    rangeBefore: { type: Number, default: 1 },
+    /** Number of pagination items to show after current page. */
+    rangeAfter: { type: Number, default: 1 },
+    /**
+     * Pagination size, optional
+     * @values small, medium, large
+     */
+    size: {
+        type: String,
+        default: () => getOption("pagination.size"),
+    },
+    /** Simple style */
+    simple: {
+        type: Boolean,
+        default: () => getOption("pagination.simple", false),
+    },
+    /** Rounded button style */
+    rounded: {
+        type: Boolean,
+        default: () => getOption("pagination.rounded", false),
+    },
+    /**
+     * Buttons order, optional
+     * @values centered, right, left
+     */
+    order: {
+        type: String,
+        default: () => getOption("pagination.order", "right"),
+    },
+    /**
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
+     */
+    iconPack: {
+        type: String,
+        default: () => getOption("pagination.iconPack"),
+    },
+    /** Icon to use for previous button */
+    iconPrev: {
+        type: String,
+        default: () => getOption("pagination.iconPrev", "chevron-left"),
+    },
+    /** Icon to use for next button */
+    iconNext: {
+        type: String,
+        default: () => getOption("pagination.iconNext", "chevron-right"),
+    },
+    /** Accessibility label for the next page button. */
+    ariaNextLabel: {
+        type: String,
+        default: () => getOption("pagination.ariaNextLabel", "Next page"),
+    },
+    /** Accessibility label for the previous page button. */
+    ariaPreviousLabel: {
+        type: String,
+        default: () => getOption("pagination.ariaNextLabel", "Previous page"),
+    },
+    /** Accessibility label for the page button. */
+    ariaPageLabel: {
+        type: String,
+        default: () => getOption("pagination.ariaNextLabel", "page"),
+    },
+    /** Accessibility label for the current page button. */
+    ariaCurrentLabel: {
+        type: String,
+        default: () => getOption("pagination.ariaNextLabel", "Current page"),
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "prevBtnClass",
+        "nextBtnClass",
+        "listItemClass",
+        "listClass",
+        "linkClass",
+        "linkCurrentClass",
+        "ellipsisClass",
+        "infoClass",
+        "orderClass",
+        "simpleClass",
+        "roundedClass",
+        "linkDisabledClass",
+        "sizeClass",
+        "mobileClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * current prop two-way binding
+     * @param value {number} updated current prop
+     */
+    (e: "update:current", value: number): void;
+    /**
+     * on current change event
+     * @param value {number} current value
+     */
+    (e: "change", event: number): void;
+}>();
+
+const { isMobile } = useMatchMedia();
+
+const current = usePropBinding("current", props, emits);
+
+/** Total page size (count). */
+const pageCount = computed(() => Math.ceil(props.total / props.perPage));
+
+/** If current page is trying to be greater than page count, set to last. */
+watch(
+    () => pageCount.value,
+    (value) => {
+        if (props.current > value) last();
+    },
+);
+
+/** First item of the page (count). */
+const firstItem = computed(() => {
+    const firstItem = props.current * props.perPage - props.perPage + 1;
+    return firstItem >= 0 ? firstItem : 0;
+});
+
+/** Check if previous button is available. */
+const hasPrev = computed(() => props.current > 1);
+
+/** Check if first page button should be visible. */
+const hasFirst = computed(() => props.current >= 2 + props.rangeBefore);
+
+/** Check if first ellipsis should be visible. */
+const hasFirstEllipsis = computed(() => props.current >= props.rangeBefore + 4);
+
+/** Check if last page button should be visible. */
+const hasLast = computed(
+    () => props.current <= pageCount.value - (1 + props.rangeAfter),
+);
+
+/** Check if last ellipsis should be visible. */
+const hasLastEllipsis = computed(
+    () => props.current < pageCount.value - (2 + props.rangeAfter),
+);
+
+/** Check if next button is available. */
+const hasNext = computed(() => props.current < pageCount.value);
+
+/**
+ * Get near pages, 1 before and 1 after the current.
+ * Also add the click event to the array.
+ */
+const pagesInRange = computed(() => {
+    if (props.simple) return;
+
+    let left = Math.max(1, props.current - props.rangeBefore);
+    if (left - 1 === 2) {
+        left--; // Do not show the ellipsis if there is only one to hide
+    }
+    let right = Math.min(props.current + props.rangeAfter, pageCount.value);
+    if (pageCount.value - right === 2) {
+        right++; // Do not show the ellipsis if there is only one to hide
+    }
+
+    const pages = [];
+    for (let i = left; i <= right; i++) {
+        pages.push(getPage(i));
+    }
+    return pages;
+});
+
+/** Get properties for a page */
+function getPage(num, ariaLabel?: string) {
+    return {
+        number: num,
+        isCurrent: props.current === num,
+        click: (event: Event): void => changePage(num, event),
+        "aria-label": ariaLabel || getAriaPageLabel(num, props.current === num),
+    };
+}
+
+/** Get text for aria-label according to page number. */
+function getAriaPageLabel(pageNumber, isCurrent): string {
+    if (props.ariaPageLabel && (!isCurrent || !props.ariaCurrentLabel))
+        return props.ariaPageLabel + " " + pageNumber + ".";
+    else if (props.ariaPageLabel && isCurrent && props.ariaCurrentLabel)
+        return (
+            props.ariaCurrentLabel +
+            ", " +
+            props.ariaPageLabel +
+            " " +
+            pageNumber +
+            "."
+        );
+    return null;
+}
+
+/** Previous button click listener. */
+function prev(event?: Event): void {
+    changePage(props.current - 1, event);
+}
+
+/** Next button click listener. */
+function next(event?: Event): void {
+    changePage(props.current + 1, event);
+}
+
+/** First button click listener. */
+function first(event?: Event): void {
+    changePage(1, event);
+}
+
+/** Last button click listener. */
+function last(event?: Event): void {
+    changePage(pageCount.value, event);
+}
+
+function changePage(num: number, event: Event): void {
+    if (props.current === num || num < 1 || num > pageCount.value) return;
+    emits("change", num);
+    current.value = num;
+
+    // Set focus on element to keep tab order
+    if (event && event.target)
+        nextTick(() => (event.target as HTMLElement).focus());
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-pag"),
+    {
+        [useComputedClass("orderClass", "o-pag--", props.order)]: props.order,
+    },
+    {
+        [useComputedClass("sizeClass", "o-pag--", props.size)]: props.size,
+    },
+    {
+        [useComputedClass("simpleClass", "o-pag--simple")]: props.simple,
+    },
+    {
+        [useComputedClass("mobileClass", "o-pag--mobile")]: isMobile.value,
+    },
+]);
+
+const prevBtnClasses = computed(() => [
+    useComputedClass("prevBtnClass", "o-pag__previous"),
+    {
+        [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
+            !hasPrev.value,
+    },
+]);
+
+const nextBtnClasses = computed(() => [
+    useComputedClass("nextBtnClass", "o-pag__next"),
+    {
+        [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
+            !hasNext.value,
+    },
+]);
+
+const infoClasses = computed(() => [
+    useComputedClass("infoClass", "o-pag__info"),
+]);
+
+const ellipsisClasses = computed(() => [
+    useComputedClass("ellipsisClass", "o-pag__ellipsis"),
+]);
+
+const listClasses = computed(() => [
+    useComputedClass("listClass", "o-pag__list"),
+]);
+
+const linkClasses = computed(() => [
+    useComputedClass("linkClass", "o-pag__link"),
+    {
+        [useComputedClass("roundedClass", "o-pag__link--rounded")]:
+            props.rounded,
+    },
+]);
+
+const linkCurrentClasses = computed(() => [
+    useComputedClass("linkCurrentClass", "o-pag__link--current"),
+]);
+
+const listItemClass = computed(() =>
+    useComputedClass("listItemClass", "o-pag__item"),
+);
+
+// --- Expose Public Functionality ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ last, first, prev, next });
 </script>
 
 <template>
     <nav :class="rootClasses">
-        <slot
-            v-if="hasPreviousSlot"
-            name="previous"
-            :linkClass="linkClasses"
-            :linkCurrentClass="linkCurrentClasses"
-            :page="
-                getPage(current - 1, {
-                    class: prevBtnClasses,
-                    'aria-label': ariaPreviousLabel,
-                })
-            ">
-            <o-icon :icon="iconPrev" :pack="iconPack" both aria-hidden="true" />
+        <!-- 
+            @slot Previous button slot
+            @binding {number} number - page number 
+            @binding {boolean} isCurrent - if page is current
+            @binding {(event:Event): void} click - onClick handler
+            @binding {string} ariaLabel - aria-label attribute
+        -->
+        <slot name="previous" v-bind="getPage(current - 1, ariaPreviousLabel)">
+            <o-pagination-button
+                v-bind="getPage(current - 1, ariaPreviousLabel)"
+                :class="prevBtnClasses"
+                :link-class="linkClasses"
+                :link-current-class="linkCurrentClasses">
+                <o-icon
+                    :icon="iconPrev"
+                    :pack="iconPack"
+                    both
+                    aria-hidden="true" />
+            </o-pagination-button>
         </slot>
-        <o-pagination-button
-            v-else
-            :class="prevBtnClasses"
-            :linkClass="linkClasses"
-            :linkCurrentClass="linkCurrentClasses"
-            :page="getPage(current - 1)">
-            <o-icon :icon="iconPrev" :pack="iconPack" both aria-hidden="true" />
-        </o-pagination-button>
-        <slot
-            v-if="hasNextSlot"
-            name="next"
-            :linkClass="linkClasses"
-            :linkCurrentClass="linkCurrentClasses"
-            :page="
-                getPage(current + 1, {
-                    class: nextBtnClasses,
-                    'aria-label': ariaNextLabel,
-                })
-            ">
-            <o-icon :icon="iconNext" :pack="iconPack" both aria-hidden="true" />
+        <!-- 
+            @slot Next button slot
+            @binding {number} number - page number 
+            @binding {boolean} isCurrent - if page is current
+            @binding {(event:Event): void} click - onClick handler
+            @binding {string} ariaLabel - aria-label attribute
+        -->
+        <slot name="next" v-bind="getPage(current + 1, ariaNextLabel)">
+            <o-pagination-button
+                v-bind="getPage(current + 1, ariaNextLabel)"
+                :class="nextBtnClasses"
+                :link-class="linkClasses"
+                :link-current-class="linkCurrentClasses">
+                <o-icon
+                    :icon="iconNext"
+                    :pack="iconPack"
+                    both
+                    aria-hidden="true" />
+            </o-pagination-button>
         </slot>
-        <o-pagination-button
-            v-else
-            :class="nextBtnClasses"
-            :linkClass="linkClasses"
-            :linkCurrentClass="linkCurrentClasses"
-            :page="getPage(current + 1)">
-            <o-icon :icon="iconNext" :pack="iconPack" both aria-hidden="true" />
-        </o-pagination-button>
 
-        <small :class="infoClasses" v-if="simple">
+        <small v-if="simple" :class="infoClasses">
             <template v-if="perPage == 1">
                 {{ firstItem }} / {{ total }}
             </template>
@@ -433,19 +380,16 @@ export default defineComponent({
                 {{ total }}
             </template>
         </small>
-        <ul :class="listClasses" v-else>
+
+        <ul v-else :class="listClasses">
             <!--First-->
             <li v-if="hasFirst" :class="listItemClass">
-                <slot
-                    v-if="hasDefaultSlot"
-                    :page="getPage(1)"
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses" />
-                <o-pagination-button
-                    v-else
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses"
-                    :page="getPage(1)" />
+                <slot v-bind="getPage(1)">
+                    <o-pagination-button
+                        v-bind="getPage(1)"
+                        :link-class="linkClasses"
+                        :link-current-class="linkCurrentClasses" />
+                </slot>
             </li>
             <li v-if="hasFirstEllipsis" :class="listItemClass">
                 <span :class="ellipsisClasses">&hellip;</span>
@@ -456,16 +400,12 @@ export default defineComponent({
                 v-for="page in pagesInRange"
                 :key="page.number"
                 :class="listItemClass">
-                <slot
-                    v-if="hasDefaultSlot"
-                    :page="page"
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses" />
-                <o-pagination-button
-                    v-else
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses"
-                    :page="page" />
+                <slot v-bind="page">
+                    <o-pagination-button
+                        v-bind="page"
+                        :link-class="linkClasses"
+                        :link-current-class="linkCurrentClasses" />
+                </slot>
             </li>
 
             <!--Last-->
@@ -473,16 +413,19 @@ export default defineComponent({
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
             <li v-if="hasLast" :class="listItemClass">
-                <slot
-                    v-if="hasDefaultSlot"
-                    :page="getPage(pageCount)"
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses" />
-                <o-pagination-button
-                    v-else
-                    :linkClass="linkClasses"
-                    :linkCurrentClass="linkCurrentClasses"
-                    :page="getPage(pageCount)" />
+                <!-- 
+                    @slot Pagination button slot
+                    @binding {number} number - page number 
+                    @binding {boolean} isCurrent - if page is current
+                    @binding {(event:Event): void} click - onClick handler
+                    @binding {string} ariaLabel - aria-label attribute
+                -->
+                <slot v-bind="getPage(pageCount)">
+                    <o-pagination-button
+                        v-bind="getPage(pageCount)"
+                        :link-class="linkClasses"
+                        :link-current-class="linkCurrentClasses" />
+                </slot>
             </li>
         </ul>
     </nav>

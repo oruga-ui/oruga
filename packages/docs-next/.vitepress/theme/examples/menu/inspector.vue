@@ -41,18 +41,16 @@ const inspectData = [
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-menu v-bind="props">
-            <o-menu-list v-bind="props" label="Menu">
-                <o-menu-item v-bind="props" icon="info-circle" label="Info" />
-                <o-menu-item v-bind="props" icon="cog" label="Submenu" expanded>
-                    <o-menu-item v-bind="props" icon="user" label="Users" />
-                    <o-menu-item
-                        v-bind="props"
-                        icon="money-bill"
-                        label="Payments"
-                        disabled />
-                </o-menu-item>
-            </o-menu-list>
+        <o-menu v-bind="props" label="Menu">
+            <o-menu-item v-bind="props" icon="info-circle" label="Info" />
+            <o-menu-item v-bind="props" icon="cog" label="Submenu" expanded>
+                <o-menu-item v-bind="props" icon="user" label="Users" />
+                <o-menu-item
+                    v-bind="props"
+                    icon="money-bill"
+                    label="Payments"
+                    disabled />
+            </o-menu-item>
         </o-menu>
     </inspector-wrapper>
 </template>
