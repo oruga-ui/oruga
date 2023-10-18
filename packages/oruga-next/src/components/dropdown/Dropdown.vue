@@ -119,13 +119,13 @@ const props = defineProps({
      */
     triggers: {
         type: Array as PropType<string[]>,
+        default: () => getOption("dropdown.triggers", ["click"]),
         validator: (values: string[]) =>
             values.filter(
                 (value) =>
                     ["click", "hover", "contextmenu", "focus"].indexOf(value) >
                     -1,
             ).length === values.length,
-        default: () => ["click"],
     },
     /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
     tabindex: { type: Number, default: 0 },
