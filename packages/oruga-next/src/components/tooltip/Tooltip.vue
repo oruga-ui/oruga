@@ -20,7 +20,7 @@ import {
     createAbsoluteElement,
     removeElement,
     isWebKitAgent,
-} from "../../utils/helpers";
+} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import type { BindProp } from "@/types";
 
