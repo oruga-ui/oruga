@@ -8,7 +8,7 @@ import {
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { File } from "../../utils/ssr";
+import { File } from "@/utils/ssr";
 
 /**
  * Upload one or more files
