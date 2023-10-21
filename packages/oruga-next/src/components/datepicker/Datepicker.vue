@@ -239,9 +239,9 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    /** A11y next button aria label */
+    /** Accessibility next button aria label */
     ariaNextLabel: { type: String, default: "Next Page" },
-    /** A11y previous button aria label  */
+    /** Accessibility previous button aria label  */
     ariaPreviousLabel: { type: String, default: "Previous Page" },
     // add class props (will not be displayed in the docs)
     ...useClassProps([

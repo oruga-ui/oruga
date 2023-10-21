@@ -110,7 +110,7 @@ function eventsDateMatch(day: Date): DatepickerEvent[] {
     return props.events.filter((event) => event.date.getDay() === day.getDay());
 }
 
-// --- Events ---
+// --- Event Handlers ---
 
 function onKeydown(event: KeyboardEvent, weekDay: Date): void {
     let preventDefault = true;

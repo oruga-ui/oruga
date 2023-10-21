@@ -151,7 +151,7 @@ function validateFocusedDay(): void {
     }
 }
 
-// --- Events ---
+// --- Event Handlers ---
 
 /** Emit input event with selected date as payload for v-model in parent */
 function onSelectedDate(date: Date): void {

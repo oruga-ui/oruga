@@ -92,9 +92,7 @@ export function getStyleValue(value: any): any {
     return value;
 }
 
-/**
- * Extension of indexOf method by equality function if specified
- */
+/** Extension of indexOf method by equality function if specified */
 export function indexOf<T>(
     array: T[],
     obj: T,
@@ -102,7 +100,7 @@ export function indexOf<T>(
 ): number {
     if (!array) return -1;
     if (!fn || typeof fn !== "function") return array.indexOf(obj);
-    return array.findIndex((value, index, obj) => fn(value, obj));
+    return array.findIndex((value, index, arr) => fn(value, arr));
 }
 
 export const isObject = <T>(obj: T): boolean =>

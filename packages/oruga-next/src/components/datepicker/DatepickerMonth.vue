@@ -173,7 +173,7 @@ function isDateSelectable(date: Date): boolean {
     return validity.indexOf(false) < 0;
 }
 
-// --- Events ---
+// --- Event Handlers ---
 
 function onKeydown(event: KeyboardEvent, weekDay: Date): void {
     let preventDefault = true;
