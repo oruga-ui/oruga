@@ -240,9 +240,15 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     /** Accessibility next button aria label */
-    ariaNextLabel: { type: String, default: "Next Page" },
+    ariaNextLabel: {
+        type: String,
+        default: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+    },
     /** Accessibility previous button aria label  */
-    ariaPreviousLabel: { type: String, default: "Previous Page" },
+    ariaPreviousLabel: {
+        type: String,
+        default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
