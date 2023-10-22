@@ -310,7 +310,7 @@ const inspectData = [
                 {{ row[column.field] }}
             </o-table-column>
             <template #footer> This is the footer </template>
-            <template #detail>DETAILS</template>
+            <template #detail> DETAILS </template>
         </o-table>
     </inspector-wrapper>
 </template>

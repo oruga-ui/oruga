@@ -1,97 +1,166 @@
-<script lang="ts">
-import { defineComponent, h } from "vue";
-
+<script setup lang="ts">
+import {
+    computed,
+    onBeforeMount,
+    ref,
+    useSlots,
+    getCurrentInstance,
+    type PropType,
+} from "vue";
+import { useProviderChild } from "@/composables";
 import { toCssDimension } from "../../utils/helpers";
+import type { TableColumnComponent, Column } from "./types";
 
 /**
  * @displayName Table Column
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OTableColumn",
-    inject: ["$table"],
-    props: {
-        label: String,
-        customKey: [String, Number],
-        field: String,
-        meta: [String, Number, Boolean, Function, Object, Array],
-        width: [Number, String],
-        numeric: Boolean,
-        /**
-         * Optional, position of column content
-         * @values left, centered, right
-         */
-        position: {
-            type: String,
-            validator(value: string) {
-                return ["left", "centered", "right"].indexOf(value) > -1;
-            },
-        },
-        searchable: Boolean,
-        sortable: Boolean,
-        visible: {
-            type: Boolean,
-            default: true,
-        },
-        customSort: Function,
-        customSearch: Function,
-        sticky: Boolean,
-        headerSelectable: Boolean,
-        /** Adds native attributes to th :th-attrs="(column)" => ({})" */
-        thAttrs: {
-            type: Function,
-            default: () => ({}),
-        },
-        /** Adds native attributes to td :td-attrs="(row, column)" => ({})" */
-        tdAttrs: {
-            type: Function,
-            default: () => ({}),
-        },
-        subheading: String,
+    configField: "table",
+});
+
+const props = defineProps({
+    /** Define the column label */
+    label: { type: String, default: undefined },
+    /** Define an object property key if data is an object */
+    field: { type: String, default: undefined },
+    /** Define a column sub heading  */
+    subheading: { type: String, default: undefined },
+    /** Add addtional meta information for the column for custom purpose*/
+    meta: {
+        type: [String, Number, Boolean, Function, Object, Array],
+        default: undefined,
     },
-    data() {
-        return {
-            newKey: undefined,
-            thAttrsData: {},
-            tdAttrsData: [],
-        };
+    /** Column fixed width */
+    width: { type: [Number, String], default: undefined },
+    /** Define column value as number */
+    numeric: { type: Boolean, defaukt: false },
+    /**
+     * Optional, position of column content
+     * @values left, centered, right
+     */
+    position: {
+        type: String,
+        default: undefined,
+        validator: (value: string) =>
+            ["left", "centered", "right"].indexOf(value) > -1,
     },
-    computed: {
-        style() {
-            return {
-                width: toCssDimension(this.width),
-            };
-        },
-        hasDefaultSlot() {
-            return this.$slots.default;
-        },
-        hasSearchableSlot() {
-            return this.$slots.searchable;
-        },
-        hasHeaderSlot() {
-            return this.$slots.header;
-        },
-        isHeaderUnselectable() {
-            return !this.headerSelectable && this.sortable;
-        },
+    /** Enable an additional searchbar below the column header */
+    searchable: { type: Boolean, defaukt: false },
+    /** Enable column sortability */
+    sortable: { type: Boolean, defaukt: false },
+    /** Define whether the column is visible or not */
+    visible: { type: Boolean, default: true },
+    /** Define a custom sort function */
+    customSort: {
+        type: Function as PropType<
+            (a: Column, b: Column, isAsc: boolean) => number
+        >,
+        default: undefined,
     },
-    created() {
-        if (!this.$table) {
-            throw new Error("You should wrap oTableColumn on a oTable");
-        }
-        this.newKey = this.$table._nextSequence();
-        this.$table._addColumn(this);
+    /** Define a custom funtion for the filter search */
+    customSearch: {
+        type: Function as PropType<(row: unknown, filter: string) => boolean>,
+        default: undefined,
     },
-    beforeMount() {
-        if (typeof this.thAttrs !== "undefined") {
-            this.thAttrsData = this.thAttrs(this);
-        }
+    /** Whether the column is sticky or not */
+    sticky: { type: Boolean, defaukt: false },
+    /** Make header selectable */
+    headerSelectable: { type: Boolean, defaukt: false },
+    /** Adds native attributes to th */
+    thAttrs: {
+        type: Function as PropType<(column: Column) => object>,
+        default: () => ({}),
     },
-    beforeUnmount() {
-        this.$table._removeColumn(this);
-    },
-    render() {
-        // renderless
-        return h("span", { "data-id": this.newKey }, this.label);
+    /** Adds native attributes to td */
+    tdAttrs: {
+        type: Function as PropType<(row: unknown, column: Column) => object>,
+        default: () => ({}),
     },
 });
+
+const thAttrsData = ref({});
+const tdAttrsData = ref([]);
+
+const style = computed(() => ({
+    width: toCssDimension(props.width),
+}));
+
+const isHeaderUnselectable = computed(
+    () => !props.headerSelectable && props.sortable,
+);
+
+const vm = getCurrentInstance();
+const slots = useSlots();
+
+const providedData = computed<TableColumnComponent>(() => ({
+    ...props,
+    $el: vm.proxy,
+    $slots: slots,
+    style: style.value,
+    thAttrsData: tdAttrsData.value,
+    tdAttrsData: tdAttrsData.value,
+    isHeaderUnselectable: isHeaderUnselectable.value,
+}));
+
+const { item } = useProviderChild({ data: providedData });
+
+onBeforeMount(() => {
+    if (typeof props.thAttrs !== "undefined") {
+        thAttrsData.value = props.thAttrs(props);
+    }
+});
 </script>
+
+<template>
+    <span :data-id="item.identifier">
+        {{ label }}
+
+        <!--
+            Do not render these slots here.
+            These are only for documentation purposes.
+            Slots are defined in table component.
+        -->
+        <template v-if="false">
+            <!--
+                @slot Default Slot
+                @binding {unknown} row - row data 
+                @binding {Column} column - column definition 
+                @binding {number} index - row index 
+                @binding {number} colindex - column index 
+                @binding {(row): void} toggle-details - toggle details function 
+            -->
+            <slot
+                :row="null"
+                :column="null"
+                :index="null"
+                :colindex="null"
+                :toggle-details="null" />
+            <!--
+                @slot Override header label 
+                @binding {Column} column - column definition 
+                @binding {number} index - column index 
+            -->
+            <slot name="header" :column="null" :index="null" />
+            <!--
+                @slot Override subheading label 
+                @binding {Column} column - column definition 
+                @binding {number} index - column index 
+            -->
+            <slot name="subheading" :column="null" :index="null" />
+
+            <!--
+                @slot Override searchable input 
+                @binding {Column} column - column definition 
+                @binding {number} index - column index 
+                @binding {Record<string,string>} filters - active filters object
+            -->
+            <slot
+                name="searchable"
+                :column="null"
+                :index="null"
+                :filter="null" />
+        </template>
+    </span>
+</template>

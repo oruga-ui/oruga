@@ -92,13 +92,13 @@ onMounted(() => {
             backend-pagination
             :total="total"
             :per-page="perPage"
+            backend-sorting
+            :default-sort-direction="defaultSortOrder"
+            :default-sort="[sortField, sortOrder]"
             aria-next-label="Next page"
             aria-previous-label="Previous page"
             aria-page-label="Page"
             aria-current-label="Current page"
-            backend-sorting
-            :default-sort-direction="defaultSortOrder"
-            :default-sort="[sortField, sortOrder]"
             @page-change="onPageChange"
             @sort="onSort">
             <o-table-column

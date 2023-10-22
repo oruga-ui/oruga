@@ -77,9 +77,8 @@ const columns = ref([
                 variant="danger"
                 :disabled="!checkedRows.length"
                 icon-left="times"
-                @click="checkedRows = []">
-                <span>Clear checked</span>
-            </o-button>
+                label="Clear checked"
+                @click="checkedRows = []" />
             <o-select v-model="checkboxPosition">
                 <option value="left">Checkbox at left</option>
                 <option value="right">Checkbox at right</option>

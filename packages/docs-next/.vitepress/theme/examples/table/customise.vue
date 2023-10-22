@@ -54,14 +54,14 @@ const hasMobileCards = ref(true);
 <template>
     <section>
         <o-field grouped group-multiline>
-            <o-switch v-model="isBordered">Bordered</o-switch>
-            <o-switch v-model="isStriped">Striped</o-switch>
-            <o-switch v-model="isNarrowed">Narrowed</o-switch>
-            <o-switch v-model="isHoverable">Hoverable</o-switch>
-            <o-switch v-model="isFocusable">Focusable</o-switch>
-            <o-switch v-model="isCheckbale">Checkable</o-switch>
-            <o-switch v-model="isLoading">Loading state</o-switch>
-            <o-switch v-model="isEmpty">Empty</o-switch>
+            <o-switch v-model="isBordered" label="Bordered" />
+            <o-switch v-model="isStriped" label="Striped" />
+            <o-switch v-model="isNarrowed" label="Narrowed" />
+            <o-switch v-model="isHoverable" label="Hoverable" />
+            <o-switch v-model="isFocusable" label="Focusable" />
+            <o-switch v-model="isCheckbale" label="Checkable" />
+            <o-switch v-model="isLoading" label="Loading state" />
+            <o-switch v-model="isEmpty" label="Empty" />
             <o-switch v-model="hasMobileCards">
                 Mobile cards
                 <small>(collapsed rows) </small>
@@ -113,7 +113,6 @@ const hasMobileCards = ref(true);
                         :icon="
                             props.row.gender === 'Male' ? 'mars' : 'venus'
                         " />
-
                     {{ props.row.gender }}
                 </span>
             </o-table-column>
