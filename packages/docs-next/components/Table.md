@@ -135,19 +135,19 @@ title: Table
 
 ### Slots
 
-| Name        | Description | Bindings   |
-| ----------- | ----------- | ---------- |
-| default     |             |            |
-| pagination  |             |            |
-| top-left    |             |            |
-| caption     |             |            |
-| preheader   |             |            |
-| check-all   |             | <br/><br/> |
-| detail      |             | <br/>      |
-| empty       |             |            |
-| footer      |             |            |
-| loading     |             |            |
-| bottom-left |             |            |
+| Name        | Description                           | Bindings                                                                                                                                                                              |
+| ----------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default     | Place o-table-column here             |                                                                                                                                                                                       |
+| pagination  | Override pagination label             | **current** `number` - current page<br/>**per-page** `number` - rows per page<br/>**total** `number` - total rows count<br/>**change** `(page: number): void ` - on page change event |
+| top-left    | Additional slot if table is paginated |                                                                                                                                                                                       |
+| caption     | Define a table caption here           |                                                                                                                                                                                       |
+| preheader   | Define preheader content here         |                                                                                                                                                                                       |
+| check-all   | Override check all checkbox           | **is-all-checked** `boolean` - if all rows are checked<br/>**is-all-uncheckable** `boolean` - if check all is uncheckable<br/>**check-all** `(): void` - check all function           |
+| detail      | Place row detail content here         | **row** `unknown` - row conent<br/>**index** `number` - row index                                                                                                                     |
+| empty       | Define content if table is empty      |                                                                                                                                                                                       |
+| footer      | Define a custom footer                |                                                                                                                                                                                       |
+| loading     | Override loading component            | **loading** `boolean` - is loading enabled                                                                                                                                            |
+| bottom-left | Additional slot if table is paginated |                                                                                                                                                                                       |
 
 </div>
 

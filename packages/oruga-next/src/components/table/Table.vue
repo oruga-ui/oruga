@@ -1438,6 +1438,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
 <template>
     <div ref="rootRef" :class="rootClasses">
         <div ref="slotRef" style="display: none">
+            <!--
+                @slot Place o-table-column here
+            -->
             <slot>
                 <template v-if="columns?.length">
                     <o-table-column
@@ -1468,7 +1471,19 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                 paginated &&
                 (paginationPosition === 'top' || paginationPosition === 'both')
             ">
-            <slot name="pagination">
+            <!--
+                @slot Override pagination label 
+                @binding {number} current - current page
+                @binding {number} per-page - rows per page
+                @binding {number} total - total rows count 
+                @binding {(page: number): void } change - on page change event 
+            -->
+            <slot
+                name="pagination"
+                :current="tableCurrentPage"
+                :per-page="perPage"
+                :total="dataTotal"
+                :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
                     v-bind="$attrs"
                     v-model:current="tableCurrentPage"
@@ -1485,6 +1500,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     :aria-current-label="ariaCurrentLabel"
                     :root-class="paginationWrapperClasses"
                     @change="(page) => $emit('page-change', page)">
+                    <!--
+                        @slot Additional slot if table is paginated 
+                    -->
                     <slot name="top-left" />
                 </o-table-pagination>
             </slot>
@@ -1497,9 +1515,15 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                 @keydown.self.prevent.up="onArrowPressed(-1, $event)"
                 @keydown.self.prevent.down="onArrowPressed(1, $event)">
                 <caption v-if="$slots.caption">
+                    <!--
+                        @slot Define a table caption here
+                    -->
                     <slot name="caption" />
                 </caption>
                 <thead v-if="tableColumns.length && showHeader">
+                    <!--
+                        @slot Define preheader content here
+                    -->
                     <slot name="preheader" />
                     <tr>
                         <th
@@ -1508,6 +1532,12 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
                             :class="thCheckboxClasses">
+                            <!--
+                                @slot Override check all checkbox 
+                                @binding {boolean} is-all-checked - if all rows are checked
+                                @binding {boolean} is-all-uncheckable - if check all is uncheckable
+                                @binding {(): void} check-all - check all function
+                            -->
                             <slot
                                 name="check-all"
                                 :is-all-checked="isAllChecked"
@@ -1573,6 +1603,12 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                             v-if="checkable && checkboxPosition === 'right'"
                             :class="thCheckboxClasses">
                             <template v-if="headerCheckable">
+                                <!--
+                                    @slot Override check all checkbox 
+                                    @binding {boolean} is-all-checked - if all rows are checked
+                                    @binding {boolean} is-all-uncheckable - if check all is uncheckable
+                                    @binding {(): void} check-all - check all function
+                                -->
                                 <slot
                                     name="check-all"
                                     :is-all-checked="isAllChecked"
@@ -1742,6 +1778,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                                 :key="getRowKey(row) + 'detail'"
                                 :class="detailedClasses">
                                 <td :colspan="columnCount">
+                                    <!--
+                                        @slot Place row detail content here 
+                                        @binding {unknown} row - row conent
+                                        @binding {number} index - row index
+                                    -->
                                     <slot
                                         name="detail"
                                         :row="row"
@@ -1749,6 +1790,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                                 </td>
                             </tr>
                         </transition>
+                        <!--
+                            @slot Place row detail content here 
+                            @binding {unknown} row - row conent
+                            @binding {number} index - row index
+                        -->
                         <slot
                             v-if="isActiveCustomDetailRow(row)"
                             name="detail"
@@ -1758,6 +1804,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
 
                     <tr v-if="!visibleRows.length">
                         <td :colspan="columnCount">
+                            <!--
+                                @slot Define content if table is empty
+                            -->
                             <slot name="empty" />
                         </td>
                     </tr>
@@ -1765,6 +1814,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
 
                 <tfoot v-if="$slots.footer">
                     <tr :class="footerClasses">
+                        <!--
+                            @slot Define a custom footer
+                        -->
                         <slot v-if="hasCustomFooterSlot()" name="footer" />
                         <th v-else :colspan="columnCount">
                             <slot name="footer" />
@@ -1772,8 +1824,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     </tr>
                 </tfoot>
             </table>
-
-            <slot name="loading">
+            <!--
+                @slot Override loading component 
+                @binding {boolean} loading - is loading enabled
+            -->
+            <slot name="loading" :loading="loading">
                 <o-loading :full-page="false" :active="loading" />
             </slot>
         </div>
@@ -1785,7 +1840,19 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     (paginationPosition === 'bottom' ||
                         paginationPosition === 'both'))
             ">
-            <slot name="pagination">
+            <!--
+                @slot Override pagination label 
+                @binding {number} current - current page 
+                @binding {number} per-page - rows per page 
+                @binding {number} total - total rows count 
+                @binding {(page: number): void } change - on page change event 
+            -->
+            <slot
+                name="pagination"
+                :current="tableCurrentPage"
+                :per-page="perPage"
+                :total="dataTotal"
+                :change="(page) => (tableCurrentPage = page)">
                 <o-table-pagination
                     v-bind="$attrs"
                     v-model:current="tableCurrentPage"
@@ -1802,6 +1869,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     :aria-current-label="ariaCurrentLabel"
                     :root-class="paginationWrapperClasses"
                     @change="(page) => $emit('page-change', page)">
+                    <!--
+                        @slot Additional slot if table is paginated 
+                    -->
                     <slot name="bottom-left" />
                 </o-table-pagination>
             </slot>
