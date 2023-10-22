@@ -170,7 +170,7 @@ const props = defineProps({
     },
     /**
      * Pagination position (if paginated)
-     * @values bottom, top, bot
+     * @values bottom, top, both
      */
     paginationPosition: {
         type: String,
@@ -345,7 +345,6 @@ const emits = defineEmits<{
      * @param page {number} updated page
      */
     (e: "page-change", page: number): void;
-
     /**
      * select prop two-way binding
      * @param value {typeof data} updated select prop
@@ -373,7 +372,6 @@ const emits = defineEmits<{
      * @param value {Array<typeof data>} updated checkedRows prop
      */
     (e: "update:checkedRows", value: Array<unknown>): void;
-
     /**
      * on column sort change event
      * @param column {Column} column data
@@ -382,13 +380,11 @@ const emits = defineEmits<{
      * @param event {Event} native  event
      */
     (e: "sort", column: Column, direction: "asc" | "desc", event: Event): void;
-
     /**
      * on filter change event
      * @param filters {Record<string, string>} filter object
      */
     (e: "filters-change", value: Record<string, string>): void;
-
     /**
      * on natvie filter event based on props filtersEvent
      * @param filtersEvent {string} props filtersEvent value
@@ -401,7 +397,6 @@ const emits = defineEmits<{
         filters: Record<string, string>,
         event: Event,
     ): void;
-
     /**
      * openedDetailed prop two-way binding
      * @param value {Array<typeof data>} updated openedDetailed prop
@@ -576,7 +571,7 @@ const tableColumns = computed<TableColumn[]>(() =>
     })),
 );
 
-const tableRows = computed(() => {
+const tableData = computed(() => {
     if (!props.data?.length) return [...props.data];
     // if no customRowKey is given and data are objects, create unique row id for each row
     return props.data.map((row) =>
@@ -586,9 +581,9 @@ const tableRows = computed(() => {
     );
 });
 
-const tableData = ref(tableRows.value);
+const tableRows = ref(tableData.value);
 const dataTotal = ref(
-    props.backendPagination ? props.total : tableRows.value.length,
+    props.backendPagination ? props.total : tableData.value.length,
 );
 
 const tableCurrentPage = usePropBinding<number>("currentPage", props, emits);
@@ -601,16 +596,16 @@ const tableCurrentPage = usePropBinding<number>("currentPage", props, emits);
  *   4. Set new total if it's not backend-paginated.
  */
 watch(
-    () => tableRows.value,
+    () => tableData.value,
     (value) => {
         // if not backend filtered, filter rows
         if (!props.backendFiltering)
-            tableData.value = value.filter((row) => isRowFiltered(row));
-        else tableData.value = [...value];
+            tableRows.value = value.filter((row) => isRowFiltered(row));
+        else tableRows.value = [...value];
         // if not backend sorted, sort rows
         if (!props.backendSorting) sort(currentSortColumn.value, true);
         // if not backend paginated, set pagination total
-        if (!props.backendPagination) dataTotal.value = tableData.value.length;
+        if (!props.backendPagination) dataTotal.value = tableRows.value.length;
     },
     { deep: true },
 );
@@ -633,17 +628,17 @@ const tableWrapperStyle = computed(() => ({
 
 /** Splitted data based on the pagination. */
 const visibleRows = computed(() => {
-    if (!props.paginated) return tableData.value;
+    if (!props.paginated) return tableRows.value;
 
     const currentPage = tableCurrentPage.value;
     const perPage = Number(props.perPage);
 
-    if (tableData.value.length <= perPage) {
-        return tableData.value;
+    if (tableRows.value.length <= perPage) {
+        return tableRows.value;
     } else {
         const start = (currentPage - 1) * perPage;
         const end = start + perPage;
-        return tableData.value.slice(start, end);
+        return tableRows.value.slice(start, end);
     }
 });
 
@@ -794,9 +789,9 @@ function handleFiltersChange(value: Record<string, string>): void {
     if (props.backendFiltering) {
         emits("filters-change", value);
     } else {
-        tableData.value = props.data.filter((row) => isRowFiltered(row));
+        tableRows.value = props.data.filter((row) => isRowFiltered(row));
         if (!props.backendPagination) {
-            dataTotal.value = tableData.value.length;
+            dataTotal.value = tableRows.value.length;
         }
         if (!props.backendSorting) {
             if (Object.keys(currentSortColumn.value).length > 0) {
@@ -930,8 +925,8 @@ function sort(
 }
 
 function doSortSingleColumn(column: Column): void {
-    tableData.value = sortBy(
-        tableData.value,
+    tableRows.value = sortBy(
+        tableRows.value,
         column.field,
         column.customSort,
         isAsc.value,
