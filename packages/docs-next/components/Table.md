@@ -135,18 +135,19 @@ title: Table
 
 ### Slots
 
-| Name        | Description | Bindings |
-| ----------- | ----------- | -------- |
-| default     |             |          |
-| pagination  |             |          |
-| top-left    |             |          |
-| caption     |             |          |
-| preheader   |             |          |
-| detail      |             | <br/>    |
-| empty       |             |          |
-| footer      |             |          |
-| loading     |             |          |
-| bottom-left |             |          |
+| Name        | Description | Bindings   |
+| ----------- | ----------- | ---------- |
+| default     |             |            |
+| pagination  |             |            |
+| top-left    |             |            |
+| caption     |             |            |
+| preheader   |             |            |
+| check-all   |             | <br/><br/> |
+| detail      |             | <br/>      |
+| empty       |             |            |
+| footer      |             |            |
+| loading     |             |            |
+| bottom-left |             |            |
 
 </div>
 

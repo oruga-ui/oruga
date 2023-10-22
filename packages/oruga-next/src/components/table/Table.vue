@@ -1508,13 +1508,19 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
                             :class="thCheckboxClasses">
-                            <o-checkbox
-                                v-if="headerCheckable"
-                                :model-value="isAllChecked"
-                                autocomplete="off"
-                                :variant="checkboxVariant"
-                                :disabled="isAllUncheckable"
-                                @update:modelValue="checkAll" />
+                            <slot
+                                name="check-all"
+                                :is-all-checked="isAllChecked"
+                                :is-all-uncheckable="isAllUncheckable"
+                                :check-all="checkAll">
+                                <o-checkbox
+                                    v-if="headerCheckable"
+                                    :model-value="isAllChecked"
+                                    autocomplete="off"
+                                    :variant="checkboxVariant"
+                                    :disabled="isAllUncheckable"
+                                    @update:modelValue="checkAll" />
+                            </slot>
                         </th>
                         <th
                             v-for="(column, index) in visibleColumns"
@@ -1567,12 +1573,18 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                             v-if="checkable && checkboxPosition === 'right'"
                             :class="thCheckboxClasses">
                             <template v-if="headerCheckable">
-                                <o-checkbox
-                                    :model-value="isAllChecked"
-                                    autocomplete="off"
-                                    :variant="checkboxVariant"
-                                    :disabled="isAllUncheckable"
-                                    @update:modelValue="checkAll" />
+                                <slot
+                                    name="check-all"
+                                    :is-all-checked="isAllChecked"
+                                    :is-all-uncheckable="isAllUncheckable"
+                                    :check-all="checkAll">
+                                    <o-checkbox
+                                        :model-value="isAllChecked"
+                                        autocomplete="off"
+                                        :variant="checkboxVariant"
+                                        :disabled="isAllUncheckable"
+                                        @update:modelValue="checkAll" />
+                                </slot>
                             </template>
                         </th>
                     </tr>
