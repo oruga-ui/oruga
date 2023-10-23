@@ -15,10 +15,10 @@ export type ProviderItem<T = unknown> = {
     identifier: string;
 };
 
-type PovidedData<T, I = unknown> = {
+type PovidedData<P, I = unknown> = {
     registerItem: (data: I) => ProviderItem<I>;
     unregisterItem: (item: ProviderItem<I>) => void;
-    data?: T;
+    data?: P;
 };
 
 type ProviderParentOptions<T = unknown> = {
@@ -39,10 +39,9 @@ type ProviderParentOptions<T = unknown> = {
  * @param data Additional data to provide
  * @param options additional options
  */
-export function useProviderParent<T, I = unknown>(
+export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     rootRef: Ref<HTMLElement>,
-    data?: T,
-    options?: ProviderParentOptions,
+    options?: ProviderParentOptions<ParentData>,
 ) {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
@@ -54,7 +53,9 @@ export function useProviderParent<T, I = unknown>(
     const configField = vm.proxy?.$options.configField;
     const key = options?.key ? options.key : configField;
 
-    const childItems = ref<ProviderItem<I>[]>([]) as Ref<ProviderItem<I>[]>;
+    const childItems = ref<ProviderItem<ItemData>[]>([]) as Ref<
+        ProviderItem<ItemData>[]
+    >;
     const sequence = ref(1);
 
     /**
@@ -64,7 +65,7 @@ export function useProviderParent<T, I = unknown>(
         childItems.value.slice().sort((a, b) => a.index - b.index),
     );
 
-    function registerItem(data?: I): ProviderItem<I> {
+    function registerItem(data?: ItemData): ProviderItem<ItemData> {
         const index = childItems.value.length;
         const identifier = nextSequence();
         const item = { index, data, identifier };
@@ -97,10 +98,10 @@ export function useProviderParent<T, I = unknown>(
     }
 
     /** Provide functionality for child components via dependency injection. */
-    provide<PovidedData<T, I>>("$o-" + key, {
+    provide<PovidedData<ParentData, ItemData>>("$o-" + key, {
         registerItem,
         unregisterItem,
-        data: data,
+        data: options.data,
     });
 
     return {
@@ -135,9 +136,9 @@ type ProviderChildOptions<T = unknown> = {
  * Inject functionalities and data from parent components
  * @param options additional options
  */
-export function useProviderChild<T, I = unknown>(
-    options: ProviderChildOptions<I> = { needParent: true },
-): { parent: T; item: Ref<ProviderItem<I>> } {
+export function useProviderChild<ParentData, ItemData = unknown>(
+    options: ProviderChildOptions<ItemData> = { needParent: true },
+): { parent: ParentData; item: Ref<ProviderItem<ItemData>> } {
     // getting a hold of the internal instance in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -149,7 +150,10 @@ export function useProviderChild<T, I = unknown>(
     const key = options?.key ? options.key : configField;
 
     /** Inject parent component functionality if used inside one **/
-    const parent = inject<PovidedData<T, I>>("$o-" + key, undefined);
+    const parent = inject<PovidedData<ParentData, ItemData>>(
+        "$o-" + key,
+        undefined,
+    );
 
     const needParent =
         typeof options.needParent === "undefined" || options.needParent;
@@ -163,7 +167,7 @@ export function useProviderChild<T, I = unknown>(
         );
     }
 
-    const item = ref<ProviderItem<I>>();
+    const item = ref<ProviderItem<ItemData>>();
 
     if (parent && register) item.value = parent.registerItem(options.data);
 
