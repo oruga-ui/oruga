@@ -73,7 +73,7 @@ watch(
 
 function sort(event?: Event): void {
     const column = sortableColumns.value.filter(
-        (c) => getValueByPath(c, "newKey") === this.mobileSort,
+        (c) => getValueByPath(c, "identifier") === mobileSort.value,
     )[0];
     emits("sort", column, event);
 }

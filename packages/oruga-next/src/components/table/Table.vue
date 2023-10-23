@@ -104,7 +104,7 @@ const props = defineProps({
     focusable: { type: Boolean, default: false },
     /** Custom method to verify if row is checked, works when is checkable. Useful for backend pagination */
     customIsChecked: {
-        type: Function as PropType<(row: unknown, datra: T[]) => boolean>,
+        type: Function as PropType<(row: unknown, data: unknown[]) => boolean>,
         default: undefined,
     },
     /** Custom method to verify if a row is checkable, works when is checkable */
