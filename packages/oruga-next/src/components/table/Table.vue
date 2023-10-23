@@ -111,7 +111,8 @@ const props = defineProps({
     isRowCheckable: {
         type: Function as PropType<(row: unknown) => boolean>,
         default: (row: unknown) =>
-            getOption("table.isRowCheckable", () => true)(row),
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("table.isRowCheckable", (row) => true)(row),
     },
     /** Set which rows are checked, use v-model:checkedRows to make it two-way binding */
     checkedRows: { type: Array, default: () => [] },
@@ -192,7 +193,8 @@ const props = defineProps({
     rowClass: {
         type: Function as PropType<(row: unknown, index: number) => string>,
         default: (row: unknown, index: number) =>
-            getOption("table.rowClass", () => "")(row, index),
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("table.rowClass", (row, index) => "")(row, index),
     },
     /** Allow pre-defined opened details. Ideal to open details via vue-router. (A unique key is required; check detail-key prop) */
     openedDetailed: { type: Array, default: () => [] },
@@ -200,7 +202,8 @@ const props = defineProps({
     hasDetailedVisible: {
         type: Function as PropType<(row: unknown) => boolean>,
         default: (row: unknown) =>
-            getOption("table.hasDetailedVisible", () => true)(row),
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            getOption("table.hasDetailedVisible", (row) => true)(row),
     },
     /** Use a unique key of your data Object when use detailed or opened detailed. (id recommended) */
     detailKey: {
