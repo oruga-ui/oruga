@@ -3,7 +3,7 @@ import type { App, Plugin } from "vue";
 import Tabs from "./Tabs.vue";
 import TabItem from "./TabItem.vue";
 
-import { registerComponent } from "../../utils/plugins";
+import { registerComponent } from "@/utils/plugins";
 
 export default {
     install(app: App) {
