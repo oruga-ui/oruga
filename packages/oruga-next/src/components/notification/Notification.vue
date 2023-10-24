@@ -74,8 +74,7 @@ const props = defineProps({
     /** Accessibility label for the close button */
     ariaCloseLabel: {
         type: String,
-        default: () =>
-            getOption("notification.ariaCloseLabel", "Close notification"),
+        default: () => getOption("notification.ariaCloseLabel", "Close"),
     },
     /**
      * Icon pack to use

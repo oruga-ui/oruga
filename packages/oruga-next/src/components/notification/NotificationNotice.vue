@@ -4,8 +4,8 @@ import {
     ref,
     onMounted,
     onBeforeMount,
-    type PropType,
     watch,
+    type PropType,
     type Component,
 } from "vue";
 
@@ -68,7 +68,7 @@ const props = defineProps({
     /** If notice should queue with others notices (snackbar/toast/notification). */
     queue: {
         type: Boolean,
-        default: () => getOption("notification.noticeQueue", undefined),
+        default: () => getOption("notification.queue"),
     },
     /** Callback function to call after user canceled (pressed escape / clicked outside). */
     onCancel: { type: Function as PropType<() => void>, default: () => {} },
