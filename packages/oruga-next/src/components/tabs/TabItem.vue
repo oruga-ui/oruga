@@ -96,7 +96,7 @@ const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
     data: providedData,
 });
 
-const transitionName = ref(undefined);
+const transitionName = ref();
 
 const isActive = computed(() => parent.value.activeId === props.value);
 

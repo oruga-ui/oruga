@@ -17,7 +17,7 @@ export type TabItemComponent = TabItemProps & {
 };
 
 export type TabsComponent = {
-    activeIndex: number;
+    activeId: number;
     type: string;
     vertical: boolean;
 };
