@@ -198,6 +198,9 @@ const headerTextClasses = computed(() => [
             :data-id="`tabs-${item.identifier}`"
             :tabindex="isActive ? 0 : -1"
             :role="ariaRole">
+            <!-- 
+                @slot Tab item content
+            -->
             <slot />
         </div>
     </Transition>

@@ -281,6 +281,9 @@ const contentClasses = computed(() => [
             :class="navClasses"
             role="tablist"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
+            <!--
+                @slot Additional slot before tabs
+            -->
             <slot name="start" />
             <div
                 v-for="childItem in items"
@@ -325,10 +328,16 @@ const contentClasses = computed(() => [
                     </span>
                 </component>
             </div>
+            <!--
+                @slot Additional slot after tabs
+            -->
             <slot name="end" />
         </nav>
 
         <section :class="contentClasses">
+            <!--
+                @slot Place tab items here
+            -->
             <slot />
         </section>
     </div>

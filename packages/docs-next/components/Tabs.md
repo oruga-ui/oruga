@@ -60,11 +60,11 @@ title: Tabs
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| start   |             |          |
-| end     |             |          |
-| default |             |          |
+| Name    | Description                 | Bindings |
+| ------- | --------------------------- | -------- |
+| start   | Additional slot before tabs |          |
+| end     | Additional slot after tabs  |          |
+| default | Place tab items here        |          |
 
 </div>
 
@@ -98,9 +98,9 @@ title: Tabs
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description      | Bindings |
+| ------- | ---------------- | -------- |
+| default | Tab item content |          |
 
 </div>
 
