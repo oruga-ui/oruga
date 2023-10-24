@@ -147,37 +147,13 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.sortIconSize", "small"),
     },
-    /** Adds pagination to the table */
-    paginated: {
-        type: Boolean,
-        default: () => getOption("table.paginated", false),
-    },
-    /** Current page of table data (if paginated), use v-model:currentPage to make it two-way binding */
-    currentPage: { type: Number, default: 1 },
-    /** How many rows per page (if paginated) */
-    perPage: {
-        type: [Number, String],
-        default: () => getOption("table.perPage", 20),
-    },
-    /** Allow chevron icon and column to be visible */
-    showDetailIcon: {
-        type: Boolean,
-        default: () => getOption("table.showDetailIcon", true),
-    },
-    /** Icon name of detail action */
-    detailIcon: {
-        type: String,
-        default: () => getOption("table.detailIcon", "chevron-right"),
-    },
     /**
-     * Pagination position (if paginated)
-     * @values bottom, top, both
+     * Icon pack to use
+     * @values mdi, fa, fas and any other custom icon pack
      */
-    paginationPosition: {
+    iconPack: {
         type: String,
-        default: () => getOption("table.paginationPosition", "bottom"),
-        validator: (value: string) =>
-            ["bottom", "top", "both"].indexOf(value) >= 0,
+        default: () => getOption("table.iconPack"),
     },
     /** Columns won't be sorted with Javascript, use with sort event to sort in your backend */
     backendSorting: {
@@ -210,24 +186,22 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.detailKey"),
     },
+    /** Allow chevron icon and column to be visible */
+    showDetailIcon: {
+        type: Boolean,
+        default: () => getOption("table.showDetailIcon", true),
+    },
+    /** Icon name of detail action */
+    detailIcon: {
+        type: String,
+        default: () => getOption("table.detailIcon", "chevron-right"),
+    },
     /** Custom style on details */
     customDetailRow: { type: Boolean, default: false },
     /* Transition name to use when toggling row details. */
     detailTransition: {
         type: String,
         default: () => getOption("table.detailTransition", "slide"),
-    },
-    /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
-    backendPagination: { type: Boolean, default: false },
-    /** Total number of table data if backend-pagination is enabled */
-    total: { type: Number, default: 0 },
-    /**
-     * Icon pack to use
-     * @values mdi, fa, fas and any other custom icon pack
-     */
-    iconPack: {
-        type: String,
-        default: () => getOption("table.iconPack"),
     },
     /** Text when nothing is selected */
     mobileSortPlaceholder: {
@@ -245,6 +219,72 @@ const props = defineProps({
     draggableColumn: { type: Boolean, default: false },
     /** Add a horizontal scrollbar when table is too wide */
     scrollable: { type: Boolean, default: undefined },
+    /** Show a sticky table header */
+    stickyHeader: { type: Boolean, default: undefined },
+    /** Table fixed height */
+    height: { type: [Number, String], default: undefined },
+    /** Add a native event to filter */
+    filtersEvent: { type: String, default: "" },
+    /** Filtering debounce time (in milliseconds) */
+    debounceSearch: { type: Number, default: undefined },
+    /** Show header */
+    showHeader: {
+        type: Boolean,
+        default: () => getOption("table.showHeader", true),
+    },
+    /** Make the checkbox column sticky when checkable */
+    stickyCheckbox: { type: Boolean, default: false },
+    /** Adds pagination to the table */
+    paginated: {
+        type: Boolean,
+        default: () => getOption("table.paginated", false),
+    },
+    /** Rows won't be paginated with Javascript, use with page-change event to paginate in your backend */
+    backendPagination: { type: Boolean, default: false },
+    /** Total number of table data if backend-pagination is enabled */
+    total: { type: Number, default: 0 },
+    /** Current page of table data (if paginated), use v-model:currentPage to make it two-way binding */
+    currentPage: { type: Number, default: 1 },
+    /** How many rows per page (if paginated) */
+    perPage: {
+        type: [Number, String],
+        default: () => getOption("table.perPage", 20),
+    },
+    /**
+     * Pagination position (if paginated)
+     * @values bottom, top, both
+     */
+    paginationPosition: {
+        type: String,
+        default: () => getOption("table.paginationPosition", "bottom"),
+        validator: (value: string) =>
+            ["bottom", "top", "both"].indexOf(value) >= 0,
+    },
+    /** Rounded pagination if paginated */
+    paginationRounded: {
+        type: Boolean,
+        default: () => getOption("table.paginationRounded", false),
+    },
+    /** Size of pagination if paginated */
+    paginationSize: {
+        type: String,
+        default: () => getOption("table.paginationSize", "small"),
+    },
+    /** Enable simple style pagination if paginated */
+    paginationSimple: {
+        type: Boolean,
+        default: () => getOption("table.paginationSimple", false),
+    },
+    /**
+     * Pagination buttons order if paginated
+     * @values centered, right, left
+     */
+    paginationOrder: {
+        type: String,
+        default: () => getOption("table.paginationOrder"),
+        validator: (value: string) =>
+            ["centered", "right", "left"].indexOf(value) >= 0,
+    },
     /** Accessibility label for the pagination next page button. */
     ariaNextLabel: {
         type: String,
@@ -264,41 +304,6 @@ const props = defineProps({
     ariaCurrentLabel: {
         type: String,
         default: () => getOption("table.ariaCurrentLabel"),
-    },
-    /** Show a sticky table header */
-    stickyHeader: { type: Boolean, default: undefined },
-    /** Table fixed height */
-    height: { type: [Number, String], default: undefined },
-    /** Add a native event to filter */
-    filtersEvent: { type: String, default: "" },
-    /** Filtering debounce time (in milliseconds) */
-    debounceSearch: { type: Number, default: undefined },
-    /** Show header */
-    showHeader: {
-        type: Boolean,
-        default: () => getOption("table.showHeader", true),
-    },
-    /** Make the checkbox column sticky when checkable */
-    stickyCheckbox: { type: Boolean, default: false },
-    /** Rounded pagination if paginated */
-    paginationRounded: {
-        type: Boolean,
-        default: () => getOption("table.paginationRounded", false),
-    },
-    /** Size of pagination if paginated */
-    paginationSize: {
-        type: String,
-        default: () => getOption("table.paginationSize", "small"),
-    },
-    /**
-     * Pagination buttons order if paginated
-     * @values centered, right, left
-     */
-    paginationOrder: {
-        type: String,
-        default: () => getOption("table.paginationOrder"),
-        validator: (value: string) =>
-            ["centered", "right", "left"].indexOf(value) >= 0,
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
@@ -1489,6 +1494,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     :rounded="paginationRounded"
                     :size="paginationSize"
                     :order="paginationOrder"
+                    :simple="paginationSimple"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
@@ -1872,6 +1878,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     :rounded="paginationRounded"
                     :size="paginationSize"
                     :order="paginationOrder"
+                    :simple="paginationSimple"
                     :icon-pack="iconPack"
                     :aria-next-label="ariaNextLabel"
                     :aria-previous-label="ariaPreviousLabel"
