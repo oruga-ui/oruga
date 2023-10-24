@@ -112,10 +112,10 @@ const provideData = computed(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { childItems, sortedItems } = useProviderParent<
-    typeof provideData,
-    TabItemComponent
->(rootRef, provideData);
+const { childItems, sortedItems } = useProviderParent<TabItemComponent>(
+    rootRef,
+    { data: provideData },
+);
 
 const items = computed(() =>
     sortedItems.value.map((column) => ({
