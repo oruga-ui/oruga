@@ -1,39 +1,39 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-import Pagination from "../pagination/Pagination.vue";
+<script setup lang="ts">
+import { usePropBinding } from "@/composables";
+import OPagination from "../pagination/Pagination.vue";
 
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OTablePagination",
-    components: {
-        [Pagination.name]: Pagination,
-    },
-    emits: ["update:currentPage", "page-change"],
-    props: {
-        paginated: Boolean,
-        currentPage: Number,
-        rootClass: [String, Array, Object],
-    },
-    data() {
-        return {
-            newCurrentPage: this.currentPage,
-        };
-    },
-    watch: {
-        currentPage(newVal) {
-            this.newCurrentPage = newVal;
-        },
-    },
-    methods: {
-        /**
-         * Paginator change listener.
-         */
-        pageChanged(page) {
-            this.newCurrentPage = page > 0 ? page : 1;
-            this.$emit("update:currentPage", this.newCurrentPage);
-            this.$emit("page-change", this.newCurrentPage);
-        },
-    },
+    configField: "table",
 });
+
+const props = defineProps({
+    current: { type: Number, default: undefined },
+    paginated: { type: Boolean, default: false },
+    rootClass: { type: [String, Array, Object], default: undefined },
+});
+
+const emits = defineEmits<{
+    /**
+     * current prop two-way binding
+     * @param value {number} updated current prop
+     */
+    (e: "update:current", value: number): void;
+    /**
+     * on current change event
+     * @param value {number} current value
+     */
+    (e: "change", event: number): void;
+}>();
+
+const currentPage = usePropBinding("current", props, emits);
+
+/** Paginator change listener. */
+function pageChanged(page: number): void {
+    currentPage.value = page > 0 ? page : 1;
+    emits("change", currentPage.value);
+}
 </script>
 
 <template>
@@ -45,7 +45,7 @@ export default defineComponent({
             <o-pagination
                 v-if="paginated"
                 v-bind="$attrs"
-                :current="newCurrentPage"
+                :current="currentPage"
                 @change="pageChanged" />
         </div>
     </div>

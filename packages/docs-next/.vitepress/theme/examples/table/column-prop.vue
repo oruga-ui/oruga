@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-const tableData = [
+const data = ref([
     {
         id: 1,
         first_name: "Jesse",
@@ -37,10 +37,7 @@ const tableData = [
         date: "2016-12-06 14:38:38",
         gender: "Female",
     },
-];
-
-const data = ref(tableData);
-const selected = ref(tableData[1]);
+]);
 
 const columns = ref([
     {
@@ -71,23 +68,6 @@ const columns = ref([
 
 <template>
     <section>
-        <o-button
-            variant="danger"
-            :disabled="!selected"
-            icon-left="times"
-            label="Clear selected"
-            @click="selected = null" />
-
-        <p><b>Selection:</b> {{ selected }}</p>
-
-        <o-table v-model:selected="selected" :data="data" focusable>
-            <o-table-column
-                v-for="(column, idx) in columns"
-                :key="idx"
-                v-slot="{ row }"
-                v-bind="column">
-                {{ row[column.field] }}
-            </o-table-column>
-        </o-table>
+        <o-table :data="data" :columns="columns" />
     </section>
 </template>

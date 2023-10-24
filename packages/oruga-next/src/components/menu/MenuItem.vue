@@ -163,7 +163,7 @@ const provideData = computed(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-useProviderParent(rootRef, provideData, { key: "menu-item" });
+useProviderParent(rootRef, { data: provideData, key: "menu-item" });
 
 // --- Computed Component Classes ---
 

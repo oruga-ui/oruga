@@ -206,8 +206,8 @@ ${description ? "> " + description : ""}
                 // refactored components
                 const clear = (s) => s.replace(/'|"/g, "");
                 // get default params
-                let f = d.replace(/\r\n/g, "")
-                    .substring(d.lastIndexOf("getOption(") + "getOption(".length);
+                d = d.replace(/\r\n/g, "")
+                let f = d.substring(d.lastIndexOf("getOption(") + "getOption(".length);
                 // remove function prop invokation
                if(f.lastIndexOf('(') > 0) f = f.substring(0, f.lastIndexOf('('));
                if(f.lastIndexOf(')') > 0) f = f.substring(0, f.lastIndexOf(')'));
@@ -223,7 +223,7 @@ ${description ? "> " + description : ""}
                     const value = `${clear(configParts[1])}: ${params[1]}`;
                     d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(configParts[0])}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
                 }
-                if (configParts && configParts.length == 1) {
+                else if (configParts && configParts.length == 1) {
                     const value = `${clear(configParts[0])}: ${params[1]}`;
                     d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
                 }
