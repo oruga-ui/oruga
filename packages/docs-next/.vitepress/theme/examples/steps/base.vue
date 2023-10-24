@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 // Is
-const activeStep = ref(1);
+const activeStep = ref("1");
 const isStepsClickable = ref(false);
 const isAnimated = ref(true);
 const isVertical = ref(false);
@@ -31,31 +31,27 @@ const onProfileActivate = () => {
     <section>
         <o-field grouped group-multiline>
             <o-field>
-                <o-switch v-model="showSocial"> Show Social step </o-switch>
+                <o-switch v-model="showSocial" label="Show Social step" />
             </o-field>
             <o-field>
-                <o-switch v-model="isAnimated"> Animated </o-switch>
+                <o-switch v-model="isAnimated" label="Animated" />
             </o-field>
             <o-field>
-                <o-switch v-model="isRounded"> Rounded </o-switch>
+                <o-switch v-model="isRounded" label="Rounded" />
             </o-field>
             <o-field>
-                <o-switch v-model="isVertical"> Vertical </o-switch>
+                <o-switch v-model="isVertical" label="Vertical" />
             </o-field>
             <o-field>
-                <o-switch v-model="isStepsClickable">
-                    Clickable Marker
-                </o-switch>
+                <o-switch v-model="isStepsClickable" label="Clickable Marker" />
             </o-field>
             <o-field>
-                <o-switch v-model="hasNavigation">
-                    Navigation Buttons
-                </o-switch>
+                <o-switch v-model="hasNavigation" label="Navigation Buttons" />
             </o-field>
             <o-field>
-                <o-switch v-model="customNavigation">
-                    Custom Navigation
-                </o-switch>
+                <o-switch
+                    v-model="customNavigation"
+                    label="Custom Navigation" />
             </o-field>
             <o-field>
                 <o-switch v-model="isProfileSuccess">
@@ -106,12 +102,17 @@ const onProfileActivate = () => {
             :icon-prev="prevIcon"
             :icon-next="nextIcon"
             :label-position="labelPosition">
-            <o-step-item step="1" label="Account" :clickable="isStepsClickable">
+            <o-step-item
+                value="1"
+                step="1"
+                label="Account"
+                :clickable="isStepsClickable">
                 <h1 class="title has-text-centered">Account</h1>
                 Lorem ipsum dolor sit amet.
             </o-step-item>
 
             <o-step-item
+                value="2"
                 step="2"
                 label="Profile"
                 :clickable="isStepsClickable"
@@ -122,6 +123,7 @@ const onProfileActivate = () => {
             </o-step-item>
 
             <o-step-item
+                value="3"
                 step="3"
                 :visible="showSocial"
                 label="Social"
@@ -131,6 +133,7 @@ const onProfileActivate = () => {
             </o-step-item>
 
             <o-step-item
+                value="4"
                 :step="showSocial ? '4' : '3'"
                 label="Finish"
                 :clickable="isStepsClickable"

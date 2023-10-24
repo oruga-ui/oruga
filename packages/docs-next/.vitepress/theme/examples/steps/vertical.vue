@@ -10,9 +10,10 @@ const size = ref(null);
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="position" true-value="right">
-                    Right position
-                </o-switch>
+                <o-switch
+                    v-model="position"
+                    true-value="right"
+                    label="Right position" />
             </o-field>
             <o-field label="Size">
                 <o-select v-model="size" placeholder="Size">
