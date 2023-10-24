@@ -38,13 +38,24 @@ title: Tabs
 
 ### Props
 
-| Prop name | Description                                     | Type    | Values            | Default                                                                                                                                       |
-| --------- | ----------------------------------------------- | ------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated  | Tab will have an animation                      | boolean | -                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
-| expanded  | Tabs will be expanded (full-width)              | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
-| multiline | Show tab items multiline when there is no space | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
-| override  |                                                 | boolean | -                 | <code style='white-space: nowrap; padding: 0;'></code>                                                                                        |
-| type      | Tab type                                        | string  | `boxed`, `toggle` | <code style='white-space: nowrap; padding: 0;'>"default"</code>                                                                               |
+| Prop name     | Description                                     | Type           | Values                                                                          | Default                                                                                                                                           |
+| ------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated      | Tab will have an animation                      | boolean        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;animated: true<br>}</code>     |
+| destroyOnHide | Destroy tab on hide                             | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| expanded      | Tabs will be expanded (full-width)              | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| multiline     | Show tab items multiline when there is no space | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| position      | Position of the tab, optional                   | string         | `left`, `centered`, `right`                                                     |                                                                                                                                                   |
+| size          | Tab size, optional                              | string         | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;size: undefined<br>}</code>    |
+| type          | Tab type                                        | string         | `boxed`, `toggle`                                                               | <code style='white-space: nowrap; padding: 0;'>"default"</code>                                                                                   |
+| v-model       |                                                 | string\|number | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                           |
+| variant       | Color of the control, optional                  | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;variant: undefined<br>}</code> |
+| vertical      | Show tab in vertical layout                     | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+
+### Events
+
+| Event name        | Properties                                             | Description                     |
+| ----------------- | ------------------------------------------------------ | ------------------------------- |
+| update:modelValue | **value** `string \| number` - updated modelValue prop | modelValue prop two-way binding |
 
 ### Slots
 
@@ -66,11 +77,29 @@ title: Tabs
 
 ### Props
 
-| Prop name | Description           | Type                | Values | Default                                                                                                                                          |
-| --------- | --------------------- | ------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| disabled  | Item will be disabled | boolean             | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                           |
-| override  |                       | boolean             | -      | <code style='white-space: nowrap; padding: 0;'></code>                                                                                           |
-| tag       | Tabs item tag name    | string \| Component | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code> |
+| Prop name | Description                                                              | Type                | Values | Default                                                                                                                                            |
+| --------- | ------------------------------------------------------------------------ | ------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility. | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
+| disabled  | Item will be disabled                                                    | boolean             | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                        |
+| icon      | Icon on the left                                                         | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
+| iconPack  | Icon pack                                                                | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| label     | Item label                                                               | string              | -      |                                                                                                                                                    |
+| tag       | Tabs item tag name                                                       | string \| Component | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component)             | string\|number      | -      | Default function (see source code)                                                                                                                 |
+| visible   | Show/hide item                                                           | boolean             | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
+
+### Events
+
+| Event name | Properties | Description                  |
+| ---------- | ---------- | ---------------------------- |
+| activate   |            | on tab item activate event   |
+| deactivate |            | on tab item deactivate event |
+
+### Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 </div>
 
