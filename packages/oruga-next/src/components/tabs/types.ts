@@ -20,5 +20,4 @@ export type TabsComponent = {
     activeIndex: number;
     type: string;
     vertical: boolean;
-    setTransitioning: (value: boolean) => void;
 };

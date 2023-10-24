@@ -118,10 +118,9 @@ const provideData = computed(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { childItems, sortedItems } = useProviderParent<TabItemComponent>(
-    rootRef,
-    { data: provideData },
-);
+const { sortedItems } = useProviderParent<TabItemComponent>(rootRef, {
+    data: provideData,
+});
 
 const items = computed(() =>
     sortedItems.value.map((column) => ({
@@ -162,6 +161,30 @@ function childClick(child): void {
     if (activeId.value !== child.value) performAction(child.newValue);
 }
 
+/** Go to the next item or wrap around */
+function next(): void {
+    const newIndex = mod(activeIndex.value + 1, items.value.length);
+    clickFirstViableChild(newIndex, true);
+}
+
+/** Go to the previous item or wrap around */
+function prev(): void {
+    const newIndex = mod(activeIndex.value - 1, items.value.length);
+    clickFirstViableChild(newIndex, false);
+}
+
+/** Go to the first viable item */
+function homePressed(): void {
+    if (items.value.length < 1) return;
+    clickFirstViableChild(0, true);
+}
+
+/** Go to the last viable item */
+function endPressed(): void {
+    if (items.value.length < 1) return;
+    clickFirstViableChild(items.value.length - 1, false);
+}
+
 /**
  * Select the first 'viable' child, starting at startingIndex and in the direction specified
  * by the boolean parameter forward. In other words, first try to select the child at index
@@ -180,31 +203,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    childClick(this.childItems[newIndex]);
-}
-
-/** Go to the next item or wrap around */
-function next(): void {
-    const newIndex = mod(activeIndex.value + 1, childItems.value.length);
-    clickFirstViableChild(newIndex, true);
-}
-
-/** Go to the previous item or wrap around */
-function prev(): void {
-    const newIndex = mod(activeIndex.value - 1, childItems.value.length);
-    clickFirstViableChild(newIndex, false);
-}
-
-/** Go to the first viable item */
-function homePressed(): void {
-    if (childItems.value.length < 1) return;
-    clickFirstViableChild(0, true);
-}
-
-/** Go to the last viable item */
-function endPressed(): void {
-    if (childItems.value.length < 1) return;
-    clickFirstViableChild(childItems.value.length - 1, false);
+    childClick(items.value[newIndex]);
 }
 
 /** Activate next child and deactivate prev child */

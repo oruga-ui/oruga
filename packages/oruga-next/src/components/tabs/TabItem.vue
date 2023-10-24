@@ -30,9 +30,7 @@ defineOptions({
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
-    /**
-     * Item value (it will be used as v-model of wrapper component)
-     */
+    /** Item value (it will be used as v-model of wrapper component) */
     value: { type: [String, Number], default: () => uuid() },
     /** Item label */
     label: { type: String, default: undefined },
@@ -62,7 +60,6 @@ const props = defineProps({
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
-        "headerClass",
         "itemClass",
         "itemHeaderClass",
         "itemHeaderActiveClass",
@@ -95,10 +92,7 @@ const providedData = computed<TabItemComponent>(() => ({
 }));
 
 // Inject functionalities and data from the parent carousel component
-const { parent, item } = useProviderChild<
-    ComputedRef<TabsComponent>,
-    typeof providedData
->({
+const { parent, item } = useProviderChild<ComputedRef<TabsComponent>>({
     data: providedData,
 });
 
