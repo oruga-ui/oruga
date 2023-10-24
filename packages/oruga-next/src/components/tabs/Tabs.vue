@@ -100,6 +100,12 @@ const emits = defineEmits<{
      * @param value {string | number} updated modelValue prop
      */
     (e: "update:modelValue", value: string | number): void;
+    /**
+     * on tab change event
+     * @param value {string | number} new tab value
+     * @param value {string | number} old tab value
+     */
+    (e: "change", newValue: string | number, oldValue: string | number): void;
 }>();
 
 const rootRef = ref();
@@ -213,6 +219,7 @@ function performAction(newId: number | string): void {
             oldTab.deactivate(activeItem.value.index);
             activeItem.value.activate(oldTab.index);
         }
+        emits("change", newId, oldValue);
     });
 }
 

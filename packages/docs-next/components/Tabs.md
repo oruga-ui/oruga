@@ -53,9 +53,10 @@ title: Tabs
 
 ### Events
 
-| Event name        | Properties                                             | Description                     |
-| ----------------- | ------------------------------------------------------ | ------------------------------- |
-| update:modelValue | **value** `string \| number` - updated modelValue prop | modelValue prop two-way binding |
+| Event name        | Properties                                                                                    | Description                     |
+| ----------------- | --------------------------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `string \| number` - updated modelValue prop                                        | modelValue prop two-way binding |
+| change            | **value** `string \| number` - new tab value<br/>**value** `string \| number` - old tab value | on tab change event             |
 
 ### Slots
 
