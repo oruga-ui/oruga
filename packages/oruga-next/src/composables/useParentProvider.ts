@@ -101,7 +101,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
     provide<PovidedData<ParentData, ItemData>>("$o-" + key, {
         registerItem,
         unregisterItem,
-        data: options.data,
+        data: options?.data,
     });
 
     return {
