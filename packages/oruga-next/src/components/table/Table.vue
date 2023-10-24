@@ -562,9 +562,7 @@ const rootRef = ref<HTMLElement>();
 const slotRef = ref<HTMLElement>();
 
 /** Provide functionalities and data to child item components */
-const provider = useProviderParent<null, ComputedRef<TableColumnComponent>>(
-    slotRef,
-);
+const provider = useProviderParent<ComputedRef<TableColumnComponent>>(slotRef);
 
 const tableColumns = computed<TableColumn[]>(() =>
     provider.sortedItems.value.map((column) => ({
