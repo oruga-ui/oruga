@@ -34,7 +34,7 @@ const type = ref("default");
         </o-field>
 
         <o-tabs
-            :position="atRight ? 'right' : ''"
+            :position="atRight ? 'right' : 'left'"
             :size="size"
             :type="type"
             vertical

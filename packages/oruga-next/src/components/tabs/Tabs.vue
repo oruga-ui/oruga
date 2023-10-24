@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, watch, toValue } from "vue";
+import { computed, ref, watch, toValue, nextTick } from "vue";
 
-import OIcon from "../components/icon/Icon.vue";
+import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "@/utils/SlotComponent";
 
 import { baseComponentProps } from "@/utils/SharedProps";
@@ -12,9 +12,9 @@ import {
     useProviderParent,
     useVModelBinding,
 } from "@/composables";
+import type { BindProp } from "@/index";
 import { mod, isDefined } from "@/utils/helpers";
-import type { TabItemComponent } from "./types";
-import { nextTick } from "process";
+import type { TabItem, TabItemComponent } from "./types";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -122,7 +122,7 @@ const { sortedItems } = useProviderParent<TabItemComponent>(rootRef, {
     data: provideData,
 });
 
-const items = computed(() =>
+const items = computed<TabItem[]>(() =>
     sortedItems.value.map((column) => ({
         index: column.index,
         identifier: column.identifier,
@@ -130,35 +130,36 @@ const items = computed(() =>
     })),
 );
 
-const activeId = useVModelBinding(props, emits);
+const activeId = useVModelBinding(props, emits, { passive: true });
 
 /**  When v-model is changed set the new active tab. */
 watch(
     () => props.modelValue,
     (value) => {
-        if (activeId.value !== value) {
-            performAction(value);
-        }
+        if (activeId.value !== value) performAction(value);
     },
 );
 
 const activeItem = computed(() =>
     isDefined(activeId)
-        ? items.value.find((item) => item.value === activeId.value)
+        ? items.value.find((item) => item.value === activeId.value) ||
+          items.value[0]
         : items.value[0],
 );
 
-const activeIndex = computed(() =>
-    items.value.findIndex((item) => item.value === activeId.value),
-);
+const activeIndex = computed(() => activeItem.value.index);
+
+function isActive(item: TabItem): boolean {
+    return item.value === activeItem.value.value;
+}
 
 const isTransitioning = computed(() =>
     items.value.some((item) => item.isTransitioning),
 );
 
-/** Child click listener, emit input event and change active child. */
-function childClick(child): void {
-    if (activeId.value !== child.value) performAction(child.newValue);
+/** Item click listener, emit input event and change active child. */
+function itemClick(item: TabItem): void {
+    if (activeId.value !== item.value) performAction(item.value);
 }
 
 /** Go to the next item or wrap around */
@@ -203,7 +204,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
         if (items.value[newIndex].visible && !items.value[newIndex].disabled)
             break;
     }
-    childClick(items.value[newIndex]);
+    itemClick(items.value[newIndex]);
 }
 
 /** Activate next child and deactivate prev child */
@@ -272,6 +273,33 @@ const contentClasses = computed(() => [
         )]: isTransitioning.value,
     },
 ]);
+
+function itemHeaderClasses(childItem): BindProp {
+    return [
+        childItem.headerClass,
+        useComputedClass("itemHeaderClass", "o-tabs__nav-item"),
+        {
+            [useComputedClass(
+                "itemHeaderActiveClass",
+                "o-tabs__nav-item-{*}--active",
+            )]: isActive(childItem),
+        },
+        {
+            [useComputedClass(
+                "itemHeaderDisabledClass",
+                "o-tabs__nav-item-{*}--disabled",
+                props.type,
+            )]: childItem.disabled,
+        },
+        {
+            [useComputedClass(
+                "itemHeaderTypeClass",
+                "o-tabs__nav-item-",
+                props.type,
+            )]: props.type,
+        },
+    ];
+}
 </script>
 
 <template>
@@ -291,7 +319,7 @@ const contentClasses = computed(() => [
                 :class="itemWrapperClasses"
                 role="tab"
                 :aria-controls="`${childItem.value}-content`"
-                :aria-selected="childItem.isActive ? 'true' : 'false'"
+                :aria-selected="isActive(childItem) ? 'true' : 'false'"
                 @keydown.left.prevent="prev"
                 @keydown.right.prevent="next"
                 @keydown.up.prevent="prev"
@@ -303,8 +331,8 @@ const contentClasses = computed(() => [
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    :class="childItem.headerClasses"
-                    @click="childClick(childItem)"
+                    :class="itemHeaderClasses(childItem)"
+                    @click="itemClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -314,8 +342,8 @@ const contentClasses = computed(() => [
                 <component
                     :is="childItem.tag"
                     v-else
-                    :class="childItem.headerClasses"
-                    @click="childClick(childItem)">
+                    :class="itemHeaderClasses(childItem)"
+                    @click="itemClick(childItem)">
                     <o-icon
                         v-if="childItem.icon"
                         :root-class="childItem.headerIconClasses"

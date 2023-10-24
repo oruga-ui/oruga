@@ -60,6 +60,7 @@ const props = defineProps({
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
+        "headerClass",
         "itemClass",
         "itemHeaderClass",
         "itemHeaderActiveClass",
@@ -82,10 +83,8 @@ const slots = useSlots();
 const providedData = computed<TabItemComponent>(() => ({
     ...props,
     $slots: slots,
-    headerClasses: headerClasses.value,
     headerIconClasses: headerIconClasses.value,
     headerTextClasses: headerTextClasses.value,
-    isActive: isActive.value,
     isTransitioning: isTransitioning.value,
     activate,
     deactivate,
@@ -144,31 +143,6 @@ function beforeLeave(): void {
 
 const elementClasses = computed(() => [
     useComputedClass("itemClass", "o-tab-item__content"),
-]);
-
-const headerClasses = computed(() => [
-    useComputedClass("itemHeaderClass", "o-tabs__nav-item"),
-    {
-        [useComputedClass(
-            "itemHeaderActiveClass",
-            "o-tabs__nav-item-{*}--active",
-            parent.value.type,
-        )]: isActive.value,
-    },
-    {
-        [useComputedClass(
-            "itemHeaderDisabledClass",
-            "o-tabs__nav-item-{*}--disabled",
-            parent.value.type,
-        )]: props.disabled,
-    },
-    {
-        [useComputedClass(
-            "itemHeaderTypeClass",
-            "o-tabs__nav-item-",
-            parent.value.type,
-        )]: parent.value.type,
-    },
 ]);
 
 const headerIconClasses = computed(() => [

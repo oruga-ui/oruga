@@ -1,3 +1,4 @@
+import type { ProviderItem } from "@/composables";
 import TabItem from "./TabItem.vue";
 import type { BindProp } from "@/types";
 
@@ -7,10 +8,8 @@ export type TabItemSlots = InstanceType<typeof TabItem>["$slots"];
 
 export type TabItemComponent = TabItemProps & {
     $slots: TabItemSlots;
-    headerClasses: BindProp;
     headerIconClasses: BindProp;
     headerTextClasses: BindProp;
-    isActive: boolean;
     isTransitioning: boolean;
     activate: (index: number) => void;
     deactivate: (index: number) => void;
@@ -21,3 +20,5 @@ export type TabsComponent = {
     type: string;
     vertical: boolean;
 };
+
+export type TabItem = Omit<ProviderItem, "data"> & TabItemComponent;
