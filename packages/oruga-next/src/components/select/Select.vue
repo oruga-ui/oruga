@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, onMounted, ref, nextTick } from "vue";
+import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -13,6 +13,9 @@ import {
 } from "@/composables";
 
 import { injectField } from "../field/useFieldShare";
+
+import type { OptionsItem } from "./types";
+import { uuid } from "@/utils/helpers";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -33,6 +36,11 @@ const props = defineProps({
     modelValue: {
         type: [String, Number, Boolean, Object, Array],
         default: null,
+    },
+    /** Select options, unnecessary when default slot is used */
+    options: {
+        type: Array as PropType<string[] | OptionsItem[]>,
+        default: undefined,
     },
     /**
      * Vertical size of input, optional
@@ -189,6 +197,16 @@ onMounted(() => {
     );
 });
 
+const selectOptions = computed<OptionsItem[]>(() => {
+    if (!props.options || !Array.isArray(props.options)) return [];
+
+    return props.options.map((option) =>
+        typeof option === "string"
+            ? { value: option, label: option, key: uuid() }
+            : { ...option, key: uuid() },
+    );
+});
+
 // --- Icon Feature ---
 
 const hasIconRight = computed(
@@ -293,13 +311,29 @@ const iconRightClasses = computed(() => [
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
-            <template v-if="placeholder">
+            <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" :value="null" disabled hidden>
-                    {{ placeholder }}
+                    <!-- 
+                        @slot Override the placeholder
+                    -->
+                    <slot name="placeholder">
+                        {{ placeholder }}
+                    </slot>
                 </option>
             </template>
 
-            <slot />
+            <!--
+                @slot Override the options
+            -->
+            <slot>
+                <option
+                    v-for="option in selectOptions"
+                    :key="option.key"
+                    :value="option.value"
+                    v-bind="option.attrs">
+                    {{ option.label }}
+                </option>
+            </slot>
         </select>
 
         <o-icon
