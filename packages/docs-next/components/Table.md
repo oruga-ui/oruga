@@ -145,7 +145,7 @@ title: Table
 | check-all   | Override check all checkbox           | **is-all-checked** `boolean` - if all rows are checked<br/>**is-all-uncheckable** `boolean` - if check all is uncheckable<br/>**check-all** `(): void` - check all function           |
 | detail      | Place row detail content here         | **row** `unknown` - row conent<br/>**index** `number` - row index                                                                                                                     |
 | empty       | Define content if table is empty      |                                                                                                                                                                                       |
-| footer      | Define a custom footer                |                                                                                                                                                                                       |
+| footer      | Define a custom footer                | **column-count** `number` - counts of visible columns<br/>**row-count** `number` - counts of visible rows                                                                             |
 | loading     | Override loading component            | **loading** `boolean` - is loading enabled                                                                                                                                            |
 | bottom-left | Additional slot if table is paginated |                                                                                                                                                                                       |
 

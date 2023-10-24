@@ -1812,10 +1812,24 @@ function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
                     <tr :class="footerClasses">
                         <!--
                             @slot Define a custom footer
+                            @binding {number} column-count - counts of visible columns
+                            @binding {number} row-count - counts of visible rows
                         -->
-                        <slot v-if="hasCustomFooterSlot()" name="footer" />
+                        <slot
+                            v-if="hasCustomFooterSlot()"
+                            name="footer"
+                            :column-count="columnCount"
+                            :row-count="visibleRows?.length" />
                         <th v-else :colspan="columnCount">
-                            <slot name="footer" />
+                            <!--
+                                @slot Define a custom footer
+                                @binding {number} column-count - counts of visible columns
+                                @binding {number} row-count - counts of visible rows
+                            -->
+                            <slot
+                                name="footer"
+                                :column-count="columnCount"
+                                :row-count="visibleRows?.length" />
                         </th>
                     </tr>
                 </tfoot>
