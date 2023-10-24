@@ -11,7 +11,7 @@ export default defineComponent({
         name: { type: String, default: "default" },
         /** Props passed to the slot */
         props: { type: Object, default: () => {} },
-        /** Tag name of the  */
+        /** Tag name of the slot wrapper element */
         tag: {
             type: [String, Object, Function] as PropType<string | Component>,
             default: "div",
