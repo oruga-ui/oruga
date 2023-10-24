@@ -32,7 +32,7 @@ const props = defineProps({
     total: { type: Number, default: undefined },
     /** Items count for each page */
     perPage: {
-        type: Number,
+        type: [Number, String],
         default: () => getOption("pagination.perPage", 20),
     },
     /** Current page number, use v-model:current to make it two-way binding. */
@@ -66,6 +66,8 @@ const props = defineProps({
     order: {
         type: String,
         default: () => getOption("pagination.order", "right"),
+        validator: (value: string) =>
+            ["centered", "right", "left"].indexOf(value) >= 0,
     },
     /**
      * Icon pack to use
@@ -93,17 +95,18 @@ const props = defineProps({
     /** Accessibility label for the previous page button. */
     ariaPreviousLabel: {
         type: String,
-        default: () => getOption("pagination.ariaNextLabel", "Previous page"),
+        default: () =>
+            getOption("pagination.ariaPreviousLabel", "Previous page"),
     },
     /** Accessibility label for the page button. */
     ariaPageLabel: {
         type: String,
-        default: () => getOption("pagination.ariaNextLabel", "page"),
+        default: () => getOption("pagination.ariaPageLabel", "page"),
     },
     /** Accessibility label for the current page button. */
     ariaCurrentLabel: {
         type: String,
-        default: () => getOption("pagination.ariaNextLabel", "Current page"),
+        default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
@@ -143,7 +146,9 @@ const { isMobile } = useMatchMedia();
 const current = usePropBinding("current", props, emits);
 
 /** Total page size (count). */
-const pageCount = computed(() => Math.ceil(props.total / props.perPage));
+const pageCount = computed(() =>
+    Math.ceil(props.total / Number(props.perPage)),
+);
 
 /** If current page is trying to be greater than page count, set to last. */
 watch(
@@ -155,7 +160,8 @@ watch(
 
 /** First item of the page (count). */
 const firstItem = computed(() => {
-    const firstItem = props.current * props.perPage - props.perPage + 1;
+    const perPage = Number(props.perPage);
+    const firstItem = props.current * perPage - perPage + 1;
     return firstItem >= 0 ? firstItem : 0;
 });
 
@@ -205,7 +211,7 @@ const pagesInRange = computed(() => {
 });
 
 /** Get properties for a page */
-function getPage(num, ariaLabel?: string) {
+function getPage(num: number, ariaLabel?: string) {
     return {
         number: num,
         isCurrent: props.current === num,
@@ -215,7 +221,7 @@ function getPage(num, ariaLabel?: string) {
 }
 
 /** Get text for aria-label according to page number. */
-function getAriaPageLabel(pageNumber, isCurrent): string {
+function getAriaPageLabel(pageNumber: number, isCurrent: boolean): string {
     if (props.ariaPageLabel && (!isCurrent || !props.ariaCurrentLabel))
         return props.ariaPageLabel + " " + pageNumber + ".";
     else if (props.ariaPageLabel && isCurrent && props.ariaCurrentLabel)
@@ -250,10 +256,10 @@ function last(event?: Event): void {
     changePage(pageCount.value, event);
 }
 
-function changePage(num: number, event: Event): void {
-    if (props.current === num || num < 1 || num > pageCount.value) return;
-    emits("change", num);
-    current.value = num;
+function changePage(page: number, event: Event): void {
+    if (props.current === page || page < 1 || page > pageCount.value) return;
+    emits("change", page);
+    current.value = page;
 
     // Set focus on element to keep tab order
     if (event && event.target)
@@ -376,7 +382,8 @@ defineExpose({ last, first, prev, next });
                 {{ firstItem }} / {{ total }}
             </template>
             <template v-else>
-                {{ firstItem }}-{{ Math.min(current * perPage, total) }} /
+                {{ firstItem }}-{{ Math.min(current * Number(perPage), total) }}
+                /
                 {{ total }}
             </template>
         </small>

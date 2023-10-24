@@ -124,7 +124,7 @@ const columns = ref([
 <template>
     <section class="overflow">
         <o-field grouped>
-            <o-switch v-model="stickyHeaders">Sticky Headers</o-switch>
+            <o-switch v-model="stickyHeaders" label="Sticky Headers" />
         </o-field>
 
         <o-table :data="data" :sticky-header="stickyHeaders">

@@ -193,12 +193,13 @@ const data = ref(tableData);
     <section>
         <o-field grouped group-multiline>
             <o-field>
-                <o-switch v-model="isPaginated">Paginated</o-switch>
+                <o-switch v-model="isPaginated" label="Paginated" />
             </o-field>
             <o-field>
-                <o-switch v-model="isPaginationSimple" :disabled="!isPaginated">
-                    Simple pagination
-                </o-switch>
+                <o-switch
+                    v-model="isPaginationSimple"
+                    :disabled="!isPaginated"
+                    label="Simple pagination" />
             </o-field>
             <o-field>
                 <o-select v-model="defaultSortDirection">
@@ -241,9 +242,8 @@ const data = ref(tableData);
                 <o-button
                     variant="info"
                     :disabled="!isPaginated"
-                    @click="currentPage = 2">
-                    Set page to 2
-                </o-button>
+                    label="Set page to 2"
+                    @click="currentPage = 2" />
             </o-field>
         </o-field>
 
@@ -259,11 +259,7 @@ const data = ref(tableData);
             :default-sort-direction="defaultSortDirection"
             :sort-icon="sortIcon"
             :sort-icon-size="sortIconSize"
-            default-sort="user.first_name"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page">
+            default-sort="user.first_name">
             <o-table-column
                 v-slot="props"
                 field="id"

@@ -114,16 +114,12 @@ const toggle = (row) => {
 <template>
     <section>
         <o-field grouped group-multiline>
-            <o-checkbox v-model="showDetailIcon">
-                Show detail chevron
-            </o-checkbox>
-            <o-checkbox v-model="showDefaultDetail">
-                Custom detail column
-            </o-checkbox>
+            <o-checkbox v-model="showDetailIcon" label="Show detail chevron" />
+            <o-checkbox
+                v-model="showDefaultDetail"
+                label="Custom detail column" />
             <div v-for="(column, index) in columnsVisible" :key="index">
-                <o-checkbox v-model="column.display">
-                    {{ column.title }}
-                </o-checkbox>
+                <o-checkbox v-model="column.display" :label="column.title" />
             </div>
         </o-field>
 

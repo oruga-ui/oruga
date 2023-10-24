@@ -74,7 +74,9 @@ const provideData = computed(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent(rootRef, provideData);
+const { childItems } = useProviderParent<{ reset: () => void }>(rootRef, {
+    data: provideData,
+});
 
 function resetMenu(excludedItems: ProviderItem[] = []): void {
     childItems.value.forEach((item) => {
