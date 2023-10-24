@@ -15,6 +15,7 @@ import {
 import { injectField } from "../field/useFieldShare";
 
 import type { OptionsItem } from "./types";
+import { uuid } from "@/utils/helpers";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -38,7 +39,7 @@ const props = defineProps({
     },
     /** Select options, unnecessary when default slot is used */
     options: {
-        type: Array as PropType<OptionsItem[]>,
+        type: Array as PropType<string[] | OptionsItem[]>,
         default: undefined,
     },
     /**
@@ -196,6 +197,16 @@ onMounted(() => {
     );
 });
 
+const selectOptions = computed<OptionsItem[]>(() => {
+    if (!props.options || !Array.isArray(props.options)) return [];
+
+    return props.options.map((option) =>
+        typeof option === "string"
+            ? { value: option, label: option, key: uuid() }
+            : { ...option, key: uuid() },
+    );
+});
+
 // --- Icon Feature ---
 
 const hasIconRight = computed(
@@ -316,8 +327,8 @@ const iconRightClasses = computed(() => [
             -->
             <slot>
                 <option
-                    v-for="option in options"
-                    :key="String(option.value)"
+                    v-for="option in selectOptions"
+                    :key="option.key"
                     :value="option.value"
                     v-bind="option.attrs">
                     {{ option.label }}
