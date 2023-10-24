@@ -5,6 +5,7 @@ import StepItem from "./StepItem.vue";
 
 import { registerComponent } from "../../utils/plugins";
 
+// export steps plugin
 export default {
     install(app: App) {
         registerComponent(app, Steps);
@@ -12,4 +13,5 @@ export default {
     },
 } as Plugin;
 
+// export steps components
 export { Steps as OSteps, StepItem as OStepItem };
