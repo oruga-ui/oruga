@@ -190,9 +190,7 @@ const isTransitioning = computed(() =>
 );
 
 /** Check if previous button is available. */
-const hasPrev = computed(() => {
-    return !!prevItem.value;
-});
+const hasPrev = computed(() => !!prevItem.value);
 
 /** Check if next button is available. */
 const hasNext = computed(() => !!nextItem.value);
@@ -325,7 +323,7 @@ const stepLinkLabelClasses = computed(() => [
     useComputedClass("stepLinkLabelClass", "o-steps__title"),
 ]);
 
-function stepLinkClasses(childItem): BindProp {
+function stepLinkClasses(childItem: StepItem): BindProp {
     return [
         useComputedClass("stepLinkClass", "o-steps__link"),
         {
