@@ -335,7 +335,7 @@ defineExpose({ last, first, prev, next });
 </script>
 
 <template>
-    <nav :class="rootClasses">
+    <nav :class="rootClasses" data-oruga="pagination">
         <!-- 
             @slot Previous button slot
             @binding {number} number - page number 

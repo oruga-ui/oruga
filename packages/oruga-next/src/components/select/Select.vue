@@ -290,7 +290,7 @@ const iconRightClasses = computed(() => [
 </script>
 
 <template>
-    <div :class="rootClasses">
+    <div :class="rootClasses" data-oruga="select">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"

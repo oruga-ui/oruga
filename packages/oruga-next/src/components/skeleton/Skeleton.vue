@@ -106,7 +106,7 @@ const itemClasses = computed(() => [
 </script>
 
 <template>
-    <div v-if="active" ref="rootRef" :class="rootClasses" const>
+    <div v-if="active" ref="rootRef" data-oruga="skeleton" :class="rootClasses">
         <div
             v-for="i in count"
             :key="i"

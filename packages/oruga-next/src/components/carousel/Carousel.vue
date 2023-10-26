@@ -529,6 +529,7 @@ const indicatorClasses = computed(() => [
     <div
         ref="rootRef"
         :class="rootClasses"
+        data-oruga="carousel"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave">
         <div :class="sceneClasses">

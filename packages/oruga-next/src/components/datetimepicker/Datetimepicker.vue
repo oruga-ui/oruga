@@ -549,9 +549,10 @@ const timepickerWrapperClasses = computed(() => [
     <o-datepicker
         v-if="!isMobileNative || inline"
         ref="datepickerRef"
+        v-bind="{ ...$attrs, ...datepicker }"
         v-model="vmodel"
         v-model:active="isActive"
-        v-bind="{ ...{ 'data-oruga': 'datetimepicker' }, ...datepicker }"
+        data-oruga="datetimepicker"
         :class="datepickerWrapperClasses"
         :rounded="rounded"
         :open-on-focus="openOnFocus"
@@ -605,6 +606,7 @@ const timepickerWrapperClasses = computed(() => [
     <!-- Native Picker -->
     <o-input
         v-else
+        v-bind="$attrs"
         ref="nativeInputRef"
         type="datetime-local"
         autocomplete="off"
@@ -618,7 +620,6 @@ const timepickerWrapperClasses = computed(() => [
         :rounded="rounded"
         :disabled="disabled"
         :readonly="false"
-        v-bind="$attrs"
         :use-html5-validation="false"
         @change="onChangeNativePicker"
         @focus="onFocus"

@@ -34,7 +34,6 @@ defineOptions({
     isOruga: true,
     name: "ODatepicker",
     configField: "datepicker",
-    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -716,9 +715,8 @@ const footerClasses = computed(() => [
 <template>
     <OPickerWrapper
         ref="wrapperRef"
-        v-bind="$attrs"
         v-model:active="isActive"
-        :wrapper-bind="{ 'data-oruga': 'datepicker' }"
+        data-oruga="datepicker"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"

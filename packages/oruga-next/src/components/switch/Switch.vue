@@ -202,6 +202,7 @@ const labelClasses = computed(() => [
     <label
         ref="label"
         :class="rootClasses"
+        data-oruga="switch"
         @click="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

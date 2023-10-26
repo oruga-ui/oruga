@@ -698,7 +698,7 @@ const footerClasses = computed(() => [
         ref="wrapperRef"
         v-model:active="isActive"
         v-bind="$attrs"
-        :wrapper-bind="{ 'data-oruga': 'timepicker' }"
+        data-oruga="timepicker"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"

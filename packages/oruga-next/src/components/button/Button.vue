@@ -187,7 +187,8 @@ const elementsWrapperClasses = computed(() => [
         :is="computedTag"
         :disabled="computedDisabled"
         :type="computedNativeType"
-        :class="rootClasses">
+        :class="rootClasses"
+        data-oruga="button">
         <span :class="elementsWrapperClasses">
             <o-icon
                 v-if="iconLeft"

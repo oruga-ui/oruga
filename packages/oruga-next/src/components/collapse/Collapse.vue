@@ -76,7 +76,7 @@ const contentClass = computed(() => [
 </script>
 
 <template>
-    <div :class="rootClass">
+    <div :class="rootClass" data-oruga="collapse">
         <div v-if="position === 'top'" :class="triggerClass" @click="toggle">
             <slot name="trigger" :open="isOpen" />
         </div>

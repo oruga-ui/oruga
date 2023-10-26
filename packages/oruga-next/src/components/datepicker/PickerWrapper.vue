@@ -25,6 +25,7 @@ defineOptions({
 const props = defineProps({
     /** parent picker component props  */
     pickerProps: { type: Object, required: true },
+    dataOruga: { type: String, required: true },
     /** The input value */
     value: { type: [Date, Array], default: undefined },
     /** The active state of the dropdown */
@@ -45,7 +46,6 @@ const props = defineProps({
         type: [String, Object] as PropType<BindProp>,
         required: true,
     },
-    wrapperBind: { type: Object, default: undefined },
 });
 
 const emits = defineEmits<{
@@ -179,7 +179,7 @@ const dropdownBind = computed(() => ({
 </script>
 
 <template>
-    <div data-oruga="picker" :class="rootClasses" v-bind="wrapperBind">
+    <div :data-oruga="dataOruga" :class="rootClasses">
         <o-dropdown
             v-if="!isMobileNative || picker.inline"
             ref="dropdownRef"

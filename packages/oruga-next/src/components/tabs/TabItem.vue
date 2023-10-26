@@ -164,6 +164,7 @@ const headerTextClasses = computed(() => [
             ref="rootRef"
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
+            data-oruga="tabs-item"
             :tabindex="isActive ? 0 : -1"
             :role="ariaRole">
             <!-- 
