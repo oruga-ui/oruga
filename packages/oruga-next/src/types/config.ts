@@ -50,7 +50,7 @@ export type OrugaOptions = {
 };
 
 /** Vue native type which a v-bind prop must have */
-export type BindProp = (
+export type PropBind = (
     | string
     | {
           [x: string]: string;

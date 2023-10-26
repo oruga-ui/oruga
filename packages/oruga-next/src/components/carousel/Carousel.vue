@@ -23,7 +23,7 @@ import {
     useEventListener,
     useProviderParent,
 } from "@/composables";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 import { isClient } from "@/utils/ssr";
 
 /**
@@ -484,7 +484,7 @@ const arrowIconNextClasses = computed(() => [
     useComputedClass("arrowIconNextClass", "o-car__arrow__icon-next"),
 ]);
 
-function indicatorItemClasses(index): BindProp {
+function indicatorItemClasses(index): PropBind {
     return [
         useComputedClass("indicatorItemClass", "o-car__indicator__item"),
         {

@@ -16,7 +16,7 @@ import {
     useClassProps,
     useProgrammaticComponent,
 } from "@/composables";
-import type { BindProp, ProgrammaticInstance } from "@/types";
+import type { PropBind, ProgrammaticInstance } from "@/types";
 
 import type { NotifcationProps } from "./index";
 
@@ -266,7 +266,7 @@ const rootClasses = computed(() => [
     useComputedClass("noticeClass", "o-notices"),
 ]);
 
-function positionClasses(position): BindProp {
+function positionClasses(position): PropBind {
     return [useComputedClass("noticePositionClass", "o-notices--", position)];
 }
 

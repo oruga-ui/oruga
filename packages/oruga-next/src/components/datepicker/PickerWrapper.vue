@@ -12,7 +12,7 @@ import {
 } from "@/composables";
 import { isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 /**
  * This is a internal used component.
@@ -38,11 +38,11 @@ const props = defineProps({
     stayOpen: { type: Boolean, default: false },
     dropdownClass: { type: String, required: true },
     rootClasses: {
-        type: [String, Object] as PropType<BindProp>,
+        type: [String, Object] as PropType<PropBind>,
         required: true,
     },
     boxClasses: {
-        type: [String, Object] as PropType<BindProp>,
+        type: [String, Object] as PropType<PropBind>,
         required: true,
     },
 });

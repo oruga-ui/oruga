@@ -13,7 +13,7 @@ import {
     useVModelBinding,
     useMatchMedia,
 } from "@/composables";
-import type { BindProp } from "@/index";
+import type { PropBind } from "@/index";
 import { isDefined } from "@/utils/helpers";
 import type { StepItem, StepItemComponent } from "./types";
 
@@ -321,7 +321,7 @@ const stepLinkLabelClasses = computed(() => [
     useComputedClass("stepLinkLabelClass", "o-steps__title"),
 ]);
 
-function stepLinkClasses(childItem: StepItem): BindProp {
+function stepLinkClasses(childItem: StepItem): PropBind {
     return [
         useComputedClass("stepLinkClass", "o-steps__link"),
         {
@@ -340,7 +340,7 @@ function stepLinkClasses(childItem: StepItem): BindProp {
     ];
 }
 
-function itemClasses(childItem): BindProp {
+function itemClasses(childItem): PropBind {
     return [
         childItem.headerClass,
         useComputedClass("itemHeaderClass", "o-steps__nav-item"),

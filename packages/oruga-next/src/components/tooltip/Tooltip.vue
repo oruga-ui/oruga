@@ -22,7 +22,7 @@ import {
     isWebKitAgent,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -406,7 +406,7 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed<BindProp>(() => [
+const rootClasses = computed<PropBind>(() => [
     useComputedClass("rootClass", "o-tip"),
 ]);
 

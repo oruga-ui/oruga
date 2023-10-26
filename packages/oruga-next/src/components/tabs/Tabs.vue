@@ -12,7 +12,7 @@ import {
     useProviderParent,
     useVModelBinding,
 } from "@/composables";
-import type { BindProp } from "@/index";
+import type { PropBind } from "@/index";
 import { mod, isDefined } from "@/utils/helpers";
 import type { TabItem, TabItemComponent } from "./types";
 
@@ -274,7 +274,7 @@ const contentClasses = computed(() => [
     },
 ]);
 
-function itemHeaderClasses(childItem): BindProp {
+function itemHeaderClasses(childItem): PropBind {
     return [
         childItem.headerClass,
         useComputedClass("itemHeaderClass", "o-tabs__nav-item"),

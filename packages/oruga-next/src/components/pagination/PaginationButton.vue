@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type Component, type PropType } from "vue";
 import { getOption } from "@/utils/config";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -37,7 +37,7 @@ const props = defineProps({
     },
     class: { type: String, default: undefined },
     linkClass: {
-        type: Array as PropType<BindProp>,
+        type: Array as PropType<PropBind>,
         required: true,
     },
     linkCurrentClass: {

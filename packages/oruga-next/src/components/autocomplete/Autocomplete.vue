@@ -32,7 +32,7 @@ import {
     toCssDimension,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -884,7 +884,7 @@ const itemFooterClasses = computed(() => [
     },
 ]);
 
-function itemOptionClasses(option): BindProp {
+function itemOptionClasses(option): PropBind {
     return [
         ...itemClasses.value,
         {
