@@ -40,7 +40,7 @@ type ProviderParentOptions<T = unknown> = {
  * @param options additional options
  */
 export function useProviderParent<ItemData = unknown, ParentData = unknown>(
-    rootRef: Ref<HTMLElement>,
+    rootRef?: Ref<HTMLElement>,
     options?: ProviderParentOptions<ParentData>,
 ) {
     // getting a hold of the internal instance in setup()
@@ -70,7 +70,7 @@ export function useProviderParent<ItemData = unknown, ParentData = unknown>(
         const identifier = nextSequence();
         const item = { index, data, identifier };
         childItems.value.push(item);
-        if (rootRef.value) {
+        if (rootRef?.value) {
             nextTick(() => {
                 const ids = childItems.value
                     .map((item) => `[data-id="${key}-${item.identifier}"]`)
