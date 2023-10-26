@@ -1,12 +1,7 @@
 import { ref, type App } from "vue";
 import { getValueByPath, merge, setValueByPath } from "./helpers";
+import { setVueInstance } from "./plugins";
 import type { OrugaOptions } from "@/types";
-
-export let VueInstance: App;
-
-export const setVueInstance = (Vue: App): void => {
-    VueInstance = Vue;
-};
 
 const globalOptions = ref<OrugaOptions>({
     iconPack: "mdi",

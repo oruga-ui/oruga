@@ -5,10 +5,10 @@ import TableColumn from "./TableColumn.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-// export table specific types
+/** export table specific types */
 export type { Column } from "./types";
 
-// export table plugin
+/** export table plugin */
 export default {
     install(app: App) {
         registerComponent(app, Table);
@@ -16,5 +16,5 @@ export default {
     },
 } as Plugin;
 
-// export table components
+/** export table components */
 export { Table as OTable, TableColumn as OTableColumn };

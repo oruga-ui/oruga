@@ -5,6 +5,7 @@ import CarouselItem from "./CarouselItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export carousel plugin */
 export default {
     install(app: App) {
         registerComponent(app, Carousel);
@@ -12,4 +13,5 @@ export default {
     },
 } as Plugin;
 
+/** export carousel components */
 export { Carousel as OCarousel, CarouselItem as OCarouselItem };

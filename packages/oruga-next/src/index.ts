@@ -4,13 +4,12 @@ import type { OrugaOptions } from "./types";
 import * as plugins from "./components/plugins";
 
 import { merge } from "./utils/helpers";
+import { setOptions, getOptions, ConfigProgrammatic } from "./utils/config";
 import {
     setVueInstance,
-    setOptions,
-    getOptions,
-    ConfigProgrammatic,
-} from "./utils/config";
-import { registerPlugin, registerComponentProgrammatic } from "./utils/plugins";
+    registerPlugin,
+    registerComponentProgrammatic,
+} from "./utils/plugins";
 
 // export all types
 export * from "./types";

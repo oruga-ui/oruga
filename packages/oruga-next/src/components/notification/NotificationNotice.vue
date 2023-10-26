@@ -17,8 +17,7 @@ import {
     useProgrammaticComponent,
 } from "@/composables";
 import type { PropBind, ProgrammaticInstance } from "@/types";
-
-import type { NotifcationProps } from "./index";
+import type { NotifcationProps } from "./types";
 
 /**
  * Notification Notice is used for the programmatic usage
