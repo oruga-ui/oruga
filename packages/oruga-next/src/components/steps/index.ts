@@ -3,7 +3,7 @@ import type { App, Plugin } from "vue";
 import Steps from "./Steps.vue";
 import StepItem from "./StepItem.vue";
 
-import { registerComponent } from "../../utils/plugins";
+import { registerComponent } from "@/utils/plugins";
 
 // export steps plugin
 export default {

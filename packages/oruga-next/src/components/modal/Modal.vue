@@ -94,7 +94,7 @@ const props = defineProps({
     },
     /** Accessibility aria-modal to be passed to the div wrapper element. */
     ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
-    /** Accessibility aria-labelto to be passed to the div wrapper element. */
+    /** Accessibility aria-label to be passed to the div wrapper element. */
     ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
     /** Destroy modal on hide */
     destroyOnHide: {

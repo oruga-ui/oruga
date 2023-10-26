@@ -17,8 +17,6 @@ import type { BindProp } from "@/index";
 import { isDefined } from "@/utils/helpers";
 import type { StepItem, StepItemComponent } from "./types";
 
-// import TabbedMixin from "../../utils/TabbedMixin";
-
 /**
  * Responsive horizontal process steps
  * @displayName Steps
