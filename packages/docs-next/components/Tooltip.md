@@ -46,6 +46,7 @@ title: Tooltip
 | appendToBody | Append tooltip content to body                                                  | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | autoClose    | Tooltip auto close options                                                      | string[] \| boolean | `true`, `false`, `'inside'`, `'outside'`, `'escape'`                                      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                            |
 | delay        | Tooltip delay before it appears (number in ms)                                  | number              | -                                                                                         |                                                                                                                                                       |
+| disabled     | Tooltip will be disabled                                                        | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | label        | Tooltip text, unnecessary when content slot is used                             | string              | -                                                                                         |                                                                                                                                                       |
 | multiline    | Tooltip will be multilined                                                      | boolean             | -                                                                                         | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | position     | Tooltip position in relation to the element                                     | Position \| "auto"  | `'top'`, `'bottom'`, `'left'`, `'right'`, `'auto'`                                        | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tooltip: {<br>&nbsp;&nbsp;position: "top"<br>}</code>     |
@@ -54,11 +55,11 @@ title: Tooltip
 
 ### Events
 
-| Event name    | Properties                                | Description                 |
-| ------------- | ----------------------------------------- | --------------------------- |
-| update:active | **value** `boolean` - updated active prop | active prop two-way binding |
-| close         |                                           | on tooltip close event      |
-| open          |                                           | on tooltip close event      |
+| Event name    | Properties                                | Description                     |
+| ------------- | ----------------------------------------- | ------------------------------- |
+| update:active | **value** `boolean` - updated active prop | active prop two-way binding     |
+| close         |                                           | on active change to false event |
+| open          |                                           | on active change to true event  |
 
 ### Slots
 

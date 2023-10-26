@@ -13,10 +13,10 @@ const settings = reactive({
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.rounded">Rounded</o-switch>
+                <o-switch v-model="settings.rounded" label="Rounded" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.tooltip">With Tooltip</o-switch>
+                <o-switch v-model="settings.tooltip" label="With Tooltip" />
             </o-field>
             <o-field label="Size">
                 <o-select v-model="settings.size">

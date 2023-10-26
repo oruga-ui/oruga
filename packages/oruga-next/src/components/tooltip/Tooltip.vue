@@ -94,6 +94,8 @@ const props = defineProps({
     delay: { type: Number, default: undefined },
     /** Tooltip will be always active */
     always: { type: Boolean, default: false },
+    /** Tooltip will be disabled */
+    disabled: { type: Boolean, default: false },
     /** Tooltip default animation */
     animation: {
         type: String,
@@ -131,9 +133,9 @@ const emits = defineEmits<{
      * @param value {boolean} - updated active prop
      */
     (e: "update:active", value: boolean): void;
-    /** on tooltip close event */
+    /** on active change to false event */
     (e: "close"): void;
-    /** on tooltip close event */
+    /** on active change to true event */
     (e: "open"): void;
 }>();
 
@@ -365,6 +367,7 @@ function onContextMenu(event: Event): void {
 }
 
 function open(): void {
+    if (props.disabled) return;
     if (props.delay) {
         timer.value = setTimeout(() => {
             isActive.value = true;
@@ -460,7 +463,7 @@ const contentClasses = computed(() => [
             @after-leave="metrics = null"
             @enter-cancelled="metrics = null">
             <div
-                v-show="isActive || always"
+                v-show="isActive || (always && !disabled)"
                 ref="contentRef"
                 :class="contentClasses">
                 <span :class="arrowClasses"></span>

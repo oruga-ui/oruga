@@ -1,11 +1,17 @@
-<script lang="ts">
-import SliderThumb from "./SliderThumb.vue";
-import SliderTick from "./SliderTick.vue";
+<script setup lang="ts">
+import { computed, ref, watch, type PropType } from "vue";
 
-import { getOptions } from "../../utils/config";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import { getValueByPath } from "../../utils/helpers";
-import { defineComponent } from "vue";
+import OSliderThumb from "./SliderThumb.vue";
+import OSliderTick from "./SliderTick.vue";
+
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useComputedClass,
+    useClassProps,
+    useProviderParent,
+} from "@/composables";
+import type { SliderComponent } from "./types";
 
 /**
  * A slider to select a value or range from a given range
@@ -13,406 +19,357 @@ import { defineComponent } from "vue";
  * @requires ./SliderTick.vue
  * @style _slider.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OSlider",
-    components: {
-        [SliderThumb.name]: SliderThumb,
-        [SliderTick.name]: SliderTick,
-    },
     configField: "slider",
-    mixins: [BaseComponentMixin],
-    provide() {
-        return {
-            $slider: this,
-        };
-    },
-    emits: ["update:modelValue", "change", "dragging", "dragstart", "dragend"],
-    props: {
-        /** @model */
-        modelValue: {
-            type: [Number, Array],
-            default: 0,
-        },
-        /** Minimum value */
-        min: {
-            type: Number,
-            default: 0,
-        },
-        /** Maximum  value */
-        max: {
-            type: Number,
-            default: 100,
-        },
-        /** Step interval of ticks */
-        step: {
-            type: Number,
-            default: 1,
-        },
-        /**
-         * Color of the slider
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        variant: {
-            type: String,
-        },
-        /**
-         * Vertical size of slider, optional
-         * @values small, medium, large
-         */
-        size: String,
-        /** Show tick marks */
-        ticks: {
-            type: Boolean,
-            default: false,
-        },
-        /** Show tooltip when thumb is being dragged */
-        tooltip: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "slider.tooltip", true);
-            },
-        },
-        /**
-         * Color of the tooltip
-         * @values primary, info, success, warning, danger, and any other custom color
-         */
-        tooltipVariant: String,
-        /** Rounded thumb */
-        rounded: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "slider.rounded", false);
-            },
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        /** Update v-model only when dragging is finished */
-        lazy: {
-            type: Boolean,
-            default: false,
-        },
-        /** Function to format the tooltip label for display */
-        customFormatter: Function,
-        ariaLabel: [String, Array],
-        /** Increases slider size on focus */
-        biggerSliderFocus: {
-            type: Boolean,
-            default: false,
-        },
-        indicator: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: "raw",
-            validator: (value: string) => {
-                return ["raw", "percent"].indexOf(value) >= 0;
-            },
-        },
-        locale: {
-            type: [String, Array],
-            default: () => {
-                return getValueByPath(getOptions(), "locale");
-            },
-        },
-        /** Tooltip displays always */
-        tooltipAlways: {
-            type: Boolean,
-            default: false,
-        },
-        rootClass: [String, Function, Array],
-        sizeClass: [String, Function, Array],
-        trackClass: [String, Function, Array],
-        fillClass: [String, Function, Array],
-        thumbRoundedClass: [String, Function, Array],
-        thumbDraggingClass: [String, Function, Array],
-        disabledClass: [String, Function, Array],
-        thumbWrapperClass: [String, Function, Array],
-        thumbClass: [String, Function, Array],
-        variantClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            value1: null,
-            value2: null,
-            dragging: false,
-            isRange: false,
-        };
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-slide"),
-                {
-                    [this.computedClass("sizeClass", "o-slide--", this.size)]:
-                        this.size,
-                },
-                {
-                    [this.computedClass("disabledClass", "o-slide--disabled")]:
-                        this.disabled,
-                },
-            ];
-        },
-        trackClasses() {
-            return [this.computedClass("trackClass", "o-slide__track")];
-        },
-        fillClasses() {
-            return [
-                this.computedClass("fillClass", "o-slide__fill"),
-                {
-                    [this.computedClass(
-                        "variantClass",
-                        "o-slide__fill--",
-                        this.variant,
-                    )]: this.variant,
-                },
-            ];
-        },
-        thumbClasses() {
-            return [
-                this.computedClass("thumbClass", "o-slide__thumb"),
-                {
-                    [this.computedClass(
-                        "thumbDraggingClass",
-                        "o-slide__thumb--dragging",
-                    )]: this.dragging,
-                },
-                {
-                    [this.computedClass(
-                        "thumbRoundedClass",
-                        "o-slide__thumb--rounded",
-                    )]: this.rounded,
-                },
-            ];
-        },
-        thumbWrapperClasses() {
-            return [
-                this.computedClass(
-                    "thumbWrapperClass",
-                    "o-slide__thumb-wrapper",
-                ),
-            ];
-        },
-        newTooltipVariant() {
-            return this.tooltipVariant ? this.tooltipVariant : this.variant;
-        },
-        tickValues() {
-            if (!this.ticks || this.min > this.max || this.step === 0)
-                return [];
-            const result = [];
-            for (
-                let i = this.min + this.step;
-                i < this.max;
-                i = i + this.step
-            ) {
-                result.push(i);
-            }
-            return result;
-        },
-        minValue() {
-            return Math.min(this.value1, this.value2);
-        },
-        maxValue() {
-            return Math.max(this.value1, this.value2);
-        },
-        barSize() {
-            return this.isRange
-                ? `${
-                      (100 * (this.maxValue - this.minValue)) /
-                      (this.max - this.min)
-                  }%`
-                : `${
-                      (100 * (this.value1 - this.min)) / (this.max - this.min)
-                  }%`;
-        },
-        barStart() {
-            return this.isRange
-                ? `${
-                      (100 * (this.minValue - this.min)) / (this.max - this.min)
-                  }%`
-                : "0%";
-        },
-        precision() {
-            const precisions = [this.min, this.max, this.step].map((item) => {
-                const decimal = ("" + item).split(".")[1];
-                return decimal ? decimal.length : 0;
-            });
-            return Math.max(...precisions);
-        },
-        barStyle() {
-            return {
-                width: this.barSize,
-                left: this.barStart,
-            };
-        },
-    },
-    watch: {
-        value1() {
-            this.onInternalValueUpdate();
-        },
-        value2() {
-            this.onInternalValueUpdate();
-        },
-        min() {
-            this.setValues(this.value);
-        },
-        max() {
-            this.setValues(this.value);
-        },
-        /**
-         * When v-model is changed set the new active step.
-         */
-        modelValue(value) {
-            this.setValues(value);
-        },
-    },
-    methods: {
-        setValues(newValue) {
-            if (this.min > this.max) {
-                return;
-            }
-            if (Array.isArray(newValue)) {
-                this.isRange = true;
-                const smallValue =
-                    typeof newValue[0] !== "number" || isNaN(newValue[0])
-                        ? this.min
-                        : Math.min(Math.max(this.min, newValue[0]), this.max);
-                const largeValue =
-                    typeof newValue[1] !== "number" || isNaN(newValue[1])
-                        ? this.max
-                        : Math.max(Math.min(this.max, newValue[1]), this.min);
-                this.value1 = this.isThumbReversed ? largeValue : smallValue;
-                this.value2 = this.isThumbReversed ? smallValue : largeValue;
-            } else {
-                this.isRange = false;
-                this.value1 = isNaN(newValue)
-                    ? this.min
-                    : Math.min(this.max, Math.max(this.min, newValue));
-                this.value2 = null;
-            }
-        },
-        onInternalValueUpdate() {
-            if (this.isRange) {
-                this.isThumbReversed = this.value1 > this.value2;
-            }
-            if (!this.lazy || !this.dragging) {
-                this.emitValue("update:modelValue");
-            }
-            if (this.dragging) {
-                this.emitValue("dragging");
-            }
-        },
-        sliderSize() {
-            return this.$refs.slider.getBoundingClientRect().width;
-        },
-        onSliderClick(event) {
-            if (this.disabled || this.isTrackClickDisabled) return;
-            const sliderOffsetLeft =
-                this.$refs.slider.getBoundingClientRect().left;
-            const percent =
-                ((event.clientX - sliderOffsetLeft) / this.sliderSize()) * 100;
-            const targetValue =
-                this.min + (percent * (this.max - this.min)) / 100;
-            const diffFirst = Math.abs(targetValue - this.value1);
-            if (!this.isRange) {
-                if (diffFirst < this.step / 2) return;
-                this.$refs.button1.setPosition(percent);
-            } else {
-                const diffSecond = Math.abs(targetValue - this.value2);
-                if (diffFirst <= diffSecond) {
-                    if (diffFirst < this.step / 2) return;
-                    this.$refs["button1"].setPosition(percent);
-                } else {
-                    if (diffSecond < this.step / 2) return;
-                    this.$refs["button2"].setPosition(percent);
-                }
-            }
-            this.emitValue("change");
-        },
-        onDragStart() {
-            this.dragging = true;
-            this.$emit("dragstart");
-        },
-        onDragEnd() {
-            this.isTrackClickDisabled = true;
-            setTimeout(() => {
-                // avoid triggering onSliderClick after dragend
-                this.isTrackClickDisabled = false;
-            }, 0);
-            this.dragging = false;
-            this.$emit("dragend");
-            if (this.lazy) {
-                this.emitValue("update:modelValue");
-            }
-        },
-        emitValue(event) {
-            const val = this.isRange
-                ? [this.minValue, this.maxValue]
-                : this.value1;
-            this.$emit(event, val);
-        },
-    },
-    created() {
-        this.isThumbReversed = false;
-        this.isTrackClickDisabled = false;
-        this.setValues(this.modelValue);
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** @model */
+    modelValue: {
+        type: [Number, Array] as PropType<number | number[]>,
+        default: 0,
+    },
+    /** Minimum value */
+    min: { type: Number, default: 0 },
+    /** Maximum  value */
+    max: { type: Number, default: 100 },
+    /** Step interval of ticks */
+    step: { type: Number, default: 1 },
+    /**
+     * Color of the slider
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant: {
+        type: String,
+        default: () => getOption("slider.variant"),
+    },
+    /**
+     * Vertical size of slider, optional
+     * @values small, medium, large
+     */
+    size: {
+        type: String,
+        default: () => getOption("slider.size"),
+    },
+    /** Show tick marks */
+    ticks: { type: Boolean, default: false },
+    /** Show tooltip when thumb is being dragged */
+    tooltip: {
+        type: Boolean,
+        default: () => getOption("slider.tooltip", true),
+    },
+    /**
+     * Color of the tooltip
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    tooltipVariant: {
+        type: String,
+        default: () => getOption("slider.tooltipVariant"),
+    },
+    /** Tooltip displays always */
+    tooltipAlways: { type: Boolean, default: false },
+    /** Rounded thumb */
+    rounded: {
+        type: Boolean,
+        default: () => getOption("slider.rounded", false),
+    },
+    /** Slider will be disabled */
+    disabled: { type: Boolean, default: false },
+    /** Update v-model only when dragging is finished */
+    lazy: { type: Boolean, default: false },
+    /** Function to format the tooltip label for display */
+    customFormatter: { type: Function, default: undefined },
+    /** Increases slider size on focus */
+    biggerSliderFocus: { type: Boolean, default: false },
+    /** Show indicators */
+    indicator: { type: Boolean, default: false },
+    /**
+     * Define v-model format
+     * @values row, percent
+     */
+    format: {
+        type: String,
+        default: "raw",
+        validator: (value: string) => ["raw", "percent"].indexOf(value) >= 0,
+    },
+    /** Date format locale */
+    locale: {
+        type: [String, Array] as PropType<string | string[]>,
+        default: () => getOption("locale"),
+    },
+    /** Accessibility aria-label to to be passed to the slider thumb element. */
+    ariaLabel: {
+        type: [String, Array] as PropType<string | string[]>,
+        default: undefined,
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "sizeClass",
+        "trackClass",
+        "fillClass",
+        "thumbRoundedClass",
+        "thumbDraggingClass",
+        "disabledClass",
+        "thumbWrapperClass",
+        "thumbClass",
+        "variantClass",
+    ]),
+    tickClass: { type: [String, Function, Array], default: undefined },
+    tickHiddenClass: { type: [String, Function, Array], default: undefined },
+    tickLabelClass: { type: [String, Function, Array], default: undefined },
+});
+
+const emits = defineEmits<{
+    /**
+     * modelValue prop two-way binding
+     * @param value {number | number[]} updated modelValue prop
+     */
+    (e: "update:modelValue", value: number | number[]): void;
+    /**
+     * on value change event
+     * @param value {number | number[]} updated modelValue prop
+     */
+    (e: "change", value: number | number[]): void;
+    /**
+     * on dragging event
+     * @param value {number | number[]} updated modelValue prop
+     * */
+    (e: "dragging", value: number | number[]): void;
+    /** on drag start event */
+    (e: "dragstart"): void;
+    /** on drag end event */
+    (e: "dragend"): void;
+}>();
+
+function emitValue(event: any): void {
+    const val = isRange.value
+        ? [minValue.value, maxValue.value]
+        : valueStart.value || 0;
+    emits(event, val);
+}
+
+// Provided data is a computed ref to enjure reactivity.
+const provideData = computed<SliderComponent>(() => ({
+    max: props.max,
+    min: props.min,
+}));
+
+/** Provide functionalities and data to child item components */
+useProviderParent(undefined, { data: provideData });
+
+const sliderRef = ref();
+const thumbStartRef = ref();
+const thumbEndRef = ref();
+
+const valueStart = ref<number>(null);
+const valueEnd = ref<number>(null);
+const dragging = ref(false);
+const isRange = ref(false);
+
+const isThumbReversed = ref();
+const isTrackClickDisabled = ref();
+
+setValues(props.modelValue);
+
+watch([valueStart, valueEnd], () => onInternalValueUpdate());
+
+/** When min, max or v-model is changed set the new active step. */
+watch([() => props.min, () => props.max, () => props.modelValue], () =>
+    setValues(props.modelValue),
+);
+
+const tickValues = computed(() => {
+    if (!props.ticks || props.min > props.max || props.step === 0) return [];
+    const result = [];
+    for (let i = props.min + props.step; i < props.max; i = i + props.step) {
+        result.push(i);
+    }
+    return result;
+});
+
+const minValue = computed(() => Math.min(valueStart.value, valueEnd.value));
+
+const maxValue = computed(() => Math.max(valueStart.value, valueEnd.value));
+
+const barSize = computed(() =>
+    isRange.value
+        ? `${
+              (100 * (maxValue.value - minValue.value)) /
+              (props.max - props.min)
+          }%`
+        : `${
+              (100 * (valueStart.value - props.min)) / (props.max - props.min)
+          }%`,
+);
+
+const barStart = computed(() =>
+    isRange.value
+        ? `${(100 * (minValue.value - props.min)) / (props.max - props.min)}%`
+        : "0%",
+);
+
+const barStyle = computed(() => ({
+    width: barSize.value,
+    left: barStart.value,
+}));
+
+function setValues(newValue: number | number[]): void {
+    if (props.min > props.max) return;
+
+    if (Array.isArray(newValue)) {
+        isRange.value = true;
+        const smallValue =
+            typeof newValue[0] !== "number" || isNaN(newValue[0])
+                ? props.min
+                : Math.min(Math.max(props.min, newValue[0]), props.max);
+        const largeValue =
+            typeof newValue[1] !== "number" || isNaN(newValue[1])
+                ? props.max
+                : Math.max(Math.min(props.max, newValue[1]), props.min);
+        valueStart.value = isThumbReversed.value ? largeValue : smallValue;
+        valueEnd.value = isThumbReversed.value ? smallValue : largeValue;
+    } else {
+        isRange.value = false;
+        valueStart.value = isNaN(newValue)
+            ? props.min
+            : Math.min(props.max, Math.max(props.min, newValue));
+        valueEnd.value = null;
+    }
+}
+
+function onInternalValueUpdate(): void {
+    if (isRange.value)
+        isThumbReversed.value = valueStart.value > valueEnd.value;
+    if (!props.lazy || !dragging.value) emitValue("update:modelValue");
+    if (dragging.value) emitValue("dragging");
+}
+
+function sliderSize(): number {
+    return sliderRef.value.getBoundingClientRect().width;
+}
+
+function onSliderClick(event: MouseEvent): void {
+    if (props.disabled || isTrackClickDisabled.value) return;
+    const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
+    const percent = ((event.clientX - sliderOffsetLeft) / sliderSize()) * 100;
+    const targetValue = props.min + (percent * (props.max - props.min)) / 100;
+    const diffFirst = Math.abs(targetValue - valueStart.value);
+    if (!isRange.value) {
+        if (diffFirst < props.step / 2) return;
+        this.$refs.button1.setPosition(percent);
+    } else {
+        const diffSecond = Math.abs(targetValue - valueEnd.value);
+        if (diffFirst <= diffSecond) {
+            if (diffFirst < props.step / 2) return;
+            this.$refs["button1"].setPosition(percent);
+        } else {
+            if (diffSecond < props.step / 2) return;
+            this.$refs["button2"].setPosition(percent);
+        }
+    }
+    emitValue("change");
+}
+
+function onDragStart(): void {
+    dragging.value = true;
+    emits("dragstart");
+}
+
+function onDragEnd(): void {
+    isTrackClickDisabled.value = true;
+    // avoid triggering onSliderClick after dragend
+    setTimeout(() => (isTrackClickDisabled.value = false));
+    dragging.value = false;
+    emits("dragend");
+    if (props.lazy) emitValue("update:modelValue");
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-slide"),
+    {
+        [useComputedClass("sizeClass", "o-slide--", props.size)]: props.size,
+    },
+    {
+        [useComputedClass("disabledClass", "o-slide--disabled")]:
+            props.disabled,
+    },
+]);
+
+const trackClasses = computed(() => [
+    useComputedClass("trackClass", "o-slide__track"),
+]);
+
+const fillClasses = computed(() => [
+    useComputedClass("fillClass", "o-slide__fill"),
+    {
+        [useComputedClass("variantClass", "o-slide__fill--", props.variant)]:
+            props.variant,
+    },
+]);
+
+const thumbClasses = computed(() => [
+    useComputedClass("thumbClass", "o-slide__thumb"),
+    {
+        [useComputedClass("thumbDraggingClass", "o-slide__thumb--dragging")]:
+            dragging.value,
+    },
+    {
+        [useComputedClass("thumbRoundedClass", "o-slide__thumb--rounded")]:
+            props.rounded,
+    },
+]);
+
+const thumbWrapperClasses = computed(() => [
+    useComputedClass("thumbWrapperClass", "o-slide__thumb-wrapper"),
+]);
 </script>
 
 <template>
-    <div @click="onSliderClick" :class="rootClasses">
-        <div :class="trackClasses" ref="slider">
+    <div :class="rootClasses" @click="onSliderClick">
+        <div ref="sliderRef" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
             <template v-if="ticks">
                 <o-slider-tick
                     v-for="(val, key) in tickValues"
                     :key="key"
-                    :value="val" />
+                    :value="val"
+                    :tick-class="tickClass"
+                    :tick-hidden-class="tickHiddenClass"
+                    :tick-label-class="tickLabelClass" />
             </template>
+
+            <!-- 
+                @slot Define additional slider ticks here
+             -->
             <slot />
+
             <o-slider-thumb
-                v-model="value1"
-                :variant="newTooltipVariant"
-                :tooltip="tooltip"
-                :custom-formatter="customFormatter"
-                :indicator="indicator"
-                ref="button1"
-                role="slider"
-                :format="format"
-                :locale="locale"
-                :tooltip-always="tooltipAlways"
-                :aria-valuenow="value1"
-                :aria-valuemin="min"
-                :aria-valuemax="max"
-                aria-orientation="horizontal"
-                :aria-label="
-                    Array.isArray(ariaLabel) ? ariaLabel[0] : ariaLabel
-                "
-                :aria-disabled="disabled"
+                ref="thumbStartRef"
+                v-model="valueStart"
+                :slider-props="props"
+                :slider-size="sliderSize"
+                :thumb-classes="thumbClasses"
+                :thumb-wrapper-classes="thumbWrapperClasses"
+                @change="emitValue('change')"
                 @dragstart="onDragStart"
                 @dragend="onDragEnd" />
+
             <o-slider-thumb
-                v-model="value2"
-                :variant="newTooltipVariant"
-                :tooltip="tooltip"
-                :custom-formatter="customFormatter"
-                :indicator="indicator"
-                ref="button2"
                 v-if="isRange"
-                role="slider"
-                :format="format"
-                :locale="locale"
-                :tooltip-always="tooltipAlways"
-                :aria-valuenow="value2"
-                :aria-valuemin="min"
-                :aria-valuemax="max"
-                aria-orientation="horizontal"
-                :aria-label="Array.isArray(ariaLabel) ? ariaLabel[1] : ''"
-                :aria-disabled="disabled"
+                ref="thumbEndRef"
+                v-model="valueEnd"
+                :slider-props="props"
+                :slider-size="sliderSize"
+                :thumb-classes="thumbClasses"
+                :thumb-wrapper-classes="thumbWrapperClasses"
+                @change="emitValue('change')"
                 @dragstart="onDragStart"
                 @dragend="onDragEnd" />
         </div>
