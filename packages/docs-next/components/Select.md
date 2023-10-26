@@ -30,6 +30,8 @@ title: Select
 
 ## Select component
 
+> Select an item in a dropdown list. Use with Field to access all functionalities
+
 ```html
 <o-select></o-select>
 ```
@@ -48,6 +50,7 @@ title: Select
 | iconRightVariant   | Variant of right icon                                       | string                                 | -                                                                               |                                                                                                                                                       |
 | multiple           | Allow multiple selection                                    | boolean                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | nativeSize         | Same as native size                                         | string\|number                         | -                                                                               |                                                                                                                                                       |
+| options            | Select options, unnecessary when default slot is used       | string[] \| OptionsItem[]              | -                                                                               |                                                                                                                                                       |
 | placeholder        | Text when nothing is selected                               | string                                 | -                                                                               |                                                                                                                                                       |
 | rounded            | Makes the element rounded                                   | boolean                                | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 | size               | Vertical size of input, optional                            | string                                 | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>select: {<br>&nbsp;&nbsp;size: undefined<br>}</code>      |
@@ -59,20 +62,21 @@ title: Select
 
 ### Events
 
-| Event name        | Properties                                                                      | Description                     |
-| ----------------- | ------------------------------------------------------------------------------- | ------------------------------- |
-| update:modelValue | **value** ` [String, Number, Boolean, Object, Array]` - updated modelValue prop | modelValue prop two-way binding |
-| focus             | **event** `Event` - native event                                                | on input focus event            |
-| blur              | **event** `Event` - native event                                                | on input blur event             |
-| invalid           | **event** `Event` - native event                                                | on input invalid event          |
-| icon-click        | **event** `Event` - native event                                                | on icon click event             |
-| icon-right-click  | **event** `Event` - native event                                                | on icon right click event       |
+| Event name        | Properties                                                                                      | Description                     |
+| ----------------- | ----------------------------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `string \| number \| boolean \| object \| Array&lt;any&gt;` - updated modelValue prop | modelValue prop two-way binding |
+| focus             | **event** `Event` - native event                                                                | on input focus event            |
+| blur              | **event** `Event` - native event                                                                | on input blur event             |
+| invalid           | **event** `Event` - native event                                                                | on input invalid event          |
+| icon-click        | **event** `Event` - native event                                                                | on icon click event             |
+| icon-right-click  | **event** `Event` - native event                                                                | on icon right click event       |
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name        | Description              | Bindings |
+| ----------- | ------------------------ | -------- |
+| placeholder | Override the placeholder |          |
+| default     | Override the options     |          |
 
 </div>
 

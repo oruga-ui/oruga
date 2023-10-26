@@ -1,72 +1,71 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, type ComputedRef } from "vue";
+import { useComputedClass, useProviderChild } from "@/composables";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+
+import type { SliderComponent } from "./types";
 
 /**
  * @displayName Slider Tick
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OSliderTick",
-    mixins: [BaseComponentMixin],
     configField: "slider",
-    inject: ["$slider"],
-    props: {
-        /** Value of single tick */
-        value: {
-            variant: Number,
-            default: 0,
-        },
-        tickClass: [String, Function, Array],
-        tickHiddenClass: [String, Function, Array],
-        tickLabelClass: [String, Function, Array],
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("tickClass", "o-slide__tick"),
-                {
-                    [this.computedClass(
-                        "tickHiddenClass",
-                        "o-slide__tick--hidden",
-                    )]: this.hidden,
-                },
-            ];
-        },
-        tickLabelClasses() {
-            return [
-                this.computedClass("tickLabelClass", "o-slide__tick-label"),
-            ];
-        },
-        position() {
-            const pos =
-                ((this.value - this.$parent.min) /
-                    (this.$parent.max - this.$parent.min)) *
-                100;
-            return pos >= 0 && pos <= 100 ? pos : 0;
-        },
-        hidden() {
-            return (
-                this.value === this.$parent.min ||
-                this.value === this.$parent.max
-            );
-        },
-        tickStyle() {
-            return { left: this.position + "%" };
-        },
-    },
-    created() {
-        if (!this.$slider) {
-            throw new Error("You should wrap oSliderTick on a oSlider");
-        }
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Value of single tick */
+    value: { type: Number, required: true },
+    /** Tick label */
+    label: { type: String, default: undefined },
+    tickClass: { type: [String, Function, Array], default: undefined },
+    tickHiddenClass: { type: [String, Function, Array], default: undefined },
+    tickLabelClass: { type: [String, Function, Array], default: undefined },
+});
+
+// Inject functionalities and data from the parent carousel component
+const { parent } = useProviderChild<ComputedRef<SliderComponent>>();
+
+const position = computed(() => {
+    const pos =
+        ((props.value - parent.value.min) /
+            (parent.value.max - parent.value.min)) *
+        100;
+    return pos >= 0 && pos <= 100 ? pos : 0;
+});
+
+const hidden = computed(
+    () => props.value === parent.value.min || props.value === parent.value.max,
+);
+
+const tickStyle = computed(() => ({ left: position.value + "%" }));
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("tickClass", "o-slide__tick"),
+    {
+        [useComputedClass("tickHiddenClass", "o-slide__tick--hidden")]:
+            hidden.value,
+    },
+]);
+
+const tickLabelClasses = computed(() => [
+    useComputedClass("tickLabelClass", "o-slide__tick-label"),
+]);
 </script>
 
 <template>
     <div :class="rootClasses" :style="tickStyle">
         <span v-if="$slots.default" :class="tickLabelClasses">
-            <slot />
+            <!-- 
+                @slot Tick content slot, label is default
+             -->
+            <slot> {{ label }} </slot>
         </span>
     </div>
 </template>

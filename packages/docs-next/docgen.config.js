@@ -107,7 +107,7 @@ ${tmplClassProps(config, component)}
 ` : ""
 }
 <div class="vp-doc">
-${tmplProps(renderedUsage.props, component)}
+${tmplProps(renderedUsage.props, component, description)}
 ${renderedUsage.methods}
 ${renderedUsage.events}
 ${renderedUsage.slots}
@@ -142,10 +142,11 @@ function tmplClassProps(config, name) {
     }
 }
 
-function tmplProps(props, name) {
+function tmplProps(props, name, description) {
     const tag  = name.match(/[A-Z][a-z]+/g).join("-").toLowerCase();
     let ret = `
 ## ${name} component
+${description ? "> " + description : ""}
 
 \`\`\`html
 <o-${tag}></o-${tag}> 
@@ -205,15 +206,15 @@ function tmplProps(props, name) {
                 // refactored components
                 const clear = (s) => s.replace(/'|"/g, "");
                 // get default params
-                let f = d.replace(/\r\n/g, "")
-                    .substring(d.lastIndexOf("getOption(") + "getOption(".length);
+                d = d.replace(/\r\n/g, "")
+                let f = d.substring(d.lastIndexOf("getOption(") + "getOption(".length);
                 // remove function prop invokation
                if(f.lastIndexOf('(') > 0) f = f.substring(0, f.lastIndexOf('('));
                if(f.lastIndexOf(')') > 0) f = f.substring(0, f.lastIndexOf(')'));
-                const params = f.split(",");
-                if (params.length > 3) {
+                const params = f.split(", ");
+                if (params.length >= 3) {
                     // In case last param contains a ','
-                    params[2] = params.slice(2).join(",");
+                    params[1] = params.slice(1).join(",");
                 }
                 if (params[0]) {
                     configParts = params[0].trim().split(".");
@@ -222,7 +223,7 @@ function tmplProps(props, name) {
                     const value = `${clear(configParts[1])}: ${params[1]}`;
                     d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>${clear(configParts[0])}: {<br>&nbsp;&nbsp;${value}<br>}</code>`;
                 }
-                if (configParts && configParts.length == 1) {
+                else if (configParts && configParts.length == 1) {
                     const value = `${clear(configParts[0])}: ${params[1]}`;
                     d = `<div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;${value}<br>}</code>`;
                 }

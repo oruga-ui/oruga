@@ -1,13 +1,7 @@
 <script setup>
 defineProps({
-    email: {
-        type: String,
-        default: "",
-    },
-    password: {
-        type: String,
-        default: "",
-    },
+    email: { type: String, default: "" },
+    password: { type: String, default: "" },
 });
 
 defineEmits(["close"]);
@@ -43,7 +37,7 @@ defineEmits(["close"]);
                 </o-field>
 
                 <o-field>
-                    <o-checkbox>Remember me</o-checkbox>
+                    <o-checkbox label="Remember me" />
                 </o-field>
             </section>
             <footer class="modal-card-foot">

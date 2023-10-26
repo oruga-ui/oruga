@@ -60,14 +60,14 @@ function setDayRef(date: Date, el: Element | ComponentPublicInstance): void {
 watch(
     () => props.day,
     (day) => {
-        const refKey = `day-${props.month}-${day}`;
-        nextTick(() => {
-            // $nextTick is needed when month is changed
-            const ref = dayRefs.value.get(refKey);
-            if (ref?.length > 0 && ref[0]) {
-                ref[0].focus();
-            }
-        });
+        // if day is in week
+        if (props.week.map((d) => d.getDate()).includes(day))
+            nextTick(() => {
+                // $nextTick is needed when month is changed
+                const refKey = `day-${props.month}-${day}`;
+                const ref = dayRefs.value.get(refKey);
+                if (ref) ref.focus();
+            });
     },
 );
 
@@ -75,7 +75,7 @@ function clickWeekNumber(week: number): void {
     if (datepicker.value.weekNumberClickable) emits("week-number-click", week);
 }
 
-function getSetDayOfYear(input): number {
+function getDayOfYear(input): number {
     return (
         Math.round(
             (input.getTime() - new Date(input.getFullYear(), 0, 1).getTime()) /
@@ -89,7 +89,7 @@ function getWeekNumber(mom): number {
     // Rules for the first week : 1 for the 1st January, 4 for the 4th January
     const doy = datepicker.value.rulesForFirstWeek;
     const weekOffset = firstWeekOffset(mom.getFullYear(), dow, doy);
-    const week = Math.floor((getSetDayOfYear(mom) - weekOffset - 1) / 7) + 1;
+    const week = Math.floor((getDayOfYear(mom) - weekOffset - 1) / 7) + 1;
     let resWeek;
     let resYear;
     if (week < 1) {
@@ -160,12 +160,14 @@ function selectDate(date: Date): void {
 function changeFocus(day, inc): void {
     const nextDay = new Date(day.getTime());
     nextDay.setDate(day.getDate() + inc);
+    // if next day is out of range or not selectable, move to next selectable date
     while (
-        (!datepicker.value.minDate || nextDay > datepicker.value.minDate) &&
-        (!datepicker.value.maxDate || nextDay < datepicker.value.maxDate) &&
-        !isDateSelectable(nextDay, props.month)
+        (datepicker.value.minDate && nextDay < datepicker.value.minDate) ||
+        (datepicker.value.maxDate && nextDay > datepicker.value.maxDate) ||
+        !isDateSelectable(nextDay, nextDay.getMonth())
     ) {
-        nextDay.setDate(day.getDate() + Math.sign(inc));
+        // revert day selection until selectable day is reached
+        nextDay.setDate(nextDay.getDate() - Math.sign(inc));
     }
     setRangeHoverEndDate(nextDay);
     emits("change-focus", nextDay);

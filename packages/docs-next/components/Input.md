@@ -30,6 +30,8 @@ title: Input
 
 ## Input component
 
+> Get user Input. Use with Field to access all functionalities
+
 ```html
 <o-input></o-input>
 ```

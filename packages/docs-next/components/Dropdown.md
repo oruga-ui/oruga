@@ -30,6 +30,8 @@ title: Dropdown
 
 ## Dropdown component
 
+> Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
+
 ```html
 <o-dropdown></o-dropdown>
 ```
@@ -57,7 +59,7 @@ title: Dropdown
 | tabindex     | Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key)                                                                     | number                                 | -                                                      | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
 | trapFocus    | Trap focus inside the dropdown.                                                                                                                                  | boolean                                | -                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;trapFocus: true<br>}</code>         |
 | triggerTag   | Dropdown trigger tag name                                                                                                                                        | string \| Component                    | -                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;triggerTag: "div"<br>}</code>       |
-| triggers     | Dropdown will be triggered by any events                                                                                                                         | string[]                               | `click`, `hover`, `contextmenu`, `focus`               | Default function (see source code)                                                                                                                         |
+| triggers     | Dropdown will be triggered by any events                                                                                                                         | string[]                               | `click`, `hover`, `contextmenu`, `focus`               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>dropdown: {<br>&nbsp;&nbsp;triggers: ["click"]<br>}</code>     |
 | v-model      |                                                                                                                                                                  | string\|number\|boolean\|object\|array | -                                                      |                                                                                                                                                            |
 
 ### Events

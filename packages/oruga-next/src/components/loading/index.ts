@@ -1,4 +1,4 @@
-import type { App, ComponentPropsOptions, Plugin } from "vue";
+import type { App, Plugin } from "vue";
 import { createVNode, render } from "vue";
 
 import Loading from "./Loading.vue";
@@ -10,6 +10,9 @@ import {
     registerComponentProgrammatic,
 } from "@/utils/plugins";
 import InstanceRegistry from "@/utils/InstanceRegistry";
+import type { ProgrammaticExpose } from "@/types";
+
+export type LoadingProps = InstanceType<typeof Loading>["$props"];
 
 declare module "@/types" {
     interface OrugaProgrammatic {
@@ -22,28 +25,42 @@ let localVueInstance: App;
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {
-    open(
-        params: Readonly<ComponentPropsOptions>,
-    ): InstanceType<typeof Loading> {
+    open(params: Readonly<string | LoadingProps>): ProgrammaticExpose {
+        const componentParams =
+            typeof params === "string"
+                ? {
+                      label: params,
+                  }
+                : { ...params };
+
+        let slot;
+        if (Array.isArray(componentParams.label)) {
+            slot = componentParams.label;
+            delete componentParams.label;
+        }
+
         const defaultParams = {
             programmatic: { instances },
-            active: true,
+            active: true, // set the active state to true
         };
 
-        const propsData = merge(defaultParams, params);
+        const propsData = merge(defaultParams, componentParams);
         propsData.promise = new Promise((p1, p2) => {
             propsData.programmatic.resolve = p1;
             propsData.programmatic.reject = p2;
         });
 
+        const defaultSlot = () => slot;
+
         const app = localVueInstance || VueInstance;
-        const vnode = createVNode(Loading, propsData);
+        const vnode = createVNode(Loading, propsData, defaultSlot);
         vnode.appContext = app._context;
         render(vnode, document.createElement("div"));
-        return vnode.component.proxy as InstanceType<typeof Loading>;
+        // return exposed functionalities
+        return vnode.component.exposed as ProgrammaticExpose;
     },
     closeAll(...args: any[]): void {
-        instances.walk((entry) => entry.close(...args));
+        instances.walk((entry) => entry.exposed.close(...args));
     },
 };
 

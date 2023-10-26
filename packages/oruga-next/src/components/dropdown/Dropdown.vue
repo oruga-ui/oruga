@@ -25,6 +25,7 @@ import {
     removeElement,
     createAbsoluteElement,
     toCssDimension,
+    isMobileAgent,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { provideDropdown } from "./useDropdownShare";
@@ -118,13 +119,13 @@ const props = defineProps({
      */
     triggers: {
         type: Array as PropType<string[]>,
+        default: () => getOption("dropdown.triggers", ["click"]),
         validator: (values: string[]) =>
             values.filter(
                 (value) =>
                     ["click", "hover", "contextmenu", "focus"].indexOf(value) >
                     -1,
             ).length === values.length,
-        default: () => ["click"],
     },
     /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
     tabindex: { type: Number, default: 0 },
@@ -191,6 +192,7 @@ const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
     emits,
     { passive: true },
 ) as Ref<any>;
+
 const isActive = ref(props.active);
 
 /** toggle isActive value when prop is changed */
@@ -209,8 +211,6 @@ watch(isActive, (value) => {
     emits("update:active", value);
     if (props.appendToBody) nextTick(() => updateAppendToBody());
 });
-
-const isHovered = ref(false);
 
 const { isMobile } = useMatchMedia();
 
@@ -233,7 +233,11 @@ onUnmounted(() => {
     }
 });
 
+// check if mobile modal should be shown
 const isMobileModal = computed(() => props.mobileModal && !props.inline);
+
+// check if client is mobile native
+const isMobileNative = computed(() => props.mobileModal && isMobileAgent.any());
 
 const cancelOptions = computed(() =>
     typeof props.canClose === "boolean"
@@ -339,7 +343,7 @@ function keyPress(event: KeyboardEvent): void {
 }
 
 function onClick(): void {
-    if (props.triggers.indexOf("click") >= 0) toggle();
+    if (props.triggers.indexOf("click") >= 0 || isMobileNative.value) toggle();
 }
 function onContextMenu(event: MouseEvent): void {
     if (props.triggers.indexOf("contextmenu") >= 0) {
@@ -347,20 +351,22 @@ function onContextMenu(event: MouseEvent): void {
         toggle();
     }
 }
+function onFocus(): void {
+    if (props.triggers.indexOf("focus") >= 0) toggle();
+}
+
+const isHovered = ref(false);
 function onHover(): void {
-    if (props.triggers.indexOf("hover") >= 0) {
+    if (!isMobileNative.value && props.triggers.indexOf("hover") >= 0) {
         isHovered.value = true;
         toggle();
     }
 }
 function onHoverLeave(): void {
-    if (isHovered.value) {
+    if (!isMobileNative.value && isHovered.value) {
         toggle();
         isHovered.value = false;
     }
-}
-function onFocus(): void {
-    if (props.triggers.indexOf("focus") >= 0) toggle();
 }
 
 /** Toggle dropdown if it's not disabled. */

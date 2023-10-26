@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, onMounted, ref, nextTick } from "vue";
+import { computed, watch, onMounted, ref, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
@@ -13,6 +13,9 @@ import {
 } from "@/composables";
 
 import { injectField } from "../field/useFieldShare";
+
+import type { OptionsItem } from "./types";
+import { uuid } from "@/utils/helpers";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -33,6 +36,11 @@ const props = defineProps({
     modelValue: {
         type: [String, Number, Boolean, Object, Array],
         default: null,
+    },
+    /** Select options, unnecessary when default slot is used */
+    options: {
+        type: Array as PropType<string[] | OptionsItem[]>,
+        default: undefined,
     },
     /**
      * Vertical size of input, optional
@@ -124,11 +132,11 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value { [String, Number, Boolean, Object, Array]} updated modelValue prop
+     * @param value {string | number | boolean | object | Array<any>} updated modelValue prop
      */
     (
         e: "update:modelValue",
-        value: [string, number, boolean, object, Array<any>],
+        value: string | number | boolean | object | Array<any>,
     ): void;
     /**
      * on input focus event
@@ -166,11 +174,9 @@ const { checkHtml5Validity, onBlur, onFocus, onInvalid, setFocus } =
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
-    props,
-    emits,
-    { passive: true },
-);
+const vmodel = useVModelBinding<
+    string | number | boolean | object | Array<any>
+>(props, emits, { passive: true });
 
 const placeholderVisible = computed(() => vmodel.value === null);
 
@@ -188,6 +194,16 @@ onMounted(() => {
             checkHtml5Validity();
         },
         { immediate: true },
+    );
+});
+
+const selectOptions = computed<OptionsItem[]>(() => {
+    if (!props.options || !Array.isArray(props.options)) return [];
+
+    return props.options.map((option) =>
+        typeof option === "string"
+            ? { value: option, label: option, key: uuid() }
+            : { ...option, key: uuid() },
     );
 });
 
@@ -296,13 +312,29 @@ const iconRightClasses = computed(() => [
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
-            <template v-if="placeholder">
+            <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" :value="null" disabled hidden>
-                    {{ placeholder }}
+                    <!-- 
+                        @slot Override the placeholder
+                    -->
+                    <slot name="placeholder">
+                        {{ placeholder }}
+                    </slot>
                 </option>
             </template>
 
-            <slot />
+            <!--
+                @slot Override the options
+            -->
+            <slot>
+                <option
+                    v-for="option in selectOptions"
+                    :key="option.key"
+                    :value="option.value"
+                    v-bind="option.attrs">
+                    {{ option.label }}
+                </option>
+            </slot>
         </select>
 
         <o-icon

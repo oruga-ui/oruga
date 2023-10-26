@@ -1,11 +1,20 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, ref, watch, toValue, nextTick } from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TabbedMixin from "../../utils/TabbedMixin";
+import OIcon from "../icon/Icon.vue";
+import OSlotComponent from "@/utils/SlotComponent";
 
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useClassProps,
+    useComputedClass,
+    useProviderParent,
+    useVModelBinding,
+} from "@/composables";
+import type { BindProp } from "@/index";
+import { mod, isDefined } from "@/utils/helpers";
+import type { TabItem, TabItemComponent } from "./types";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -13,172 +22,349 @@ import { getValueByPath } from "../../utils/helpers";
  * @requires ./TabItem.vue
  * @style _tabs.scss
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OTabs",
-    mixins: [BaseComponentMixin, TabbedMixin("tab")],
     configField: "tabs",
-    props: {
-        /**
-         * Tab type
-         * @values boxed, toggle
-         */
-        type: {
-            type: String,
-            default: "default",
-        },
-        /**
-         * Tabs will be expanded (full-width)
-         */
-        expanded: Boolean,
-        /** Tab will have an animation */
-        animated: {
-            type: Boolean,
-            default: () => {
-                return getValueByPath(getOptions(), "tabs.animated", true);
-            },
-        },
-        /** Show tab items multiline when there is no space */
-        multiline: Boolean,
-        rootClass: [String, Function, Array],
-        positionClass: [String, Function, Array],
-        expandedClass: [String, Function, Array],
-        verticalClass: [String, Function, Array],
-        multilineClass: [String, Function, Array],
-        navTabsClass: [String, Function, Array],
-        navSizeClass: [String, Function, Array],
-        navPositionClass: [String, Function, Array],
-        navTypeClass: [String, Function, Array],
-        contentClass: [String, Function, Array],
-        transitioningClass: [String, Function, Array],
-        tabItemWrapperClass: [String, Function, Array],
-    },
-    computed: {
-        rootClasses() {
-            return [
-                this.computedClass("rootClass", "o-tabs"),
-                {
-                    [this.computedClass(
-                        "positionClass",
-                        "o-tabs--",
-                        this.position,
-                    )]: this.position && this.vertical,
-                },
-                {
-                    [this.computedClass("expandedClass", "o-tabs--fullwidth")]:
-                        this.expanded,
-                },
-                {
-                    [this.computedClass("verticalClass", "o-tabs--vertical")]:
-                        this.vertical,
-                },
-                {
-                    [this.computedClass("multilineClass", "o-tabs--multiline")]:
-                        this.multiline,
-                },
-            ];
-        },
-        itemWrapperClasses() {
-            return [
-                this.computedClass(
-                    "tabItemWrapperClass",
-                    "o-tabs__nav-item-wrapper",
-                ),
-            ];
-        },
-        navClasses() {
-            return [
-                this.computedClass("navTabsClass", "o-tabs__nav"),
-                {
-                    [this.computedClass(
-                        "navSizeClass",
-                        "o-tabs__nav--",
-                        this.size,
-                    )]: this.size,
-                },
-                {
-                    [this.computedClass(
-                        "navPositionClass",
-                        "o-tabs__nav--",
-                        this.position,
-                    )]: this.position && !this.vertical,
-                },
-                {
-                    [this.computedClass(
-                        "navTypeClass",
-                        "o-tabs__nav--",
-                        this.type,
-                    )]: this.type,
-                },
-            ];
-        },
-        contentClasses() {
-            return [
-                this.computedClass("contentClass", "o-tabs__content"),
-                {
-                    [this.computedClass(
-                        "transitioningClass",
-                        "o-tabs__content--transitioning",
-                    )]: this.isTransitioning,
-                },
-            ];
-        },
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** @model */
+    modelValue: { type: [String, Number], default: 0 },
+    /**
+     * Color of the control, optional
+     * @values primary, info, success, warning, danger, and any other custom color
+     */
+    variant: {
+        type: String,
+        default: () => getOption("tabs.variant"),
+    },
+    /**
+     * Tab size, optional
+     * @values small, medium, large
+     */
+    size: {
+        type: String,
+        default: () => getOption("tabs.size"),
+    },
+    /** Show tab in vertical layout */
+    vertical: { type: Boolean, default: false },
+    /**
+     * Position of the tab, optional
+     * @values left, centered, right
+     */
+    position: {
+        type: String,
+        default: undefined,
+        validator: (value: string) =>
+            ["left", "centered", "right"].indexOf(value) >= 0,
+    },
+    /** Destroy tab on hide */
+    destroyOnHide: { type: Boolean, default: false },
+    /**
+     * Tab type
+     * @values boxed, toggle
+     */
+    type: { type: String, default: "default" },
+    /** Tabs will be expanded (full-width) */
+    expanded: { type: Boolean, default: false },
+    /** Tab will have an animation */
+    animated: {
+        type: Boolean,
+        default: () => getOption("tabs.animated", true),
+    },
+    /** Show tab items multiline when there is no space */
+    multiline: { type: Boolean, default: false },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "rootClass",
+        "positionClass",
+        "expandedClass",
+        "verticalClass",
+        "multilineClass",
+        "navTabsClass",
+        "navSizeClass",
+        "navPositionClass",
+        "navTypeClass",
+        "contentClass",
+        "transitioningClass",
+        "tabItemWrapperClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /**
+     * modelValue prop two-way binding
+     * @param value {string | number} updated modelValue prop
+     */
+    (e: "update:modelValue", value: string | number): void;
+    /**
+     * on tab change event
+     * @param value {string | number} new tab value
+     * @param value {string | number} old tab value
+     */
+    (e: "change", newValue: string | number, oldValue: string | number): void;
+}>();
+
+const rootRef = ref();
+
+// Provided data is a computed ref to enjure reactivity.
+const provideData = computed(() => ({
+    activeId: activeId.value,
+    type: props.type,
+    vertical: props.vertical,
+}));
+
+/** Provide functionalities and data to child item components */
+const { sortedItems } = useProviderParent<TabItemComponent>(rootRef, {
+    data: provideData,
+});
+
+const items = computed<TabItem[]>(() =>
+    sortedItems.value.map((column) => ({
+        index: column.index,
+        identifier: column.identifier,
+        ...toValue(column.data),
+    })),
+);
+
+const activeId = useVModelBinding(props, emits, { passive: true });
+
+/**  When v-model is changed set the new active tab. */
+watch(
+    () => props.modelValue,
+    (value) => {
+        if (activeId.value !== value) performAction(value);
+    },
+);
+
+const activeItem = computed(() =>
+    isDefined(activeId)
+        ? items.value.find((item) => item.value === activeId.value) ||
+          items.value[0]
+        : items.value[0],
+);
+
+const activeIndex = computed(() => activeItem.value.index);
+
+function isActive(item: TabItem): boolean {
+    return item.value === activeItem.value.value;
+}
+
+const isTransitioning = computed(() =>
+    items.value.some((item) => item.isTransitioning),
+);
+
+/** Item click listener, emit input event and change active child. */
+function itemClick(item: TabItem): void {
+    if (activeId.value !== item.value) performAction(item.value);
+}
+
+/** Go to the next item or wrap around */
+function next(): void {
+    const newIndex = mod(activeIndex.value + 1, items.value.length);
+    clickFirstViableChild(newIndex, true);
+}
+
+/** Go to the previous item or wrap around */
+function prev(): void {
+    const newIndex = mod(activeIndex.value - 1, items.value.length);
+    clickFirstViableChild(newIndex, false);
+}
+
+/** Go to the first viable item */
+function homePressed(): void {
+    if (items.value.length < 1) return;
+    clickFirstViableChild(0, true);
+}
+
+/** Go to the last viable item */
+function endPressed(): void {
+    if (items.value.length < 1) return;
+    clickFirstViableChild(items.value.length - 1, false);
+}
+
+/**
+ * Select the first 'viable' child, starting at startingIndex and in the direction specified
+ * by the boolean parameter forward. In other words, first try to select the child at index
+ * startingIndex, and if it is not visible or it is disabled, then go to the index in the
+ * specified direction until either returning to startIndex or finding a viable child item.
+ */
+function clickFirstViableChild(startingIndex: number, forward: boolean): void {
+    const direction = forward ? 1 : -1;
+    let newIndex = startingIndex;
+    for (
+        ;
+        newIndex !== activeIndex.value;
+        newIndex = mod(newIndex + direction, items.value.length)
+    ) {
+        // Break if the item at this index is viable (not disabled and is visible)
+        if (items.value[newIndex].visible && !items.value[newIndex].disabled)
+            break;
+    }
+    itemClick(items.value[newIndex]);
+}
+
+/** Activate next child and deactivate prev child */
+function performAction(newId: number | string): void {
+    const oldValue = activeId.value;
+    const oldTab = isDefined(oldValue)
+        ? items.value.find((item) => item.value === oldValue)[0]
+        : items.value[0];
+    activeId.value = newId;
+    nextTick(() => {
+        if (oldTab && activeItem.value) {
+            oldTab.deactivate(activeItem.value.index);
+            activeItem.value.activate(oldTab.index);
+        }
+        emits("change", newId, oldValue);
+    });
+}
+
+// --- Computed Component Classes ---
+
+const rootClasses = computed(() => [
+    useComputedClass("rootClass", "o-tabs"),
+    {
+        [useComputedClass("positionClass", "o-tabs--", props.position)]:
+            props.position && props.vertical,
+    },
+    {
+        [useComputedClass("expandedClass", "o-tabs--fullwidth")]:
+            props.expanded,
+    },
+    {
+        [useComputedClass("verticalClass", "o-tabs--vertical")]: props.vertical,
+    },
+    {
+        [useComputedClass("multilineClass", "o-tabs--multiline")]:
+            props.multiline,
+    },
+]);
+
+const itemWrapperClasses = computed(() => [
+    useComputedClass("tabItemWrapperClass", "o-tabs__nav-item-wrapper"),
+]);
+
+const navClasses = computed(() => [
+    useComputedClass("navTabsClass", "o-tabs__nav"),
+    {
+        [useComputedClass("navSizeClass", "o-tabs__nav--", props.size)]:
+            props.size,
+    },
+    {
+        [useComputedClass("navPositionClass", "o-tabs__nav--", props.position)]:
+            props.position && !props.vertical,
+    },
+    {
+        [useComputedClass("navTypeClass", "o-tabs__nav--", props.type)]:
+            props.type,
+    },
+]);
+
+const contentClasses = computed(() => [
+    useComputedClass("contentClass", "o-tabs__content"),
+    {
+        [useComputedClass(
+            "transitioningClass",
+            "o-tabs__content--transitioning",
+        )]: isTransitioning.value,
+    },
+]);
+
+function itemHeaderClasses(childItem): BindProp {
+    return [
+        childItem.headerClass,
+        useComputedClass("itemHeaderClass", "o-tabs__nav-item"),
+        {
+            [useComputedClass(
+                "itemHeaderActiveClass",
+                "o-tabs__nav-item-{*}--active",
+            )]: isActive(childItem),
+        },
+        {
+            [useComputedClass(
+                "itemHeaderDisabledClass",
+                "o-tabs__nav-item-{*}--disabled",
+                props.type,
+            )]: childItem.disabled,
+        },
+        {
+            [useComputedClass(
+                "itemHeaderTypeClass",
+                "o-tabs__nav-item-",
+                props.type,
+            )]: props.type,
+        },
+    ];
+}
 </script>
 
 <template>
-    <div :class="rootClasses">
+    <div ref="rootRef" :class="rootClasses">
         <nav
             :class="navClasses"
             role="tablist"
             :aria-orientation="vertical ? 'vertical' : 'horizontal'">
+            <!--
+                @slot Additional slot before tabs
+            -->
             <slot name="start" />
             <div
                 v-for="childItem in items"
-                :key="childItem.newValue"
                 v-show="childItem.visible"
+                :key="childItem.value"
+                :class="itemWrapperClasses"
+                role="tab"
+                :aria-controls="`${childItem.value}-content`"
+                :aria-selected="isActive(childItem) ? 'true' : 'false'"
                 @keydown.left.prevent="prev"
                 @keydown.right.prevent="next"
                 @keydown.up.prevent="prev"
                 @keydown.down.prevent="next"
                 @keydown.home.prevent="homePressed"
-                @keydown.end.prevent="endPressed"
-                :class="itemWrapperClasses"
-                role="tab"
-                :aria-controls="`${childItem.value}-content`"
-                :aria-selected="childItem.isActive ? 'true' : 'false'">
+                @keydown.end.prevent="endPressed">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
                     :tag="childItem.tag"
                     name="header"
-                    @click="childClick(childItem)"
+                    :class="itemHeaderClasses(childItem)"
+                    @click="itemClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
                     @keydown.down.prevent="next"
                     @keydown.home.prevent="homePressed"
-                    @keydown.end.prevent="endPressed"
-                    :class="childItem.headerClasses" />
+                    @keydown.end.prevent="endPressed" />
                 <component
-                    v-else
                     :is="childItem.tag"
-                    @click="childClick(childItem)"
-                    :class="childItem.headerClasses">
+                    v-else
+                    :class="itemHeaderClasses(childItem)"
+                    @click="itemClick(childItem)">
                     <o-icon
                         v-if="childItem.icon"
-                        :rootClass="childItem.headerIconClasses"
+                        :root-class="childItem.headerIconClasses"
                         :icon="childItem.icon"
                         :pack="childItem.iconPack"
                         :size="size" />
-                    <span :class="childItem.headerTextClasses">{{
-                        childItem.label
-                    }}</span>
+                    <span :class="childItem.headerTextClasses">
+                        {{ childItem.label }}
+                    </span>
                 </component>
             </div>
+            <!--
+                @slot Additional slot after tabs
+            -->
             <slot name="end" />
         </nav>
+
         <section :class="contentClasses">
+            <!--
+                @slot Place tab items here
+            -->
             <slot />
         </section>
     </div>

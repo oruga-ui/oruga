@@ -16,7 +16,9 @@ defineEmits(["close"]);
                     clickable
                     native-type="button"
                     icon="times"
-                    @click="$emit('close')" />
+                    @click="
+                        $emit('close', { action: 'cancel', method: 'x' })
+                    " />
             </header>
             <section class="modal-card-body">
                 <o-field label="Email">
@@ -41,7 +43,12 @@ defineEmits(["close"]);
                 </o-field>
             </section>
             <footer class="modal-card-foot">
-                <o-button label="Close" type="button" @click="$emit('close')" />
+                <o-button
+                    label="Close"
+                    type="button"
+                    @click="
+                        $emit('close', { action: 'cancel', method: 'close' })
+                    " />
                 <o-button label="Login" variant="primary" />
             </footer>
         </div>

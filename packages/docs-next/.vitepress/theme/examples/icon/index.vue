@@ -8,14 +8,15 @@ import CustomIconPackCode from "./custom-icon-pack.vue?raw";
 import { ref } from "vue";
 
 const customIconConfigCode = ref(
-    `const customIconConfig = {
+    `<script setup>
+const customIconConfig = {
     customIconPacks: {
         fas: {
             sizes: {
                 default: null,
                 small: null,
                 medium: "fa-lg",
-                large: "fa-2x"
+                large: "fa-xl"
             }
         }
     }
@@ -26,11 +27,13 @@ app.use(Oruga, {
     iconComponent: "vue-fontawesome",
     iconPack: "fas",
     ...customIconConfig
-})`,
+});
+/script>`,
 );
 
 const faIconConfigCode = ref(
-    `import { library } from "@fortawesome/fontawesome-svg-core";
+    `<script setup>
+import { library } from "@fortawesome/fontawesome-svg-core";
 // internal icons
 import {
     faCheck,
@@ -72,7 +75,8 @@ import Oruga from "@oruga-ui/oruga";
 app.use(Oruga, {
     iconComponent: "vue-fontawesome",
     iconPack: "fas"
-})`,
+})
+/script>`,
 );
 </script>
 
@@ -107,7 +111,7 @@ app.use(Oruga, {
             You can also customize some properties of the default icon packs. In
             this example, default sizes for FontAwesome have been modified.
         </p>
-        <highlightjs :code="customIconConfigCode" />
+        <ExampleViewer :code="customIconConfigCode" :open="true" />
 
         <h3 id="component">Custom icon component</h3>
         <div class="tip custom-block">
@@ -118,6 +122,6 @@ app.use(Oruga, {
                 Vue icon components as well).
             </p>
         </div>
-        <highlightjs :code="faIconConfigCode" />
+        <ExampleViewer :code="faIconConfigCode" :open="true" />
     </div>
 </template>

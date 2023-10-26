@@ -7,7 +7,7 @@ const inspectData = [
         class: "rootClass",
         description: "Class of the root element",
         action: (cmp, data) => {
-            data.canCancel = true;
+            data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
         },
@@ -16,7 +16,7 @@ const inspectData = [
         class: "overlayClass",
         description: "Class of the loading overlay",
         action: (cmp, data) => {
-            data.canCancel = true;
+            data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
         },
@@ -25,7 +25,7 @@ const inspectData = [
         class: "iconClass",
         description: "Class for the loading icon",
         action: (cmp, data) => {
-            data.canCancel = true;
+            data.cancelable = true;
             data.fullPage = false;
             loading.value = true;
         },
@@ -36,7 +36,7 @@ const inspectData = [
         properties: ["fullPage"],
         action: (cmp, data) => {
             data.fullPage = true;
-            data.canCancel = true;
+            data.cancelable = true;
             loading.value = true;
         },
     },

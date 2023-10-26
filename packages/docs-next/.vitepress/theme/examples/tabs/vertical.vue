@@ -11,10 +11,10 @@ const type = ref("default");
     <section>
         <o-field grouped group-multiline>
             <o-field>
-                <o-switch v-model="atRight"> Right position </o-switch>
+                <o-switch v-model="atRight" label="Right position" />
             </o-field>
             <o-field>
-                <o-switch v-model="expanded"> Expanded </o-switch>
+                <o-switch v-model="expanded" label="Expanded" />
             </o-field>
             <o-field label="Size">
                 <o-select v-model="size" placeholder="Size">
@@ -34,7 +34,7 @@ const type = ref("default");
         </o-field>
 
         <o-tabs
-            :position="atRight ? 'right' : ''"
+            :position="atRight ? 'right' : 'left'"
             :size="size"
             :type="type"
             vertical

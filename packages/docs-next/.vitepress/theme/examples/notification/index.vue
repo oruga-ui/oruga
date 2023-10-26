@@ -1,6 +1,6 @@
 <script setup>
-import ProgrammaticallyOpening from "./programmatically-opening.vue";
-import ProgrammaticallyOpeningCode from "./programmatically-opening.vue?raw";
+import Programmatically from "./programmatically.vue";
+import ProgrammaticallyCode from "./programmatically.vue?raw";
 
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
@@ -29,7 +29,5 @@ import AddCustomButtonsCode from "./add-custom-buttons.vue?raw";
     <ExampleViewer :component="AddCustomButtons" :code="AddCustomButtonsCode" />
 
     <h3 id="programmatically">Programmatically opening</h3>
-    <ExampleViewer
-        :component="ProgrammaticallyOpening"
-        :code="ProgrammaticallyOpeningCode" />
+    <ExampleViewer :component="Programmatically" :code="ProgrammaticallyCode" />
 </template>

@@ -46,12 +46,23 @@ function danger() {
     });
 }
 
-function component() {
-    oruga.notification.open({
+async function component() {
+    const instance = oruga.notification.open({
         component: NotificationForm,
         position: "bottom-right",
         variant: "warning",
         indefinite: true,
+    });
+
+    // wait until the notification got closed
+    const result = await instance.promise;
+
+    oruga.notification.open({
+        duration: 5000,
+        message: "Modal dialog returned " + JSON.stringify(result),
+        variant: "info",
+        position: "top",
+        closable: true,
     });
 }
 </script>

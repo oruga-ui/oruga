@@ -12,6 +12,7 @@ const promptModal = async () => {
             message: "Do you really want me to ship the selected sprockets?",
         },
         trapFocus: true,
+        destroyOnHide: true,
     });
     // Note utilizing the promise requires Promise be supported by the browser
     // If you are running Vue 2 on IE 11 this will not be the case unless you
@@ -36,13 +37,12 @@ const promptModalCloseAll = async () => {
                 "There is a 3 second timeout that will close all programmatic modals",
         },
         trapFocus: true,
+        destroyOnHide: true,
     });
 
     setTimeout(() => oruga.modal.closeAll({ action: "closeAll" }), 3 * 1000);
 
-    // Note utilizing the promise requires Promise be supported by the browser
-    // If you are running Vue 2 on IE 11 this will not be the case unless you
-    // add a polyfill in your build.
+    // wait until the modal got closed
     const result = await instance.promise;
 
     oruga.notification.open({
