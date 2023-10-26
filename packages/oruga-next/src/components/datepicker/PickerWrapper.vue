@@ -25,10 +25,11 @@ defineOptions({
 const props = defineProps({
     /** parent picker component props  */
     pickerProps: { type: Object, required: true },
+    /** data-oruga attribute value */
     dataOruga: { type: String, required: true },
-    /** The input value */
+    /** the input value */
     value: { type: [Date, Array], default: undefined },
-    /** The active state of the dropdown */
+    /** the active state of the dropdown */
     active: { type: Boolean, default: false },
     formattedValue: { type: String, default: undefined },
     nativeType: { type: String, required: true },
