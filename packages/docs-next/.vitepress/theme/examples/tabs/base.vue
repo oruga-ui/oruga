@@ -9,11 +9,11 @@ const multiline = ref(false);
 <template>
     <section>
         <o-field grouped>
-            <o-button @click="activeTab = 1">Set Music</o-button>
+            <o-button label="Set Music" @click="activeTab = 1" />
         </o-field>
         <o-field grouped>
-            <o-switch v-model="showBooks"> Show Books item </o-switch>
-            <o-switch v-model="multiline"> Multiline </o-switch>
+            <o-switch v-model="showBooks" label="Show Books item" />
+            <o-switch v-model="multiline" label="Multiline" />
         </o-field>
 
         <o-tabs v-model="activeTab" :multiline="multiline">

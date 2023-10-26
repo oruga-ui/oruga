@@ -184,7 +184,7 @@ const provideData = computed(() => ({
 }));
 
 /** Provide functionalities and data to child item components */
-const { childItems } = useProviderParent(rootRef, provideData);
+const { childItems } = useProviderParent(rootRef, { data: provideData });
 
 const activeIndex = useVModelBinding<number>(props, emits);
 const scrollIndex = ref(props.modelValue);

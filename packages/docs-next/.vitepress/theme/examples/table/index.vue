@@ -2,6 +2,9 @@
 import Base from "./base.vue";
 import BaseCode from "./base.vue?raw";
 
+import ColumnProp from "./column-prop.vue";
+import ColumnPropCode from "./column-prop.vue?raw";
+
 import Customise from "./customise.vue";
 import CustomiseCode from "./customise.vue?raw";
 
@@ -31,8 +34,11 @@ import DraggableRowsColumnsCode from "./draggable-rows-columns.vue?raw";
 </script>
 
 <template>
-    <h3 id="base">Base</h3>
+    <h3 id="base-column">Base</h3>
     <ExampleViewer :component="Base" :code="BaseCode" />
+
+    <h3 id="base-props">Column prop</h3>
+    <ExampleViewer :component="ColumnProp" :code="ColumnPropCode" />
 
     <h3 id="customise">Customise</h3>
     <ExampleViewer :component="Customise" :code="CustomiseCode" />
