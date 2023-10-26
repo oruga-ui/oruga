@@ -25,7 +25,6 @@ defineOptions({
     isOruga: true,
     name: "OTimepicker",
     configField: "timepicker",
-    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -697,7 +696,6 @@ const footerClasses = computed(() => [
     <OPickerWrapper
         ref="wrapperRef"
         v-model:active="isActive"
-        v-bind="$attrs"
         data-oruga="timepicker"
         :value="vmodel"
         :picker-props="props"
