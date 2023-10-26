@@ -76,14 +76,14 @@ export function useInputHandler(
             // if element is the input element
             return el as ValidatableFormElement;
 
-        const inputs = el.querySelectorAll("[data-oruga-input]");
+        const inputs = el.querySelector("[data-oruga-input]");
 
-        if (!inputs || !inputs[0]) {
-            console.warn("Underlaying Oruga input not found");
+        if (!inputs) {
+            console.warn("Underlaying Oruga input component not found");
             return undefined;
         }
         // return underlaying the input element
-        return inputs[0] as ValidatableFormElement;
+        return inputs as ValidatableFormElement;
     });
 
     // --- Input Focus Feature ---
