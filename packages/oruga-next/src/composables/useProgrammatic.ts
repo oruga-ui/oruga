@@ -134,11 +134,16 @@ export function useProgrammaticComponent(
                     typeof options.destroyOnHide === "undefined" ||
                     options.destroyOnHide
                 )
-                    window.requestAnimationFrame(() => {
-                        // remove the component from the container or the body tag
+                    if (isClient)
+                        window.requestAnimationFrame(() => {
+                            // remove the component from the container or the body tag
+                            const el = getElement();
+                            if (el) removeElement(el);
+                        });
+                    else {
                         const el = getElement();
                         if (el) removeElement(el);
-                    });
+                    }
             });
         } else {
             // set active state of current instance
