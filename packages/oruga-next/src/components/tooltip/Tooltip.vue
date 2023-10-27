@@ -457,7 +457,7 @@ const contentClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div ref="rootRef" :class="rootClasses" data-oruga="tooltip">
         <transition
             :name="animation"
             @after-leave="metrics = null"

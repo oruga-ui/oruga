@@ -162,7 +162,7 @@ const rootClasses = computed(() => [
 </script>
 
 <template>
-    <span :class="rootClasses" :style="rootStyle">
+    <span :class="rootClasses" data-oruga="icon" :style="rootStyle">
         <!-- custom icon component -->
         <component
             :is="component"

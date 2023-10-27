@@ -156,7 +156,11 @@ defineExpose({ close, promise: props.promise });
 
 <template>
     <transition :name="animation">
-        <div v-if="isActive" ref="rootRef" :class="rootClasses">
+        <div
+            v-if="isActive"
+            ref="rootRef"
+            data-oruga="loading"
+            :class="rootClasses">
             <div :class="overlayClasses" @click="cancel('outside')" />
             <!-- 
                 @slot Override icon and label

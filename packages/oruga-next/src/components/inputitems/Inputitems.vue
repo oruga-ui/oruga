@@ -230,7 +230,7 @@ const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
 const items = useVModelBinding<any[]>(props, emits, { passive: true });
 
 // use form input functionalities
-const { onFocus, onBlur, onInvalid } = useInputHandler(
+const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
     autocompleteRef,
     emits,
     props,
@@ -323,7 +323,7 @@ function removeItem(index: number, event?: Event): void {
     emits("remove", item);
     if (event) event.stopPropagation();
     if (props.openOnFocus && autocompleteRef.value) {
-        autocompleteRef.value.$inputRef.focus();
+        setFocus();
     }
 }
 
@@ -413,20 +413,10 @@ const closeClasses = computed(() => [
 const counterClasses = computed(() => [
     useComputedClass("counterClass", "o-inputit__counter"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-const rootRef = ref();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => rootRef.value),
-    // expose the input element
-    $inputRef: computed(() => autocompleteRef.value.$inputRef),
-});
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div data-oruga="inputitems" :class="rootClasses">
         <div :class="containerClasses" @click="hasInput && onFocus()">
             <slot name="selected" :items="items">
                 <span

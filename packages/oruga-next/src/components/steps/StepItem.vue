@@ -160,6 +160,7 @@ const elementClasses = computed(() => [
             ref="rootRef"
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
+            data-oruga="steps-item"
             :tabindex="isActive ? 0 : -1"
             :role="ariaRole">
             <!-- 

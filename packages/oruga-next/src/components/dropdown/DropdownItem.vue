@@ -106,6 +106,7 @@ const rootClasses = computed(() => [
         :class="rootClasses"
         :role="ariaRole"
         :tabindex="tabindex"
+        data-oruga="dropdown-item"
         @click="selectItem">
         <!--
             @slot Override the item default content, default is label prop 

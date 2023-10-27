@@ -410,7 +410,8 @@ defineExpose({ close, promise: props.promise });
             v-show="!hideOnMobile"
             ref="rootRef"
             v-bind="$attrs"
-            :class="rootClasses">
+            :class="rootClasses"
+            data-oruga="sidebar">
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"

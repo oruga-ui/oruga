@@ -1437,7 +1437,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div ref="rootRef" :class="rootClasses" data-oruga="table">
         <div ref="slotRef" style="display: none">
             <!--
                 @slot Place o-table-column here

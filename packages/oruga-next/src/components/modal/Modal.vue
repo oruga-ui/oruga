@@ -327,6 +327,7 @@ defineExpose({ close, promise: props.promise });
             v-show="isActive"
             ref="rootRef"
             v-trap-focus="trapFocus"
+            data-oruga="modal"
             :class="rootClasses"
             :tabindex="-1"
             :role="ariaRole"

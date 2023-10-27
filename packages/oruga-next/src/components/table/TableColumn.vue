@@ -114,7 +114,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <span :data-id="item.identifier">
+    <span :data-id="item.identifier" data-oruga="table-column">
         {{ label }}
 
         <!--

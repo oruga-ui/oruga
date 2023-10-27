@@ -368,7 +368,7 @@ function itemClasses(childItem): PropBind {
 </script>
 
 <template>
-    <div :class="wrapperClasses">
+    <div :class="wrapperClasses" data-oruga="steps">
         <nav :class="mainClasses">
             <div
                 v-for="(childItem, index) in items"

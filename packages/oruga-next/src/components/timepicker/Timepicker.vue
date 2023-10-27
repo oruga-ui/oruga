@@ -25,7 +25,6 @@ defineOptions({
     isOruga: true,
     name: "OTimepicker",
     configField: "timepicker",
-    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -691,23 +690,13 @@ const separatorClasses = computed(() => [
 const footerClasses = computed(() => [
     useComputedClass("footerClass", "o-tpck__footer"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-const wrapperRef = ref<typeof OPickerWrapper>();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => wrapperRef.value.$el),
-    // expose the input element
-    $inputRef: computed(() => wrapperRef.value.$inputRef),
-});
 </script>
 
 <template>
     <OPickerWrapper
         ref="wrapperRef"
         v-model:active="isActive"
-        v-bind="$attrs"
+        data-oruga="timepicker"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"

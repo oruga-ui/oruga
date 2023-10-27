@@ -101,7 +101,7 @@ const labelClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div ref="rootRef" data-oruga="menu" :class="rootClasses">
         <div v-if="label || $slots.label" :class="labelClasses">
             <!-- 
                 @slot Override icon and label

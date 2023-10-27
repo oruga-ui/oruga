@@ -303,7 +303,7 @@ function itemHeaderClasses(childItem): PropBind {
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div ref="rootRef" :class="rootClasses" data-oruga="tabs">
         <nav
             :class="navClasses"
             role="tablist"

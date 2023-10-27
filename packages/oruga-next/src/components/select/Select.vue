@@ -290,7 +290,7 @@ const iconRightClasses = computed(() => [
 </script>
 
 <template>
-    <div :class="rootClasses">
+    <div :class="rootClasses" data-oruga="select">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -304,6 +304,7 @@ const iconRightClasses = computed(() => [
             v-bind="$attrs"
             ref="selectRef"
             v-model="vmodel"
+            data-oruga-input="select"
             :class="selectClasses"
             :autocomplete="autocomplete"
             :multiple="multiple"

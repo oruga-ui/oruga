@@ -60,7 +60,7 @@ const tickLabelClasses = computed(() => [
 </script>
 
 <template>
-    <div :class="rootClasses" :style="tickStyle">
+    <div :class="rootClasses" :style="tickStyle" data-oruga="slider-tick">
         <span v-if="$slots.default" :class="tickLabelClasses">
             <!-- 
                 @slot Tick content slot, label is default

@@ -201,7 +201,9 @@ const {
 // inject parent field component if used inside one
 const { parentField, statusVariant, statusVariantIcon } = injectField();
 
-const vmodel = useVModelBinding<string | number>(props, emits);
+const vmodel = useVModelBinding<string | number>(props, emits, {
+    passive: true,
+});
 
 /** Get value length */
 const valueLength = computed(() =>
@@ -368,20 +370,10 @@ const iconRightClasses = computed(() => [
 const counterClasses = computed(() => [
     useComputedClass("counterClass", "o-input__counter"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-const rootRef = ref();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => rootRef.value),
-    // expose the input element
-    $inputRef: computed(() => elementRef.value),
-});
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div data-oruga="input" :class="rootClasses">
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -396,6 +388,7 @@ defineExpose({
             v-bind="$attrs"
             ref="inputRef"
             v-model="vmodel"
+            :data-oruga-input="inputType"
             :type="inputType"
             :class="inputClasses"
             :maxlength="maxlength"
@@ -411,6 +404,7 @@ defineExpose({
             v-bind="$attrs"
             ref="textareaRef"
             v-model="vmodel"
+            data-oruga-input="textarea"
             :class="inputClasses"
             :maxlength="maxlength"
             :style="computedStyles"

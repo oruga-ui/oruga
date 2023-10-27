@@ -475,7 +475,11 @@ const menuClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" @mouseleave="onHoverLeave">
+    <div
+        ref="rootRef"
+        data-oruga="dropdown"
+        :class="rootClasses"
+        @mouseleave="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"

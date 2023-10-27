@@ -195,7 +195,11 @@ const closeClasses = computed(() => [
 
 <template>
     <transition :name="animation">
-        <article v-show="isActive" :class="rootClasses" v-bind="$attrs">
+        <article
+            v-show="isActive"
+            v-bind="$attrs"
+            :class="rootClasses"
+            data-oruga="notification">
             <button
                 v-if="closable"
                 :class="closeClasses"

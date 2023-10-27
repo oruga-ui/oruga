@@ -55,6 +55,7 @@ const itemClasses = computed(() => [
         :class="itemClasses"
         :style="itemStyle"
         :data-id="`carousel-${item.identifier}`"
+        data-oruga="carousel-item"
         @click="onClick">
         <slot />
     </div>
