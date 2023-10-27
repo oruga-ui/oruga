@@ -422,7 +422,6 @@ function selectItem(value: any): void {
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
-    $el: rootRef.value,
     props,
     selected: vmodel.value,
     selectItem,
