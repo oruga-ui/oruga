@@ -186,7 +186,7 @@ export function createAbsoluteElement(el: Element): HTMLDivElement {
     return root;
 }
 
-export function createNewEvent(eventName: string) {
+export function createNewEvent(eventName: string): Event {
     let event: any;
     if (typeof Event === "function") {
         event = new Event(eventName);
