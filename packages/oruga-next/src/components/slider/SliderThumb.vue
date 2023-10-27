@@ -208,7 +208,7 @@ function setPosition(percent: number): void {
     <div
         :class="thumbWrapperClasses"
         :style="wrapperStyle"
-        data-oruga="slider-tumb">
+        data-oruga="slider-thumb">
         <o-tooltip
             :label="formattedValue"
             :variant="computedTooltipVariant"
