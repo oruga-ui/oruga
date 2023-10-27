@@ -23,7 +23,7 @@ export * from "./steps";
 export * from "./switch";
 export * from "./table";
 export * from "./tabs";
-export * from "./inputitems";
+export * from "./taginput";
 export * from "./timepicker";
 export * from "./tooltip";
 export * from "./upload";

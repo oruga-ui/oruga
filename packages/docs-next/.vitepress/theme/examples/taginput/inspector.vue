@@ -432,7 +432,7 @@ function getFilteredTags(text) {
 
 <template>
     <inspector-wrapper v-slot="props" :inspect-data="inspectData">
-        <o-inputitems
+        <o-taginput
             v-bind="props"
             v-model="tags"
             :data="filteredTags"
@@ -441,6 +441,6 @@ function getFilteredTags(text) {
             icon="tag"
             placeholder="Add a tag"
             @typing="getFilteredTags">
-        </o-inputitems>
+        </o-taginput>
     </inspector-wrapper>
 </template>

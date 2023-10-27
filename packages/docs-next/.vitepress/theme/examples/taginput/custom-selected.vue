@@ -22,7 +22,7 @@ function getType(item) {
 <template>
     <section>
         <o-field label="Enter some items">
-            <o-inputitems
+            <o-taginput
                 ref="input"
                 v-model="items"
                 icon="tag"
@@ -37,7 +37,7 @@ function getType(item) {
                         rounded
                         @click="$refs.input.removeItem(index, $event)" />
                 </template>
-            </o-inputitems>
+            </o-taginput>
         </o-field>
         <p><b>Items:</b> {{ items }}</p>
     </section>
