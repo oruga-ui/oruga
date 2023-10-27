@@ -894,20 +894,10 @@ function itemOptionClasses(option): BindProp {
         },
     ];
 }
-
-// --- Expose Public Functionalities ---
-
-const rootRef = ref();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => rootRef.value),
-    // expose the input element
-    $inputRef: computed(() => inputRef.value.$inputRef),
-});
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div data-oruga="autocomplete" :class="rootClasses">
         <o-input
             ref="inputRef"
             v-model="vmodel"

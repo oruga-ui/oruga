@@ -197,7 +197,8 @@ const wrapperClasses = computed(() => [
         ref="rootRef"
         :role="ariaRole"
         :class="wrapperClasses"
-        :data-id="identifier">
+        :data-id="identifier"
+        data-oruga="menu-item">
         <component
             :is="tag"
             v-bind="$attrs"

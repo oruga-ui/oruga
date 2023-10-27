@@ -370,7 +370,7 @@ function itemClasses(childItem): BindProp {
 </script>
 
 <template>
-    <div :class="wrapperClasses">
+    <div :class="wrapperClasses" data-oruga="steps">
         <nav :class="mainClasses">
             <div
                 v-for="(childItem, index) in items"

@@ -250,7 +250,7 @@ const draggableClasses = computed(() => [
 </script>
 
 <template>
-    <label :class="rootClasses" @click="onClick">
+    <label :class="rootClasses" data-oruga="upload" @click="onClick">
         <template v-if="!dragDrop">
             <slot />
         </template>

@@ -258,7 +258,7 @@ const innerFieldClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div ref="rootRef" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="labelHorizontalClasses">
             <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
                 <slot name="label">{{ label }}</slot>

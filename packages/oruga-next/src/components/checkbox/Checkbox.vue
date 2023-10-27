@@ -182,6 +182,7 @@ const labelClasses = computed(() =>
     <label
         ref="label"
         :class="rootClasses"
+        data-oruga="checkbox"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

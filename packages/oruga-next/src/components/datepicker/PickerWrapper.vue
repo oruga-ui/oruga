@@ -25,9 +25,11 @@ defineOptions({
 const props = defineProps({
     /** parent picker component props  */
     pickerProps: { type: Object, required: true },
-    /** The input value */
+    /** data-oruga attribute value */
+    dataOruga: { type: String, required: true },
+    /** the input value */
     value: { type: [Date, Array], default: undefined },
-    /** The active state of the dropdown */
+    /** the active state of the dropdown */
     active: { type: Boolean, default: false },
     formattedValue: { type: String, default: undefined },
     nativeType: { type: String, required: true },
@@ -85,8 +87,16 @@ const elementRef = computed(() =>
 );
 
 // use form input functionality for native input
-const { checkHtml5Validity, onBlur, onFocus, onInvalid, isValid, isFocused } =
-    useInputHandler(elementRef, emits, picker.value);
+const {
+    checkHtml5Validity,
+    setFocus,
+    doClick,
+    onBlur,
+    onFocus,
+    onInvalid,
+    isValid,
+    isFocused,
+} = useInputHandler(elementRef, emits, picker.value);
 
 /**
  * Show input as text for placeholder,
@@ -136,9 +146,8 @@ function onKeyPress(event: KeyboardEvent): void {
 /** Toggle picker */
 function togglePicker(active: boolean): void {
     if (isMobileNative.value) {
-        const input = elementRef.value;
-        input.$inputRef.focus();
-        input.$inputRef.click();
+        setFocus(); // focus the underlaying input element
+        doClick(); // click to open the underlaying input element
     } else if (dropdownRef.value) {
         if (active || picker.value.closeOnClick)
             nextTick(() => (isActive.value = active));
@@ -168,20 +177,10 @@ const dropdownBind = computed(() => ({
     "root-class": props.dropdownClass,
     ...picker.value.dropdownClasses,
 }));
-
-// --- Expose Public Functionalities ---
-
-const rootRef = ref();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => rootRef.value),
-    // expose the input element
-    $inputRef: computed(() => elementRef.value),
-});
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses">
+    <div :data-oruga="dataOruga" :class="rootClasses">
         <o-dropdown
             v-if="!isMobileNative || picker.inline"
             ref="dropdownRef"

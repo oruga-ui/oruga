@@ -34,7 +34,6 @@ defineOptions({
     isOruga: true,
     name: "ODatepicker",
     configField: "datepicker",
-    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -711,23 +710,13 @@ const listsClasses = computed(() => [
 const footerClasses = computed(() => [
     useComputedClass("footerClass", "o-dpck__footer"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-const wrapperRef = ref<typeof OPickerWrapper>();
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => wrapperRef.value.$el),
-    // expose the input element
-    $inputRef: computed(() => wrapperRef.value.$inputRef),
-});
 </script>
 
 <template>
     <OPickerWrapper
         ref="wrapperRef"
-        v-bind="$attrs"
         v-model:active="isActive"
+        data-oruga="datepicker"
         :value="vmodel"
         :picker-props="props"
         :formatted-value="formattedValue"

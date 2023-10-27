@@ -210,7 +210,7 @@ const timepickerRef = ref<InstanceType<typeof OTimepicker>>();
 const nativeInputRef = ref<InstanceType<typeof OInput>>();
 
 const elementRef = computed(() =>
-    isMobileNative.value ? nativeInputRef.value : datepickerRef.value.$inputRef,
+    isMobileNative.value ? nativeInputRef.value : datepickerRef.value,
 );
 
 // use form input functionality for native input
@@ -543,24 +543,16 @@ const datepickerWrapperClasses = computed(() => [
 const timepickerWrapperClasses = computed(() => [
     useComputedClass("timepickerWrapperClass", "o-dtpck__time"),
 ]);
-
-// --- Expose Public Functionalities ---
-
-defineExpose({
-    // expose the html root element of this component
-    $el: computed(() => datepickerRef.value.$el),
-    // expose the input element
-    $inputRef: computed(() => elementRef.value),
-});
 </script>
 
 <template>
     <o-datepicker
         v-if="!isMobileNative || inline"
         ref="datepickerRef"
+        v-bind="{ ...$attrs, ...datepicker }"
         v-model="vmodel"
         v-model:active="isActive"
-        v-bind="datepicker"
+        data-oruga="datetimepicker"
         :class="datepickerWrapperClasses"
         :rounded="rounded"
         :open-on-focus="openOnFocus"
@@ -614,6 +606,7 @@ defineExpose({
     <!-- Native Picker -->
     <o-input
         v-else
+        v-bind="$attrs"
         ref="nativeInputRef"
         type="datetime-local"
         autocomplete="off"
@@ -627,7 +620,6 @@ defineExpose({
         :rounded="rounded"
         :disabled="disabled"
         :readonly="false"
-        v-bind="$attrs"
         :use-html5-validation="false"
         @change="onChangeNativePicker"
         @focus="onFocus"
