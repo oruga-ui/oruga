@@ -4,7 +4,6 @@ import Dropdown from "./Dropdown.vue";
 export type DropdownProps = InstanceType<typeof Dropdown>["$props"];
 
 type DropdownData<T> = {
-    $el: Element;
     props: DropdownProps;
     selected: T[];
     selectItem: (value: T) => void;

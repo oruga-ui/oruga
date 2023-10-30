@@ -1,10 +1,7 @@
 const findFocusable = (element: any, programmatic = false) => {
-    if (!element) {
-        return null;
-    }
-    if (programmatic) {
-        return element.querySelectorAll(`*[tabindex="-1"]`);
-    }
+    if (!element) return null;
+    if (programmatic) return element.querySelectorAll(`*[tabindex="-1"]`);
+
     return element.querySelectorAll(`a[href]:not([tabindex="-1"]),
                                      area[href],
                                      input:not([disabled]),

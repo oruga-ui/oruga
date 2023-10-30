@@ -14,7 +14,7 @@ import {
     type DatepickerEvent,
     type FocusedDate,
 } from "./useDatepickerShare";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 defineOptions({
     name: "ODatepickerMonth",
@@ -173,7 +173,7 @@ function isDateSelectable(date: Date): boolean {
     return validity.indexOf(false) < 0;
 }
 
-// --- Events ---
+// --- Event Handlers ---
 
 function onKeydown(event: KeyboardEvent, weekDay: Date): void {
     let preventDefault = true;
@@ -303,7 +303,7 @@ function onRangeHoverEndDate(day: Date): void {
 /**
  * Build cellClasses for cell using validations
  */
-function cellClasses(day: Date): BindProp {
+function cellClasses(day: Date): PropBind {
     function dateMatch(dateOne, dateTwo, multiple = false): boolean {
         // if either date is null or undefined, return false
         if (!dateOne || !dateTwo || multiple) return false;

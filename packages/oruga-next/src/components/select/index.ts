@@ -4,15 +4,15 @@ import Select from "./Select.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-// export select specific types
+/** export select specific types */
 export type { OptionsItem } from "./types";
 
-// export select plugin
+/** export select plugin */
 export default {
     install(app: App) {
         registerComponent(app, Select);
     },
 } as Plugin;
 
-// export select components
+/** export select components */
 export { Select as OSelect };

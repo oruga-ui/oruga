@@ -95,9 +95,9 @@ title: Slider
 
 ### Slots
 
-| Name    | Description                         | Bindings |
-| ------- | ----------------------------------- | -------- |
-| default | Tick content slot, label is default |          |
+| Name    | Description                                  | Bindings |
+| ------- | -------------------------------------------- | -------- |
+| default | Override tick content, default is label prop |          |
 
 </div>
 

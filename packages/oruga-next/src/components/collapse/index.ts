@@ -4,10 +4,12 @@ import Collapse from "./Collapse.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export collapse plugin */
 export default {
     install(app: App) {
         registerComponent(app, Collapse);
     },
 } as Plugin;
 
+/** export collapse components */
 export { Collapse as OCollapse };

@@ -67,9 +67,9 @@ title: Checkbox
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description                         | Bindings |
+| ------- | ----------------------------------- | -------- |
+| default | Content slot, default is label prop |          |
 
 </div>
 

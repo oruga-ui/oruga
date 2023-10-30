@@ -63,7 +63,7 @@ const tickLabelClasses = computed(() => [
     <div :class="rootClasses" :style="tickStyle" data-oruga="slider-tick">
         <span v-if="$slots.default" :class="tickLabelClasses">
             <!-- 
-                @slot Tick content slot, label is default
+                @slot Override tick content, default is label prop
              -->
             <slot> {{ label }} </slot>
         </span>

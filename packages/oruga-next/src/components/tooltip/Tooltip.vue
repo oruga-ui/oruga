@@ -20,9 +20,9 @@ import {
     createAbsoluteElement,
     removeElement,
     isWebKitAgent,
-} from "../../utils/helpers";
+} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -60,7 +60,7 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /**
      * Color of the tooltip
-     * @values 'primary', 'info', 'success', 'warning', 'danger', and any other custom color
+     * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
         type: String,
@@ -68,7 +68,7 @@ const props = defineProps({
     },
     /**
      * Tooltip position in relation to the element
-     * @values 'top', 'bottom', 'left', 'right', 'auto'
+     * @values top, bottom, left, right, auto
      */
     position: {
         type: String as PropType<Position | "auto">,
@@ -78,7 +78,7 @@ const props = defineProps({
     },
     /**
      * Tooltip trigger events
-     * @values 'hover', 'click', 'focus', 'contextmenu'
+     * @values hover, click, focus, contextmenu
      */
     triggers: {
         type: Array as PropType<string[]>,
@@ -103,7 +103,7 @@ const props = defineProps({
     },
     /**
      * Tooltip auto close options
-     * @values true, false, 'inside', 'outside', 'escape'
+     * @values true, false, inside, outside, escape
      */
     autoClose: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
@@ -406,7 +406,7 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed<BindProp>(() => [
+const rootClasses = computed<PropBind>(() => [
     useComputedClass("rootClass", "o-tip"),
 ]);
 
@@ -469,7 +469,7 @@ const contentClasses = computed(() => [
                 <span :class="arrowClasses"></span>
 
                 <!--
-                    @slot Tooltip content, prop label is default
+                    @slot Tooltip content, default is label prop
                 -->
                 <slot name="content">{{ label }}</slot>
             </div>

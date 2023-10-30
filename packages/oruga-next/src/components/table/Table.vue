@@ -41,7 +41,7 @@ import {
     uuid,
 } from "../../utils/helpers";
 import type { Column, TableColumn, TableColumnComponent } from "./types";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -1361,7 +1361,7 @@ const paginationWrapperClasses = computed(() => [
     useComputedClass("paginationWrapperClass", "o-table__pagination"),
 ]);
 
-function thClasses(column: TableColumn): BindProp {
+function thClasses(column: TableColumn): PropBind {
     return [
         ...thBaseClasses.value,
         ...thStickyClasses(column),
@@ -1391,7 +1391,7 @@ function thClasses(column: TableColumn): BindProp {
     ];
 }
 
-function thStickyClasses(column: Column): BindProp {
+function thStickyClasses(column: Column): PropBind {
     return [
         {
             [useComputedClass("thStickyClass", "o-table__th--sticky")]:
@@ -1400,7 +1400,7 @@ function thStickyClasses(column: Column): BindProp {
     ];
 }
 
-function rowClasses(row: unknown, index: number): BindProp {
+function rowClasses(row: unknown, index: number): PropBind {
     return [
         props.rowClass(row, index),
         {
@@ -1414,11 +1414,11 @@ function rowClasses(row: unknown, index: number): BindProp {
     ];
 }
 
-function thSortIconClasses(): BindProp {
+function thSortIconClasses(): PropBind {
     return [useComputedClass("thSortIconClass", "o-table__th__sort-icon")];
 }
 
-function tdClasses(row: unknown, column: TableColumnComponent): BindProp {
+function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
     return [
         ...tdBaseClasses.value,
         {

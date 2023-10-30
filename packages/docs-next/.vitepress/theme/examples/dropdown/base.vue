@@ -40,9 +40,9 @@
 
         <o-dropdown>
             <template #trigger>
-                <div>
+                <div role="button">
                     Custom
-                    <o-icon variant="success" icon="caret-down" role="button" />
+                    <o-icon variant="success" icon="caret-down" />
                 </div>
             </template>
 
@@ -53,7 +53,17 @@
 
         <o-dropdown :triggers="['contextmenu']">
             <template #trigger>
-                <o-button label="Right click" role="button" />
+                <o-button label="Right click" />
+            </template>
+
+            <o-dropdown-item label="Action" />
+            <o-dropdown-item label="Another action" />
+            <o-dropdown-item label="Something else" />
+        </o-dropdown>
+
+        <o-dropdown append-to-body>
+            <template #trigger>
+                <o-button label="Append to body" />
             </template>
 
             <o-dropdown-item label="Action" />

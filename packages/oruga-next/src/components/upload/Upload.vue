@@ -8,7 +8,7 @@ import {
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { File } from "../../utils/ssr";
+import { File } from "@/utils/ssr";
 
 /**
  * Upload one or more files
@@ -252,6 +252,9 @@ const draggableClasses = computed(() => [
 <template>
     <label :class="rootClasses" data-oruga="upload" @click="onClick">
         <template v-if="!dragDrop">
+            <!--
+                @slot Default content
+            -->
             <slot />
         </template>
 
@@ -264,6 +267,9 @@ const draggableClasses = computed(() => [
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
             @drop.prevent="onFileChange">
+            <!--
+                @slot Default content
+            -->
             <slot />
         </div>
 

@@ -68,9 +68,9 @@ title: Switch
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description                               | Bindings |
+| ------- | ----------------------------------------- | -------- |
+| default | Override the label, default is label prop |          |
 
 </div>
 

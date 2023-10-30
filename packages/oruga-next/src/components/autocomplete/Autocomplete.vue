@@ -32,7 +32,7 @@ import {
     toCssDimension,
 } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -146,9 +146,8 @@ const props = defineProps({
     menuPosition: {
         type: String,
         default: () => getOption("autocomplete.menuPosition", "auto"),
-        validator: (value: string) => {
-            return ["auto", "top", "bottom"].indexOf(value) >= 0;
-        },
+        validator: (value: string) =>
+            ["auto", "top", "bottom"].indexOf(value) >= 0,
     },
     /** Transition name to apply on dropdown list */
     animation: {
@@ -449,7 +448,7 @@ const menuStyle = computed(() => ({
  * If object, get value from path based on given field, or else just the value.
  * Apply a formatter function to the label if given.
  */
-function getValue(option): string {
+function getValue(option: unknown): string {
     if (!option) return "";
 
     const property =
@@ -466,7 +465,7 @@ function getValue(option): string {
 }
 
 /** Set which option is currently hovered. */
-function setHovered(option): void {
+function setHovered(option: unknown): void {
     if (option === undefined) return;
     hoveredOption.value = option;
 }
@@ -554,10 +553,10 @@ function navigateItem(direction: 1 | -1): void {
     if (footerRef.value && props.selectableFooter) data.push(undefined);
 
     // define current index
-    let index;
+    let index = data.map(toRaw).indexOf(toRaw(hoveredOption.value));
     if (headerHovered.value) index = 0 + direction;
     else if (footerHovered.value) index = data.length - 1 + direction;
-    else index = data.indexOf(toRaw(hoveredOption.value)) + direction;
+    else index = index + direction;
 
     // check if index overflow
     index = index > data.length - 1 ? data.length - 1 : index;
@@ -883,7 +882,7 @@ const itemFooterClasses = computed(() => [
     },
 ]);
 
-function itemOptionClasses(option): BindProp {
+function itemOptionClasses(option): PropBind {
     return [
         ...itemClasses.value,
         {
@@ -942,6 +941,9 @@ function itemOptionClasses(option): BindProp {
                     :tabindex="0"
                     :class="itemHeaderClasses"
                     @click="selectHeaderOrFoterByClick($event, 'header')">
+                    <!--
+                        @slot Define an additional header
+                    -->
                     <slot name="header" />
                 </component>
                 <template v-for="(element, groupindex) in computedData">
@@ -950,6 +952,11 @@ function itemOptionClasses(option): BindProp {
                         v-if="element.group"
                         :key="groupindex + 'group'"
                         :class="itemGroupClasses">
+                        <!--
+                            @slot Override the option grpup
+                            @binding {object} group - options group
+                            @binding {number} index - option index
+                        -->
                         <slot
                             v-if="$slots.group"
                             name="group"
@@ -969,6 +976,12 @@ function itemOptionClasses(option): BindProp {
                         role="button"
                         :tabindex="0"
                         @click.stop="setSelected(option, !keepOpen, $event)">
+                        <!--
+                            @slot Override the select option
+                            @binding {object} option - option object
+                            @binding {number} index - option index
+                            @binding {unknown} value - option value
+                        -->
                         <slot
                             v-if="$slots.default"
                             :option="option"
@@ -984,6 +997,9 @@ function itemOptionClasses(option): BindProp {
                     :is="itemTag"
                     v-if="isEmpty && $slots.empty"
                     :class="itemEmptyClasses">
+                    <!--
+                        @slot Define content for empty state 
+                    -->
                     <slot name="empty" />
                 </component>
 
@@ -995,6 +1011,9 @@ function itemOptionClasses(option): BindProp {
                     :tabindex="0"
                     :class="itemFooterClasses"
                     @click="selectHeaderOrFoterByClick($event, 'footer')">
+                    <!--
+                        @slot Define an additional footer
+                    -->
                     <slot name="footer" />
                 </component>
             </component>

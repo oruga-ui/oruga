@@ -98,7 +98,7 @@ const props = defineProps({
     },
     /**
      * Is Sidebar cancleable by pressing escape or clicking outside.
-     * @values 'escape', 'outside', true, false
+     * @values escape, outside, true, false
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
@@ -425,8 +425,8 @@ defineExpose({ close, promise: props.promise });
                     ref="sidebarContent"
                     :class="contentClasses">
                     <!--
-                        @slot Sidebar default content, prop component is default
-                        @binding {close} close - function to close the component
+                        @slot Sidebar default content, default is component prop
+                        @binding {(...args):void} close - function to close the component
                     -->
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->

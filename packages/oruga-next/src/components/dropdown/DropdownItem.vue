@@ -35,11 +35,14 @@ const props = defineProps({
     /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
     tabindex: { type: [Number, String], default: 0 },
     /**
-     * Role attribute to be passed to the item container for better accessibility.
+     * Role attribute to be passed to the list item for better accessibility.
      * Use menuitem only in situations where your dropdown is related to a navigation menu.
      * @values listitem, menuitem
      */
-    ariaRole: { type: String, default: "listitem" },
+    ariaRole: {
+        type: String,
+        default: getOption("dropdown.itemAriaRole", "listitem"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps(["itemClass", "itemActiveClass", "itemDisabledClass"]),
 });
@@ -105,6 +108,9 @@ const rootClasses = computed(() => [
         :tabindex="tabindex"
         data-oruga="dropdown-item"
         @click="selectItem">
+        <!--
+            @slot Override the label, default is label prop 
+        -->
         <slot>{{ label }}</slot>
     </component>
 </template>

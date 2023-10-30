@@ -5,6 +5,7 @@ import MenuItem from "./MenuItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export menu plugin */
 export default {
     install(app: App) {
         registerComponent(app, Menu);
@@ -12,4 +13,5 @@ export default {
     },
 } as Plugin;
 
+/** export menu components */
 export { Menu as OMenu, MenuItem as OMenuItem };

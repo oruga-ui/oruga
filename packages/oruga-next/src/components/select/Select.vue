@@ -324,7 +324,7 @@ const iconRightClasses = computed(() => [
             </template>
 
             <!--
-                @slot Override the options
+                @slot Override the options, default is options prop
             -->
             <slot>
                 <option

@@ -1,5 +1,9 @@
 // Vitepress overrides
 
+:root {
+    --vp-layout-max-width: 1550px;
+}
+
 .VPNavBarTitle a {
     text-decoration: none;
 }

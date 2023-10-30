@@ -4,10 +4,12 @@ import Switch from "./Switch.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export switch plugin */
 export default {
     install(app: App) {
         registerComponent(app, Switch);
     },
 } as Plugin;
 
+/** export switch components */
 export { Switch as OSwitch };

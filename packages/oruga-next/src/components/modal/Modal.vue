@@ -56,7 +56,7 @@ const props = defineProps({
     },
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
-     * @values 'escape', 'x', 'outside', 'button', true, false
+     * @values escape, x, outside, button, true, false
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
@@ -94,7 +94,7 @@ const props = defineProps({
     },
     /** Accessibility aria-modal to be passed to the div wrapper element. */
     ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
-    /** Accessibility aria-labelto to be passed to the div wrapper element. */
+    /** Accessibility aria-label to be passed to the div wrapper element. */
     ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
     /** Destroy modal on hide */
     destroyOnHide: {
@@ -343,8 +343,8 @@ defineExpose({ close, promise: props.promise });
                     v-on="$props.events"
                     @close="close" />
                 <!--
-                    @slot Modal default content, prop content is default
-                    @binding {close} close - function to close the component
+                    @slot Modal default content, default is content prop
+                    @binding {(...args): void} close - function to close the component
                 -->
                 <slot v-else :close="close">
                     <div v-if="content">{{ content }}</div>

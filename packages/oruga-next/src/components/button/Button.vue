@@ -82,6 +82,11 @@ const props = defineProps({
         validator: (value: string) =>
             ["button", "submit", "reset"].indexOf(value) >= 0,
     },
+    /** Accessibility Role attribute to be passed to the button. */
+    role: {
+        type: String,
+        default: () => getOption("button.role", "button"),
+    },
     /**
      * This is used internally
      * @ignore
@@ -188,6 +193,7 @@ const elementsWrapperClasses = computed(() => [
         :disabled="computedDisabled"
         :type="computedNativeType"
         :class="rootClasses"
+        :role="role"
         data-oruga="button">
         <span :class="elementsWrapperClasses">
             <o-icon
@@ -198,6 +204,9 @@ const elementsWrapperClasses = computed(() => [
                 :both="iconBoth"
                 :class="iconLeftClasses" />
             <span v-if="label || $slots.default" :class="labelClasses">
+                <!--
+                    @slot Override the label, default is label prop 
+                -->
                 <slot>{{ label }}</slot>
             </span>
             <o-icon

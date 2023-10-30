@@ -14,7 +14,7 @@ import {
     type DatepickerEvent,
 } from "./useDatepickerShare";
 import { weeksInYear, firstWeekOffset } from "./datepickerUtils";
-import type { BindProp } from "@/types";
+import type { PropBind } from "@/types";
 
 defineOptions({
     name: "ODatepickerTableRow",
@@ -110,7 +110,7 @@ function eventsDateMatch(day: Date): DatepickerEvent[] {
     return props.events.filter((event) => event.date.getDay() === day.getDay());
 }
 
-// --- Events ---
+// --- Event Handlers ---
 
 function onKeydown(event: KeyboardEvent, weekDay: Date): void {
     let preventDefault = true;
@@ -180,7 +180,7 @@ function setRangeHoverEndDate(day): void {
 // --- Computed Component Classes ---
 
 /** Build cellClasses for cell using validations */
-function cellClasses(day: Date): BindProp {
+function cellClasses(day: Date): PropBind {
     function dateMatch(dateOne, dateTwo, multiple = false): boolean {
         // if either date is null or undefined, return false
         // if using multiple flag, return false
@@ -321,7 +321,7 @@ function cellClasses(day: Date): BindProp {
     ];
 }
 
-function eventClasses(event: DatepickerEvent): BindProp {
+function eventClasses(event: DatepickerEvent): PropBind {
     return [
         useComputedClass("tableEventClass", "o-dpck__table__event"),
         {

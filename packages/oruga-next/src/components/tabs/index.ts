@@ -5,7 +5,7 @@ import TabItem from "./TabItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-// export tabs components
+/** export tabs plugin */
 export default {
     install(app: App) {
         registerComponent(app, Tabs);
@@ -13,5 +13,5 @@ export default {
     },
 } as Plugin;
 
-// export tabs components
+/** export tabs components */
 export { Tabs as OTabs, TabItem as OTabItem };

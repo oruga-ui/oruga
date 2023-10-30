@@ -37,7 +37,7 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: { type: Date, default: undefined },
-    /** The active state of the dropdown */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Define props for the underlying datepicker component */
     datepicker: {
@@ -598,6 +598,9 @@ const timepickerWrapperClasses = computed(() => [
                     :locale="locale" />
             </div>
             <template v-if="$slots.footer !== undefined">
+                <!--
+                    @slot Define an additional footer
+                -->
                 <slot name="footer" />
             </template>
         </template>

@@ -92,10 +92,10 @@ title: Timepicker
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| trigger |             |          |
-| default |             |          |
+| Name    | Description                            | Bindings |
+| ------- | -------------------------------------- | -------- |
+| trigger | Override the trigger                   |          |
+| default | Define an additional content on footer |          |
 
 </div>
 

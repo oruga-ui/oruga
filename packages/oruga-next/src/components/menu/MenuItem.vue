@@ -211,6 +211,8 @@ const wrapperClasses = computed(() => [
                 :size="iconSize" />
             <!-- 
                 @slot Override label
+                @binding {boolean} expanded - item expanded state
+                @binding {boolean} active - item active state
             -->
             <slot name="label" :expanded="isExpanded" :active="isActive">
                 <span>{{ label }}</span>

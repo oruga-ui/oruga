@@ -4,8 +4,8 @@ import {
     ref,
     onMounted,
     onBeforeMount,
-    type PropType,
     watch,
+    type PropType,
     type Component,
 } from "vue";
 
@@ -16,9 +16,8 @@ import {
     useClassProps,
     useProgrammaticComponent,
 } from "@/composables";
-import type { BindProp, ProgrammaticInstance } from "@/types";
-
-import type { NotifcationProps } from "./index";
+import type { PropBind, ProgrammaticInstance } from "@/types";
+import type { NotifcationProps } from "./types";
 
 /**
  * Notification Notice is used for the programmatic usage
@@ -68,7 +67,7 @@ const props = defineProps({
     /** If notice should queue with others notices (snackbar/toast/notification). */
     queue: {
         type: Boolean,
-        default: () => getOption("notification.noticeQueue", undefined),
+        default: () => getOption("notification.queue"),
     },
     /** Callback function to call after user canceled (pressed escape / clicked outside). */
     onCancel: { type: Function as PropType<() => void>, default: () => {} },
@@ -266,7 +265,7 @@ const rootClasses = computed(() => [
     useComputedClass("noticeClass", "o-notices"),
 ]);
 
-function positionClasses(position): BindProp {
+function positionClasses(position): PropBind {
     return [useComputedClass("noticePositionClass", "o-notices--", position)];
 }
 

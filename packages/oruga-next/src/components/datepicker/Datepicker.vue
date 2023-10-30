@@ -44,7 +44,7 @@ const props = defineProps({
         type: [Date, Array] as PropType<Date | Date[]>,
         default: undefined,
     },
-    /** The active state of the dropdown */
+    /** The active state of the dropdown, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /**
      * Define picker mode
@@ -238,10 +238,16 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    /** A11y next button aria label */
-    ariaNextLabel: { type: String, default: "Next Page" },
-    /** A11y previous button aria label  */
-    ariaPreviousLabel: { type: String, default: "Previous Page" },
+    /** Accessibility next button aria label */
+    ariaNextLabel: {
+        type: String,
+        default: () => getOption("datepicker.ariaNextLabel", "Next Page"),
+    },
+    /** Accessibility previous button aria label  */
+    ariaPreviousLabel: {
+        type: String,
+        default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -736,9 +742,15 @@ const footerClasses = computed(() => [
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
+            <!--
+                @slot Override the trigger
+            -->
             <slot name="trigger" />
         </template>
         <header :class="headerClasses">
+            <!--
+                @slot Override the header
+            -->
             <slot name="header">
                 <div :class="headerButtonsClasses">
                     <OButton
@@ -796,6 +808,9 @@ const footerClasses = computed(() => [
                 </div>
             </slot>
         </header>
+        <!--
+            @slot Override the body
+        -->
         <slot name="body">
             <o-datepicker-month
                 v-if="isTypeMonth"
@@ -816,6 +831,9 @@ const footerClasses = computed(() => [
                 @range-end="(date) => $emit('range-end', date)" />
         </slot>
         <footer v-if="$slots.footer" :class="footerClasses">
+            <!--
+                @slot Define an additional footer
+            -->
             <slot name="footer" />
         </footer>
     </OPickerWrapper>
