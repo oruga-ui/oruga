@@ -703,7 +703,7 @@ if (isClient && props.menuPosition === "auto") {
 watch(isActive, (active) => {
     if (props.menuPosition === "auto") {
         if (active) calcDropdownInViewportVertical();
-        else
+        else if (isClient)
             window.requestAnimationFrame(() =>
                 calcDropdownInViewportVertical(),
             );
@@ -728,9 +728,7 @@ function calcDropdownInViewportVertical(): void {
             rect.top >= 0 &&
             rect.bottom <=
                 (window.innerHeight || document.documentElement.clientHeight);
-        if (props.appendToBody) {
-            updateAppendToBody();
-        }
+        if (props.appendToBody) updateAppendToBody();
     });
 }
 

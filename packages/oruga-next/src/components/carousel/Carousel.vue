@@ -409,11 +409,16 @@ function onDragStart(event: TouchEvent | MouseEvent): void {
     if (isTouch.value) {
         pauseTimer();
     }
-    window.addEventListener(
-        isTouch.value ? "touchmove" : "mousemove",
-        dragMove,
-    );
-    window.addEventListener(isTouch.value ? "touchend" : "mouseup", dragEnd);
+    if (isClient) {
+        window.addEventListener(
+            isTouch.value ? "touchmove" : "mousemove",
+            dragMove,
+        );
+        window.addEventListener(
+            isTouch.value ? "touchend" : "mouseup",
+            dragEnd,
+        );
+    }
 }
 
 function dragMove(event: TouchEvent | MouseEvent): void {
@@ -442,11 +447,16 @@ function dragEnd(event?: TouchEvent | MouseEvent): void {
     dragX.value = undefined;
     if ((event as TouchEvent)?.touches) startTimer();
 
-    window.removeEventListener(
-        isTouch.value ? "touchmove" : "mousemove",
-        dragMove,
-    );
-    window.removeEventListener(isTouch.value ? "touchend" : "mouseup", dragEnd);
+    if (isClient) {
+        window.removeEventListener(
+            isTouch.value ? "touchmove" : "mousemove",
+            dragMove,
+        );
+        window.removeEventListener(
+            isTouch.value ? "touchend" : "mouseup",
+            dragEnd,
+        );
+    }
 }
 
 // --- Computed Component Classes ---
