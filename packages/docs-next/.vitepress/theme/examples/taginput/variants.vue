@@ -1,7 +1,7 @@
 <template>
     <section>
         <o-field label="Primary">
-            <o-inputitems
+            <o-taginput
                 :model-value="['One']"
                 :data="['One', 'Two', 'Three', 'Four']"
                 :allow-new="false"
@@ -9,7 +9,7 @@
         </o-field>
 
         <o-field label="Success">
-            <o-inputitems
+            <o-taginput
                 :model-value="['One']"
                 :data="['One', 'Two', 'Three', 'Four']"
                 :allow-new="false"
@@ -17,7 +17,7 @@
         </o-field>
 
         <o-field label="Info">
-            <o-inputitems
+            <o-taginput
                 :model-value="['One']"
                 :data="['One', 'Two', 'Three', 'Four']"
                 :allow-new="false"
@@ -25,7 +25,7 @@
         </o-field>
 
         <o-field label="Warning">
-            <o-inputitems
+            <o-taginput
                 :model-value="['One']"
                 :data="['One', 'Two', 'Three', 'Four']"
                 :allow-new="false"
@@ -33,7 +33,7 @@
         </o-field>
 
         <o-field label="Danger">
-            <o-inputitems
+            <o-taginput
                 :model-value="['One']"
                 :data="['One', 'Two', 'Three', 'Four']"
                 :allow-new="false"

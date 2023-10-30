@@ -7,7 +7,7 @@ const tags = ref(["Pistoia", "Valdinievole"]);
 <template>
     <section>
         <o-field label="Add some items">
-            <o-inputitems
+            <o-taginput
                 v-model="tags"
                 icon="tag"
                 placeholder="Add an item"

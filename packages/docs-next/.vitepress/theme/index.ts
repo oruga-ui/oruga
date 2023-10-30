@@ -124,5 +124,14 @@ export default {
                 markRaw(inspectors[path].default),
             );
         }
+
+        /** This contains same pollyfills for the docs because outdated themes. */
+
+        // feature #549: rename inputitems to taginput
+        // copy inputitems config to taginput config if not given
+        // remove after themes are updated
+        const inputitems = oruga.config.getOption("inputitems");
+        const taginput = oruga.config.getOption("taginput");
+        if (!taginput) oruga.config.setOption("taginput", inputitems);
     },
 };

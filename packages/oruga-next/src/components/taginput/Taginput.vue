@@ -12,17 +12,17 @@ import {
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { getValueByPath } from "../../utils/helpers";
+import { getValueByPath } from "@/utils/helpers";
 
 /**
  * A simple tag input field that can have autocomplete functionality
- * @displayName Inputitems
- * @style _inputitems.scss
+ * @displayName Taginput
+ * @style _taginput.scss
  */
 defineOptions({
     isOruga: true,
-    name: "OInputitems",
-    configField: "inputitems",
+    name: "OTaginput",
+    configField: "taginput",
     inheritAttrs: false,
 });
 
@@ -45,7 +45,7 @@ const props = defineProps({
      */
     size: {
         type: String,
-        default: () => getOption("inputitems.size"),
+        default: () => getOption("taginput.size"),
     },
     /**
      * Color of the each items, optional
@@ -53,7 +53,7 @@ const props = defineProps({
      */
     variant: {
         type: String,
-        default: () => getOption("inputitems.variant"),
+        default: () => getOption("taginput.variant"),
     },
     /** Limits the number of items, plus item counter */
     maxitems: { type: Number, default: undefined },
@@ -62,7 +62,7 @@ const props = defineProps({
     /** Show counter when maxlength or maxtags props are passed */
     hasCounter: {
         type: Boolean,
-        default: () => getOption("inputitems.hasCounter", true),
+        default: () => getOption("taginput.hasCounter", true),
     },
     /** Opens a dropdown with choices when the input field is focused */
     openOnFocus: { type: Boolean, default: false },
@@ -79,13 +79,12 @@ const props = defineProps({
      */
     confirmKeys: {
         type: Array,
-        default: () =>
-            getOption("inputitems.confirmKeys", [",", "Tab", "Enter"]),
+        default: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
     },
     /** Array of chars used to split when pasting a new string */
     pasteSeparators: {
         type: Array as PropType<string[]>,
-        default: () => getOption("inputitems.pasteSeparators", [","]),
+        default: () => getOption("taginput.pasteSeparators", [","]),
     },
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst: { type: Boolean, default: false },
@@ -98,7 +97,7 @@ const props = defineProps({
     /** Allow removing last item when pressing given keys, if input is empty */
     removeOnKeys: {
         type: Array,
-        default: () => getOption("inputitems.removeOnKeys", ["Backspace"]),
+        default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
     },
     /** Function to validate the value of the item before adding */
     beforeAdding: {
@@ -113,12 +112,12 @@ const props = defineProps({
     /** Makes the component check if list reached scroll start or end and emit scroll events. */
     checkScroll: {
         type: Boolean,
-        default: () => getOption("inputitems.checkScroll", false),
+        default: () => getOption("taginput.checkScroll", false),
     },
     /** Add close/delete button to the item */
     closable: {
         type: Boolean,
-        default: () => getOption("inputitems.closable", true),
+        default: () => getOption("taginput.closable", true),
     },
     /**
      * Icon pack to use
@@ -126,22 +125,22 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("inputitems.iconPack", undefined),
+        default: () => getOption("taginput.iconPack", undefined),
     },
     /** Icon name to be shown */
     icon: {
         type: String,
-        default: () => getOption("inputitems.icon", undefined),
+        default: () => getOption("taginput.icon", undefined),
     },
     /** Icon name of close icon on selected item */
     closeIcon: {
         type: String,
-        default: () => getOption("inputitems.closeIcon", "close"),
+        default: () => getOption("taginput.closeIcon", "close"),
     },
     /** Accessibility label for the close button */
     ariaCloseLabel: {
         type: String,
-        default: () => getOption("inputitems.ariaCloseLabel"),
+        default: () => getOption("taginput.ariaCloseLabel"),
     },
     /** Enable html 5 native validation */
     useHtml5Validation: {
@@ -151,12 +150,12 @@ const props = defineProps({
     /** Native options to use in HTML5 validation */
     autocomplete: {
         type: String,
-        default: () => getOption("inputitems.autocomplete", "off"),
+        default: () => getOption("taginput.autocomplete", "off"),
     },
     /** Append autocomplete content to body */
     appendToBody: {
         type: Boolean,
-        default: () => getOption("inputitems.appendToBody", false),
+        default: () => getOption("taginput.appendToBody", false),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
@@ -169,7 +168,7 @@ const props = defineProps({
     ]),
     autocompleteClasses: {
         type: Object,
-        default: () => getOption("inputitems.autocompleteClasses", {}),
+        default: () => getOption("taginput.autocompleteClasses", {}),
     },
 });
 
@@ -416,7 +415,7 @@ const counterClasses = computed(() => [
 </script>
 
 <template>
-    <div data-oruga="inputitems" :class="rootClasses">
+    <div data-oruga="taginput" :class="rootClasses">
         <div :class="containerClasses" @click="hasInput && onFocus()">
             <slot name="selected" :items="items">
                 <span
