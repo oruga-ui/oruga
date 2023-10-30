@@ -448,7 +448,7 @@ const menuStyle = computed(() => ({
  * If object, get value from path based on given field, or else just the value.
  * Apply a formatter function to the label if given.
  */
-function getValue(option): string {
+function getValue(option: unknown): string {
     if (!option) return "";
 
     const property =
@@ -465,7 +465,7 @@ function getValue(option): string {
 }
 
 /** Set which option is currently hovered. */
-function setHovered(option): void {
+function setHovered(option: unknown): void {
     if (option === undefined) return;
     hoveredOption.value = option;
 }
@@ -553,10 +553,10 @@ function navigateItem(direction: 1 | -1): void {
     if (footerRef.value && props.selectableFooter) data.push(undefined);
 
     // define current index
-    let index;
+    let index = data.map(toRaw).indexOf(toRaw(hoveredOption.value));
     if (headerHovered.value) index = 0 + direction;
     else if (footerHovered.value) index = data.length - 1 + direction;
-    else index = data.indexOf(toRaw(hoveredOption.value)) + direction;
+    else index = index + direction;
 
     // check if index overflow
     index = index > data.length - 1 ? data.length - 1 : index;
