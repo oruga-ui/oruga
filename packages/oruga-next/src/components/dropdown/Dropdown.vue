@@ -67,7 +67,7 @@ const props = defineProps({
     },
     /**
      * Optional, position of the dropdown relative to the trigger
-     * @values 'top-right', 'top-left', 'bottom-left', 'bottom-right'
+     * @values top-right, top-left, bottom-left, bottom-right
      */
     position: {
         type: String,
@@ -117,7 +117,7 @@ const props = defineProps({
     },
     /**
      * Dropdown will be triggered by any events
-     * @values 'click', 'hover', 'contextmenu', 'focus'
+     * @values click, hover, contextmenu, focus
      */
     triggers: {
         type: Array as PropType<string[]>,
