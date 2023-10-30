@@ -56,7 +56,7 @@ const props = defineProps({
     },
     /**
      * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
-     * @values 'escape', 'x', 'outside', 'button', true, false
+     * @values escape, x, outside, button, true, false
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,

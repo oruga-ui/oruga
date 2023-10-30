@@ -60,7 +60,7 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /**
      * Color of the tooltip
-     * @values 'primary', 'info', 'success', 'warning', 'danger', and any other custom color
+     * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
         type: String,
@@ -68,7 +68,7 @@ const props = defineProps({
     },
     /**
      * Tooltip position in relation to the element
-     * @values 'top', 'bottom', 'left', 'right', 'auto'
+     * @values top, bottom, left, right, auto
      */
     position: {
         type: String as PropType<Position | "auto">,
@@ -78,7 +78,7 @@ const props = defineProps({
     },
     /**
      * Tooltip trigger events
-     * @values 'hover', 'click', 'focus', 'contextmenu'
+     * @values hover, click, focus, contextmenu
      */
     triggers: {
         type: Array as PropType<string[]>,
@@ -103,7 +103,7 @@ const props = defineProps({
     },
     /**
      * Tooltip auto close options
-     * @values true, false, 'inside', 'outside', 'escape'
+     * @values true, false, inside, outside, escape
      */
     autoClose: {
         type: [Array, Boolean] as PropType<string[] | boolean>,

@@ -98,7 +98,7 @@ const props = defineProps({
     },
     /**
      * Is Sidebar cancleable by pressing escape or clicking outside.
-     * @values 'escape', 'outside', true, false
+     * @values escape, outside, true, false
      */
     cancelable: {
         type: [Array, Boolean] as PropType<string[] | boolean>,
