@@ -389,7 +389,7 @@ const openOnFocus = ref(false);
             <o-switch v-model="openOnFocus"> Open on focus </o-switch>
         </o-field>
         <o-field label="Enter some items">
-            <o-inputitems
+            <o-taginput
                 v-model="tags"
                 :data="filteredTags"
                 :allow-autocomplete="true"
