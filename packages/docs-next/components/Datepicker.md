@@ -109,12 +109,12 @@ title: Datepicker
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| trigger |             |          |
-| header  |             |          |
-| body    |             |          |
-| footer  |             |          |
+| Name    | Description                 | Bindings |
+| ------- | --------------------------- | -------- |
+| trigger | Override the trigger        |          |
+| header  | Override the header         |          |
+| body    | Override the body           |          |
+| footer  | Define an additional footer |          |
 
 </div>
 

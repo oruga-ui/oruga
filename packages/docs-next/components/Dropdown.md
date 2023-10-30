@@ -71,10 +71,10 @@ title: Dropdown
 
 ### Slots
 
-| Name    | Description                                         | Bindings                                                                                                    |
-| ------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| trigger | Override the trigger element, default is label prop | **active** `active` - is active state representation                                                        |
-| default | Place dropdown items here                           | **active** `active` - is active state representation<br/>**toggle** `toggle` - toggle active state function |
+| Name    | Description                                         | Bindings                                                                                             |
+| ------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| trigger | Override the trigger element, default is label prop | **active** `boolean` - dropdown active state                                                         |
+| default | Place dropdown items here                           | **active** `boolean` - dropdown active state<br/>**toggle** `boolean` - toggle active state function |
 
 </div>
 
@@ -106,9 +106,9 @@ title: Dropdown
 
 ### Slots
 
-| Name    | Description                                              | Bindings |
-| ------- | -------------------------------------------------------- | -------- |
-| default | Override the item default content, default is label prop |          |
+| Name    | Description                               | Bindings |
+| ------- | ----------------------------------------- | -------- |
+| default | Override the label, default is label prop |          |
 
 </div>
 

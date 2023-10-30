@@ -86,9 +86,9 @@ title: Datetimepicker
 
 ### Slots
 
-| Name   | Description | Bindings |
-| ------ | ----------- | -------- |
-| footer |             |          |
+| Name   | Description                 | Bindings |
+| ------ | --------------------------- | -------- |
+| footer | Define an additional footer |          |
 
 </div>
 

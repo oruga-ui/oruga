@@ -91,10 +91,10 @@ title: Menu
 
 ### Slots
 
-| Name    | Description           | Bindings |
-| ------- | --------------------- | -------- |
-| label   | Override label        | <br/>    |
-| default | Place menu items here |          |
+| Name    | Description           | Bindings                                                                                  |
+| ------- | --------------------- | ----------------------------------------------------------------------------------------- |
+| label   | Override label        | **expanded** `boolean` - item expanded state<br/>**active** `boolean` - item active state |
+| default | Place menu items here |                                                                                           |
 
 </div>
 

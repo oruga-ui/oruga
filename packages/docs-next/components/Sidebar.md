@@ -71,9 +71,9 @@ title: Sidebar
 
 ### Slots
 
-| Name    | Description                                        | Bindings                                            |
-| ------- | -------------------------------------------------- | --------------------------------------------------- |
-| default | Sidebar default content, prop component is default | **close** `close` - function to close the component |
+| Name    | Description                                        | Bindings                                                     |
+| ------- | -------------------------------------------------- | ------------------------------------------------------------ |
+| default | Sidebar default content, default is component prop | **close** `(...args):void` - function to close the component |
 
 </div>
 

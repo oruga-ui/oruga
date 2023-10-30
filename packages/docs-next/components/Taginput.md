@@ -91,13 +91,14 @@ title: Taginput
 
 ### Slots
 
-| Name     | Description | Bindings   |
-| -------- | ----------- | ---------- |
-| selected |             |            |
-| header   |             |            |
-| default  |             | <br/><br/> |
-| empty    |             |            |
-| footer   |             |            |
+| Name     | Description                    | Bindings                                                                                                         |
+| -------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| selected | Override selected items        | **items** `unknown[]` - selected items                                                                           |
+| header   | Define an additional header    |                                                                                                                  |
+| default  | Override the select option     | **option** `object` - option object<br/>**index** `number` - option index<br/>**value** `unknown` - option value |
+| empty    | Define content for empty state |                                                                                                                  |
+| footer   | Define an additional footer    |                                                                                                                  |
+| counter  | Override the counter           | **items** `number` - items count<br/>**total** `number` - total count                                            |
 
 </div>
 

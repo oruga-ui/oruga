@@ -72,13 +72,13 @@ title: Carousel
 
 ### Slots
 
-| Name       | Description           | Bindings                                                                                                                                                                                                        |
-| ---------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| default    | display carousel item |                                                                                                                                                                                                                 |
-| arrow      | Arrows section        | **has-prev** `boolean` - has prev arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**has-next** `boolean` - has next arrow button<br/>**next** `(): void` - switch to next item function |
-| indicators | Indicators section    | **active** `number` - active index<br/>**switch-to** `(idx: number): void` - switch to item function<br/>**indicator-index** `number` - current indicator index                                                 |
-| indicator  | Indicator element     | **index** `index` - indicator index                                                                                                                                                                             |
-| overlay    | Overlay element       |                                                                                                                                                                                                                 |
+| Name       | Description                     | Bindings                                                                                                                                                                                                        |
+| ---------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Display carousel item           |                                                                                                                                                                                                                 |
+| arrow      | Override the arrows             | **has-prev** `boolean` - has prev arrow button<br/>**prev** `(): void` - switch to prev item function<br/>**has-next** `boolean` - has next arrow button<br/>**next** `(): void` - switch to next item function |
+| indicators | Override the indicators         | **active** `number` - active index<br/>**switch-to** `(idx: number): void` - switch to item function<br/>**indicator-index** `number` - current indicator index                                                 |
+| indicator  | Override the indicator elements | **index** `index` - indicator index                                                                                                                                                                             |
+| overlay    | Overlay element                 |                                                                                                                                                                                                                 |
 
 </div>
 
@@ -100,9 +100,9 @@ title: Carousel
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description     | Bindings |
+| ------- | --------------- | -------- |
+| default | Default content |          |
 
 </div>
 

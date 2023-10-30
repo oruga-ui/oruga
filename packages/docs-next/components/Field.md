@@ -53,11 +53,11 @@ title: Field
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| label   |             |          |
-| default |             |          |
-| message |             |          |
+| Name    | Description          | Bindings |
+| ------- | -------------------- | -------- |
+| label   | Override the label   |          |
+| default | Default content      |          |
+| message | Override the message |          |
 
 </div>
 

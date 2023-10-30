@@ -63,10 +63,10 @@ title: Notification
 
 ### Slots
 
-| Name    | Description                                                  | Bindings                                               |
-| ------- | ------------------------------------------------------------ | ------------------------------------------------------ |
-| inner   | Notification inner content, outside of the message container | **close** `close` - function to close the notification |
-| default | Notification default content, message prop is default        | **close** `close` - function to close the notification |
+| Name    | Description                                                  | Bindings                                                         |
+| ------- | ------------------------------------------------------------ | ---------------------------------------------------------------- |
+| inner   | Notification inner content, outside of the message container | **close** `(...args): void` - function to close the notification |
+| default | Notification default content, default is message prop        | **close** `(...args): void` - function to close the notification |
 
 </div>
 

@@ -71,9 +71,9 @@ title: Modal
 
 ### Slots
 
-| Name    | Description                                    | Bindings                                            |
-| ------- | ---------------------------------------------- | --------------------------------------------------- |
-| default | Modal default content, prop content is default | **close** `close` - function to close the component |
+| Name    | Description                                    | Bindings                                                      |
+| ------- | ---------------------------------------------- | ------------------------------------------------------------- |
+| default | Modal default content, default is content prop | **close** `(...args): void` - function to close the component |
 
 </div>
 

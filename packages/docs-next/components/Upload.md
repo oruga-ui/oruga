@@ -62,9 +62,9 @@ title: Upload
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| default |             |          |
+| Name    | Description     | Bindings |
+| ------- | --------------- | -------- |
+| default | Default content |          |
 
 </div>
 

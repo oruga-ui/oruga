@@ -55,10 +55,10 @@ title: Collapse
 
 ### Slots
 
-| Name    | Description | Bindings |
-| ------- | ----------- | -------- |
-| trigger |             |          |
-| default |             |          |
+| Name    | Description                 | Bindings                                 |
+| ------- | --------------------------- | ---------------------------------------- |
+| trigger | Define the collapse trigger | **open** `boolean` - collapse open state |
+| default | Default content             |                                          |
 
 </div>
 
