@@ -250,13 +250,6 @@ export function removeDiacriticsFromString(value: string): string {
 }
 
 /**
- * @deprecated use ssr helper instead
- */
-export function isClient(): boolean {
-    return typeof window !== "undefined";
-}
-
-/**
  * Mobile detection
  * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
  */

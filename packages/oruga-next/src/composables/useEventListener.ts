@@ -13,13 +13,9 @@ export function useEventListener(
     el: Element | Document | Window = document,
 ): void {
     onMounted(() => {
-        if (typeof window !== "undefined") {
-            el.addEventListener(event, listener);
-        }
+        if (typeof el !== "undefined") el.addEventListener(event, listener);
     });
     onBeforeUnmount(() => {
-        if (typeof window !== "undefined") {
-            el.removeEventListener(event, listener);
-        }
+        if (typeof el !== "undefined") el.removeEventListener(event, listener);
     });
 }

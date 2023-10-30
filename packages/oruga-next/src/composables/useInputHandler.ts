@@ -1,7 +1,4 @@
-import { injectField } from "@/components/field/useFieldShare";
-import { getOption } from "@/utils/config";
 import {
-    // getCurrentInstance,
     nextTick,
     ref,
     computed,
@@ -10,21 +7,23 @@ import {
     type ExtractPropTypes,
     type ComponentPublicInstance,
 } from "vue";
+import { injectField } from "@/components/field/useFieldShare";
+import { getOption } from "@/utils/config";
+import { isSSR } from "@/utils/ssr";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
-const validatableFormElementTypes =
-    typeof window === "undefined"
-        ? []
-        : [
-              HTMLButtonElement,
-              HTMLFieldSetElement,
-              HTMLInputElement,
-              HTMLObjectElement,
-              HTMLOutputElement,
-              HTMLSelectElement,
-              HTMLTextAreaElement,
-          ];
+const validatableFormElementTypes = isSSR
+    ? []
+    : [
+          HTMLButtonElement,
+          HTMLFieldSetElement,
+          HTMLInputElement,
+          HTMLObjectElement,
+          HTMLOutputElement,
+          HTMLSelectElement,
+          HTMLTextAreaElement,
+      ];
 
 export type ValidatableFormElement = InstanceType<
     (typeof validatableFormElementTypes)[number]
