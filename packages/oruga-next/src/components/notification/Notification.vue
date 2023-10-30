@@ -216,7 +216,7 @@ const closeClasses = computed(() => [
 
             <!--
                 @slot Notification inner content, outside of the message container
-                @binding {close} close - function to close the notification
+                @binding {(...args): void} close - function to close the notification
             -->
             <slot name="inner" :close="close" />
 
@@ -231,8 +231,8 @@ const closeClasses = computed(() => [
                     aria-hidden />
                 <div :class="contentClasses">
                     <!--
-                        @slot Notification default content, message prop is default
-                        @binding {close} close - function to close the notification
+                        @slot Notification default content, default is message prop
+                        @binding {(...args): void} close - function to close the notification
                     -->
                     <slot :close="close">
                         <span v-if="message" v-html="message" />

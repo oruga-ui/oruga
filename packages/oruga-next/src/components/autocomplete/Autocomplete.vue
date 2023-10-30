@@ -941,6 +941,9 @@ function itemOptionClasses(option): PropBind {
                     :tabindex="0"
                     :class="itemHeaderClasses"
                     @click="selectHeaderOrFoterByClick($event, 'header')">
+                    <!--
+                        @slot Define an additional header
+                    -->
                     <slot name="header" />
                 </component>
                 <template v-for="(element, groupindex) in computedData">
@@ -949,6 +952,11 @@ function itemOptionClasses(option): PropBind {
                         v-if="element.group"
                         :key="groupindex + 'group'"
                         :class="itemGroupClasses">
+                        <!--
+                            @slot Override the option grpup
+                            @binding {object} group - options group
+                            @binding {number} index - option index
+                        -->
                         <slot
                             v-if="$slots.group"
                             name="group"
@@ -968,6 +976,12 @@ function itemOptionClasses(option): PropBind {
                         role="button"
                         :tabindex="0"
                         @click.stop="setSelected(option, !keepOpen, $event)">
+                        <!--
+                            @slot Override the select option
+                            @binding {object} option - option object
+                            @binding {number} index - option index
+                            @binding {unknown} value - option value
+                        -->
                         <slot
                             v-if="$slots.default"
                             :option="option"
@@ -983,6 +997,9 @@ function itemOptionClasses(option): PropBind {
                     :is="itemTag"
                     v-if="isEmpty && $slots.empty"
                     :class="itemEmptyClasses">
+                    <!--
+                        @slot Define content for empty state 
+                    -->
                     <slot name="empty" />
                 </component>
 
@@ -994,6 +1011,9 @@ function itemOptionClasses(option): PropBind {
                     :tabindex="0"
                     :class="itemFooterClasses"
                     @click="selectHeaderOrFoterByClick($event, 'footer')">
+                    <!--
+                        @slot Define an additional footer
+                    -->
                     <slot name="footer" />
                 </component>
             </component>

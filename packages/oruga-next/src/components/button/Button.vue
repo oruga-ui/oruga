@@ -204,9 +204,9 @@ const elementsWrapperClasses = computed(() => [
                 :both="iconBoth"
                 :class="iconLeftClasses" />
             <span v-if="label || $slots.default" :class="labelClasses">
-                <!-- 
-                    @slot Override the content element, default is label prop 
-                 -->
+                <!--
+                    @slot Override the label, default is label prop 
+                -->
                 <slot>{{ label }}</slot>
             </span>
             <o-icon

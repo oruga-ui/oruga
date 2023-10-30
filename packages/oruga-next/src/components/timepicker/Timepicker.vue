@@ -716,6 +716,9 @@ const footerClasses = computed(() => [
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
+            <!--
+                @slot Override the trigger
+            -->
             <slot name="trigger" />
         </template>
         <o-select
@@ -785,6 +788,9 @@ const footerClasses = computed(() => [
         </o-select>
 
         <footer v-if="$slots.default" :class="footerClasses">
+            <!--
+                @slot Define an additional content on footer
+            -->
             <slot />
         </footer>
     </OPickerWrapper>

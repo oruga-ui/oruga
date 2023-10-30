@@ -417,6 +417,10 @@ const counterClasses = computed(() => [
 <template>
     <div data-oruga="taginput" :class="rootClasses">
         <div :class="containerClasses" @click="hasInput && onFocus()">
+            <!--
+                @slot Override selected items
+                @binding {unknown[]} items - selected items
+            -->
             <slot name="selected" :items="items">
                 <span
                     v-for="(item, index) in items"
@@ -471,18 +475,33 @@ const counterClasses = computed(() => [
                 @icon-click="$emit('icon-click', $event)"
                 @icon-right-click="$emit('icon-right-click', $event)">
                 <template v-if="$slots.header" #header>
+                    <!--
+                        @slot Define an additional header
+                    -->
                     <slot name="header" />
                 </template>
                 <template v-if="$slots.default" #default="props">
+                    <!--
+                        @slot Override the select option
+                        @binding {object} option - option object
+                        @binding {number} index - option index
+                        @binding {unknown} value - option value
+                    -->
                     <slot
                         :option="props.option"
                         :index="props.index"
                         :value="props.value" />
                 </template>
                 <template v-if="$slots.empty" #empty>
+                    <!--
+                        @slot Define content for empty state 
+                    -->
                     <slot name="empty" />
                 </template>
                 <template v-if="$slots.footer" #footer>
+                    <!--
+                        @slot Define an additional footer
+                    -->
                     <slot name="footer" />
                 </template>
             </o-autocomplete>
@@ -492,10 +511,24 @@ const counterClasses = computed(() => [
             v-if="hasCounter && (maxitems || maxlength)"
             :class="counterClasses">
             <template v-if="maxlength && valueLength > 0">
-                {{ valueLength }} / {{ maxlength }}
+                <!--
+                    @slot Override the counter
+                    @binding {number} items - items count
+                    @binding {number} total - total count
+                -->
+                <slot name="counter" :items="valueLength" :total="maxlength">
+                    {{ valueLength }} / {{ maxlength }}
+                </slot>
             </template>
             <template v-else-if="maxitems">
-                {{ itemsLength }} / {{ maxitems }}
+                <!--
+                    @slot Override the counter
+                    @binding {number} items - items count
+                    @binding {number} total - total count
+                -->
+                <slot name="counter" :items="itemsLength" :total="maxitems">
+                    {{ itemsLength }} / {{ maxitems }}
+                </slot>
             </template>
         </small>
     </div>

@@ -175,6 +175,9 @@ const labelClasses = computed(() => [
             v-if="label || $slots.default"
             :id="ariaLabelledby"
             :class="labelClasses">
+            <!--
+                @slot Override the label, default is label prop 
+            -->
             <slot>{{ label }}</slot>
         </span>
     </label>

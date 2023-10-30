@@ -492,7 +492,7 @@ const menuClasses = computed(() => [
             @focus.capture="onFocus">
             <!--
                 @slot Override the trigger element, default is label prop 
-                @binding {active} active is active state representation
+                @binding {boolean} active - dropdown active state
             -->
             <slot name="trigger" :active="isActive">
                 {{ label }}
@@ -520,8 +520,8 @@ const menuClasses = computed(() => [
                 :style="menuStyle">
                 <!--
                     @slot Place dropdown items here 
-                    @binding {active} active is active state representation
-                    @binding {toggle} toggle toggle active state function
+                    @binding {boolean} active - dropdown active state
+                    @binding {boolean} toggle - toggle active state function
                 -->
                 <slot :active="isActive" :toggle="toggle" />
             </component>

@@ -109,7 +109,7 @@ const rootClasses = computed(() => [
         data-oruga="dropdown-item"
         @click="selectItem">
         <!--
-            @slot Override the content element, default is label prop 
+            @slot Override the label, default is label prop 
         -->
         <slot>{{ label }}</slot>
     </component>

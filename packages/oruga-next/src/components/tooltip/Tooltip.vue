@@ -469,7 +469,7 @@ const contentClasses = computed(() => [
                 <span :class="arrowClasses"></span>
 
                 <!--
-                    @slot Tooltip content, prop label is default
+                    @slot Tooltip content, default is label prop
                 -->
                 <slot name="content">{{ label }}</slot>
             </div>

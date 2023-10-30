@@ -425,8 +425,8 @@ defineExpose({ close, promise: props.promise });
                     ref="sidebarContent"
                     :class="contentClasses">
                     <!--
-                        @slot Sidebar default content, prop component is default
-                        @binding {close} close - function to close the component
+                        @slot Sidebar default content, default is component prop
+                        @binding {(...args):void} close - function to close the component
                     -->
                     <slot :close="close">
                         <!-- injected component for programmatic usage -->

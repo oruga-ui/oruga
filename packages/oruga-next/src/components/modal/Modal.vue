@@ -343,8 +343,8 @@ defineExpose({ close, promise: props.promise });
                     v-on="$props.events"
                     @close="close" />
                 <!--
-                    @slot Modal default content, prop content is default
-                    @binding {close} close - function to close the component
+                    @slot Modal default content, default is content prop
+                    @binding {(...args): void} close - function to close the component
                 -->
                 <slot v-else :close="close">
                     <div v-if="content">{{ content }}</div>
