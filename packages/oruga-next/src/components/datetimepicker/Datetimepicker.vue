@@ -598,6 +598,9 @@ const timepickerWrapperClasses = computed(() => [
                     :locale="locale" />
             </div>
             <template v-if="$slots.footer !== undefined">
+                <!--
+                    @slot Define an additional footer
+                -->
                 <slot name="footer" />
             </template>
         </template>

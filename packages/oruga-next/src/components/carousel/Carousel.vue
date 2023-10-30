@@ -549,12 +549,12 @@ const indicatorClasses = computed(() => [
                 @mousedown="onDragStart"
                 @touchstart="onDragStart">
                 <!--
-                    @slot display carousel item
+                    @slot Display carousel item
                 -->
                 <slot />
             </div>
             <!--
-                @slot Arrows section
+                @slot Override the arrows
                 @binding {boolean} has-prev has prev arrow button 
                 @binding {boolean} has-next has next arrow button 
                 @binding {(): void} prev switch to prev item function
@@ -588,7 +588,7 @@ const indicatorClasses = computed(() => [
         </div>
 
         <!--
-            @slot Indicators section
+            @slot Override the indicators
             @binding {number} active active index 
             @binding {(idx: number): void} switch-to switch to item function
             @binding {number} indicator-index current indicator index
@@ -607,7 +607,7 @@ const indicatorClasses = computed(() => [
                         @mouseover="onModeChange('hover', index)"
                         @click="onModeChange('click', index)">
                         <!--
-                            @slot Indicator element
+                            @slot Override the indicator elements
                             @binding {index} index indicator index 
                         -->
                         <slot :index="index" name="indicator">

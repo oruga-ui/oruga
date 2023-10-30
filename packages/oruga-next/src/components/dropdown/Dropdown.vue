@@ -20,7 +20,7 @@ import {
     useMatchMedia,
     useEventListener,
 } from "@/composables";
-import { vTrapFocus } from "../../directives/trapFocus";
+import { vTrapFocus } from "@/directives/trapFocus";
 import {
     removeElement,
     createAbsoluteElement,

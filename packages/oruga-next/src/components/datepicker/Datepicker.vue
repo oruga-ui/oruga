@@ -742,9 +742,15 @@ const footerClasses = computed(() => [
         @icon-click="$emit('icon-click', $event)"
         @icon-right-click="$emit('icon-right-click', $event)">
         <template v-if="$slots.trigger" #trigger>
+            <!--
+                @slot Override the trigger
+            -->
             <slot name="trigger" />
         </template>
         <header :class="headerClasses">
+            <!--
+                @slot Override the header
+            -->
             <slot name="header">
                 <div :class="headerButtonsClasses">
                     <OButton
@@ -802,6 +808,9 @@ const footerClasses = computed(() => [
                 </div>
             </slot>
         </header>
+        <!--
+            @slot Override the body
+        -->
         <slot name="body">
             <o-datepicker-month
                 v-if="isTypeMonth"
@@ -822,6 +831,9 @@ const footerClasses = computed(() => [
                 @range-end="(date) => $emit('range-end', date)" />
         </slot>
         <footer v-if="$slots.footer" :class="footerClasses">
+            <!--
+                @slot Define an additional footer
+            -->
             <slot name="footer" />
         </footer>
     </OPickerWrapper>

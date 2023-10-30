@@ -261,30 +261,48 @@ const innerFieldClasses = computed(() => [
     <div ref="rootRef" data-oruga="field" :class="rootClasses">
         <div v-if="horizontal" :class="labelHorizontalClasses">
             <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+                <!--
+                    @slot Override the label
+                -->
                 <slot name="label">{{ label }}</slot>
             </label>
         </div>
         <template v-else>
             <label v-if="hasLabel" :for="labelFor" :class="labelClasses">
+                <!--
+                    @slot Override the label
+                -->
                 <slot name="label">{{ label }}</slot>
             </label>
         </template>
 
         <o-field-body v-if="horizontal" :classes="bodyHorizontalClasses">
+            <!--
+                @slot Default content
+            -->
             <slot />
         </o-field-body>
 
         <div v-else-if="hasInnerField" :class="bodyClasses">
             <div :class="innerFieldClasses">
+                <!--
+                   @slot Default content
+                -->
                 <slot />
             </div>
         </div>
 
         <template v-else>
+            <!--
+                @slot Default content
+            -->
             <slot />
         </template>
 
         <p v-if="hasMessage && !horizontal" :class="messageClasses">
+            <!--
+                @slot Override the message
+            -->
             <slot name="message"> {{ fieldMessage }} </slot>
         </p>
     </div>

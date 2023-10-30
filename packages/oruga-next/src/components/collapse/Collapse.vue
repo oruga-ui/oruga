@@ -78,16 +78,27 @@ const contentClass = computed(() => [
 <template>
     <div :class="rootClass" data-oruga="collapse">
         <div v-if="position === 'top'" :class="triggerClass" @click="toggle">
+            <!--
+                @slot Define the collapse trigger
+                @binding {boolean} open collapse open state 
+             -->
             <slot name="trigger" :open="isOpen" />
         </div>
 
         <Transition :name="animation">
             <div v-show="isOpen" :id="contentId" :class="contentClass">
+                <!--
+                    @slot Default content
+                -->
                 <slot />
             </div>
         </Transition>
 
         <div v-if="position === 'bottom'" :class="triggerClass" @click="toggle">
+            <!--
+                @slot Define the collapse trigger
+                @binding {boolean} open collapse open state 
+             -->
             <slot name="trigger" :open="isOpen" />
         </div>
     </div>

@@ -209,6 +209,9 @@ const labelClasses = computed(() =>
             v-if="label || $slots.default"
             :id="ariaLabelledby"
             :class="labelClasses">
+            <!--
+                @slot Content slot, default is label prop
+            -->
             <slot>{{ label }}</slot>
         </span>
     </label>
