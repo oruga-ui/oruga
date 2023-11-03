@@ -38,11 +38,11 @@ defineOptions({
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
-    /** Whether modal is active or not, use v-model:active to make it two-way binding. */
+    /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Display modal as full screen */
     fullScreen: { type: Boolean, default: false },
-    /** Text content, unnecessary when default slot is used. */
+    /** Text content, unnecessary when default slot is used */
     content: { type: String, default: undefined },
     /** Width of the Modal */
     width: {
@@ -55,7 +55,7 @@ const props = defineProps({
         default: () => getOption("modal.animation", "zoom-out"),
     },
     /**
-     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside.
+     * Is Modal cancleable by clicking 'X', pressing escape or clicking outside
      * @values escape, x, outside, button, true, false
      */
     cancelable: {
@@ -77,7 +77,7 @@ const props = defineProps({
         default: () => getOption("modal.scroll", "keep"),
         validator: (value: string) => ["keep", "clip"].indexOf(value) >= 0,
     },
-    /** Trap focus inside the modal. */
+    /** Trap focus inside the modal */
     trapFocus: {
         type: Boolean,
         default: () => getOption("modal.trapFocus", true),
@@ -92,9 +92,9 @@ const props = defineProps({
         validator: (value: string) =>
             ["dialog", "alertdialog"].indexOf(value) >= 0,
     },
-    /** Accessibility aria-modal to be passed to the div wrapper element. */
+    /** Accessibility aria-modal to be passed to the div wrapper element */
     ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
-    /** Accessibility aria-label to be passed to the div wrapper element. */
+    /** Accessibility aria-label to be passed to the div wrapper element */
     ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
     /** Destroy modal on hide */
     destroyOnHide: {
@@ -120,6 +120,15 @@ const props = defineProps({
         default: () => getOption("modal.closeIconSize", "medium"),
     },
     /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("modal.teleport", false),
+    },
+    /**
      * Component to be injected, used to open a component modal programmatically.
      * Close modal within the component by emitting a 'close' event — emits('close')
      */
@@ -127,17 +136,17 @@ const props = defineProps({
         type: [Object, Function] as PropType<Component>,
         default: undefined,
     },
-    /** Props to be binded to the injected component. */
+    /** Props to be binded to the injected component */
     props: { type: Object, default: undefined },
-    /** Events to be binded to the injected component. */
+    /** Events to be binded to the injected component */
     events: { type: Object, default: () => ({}) },
-    /** DOM element where the modal component will be created on (for programmatic usage). */
+    /** DOM element where the modal component will be created on (for programmatic usage) */
     container: {
         type: [Object, String] as PropType<string | HTMLElement>,
         default: () => getOption("modal.container", "body"),
     },
     /**
-     * This is used internally for programmatic usage.
+     * This is used internally for programmatic usage
      * @ignore
      */
     programmatic: {
@@ -145,7 +154,7 @@ const props = defineProps({
         default: undefined,
     },
     /**
-     * This is used internally for programmatic usage.
+     * This is used internally for programmatic usage
      * @ignore
      */
     promise: { type: Promise, default: undefined },
@@ -195,6 +204,12 @@ const { isActive, close, cancel } = useProgrammaticComponent(
 );
 
 const { isMobile } = useMatchMedia();
+
+const _teleport = computed(() =>
+    typeof props.teleport === "boolean"
+        ? { to: "body", disabled: !props.teleport }
+        : { to: props.teleport, disabled: false },
+);
 
 const savedScrollTop = ref(null);
 const modalWidth = ref(toCssDimension(props.width));
@@ -319,47 +334,49 @@ defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
-    <transition
-        :name="animation"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave">
-        <div
-            v-show="isActive"
-            ref="rootRef"
-            v-trap-focus="trapFocus"
-            data-oruga="modal"
-            :class="rootClasses"
-            :tabindex="-1"
-            :role="ariaRole"
-            :aria-label="ariaLabel"
-            :aria-modal="ariaModal">
-            <div :class="overlayClasses" @click="cancel('outside')" />
-            <div :class="contentClasses" :style="customStyle">
-                <!-- injected component for programmatic usage -->
-                <component
-                    v-bind="$props.props"
-                    :is="component"
-                    v-if="component"
-                    v-on="$props.events"
-                    @close="close" />
-                <!--
+    <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
+        <transition
+            :name="animation"
+            @after-enter="afterEnter"
+            @before-leave="beforeLeave">
+            <div
+                v-show="isActive"
+                ref="rootRef"
+                v-trap-focus="trapFocus"
+                data-oruga="modal"
+                :class="rootClasses"
+                :tabindex="-1"
+                :role="ariaRole"
+                :aria-label="ariaLabel"
+                :aria-modal="ariaModal">
+                <div :class="overlayClasses" @click="cancel('outside')" />
+                <div :class="contentClasses" :style="customStyle">
+                    <!-- injected component for programmatic usage -->
+                    <component
+                        v-bind="$props.props"
+                        :is="component"
+                        v-if="component"
+                        v-on="$props.events"
+                        @close="close" />
+                    <!--
                     @slot Modal default content, default is content prop
                     @binding {(...args): void} close - function to close the component
                 -->
-                <slot v-else :close="close">
-                    <div v-if="content">{{ content }}</div>
-                </slot>
+                    <slot v-else :close="close">
+                        <div v-if="content">{{ content }}</div>
+                    </slot>
 
-                <o-icon
-                    v-if="showX"
-                    v-show="!isAnimating"
-                    clickable
-                    both
-                    :class="closeClasses"
-                    :icon="closeIcon"
-                    :size="closeIconSize"
-                    @click="cancel('x')" />
+                    <o-icon
+                        v-if="showX"
+                        v-show="!isAnimating"
+                        clickable
+                        both
+                        :class="closeClasses"
+                        :icon="closeIcon"
+                        :size="closeIconSize"
+                        @click="cancel('x')" />
+                </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+    </Teleport>
 </template>

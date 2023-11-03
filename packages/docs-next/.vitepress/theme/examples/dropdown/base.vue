@@ -61,7 +61,7 @@
             <o-dropdown-item label="Something else" />
         </o-dropdown>
 
-        <o-dropdown append-to-body>
+        <o-dropdown teleport>
             <template #trigger>
                 <o-button label="Append to body" />
             </template>

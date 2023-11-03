@@ -4,8 +4,6 @@ import {
     nextTick,
     ref,
     watch,
-    onMounted,
-    onUnmounted,
     type Component,
     type PropType,
     type Ref,
@@ -19,16 +17,14 @@ import {
     useVModelBinding,
     useMatchMedia,
     useEventListener,
+    usePropBinding,
+    useClickOutside,
 } from "@/composables";
 import { vTrapFocus } from "@/directives/trapFocus";
-import {
-    removeElement,
-    createAbsoluteElement,
-    toCssDimension,
-    isMobileAgent,
-} from "@/utils/helpers";
+import { toCssDimension, isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { provideDropdown } from "./useDropdownShare";
+import TeleportWrapper from "@/utils/TeleportWrapper.vue";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -94,15 +90,6 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("dropdown.trapFocus", true),
     },
-    /**
-     * Can close dropdown by pressing escape, clicking the content or outside
-     * @values escape, outside, content
-     */
-    closeable: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: () =>
-            getOption("dropdown.closeable", ["escape", "outside", "content"]),
-    },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
     /** Dropdown menu tag name */
@@ -129,6 +116,17 @@ const props = defineProps({
                     -1,
             ).length === values.length,
     },
+    /** Dropdown delay before it appears (number in ms) */
+    delay: { type: Number, default: undefined },
+    /**
+     * Dropdown close options (pressing escape, clicking the content or outside)
+     * @values true, false, escape, outside, content
+     */
+    closeable: {
+        type: [Array, Boolean] as PropType<string[] | boolean>,
+        default: () =>
+            getOption("dropdown.closeable", ["escape", "outside", "content"]),
+    },
     /** Set the tabindex attribute on the dropdown trigger div (-1 to prevent selection via tab key) */
     tabindex: { type: Number, default: 0 },
     /**
@@ -142,13 +140,15 @@ const props = defineProps({
         validator: (value: string) =>
             ["menu", "list", "dialog"].indexOf(value) > -1,
     },
-    /** Append dropdown content to body */
-    appendToBody: {
-        type: Boolean,
-        default: () => getOption("dropdown.appendToBody", false),
+    /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("dropdown.teleport", false),
     },
-    /** @ignore */
-    appendToBodyCopyParent: Boolean,
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -185,17 +185,13 @@ const emits = defineEmits<{
     (e: "change", value: any): void;
 }>();
 
-const rootRef = ref();
-const menuRef = ref();
-const triggerRef = ref();
-
 const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
     props,
     emits,
     { passive: true },
 ) as Ref<any>;
 
-const isActive = ref(props.active);
+const isActive = usePropBinding("active", props, emits, { passive: true });
 
 /** toggle isActive value when prop is changed */
 watch(
@@ -208,36 +204,12 @@ watch(
     },
 );
 
-/** emit event when isActive value is changed */
-watch(isActive, (value) => {
-    emits("update:active", value);
-    if (props.appendToBody) nextTick(() => updateAppendToBody());
-});
-
 const { isMobile } = useMatchMedia();
 
-if (isClient) {
-    useEventListener("click", onClickedOutside);
-    useEventListener("keyup", onKeyPress);
-}
-
-const bodyEl = ref<HTMLDivElement>(); // Used to append to body
-
-onMounted(() => {
-    if (props.appendToBody) {
-        bodyEl.value = createAbsoluteElement(menuRef.value);
-        updateAppendToBody();
-    }
-});
-
-onUnmounted(() => {
-    if (props.appendToBody) {
-        removeElement(bodyEl.value);
-    }
-});
-
 // check if mobile modal should be shown
-const isMobileModal = computed(() => props.mobileModal && !props.inline);
+const isMobileModal = computed(
+    () => isMobile.value && props.mobileModal && !props.inline,
+);
 
 // check if client is mobile native
 const isMobileNative = computed(() => props.mobileModal && isMobileAgent.any());
@@ -249,79 +221,40 @@ const menuStyle = computed(() => ({
 
 const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 
-/** White-listed items to not close when clicked. */
-function isInWhiteList(el: Element): boolean {
-    if (el === menuRef.value) return true;
-    if (el === triggerRef.value) return true;
-    // All chidren from dropdown
-    if (menuRef.value !== undefined) {
-        const children = menuRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) {
-                return true;
-            }
-        }
-    }
-    // All children from trigger
-    if (triggerRef.value !== undefined) {
-        const children = triggerRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) return true;
-        }
-    }
-    return false;
-}
+// --- Event Handler ---
 
-/** Append element to body feature */
-function updateAppendToBody(): void {
-    const dropdownMenu = menuRef.value;
-    const trigger = triggerRef.value;
-    if (dropdownMenu && trigger) {
-        // update wrapper dropdown
-        const dropdown = bodyEl.value.children[0];
-        dropdown.classList.forEach((item) =>
-            dropdown.classList.remove(...item.split(" ")),
-        );
-        rootClasses.value.forEach((item) => {
-            if (item) {
-                if (typeof item === "object") {
-                    Object.keys(item)
-                        .filter((key) => key && item[key])
-                        .forEach((key) => dropdown.classList.add(key));
-                } else {
-                    dropdown.classList.add(...item.split(" "));
-                }
+const contentRef = ref();
+const triggerRef = ref();
+
+const eventCleanups = ref([]);
+const timer = ref();
+
+watch(isActive, (value) => {
+    // on active set event handler
+    if (value && isClient) {
+        setTimeout(() => {
+            if (cancelOptions.value.indexOf("outside") >= 0) {
+                // set outside handler
+                eventCleanups.value.push(
+                    useClickOutside(contentRef, onClickedOutside, [triggerRef]),
+                );
+            }
+
+            if (cancelOptions.value.indexOf("escape") >= 0) {
+                // set keyup handler
+                eventCleanups.value.push(
+                    useEventListener("keyup", onKeyPress, document, {
+                        immediate: true,
+                    }),
+                );
             }
         });
-        if (props.appendToBodyCopyParent) {
-            const parentNode = rootRef.value.parentNode;
-            const parent = bodyEl.value;
-            parent.classList.forEach((item) =>
-                parent.classList.remove(...item.split(" ")),
-            );
-            parentNode.classList.forEach((item) =>
-                parent.classList.add(...item.split(" ")),
-            );
-        }
-        const rect = trigger.getBoundingClientRect();
-        let top = rect.top + window.scrollY;
-        let left = rect.left + window.scrollX;
-        if (!props.position || props.position.indexOf("bottom") >= 0) {
-            top += trigger.clientHeight;
-        } else {
-            top -= dropdownMenu.clientHeight;
-        }
-        if (props.position && props.position.indexOf("left") >= 0) {
-            left -= dropdownMenu.clientWidth - trigger.clientWidth;
-        }
-        dropdownMenu.style.position = "absolute";
-        dropdownMenu.style.top = `${top}px`;
-        dropdownMenu.style.left = `${left}px`;
-        dropdownMenu.style.zIndex = "9999";
+    } else if (!value) {
+        // on close cleanup event handler
+        eventCleanups.value.forEach((fn) => fn());
+        eventCleanups.value.length = 0;
     }
-}
-
-// --- Event Handler ---
+});
 
 const cancelOptions = computed(() =>
     typeof props.closeable === "boolean"
@@ -332,10 +265,10 @@ const cancelOptions = computed(() =>
 );
 
 /** Close dropdown if clicked outside. */
-function onClickedOutside(event: MouseEvent): void {
-    if (props.inline) return;
+function onClickedOutside(): void {
+    if (!isActive.value || props.inline) return;
     if (cancelOptions.value.indexOf("outside") < 0) return;
-    if (!isInWhiteList(event.target as Element)) isActive.value = false;
+    isActive.value = false;
 }
 
 /** Keypress event that is bound to the document */
@@ -347,30 +280,32 @@ function onKeyPress(event: KeyboardEvent): void {
 }
 
 function onClick(): void {
-    if (props.triggers.indexOf("click") >= 0 || isMobileNative.value) toggle();
+    if (props.triggers.indexOf("click") < 0) return;
+    toggle();
 }
 
 function onContextMenu(event: MouseEvent): void {
-    if (props.triggers.indexOf("contextmenu") >= 0) {
-        event.preventDefault();
-        toggle();
-    }
+    if (props.triggers.indexOf("contextmenu") < 0) return;
+    event.preventDefault();
+    open();
 }
+
 function onFocus(): void {
-    if (props.triggers.indexOf("focus") >= 0) toggle();
+    if (props.triggers.indexOf("focus") < 0) return;
+    open();
 }
 
 const isHovered = ref(false);
 function onHover(): void {
     if (!isMobileNative.value && props.triggers.indexOf("hover") >= 0) {
         isHovered.value = true;
-        toggle();
+        open();
     }
 }
 function onHoverLeave(): void {
     if (!isMobileNative.value && isHovered.value) {
-        toggle();
         isHovered.value = false;
+        onClose();
     }
 }
 
@@ -381,6 +316,24 @@ function toggle(): void {
     // if not active, toggle after clickOutside event
     // this fixes toggling programmatic
     else nextTick(() => (isActive.value = !isActive.value));
+}
+
+function open(): void {
+    if (props.disabled) return;
+    if (props.delay) {
+        timer.value = setTimeout(() => {
+            isActive.value = true;
+            timer.value = null;
+        }, props.delay);
+    } else {
+        isActive.value = true;
+    }
+}
+
+function onClose(): void {
+    if (cancelOptions.value.indexOf("content") < 0) return;
+    isActive.value = !props.closeable;
+    if (timer.value && props.closeable) clearTimeout(timer.value);
 }
 
 // --- Field Dependency Injection Feature ---
@@ -445,7 +398,7 @@ const rootClasses = computed(() => [
     },
     {
         [useComputedClass("mobileClass", "o-drop--mobile")]:
-            isMobileModal.value && isMobile.value && !hoverable.value,
+            isMobileModal.value && !hoverable.value,
     },
 ]);
 
@@ -474,11 +427,7 @@ const menuClasses = computed(() => [
 </script>
 
 <template>
-    <div
-        ref="rootRef"
-        data-oruga="dropdown"
-        :class="rootClasses"
-        @mouseleave="onHoverLeave">
+    <div data-oruga="dropdown" :class="rootClasses" @mouseleave="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"
@@ -498,33 +447,39 @@ const menuClasses = computed(() => [
                 {{ label }}
             </slot>
         </component>
+        <TeleportWrapper
+            :teleport="teleport"
+            :class="rootClasses"
+            :trigger="triggerRef"
+            :content="contentRef"
+            :positioning="!isMobileModal">
+            <transition :name="animation">
+                <div
+                    v-if="isMobileModal"
+                    v-show="isActive"
+                    :class="menuMobileOverlayClasses"
+                    :aria-hidden="!isActive" />
+            </transition>
 
-        <transition :name="animation">
-            <div
-                v-if="isMobileNative"
-                v-show="isActive"
-                :class="menuMobileOverlayClasses"
-                :aria-hidden="!isActive" />
-        </transition>
-
-        <transition :name="animation">
-            <component
-                :is="menuTag"
-                v-show="(!disabled && (isActive || isHovered)) || inline"
-                ref="menuRef"
-                v-trap-focus="trapFocus"
-                :class="menuClasses"
-                :aria-hidden="!isActive"
-                :role="ariaRole"
-                :aria-modal="!inline"
-                :style="menuStyle">
-                <!--
-                    @slot Place dropdown items here 
-                    @binding {boolean} active - dropdown active state
-                    @binding {boolean} toggle - toggle active state function
-                -->
-                <slot :active="isActive" :toggle="toggle" />
-            </component>
-        </transition>
+            <transition :name="animation">
+                <component
+                    :is="menuTag"
+                    v-show="(!disabled && (isActive || isHovered)) || inline"
+                    ref="contentRef"
+                    v-trap-focus="trapFocus"
+                    :class="menuClasses"
+                    :aria-hidden="!isActive"
+                    :role="ariaRole"
+                    :aria-modal="!inline"
+                    :style="menuStyle">
+                    <!--
+                        @slot Place dropdown items here 
+                        @binding {boolean} active - dropdown active state
+                        @binding {boolean} toggle - toggle active state function
+                    -->
+                    <slot :active="isActive" :toggle="toggle" />
+                </component>
+            </transition>
+        </TeleportWrapper>
     </div>
 </template>
