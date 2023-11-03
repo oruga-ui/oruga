@@ -62,15 +62,23 @@ const props = defineProps({
         default: () => getOption("dropdown.maxHeight", 200),
     },
     /**
-     * Optional, position of the dropdown relative to the trigger
-     * @values top-right, top-left, bottom-left, bottom-right
+     * Position of the dropdown relative to the trigger
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
     position: {
         type: String,
         validator: (value: string) =>
-            ["top-right", "top-left", "bottom-left", "bottom-right"].indexOf(
-                value,
-            ) > -1,
+            [
+                "auto",
+                "top",
+                "bottom",
+                "left",
+                "right",
+                "top-right",
+                "top-left",
+                "bottom-left",
+                "bottom-right",
+            ].indexOf(value) > -1,
         default: undefined,
     },
     /** Dropdown content (items) are shown into a modal on mobile */
@@ -452,7 +460,9 @@ const menuClasses = computed(() => [
             :class="rootClasses"
             :trigger="triggerRef"
             :content="contentRef"
-            :positioning="!isMobileModal">
+            :position="position"
+            :update-key="isActive"
+            :disable-positioning="!isMobileModal">
             <transition :name="animation">
                 <div
                     v-if="isMobileModal"

@@ -30,11 +30,6 @@ const opposites: Record<Position, Position> = {
     left: "right",
 };
 
-type TooltipMetrics = {
-    content: DOMRect;
-    trigger: DOMRect;
-};
-
 type Point = { x: number; y: number };
 
 /**
@@ -69,7 +64,7 @@ const props = defineProps({
      */
     position: {
         type: String as PropType<Position | "auto">,
-        default: () => getOption("tooltip.position", "top"),
+        default: () => getOption("tooltip.position", "auto"),
         validator: (value: string) =>
             ["top", "bottom", "left", "right", "auto"].indexOf(value) > -1,
     },
@@ -155,13 +150,15 @@ const isActive = usePropBinding<boolean>("active", props, emits, {
 
 const timer = ref();
 
+const rootRef = ref<HTMLElement>();
+
 const computedPosition = computed((): Position => {
     if (props.position !== "auto") return props.position;
 
     // detect auto position
-    const defaultPosition = getOption<Position>("tooltip.position", "top");
+    const defaultPosition = "top" as Position;
     let bestPosition = defaultPosition;
-    if (metrics.value != null) {
+    if (contentRef.value && triggerRef.value && isActive.value) {
         let viewRect: DOMRect;
         const viewport = window.visualViewport;
         if (viewport != undefined) {
@@ -185,8 +182,11 @@ const computedPosition = computed((): Position => {
                 document.documentElement.clientHeight,
             );
         }
-        const triggerAnchors = anchors(metrics.value.trigger);
-        const contentRect = metrics.value.content;
+
+        const contentRect = contentRef.value.getBoundingClientRect();
+        const triggerRect = triggerRef.value.getBoundingClientRect();
+
+        const triggerAnchors = anchors(triggerRect);
         const contentAnchors = anchors(contentRect);
         const contentRectAtAnchor = (pos: Position) => {
             const triggerAnchor = triggerAnchors[pos];
@@ -229,21 +229,9 @@ const computedPosition = computed((): Position => {
     return bestPosition;
 });
 
-const rootRef = ref<HTMLElement>();
-
-const metrics = ref<TooltipMetrics>({ content: undefined, trigger: undefined }); // Used for automatic tooltip positioning
-
 watch(isActive, (value) => {
     if (value) emits("open");
     else emits("close");
-    if (value && props.position === "auto") {
-        nextTick(() => {
-            metrics.value = {
-                content: contentRef.value.getBoundingClientRect(),
-                trigger: triggerRef.value.getBoundingClientRect(),
-            };
-        });
-    }
 });
 
 // --- Event Handler ---
@@ -423,11 +411,10 @@ const contentClasses = computed(() => [
             :teleport="teleport"
             :class="rootClasses"
             :trigger="triggerRef"
-            :content="contentRef">
-            <transition
-                :name="animation"
-                @after-leave="metrics = null"
-                @enter-cancelled="metrics = null">
+            :content="contentRef"
+            :position="position"
+            :update-key="isActive">
+            <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
                     ref="contentRef"

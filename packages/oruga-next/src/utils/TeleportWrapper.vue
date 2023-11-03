@@ -18,20 +18,29 @@ const props = defineProps({
         default: undefined,
     },
     /**
-     * Position of the dropdown relative to the trigger
-     * @values top-right, top-left, bottom-left, bottom-right
-     * @values top, bottom, left, right, auto
+     * Position of the component relative to the trigger
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
     position: {
         type: String,
         validator: (value: string) =>
-            ["top-right", "top-left", "bottom-left", "bottom-right"].indexOf(
-                value,
-            ) > -1,
+            [
+                "auto",
+                "top",
+                "bottom",
+                "left",
+                "right",
+                "top-right",
+                "top-left",
+                "bottom-left",
+                "bottom-right",
+            ].indexOf(value) > -1,
         default: undefined,
     },
+    /** additional key property to force update on key change */
+    updateKey: { type: [String, Boolean, Number], default: undefined },
     /** update positioning on teleport */
-    positioning: { type: Boolean, default: true },
+    disablePositioning: { type: Boolean, default: true },
 });
 
 const to = computed(() =>
@@ -44,8 +53,14 @@ const disabled = computed(() =>
         : false,
 );
 
+// update positioning if props change
 watch(
-    [() => props.trigger, () => props.content, () => props.positioning],
+    [
+        () => props.trigger,
+        () => props.content,
+        () => props.disablePositioning,
+        () => props.updateKey,
+    ],
     () => {
         if (props.teleport) nextTick(() => updatePositioning());
     },
@@ -61,21 +76,36 @@ function updatePositioning(): void {
     const content = props.content;
     const trigger = props.trigger;
 
+    // set content position
     if (content && trigger) {
-        // set content position
         const rect = trigger.getBoundingClientRect();
         let top = rect.top + window.scrollY;
         let left = rect.left + window.scrollX;
-        if (!props.position || props.position.indexOf("bottom") >= 0) {
+        // define vertical positioning
+        if (!props.position || props.position.includes("bottom")) {
             top += trigger.clientHeight;
-        } else {
+        } else if (props.position && props.position.includes("top")) {
             top -= content.clientHeight;
         }
-        if (props.position && props.position.indexOf("left") >= 0) {
-            left -= content.clientWidth - trigger.clientWidth;
+        // define horizontal positioning
+        if (props.position === "left") {
+            left -= content.clientWidth;
+        } else if (props.position === "right") {
+            left += trigger.clientWidth;
+        } else if (props.position.includes("-right")) {
+            left += trigger.clientWidth - content.clientWidth;
         }
-        if (props.positioning) {
-            content.style.position = "absolute";
+
+        if (props.position === "top" || props.position === "bottom") {
+            left += trigger.clientWidth / 2;
+        }
+        if (props.position === "left" || props.position === "right") {
+            top += trigger.clientHeight / 2;
+        }
+
+        // set style properties
+        if (props.disablePositioning) {
+            content.style.position = "relative";
             content.style.top = `${top}px`;
             content.style.left = `${left}px`;
         } else {
