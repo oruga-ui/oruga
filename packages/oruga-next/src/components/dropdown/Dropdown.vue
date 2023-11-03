@@ -24,7 +24,7 @@ import { vTrapFocus } from "@/directives/trapFocus";
 import { toCssDimension, isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { provideDropdown } from "./useDropdownShare";
-import TeleportWrapper from "@/utils/TeleportWrapper.vue";
+import PositionWrapper from "@/utils/PositionWrapper.vue";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -67,6 +67,7 @@ const props = defineProps({
      */
     position: {
         type: String,
+        default: () => getOption("dropdown.position", "bottom-left"),
         validator: (value: string) =>
             [
                 "auto",
@@ -79,7 +80,6 @@ const props = defineProps({
                 "bottom-left",
                 "bottom-right",
             ].indexOf(value) > -1,
-        default: undefined,
     },
     /** Dropdown content (items) are shown into a modal on mobile */
     mobileModal: {
@@ -200,6 +200,16 @@ const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
 ) as Ref<any>;
 
 const isActive = usePropBinding("active", props, emits, { passive: true });
+
+const autoPosition = ref(props.position);
+
+/** update autoPosition on prop change */
+watch(
+    () => props.position,
+    (v) => (autoPosition.value = v),
+);
+
+watch(autoPosition, (v) => console.log(v));
 
 /** toggle isActive value when prop is changed */
 watch(
@@ -424,8 +434,8 @@ const menuClasses = computed(() => [
         [useComputedClass(
             "menuPositionClass",
             "o-drop__menu--",
-            props.position,
-        )]: props.position,
+            autoPosition.value,
+        )]: autoPosition.value,
     },
     {
         [useComputedClass("menuActiveClass", "o-drop__menu--active")]:
@@ -455,12 +465,12 @@ const menuClasses = computed(() => [
                 {{ label }}
             </slot>
         </component>
-        <TeleportWrapper
+        <PositionWrapper
+            v-model:position="autoPosition"
             :teleport="teleport"
             :class="rootClasses"
             :trigger="triggerRef"
             :content="contentRef"
-            :position="position"
             :update-key="isActive"
             :disable-positioning="!isMobileModal">
             <transition :name="animation">
@@ -490,6 +500,6 @@ const menuClasses = computed(() => [
                     <slot :active="isActive" :toggle="toggle" />
                 </component>
             </transition>
-        </TeleportWrapper>
+        </PositionWrapper>
     </div>
 </template>
