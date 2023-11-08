@@ -72,7 +72,6 @@ const disabled = computed(() =>
 );
 
 const computedPosition = computed((): string => {
-    console.log("compute position", props.position);
     if (props.position !== "auto") return props.position;
 
     // detect auto position
@@ -146,8 +145,6 @@ const computedPosition = computed((): string => {
             }
         }
     }
-
-    console.log("emit", bestPosition);
     // two-way bind auto position
     emits("update:position", bestPosition);
     return bestPosition;

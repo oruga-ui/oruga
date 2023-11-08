@@ -227,8 +227,6 @@ watch(
     (v) => (autoPosition.value = v),
 );
 
-watch(autoPosition, (v) => console.log(v));
-
 /** toggle isActive value when prop is changed */
 watch(
     () => props.active,
