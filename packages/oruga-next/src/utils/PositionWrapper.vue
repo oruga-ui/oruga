@@ -151,6 +151,7 @@ const computedPosition = computed((): string => {
     emits("update:position", bestPosition);
     return bestPosition;
 });
+
 // trigger compute auto position
 if (props.position === "auto") computedPosition.value;
 
@@ -197,17 +198,19 @@ function updatePositioning(): void {
             left += trigger.clientWidth - content.clientWidth;
         }
 
+        // adjust exact vertical positioning
         if (
             computedPosition.value === "top" ||
             computedPosition.value === "bottom"
         ) {
-            left += trigger.clientWidth / 2;
+            left += trigger.clientWidth / 2; //- content.clientWidth / 2;
         }
+        // adjust exact horizontal positioning
         if (
             computedPosition.value === "left" ||
             computedPosition.value === "right"
         ) {
-            top += trigger.clientHeight / 2;
+            top += trigger.clientHeight / 2; // - content.clientHeight / 2;
         }
 
         // set style properties

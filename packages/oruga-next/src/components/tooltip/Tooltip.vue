@@ -17,7 +17,6 @@ import {
     useClickOutside,
 } from "@/composables";
 import { isClient } from "@/utils/ssr";
-import type { PropBind } from "@/types";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 
 /**
@@ -119,6 +118,7 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
+        "teleportClass",
         "contentClass",
         "orderClass",
         "triggerClass",
@@ -266,8 +266,12 @@ function onClose(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed<PropBind>(() => [
+const rootClasses = computed(() => [
     useComputedClass("rootClass", "o-tip"),
+    {
+        [useComputedClass("teleportClass", "o-tip--teleport")]:
+            !!props.teleport,
+    },
 ]);
 
 const triggerClasses = computed(() => [

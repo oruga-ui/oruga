@@ -160,6 +160,7 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
+        "teleportClass",
         "triggerClass",
         "inlineClass",
         "menuMobileOverlayClass",
@@ -417,6 +418,10 @@ const rootClasses = computed(() => [
     {
         [useComputedClass("mobileClass", "o-drop--mobile")]:
             isMobileModal.value && !hoverable.value,
+    },
+    {
+        [useComputedClass("teleportClass", "o-drop--teleport")]:
+            !!props.teleport,
     },
 ]);
 
