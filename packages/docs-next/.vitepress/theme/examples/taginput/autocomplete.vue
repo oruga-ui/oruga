@@ -388,18 +388,20 @@ const openOnFocus = ref(false);
             <o-switch v-model="allowNew"> Allow new items </o-switch>
             <o-switch v-model="openOnFocus"> Open on focus </o-switch>
         </o-field>
+
         <o-field label="Enter some items">
             <o-taginput
                 v-model="tags"
                 :data="filteredTags"
-                :allow-autocomplete="true"
+                allow-autocomplete
                 :allow-new="allowNew"
                 :open-on-focus="openOnFocus"
                 field="user.first_name"
                 icon="tag"
                 placeholder="Add an item"
-                @typing="getFilteredTags" />
+                @input="getFilteredTags" />
         </o-field>
+
         <p><b>Items:</b> {{ tags }}</p>
     </section>
 </template>

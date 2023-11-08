@@ -293,9 +293,9 @@ const emits = defineEmits<{
      * @param event {Event} native event
      */
     (e: "icon-right-click", event: Event): void;
-    /** the scroll list inside the dropdown reached the start */
+    /** the list inside the dropdown reached the start */
     (e: "scroll-start"): void;
-    /** the scroll list inside the dropdown reached it's end */
+    /** the list inside the dropdown reached it's end */
     (e: "scroll-end"): void;
 }>();
 
@@ -341,11 +341,11 @@ watch(
         if (currentValue && currentValue !== value) setSelected(null, false);
 
         nextTick(() => {
-            // Close dropdown if input is clear or else open it
-            if (isFocused.value && (!props.openOnFocus || value))
-                isActive.value = !!value;
-
+            // Close dropdown if data is empty
             if (isEmpty.value) isActive.value = false;
+            // Close dropdown if input is clear or else open it
+            else if (isFocused.value && (!props.openOnFocus || value))
+                isActive.value = !!value;
         });
     },
 );
@@ -390,13 +390,16 @@ const computedData = computed<{ items: any; group?: any }[]>(() => {
     return [{ items: props.data }];
 });
 
-const isEmpty = computed(() =>
-    !computedData.value
-        ? true
-        : !computedData.value.some(
-              (element) => element.items && element.items.length,
-          ),
+const isEmpty = computed(
+    () =>
+        !computedData.value?.some(
+            (element) => element.items && element.items.length,
+        ),
 );
+
+watch(isEmpty, (empty) => {
+    if (isFocused) isActive.value = !empty;
+});
 
 const closeableOptions = computed(() => {
     const options = ["escape"];
@@ -598,8 +601,6 @@ function onKeydown(event: KeyboardEvent): void {
             return;
         }
         setSelected(hoveredOption.value, closeDropdown, event);
-    } else if (isEmpty.value) {
-        isActive.value = false;
     }
 }
 
@@ -612,7 +613,7 @@ function handleFocus(event: Event): void {
         inputRef.value.$el.querySelector("input").select();
     }
     if (props.openOnFocus) {
-        isActive.value = true;
+        if (!isEmpty.value) isActive.value = true;
         if (props.keepFirst)
             // If open on focus, update the hovered
             selectFirstOption();
@@ -677,11 +678,9 @@ onMounted(() => {
 function checkDropdownScroll(): void {
     const dropdown = dropdownRef.value.$content;
     if (!dropdown) return;
-    const trashhold = 15;
-    const headerHeight = headerRef.value ? headerRef.value.clientHeight : 0;
-    const footerHeight = footerRef.value
-        ? footerRef.value.clientHeight + trashhold
-        : 0;
+    const trashhold = dropdown.offsetTop;
+    const headerHeight = headerRef.value?.clientHeight || 0;
+    const footerHeight = (footerRef.value?.clientHeight || 0) + trashhold;
     if (dropdown.clientHeight !== dropdown.scrollHeight) {
         if (
             dropdown.scrollTop + dropdown.clientHeight + footerHeight >=
@@ -813,6 +812,7 @@ function itemOptionClasses(option): PropBind {
             -->
             <slot name="header" />
         </o-dropdown-item>
+
         <template v-for="(element, groupindex) in computedData">
             <o-dropdown-item
                 v-if="element.group"

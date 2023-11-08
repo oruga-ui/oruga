@@ -66,6 +66,11 @@ const props = defineProps({
     },
     /** Opens a dropdown with choices when the input field is focused */
     openOnFocus: { type: Boolean, default: false },
+    /** Keep open dropdown list after select */
+    keepOpen: {
+        type: Boolean,
+        default: () => getOption("autocomplete.keepOpen", false),
+    },
     /** Input placeholder */
     placeholder: { type: String, default: undefined },
     /** Makes input full width when inside a grouped or addon field */
@@ -82,9 +87,9 @@ const props = defineProps({
         default: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
     },
     /** Array of chars used to split when pasting a new string */
-    pasteSeparators: {
+    separators: {
         type: Array as PropType<string[]>,
-        default: () => getOption("taginput.pasteSeparators", [","]),
+        default: () => getOption("taginput.separators", [","]),
     },
     /** The first option will always be pre-selected (easier to just hit enter or tab) */
     keepFirst: { type: Boolean, default: false },
@@ -152,10 +157,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("taginput.autocomplete", "off"),
     },
-    /** Append autocomplete content to body */
-    appendToBody: {
-        type: Boolean,
-        default: () => getOption("taginput.appendToBody", false),
+    /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("autocomplete.teleport", false),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
@@ -218,9 +227,9 @@ const emits = defineEmits<{
      * @param event {Event} native event
      */
     (e: "icon-right-click", event: Event): void;
-    /** the scroll list inside the dropdown reached the start */
+    /** the list inside the dropdown reached the start */
     (e: "scroll-start"): void;
-    /** the scroll list inside the dropdown reached it's end */
+    /** the list inside the dropdown reached it's end */
     (e: "scroll-end"): void;
 }>();
 
@@ -267,9 +276,9 @@ watch(
  * returning new RegExp used to split pasted string.
  */
 const separatorsAsRegExp = computed(() =>
-    props.pasteSeparators.length
+    props.separators.length
         ? new RegExp(
-              props.pasteSeparators
+              props.separators
                   .map((s) =>
                       s ? s.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") : null,
                   )
@@ -321,9 +330,7 @@ function removeItem(index: number, event?: Event): void {
     const item = items.value.splice(index, 1)[0];
     emits("remove", item);
     if (event) event.stopPropagation();
-    if (props.openOnFocus && autocompleteRef.value) {
-        setFocus();
-    }
+    if (props.openOnFocus && autocompleteRef.value) setFocus();
 }
 
 // --- Event Handler ---
@@ -337,10 +344,11 @@ function onSelect(option?: string): void {
 function onKeydown(event: KeyboardEvent): void {
     if (
         props.removeOnKeys.indexOf(event.key) !== -1 &&
-        !newItem.value?.length
+        !newItem.value?.length &&
+        itemsLength.value > 0
     ) {
         // remove last item
-        if (itemsLength.value > 0) removeItem(itemsLength.value - 1);
+        removeItem(itemsLength.value - 1);
     }
     // Stop if is to accept select only
     if (props.allowAutocomplete && !props.allowNew) return;
@@ -454,13 +462,13 @@ const counterClasses = computed(() => [
                 :autocomplete="autocomplete"
                 :open-on-focus="openOnFocus"
                 :keep-first="keepFirst"
-                :keep-open="openOnFocus"
+                :keep-open="keepOpen"
                 :group-field="groupField"
                 :group-options="groupOptions"
                 :has-counter="false"
                 :use-html5-validation="useHtml5Validation"
                 :check-scroll="checkScroll"
-                :append-to-body="appendToBody"
+                :teleport="teleport"
                 :confirm-keys="confirmKeys"
                 @input="onInput"
                 @focus="onFocus"
@@ -480,6 +488,7 @@ const counterClasses = computed(() => [
                     -->
                     <slot name="header" />
                 </template>
+
                 <template v-if="$slots.default" #default="props">
                     <!--
                         @slot Override the select option
@@ -492,12 +501,14 @@ const counterClasses = computed(() => [
                         :index="props.index"
                         :value="props.value" />
                 </template>
+
                 <template v-if="$slots.empty" #empty>
                     <!--
                         @slot Define content for empty state 
                     -->
                     <slot name="empty" />
                 </template>
+
                 <template v-if="$slots.footer" #footer>
                     <!--
                         @slot Define an additional footer
@@ -520,6 +531,7 @@ const counterClasses = computed(() => [
                     {{ valueLength }} / {{ maxlength }}
                 </slot>
             </template>
+
             <template v-else-if="maxitems">
                 <!--
                     @slot Override the counter

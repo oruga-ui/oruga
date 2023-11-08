@@ -39,6 +39,7 @@ function getType(item) {
                 </template>
             </o-taginput>
         </o-field>
+
         <p><b>Items:</b> {{ items }}</p>
     </section>
 </template>
