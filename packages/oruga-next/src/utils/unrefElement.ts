@@ -20,6 +20,8 @@ export type MaybeElement =
 export type UnRefElementReturn<T extends MaybeElement = MaybeElement> =
     T extends ComponentPublicInstance
         ? Exclude<MaybeElement, ComponentPublicInstance>
+        : T extends Component
+        ? HTMLElement
         : T | undefined;
 
 /**

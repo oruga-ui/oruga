@@ -25,6 +25,7 @@ import { toCssDimension, isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import { provideDropdown } from "./useDropdownShare";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
+import { unrefElement } from "@/utils/unrefElement";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -58,7 +59,7 @@ const props = defineProps({
     scrollable: { type: Boolean, default: false },
     /** Max height of dropdown content */
     maxHeight: {
-        type: Number,
+        type: [String, Number],
         default: () => getOption("dropdown.maxHeight", 200),
     },
     /**
@@ -97,6 +98,11 @@ const props = defineProps({
     trapFocus: {
         type: Boolean,
         default: () => getOption("dropdown.trapFocus", true),
+    },
+    /** Makes the component check if menu reached scroll start or end and emit scroll events. */
+    checkScroll: {
+        type: Boolean,
+        default: () => getOption("dropdown.checkScroll", false),
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
@@ -188,10 +194,19 @@ const emits = defineEmits<{
      */
     (e: "update:active", value: boolean): void;
     /**
-     * change event
+     * on change event
      * @param value {any} selected value
      */
     (e: "change", value: any): void;
+    /**
+     * on close event
+     * @param method {string} close method
+     */
+    (e: "close", method: string): void;
+    /** the list inside the dropdown reached the start */
+    (e: "scroll-start"): void;
+    /** the list inside the dropdown reached it's end */
+    (e: "scroll-end"): void;
 }>();
 
 const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
@@ -200,7 +215,9 @@ const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
     { passive: true },
 ) as Ref<any>;
 
-const isActive = usePropBinding("active", props, emits, { passive: true });
+const isActive = usePropBinding<boolean>("active", props, emits, {
+    passive: true,
+});
 
 const autoPosition = ref(props.position);
 
@@ -242,8 +259,8 @@ const hoverable = computed(() => props.triggers.indexOf("hover") >= 0);
 
 // --- Event Handler ---
 
-const contentRef = ref();
-const triggerRef = ref();
+const contentRef = ref<HTMLElement>();
+const triggerRef = ref<HTMLElement>();
 
 const eventCleanups = ref([]);
 const timer = ref();
@@ -287,6 +304,7 @@ const cancelOptions = computed(() =>
 function onClickedOutside(): void {
     if (!isActive.value || props.inline) return;
     if (cancelOptions.value.indexOf("outside") < 0) return;
+    emits("close", "outside");
     isActive.value = false;
 }
 
@@ -294,6 +312,7 @@ function onClickedOutside(): void {
 function onKeyPress(event: KeyboardEvent): void {
     if (isActive.value && (event.key === "Escape" || event.key === "Esc")) {
         if (cancelOptions.value.indexOf("escape") < 0) return;
+        emits("close", "escape");
         isActive.value = false;
     }
 }
@@ -351,8 +370,29 @@ function open(): void {
 
 function onClose(): void {
     if (cancelOptions.value.indexOf("content") < 0) return;
+    emits("close", "content");
     isActive.value = !props.closeable;
     if (timer.value && props.closeable) clearTimeout(timer.value);
+}
+
+// --- InfitiveScroll Feature ---
+
+if (isClient && props.checkScroll)
+    useEventListener("scroll", checkDropdownScroll, contentRef);
+
+/** Check if the scroll list inside the dropdown reached the top or it's end. */
+function checkDropdownScroll(): void {
+    const dropdown = unrefElement(contentRef.value);
+    if (dropdown.clientHeight !== dropdown.scrollHeight) {
+        if (
+            dropdown.scrollTop + dropdown.clientHeight >=
+            dropdown.scrollHeight
+        ) {
+            emits("scroll-end");
+        } else if (dropdown.scrollTop <= 0) {
+            emits("scroll-start");
+        }
+    }
 }
 
 // --- Field Dependency Injection Feature ---
@@ -387,6 +427,7 @@ function selectItem(value: any): void {
     }
     if (!props.multiple) {
         if (cancelOptions.value.indexOf("content") < 0) return;
+        emits("close", "content");
         isActive.value = false;
         isHovered.value = false;
     }
@@ -447,6 +488,11 @@ const menuClasses = computed(() => [
             isActive.value || props.inline,
     },
 ]);
+
+// --- Expose Public Functionality ---
+
+/** expose functionalities for programmatic usage */
+defineExpose({ $trigger: triggerRef, $content: contentRef });
 </script>
 
 <template>

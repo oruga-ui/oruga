@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useEventListener } from "@/composables";
-import { watch, computed, type PropType, nextTick } from "vue";
+import { watch, computed, type PropType, nextTick, type Component } from "vue";
 import { isClient } from "./ssr";
 import { isWebKitAgent } from "./helpers";
+import { unrefElement } from "./unrefElement";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -23,11 +24,11 @@ const props = defineProps({
         required: true,
     },
     trigger: {
-        type: Object as PropType<HTMLElement>,
+        type: Object as PropType<HTMLElement | Component>,
         default: undefined,
     },
     content: {
-        type: Object as PropType<HTMLElement>,
+        type: Object as PropType<HTMLElement | Component>,
         default: undefined,
     },
     /**
@@ -102,8 +103,8 @@ const computedPosition = computed((): string => {
             );
         }
 
-        const contentRect = props.content.getBoundingClientRect();
-        const triggerRect = props.trigger.getBoundingClientRect();
+        const contentRect = unrefElement(props.content).getBoundingClientRect();
+        const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
 
         const triggerAnchors = anchors(triggerRect);
         const contentAnchors = anchors(contentRect);
@@ -175,8 +176,8 @@ if (props.teleport && isClient) {
 
 /** set teleport positioning */
 function updatePositioning(): void {
-    const content = props.content;
-    const trigger = props.trigger;
+    const content = unrefElement(props.content);
+    const trigger = unrefElement(props.trigger);
 
     // set content position
     if (content && trigger) {

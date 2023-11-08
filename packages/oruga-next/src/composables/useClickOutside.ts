@@ -18,6 +18,10 @@ export function useClickOutside(
 ): () => void {
     if (!window) return;
 
+    /**
+     * White-listed items that not emit event when clicked.
+     * All children from ignore prop.
+     */
     const shouldIgnore = (event: PointerEvent): boolean => {
         return ignore.some((target) => {
             if (typeof target === "string") {

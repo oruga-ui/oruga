@@ -62,7 +62,7 @@ export function useInputHandler(
     const { parentField } = injectField();
 
     const element = computed<ValidatableFormElement>(() => {
-        const el = unrefElement(inputRef) as HTMLElement;
+        const el = unrefElement(inputRef as Component);
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
             return el as ValidatableFormElement;
