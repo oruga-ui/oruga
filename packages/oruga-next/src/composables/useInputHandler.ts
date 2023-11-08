@@ -4,6 +4,7 @@ import {
     computed,
     type ExtractPropTypes,
     type MaybeRefOrGetter,
+    type Component,
 } from "vue";
 import { injectField } from "@/components/field/useFieldShare";
 import { getOption } from "@/utils/config";
@@ -39,7 +40,7 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
  */
 export function useInputHandler(
     /** input ref element - can be a html element or a vue component*/
-    inputRef: MaybeRefOrGetter<ValidatableFormElement>,
+    inputRef: MaybeRefOrGetter<ValidatableFormElement | Component>,
     /** emitted input events */
     emits: {
         /** on input focus event */
@@ -61,7 +62,7 @@ export function useInputHandler(
     const { parentField } = injectField();
 
     const element = computed<ValidatableFormElement>(() => {
-        const el = unrefElement<ValidatableFormElement>(inputRef);
+        const el = unrefElement(inputRef) as HTMLElement;
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
             return el as ValidatableFormElement;
