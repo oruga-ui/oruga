@@ -226,10 +226,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("datepicker.iconNext", "chevron-right"),
     },
-    /** Append autocomplete content to body */
-    appendToBody: {
-        type: Boolean,
-        default: () => getOption("datepicker.appendToBody", false),
+    /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("datepicker.teleport", false),
     },
     /** Enable html 5 native validation */
     useHtml5Validation: {

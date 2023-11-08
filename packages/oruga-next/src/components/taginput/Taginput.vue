@@ -164,7 +164,7 @@ const props = defineProps({
      */
     teleport: {
         type: [Boolean, String, Object],
-        default: () => getOption("autocomplete.teleport", false),
+        default: () => getOption("taginput.teleport", false),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
