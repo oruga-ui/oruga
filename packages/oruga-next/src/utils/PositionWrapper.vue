@@ -51,6 +51,13 @@ const props = defineProps({
             ].indexOf(value) > -1,
         default: undefined,
     },
+    /** Used for calculation position auto */
+    defaultPosition: {
+        type: String as PropType<Position>,
+        validator: (value: string) =>
+            ["top", "bottom", "left", "right"].indexOf(value) > -1,
+        default: "top",
+    },
     /** additional key property to force update on key change */
     updateKey: { type: [String, Boolean, Number], default: undefined },
     /** update positioning on teleport */
@@ -75,8 +82,7 @@ const computedPosition = computed((): string => {
     if (props.position !== "auto") return props.position;
 
     // detect auto position
-    const defaultPosition = "top" as Position;
-    let bestPosition = defaultPosition;
+    let bestPosition = props.defaultPosition;
     if (props.content && props.trigger && props.updateKey) {
         let viewRect: DOMRect;
         const viewport = window.visualViewport;
@@ -120,15 +126,17 @@ const computedPosition = computed((): string => {
                 contentRect.height,
             );
         };
-        const defaultOpposite = opposites[defaultPosition];
+
+        const defaultOpposite = opposites[props.defaultPosition];
         const crossPosition =
-            defaultPosition === "top" || defaultPosition === "bottom"
+            props.defaultPosition === "top" ||
+            props.defaultPosition === "bottom"
                 ? "left"
                 : "top";
         const crossOpposite = opposites[crossPosition];
         // In descending order of priority
         const positions: Position[] = [
-            defaultPosition,
+            props.defaultPosition,
             defaultOpposite,
             crossPosition,
             crossOpposite,

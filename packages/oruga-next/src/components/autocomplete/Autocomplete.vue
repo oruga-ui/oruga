@@ -387,6 +387,11 @@ const computedData = computed<{ items: any; group?: any }[]>(() => {
                 items: props.data[group],
             }));
     }
+    // Return no data to avoid the full list to be shown when clearing input
+    if (!props.openOnFocus && !props.keepOpen && vmodel.value === "") {
+        // ...already returned nothing and dropdown closed.
+        return [{ items: [] }];
+    }
     return [{ items: props.data }];
 });
 

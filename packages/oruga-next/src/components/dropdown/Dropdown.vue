@@ -521,6 +521,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
             :trigger="triggerRef"
             :content="contentRef"
             :update-key="isActive"
+            default-position="bottom"
             :disable-positioning="!isMobileModal">
             <transition :name="animation">
                 <div
