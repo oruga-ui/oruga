@@ -10,28 +10,12 @@ const teleport = ref(false);
             <o-switch v-model="teleport" label="teleport" />
         </o-field>
         <o-field expanded>
-            <o-dropdown position="top-right" expanded :teleport="teleport">
+            <o-dropdown position="auto" expanded :teleport="teleport">
                 <template #trigger>
                     <o-button
                         class="dropdown-toggle"
                         variant="primary"
-                        label="Position top"
-                        expanded />
-                </template>
-
-                <o-dropdown-item label="Action" />
-                <o-dropdown-item label="Another action" />
-                <o-dropdown-item label="Something else" />
-            </o-dropdown>
-        </o-field>
-
-        <o-field expanded>
-            <o-dropdown position="bottom-left" expanded :teleport="teleport">
-                <template #trigger>
-                    <o-button
-                        class="dropdown-toggle"
-                        variant="primary"
-                        label="Position bottom"
+                        label="Position Auto"
                         expanded />
                 </template>
 

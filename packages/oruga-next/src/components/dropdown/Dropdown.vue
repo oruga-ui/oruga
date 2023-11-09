@@ -530,7 +530,6 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
-
             <transition :name="animation">
                 <component
                     :is="menuTag"

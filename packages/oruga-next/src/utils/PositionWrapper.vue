@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { useEventListener } from "@/composables";
-import { watch, computed, type PropType, nextTick, type Component } from "vue";
+import {
+    watch,
+    computed,
+    nextTick,
+    onBeforeUnmount,
+    ref,
+    type Component,
+    type PropType,
+} from "vue";
 import { isClient } from "./ssr";
-import { isWebKitAgent } from "./helpers";
 import { unrefElement } from "./unrefElement";
+import { getScrollingParent } from "@/composables";
 
 type Position = "top" | "bottom" | "left" | "right";
 
@@ -78,88 +85,39 @@ const disabled = computed(() =>
         : false,
 );
 
-const computedPosition = computed((): string => {
-    if (props.position !== "auto") return props.position;
+// --- Dynamic Positioning Handling Feature ---
 
-    // detect auto position
-    let bestPosition = props.defaultPosition;
-    if (props.content && props.trigger && props.updateKey) {
-        let viewRect: DOMRect;
-        const viewport = window.visualViewport;
-        if (viewport != undefined) {
-            if (isWebKitAgent()) {
-                // On WebKit, getBoundingClientRect offsets relative to the the visual viewport's origin, not the layout viewport's.
-                // See https://bugs.webkit.org/show_bug.cgi?id=170981
-                viewRect = new DOMRect(0, 0, viewport.width, viewport.height);
-            } else {
-                viewRect = new DOMRect(
-                    viewport.offsetLeft,
-                    viewport.offsetTop,
-                    viewport.width,
-                    viewport.height,
+const initialPosition = props.position;
+
+const scrollingParent = ref(undefined);
+const resizeObserver = new ResizeObserver(updatePositioning);
+
+// on content change update event listener
+watch(
+    () => props.content,
+    (container) => {
+        // defeine conatainer events
+        if (isClient && !scrollingParent.value && container) {
+            // get parent container
+            scrollingParent.value = getScrollingParent(unrefElement(container));
+            // set event listener
+            if (scrollingParent.value !== document.documentElement) {
+                scrollingParent.value.addEventListener(
+                    "scroll",
+                    updatePositioning,
+                    { passive: true },
                 );
-            }
-        } else {
-            viewRect = new DOMRect(
-                0,
-                0,
-                document.documentElement.clientWidth,
-                document.documentElement.clientHeight,
-            );
-        }
-
-        const contentRect = unrefElement(props.content).getBoundingClientRect();
-        const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
-
-        const triggerAnchors = anchors(triggerRect);
-        const contentAnchors = anchors(contentRect);
-        const contentRectAtAnchor = (pos: Position) => {
-            const triggerAnchor = triggerAnchors[pos];
-            const contentAnchor = contentAnchors[opposites[pos]];
-            // Translates contentRect so contentAnchor is on top of triggerAnchor
-            // NOTE: this doesn't account for the extra offset that the tooltip arrow provides.
-            // That offset should be small, and it's tricky to get it from the CSS.
-            return new DOMRect(
-                contentRect.x + (triggerAnchor.x - contentAnchor.x),
-                contentRect.y + (triggerAnchor.y - contentAnchor.y),
-                contentRect.width,
-                contentRect.height,
-            );
-        };
-
-        const defaultOpposite = opposites[props.defaultPosition];
-        const crossPosition =
-            props.defaultPosition === "top" ||
-            props.defaultPosition === "bottom"
-                ? "left"
-                : "top";
-        const crossOpposite = opposites[crossPosition];
-        // In descending order of priority
-        const positions: Position[] = [
-            props.defaultPosition,
-            defaultOpposite,
-            crossPosition,
-            crossOpposite,
-        ];
-        let maxOverlap = 0;
-        for (const position of positions) {
-            const overlap = intersectionArea(
-                viewRect,
-                contentRectAtAnchor(position),
-            );
-            if (overlap > maxOverlap) {
-                maxOverlap = overlap;
-                bestPosition = position;
+                resizeObserver.observe(scrollingParent.value);
+            } else {
+                document.addEventListener("scroll", updatePositioning, {
+                    passive: true,
+                });
+                window.addEventListener("resize", updatePositioning);
             }
         }
-    }
-    // two-way bind auto position
-    emits("update:position", bestPosition);
-    return bestPosition;
-});
-
-// trigger compute auto position
-if (props.position === "auto") computedPosition.value;
+    },
+    { immediate: true },
+);
 
 // update positioning if props change
 watch(
@@ -170,17 +128,34 @@ watch(
         () => props.updateKey,
     ],
     () => {
-        if (props.teleport) nextTick(() => updatePositioning());
+        nextTick(() => updatePositioning());
     },
     { immediate: true },
 );
 
-if (props.teleport && isClient) {
-    useEventListener("resize", updatePositioning, window);
-}
+onBeforeUnmount(() => {
+    if (isClient) {
+        // remove event listener
+        resizeObserver?.disconnect();
+        window.removeEventListener("resize", updatePositioning);
+        document.removeEventListener("scroll", updatePositioning);
+    }
+});
 
-/** set teleport positioning */
+/** Update the best position set teleport positioning */
 function updatePositioning(): void {
+    let position = props.position;
+    // update position if auto position is enabled
+    if (initialPosition === "auto") {
+        // calculate best position
+        position = getAutoPosition();
+        if (position != props.position)
+            // two-way bind updated position
+            emits("update:position", position);
+    }
+    // do not set content position if not teleport enabled
+    if (!props.teleport) return;
+
     const content = unrefElement(props.content);
     const trigger = unrefElement(props.trigger);
 
@@ -190,32 +165,26 @@ function updatePositioning(): void {
         let top = rect.top + window.scrollY;
         let left = rect.left + window.scrollX;
         // define vertical positioning
-        if (computedPosition.value.includes("bottom")) {
+        if (position.includes("bottom")) {
             top += trigger.clientHeight;
-        } else if (computedPosition.value.includes("top")) {
+        } else if (position.includes("top")) {
             top -= content.clientHeight;
         }
         // define horizontal positioning
-        if (computedPosition.value === "left") {
+        if (position === "left") {
             left -= content.clientWidth;
-        } else if (computedPosition.value === "right") {
+        } else if (position === "right") {
             left += trigger.clientWidth;
-        } else if (computedPosition.value.includes("-right")) {
+        } else if (position.includes("-right")) {
             left += trigger.clientWidth - content.clientWidth;
         }
 
         // adjust exact vertical positioning
-        if (
-            computedPosition.value === "top" ||
-            computedPosition.value === "bottom"
-        ) {
+        if (position === "top" || position === "bottom") {
             left += trigger.clientWidth / 2; //- content.clientWidth / 2;
         }
         // adjust exact horizontal positioning
-        if (
-            computedPosition.value === "left" ||
-            computedPosition.value === "right"
-        ) {
+        if (position === "left" || position === "right") {
             top += trigger.clientHeight / 2; // - content.clientHeight / 2;
         }
 
@@ -230,6 +199,67 @@ function updatePositioning(): void {
             content.style.left = "";
         }
     }
+}
+
+/** calculate best position if auto */
+function getAutoPosition(): string {
+    let bestPosition = props.defaultPosition;
+    if (!props.content || !props.trigger) return bestPosition;
+    if (!scrollingParent.value) return bestPosition;
+
+    // get viewport from container
+    const viewRect = new DOMRect(
+        scrollingParent.value.offsetLeft,
+        scrollingParent.value.offsetTop,
+        scrollingParent.value.clientWidth,
+        scrollingParent.value.clientHeight,
+    );
+
+    const contentRect = unrefElement(props.content).getBoundingClientRect();
+    const triggerRect = unrefElement(props.trigger).getBoundingClientRect();
+
+    // detect auto position
+    const triggerAnchors = anchors(triggerRect);
+    const contentAnchors = anchors(contentRect);
+    const contentRectAtAnchor = (pos: Position) => {
+        const triggerAnchor = triggerAnchors[pos];
+        const contentAnchor = contentAnchors[opposites[pos]];
+        // Translates contentRect so contentAnchor is on top of triggerAnchor
+        // NOTE: this doesn't account for the extra offset that the tooltip arrow provides.
+        // That offset should be small, and it's tricky to get it from the CSS.
+        return new DOMRect(
+            contentRect.x + (triggerAnchor.x - contentAnchor.x),
+            contentRect.y + (triggerAnchor.y - contentAnchor.y),
+            contentRect.width,
+            contentRect.height,
+        );
+    };
+
+    const defaultOpposite = opposites[props.defaultPosition];
+    const crossPosition =
+        props.defaultPosition === "top" || props.defaultPosition === "bottom"
+            ? "left"
+            : "top";
+    const crossOpposite = opposites[crossPosition];
+    // In descending order of priority
+    const positions: Position[] = [
+        props.defaultPosition,
+        defaultOpposite,
+        crossPosition,
+        crossOpposite,
+    ];
+    let maxOverlap = 0;
+    for (const position of positions) {
+        const overlap = intersectionArea(
+            viewRect,
+            contentRectAtAnchor(position),
+        );
+        if (overlap > maxOverlap) {
+            maxOverlap = overlap;
+            bestPosition = position;
+        }
+    }
+    return bestPosition;
 }
 
 // --- Helper Functions ---
