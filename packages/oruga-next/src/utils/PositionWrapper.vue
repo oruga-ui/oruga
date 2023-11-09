@@ -65,8 +65,8 @@ const props = defineProps({
             ["top", "bottom", "left", "right"].indexOf(value) > -1,
         default: "top",
     },
-    /** additional key property to force update on key change */
-    updateKey: { type: [String, Boolean, Number], default: undefined },
+    /** disable the position calculation */
+    disabled: { type: Boolean, default: false },
     /** update positioning on teleport */
     disablePositioning: { type: Boolean, default: true },
 });
@@ -92,29 +92,12 @@ const initialPosition = props.position;
 const scrollingParent = ref(undefined);
 const resizeObserver = new ResizeObserver(updatePositioning);
 
-// on content change update event listener
+// on content or disable state change update event listener
 watch(
-    () => props.content,
-    (container) => {
-        // defeine conatainer events
-        if (isClient && !scrollingParent.value && container) {
-            // get parent container
-            scrollingParent.value = getScrollingParent(unrefElement(container));
-            // set event listener
-            if (scrollingParent.value !== document.documentElement) {
-                scrollingParent.value.addEventListener(
-                    "scroll",
-                    updatePositioning,
-                    { passive: true },
-                );
-                resizeObserver.observe(scrollingParent.value);
-            } else {
-                document.addEventListener("scroll", updatePositioning, {
-                    passive: true,
-                });
-                window.addEventListener("resize", updatePositioning);
-            }
-        }
+    [() => props.disabled, () => props.content],
+    () => {
+        if (!props.disabled) addHandler();
+        else removeHandler();
     },
     { immediate: true },
 );
@@ -125,7 +108,7 @@ watch(
         () => props.trigger,
         () => props.content,
         () => props.disablePositioning,
-        () => props.updateKey,
+        () => props.disabled,
     ],
     () => {
         nextTick(() => updatePositioning());
@@ -133,17 +116,44 @@ watch(
     { immediate: true },
 );
 
-onBeforeUnmount(() => {
+// remove any event listener on unmount
+onBeforeUnmount(() => removeHandler());
+
+/** add event listener */
+function addHandler(): void {
+    if (isClient && !scrollingParent.value && props.content) {
+        // get parent container
+        scrollingParent.value = getScrollingParent(unrefElement(props.content));
+        // set event listener
+        if (scrollingParent.value !== document.documentElement) {
+            scrollingParent.value.addEventListener(
+                "scroll",
+                updatePositioning,
+                { passive: true },
+            );
+            resizeObserver.observe(scrollingParent.value);
+        } else {
+            document.addEventListener("scroll", updatePositioning, {
+                passive: true,
+            });
+            window.addEventListener("resize", updatePositioning);
+        }
+    }
+}
+
+/** remove event listener */
+function removeHandler(): void {
     if (isClient) {
-        // remove event listener
         resizeObserver?.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
+        scrollingParent.value = undefined;
     }
-});
+}
 
 /** Update the best position set teleport positioning */
 function updatePositioning(): void {
+    if (props.disabled) return;
     let position = props.position;
     // update position if auto position is enabled
     if (initialPosition === "auto") {

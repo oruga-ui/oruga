@@ -328,7 +328,8 @@ const contentClasses = computed(() => [
             :class="rootClasses"
             :trigger="triggerRef"
             :content="contentRef"
-            :update-key="isActive">
+            default-position="top"
+            :disabled="!isActive">
             <transition :name="animation">
                 <div
                     v-show="isActive || (always && !disabled)"
