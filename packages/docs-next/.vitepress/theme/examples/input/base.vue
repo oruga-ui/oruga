@@ -33,7 +33,7 @@ const name = ref("John Silver");
             <o-input placeholder="No label" />
         </o-field>
 
-        <o-field label="Rounded">
+        <o-field label="Number">
             <o-input placeholder="Number" type="number" rounded />
         </o-field>
 

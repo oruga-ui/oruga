@@ -107,6 +107,12 @@ const emits = defineEmits<{
      */
     (e: "update:modelValue", value: string | number | boolean): void;
     /**
+     * on input change event
+     * @param value {string, number, boolean} input value
+     * @param event {Event} native event
+     */
+    (e: "input", value: string | number | boolean, event: Event): void;
+    /**
      * on input focus event
      * @param event {Event} native event
      */
@@ -142,6 +148,10 @@ const isChecked = computed(
         (Array.isArray(vmodel.value) &&
             vmodel.value.indexOf(props.nativeValue) !== -1),
 );
+
+function onInput(event: Event): void {
+    emits("input", vmodel.value, event);
+}
 
 // --- Computed Component Classes ---
 
@@ -211,6 +221,7 @@ const labelClasses = computed(() => [
             v-model="vmodel"
             type="checkbox"
             role="switch"
+            data-oruga-input="switch"
             :class="inputClasses"
             :disabled="disabled"
             :required="required"
@@ -223,10 +234,13 @@ const labelClasses = computed(() => [
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
-            @invalid="onInvalid" />
+            @invalid="onInvalid"
+            @input="onInput" />
+
         <span :class="checkClasses">
             <span :class="checkSwitchClasses"></span>
         </span>
+
         <span
             v-if="label || $slots.default"
             :id="ariaLabelledby"

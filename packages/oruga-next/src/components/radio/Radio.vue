@@ -86,6 +86,12 @@ const emits = defineEmits<{
      */
     (e: "update:modelValue", value: string | number | boolean): void;
     /**
+     * on input change event
+     * @param value {string, number, boolean} input value
+     * @param event {Event} native event
+     */
+    (e: "input", value: string | number | boolean, event: Event): void;
+    /**
      * on input focus event
      * @param event {Event} native event
      */
@@ -114,6 +120,10 @@ const { onBlur, onFocus, onInvalid, setFocus } = useInputHandler(
 const vmodel = useVModelBinding<string | number | boolean>(props, emits);
 
 const isChecked = computed(() => vmodel.value === props.nativeValue);
+
+function onInput(event: Event): void {
+    emits("input", vmodel.value, event);
+}
 
 // --- Computed Component Classes ---
 
@@ -160,6 +170,7 @@ const labelClasses = computed(() => [
             ref="inputRef"
             v-model="vmodel"
             type="radio"
+            data-oruga-input="radio"
             :class="checkClasses"
             :disabled="disabled"
             :required="required"
@@ -170,7 +181,8 @@ const labelClasses = computed(() => [
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
-            @invalid="onInvalid" />
+            @invalid="onInvalid"
+            @input="onInput" />
         <span
             v-if="label || $slots.default"
             :id="ariaLabelledby"
