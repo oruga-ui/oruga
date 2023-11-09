@@ -152,6 +152,12 @@ const emits = defineEmits<{
      */
     (e: "update:modelValue", value: string | number): void;
     /**
+     * on input change event
+     * @param value {string | number} input value
+     * @param event {Event} native event
+     */
+    (e: "input", value: string | number, event: Event): void;
+    /**
      * on input focus event
      * @param event {Event} native event
      */
@@ -255,6 +261,10 @@ const computedStyles = computed(
               }
             : {},
 );
+
+function onInput(event: Event): void {
+    emits("input", vmodel.value, event);
+}
 
 // --- Icon Feature ---
 
@@ -397,7 +407,8 @@ const counterClasses = computed(() => [
             :disabled="disabled"
             @blur="onBlur"
             @focus="onFocus"
-            @invalid="onInvalid" />
+            @invalid="onInvalid"
+            @input="onInput" />
 
         <textarea
             v-else
@@ -412,7 +423,8 @@ const counterClasses = computed(() => [
             :disabled="disabled"
             @blur="onBlur"
             @focus="onFocus"
-            @invalid="onInvalid" />
+            @invalid="onInvalid"
+            @input="onInput" />
 
         <o-icon
             v-if="hasIconRight"
