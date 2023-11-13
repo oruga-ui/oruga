@@ -4,9 +4,8 @@ import {
     computed,
     watch,
     nextTick,
-    onBeforeUnmount,
-    onMounted,
     type PropType,
+    type Component,
 } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -15,30 +14,10 @@ import {
     useClassProps,
     usePropBinding,
     useEventListener,
+    useClickOutside,
 } from "@/composables";
-import {
-    createAbsoluteElement,
-    removeElement,
-    isWebKitAgent,
-} from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { PropBind } from "@/types";
-
-type Position = "top" | "bottom" | "left" | "right";
-
-const opposites: Record<Position, Position> = {
-    top: "bottom",
-    bottom: "top",
-    right: "left",
-    left: "right",
-};
-
-type TooltipMetrics = {
-    content: DOMRect;
-    trigger: DOMRect;
-};
-
-type Point = { x: number; y: number };
+import PositionWrapper from "@/utils/PositionWrapper.vue";
 
 /**
  * Display a brief helper text to your user
@@ -67,14 +46,40 @@ const props = defineProps({
         default: () => getOption("tooltip.variant"),
     },
     /**
-     * Tooltip position in relation to the element
-     * @values top, bottom, left, right, auto
+     * Position of the Tooltip relative to the trigger
+     * @values auto, top, bottom, left, right, top-right, top-left, bottom-left, bottom-right
      */
     position: {
-        type: String as PropType<Position | "auto">,
-        default: () => getOption("tooltip.position", "top"),
+        type: String,
+        default: () => getOption("tooltip.position", "auto"),
         validator: (value: string) =>
-            ["top", "bottom", "left", "right", "auto"].indexOf(value) > -1,
+            [
+                "auto",
+                "top",
+                "bottom",
+                "left",
+                "right",
+                "top-right",
+                "top-left",
+                "bottom-left",
+                "bottom-right",
+            ].indexOf(value) > -1,
+    },
+    /** Tooltip will be always active */
+    always: { type: Boolean, default: false },
+    /** Tooltip will be disabled */
+    disabled: { type: Boolean, default: false },
+    /** Tooltip default animation */
+    animation: {
+        type: String,
+        default: () => getOption("tooltip.animation", "fade"),
+    },
+    /** Tooltip will be multilined */
+    multiline: { type: Boolean, default: false },
+    /** Tooltip trigger tag name */
+    triggerTag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: () => getOption("tooltip.triggerTag", "div"),
     },
     /**
      * Tooltip trigger events
@@ -92,30 +97,28 @@ const props = defineProps({
     },
     /** Tooltip delay before it appears (number in ms) */
     delay: { type: Number, default: undefined },
-    /** Tooltip will be always active */
-    always: { type: Boolean, default: false },
-    /** Tooltip will be disabled */
-    disabled: { type: Boolean, default: false },
-    /** Tooltip default animation */
-    animation: {
-        type: String,
-        default: () => getOption("tooltip.animation", "fade"),
+    /**
+     * Tooltip auto close options (pressing escape, clicking the content or outside)
+     * @values true, false, content, outside, escape
+     */
+    closeable: {
+        type: [Array, Boolean] as PropType<string[] | boolean>,
+        default: () =>
+            getOption("tooltip.closeable", ["escape", "outside", "content"]),
     },
     /**
-     * Tooltip auto close options
-     * @values true, false, inside, outside, escape
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
      */
-    autoClose: {
-        type: [Array, Boolean] as PropType<string[] | boolean>,
-        default: true,
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("dropdown.teleport", false),
     },
-    /** Tooltip will be multilined */
-    multiline: { type: Boolean, default: false },
-    /** Append tooltip content to body */
-    appendToBody: { type: Boolean, default: false },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
+        "teleportClass",
         "contentClass",
         "orderClass",
         "triggerClass",
@@ -139,200 +142,77 @@ const emits = defineEmits<{
     (e: "open"): void;
 }>();
 
-const rootRef = ref<HTMLElement>();
-const contentRef = ref<HTMLElement>();
-const triggerRef = ref<HTMLElement>();
-
 const isActive = usePropBinding<boolean>("active", props, emits, {
     passive: true,
 });
 
-const triggerStyle = ref({});
-const bodyEl = ref<HTMLDivElement>(); // Used to append to body
-const metrics = ref<TooltipMetrics>({ content: undefined, trigger: undefined }); // Used for automatic tooltip positioning
-
-const timer = ref();
-
 watch(isActive, (value) => {
     if (value) emits("open");
     else emits("close");
-    if (value && props.position === "auto") {
-        nextTick(() => {
-            metrics.value = {
-                content: contentRef.value.getBoundingClientRect(),
-                trigger: triggerRef.value.getBoundingClientRect(),
-            };
-        });
-    }
-    if (value && props.appendToBody) updateAppendToBody();
 });
 
-if (isClient) {
-    useEventListener("click", onClickedOutside);
-    useEventListener("keyup", onKeyPress);
-}
+const timer = ref();
 
-onMounted(() => {
-    if (props.appendToBody) {
-        bodyEl.value = createAbsoluteElement(contentRef.value);
-        updateAppendToBody();
-    }
-});
+const autoPosition = ref(props.position);
 
-onBeforeUnmount(() => {
-    if (props.appendToBody) removeElement(bodyEl.value);
-});
+/** update autoPosition on prop change */
+watch(
+    () => props.position,
+    (v) => {
+        autoPosition.value = v;
+        console.log(v);
+    },
+);
 
-const coputedPosition = computed((): Position => {
-    if (props.position !== "auto") return props.position;
-
-    // detect auto position
-    const defaultPosition = getOption<Position>("tooltip.position", "top");
-    let bestPosition = defaultPosition;
-    if (metrics.value != null) {
-        let viewRect: DOMRect;
-        const viewport = window.visualViewport;
-        if (viewport != undefined) {
-            if (isWebKitAgent()) {
-                // On WebKit, getBoundingClientRect offsets relative to the the visual viewport's origin, not the layout viewport's.
-                // See https://bugs.webkit.org/show_bug.cgi?id=170981
-                viewRect = new DOMRect(0, 0, viewport.width, viewport.height);
-            } else {
-                viewRect = new DOMRect(
-                    viewport.offsetLeft,
-                    viewport.offsetTop,
-                    viewport.width,
-                    viewport.height,
-                );
-            }
-        } else {
-            viewRect = new DOMRect(
-                0,
-                0,
-                document.documentElement.clientWidth,
-                document.documentElement.clientHeight,
-            );
-        }
-        const triggerAnchors = anchors(metrics.value.trigger);
-        const contentRect = metrics.value.content;
-        const contentAnchors = anchors(contentRect);
-        const contentRectAtAnchor = (pos: Position) => {
-            const triggerAnchor = triggerAnchors[pos];
-            const contentAnchor = contentAnchors[opposites[pos]];
-            // Translates contentRect so contentAnchor is on top of triggerAnchor
-            // NOTE: this doesn't account for the extra offset that the tooltip arrow provides.
-            // That offset should be small, and it's tricky to get it from the CSS.
-            return new DOMRect(
-                contentRect.x + (triggerAnchor.x - contentAnchor.x),
-                contentRect.y + (triggerAnchor.y - contentAnchor.y),
-                contentRect.width,
-                contentRect.height,
-            );
-        };
-        const defaultOpposite = opposites[defaultPosition];
-        const crossPosition =
-            defaultPosition === "top" || defaultPosition === "bottom"
-                ? "left"
-                : "top";
-        const crossOpposite = opposites[crossPosition];
-        // In descending order of priority
-        const positions: Position[] = [
-            defaultPosition,
-            defaultOpposite,
-            crossPosition,
-            crossOpposite,
-        ];
-        let maxOverlap = 0;
-        for (const position of positions) {
-            const overlap = intersectionArea(
-                viewRect,
-                contentRectAtAnchor(position),
-            );
-            if (overlap > maxOverlap) {
-                maxOverlap = overlap;
-                bestPosition = position;
-            }
-        }
-    }
-    return bestPosition;
-});
-
-/** White-listed items to not close when clicked. */
-function isInWhiteList(el: Element): boolean {
-    if (el === contentRef.value) return true;
-    if (el === triggerRef.value) return true;
-    // All chidren from content
-    if (contentRef.value !== undefined) {
-        const children = contentRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) return true;
-        }
-    }
-    // All children from trigger
-    if (triggerRef.value !== undefined) {
-        const children = triggerRef.value.querySelectorAll("*");
-        for (const child of children) {
-            if (el === child) return true;
-        }
-    }
-    return false;
-}
-
-/** Append element to body feature */
-function updateAppendToBody(): void {
-    if (rootRef.value && triggerRef.value) {
-        // update wrapper tooltip
-        const tooltipEl = bodyEl.value.children[0] as HTMLElement;
-        tooltipEl.classList.forEach((item) =>
-            tooltipEl.classList.remove(...item.split(" ")),
-        );
-        rootClasses.value.forEach((item) => {
-            if (typeof item === "object") {
-                Object.keys(item)
-                    .filter((key) => key && item[key])
-                    .forEach((key) => tooltipEl.classList.add(key));
-            } else {
-                tooltipEl.classList.add(...item.split(" "));
-            }
-        });
-        tooltipEl.style.width = `${triggerRef.value.clientWidth}px`;
-        tooltipEl.style.height = `${triggerRef.value.clientHeight}px`;
-        const rect = triggerRef.value.getBoundingClientRect();
-        const top = rect.top + window.scrollY;
-        const left = rect.left + window.scrollX;
-        const wrapper = bodyEl.value;
-        wrapper.style.position = "absolute";
-        wrapper.style.top = `${top}px`;
-        wrapper.style.left = `${left}px`;
-        wrapper.style.zIndex = isActive.value || props.always ? "99" : "-1";
-        triggerStyle.value = {
-            zIndex: isActive.value || props.always ? "100" : undefined,
-        };
-    }
-}
+watch(autoPosition, (v) => console.log(v));
 
 // --- Event Handler ---
 
+const contentRef = ref<HTMLElement>();
+const triggerRef = ref<HTMLElement>();
+
+const eventCleanups = ref([]);
+
+watch(isActive, (value) => {
+    // on active set event handler
+    if (value && isClient) {
+        setTimeout(() => {
+            if (cancelOptions.value.indexOf("outside") >= 0) {
+                // set outside handler
+                eventCleanups.value.push(
+                    useClickOutside(contentRef, onClickedOutside, [triggerRef]),
+                );
+            }
+
+            if (cancelOptions.value.indexOf("escape") >= 0) {
+                // set keyup handler
+                eventCleanups.value.push(
+                    useEventListener("keyup", onKeyPress, document, {
+                        immediate: true,
+                    }),
+                );
+            }
+        });
+    } else if (!value) {
+        // on close cleanup event handler
+        eventCleanups.value.forEach((fn) => fn());
+        eventCleanups.value.length = 0;
+    }
+});
+
 const cancelOptions = computed<string[]>(() =>
-    typeof props.autoClose === "boolean"
-        ? props.autoClose
-            ? ["escape", "inside", "outside"]
+    typeof props.closeable === "boolean"
+        ? props.closeable
+            ? ["escape", "outside", "content"]
             : []
-        : props.autoClose,
+        : props.closeable,
 );
 
 /** Close tooltip if clicked outside. */
-function onClickedOutside(event: MouseEvent): void {
-    if (props.always) return;
-    if (!isActive.value) return;
-
-    if (
-        (cancelOptions.value.indexOf("outside") >= 0 &&
-            !isInWhiteList(event.target as Element)) ||
-        (cancelOptions.value.indexOf("inside") >= 0 &&
-            isInWhiteList(event.target as Element))
-    )
-        isActive.value = false;
+function onClickedOutside(): void {
+    if (!isActive.value || props.always) return;
+    if (cancelOptions.value.indexOf("outside") < 0) return;
+    isActive.value = false;
 }
 
 /** Keypress event that is bound to the document */
@@ -350,8 +230,9 @@ function onClick(): void {
     nextTick(() => setTimeout(() => open()));
 }
 
-function onHover(): void {
-    if (props.triggers.indexOf("hover") < 0) return;
+function onContextMenu(event: Event): void {
+    if (props.triggers.indexOf("contextmenu") < 0) return;
+    event.preventDefault();
     open();
 }
 
@@ -360,9 +241,8 @@ function onFocus(): void {
     open();
 }
 
-function onContextMenu(event: Event): void {
-    if (props.triggers.indexOf("contextmenu") < 0) return;
-    event.preventDefault();
+function onHover(): void {
+    if (props.triggers.indexOf("hover") < 0) return;
     open();
 }
 
@@ -379,35 +259,19 @@ function open(): void {
 }
 
 function onClose(): void {
-    if (typeof props.autoClose === "boolean") isActive.value = !props.autoClose;
-    if (timer.value && props.autoClose) clearTimeout(timer.value);
+    if (cancelOptions.value.indexOf("content") < 0) return;
+    isActive.value = !props.closeable;
+    if (timer.value && props.closeable) clearTimeout(timer.value);
 }
-
-// --- Helper Functions ---
-
-function intersectionArea(a: DOMRect, b: DOMRect): number {
-    const left = Math.max(a.left, b.left);
-    const right = Math.min(a.right, b.right);
-    const top = Math.max(a.top, b.top);
-    const bottom = Math.min(a.bottom, b.bottom);
-    return Math.max(right - left, 0) * Math.max(bottom - top, 0);
-}
-
-/**
- * @param rect the bounding rectangle of the trigger element
- * @return the "anchor points" (points where the arrow attaches) for each side of the tooltip
- */
-const anchors = (rect: DOMRect): Record<Position, Point> => ({
-    top: { x: (rect.left + rect.right) * 0.5, y: rect.top },
-    bottom: { x: (rect.left + rect.right) * 0.5, y: rect.bottom },
-    left: { x: rect.left, y: (rect.top + rect.bottom) * 0.5 },
-    right: { x: rect.right, y: (rect.top + rect.bottom) * 0.5 },
-});
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed<PropBind>(() => [
+const rootClasses = computed(() => [
     useComputedClass("rootClass", "o-tip"),
+    {
+        [useComputedClass("teleportClass", "o-tip--teleport")]:
+            !!props.teleport,
+    },
 ]);
 
 const triggerClasses = computed(() => [
@@ -420,8 +284,8 @@ const arrowClasses = computed(() => [
         [useComputedClass(
             "arrowOrderClass",
             "o-tip__arrow--",
-            coputedPosition.value,
-        )]: coputedPosition.value,
+            autoPosition.value,
+        )]: autoPosition.value,
     },
     {
         [useComputedClass(
@@ -438,8 +302,8 @@ const contentClasses = computed(() => [
         [useComputedClass(
             "orderClass",
             "o-tip__content--",
-            coputedPosition.value,
-        )]: coputedPosition.value,
+            autoPosition.value,
+        )]: autoPosition.value,
     },
     {
         [useComputedClass("variantClass", "o-tip__content--", props.variant)]:
@@ -457,27 +321,34 @@ const contentClasses = computed(() => [
 </script>
 
 <template>
-    <div ref="rootRef" :class="rootClasses" data-oruga="tooltip">
-        <transition
-            :name="animation"
-            @after-leave="metrics = null"
-            @enter-cancelled="metrics = null">
-            <div
-                v-show="isActive || (always && !disabled)"
-                ref="contentRef"
-                :class="contentClasses">
-                <span :class="arrowClasses"></span>
+    <div :class="rootClasses" data-oruga="tooltip">
+        <PositionWrapper
+            v-model:position="autoPosition"
+            :teleport="teleport"
+            :class="rootClasses"
+            :trigger="triggerRef"
+            :content="contentRef"
+            default-position="top"
+            :disabled="!isActive">
+            <transition :name="animation">
+                <div
+                    v-show="isActive || (always && !disabled)"
+                    ref="contentRef"
+                    :class="contentClasses">
+                    <span :class="arrowClasses"></span>
 
-                <!--
-                    @slot Tooltip content, default is label prop
-                -->
-                <slot name="content">{{ label }}</slot>
-            </div>
-        </transition>
-        <div
+                    <!--
+                        @slot Tooltip content, default is label prop
+                    -->
+                    <slot name="content">{{ label }}</slot>
+                </div>
+            </transition>
+        </PositionWrapper>
+        <component
+            :is="triggerTag"
             ref="triggerRef"
             :class="triggerClasses"
-            :style="triggerStyle"
+            aria-haspopup="true"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
@@ -486,8 +357,9 @@ const contentClasses = computed(() => [
             @mouseleave="onClose">
             <!--
                 @slot Tooltip trigger slot
+                @binding {boolean} active - tooltip active state
             -->
-            <slot />
-        </div>
+            <slot :active="isActive" />
+        </component>
     </div>
 </template>

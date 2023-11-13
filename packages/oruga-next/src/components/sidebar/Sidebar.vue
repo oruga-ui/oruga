@@ -47,15 +47,15 @@ const props = defineProps({
     },
     /** Show an overlay like modal */
     overlay: { type: Boolean, default: getOption("sidebar.overlay", false) },
+    /** Display the Sidebear inline */
+    inline: { type: Boolean, default: false },
     /**
-     * Skeleton position in relation to the window
-     * @values fixed, absolute, static
+     * Sidebar position
+     * @values top, right, bottom, left
      */
     position: {
-        type: String,
-        default: () => getOption("sidebar.position", "fixed"),
-        validator: (value: string) =>
-            ["fixed", "absolute", "static"].indexOf(value) >= 0,
+        type: String as PropType<"top" | "right" | "bottom" | "left">,
+        default: () => getOption("sidebar.position"),
     },
     /** Show sidebar in fullheight */
     fullheight: {
@@ -67,8 +67,6 @@ const props = defineProps({
         type: Boolean,
         default: getOption("sidebar.fullwidth", false),
     },
-    /** Show the sidebar on right */
-    right: { type: Boolean, default: getOption("sidebar.right", false) },
     /** Show a small sidebar */
     reduce: { type: Boolean, default: getOption("sidebar.reduce", false) },
     /**
@@ -124,6 +122,15 @@ const props = defineProps({
         default: () => getOption("sidebar.destroyOnHide", false),
     },
     /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("sidebar.teleport", false),
+    },
+    /**
      * Component to be injected, used to open a component sidebar programmatically.
      * Close sidebar within the component by emitting a 'close' event — emits('close')
      */
@@ -159,12 +166,10 @@ const props = defineProps({
         "activeClass",
         "overlayClass",
         "contentClass",
-        "fixedClass",
-        "staticClass",
-        "absoluteClass",
+        "positionClass",
         "fullheightClass",
         "fullwidthClass",
-        "rightClass",
+        "inlineClass",
         "reduceClass",
         "expandOnHoverClass",
         "expandOnHoverFixedClass",
@@ -215,16 +220,27 @@ watch(isActive, (value) => {
     else removeHandler();
 });
 
+const _teleport = computed(() =>
+    typeof props.teleport === "boolean"
+        ? { to: "body", disabled: !props.teleport }
+        : { to: props.teleport, disabled: false },
+);
+
 const transitionName = computed(() => {
     if (props.animation) return props.animation;
 
-    const open = props.right ? !isActive.value : isActive.value;
-    return !open ? "slide-prev" : "slide-next";
-});
+    const vertical = props.position === "top" || props.position === "bottom";
+    const right = props.position === "right";
+    const open = right ? !isActive.value : isActive.value;
 
-const isStatic = computed(() => props.position === "static");
-const isFixed = computed(() => props.position === "fixed");
-const isAbsolute = computed(() => props.position === "absolute");
+    return open
+        ? vertical
+            ? "slide-down"
+            : "slide-next"
+        : vertical
+        ? "slide-up"
+        : "slide-prev";
+});
 
 const hideOnMobile = computed(
     () => props.mobile === "hidden" && isMobile.value,
@@ -265,14 +281,12 @@ function removeHandler(): void {
 
 /** Close fixed sidebar if clicked outside. */
 function clickedOutside(event: Event): void {
-    if (!isFixed.value || !isActive.value || isAnimating.value) return;
+    if (!props.inline || !isActive.value || isAnimating.value) return;
     console.log(event.target, isActive.value);
 
     if (props.overlay || !event.composedPath().includes(sidebarContent.value))
-        if (!isStatic.value) {
-            event.preventDefault();
-            cancel("outside");
-        }
+        event.preventDefault();
+    cancel("outside");
 }
 
 function handleScroll(): void {
@@ -339,16 +353,15 @@ const contentClasses = computed(() => [
             props.variant,
     },
     {
-        [useComputedClass("fixedClass", "o-side__content--fixed")]:
-            isFixed.value,
+        [useComputedClass(
+            "positionClass",
+            "o-side__content--",
+            props.position,
+        )]: props.position,
     },
     {
-        [useComputedClass("staticClass", "o-side__content--static")]:
-            isStatic.value,
-    },
-    {
-        [useComputedClass("absoluteClass", "o-side__content--absolute")]:
-            isAbsolute.value,
+        [useComputedClass("inlineClass", "o-side__content--inline")]:
+            props.inline,
     },
     {
         [useComputedClass("fullheightClass", "o-side__content--fullheight")]:
@@ -357,9 +370,6 @@ const contentClasses = computed(() => [
     {
         [useComputedClass("fullwidthClass", "o-side__content--fullwidth")]:
             props.fullwidth || (props.mobile === "fullwidth" && isMobile.value),
-    },
-    {
-        [useComputedClass("rightClass", "o-side__content--right")]: props.right,
     },
     {
         [useComputedClass("reduceClass", "o-side__content--mini")]:
@@ -405,7 +415,7 @@ defineExpose({ close, promise: props.promise });
 </script>
 
 <template>
-    <Teleport to="body" :disabled="!isFixed">
+    <Teleport :to="_teleport.to" :disabled="_teleport.disabled">
         <div
             v-show="!hideOnMobile"
             ref="rootRef"

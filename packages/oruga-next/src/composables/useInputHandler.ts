@@ -2,14 +2,14 @@ import {
     nextTick,
     ref,
     computed,
-    type ComputedRef,
-    type Ref,
     type ExtractPropTypes,
-    type ComponentPublicInstance,
+    type MaybeRefOrGetter,
+    type Component,
 } from "vue";
 import { injectField } from "@/components/field/useFieldShare";
 import { getOption } from "@/utils/config";
 import { isSSR } from "@/utils/ssr";
+import { unrefElement } from "@/utils/unrefElement";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
@@ -35,20 +35,12 @@ function asValidatableFormElement(el: unknown): ValidatableFormElement | null {
         : null;
 }
 
-function unwrapDomElement(el: Ref | ComputedRef): HTMLElement {
-    return el.value?.$el ? el.value?.$el : el.value;
-}
-
 /**
  * Form input handler functionalities
  */
 export function useInputHandler(
     /** input ref element - can be a html element or a vue component*/
-    inputRef:
-        | Ref<ValidatableFormElement>
-        | ComputedRef<ValidatableFormElement>
-        | Ref<ComponentPublicInstance>
-        | Ref<InstanceType<any>>,
+    inputRef: MaybeRefOrGetter<ValidatableFormElement | Component>,
     /** emitted input events */
     emits: {
         /** on input focus event */
@@ -70,7 +62,7 @@ export function useInputHandler(
     const { parentField } = injectField();
 
     const element = computed<ValidatableFormElement>(() => {
-        const el = unwrapDomElement(inputRef) as ValidatableFormElement;
+        const el = unrefElement(inputRef as Component);
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
             return el as ValidatableFormElement;

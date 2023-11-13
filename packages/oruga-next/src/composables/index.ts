@@ -7,3 +7,5 @@ export * from "./useInputHandler";
 export * from "./useDebounce";
 export * from "./useParentProvider";
 export * from "./useProgrammatic";
+export * from "./useClickOutside";
+export * from "./useScrollingParent";

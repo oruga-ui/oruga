@@ -12,7 +12,6 @@ defineOptions({
     isOruga: true,
     name: "ODropdownItem",
     configField: "dropdown",
-    inheritAttrs: false,
 });
 
 const props = defineProps({

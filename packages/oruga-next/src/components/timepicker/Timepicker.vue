@@ -109,14 +109,14 @@ const props = defineProps({
     /** Dropdown trapFocus */
     trapFocus: {
         type: Boolean,
-        default: () => getOption("datepicker.trapFocus", true),
+        default: () => getOption("timepicker.trapFocus", true),
     },
     /** Dropdown position */
     position: { type: String, default: undefined },
     /** Enable dropdown mobile modal */
     mobileModal: {
         type: Boolean,
-        default: () => getOption("datepicker.mobileModal", true),
+        default: () => getOption("timepicker.mobileModal", true),
     },
     /** Enable mobile native input if mobile agent */
     mobileNative: {
@@ -139,14 +139,18 @@ const props = defineProps({
     /** Icon name to be added on the right side */
     iconRight: {
         type: String,
-        default: () => getOption("datepicker.iconRight", undefined),
+        default: () => getOption("timepicker.iconRight", undefined),
     },
     /** Make the icon right clickable */
     iconRightClickable: { type: Boolean, default: false },
-    /** Append autocomplete content to body */
-    appendToBody: {
-        type: Boolean,
-        default: () => getOption("datepicker.appendToBody", false),
+    /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("timepicker.teleport", false),
     },
     /** Enable html 5 native validation */
     useHtml5Validation: {

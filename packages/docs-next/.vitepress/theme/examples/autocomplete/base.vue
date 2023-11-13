@@ -38,6 +38,7 @@ const filteredDataArray = computed(() =>
                 placeholder="e.g. jQuery"
                 icon="search"
                 clearable
+                open-on-focus
                 :data="filteredDataArray"
                 @select="(option) => (selected = option)">
                 <template #empty>No results found</template>

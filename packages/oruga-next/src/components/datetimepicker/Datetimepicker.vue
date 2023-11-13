@@ -109,7 +109,7 @@ const props = defineProps({
     /** Enable mobile native input if mobile agent */
     mobileNative: {
         type: Boolean,
-        default: () => getOption("datepicker.mobileNative", true),
+        default: () => getOption("datetimepicker.mobileNative", true),
     },
     /**
      * Icon pack to use
@@ -117,24 +117,28 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("datepicker.iconPack", undefined),
+        default: () => getOption("datetimepicker.iconPack", undefined),
     },
     /** Icon name to be shown */
     icon: {
         type: String,
-        default: () => getOption("datepicker.icon", undefined),
+        default: () => getOption("datetimepicker.icon", undefined),
     },
     /** Icon name to be added on the right side */
     iconRight: {
         type: String,
-        default: () => getOption("datepicker.iconRight", undefined),
+        default: () => getOption("datetimepicker.iconRight", undefined),
     },
     /** Make the icon right clickable */
     iconRightClickable: { type: Boolean, default: false },
-    /** Append autocomplete content to body */
-    appendToBody: {
-        type: Boolean,
-        default: () => getOption("datepicker.appendToBody", false),
+    /**
+     * Append the component to another part of the DOM.
+     * Set `true` to append the component to the body.
+     * In addition, any CSS selector string or an actual DOM node can be used.
+     */
+    teleport: {
+        type: [Boolean, String, Object],
+        default: () => getOption("datetimepicker.teleport", false),
     },
     /** Enable html 5 native validation */
     useHtml5Validation: {
@@ -575,7 +579,7 @@ const timepickerWrapperClasses = computed(() => [
         :disabled="disabled"
         :mobile-native="isMobileNative"
         :locale="locale"
-        :append-to-body="appendToBody"
+        :teleport="teleport"
         @focus="onFocus"
         @blur="onBlur"
         @change-month="$emit('change-month', $event)"

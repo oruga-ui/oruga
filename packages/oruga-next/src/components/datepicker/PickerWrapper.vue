@@ -194,8 +194,7 @@ const dropdownBind = computed(() => ({
             :aria-role="ariaRole"
             :aria-modal="!picker.inline"
             :trigger-tabindex="-1"
-            :append-to-body="picker.appendToBody"
-            append-to-body-copy-parent
+            :teleport="picker.teleport"
             :triggers="triggers">
             <template v-if="!picker.inline" #trigger>
                 <slot name="trigger">

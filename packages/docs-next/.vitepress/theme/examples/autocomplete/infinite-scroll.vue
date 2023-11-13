@@ -60,6 +60,7 @@ function getMoreAsyncData() {
                 field="title"
                 :loading="isFetching"
                 check-scroll
+                open-on-focus
                 :debounce="500"
                 @input="getAsyncData"
                 @select="(option) => (selected = option)"
