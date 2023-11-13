@@ -30,32 +30,45 @@ title: Steps
 
 ## Steps component
 
+> Responsive horizontal process steps
+
 ```html
 <o-steps></o-steps>
 ```
 
 ### Props
 
-| Prop name         | Description                                                                                                                   | Type    | Values                                            | Default                                                                                                                                                     |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| animated          | Step navigation is animated                                                                                                   | boolean | -                                                 | true                                                                                                                                                        |
-| ariaNextLabel     |                                                                                                                               | string  | -                                                 |                                                                                                                                                             |
-| ariaPreviousLabel |                                                                                                                               | string  | -                                                 |                                                                                                                                                             |
-| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean | -                                                 | true                                                                                                                                                        |
-| iconNext          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconNext: "chevron-right", <br>}</code> |
-| iconPack          | Icon pack to use for the navigation                                                                                           | string  | `mdi`, `fa`, `fas and any other custom icon pack` |                                                                                                                                                             |
-| iconPrev          | Icon to use for navigation button                                                                                             | string  | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPrev: "chevron-left", <br>}</code>  |
-| labelPosition     | Position of the marker label, optional                                                                                        | string  | `bottom`, `right`, `left`                         | "bottom"                                                                                                                                                    |
-| mobileBreakpoint  | Mobile breakpoint as max-width value                                                                                          | string  | -                                                 |                                                                                                                                                             |
-| override          |                                                                                                                               | boolean | -                                                 |                                                                                                                                                             |
-| rounded           | Rounded step markers                                                                                                          | boolean | -                                                 | true                                                                                                                                                        |
+| Prop name         | Description                                                                                                                   | Type           | Values                                                                          | Default                                                                                                                                                   |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animated          | Step navigation is animated                                                                                                   | boolean        | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;animated: true<br>}</code>            |
+| ariaNextLabel     |                                                                                                                               | string         | -                                                                               |                                                                                                                                                           |
+| ariaPreviousLabel |                                                                                                                               | string         | -                                                                               |                                                                                                                                                           |
+| destroyOnHide     | Destroy tab on hide                                                                                                           | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
+| hasNavigation     | Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items. | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                |
+| iconNext          | Icon to use for navigation button                                                                                             | string         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconNext: "chevron-right"<br>}</code> |
+| iconPack          | Icon pack to use for the navigation                                                                                           | string         | `mdi`, `fa`, `fas and any other custom icon pack`                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code>       |
+| iconPrev          | Icon to use for navigation button                                                                                             | string         | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;iconPrev: "chevron-left"<br>}</code>  |
+| labelPosition     | Position of the marker label, optional                                                                                        | string         | `bottom`, `right`, `left`                                                       | <code style='white-space: nowrap; padding: 0;'>"bottom"</code>                                                                                            |
+| position          | Position of the tab, optional                                                                                                 | string         | `left`, `centered`, `right`                                                     |                                                                                                                                                           |
+| rounded           | Rounded step markers                                                                                                          | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                                |
+| size              | Tab size, optional                                                                                                            | string         | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
+| v-model           |                                                                                                                               | string\|number | -                                                                               |                                                                                                                                                           |
+| variant           | Color of the control, optional                                                                                                | string         | `primary`, `info`, `success`, `warning`, `danger`, `and any other custom color` | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>steps: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>        |
+| vertical          | Show tab in vertical layout                                                                                                   | boolean        | -                                                                               | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                               |
+
+### Events
+
+| Event name        | Properties                                                                                    | Description                     |
+| ----------------- | --------------------------------------------------------------------------------------------- | ------------------------------- |
+| update:modelValue | **value** `string \| number` - updated modelValue prop                                        | modelValue prop two-way binding |
+| change            | **value** `string \| number` - new tab value<br/>**value** `string \| number` - old tab value | on tab change event             |
 
 ### Slots
 
-| Name       | Description | Bindings |
-| ---------- | ----------- | -------- |
-| default    |             |          |
-| navigation |             | <br/>    |
+| Name       | Description              | Bindings                                                                                                                                                    |
+| ---------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| default    | Place step items here    |                                                                                                                                                             |
+| navigation | Override step navigation | **previous** `{disabled: boolean, action: (): void }` - previous button configs<br/>**next** `{disabled: boolean, action: (): void }` - next button configs |
 
 </div>
 
@@ -69,12 +82,31 @@ title: Steps
 
 ### Props
 
-| Prop name | Description                                                                                                                         | Type           | Values | Default   |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------ | --------- |
-| clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean        | -      | undefined |
-| override  |                                                                                                                                     | boolean        | -      |           |
-| step      | Step marker content (when there is no icon)                                                                                         | string\|number | -      |           |
-| variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string\|object | -      |           |
+| Prop name | Description                                                                                                                         | Type                | Values | Default                                                                                                                                            |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility.                                                            | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;ariaRole: "tab"<br>}</code>     |
+| clickable | Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not                          | boolean             | -      |                                                                                                                                                    |
+| icon      | Icon on the left                                                                                                                    | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;icon: undefined<br>}</code>     |
+| iconPack  | Icon pack                                                                                                                           | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;iconPack: undefined<br>}</code> |
+| label     | Item label                                                                                                                          | string              | -      |                                                                                                                                                    |
+| step      | Step marker content (when there is no icon)                                                                                         | string\|number      | -      |                                                                                                                                                    |
+| tag       | Tabs item tag name                                                                                                                  | string \| Component | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;itemTag: "button"<br>}</code>   |
+| value     | Item value (it will be used as v-model of wrapper component)                                                                        | string\|number      | -      | Default function (see source code)                                                                                                                 |
+| variant   | Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example | string              | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>tabs: {<br>&nbsp;&nbsp;variant: undefined<br>}</code>  |
+| visible   | Show/hide item                                                                                                                      | boolean             | -      | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                         |
+
+### Events
+
+| Event name | Properties | Description                  |
+| ---------- | ---------- | ---------------------------- |
+| activate   |            | on tab item activate event   |
+| deactivate |            | on tab item deactivate event |
+
+### Slots
+
+| Name    | Description       | Bindings |
+| ------- | ----------------- | -------- |
+| default | Step item content |          |
 
 </div>
 

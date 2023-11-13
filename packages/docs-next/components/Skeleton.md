@@ -30,24 +30,25 @@ title: Skeleton
 
 ## Skeleton component
 
+> A placeholder for content to load
+
 ```html
 <o-skeleton></o-skeleton>
 ```
 
 ### Props
 
-| Prop name | Description                                  | Type           | Values                      | Default |
-| --------- | -------------------------------------------- | -------------- | --------------------------- | ------- |
-| active    | Show or hide loader                          | boolean        | -                           | true    |
-| animated  | Show a loading animation                     | boolean        | -                           | true    |
-| circle    | Show a circle shape                          | boolean        | -                           |         |
-| count     | Number of shapes to display                  | number         | -                           | 1       |
-| height    | Custom height                                | number\|string | -                           |         |
-| override  |                                              | boolean        | -                           |         |
-| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | "left"  |
-| rounded   | Rounded style                                | boolean        | -                           | true    |
-| size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |         |
-| width     | Custom width                                 | number\|string | -                           |         |
+| Prop name | Description                                  | Type           | Values                      | Default                                                                                                                                           |
+| --------- | -------------------------------------------- | -------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| active    | Show or hide loader                          | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>                                                                                        |
+| animated  | Show a loading animation                     | boolean        | -                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>skeleton: {<br>&nbsp;&nbsp;animated: true<br>}</code> |
+| circle    | Show a circle shape                          | boolean        | -                           | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                       |
+| count     | Number of shapes to display                  | number         | -                           | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                           |
+| height    | Custom height                                | number\|string | -                           |                                                                                                                                                   |
+| position  | Skeleton position in relation to the element | string         | `left`, `centered`, `right` | <code style='white-space: nowrap; padding: 0;'>"left"</code>                                                                                      |
+| rounded   | Enable rounded style                         | boolean        | -                           | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>skeleton: {<br>&nbsp;&nbsp;rounded: true<br>}</code>  |
+| size      | Size of skeleton                             | string         | `small`, `medium`, `large`  |                                                                                                                                                   |
+| width     | Custom width                                 | number\|string | -                           |                                                                                                                                                   |
 
 </div>
 

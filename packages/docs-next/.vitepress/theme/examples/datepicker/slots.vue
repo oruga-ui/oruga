@@ -51,20 +51,23 @@ onMounted(() => {
                             field="name"
                             expanded
                             @select="selectMonth" />
-                        <o-button disabled>{{ date?.getFullYear() }}</o-button>
+                        <o-button
+                            disabled
+                            :label="date?.getFullYear().toString()" />
                     </o-field>
                 </template>
                 <template #footer>
                     <div class="footer-container">
-                        <o-button variant="primary" @click="date = new Date()">
-                            <o-icon icon="calendar"></o-icon>
-                            <span>Today</span>
-                        </o-button>
-
-                        <o-button variant="danger" @click="date = null">
-                            <o-icon icon="times"></o-icon>
-                            <span>Clear</span>
-                        </o-button>
+                        <o-button
+                            variant="primary"
+                            icon-left="calendar"
+                            label="Today"
+                            @click="date = new Date()" />
+                        <o-button
+                            variant="danger"
+                            icon-left="times"
+                            label="Clear"
+                            @click="date = null" />
                     </div>
                 </template>
             </o-datepicker>

@@ -1,13 +1,7 @@
 <script setup>
 defineProps({
-    title: {
-        type: String,
-        default: "",
-    },
-    message: {
-        type: String,
-        default: "",
-    },
+    title: { type: String, default: "" },
+    message: { type: String, default: "" },
 });
 
 defineEmits(["close"]);

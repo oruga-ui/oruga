@@ -132,7 +132,7 @@ const inspectData = [
         v-slot="props"
         :inspect-data="inspectData"
         :subitem="subitem">
-        <o-dropdown v-model="currentMenu" v-bind="props" aria-role="list">
+        <o-dropdown v-model="currentMenu" v-bind="props">
             <template #trigger="{ active }">
                 <o-button
                     ref="dropdownbtn"
@@ -140,17 +140,13 @@ const inspectData = [
                     variant="primary"
                     :icon-right="active ? 'caret-up' : 'caret-down'" />
             </template>
-            <o-dropdown-item v-bind="props" value="ac1" aria-role="listitem">
+            <o-dropdown-item v-bind="props" value="ac1">
                 Action
             </o-dropdown-item>
-            <o-dropdown-item v-bind="props" value="ac2" aria-role="listitem">
+            <o-dropdown-item v-bind="props" value="ac2">
                 Another action
             </o-dropdown-item>
-            <o-dropdown-item
-                v-bind="props"
-                value="ac3"
-                disabled
-                aria-role="listitem">
+            <o-dropdown-item v-bind="props" value="ac3" disabled>
                 Something else
             </o-dropdown-item>
         </o-dropdown>

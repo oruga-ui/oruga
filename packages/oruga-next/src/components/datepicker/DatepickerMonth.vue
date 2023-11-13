@@ -1,486 +1,480 @@
-<script lang="ts">
-import { isDefined } from "../../utils/helpers";
+<script setup lang="ts">
+import {
+    computed,
+    ref,
+    nextTick,
+    watch,
+    type PropType,
+    type ComponentPublicInstance,
+} from "vue";
+import { useComputedClass } from "@/composables";
+import { isDefined } from "@/utils/helpers";
+import {
+    type DatepickerProps,
+    type DatepickerEvent,
+    type FocusedDate,
+} from "./useDatepickerShare";
+import type { PropBind } from "@/types";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import DatepickerMixin from "./DatepickerMixin";
-
-export default {
+defineOptions({
     name: "ODatepickerMonth",
-    mixins: [BaseComponentMixin, DatepickerMixin],
     configField: "datepicker",
-    emits: ["update:modelValue", "range-start", "range-end", "updated:focused"],
-    props: {
-        modelValue: {
-            type: [Date, Array],
-        },
-        monthNames: Array,
-        events: Array,
-        indicators: String,
-        minDate: Date,
-        maxDate: Date,
-        focused: Object,
-        disabled: Boolean,
-        dateCreator: Function,
-        unselectableDates: [Array, Function],
-        unselectableDaysOfWeek: Array,
-        selectableDates: [Array, Function],
-        range: Boolean,
-        multiple: Boolean,
-        monthClass: [String, Function, Array],
-        monthBodyClass: [String, Function, Array],
-        monthTableClass: [String, Function, Array],
-        monthCellClass: [String, Function, Array],
-        monthCellSelectedClass: [String, Function, Array],
-        monthCellFirstSelectedClass: [String, Function, Array],
-        monthCellWithinSelectedClass: [String, Function, Array],
-        monthCellLastSelectedClass: [String, Function, Array],
-        monthCellWithinHoveredRangeClass: [String, Function, Array],
-        monthCellFirstHoveredClass: [String, Function, Array],
-        monthCellWithinHoveredClass: [String, Function, Array],
-        monthCellLastHoveredClass: [String, Function, Array],
-        monthCellTodayClass: [String, Function, Array],
-        monthCellSelectableClass: [String, Function, Array],
-        monthCellUnselectableClass: [String, Function, Array],
-        monthCellEventsClass: [String, Function, Array],
+    inheritAttrs: false,
+});
+
+const props = defineProps({
+    modelValue: {
+        type: [Date, Array] as PropType<Date | Date[]>,
+        default: undefined,
     },
-    data() {
-        return {
-            selectedBeginDate: undefined,
-            selectedEndDate: undefined,
-            hoveredEndDate: undefined,
-            multipleSelectedDates:
-                this.multiple && this.modelValue ? this.modelValue : [],
-        };
+    monthNames: { type: Array as PropType<string[]>, required: true },
+    focusedDate: { type: Object as PropType<FocusedDate>, required: true },
+    pickerProps: {
+        type: Object as PropType<DatepickerProps>,
+        required: true,
     },
-    computed: {
-        monthClasses() {
-            return [this.computedClass("monthClass", "o-dpck__month")];
-        },
-        monthBodyClasses() {
-            return [
-                this.computedClass("monthBodyClass", "o-dpck__month__body"),
-            ];
-        },
-        monthTableClasses() {
-            return [
-                this.computedClass("monthTableClass", "o-dpck__month__table"),
-            ];
-        },
-        monthCellClasses() {
-            return [
-                this.computedClass("monthCellClass", "o-dpck__month__cell"),
-            ];
-        },
-        hasEvents() {
-            return this.events && this.events.length;
-        },
+});
 
-        /*
-         * Return array of all events in the specified month
-         */
-        eventsInThisYear() {
-            if (!this.events) return [];
+const emits = defineEmits<{
+    /** modelValue prop two-way binding */
+    (e: "update:modelValue", value: Date | Date[]): void;
+    /** focusedDate prop two-way binding */
+    (e: "update:focusedDate", value: FocusedDate): void;
+    (e: "range-start", value: Date): void;
+    (e: "range-end", value: Date): void;
+}>();
 
-            const yearEvents = [];
+const selectedBeginDate = ref<Date>();
+const selectedEndDate = ref<Date>();
+const hoveredEndDate = ref<Date>();
 
-            for (let i = 0; i < this.events.length; i++) {
-                let event = this.events[i];
+const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
-                if (!Object.prototype.hasOwnProperty.call(event, "date")) {
-                    event = { date: event };
-                }
-                if (!Object.prototype.hasOwnProperty.call(event, "type")) {
-                    event.type = "is-primary";
-                }
-                if (event.date.getFullYear() === this.focused.year) {
-                    yearEvents.push(event);
-                }
+const hasEvents = computed(() => !!datepicker.value.events?.length);
+
+const monthRefs = ref(new Map());
+
+function setMonthRef(date: Date, el: Element | ComponentPublicInstance): void {
+    const refKey = `month-${date.getMonth()}`;
+    if (el) monthRefs.value.set(refKey, el);
+}
+
+watch(
+    () => props.focusedDate.month,
+    (month) => {
+        const refKey = `month-${month}`;
+        nextTick(() => {
+            // $nextTick is needed when month is changed
+            const ref = monthRefs.value.get(refKey);
+            if (ref?.length > 0 && ref[0]) {
+                ref[0].focus();
             }
-
-            return yearEvents;
-        },
-        monthDates() {
-            const year = this.focused.year;
-            const months = [];
-            for (let i = 0; i < 12; i++) {
-                const d = new Date(year, i, 1);
-                d.setHours(0, 0, 0, 0);
-                months.push(d);
-            }
-            return months;
-        },
-
-        focusedMonth() {
-            return this.focused.month;
-        },
-
-        hoveredDateRange() {
-            if (!this.range) {
-                return [];
-            }
-            if (!isNaN(this.selectedEndDate)) {
-                return [];
-            }
-            if (this.hoveredEndDate < this.selectedBeginDate) {
-                return [this.hoveredEndDate, this.selectedBeginDate].filter(
-                    isDefined,
-                );
-            }
-            return [this.selectedBeginDate, this.hoveredEndDate].filter(
-                isDefined,
-            );
-        },
+        });
     },
-    watch: {
-        focusedMonth(month) {
-            const refName = `month-${month}`;
-            if (this.$refs[refName] && this.$refs[refName].length > 0) {
-                this.$nextTick(() => {
-                    if (this.$refs[refName][0]) {
-                        this.$refs[refName][0].focus();
-                    }
-                }); // $nextTick needed when year is changed
-            }
-        },
-    },
-    methods: {
-        selectMultipleDates(date) {
-            const multipleSelect = this.multipleSelectedDates.filter(
-                (selectedDate) =>
-                    selectedDate.getDate() === date.getDate() &&
-                    selectedDate.getFullYear() === date.getFullYear() &&
-                    selectedDate.getMonth() === date.getMonth(),
-            );
-            if (multipleSelect.length) {
-                this.multipleSelectedDates = this.multipleSelectedDates.filter(
-                    (selectedDate) =>
-                        selectedDate.getDate() !== date.getDate() ||
-                        selectedDate.getFullYear() !== date.getFullYear() ||
-                        selectedDate.getMonth() !== date.getMonth(),
-                );
-            } else {
-                this.multipleSelectedDates.push(date);
-            }
-            this.$emit("update:modelValue", this.multipleSelectedDates);
-        },
+);
 
-        selectableDate(day) {
-            const validity = [];
+/** Return array of all events in the specified month */
+const eventsInThisYear = computed(() => {
+    if (!datepicker.value.events) return [];
 
-            if (this.minDate) {
-                validity.push(day >= this.minDate);
-            }
+    return datepicker.value.events
+        .map((event) => {
+            if (!event.date && event instanceof Date) event = { date: event };
+            if (!event.type) event.type = "is-primary";
+            return event;
+        })
+        .filter((event) => event.date.getFullYear() === props.focusedDate.year);
+});
 
-            if (this.maxDate) {
-                validity.push(day <= this.maxDate);
-            }
+const monthDates = computed(() => {
+    const year = props.focusedDate.year;
+    const months = [];
+    for (let i = 0; i < 12; i++) {
+        const d = new Date(year, i, 1);
+        d.setHours(0, 0, 0, 0);
+        months.push(d);
+    }
+    return months;
+});
 
-            validity.push(day.getFullYear() === this.focused.year);
+const hoveredDateRange = computed(() => {
+    if (!datepicker.value.range || !selectedEndDate.value) return [];
 
-            if (this.selectableDates) {
-                if (typeof this.selectableDates === "function") {
-                    if (this.selectableDates(day)) {
-                        return true;
-                    } else {
-                        validity.push(false);
-                    }
-                } else {
-                    for (let i = 0; i < this.selectableDates.length; i++) {
-                        const enabledDate = this.selectableDates[i];
-                        if (
-                            day.getFullYear() === enabledDate.getFullYear() &&
-                            day.getMonth() === enabledDate.getMonth()
-                        ) {
-                            return true;
-                        } else {
-                            validity.push(false);
-                        }
-                    }
-                }
-            }
+    return (
+        hoveredEndDate.value < selectedBeginDate.value
+            ? [hoveredEndDate.value, selectedBeginDate.value]
+            : [selectedBeginDate.value, hoveredEndDate.value]
+    ).filter(isDefined);
+});
 
-            if (this.unselectableDates) {
-                if (typeof this.unselectableDates === "function") {
-                    validity.push(!this.unselectableDates(day));
-                } else {
-                    for (let i = 0; i < this.unselectableDates.length; i++) {
-                        const disabledDate = this.unselectableDates[i];
-                        validity.push(
-                            day.getFullYear() !== disabledDate.getFullYear() ||
-                                day.getMonth() !== disabledDate.getMonth(),
-                        );
-                    }
-                }
-            }
+function eventsDateMatch(day): DatepickerEvent[] {
+    if (!eventsInThisYear.value.length) return [];
+    return eventsInThisYear.value.filter(
+        (event) => event.date.getMonth() === day.getMonth(),
+    );
+}
 
-            if (this.unselectableDaysOfWeek) {
-                for (let i = 0; i < this.unselectableDaysOfWeek.length; i++) {
-                    const dayOfWeek = this.unselectableDaysOfWeek[i];
-                    validity.push(day.getDay() !== dayOfWeek);
-                }
-            }
+function isDateSelectable(date: Date): boolean {
+    const validity = [];
 
-            return validity.indexOf(false) < 0;
-        },
-        eventsDateMatch(day) {
-            if (!this.eventsInThisYear.length) return false;
+    if (datepicker.value.minDate)
+        validity.push(date >= datepicker.value.minDate);
+    if (datepicker.value.maxDate)
+        validity.push(date <= datepicker.value.maxDate);
 
-            const monthEvents = [];
+    validity.push(date.getFullYear() === props.focusedDate.year);
 
-            for (let i = 0; i < this.eventsInThisYear.length; i++) {
+    if (datepicker.value.selectableDates) {
+        if (typeof datepicker.value.selectableDates === "function") {
+            if (datepicker.value.selectableDates(date)) return true;
+            else validity.push(false);
+        } else {
+            for (let i = 0; i < datepicker.value.selectableDates.length; i++) {
+                const enabledDate = datepicker.value.selectableDates[i];
                 if (
-                    this.eventsInThisYear[i].date.getMonth() === day.getMonth()
-                ) {
-                    monthEvents.push(this.events[i]);
-                }
+                    date.getFullYear() === enabledDate.getFullYear() &&
+                    date.getMonth() === enabledDate.getMonth()
+                )
+                    return true;
+                else validity.push(false);
             }
+        }
+    }
 
-            if (!monthEvents.length) {
-                return false;
-            }
-
-            return monthEvents;
-        },
-        /*
-         * Build cellClasses for cell using validations
-         */
-        cellClasses(day) {
-            function dateMatch(dateOne, dateTwo, multiple = false) {
-                // if either date is null or undefined, return false
-                if (!dateOne || !dateTwo || multiple) {
-                    return false;
-                }
-                if (Array.isArray(dateTwo)) {
-                    return dateTwo.some(
-                        (date) =>
-                            dateOne.getFullYear() === date.getFullYear() &&
-                            dateOne.getMonth() === date.getMonth(),
-                    );
-                }
-                return (
-                    dateOne.getFullYear() === dateTwo.getFullYear() &&
-                    dateOne.getMonth() === dateTwo.getMonth()
+    if (datepicker.value.unselectableDates) {
+        if (typeof datepicker.value.unselectableDates === "function") {
+            validity.push(!datepicker.value.unselectableDates(date));
+        } else {
+            for (
+                let i = 0;
+                i < datepicker.value.unselectableDates.length;
+                i++
+            ) {
+                const disabledDate = datepicker.value.unselectableDates[i];
+                validity.push(
+                    date.getFullYear() !== disabledDate.getFullYear() ||
+                        date.getMonth() !== disabledDate.getMonth(),
                 );
             }
-            function dateWithin(dateOne, dates, multiple = false) {
-                if (!Array.isArray(dates) || multiple) {
-                    return false;
-                }
+        }
+    }
 
-                return dateOne > dates[0] && dateOne < dates[1];
-            }
-            function dateMultipleSelected(dateOne, dates, multiple = false) {
-                if (!Array.isArray(dates) || !multiple) {
-                    return false;
-                }
-                return dates.some(
-                    (date) =>
-                        dateOne.getDate() === date.getDate() &&
-                        dateOne.getFullYear() === date.getFullYear() &&
-                        dateOne.getMonth() === date.getMonth(),
-                );
-            }
+    if (datepicker.value.unselectableDaysOfWeek) {
+        for (
+            let i = 0;
+            i < datepicker.value.unselectableDaysOfWeek.length;
+            i++
+        ) {
+            const dayOfWeek = datepicker.value.unselectableDaysOfWeek[i];
+            validity.push(date.getDay() !== dayOfWeek);
+        }
+    }
 
-            return [
-                ...this.monthCellClasses,
-                {
-                    [this.computedClass(
-                        "monthCellSelectedClass",
-                        "o-dpck__month__cell--selected",
-                    )]:
-                        dateMatch(day, this.modelValue, this.multiple) ||
-                        dateWithin(day, this.modelValue, this.multiple) ||
-                        dateMultipleSelected(
-                            day,
-                            this.multipleSelectedDates,
-                            this.multiple,
-                        ),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellFirstSelectedClass",
-                        "o-dpck__month__cell--first-selected",
-                    )]: dateMatch(
-                        day,
-                        Array.isArray(this.modelValue) && this.modelValue[0],
-                        this.multiple,
-                    ),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellWithinSelectedClass",
-                        "o-dpck__month__cell--within-selected",
-                    )]: dateWithin(day, this.modelValue, this.multiple),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellLastSelectedClass",
-                        "o-dpck__month__cell--last-selected",
-                    )]: dateMatch(
-                        day,
-                        Array.isArray(this.modelValue) && this.modelValue[1],
-                        this.multiple,
-                    ),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellWithinHoveredRangeClass",
-                        "o-dpck__month__cell--within-hovered-range",
-                    )]:
-                        this.hoveredDateRange &&
-                        this.hoveredDateRange.length === 2 &&
-                        (dateMatch(day, this.hoveredDateRange) ||
-                            dateWithin(day, this.hoveredDateRange)),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellFirstHoveredClass",
-                        "o-dpck__month__cell--first-hovered",
-                    )]: dateMatch(
-                        day,
-                        Array.isArray(this.hoveredDateRange) &&
-                            this.hoveredDateRange[0],
-                    ),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellWithinHoveredClass",
-                        "o-dpck__month__cell--within-hovered",
-                    )]: dateWithin(day, this.hoveredDateRange),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellLastHoveredClass",
-                        "o-dpck__month__cell--last-hovered",
-                    )]: dateMatch(
-                        day,
-                        Array.isArray(this.hoveredDateRange) &&
-                            this.hoveredDateRange[1],
-                    ),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellTodayClass",
-                        "o-dpck__month__cell--today",
-                    )]: dateMatch(day, this.dateCreator()),
-                },
-                {
-                    [this.computedClass(
-                        "monthCellSelectableclass",
-                        "o-dpck__month__cell--selectable",
-                    )]: this.selectableDate(day) && !this.disabled,
-                },
-                {
-                    [this.computedClass(
-                        "monthCellUnselectableClass",
-                        "o-dpck__month__cell--unselectable",
-                    )]: !this.selectableDate(day) || this.disabled,
-                },
-                {
-                    [this.computedClass(
-                        "monthCellEventsClass",
-                        "o-dpck__month__cell--events",
-                    )]: this.hasEvents,
-                },
-            ];
+    return validity.indexOf(false) < 0;
+}
+
+// --- Event Handlers ---
+
+function onKeydown(event: KeyboardEvent, weekDay: Date): void {
+    let preventDefault = true;
+    switch (event.key) {
+        case "Tab": {
+            preventDefault = false;
+            break;
+        }
+        case " ":
+        case "Space":
+        case "Spacebar":
+        case "Enter": {
+            selectDate(weekDay);
+            break;
+        }
+
+        case "ArrowLeft":
+        case "Left": {
+            changeFocus(weekDay, -1);
+            break;
+        }
+        case "ArrowRight":
+        case "Right": {
+            changeFocus(weekDay, 1);
+            break;
+        }
+        case "ArrowUp":
+        case "Up": {
+            changeFocus(weekDay, -7);
+            break;
+        }
+        case "ArrowDown":
+        case "Down": {
+            changeFocus(weekDay, 7);
+            break;
+        }
+    }
+    if (preventDefault) event.preventDefault();
+}
+
+/*
+ * Emit update:modelValue event with selected date as payload for v-model in parent
+ */
+function selectDate(date: Date): void {
+    if (datepicker.value.disabled) return;
+    if (
+        !datepicker.value.range &&
+        !datepicker.value.multiple &&
+        isDateSelectable(date)
+    )
+        emits("update:modelValue", date);
+    else if (datepicker.value.range) handleSelectRangeDate(date);
+    else if (datepicker.value.multiple) handleSelectMultipleDates(date);
+}
+
+/*
+ * If both begin and end dates are set, reset the end date and set the begin date.
+ * If only begin date is selected, emit an array of the begin date and the new date.
+ * If not set, only set the begin date.
+ */
+function handleSelectRangeDate(date: Date): void {
+    if (selectedBeginDate.value && selectedEndDate.value) {
+        selectedBeginDate.value = date;
+        selectedEndDate.value = undefined;
+        emits("range-start", date);
+    } else if (selectedBeginDate.value && !selectedEndDate.value) {
+        if (selectedBeginDate.value > date) {
+            selectedEndDate.value = selectedBeginDate.value;
+            selectedBeginDate.value = date;
+        } else {
+            selectedEndDate.value = date;
+        }
+        emits("range-end", date);
+        emits("update:modelValue", [
+            selectedBeginDate.value,
+            selectedEndDate.value,
+        ]);
+    } else {
+        selectedBeginDate.value = date;
+        emits("range-start", date);
+    }
+}
+
+const multipleSelectedDates = computed(() =>
+    datepicker.value.multiple && props.modelValue ? props.modelValue : [],
+);
+
+function handleSelectMultipleDates(date: Date): void {
+    if (!Array.isArray(props.modelValue)) return;
+    let multipleSelectedDates = props.modelValue;
+
+    const multipleSelect = multipleSelectedDates.filter(
+        (selectedDate) =>
+            selectedDate.getDate() === date.getDate() &&
+            selectedDate.getFullYear() === date.getFullYear() &&
+            selectedDate.getMonth() === date.getMonth(),
+    );
+    if (multipleSelect.length) {
+        multipleSelectedDates = multipleSelectedDates.filter(
+            (selectedDate) =>
+                selectedDate.getDate() !== date.getDate() ||
+                selectedDate.getFullYear() !== date.getFullYear() ||
+                selectedDate.getMonth() !== date.getMonth(),
+        );
+    } else {
+        multipleSelectedDates.push(date);
+    }
+    emits("update:modelValue", multipleSelectedDates);
+}
+
+function changeFocus(month: Date, inc: number): void {
+    month.setMonth(month.getMonth() + inc);
+    const focused = {
+        day: month.getDate(),
+        month: month.getMonth(),
+        year: month.getFullYear(),
+    };
+    emits("update:focusedDate", focused);
+}
+
+function onRangeHoverEndDate(day: Date): void {
+    if (datepicker.value.range) hoveredEndDate.value = day;
+}
+
+// --- Computed Component Classes ---
+
+/**
+ * Build cellClasses for cell using validations
+ */
+function cellClasses(day: Date): PropBind {
+    function dateMatch(dateOne, dateTwo, multiple = false): boolean {
+        // if either date is null or undefined, return false
+        if (!dateOne || !dateTwo || multiple) return false;
+        if (Array.isArray(dateTwo))
+            return dateTwo.some(
+                (date) =>
+                    dateOne.getFullYear() === date.getFullYear() &&
+                    dateOne.getMonth() === date.getMonth(),
+            );
+        return (
+            dateOne.getFullYear() === dateTwo.getFullYear() &&
+            dateOne.getMonth() === dateTwo.getMonth()
+        );
+    }
+    function dateWithin(dateOne, dates, multiple = false): boolean {
+        if (!Array.isArray(dates) || multiple) return false;
+        return dateOne > dates[0] && dateOne < dates[1];
+    }
+    function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
+        if (!Array.isArray(dates) || !multiple) return false;
+        return dates.some(
+            (date) =>
+                dateOne.getDate() === date.getDate() &&
+                dateOne.getFullYear() === date.getFullYear() &&
+                dateOne.getMonth() === date.getMonth(),
+        );
+    }
+
+    return [
+        ...monthCellClasses.value,
+        {
+            [useComputedClass(
+                "monthCellSelectedClass",
+                "o-dpck__month__cell--selected",
+            )]:
+                dateMatch(day, props.modelValue, datepicker.value.multiple) ||
+                dateWithin(day, props.modelValue, datepicker.value.multiple) ||
+                dateMultipleSelected(
+                    day,
+                    multipleSelectedDates.value,
+                    datepicker.value.multiple,
+                ),
         },
-
-        /*
-         * Emit update:modelValue event with selected date as payload for v-model in parent
-         */
-        updateSelectedDate(date) {
-            if (!this.range && !this.multiple) {
-                this.emitChosenDate(date);
-            } else if (this.range) {
-                this.handleSelectRangeDate(date);
-            } else if (this.multiple) {
-                this.selectMultipleDates(date);
-            }
+        {
+            [useComputedClass(
+                "monthCellFirstSelectedClass",
+                "o-dpck__month__cell--first-selected",
+            )]: dateMatch(
+                day,
+                Array.isArray(props.modelValue) && props.modelValue[0],
+                datepicker.value.multiple,
+            ),
         },
-
-        /*
-         * Emit select event with chosen date as payload
-         */
-        emitChosenDate(day) {
-            if (this.disabled) return;
-
-            if (!this.multiple) {
-                if (this.selectableDate(day)) {
-                    this.$emit("update:modelValue", day);
-                }
-            } else {
-                this.selectMultipleDates(day);
-            }
+        {
+            [useComputedClass(
+                "monthCellWithinSelectedClass",
+                "o-dpck__month__cell--within-selected",
+            )]: dateWithin(day, props.modelValue, datepicker.value.multiple),
         },
-
-        /*
-         * If both begin and end dates are set, reset the end date and set the begin date.
-         * If only begin date is selected, emit an array of the begin date and the new date.
-         * If not set, only set the begin date.
-         */
-        handleSelectRangeDate(date) {
-            if (this.disabled) return;
-            if (this.selectedBeginDate && this.selectedEndDate) {
-                this.selectedBeginDate = date;
-                this.selectedEndDate = undefined;
-                this.$emit("range-start", date);
-            } else if (this.selectedBeginDate && !this.selectedEndDate) {
-                if (this.selectedBeginDate > date) {
-                    this.selectedEndDate = this.selectedBeginDate;
-                    this.selectedBeginDate = date;
-                } else {
-                    this.selectedEndDate = date;
-                }
-                this.$emit("range-end", date);
-                this.$emit("update:modelValue", [
-                    this.selectedBeginDate,
-                    this.selectedEndDate,
-                ]);
-            } else {
-                this.selectedBeginDate = date;
-                this.$emit("range-start", date);
-            }
+        {
+            [useComputedClass(
+                "monthCellLastSelectedClass",
+                "o-dpck__month__cell--last-selected",
+            )]: dateMatch(
+                day,
+                Array.isArray(props.modelValue) && props.modelValue[1],
+                datepicker.value.multiple,
+            ),
         },
-
-        setRangeHoverEndDate(day) {
-            if (this.range) {
-                this.hoveredEndDate = day;
-            }
+        {
+            [useComputedClass(
+                "monthCellWithinHoveredRangeClass",
+                "o-dpck__month__cell--within-hovered-range",
+            )]:
+                hoveredDateRange.value &&
+                hoveredDateRange.value.length === 2 &&
+                (dateMatch(day, hoveredDateRange.value) ||
+                    dateWithin(day, hoveredDateRange.value)),
         },
-
-        changeFocus(month, inc) {
-            const nextMonth = month;
-            nextMonth.setMonth(month.getMonth() + inc);
-            this.$emit("update:focused", nextMonth);
+        {
+            [useComputedClass(
+                "monthCellFirstHoveredClass",
+                "o-dpck__month__cell--first-hovered",
+            )]: dateMatch(
+                day,
+                Array.isArray(hoveredDateRange.value) &&
+                    hoveredDateRange.value[0],
+            ),
         },
-    },
-};
+        {
+            [useComputedClass(
+                "monthCellWithinHoveredClass",
+                "o-dpck__month__cell--within-hovered",
+            )]: dateWithin(day, hoveredDateRange.value),
+        },
+        {
+            [useComputedClass(
+                "monthCellLastHoveredClass",
+                "o-dpck__month__cell--last-hovered",
+            )]: dateMatch(
+                day,
+                Array.isArray(hoveredDateRange.value) &&
+                    hoveredDateRange.value[1],
+            ),
+        },
+        {
+            [useComputedClass(
+                "monthCellTodayClass",
+                "o-dpck__month__cell--today",
+            )]: dateMatch(day, datepicker.value.dateCreator()),
+        },
+        {
+            [useComputedClass(
+                "monthCellSelectableclass",
+                "o-dpck__month__cell--selectable",
+            )]: isDateSelectable(day) && !datepicker.value.disabled,
+        },
+        {
+            [useComputedClass(
+                "monthCellUnselectableClass",
+                "o-dpck__month__cell--unselectable",
+            )]: !isDateSelectable(day) || datepicker.value.disabled,
+        },
+        {
+            [useComputedClass(
+                "monthCellEventsClass",
+                "o-dpck__month__cell--events",
+            )]: hasEvents.value,
+        },
+    ];
+}
+
+const monthClasses = computed(() => [
+    useComputedClass("monthClass", "o-dpck__month"),
+]);
+
+const monthBodyClasses = computed(() => [
+    useComputedClass("monthBodyClass", "o-dpck__month__body"),
+]);
+
+const monthTableClasses = computed(() => [
+    useComputedClass("monthTableClass", "o-dpck__month__table"),
+]);
+
+const monthCellClasses = computed(() => [
+    useComputedClass("monthCellClass", "o-dpck__month__cell"),
+]);
 </script>
 
 <template>
     <section :class="monthClasses">
         <div :class="monthBodyClasses">
             <div :class="monthTableClasses">
-                <template v-for="(date, index) in monthDates" :key="index">
+                <template v-for="(date, idx) in monthDates" :key="idx">
                     <a
-                        :ref="`month-${date.getMonth()}`"
-                        v-if="selectableDate(date) && !disabled"
+                        v-if="!datepicker.disabled && isDateSelectable(date)"
+                        :ref="(el) => setMonthRef(date, el)"
                         :class="cellClasses(date)"
                         role="button"
                         href="#"
-                        :disabled="disabled"
-                        @click.prevent="updateSelectedDate(date)"
-                        @mouseenter="setRangeHoverEndDate(date)"
-                        @keydown.prevent="manageKeydown($event, date)"
+                        :disabled="datepicker.disabled"
                         :tabindex="
-                            focused.month === date.getMonth() ? null : -1
-                        ">
+                            focusedDate.month === date.getMonth() ? null : -1
+                        "
+                        @click.prevent="selectDate(date)"
+                        @mouseenter="onRangeHoverEndDate(date)"
+                        @keydown.prevent="onKeydown($event, date)">
                         {{ monthNames[date.getMonth()] }}
-                        <div class="events" v-if="eventsDateMatch(date)">
+                        <div v-if="eventsDateMatch(date).length" class="events">
                             <div
-                                v-for="(event, index) in eventsDateMatch(
-                                    date,
-                                ) as any[]"
+                                v-for="(event, index) in eventsDateMatch(date)"
                                 :key="index"
                                 class="event"
                                 :class="event.type" />

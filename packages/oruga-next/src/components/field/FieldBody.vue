@@ -1,41 +1,61 @@
 <script lang="ts">
-import { defineComponent, h, resolveComponent, Comment, Text } from "vue";
+import {
+    defineComponent,
+    h,
+    resolveComponent,
+    Comment,
+    Text,
+    useSlots,
+    type PropType,
+} from "vue";
+
+import { injectField } from "./useFieldShare";
 
 export default defineComponent({
     name: "OFieldBody",
-    inject: ["$field"],
     configField: "field",
-    computed: {
-        parent() {
-            return this.$field;
+    props: {
+        classes: {
+            type: Array as PropType<string[]>,
+            default: undefined,
         },
     },
-    render() {
-        let first = true;
-        const slot = this.$slots.default();
-        const children =
-            slot.length === 1 && Array.isArray(slot[0].children)
-                ? slot[0].children
-                : slot;
-        return h(
-            "div",
-            { class: this.parent.bodyHorizontalClasses },
-            children.map((element) => {
-                let message;
-                if (element.type === Comment || element.type === Text) {
-                    return element;
-                }
-                if (first) {
-                    message = this.parent.newMessage;
-                    first = false;
-                }
-                return h(
-                    resolveComponent("OField"),
-                    { variant: this.parent.newVariant, message },
-                    () => [element],
-                );
-            }),
-        );
+    setup(props) {
+        // inject parent field component if used inside one
+        const { parentField } = injectField();
+
+        const slots = useSlots();
+
+        return () => {
+            let first = true;
+            const slot = slots.default();
+            const children =
+                slot.length === 1 && Array.isArray(slot[0].children)
+                    ? slot[0].children
+                    : slot;
+            return h(
+                "div",
+                { class: props.classes },
+                children.map((element: any) => {
+                    let message;
+                    if (element.type === Comment || element.type === Text) {
+                        return element;
+                    }
+                    if (first) {
+                        message = parentField.value.fieldMessage;
+                        first = false;
+                    }
+                    return h(
+                        resolveComponent("OField"),
+                        {
+                            variant: parentField.value.fieldVariant,
+                            message,
+                        },
+                        () => [element],
+                    );
+                }),
+            );
+        };
     },
 });
 </script>

@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const position = ref("static");
 
-const open = ref(false);
+const active = ref(false);
 const inspectData = [
     {
         class: "rootClass",
@@ -18,12 +18,19 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
     },
     {
+        class: "activeClass",
+        description: "Class of modal component when its active",
+        action: () => {
+            active.value = true;
+        },
+    },
+    {
         class: "overlayClass",
         description: "Class of the sidebar overlay",
         action: (cmp, data) => {
             position.value = "fixed";
             setTimeout(() => {
-                open.value = true;
+                active.value = true;
                 data.overlay = true;
                 data.fullheight = true;
             }, 400);
@@ -43,7 +50,7 @@ const inspectData = [
         action: (cmp, data) => {
             position.value = "fixed";
             setTimeout(() => {
-                open.value = true;
+                active.value = true;
                 data.overlay = true;
                 data.fullheight = true;
             }, 400);
@@ -66,7 +73,7 @@ const inspectData = [
             position.value = "absolute";
             setTimeout(() => {
                 data.fullheight = true;
-                open.value = true;
+                active.value = true;
             }, 400);
         },
     },
@@ -125,7 +132,7 @@ const inspectData = [
             setTimeout(() => {
                 data.expandOnHover = true;
                 data.expandOnHoverFixed = true;
-                open.value = true;
+                active.value = true;
             }, 400);
         },
     },
@@ -156,7 +163,7 @@ const inspectData = [
             v-if="position === 'static'"
             v-bind="props"
             position="static"
-            open>
+            active>
             <img
                 width="128"
                 src="https://avatars2.githubusercontent.com/u/66300512?s=200&v=4"
@@ -172,7 +179,7 @@ const inspectData = [
         <o-sidebar
             v-if="position !== 'static'"
             v-bind="props"
-            v-model:open="open"
+            v-model:active="active"
             :position="position"
             variant="primary"
             root-class="fixed">

@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
+
+const oruga = useOruga();
 
 const draggingRow = ref(null);
 const draggingRowIndex = ref(null);
@@ -70,54 +73,54 @@ const data = ref([
     },
 ]);
 
-function dragstart(payload) {
-    draggingRow.value = payload.row;
-    draggingRowIndex.value = payload.index;
-    payload.event.dataTransfer.effectAllowed = "copy";
+function dragstart(row, index, event) {
+    draggingRow.value = row;
+    draggingRowIndex.value = index;
+    event.dataTransfer.effectAllowed = "copy";
 }
 
-function dragover(payload) {
-    payload.event.dataTransfer.dropEffect = "copy";
-    payload.event.target.closest("tr").classList.add("is-selected");
-    payload.event.preventDefault();
+function dragover(row, index, event) {
+    event.dataTransfer.dropEffect = "copy";
+    event.target.closest("tr").classList.add("is-selected");
+    event.preventDefault();
 }
 
-function dragleave(payload) {
-    payload.event.target.closest("tr").classList.remove("is-selected");
-    payload.event.preventDefault();
+function dragleave(row, index, event) {
+    event.target.closest("tr").classList.remove("is-selected");
+    event.preventDefault();
 }
 
-function drop(payload) {
-    payload.event.target.closest("tr").classList.remove("is-selected");
-    const droppedOnRowIndex = payload.index;
-    this.$oruga.notification.open(
+function drop(row, index, event) {
+    event.target.closest("tr").classList.remove("is-selected");
+    const droppedOnRowIndex = index;
+    oruga.notification.open(
         `Moved ${draggingRow.value.first_name} from row ${
             draggingRowIndex.value + 1
         } to ${droppedOnRowIndex + 1}`,
     );
 }
 
-function columndragstart(payload) {
-    draggingColumn.value = payload.column;
-    draggingColumnIndex.value = payload.index;
-    payload.event.dataTransfer.effectAllowed = "copy";
+function columndragstart(column, index, event) {
+    draggingColumn.value = column;
+    draggingColumnIndex.value = index;
+    event.dataTransfer.effectAllowed = "copy";
 }
 
-function columndragover(payload) {
-    payload.event.dataTransfer.dropEffect = "copy";
-    payload.event.target.closest("th").classList.add("is-selected");
-    payload.event.preventDefault();
+function columndragover(column, index, event) {
+    event.dataTransfer.dropEffect = "copy";
+    event.target.closest("th").classList.add("is-selected");
+    event.preventDefault();
 }
 
-function columndragleave(payload) {
-    payload.event.target.closest("th").classList.remove("is-selected");
-    payload.event.preventDefault();
+function columndragleave(column, index, event) {
+    event.target.closest("th").classList.remove("is-selected");
+    event.preventDefault();
 }
 
-function columndrop(payload) {
-    payload.event.target.closest("th").classList.remove("is-selected");
-    const droppedOnColumnIndex = payload.index;
-    this.$oruga.notification.open(
+function columndrop(column, index, event) {
+    event.target.closest("th").classList.remove("is-selected");
+    const droppedOnColumnIndex = index;
+    oruga.notification.open(
         `Moved ${draggingColumn.value.field} from column ${
             draggingColumnIndex.value + 1
         } to ${droppedOnColumnIndex + 1}`,
@@ -130,11 +133,9 @@ function columndrop(payload) {
         <p>
             Use <code>draggable</code>/<code>draggable-column</code> prop to
             allow rows and columns to be draggable. Manage dragging using
-            <code>dragstart</code
-            >/<code>columndragstart</code>,<code>dragover</code>/<code>
-                columndragover
-            </code>
-            and <code>drop</code>/<code>columndrop</code> events
+            <code>dragstart</code>/<code>columndragstart</code>,
+            <code>dragover</code>/<code>columndragover </code> and
+            <code>drop</code>/<code>columndrop</code> events
         </p>
         <o-table
             :data="data"

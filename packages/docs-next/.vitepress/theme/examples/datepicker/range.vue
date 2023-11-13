@@ -1,5 +1,7 @@
 <script setup>
-const date = new Date();
+import { ref } from "vue";
+
+const date = ref();
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onBeforeMount, onBeforeUnmount } from "vue";
-import { useProgrammatic } from "../../../../../oruga-next/dist/oruga";
+import { useOruga } from "../../../../../oruga-next/dist/oruga";
 
 const customIconConfig = {
     iconComponent: undefined,
@@ -38,11 +38,11 @@ const customIconConfig = {
 
 const docsIcon = ref();
 
-const { oruga } = useProgrammatic();
+const oruga = useOruga();
 
 onBeforeMount(() => {
-    docsIcon.value = oruga.config.getOptions().iconComponent;
-    oruga.config.setOptions(customIconConfig);
+    docsIcon.value = oruga.config.getOption("iconComponent");
+    oruga.config.setOption("customIconPacks", customIconConfig);
 });
 
 onBeforeUnmount(() => {

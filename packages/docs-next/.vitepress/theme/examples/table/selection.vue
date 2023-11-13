@@ -75,9 +75,8 @@ const columns = ref([
             variant="danger"
             :disabled="!selected"
             icon-left="times"
-            @click="selected = null">
-            <span>Clear selected</span>
-        </o-button>
+            label="Clear selected"
+            @click="selected = null" />
 
         <p><b>Selection:</b> {{ selected }}</p>
 

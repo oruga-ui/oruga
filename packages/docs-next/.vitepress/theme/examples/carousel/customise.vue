@@ -12,7 +12,7 @@ const carousels = [
 const carousel = ref(0);
 
 const settings = reactive({
-    hasDrag: false,
+    dragable: false,
     autoplay: false,
     pauseHover: false,
     interval: 3000,
@@ -24,37 +24,35 @@ const settings = reactive({
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="settings.autoplay">Autoplay</o-switch>
+                <o-switch v-model="settings.autoplay" label="Autoplay" />
             </o-field>
             <o-field>
                 <o-switch
                     v-model="settings.pauseHover"
-                    :disabled="!settings.autoplay">
-                    Pause on hover
-                </o-switch>
+                    :disabled="!settings.autoplay"
+                    label="Pause on hover" />
             </o-field>
             <o-field>
-                <o-switch v-model="settings.hasDrag">Drag event</o-switch>
+                <o-switch v-model="settings.dragable" label="Drag event" />
             </o-field>
             <o-field>
                 <o-switch
                     v-model="settings.repeat"
-                    :disabled="!settings.autoplay">
-                    Repeat
-                </o-switch>
+                    :disabled="!settings.autoplay"
+                    label="Repeat" />
             </o-field>
         </o-field>
         <o-field grouped>
             <o-field label="Value">
                 <o-input
-                    v-model.number="carousel"
+                    v-model="carousel"
                     type="number"
                     min="0"
                     :max="carousels.length - 1" />
             </o-field>
             <o-field label="Interval">
                 <o-input
-                    v-model.number="settings.interval"
+                    v-model="settings.interval"
                     type="number"
                     min="0"
                     step="1000"

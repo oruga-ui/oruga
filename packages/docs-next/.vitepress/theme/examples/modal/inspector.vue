@@ -16,6 +16,13 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
     },
     {
+        class: "activeClass",
+        description: "Class of modal component when its active",
+        action: () => {
+            isImageModalActive.value = true;
+        },
+    },
+    {
         class: "overlayClass",
         description: "Class of the modal overlay",
         action: () => {

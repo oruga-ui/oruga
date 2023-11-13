@@ -1,222 +1,230 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, ref, type PropType } from "vue";
+import OTooltip from "../tooltip/Tooltip.vue";
+import type { SliderProps } from "./types";
+import { isClient } from "@/utils/ssr";
 
-import Tooltip from "../tooltip/Tooltip.vue";
-
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
-
-export default defineComponent({
+/**
+ * @displayName Slider Thumb
+ */
+defineOptions({
+    isOruga: true,
     name: "OSliderThumb",
-    components: {
-        [Tooltip.name]: Tooltip,
-    },
     configField: "slider",
     inheritAttrs: false,
-    inject: ["$slider"],
-    emits: ["update:modelValue", "dragstart", "dragend"],
-    props: {
-        modelValue: {
-            type: Number,
-            default: 0,
-        },
-        variant: {
-            type: String,
-            default: "",
-        },
-        tooltip: {
-            type: Boolean,
-            default: true,
-        },
-        indicator: {
-            type: Boolean,
-            default: false,
-        },
-        customFormatter: Function,
-        format: {
-            type: String,
-            default: "raw",
-            validator: (value: string) => {
-                return ["raw", "percent"].indexOf(value) >= 0;
-            },
-        },
-        locale: {
-            type: [String, Array],
-            default: () => {
-                return getValueByPath(getOptions(), "locale");
-            },
-        },
-        tooltipAlways: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    data() {
-        return {
-            isFocused: false,
-            dragging: false,
-            startX: 0,
-            startPosition: 0,
-            newPosition: null,
-            oldValue: this.modelValue,
-        };
-    },
-    computed: {
-        getSlider() {
-            return this.$slider;
-        },
-        disabled() {
-            return this.$parent.disabled;
-        },
-        max() {
-            return this.$parent.max;
-        },
-        min() {
-            return this.$parent.min;
-        },
-        step() {
-            return this.$parent.step;
-        },
-        precision() {
-            return this.$parent.precision;
-        },
-        currentPosition() {
-            return `${
-                ((this.modelValue - this.min) / (this.max - this.min)) * 100
-            }%`;
-        },
-        wrapperStyle() {
-            return { left: this.currentPosition };
-        },
-        formattedValue() {
-            if (typeof this.customFormatter !== "undefined") {
-                return this.customFormatter(this.modelValue);
-            }
-            if (this.format === "percent") {
-                return new Intl.NumberFormat(this.locale, {
-                    style: "percent",
-                }).format((this.modelValue - this.min) / (this.max - this.min));
-            }
-            return new Intl.NumberFormat(this.locale).format(this.modelValue);
-        },
-    },
-    methods: {
-        onFocus() {
-            this.isFocused = true;
-        },
-        onBlur() {
-            this.isFocused = false;
-        },
-        onButtonDown(event) {
-            if (this.disabled) return;
-            event.preventDefault();
-            this.onDragStart(event);
-            if (typeof window !== "undefined") {
-                document.addEventListener("mousemove", this.onDragging);
-                document.addEventListener("touchmove", this.onDragging);
-                document.addEventListener("mouseup", this.onDragEnd);
-                document.addEventListener("touchend", this.onDragEnd);
-                document.addEventListener("contextmenu", this.onDragEnd);
-            }
-        },
-        onLeftKeyDown() {
-            if (this.disabled || this.modelvalue === this.min) return;
-            this.newPosition =
-                parseFloat(this.currentPosition) -
-                (this.step / (this.max - this.min)) * 100;
-            this.setPosition(this.newPosition);
-            this.$parent.emitValue("change");
-        },
-        onRightKeyDown() {
-            if (this.disabled || this.modelvalue === this.max) return;
-            this.newPosition =
-                parseFloat(this.currentPosition) +
-                (this.step / (this.max - this.min)) * 100;
-            this.setPosition(this.newPosition);
-            this.$parent.emitValue("change");
-        },
-        onHomeKeyDown() {
-            if (this.disabled || this.modelvalue === this.min) return;
-            this.newPosition = 0;
-            this.setPosition(this.newPosition);
-            this.$parent.emitValue("change");
-        },
-        onEndKeyDown() {
-            if (this.disabled || this.modelvalue === this.max) return;
-            this.newPosition = 100;
-            this.setPosition(this.newPosition);
-            this.$parent.emitValue("change");
-        },
-        onDragStart(event) {
-            this.dragging = true;
-            this.$emit("dragstart");
-            if (event.type === "touchstart") {
-                event.clientX = event.touches[0].clientX;
-            }
-            this.startX = event.clientX;
-            this.startPosition = parseFloat(this.currentPosition);
-            this.newPosition = this.startPosition;
-        },
-        onDragging(event) {
-            if (this.dragging) {
-                if (event.type === "touchmove") {
-                    event.clientX = event.touches[0].clientX;
-                }
-                const diff =
-                    ((event.clientX - this.startX) /
-                        this.$parent.sliderSize()) *
-                    100;
-                this.newPosition = this.startPosition + diff;
-                this.setPosition(this.newPosition);
-            }
-        },
-        onDragEnd() {
-            this.dragging = false;
-            this.$emit("dragend");
-            if (this.modelvalue !== this.oldValue) {
-                this.$parent.emitValue("change");
-            }
-            this.setPosition(this.newPosition);
-            if (typeof window !== "undefined") {
-                document.removeEventListener("mousemove", this.onDragging);
-                document.removeEventListener("touchmove", this.onDragging);
-                document.removeEventListener("mouseup", this.onDragEnd);
-                document.removeEventListener("touchend", this.onDragEnd);
-                document.removeEventListener("contextmenu", this.onDragEnd);
-            }
-        },
-        setPosition(percent) {
-            if (percent === null || isNaN(percent)) return;
-            if (percent < 0) {
-                percent = 0;
-            } else if (percent > 100) {
-                percent = 100;
-            }
-            const stepLength = 100 / ((this.max - this.min) / this.step);
-            const steps = Math.round(percent / stepLength);
-            let value =
-                ((steps * stepLength) / 100) * (this.max - this.min) + this.min;
-            value = parseFloat(value.toFixed(this.precision));
-            this.$emit("update:modelValue", value);
-            if (!this.dragging && value !== this.oldValue) {
-                this.oldValue = value;
-            }
-        },
-    },
 });
+
+const props = defineProps({
+    /** parent slider component props  */
+    sliderProps: { type: Object as PropType<SliderProps>, required: true },
+    modelValue: { type: Number, required: true },
+    sliderSize: { type: Function as PropType<() => number>, required: true },
+    thumbWrapperClasses: {
+        type: [String, Function, Array],
+        required: true,
+    },
+    thumbClasses: { type: [String, Function, Array], required: true },
+});
+
+const emits = defineEmits<{
+    /**
+     * modelValue prop two-way binding
+     * @param value {number | number[]} updated modelValue prop
+     */
+    (e: "update:modelValue", value: number | number[]): void;
+    /** on value change event */
+    (e: "change"): void;
+    /** on drag start event */
+    (e: "dragstart"): void;
+    /** on drag end event */
+    (e: "dragend"): void;
+}>();
+
+/** the computed picker contains all chared props from the datepicker and the timepicker  */
+const slider = computed<SliderProps>(() => props.sliderProps);
+
+const isFocused = ref(false);
+const dragging = ref(false);
+const startX = ref(0);
+const startPosition = ref(0);
+const newPosition = ref(null);
+const oldValue = ref(props.modelValue);
+
+const tooltip = computed(() => slider.value.tooltip);
+const tooltipAlways = computed(() => slider.value.tooltipAlways);
+const disabled = computed(() => slider.value.disabled);
+const max = computed(() => slider.value.max);
+const min = computed(() => slider.value.min);
+const step = computed(() => slider.value.step);
+const indicator = computed(() => slider.value.indicator);
+
+const ariaLabel = computed(() =>
+    Array.isArray(slider.value.ariaLabel)
+        ? slider.value.ariaLabel[0]
+        : slider.value.ariaLabel,
+);
+
+const precision = computed(() => {
+    const precisions = [min.value, max.value, step.value].map((item) => {
+        const decimal = ("" + item).split(".")[1];
+        return decimal ? decimal.length : 0;
+    });
+    return Math.max(...precisions);
+});
+
+const computedTooltipVariant = computed(() =>
+    slider.value.tooltipVariant
+        ? slider.value.tooltipVariant
+        : slider.value.variant,
+);
+
+const currentPosition = computed(
+    () =>
+        `${((props.modelValue - min.value) / (max.value - min.value)) * 100}%`,
+);
+
+const wrapperStyle = computed(() => ({ left: currentPosition.value }));
+
+const formattedValue = computed(() => {
+    if (typeof slider.value.customFormatter !== "undefined")
+        return slider.value.customFormatter(props.modelValue);
+
+    if (slider.value.format === "percent")
+        return new Intl.NumberFormat(slider.value.locale, {
+            style: "percent",
+        }).format((props.modelValue - min.value) / (max.value - min.value));
+
+    return new Intl.NumberFormat(slider.value.locale).format(props.modelValue);
+});
+
+function onFocus(): void {
+    isFocused.value = true;
+}
+
+function onBlur(): void {
+    isFocused.value = false;
+}
+
+function onButtonDown(event): void {
+    if (disabled.value) return;
+    event.preventDefault();
+    onDragStart(event);
+
+    if (isClient) {
+        document.addEventListener("mousemove", onDragging);
+        document.addEventListener("touchmove", onDragging);
+        document.addEventListener("mouseup", onDragEnd);
+        document.addEventListener("touchend", onDragEnd);
+        document.addEventListener("contextmenu", onDragEnd);
+    }
+}
+
+function onLeftKeyDown(): void {
+    if (disabled.value || props.modelValue === min.value) return;
+    newPosition.value =
+        parseFloat(currentPosition.value) -
+        (step.value / (max.value - min.value)) * 100;
+    setPosition(newPosition.value);
+    this.$parent.emitValue("change");
+}
+
+function onRightKeyDown(): void {
+    if (disabled.value || props.modelValue === max.value) return;
+    newPosition.value =
+        parseFloat(currentPosition.value) +
+        (step.value / (max.value - min.value)) * 100;
+    setPosition(newPosition.value);
+    emits("change");
+}
+
+function onHomeKeyDown(): void {
+    if (disabled.value || props.modelValue === min.value) return;
+    newPosition.value = 0;
+    setPosition(newPosition.value);
+    emits("change");
+}
+
+function onEndKeyDown(): void {
+    if (disabled.value || props.modelValue === max.value) return;
+    newPosition.value = 100;
+    setPosition(newPosition.value);
+    emits("change");
+}
+
+function onDragStart(event): void {
+    dragging.value = true;
+    emits("dragstart");
+    if (event.type === "touchstart") event.clientX = event.touches[0].clientX;
+
+    startX.value = event.clientX;
+    startPosition.value = parseFloat(currentPosition.value);
+    newPosition.value = startPosition.value;
+}
+
+function onDragging(event): void {
+    if (dragging.value) {
+        if (event.type === "touchmove")
+            event.clientX = event.touches[0].clientX;
+
+        const diff =
+            ((event.clientX - startX.value) / props.sliderSize()) * 100;
+        newPosition.value = startPosition.value + diff;
+        setPosition(newPosition.value);
+    }
+}
+
+function onDragEnd(): void {
+    dragging.value = false;
+    emits("dragend");
+    if (props.modelValue !== oldValue.value) emits("change");
+
+    setPosition(newPosition.value);
+    if (isClient) {
+        document.removeEventListener("mousemove", onDragging);
+        document.removeEventListener("touchmove", onDragging);
+        document.removeEventListener("mouseup", onDragEnd);
+        document.removeEventListener("touchend", onDragEnd);
+        document.removeEventListener("contextmenu", onDragEnd);
+    }
+}
+
+function setPosition(percent: number): void {
+    if (percent === null || isNaN(percent)) return;
+    if (percent < 0) percent = 0;
+    else if (percent > 100) percent = 100;
+
+    const stepLength = 100 / ((max.value - min.value) / step.value);
+    const steps = Math.round(percent / stepLength);
+    let value =
+        ((steps * stepLength) / 100) * (max.value - min.value) + min.value;
+    value = parseFloat(value.toFixed(precision.value));
+    emits("update:modelValue", value);
+
+    if (!dragging.value && value !== oldValue.value) oldValue.value = value;
+}
 </script>
 
 <template>
-    <div :class="getSlider.thumbWrapperClasses" :style="wrapperStyle">
+    <div
+        :class="thumbWrapperClasses"
+        :style="wrapperStyle"
+        data-oruga="slider-thumb">
         <o-tooltip
             :label="formattedValue"
-            :variant="variant"
-            :always="dragging || isFocused || tooltipAlways"
-            :active="!disabled && tooltip">
+            :variant="computedTooltipVariant"
+            :disabled="disabled || !tooltip"
+            :always="tooltipAlways || dragging || isFocused">
             <div
                 v-bind="$attrs"
-                :class="getSlider.thumbClasses"
+                :class="thumbClasses"
                 :tabindex="disabled ? null : 0"
+                role="slider"
+                :aria-label="ariaLabel"
+                :aria-valuenow="modelValue"
+                :aria-valuemin="min"
+                :aria-valuemax="max"
+                :aria-disabled="disabled"
+                aria-orientation="horizontal"
                 @mousedown="onButtonDown"
                 @touchstart="onButtonDown"
                 @focus="onFocus"

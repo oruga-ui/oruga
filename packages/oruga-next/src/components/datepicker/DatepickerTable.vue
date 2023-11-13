@@ -1,395 +1,256 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, ref, type PropType } from "vue";
+import ODatepickerTableRow from "./DatepickerTableRow.vue";
+import { useComputedClass, usePropBinding } from "@/composables";
+import {
+    useDatepickerShare,
+    type DatepickerProps,
+    type DatepickerEvent,
+    type FocusedDate,
+} from "./useDatepickerShare";
+import { weekBuilder } from "./datepickerUtils";
+import { isDefined } from "@/utils/helpers";
 
-import DatepickerTableRow from "./DatepickerTableRow.vue";
-
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-
-export default defineComponent({
+defineOptions({
     name: "ODatepickerTable",
-    mixins: [BaseComponentMixin],
     configField: "datepicker",
-    components: {
-        [DatepickerTableRow.name]: DatepickerTableRow,
+});
+
+const props = defineProps({
+    modelValue: {
+        type: [Date, Array] as PropType<Date | Date[]>,
+        default: undefined,
     },
-    emits: ["update:modelValue", "range-start", "range-end", "update:focused"],
-    props: {
-        modelValue: {
-            type: [Date, Array],
-        },
-        dayNames: Array,
-        monthNames: Array,
-        firstDayOfWeek: Number,
-        events: Array,
-        indicators: String,
-        minDate: Date,
-        maxDate: Date,
-        focused: Object,
-        disabled: Boolean,
-        dateCreator: Function,
-        unselectableDates: Array,
-        unselectableDaysOfWeek: Array,
-        selectableDates: Array,
-        nearbyMonthDays: Boolean,
-        nearbySelectableMonthDays: Boolean,
-        showWeekNumber: Boolean,
-        weekNumberClickable: Boolean,
-        rulesForFirstWeek: Number,
-        range: Boolean,
-        multiple: Boolean,
-        tableClass: [String, Function, Array],
-        tableHeadClass: [String, Function, Array],
-        tableHeadCellClass: [String, Function, Array],
-        tableBodyClass: [String, Function, Array],
-        tableRowClass: [String, Function, Array],
-        tableCellClass: [String, Function, Array],
-        tableCellSelectedClass: [String, Function, Array],
-        tableCellFirstSelectedClass: [String, Function, Array],
-        tableCellInvisibleClass: [String, Function, Array],
-        tableCellWithinSelectedClass: [String, Function, Array],
-        tableCellLastSelectedClass: [String, Function, Array],
-        tableCellFirstHoveredClass: [String, Function, Array],
-        tableCellWithinHoveredClass: [String, Function, Array],
-        tableCellLastHoveredClass: [String, Function, Array],
-        tableCellTodayClass: [String, Function, Array],
-        tableCellSelectableClass: [String, Function, Array],
-        tableCellUnselectableClass: [String, Function, Array],
-        tableCellNearbyClass: [String, Function, Array],
-        tableCellEventsClass: [String, Function, Array],
-        tableEventClass: [String, Function, Array],
-        tableEventIndicatorsClass: [String, Function, Array],
-        tableEventsClass: [String, Function, Array],
-        tableEventVariantClass: [String, Function, Array],
-    },
-    data() {
-        return {
-            selectedBeginDate: undefined,
-            selectedEndDate: undefined,
-            hoveredEndDate: undefined,
-        };
-    },
-    computed: {
-        tableClasses() {
-            return [this.computedClass("tableClass", "o-dpck__table")];
-        },
-        tableHeadClasses() {
-            return [
-                this.computedClass("tableHeadClass", "o-dpck__table__head"),
-            ];
-        },
-        tableHeadCellClasses() {
-            return [
-                this.computedClass(
-                    "tableHeadCellClass",
-                    "o-dpck__table__head-cell",
-                ),
-                ...this.tableCellClasses,
-            ];
-        },
-        tableBodyClasses() {
-            return [
-                this.computedClass("tableBodyClass", "o-dpck__table__body"),
-            ];
-        },
-        tableCellClasses() {
-            return [
-                this.computedClass("tableCellClass", "o-dpck__table__cell"),
-            ];
-        },
-        visibleDayNames() {
-            const visibleDayNames = [];
-            let index = this.firstDayOfWeek;
-            while (visibleDayNames.length < this.dayNames.length) {
-                const currentDayName =
-                    this.dayNames[index % this.dayNames.length];
-                visibleDayNames.push(currentDayName);
-                index++;
-            }
-            if (this.showWeekNumber) visibleDayNames.unshift("");
-            return visibleDayNames;
-        },
-
-        /*
-         * Return array of all events in the specified month
-         */
-        eventsInThisMonth() {
-            if (!this.events) return [];
-
-            const monthEvents = [];
-
-            for (let i = 0; i < this.events.length; i++) {
-                let event = this.events[i];
-
-                if (!Object.prototype.hasOwnProperty.call(event, "date")) {
-                    event = { date: event };
-                }
-                if (
-                    event.date.getMonth() === this.focused.month &&
-                    event.date.getFullYear() === this.focused.year
-                ) {
-                    monthEvents.push(event);
-                }
-            }
-
-            return monthEvents;
-        },
-        /*
-         * Return array of all weeks in the specified month
-         */
-        weeksInThisMonth() {
-            this.validateFocusedDay();
-            const month = this.focused.month;
-            const year = this.focused.year;
-            const weeksInThisMonth = [];
-
-            let startingDay = 1;
-
-            while (weeksInThisMonth.length < 6) {
-                const newWeek = this.weekBuilder(startingDay, month, year);
-                weeksInThisMonth.push(newWeek);
-                startingDay += 7;
-            }
-
-            return weeksInThisMonth;
-        },
-        hoveredDateRange() {
-            if (!this.range) {
-                return [];
-            }
-            if (!isNaN(this.selectedEndDate)) {
-                return [];
-            }
-            if (this.hoveredEndDate < this.selectedBeginDate) {
-                return [this.hoveredEndDate, this.selectedBeginDate].filter(
-                    (d) => d !== undefined,
-                );
-            }
-            return [this.selectedBeginDate, this.hoveredEndDate].filter(
-                (d) => d !== undefined,
-            );
-        },
-    },
-    methods: {
-        /*
-         * Emit input event with selected date as payload for v-model in parent
-         */
-        updateSelectedDate(date) {
-            if (!this.range && !this.multiple) {
-                this.$emit("update:modelValue", date);
-            } else if (this.range) {
-                this.handleSelectRangeDate(date);
-            } else if (this.multiple) {
-                this.handleSelectMultipleDates(date);
-            }
-        },
-
-        /*
-         * If both begin and end dates are set, reset the end date and set the begin date.
-         * If only begin date is selected, emit an array of the begin date and the new date.
-         * If not set, only set the begin date.
-         */
-        handleSelectRangeDate(date) {
-            if (this.selectedBeginDate && this.selectedEndDate) {
-                this.selectedBeginDate = date;
-                this.selectedEndDate = undefined;
-                this.$emit("range-start", date);
-            } else if (this.selectedBeginDate && !this.selectedEndDate) {
-                if (this.selectedBeginDate > date) {
-                    this.selectedEndDate = this.selectedBeginDate;
-                    this.selectedBeginDate = date;
-                } else {
-                    this.selectedEndDate = date;
-                }
-                this.$emit("range-end", date);
-                this.$emit("update:modelValue", [
-                    this.selectedBeginDate,
-                    this.selectedEndDate,
-                ]);
-            } else {
-                this.selectedBeginDate = date;
-                this.$emit("range-start", date);
-            }
-        },
-
-        /*
-         * If selected date already exists list of selected dates, remove it from the list
-         * Otherwise, add date to list of selected dates
-         */
-        handleSelectMultipleDates(date) {
-            let multipleSelectedDates = this.modelValue;
-            const multipleSelect = multipleSelectedDates.filter(
-                (selectedDate) =>
-                    selectedDate.getDate() === date.getDate() &&
-                    selectedDate.getFullYear() === date.getFullYear() &&
-                    selectedDate.getMonth() === date.getMonth(),
-            );
-            if (multipleSelect.length) {
-                multipleSelectedDates = multipleSelectedDates.filter(
-                    (selectedDate) =>
-                        selectedDate.getDate() !== date.getDate() ||
-                        selectedDate.getFullYear() !== date.getFullYear() ||
-                        selectedDate.getMonth() !== date.getMonth(),
-                );
-            } else {
-                multipleSelectedDates = [...multipleSelectedDates, date];
-            }
-            this.$emit("update:modelValue", multipleSelectedDates);
-        },
-
-        /*
-         * Return array of all days in the week that the startingDate is within
-         */
-        weekBuilder(startingDate, month, year) {
-            const thisMonth = new Date(year, month);
-
-            const thisWeek = [];
-
-            const dayOfWeek = new Date(year, month, startingDate).getDay();
-
-            const end =
-                dayOfWeek >= this.firstDayOfWeek
-                    ? dayOfWeek - this.firstDayOfWeek
-                    : 7 - this.firstDayOfWeek + dayOfWeek;
-
-            let daysAgo = 1;
-            for (let i = 0; i < end; i++) {
-                thisWeek.unshift(
-                    new Date(
-                        thisMonth.getFullYear(),
-                        thisMonth.getMonth(),
-                        startingDate - daysAgo,
-                    ),
-                );
-                daysAgo++;
-            }
-
-            thisWeek.push(new Date(year, month, startingDate));
-
-            let daysForward = 1;
-            while (thisWeek.length < 7) {
-                thisWeek.push(
-                    new Date(year, month, startingDate + daysForward),
-                );
-                daysForward++;
-            }
-
-            return thisWeek;
-        },
-
-        validateFocusedDay() {
-            const focusedDate = new Date(
-                this.focused.year,
-                this.focused.month,
-                this.focused.day,
-            );
-            if (this.selectableDate(focusedDate)) return;
-
-            let day = 0;
-            // Number of days in the current month
-            const monthDays = new Date(
-                this.focused.year,
-                this.focused.month + 1,
-                0,
-            ).getDate();
-            let firstFocusable = null;
-            while (!firstFocusable && ++day < monthDays) {
-                const date = new Date(
-                    this.focused.year,
-                    this.focused.month,
-                    day,
-                );
-                if (this.selectableDate(date)) {
-                    firstFocusable = focusedDate;
-
-                    const focused = {
-                        day: date.getDate(),
-                        month: date.getMonth(),
-                        year: date.getFullYear(),
-                    };
-                    this.$emit("update:focused", focused);
-                }
-            }
-        },
-
-        /*
-         * Check that selected day is within earliest/latest params and
-         * is within this month
-         */
-        selectableDate(day) {
-            const validity = [];
-
-            if (this.minDate) {
-                validity.push(day >= this.minDate);
-            }
-
-            if (this.maxDate) {
-                validity.push(day <= this.maxDate);
-            }
-
-            if (this.nearbyMonthDays && !this.nearbySelectableMonthDays) {
-                validity.push(day.getMonth() === this.focused.month);
-            }
-
-            if (this.selectableDates) {
-                for (let i = 0; i < this.selectableDates.length; i++) {
-                    const enabledDate = this.selectableDates[i];
-                    if (
-                        day.getDate() === enabledDate.getDate() &&
-                        day.getFullYear() === enabledDate.getFullYear() &&
-                        day.getMonth() === enabledDate.getMonth()
-                    ) {
-                        return true;
-                    } else {
-                        validity.push(false);
-                    }
-                }
-            }
-
-            if (this.unselectableDates) {
-                for (let i = 0; i < this.unselectableDates.length; i++) {
-                    const disabledDate = this.unselectableDates[i];
-                    validity.push(
-                        day.getDate() !== disabledDate.getDate() ||
-                            day.getFullYear() !== disabledDate.getFullYear() ||
-                            day.getMonth() !== disabledDate.getMonth(),
-                    );
-                }
-            }
-
-            if (this.unselectableDaysOfWeek) {
-                for (let i = 0; i < this.unselectableDaysOfWeek.length; i++) {
-                    const dayOfWeek = this.unselectableDaysOfWeek[i];
-                    validity.push(day.getDay() !== dayOfWeek);
-                }
-            }
-
-            return validity.indexOf(false) < 0;
-        },
-
-        eventsInThisWeek(week) {
-            return this.eventsInThisMonth.filter((event) => {
-                const stripped = new Date(Date.parse(event.date));
-                stripped.setHours(0, 0, 0, 0);
-                const timed = stripped.getTime();
-
-                return week.some((weekDate) => weekDate.getTime() === timed);
-            });
-        },
-
-        setRangeHoverEndDate(day) {
-            this.hoveredEndDate = day;
-        },
-
-        changeFocus(day) {
-            const focused = {
-                day: day.getDate(),
-                month: day.getMonth(),
-                year: day.getFullYear(),
-            };
-            this.$emit("update:focused", focused);
-        },
+    focusedDate: { type: Object as PropType<FocusedDate>, required: true },
+    dayNames: { type: Array as PropType<string[]>, required: true },
+    monthNames: { type: Array as PropType<string[]>, required: true },
+    pickerProps: {
+        type: Object as PropType<DatepickerProps>,
+        required: true,
     },
 });
+
+const emits = defineEmits<{
+    /** modelValue prop two-way binding */
+    (e: "update:modelValue", value: Date | Date[]): void;
+    /** focusedDate prop two-way binding */
+    (e: "update:focusedDate", value: FocusedDate): void;
+    (e: "range-start", value: Date): void;
+    (e: "range-end", value: Date): void;
+    (e: "week-number-click", value: number): void;
+}>();
+
+const { isDateSelectable } = useDatepickerShare(props.pickerProps);
+
+const selectedBeginDate = ref<Date>();
+const selectedEndDate = ref<Date>();
+const hoveredEndDate = ref<Date>();
+
+const datepicker = computed<DatepickerProps>(() => props.pickerProps);
+
+const focusedDate = usePropBinding<FocusedDate>("focusedDate", props, emits);
+
+const visibleDayNames = computed(() => {
+    const visibleDayNames = [];
+    let index = datepicker.value.firstDayOfWeek;
+    while (visibleDayNames.length < props.dayNames.length) {
+        const currentDayName = props.dayNames[index % props.dayNames.length];
+        visibleDayNames.push(currentDayName);
+        index++;
+    }
+    if (datepicker.value.showWeekNumber) visibleDayNames.unshift("");
+    return visibleDayNames;
+});
+
+/** Return array of all events in the specified month */
+const eventsInThisMonth = computed(() => {
+    if (!datepicker.value.events) return [];
+    return datepicker.value.events
+        .map((event) =>
+            !event.date && event instanceof Date ? { date: event } : event,
+        )
+        .filter(
+            (event) =>
+                event.date.getMonth() === focusedDate.value.month &&
+                event.date.getFullYear() === focusedDate.value.year,
+        );
+});
+
+/** Return array of all weeks in the specified month */
+const weeksInThisMonth = computed(() => {
+    validateFocusedDay();
+    const month = focusedDate.value.month;
+    const year = focusedDate.value.year;
+    const weeksInThisMonth = [];
+
+    let startingDay = 1;
+
+    while (weeksInThisMonth.length < 6) {
+        const newWeek = weekBuilder(
+            startingDay,
+            month,
+            year,
+            datepicker.value.firstDayOfWeek,
+        );
+        weeksInThisMonth.push(newWeek);
+        startingDay += 7;
+    }
+
+    return weeksInThisMonth;
+});
+
+function eventsInThisWeek(week: Date[]): DatepickerEvent[] {
+    if (!datepicker.value.events) return [];
+    return eventsInThisMonth.value.filter((event) => {
+        const stripped = new Date(event.date);
+        stripped.setHours(0, 0, 0, 0);
+        const timed = stripped.getTime();
+        return week.some((weekDate) => weekDate.getTime() === timed);
+    });
+}
+
+const hoveredDateRange = computed(() => {
+    if (!datepicker.value.range || selectedEndDate.value) return [];
+    return (
+        hoveredEndDate.value < selectedBeginDate.value
+            ? [hoveredEndDate.value, selectedBeginDate.value]
+            : [selectedBeginDate.value, hoveredEndDate.value]
+    ).filter(isDefined);
+});
+
+function validateFocusedDay(): void {
+    const currentDate = new Date(
+        focusedDate.value.year,
+        focusedDate.value.month,
+        focusedDate.value.day,
+    );
+    if (isDateSelectable(currentDate, focusedDate.value.month)) return;
+
+    let day = 0;
+    // Number of days in the current month
+    const monthDays = new Date(
+        focusedDate.value.year,
+        focusedDate.value.month + 1,
+        0,
+    ).getDate();
+    let firstFocusable = null;
+    while (!firstFocusable && ++day < monthDays) {
+        const date = new Date(
+            focusedDate.value.year,
+            focusedDate.value.month,
+            day,
+        );
+        if (isDateSelectable(date, focusedDate.value.month)) {
+            firstFocusable = currentDate;
+            focusedDate.value = {
+                day: date.getDate(),
+                month: date.getMonth(),
+                year: date.getFullYear(),
+            };
+        }
+    }
+}
+
+// --- Event Handlers ---
+
+/** Emit input event with selected date as payload for v-model in parent */
+function onSelectedDate(date: Date): void {
+    if (datepicker.value.disabled) return;
+    if (!datepicker.value.range && !datepicker.value.multiple)
+        emits("update:modelValue", date);
+    else if (datepicker.value.range) handleSelectRangeDate(date);
+    else if (datepicker.value.multiple) handleSelectMultipleDates(date);
+}
+
+/*
+ * If both begin and end dates are set, reset the end date and set the begin date.
+ * If only begin date is selected, emit an array of the begin date and the new date.
+ * If not set, only set the begin date.
+ */
+function handleSelectRangeDate(date: Date): void {
+    if (selectedBeginDate.value && selectedEndDate.value) {
+        selectedBeginDate.value = date;
+        selectedEndDate.value = undefined;
+        emits("range-start", date);
+    } else if (selectedBeginDate.value && !selectedEndDate.value) {
+        if (selectedBeginDate.value > date) {
+            selectedEndDate.value = selectedBeginDate.value;
+            selectedBeginDate.value = date;
+        } else {
+            selectedEndDate.value = date;
+        }
+        emits("range-end", date);
+        emits("update:modelValue", [
+            selectedBeginDate.value,
+            selectedEndDate.value,
+        ]);
+    } else {
+        selectedBeginDate.value = date;
+        emits("range-start", date);
+    }
+}
+
+/*
+ * If selected date already exists list of selected dates, remove it from the list
+ * Otherwise, add date to list of selected dates
+ */
+function handleSelectMultipleDates(date: Date): void {
+    if (!Array.isArray(props.modelValue)) return;
+
+    let multipleSelectedDates = props.modelValue;
+    const multipleSelect = multipleSelectedDates.filter(
+        (selectedDate) =>
+            selectedDate.getDate() === date.getDate() &&
+            selectedDate.getFullYear() === date.getFullYear() &&
+            selectedDate.getMonth() === date.getMonth(),
+    );
+    if (multipleSelect.length) {
+        multipleSelectedDates = multipleSelectedDates.filter(
+            (selectedDate) =>
+                selectedDate.getDate() !== date.getDate() ||
+                selectedDate.getFullYear() !== date.getFullYear() ||
+                selectedDate.getMonth() !== date.getMonth(),
+        );
+    } else {
+        multipleSelectedDates = [...multipleSelectedDates, date];
+    }
+    emits("update:modelValue", multipleSelectedDates);
+}
+
+function onRangeHoverEndDate(date: Date): void {
+    hoveredEndDate.value = date;
+}
+
+function onChangeFocus(date: Date): void {
+    focusedDate.value = {
+        day: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear(),
+    };
+}
+
+// --- Computed Component Classes ---
+
+const tableClasses = computed(() => [
+    useComputedClass("tableClass", "o-dpck__table"),
+]);
+
+const tableHeadClasses = computed(() => [
+    useComputedClass("tableHeadClass", "o-dpck__table__head"),
+]);
+
+const tableCellClasses = computed(() => [
+    useComputedClass("tableCellClass", "o-dpck__table__cell"),
+]);
+
+const tableHeadCellClasses = computed(() => [
+    useComputedClass("tableHeadCellClass", "o-dpck__table__head-cell"),
+    ...tableCellClasses.value,
+]);
+
+const tableBodyClasses = computed(() => [
+    useComputedClass("tableBodyClass", "o-dpck__table__body"),
+]);
 </script>
 
 <template>
@@ -407,49 +268,16 @@ export default defineComponent({
                 v-for="(week, index) in weeksInThisMonth"
                 :key="index"
                 :selected-date="modelValue"
-                :day="focused.day"
+                :day="focusedDate.day"
                 :week="week"
-                :month="focused.month"
-                :min-date="minDate"
-                :max-date="maxDate"
-                :disabled="disabled"
-                :unselectable-dates="unselectableDates"
-                :unselectable-days-of-week="unselectableDaysOfWeek"
-                :selectable-dates="selectableDates"
+                :month="focusedDate.month"
                 :events="eventsInThisWeek(week)"
-                :indicators="indicators"
-                :date-creator="dateCreator"
-                :nearby-month-days="nearbyMonthDays"
-                :nearby-selectable-month-days="nearbySelectableMonthDays"
-                :show-week-number="showWeekNumber"
-                :week-number-clickable="weekNumberClickable"
-                :first-day-of-week="firstDayOfWeek"
-                :rules-for-first-week="rulesForFirstWeek"
-                :range="range"
                 :hovered-date-range="hoveredDateRange"
-                :multiple="multiple"
-                :table-row-class="tableRowClass"
-                :table-cell-class="tableCellClass"
-                :table-cell-selected-class="tableCellSelectedClass"
-                :table-cell-first-selected-class="tableCellFirstSelectedClass"
-                :table-cell-invisible-class="tableCellInvisibleClass"
-                :table-cell-within-selected-class="tableCellWithinSelectedClass"
-                :table-cell-last-selected-class="tableCellLastSelectedClass"
-                :table-cell-first-hovered-class="tableCellFirstHoveredClass"
-                :table-cell-within-hovered-class="tableCellWithinHoveredClass"
-                :table-cell-last-hovered-class="tableCellLastHoveredClass"
-                :table-cell-today-class="tableCellTodayClass"
-                :table-cell-selectable-class="tableCellSelectableClass"
-                :table-cell-unselectable-class="tableCellUnselectableClass"
-                :table-cell-nearby-class="tableCellNearbyClass"
-                :table-cell-events-class="tableCellEventsClass"
-                :table-events-class="tableEventsClass"
-                :table-event-variant-class="tableEventVariantClass"
-                :table-event-class="tableEventClass"
-                :table-event-indicators-class="tableEventIndicatorsClass"
-                @select="updateSelectedDate"
-                @rangeHoverEndDate="setRangeHoverEndDate"
-                @change-focus="changeFocus" />
+                :picker-props="props.pickerProps"
+                @select="onSelectedDate"
+                @hover-enddate="onRangeHoverEndDate"
+                @change-focus="onChangeFocus"
+                @week-number-click="$emit('week-number-click', $event)" />
         </div>
     </section>
 </template>

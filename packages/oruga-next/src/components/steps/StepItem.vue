@@ -1,61 +1,172 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import {
+    computed,
+    ref,
+    useSlots,
+    type ComputedRef,
+    type Component,
+    type PropType,
+} from "vue";
 
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
-import TabbedChildMixin from "../../utils/TabbedChildMixin";
+import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
+import {
+    useClassProps,
+    useComputedClass,
+    useProviderChild,
+} from "@/composables";
+import { uuid } from "@/utils/helpers";
+
+import type { StepsComponent } from "./types";
 
 /**
  * @displayName Step Item
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OStepItem",
-    mixins: [BaseComponentMixin, TabbedChildMixin("step")],
     configField: "steps",
-    props: {
-        /** Step marker content (when there is no icon) */
-        step: [String, Number],
-        /** Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example */
-        variant: [String, Object],
-        /** Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not */
-        clickable: {
-            type: Boolean,
-            default: undefined,
-        },
-        itemClass: [String, Function, Array],
-        itemHeaderClass: [String, Function, Array],
-        itemHeaderActiveClass: [String, Function, Array],
-        itemHeaderPreviousClass: [String, Function, Array],
-        itemHeaderVariantClass: [String, Function, Array],
-    },
-    computed: {
-        elementClasses() {
-            return [this.computedClass("itemClass", "o-steps__item")];
-        },
-        itemClasses() {
-            return [
-                this.headerClass,
-                this.computedClass("itemHeaderClass", "o-steps__nav-item"),
-                {
-                    [this.computedClass(
-                        "itemHeaderVariantClass",
-                        "o-steps__nav-item--",
-                        this.variant || this.parent.variant,
-                    )]: this.variant || this.parent.variant,
-                },
-                {
-                    [this.computedClass(
-                        "itemHeaderActiveClass",
-                        "o-steps__nav-item-active",
-                    )]: this.isActive,
-                },
-                {
-                    [this.computedClass(
-                        "itemHeaderPreviousClass",
-                        "o-steps__nav-item-previous",
-                    )]: this.parent.activeItem.index > this.index,
-                },
-            ];
-        },
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Item value (it will be used as v-model of wrapper component) */
+    value: { type: [String, Number], default: () => uuid() },
+    /** Item label */
+    label: { type: String, default: undefined },
+    /** Step marker content (when there is no icon) */
+    step: { type: [String, Number], default: undefined },
+    /** Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example */
+    variant: {
+        type: String,
+        default: () => getOption("tabs.variant"),
+    },
+    /** Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not */
+    clickable: { type: Boolean, default: undefined },
+    /** Show/hide item */
+    visible: { type: Boolean, default: true },
+    /** Icon on the left */
+    icon: {
+        type: String,
+        default: () => getOption("tabs.icon"),
+    },
+    /** Icon pack */
+    iconPack: {
+        type: String,
+        default: () => getOption("tabs.iconPack"),
+    },
+    /** Tabs item tag name */
+    tag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: () => getOption("tabs.itemTag", "button"),
+    },
+    /** Role attribute to be passed to the div wrapper for better accessibility. */
+    ariaRole: {
+        type: String,
+        default: () => getOption("tabs.ariaRole", "tab"),
+    },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps([
+        "headerClass",
+        "itemClass",
+        "itemHeaderClass",
+        "itemHeaderActiveClass",
+        "itemHeaderPreviousClass",
+        "itemHeaderVariantClass",
+    ]),
+});
+
+const emits = defineEmits<{
+    /** on tab item activate event */
+    (e: "activate"): void;
+    /** on tab item deactivate event */
+    (e: "deactivate"): void;
+}>();
+
+const slots = useSlots();
+
+const providedData = computed(() => ({
+    ...props,
+    $slots: slots,
+    isTransitioning: isTransitioning.value,
+    activate,
+    deactivate,
+}));
+
+// Inject functionalities and data from the parent carousel component
+const { parent, item } = useProviderChild<ComputedRef<StepsComponent>>({
+    data: providedData,
+});
+
+const transitionName = ref();
+
+const isActive = computed(() => parent.value.activeId === props.value);
+
+const isTransitioning = ref(false);
+
+/** Activate element, alter animation name based on the index. */
+function activate(oldIndex: number): void {
+    transitionName.value =
+        item.value.index < oldIndex
+            ? parent.value.vertical
+                ? "slide-down"
+                : "slide-next"
+            : parent.value.vertical
+            ? "slide-up"
+            : "slide-prev";
+    // emit event
+    emits("activate");
+}
+
+/** Deactivate element, alter animation name based on the index. */
+function deactivate(newIndex: number): void {
+    transitionName.value =
+        newIndex < item.value.index
+            ? parent.value.vertical
+                ? "slide-down"
+                : "slide-next"
+            : parent.value.vertical
+            ? "slide-up"
+            : "slide-prev";
+    // emit event
+    emits("deactivate");
+}
+
+/** Transition after-enter hook */
+function afterEnter(): void {
+    isTransitioning.value = true;
+}
+
+/** Transition before-leave hook */
+function beforeLeave(): void {
+    isTransitioning.value = true;
+}
+
+// --- Computed Component Classes ---
+
+const elementClasses = computed(() => [
+    useComputedClass("itemClass", "o-steps__item"),
+]);
 </script>
+
+<template>
+    <Transition
+        :name="transitionName"
+        @after-enter="afterEnter"
+        @before-leave="beforeLeave">
+        <div
+            v-show="isActive && visible"
+            ref="rootRef"
+            :class="elementClasses"
+            :data-id="`tabs-${item.identifier}`"
+            data-oruga="steps-item"
+            :tabindex="isActive ? 0 : -1"
+            :role="ariaRole">
+            <!-- 
+                @slot Step item content
+            -->
+            <slot />
+        </div>
+    </Transition>
+</template>

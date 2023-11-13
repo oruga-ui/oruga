@@ -1,57 +1,65 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-import BaseComponentMixin from "../../utils/BaseComponentMixin";
+<script setup lang="ts">
+import { computed, type Ref } from "vue";
+
+import { baseComponentProps } from "@/utils/SharedProps";
 import {
-    default as InjectedChildMixin,
-    Sorted,
-} from "../../utils/InjectedChildMixin";
+    useComputedClass,
+    useClassProps,
+    useProviderChild,
+} from "@/composables";
 
 /**
+ * A Slideshow item used by the carousel
  * @displayName Carousel Item
  */
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OCarouselItem",
     configField: "carousel",
-    mixins: [InjectedChildMixin("carousel", Sorted), BaseComponentMixin],
-    props: {
-        itemClass: [String, Function, Array],
-        itemActiveClass: [String, Function, Array],
-    },
-    computed: {
-        itemClasses() {
-            return [
-                this.computedClass("itemClass", "o-car__item"),
-                {
-                    [this.computedClass(
-                        "itemActiveClass",
-                        "o-car__item--active",
-                    )]: this.isActive,
-                },
-            ];
-        },
-        itemStyle() {
-            return `width: ${this.parent.itemWidth}px;`;
-        },
-        isActive() {
-            return this.parent.activeIndex === this.index;
-        },
-    },
-    methods: {
-        onClick(event) {
-            if (this.isActive) {
-                this.parent.$emit("click", event);
-            }
-            if (this.parent.asIndicator) {
-                this.parent.activeIndex = this.index;
-                this.parent.$emit("update:modelValue", this.index);
-            }
-        },
-    },
 });
+
+const props = defineProps({
+    // add global shared props (will not be displayed in the docs)
+    ...baseComponentProps,
+    /** Make item clickable */
+    clickable: { type: Boolean, default: false },
+    // add class props (will not be displayed in the docs)
+    ...useClassProps(["itemClass", "itemActiveClass"]),
+});
+
+// Inject functionalities and data from the parent carousel component
+const { parent, item } = useProviderChild<Ref<any>>();
+
+const isActive = computed(() => parent.value.activeIndex === item.value.index);
+
+const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
+
+function onClick(event: MouseEvent): void {
+    if (isActive.value) parent.value.onClick(event);
+    if (props.clickable) parent.value.setActive(item.value.index);
+}
+
+// --- Computed Component Classes ---
+
+const itemClasses = computed(() => [
+    useComputedClass("itemClass", "o-car__item"),
+    {
+        [useComputedClass("itemActiveClass", "o-car__item--active")]:
+            isActive.value,
+    },
+]);
 </script>
 
 <template>
-    <div :class="itemClasses" @click="onClick" :style="itemStyle">
+    <div
+        :class="itemClasses"
+        :style="itemStyle"
+        :data-id="`carousel-${item.identifier}`"
+        data-oruga="carousel-item"
+        @click="onClick">
+        <!--
+            @slot Default content
+        -->
         <slot />
     </div>
 </template>

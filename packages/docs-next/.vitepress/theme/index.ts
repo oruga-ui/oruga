@@ -12,7 +12,7 @@ import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
 import Carbon from "./components/Carbon.vue";
 
-import Oruga, { useProgrammatic } from "../../../oruga-next/dist/oruga";
+import Oruga, { useOruga } from "../../../oruga-next/dist/oruga";
 
 import { bulmaConfig } from "@oruga-ui/theme-bulma";
 import { bootstrapConfig } from "@oruga-ui/theme-bootstrap";
@@ -65,6 +65,43 @@ export default {
         app.component("Expo", Expo);
         app.component("Carbon", Carbon);
 
+        // import oruga component with theme config
+        app.use(Oruga, {
+            iconPack: "fas",
+            iconComponent: "vue-fontawesome",
+        });
+
+        const oruga = useOruga();
+
+        // set oruga as global prop for docs
+        app.config.globalProperties.$oruga = oruga;
+
+        if (typeof window !== "undefined") {
+            const theme = loadTheme();
+
+            // update oruga config by theme config
+            switch (theme.key) {
+                case "theme-bulma": {
+                    bulmaConfig.iconPack = "fas";
+                    bulmaConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bulmaConfig);
+                    break;
+                }
+                case "theme-bootstrap": {
+                    bootstrapConfig.iconPack = "fas";
+                    bootstrapConfig.iconComponent = "vue-fontawesome";
+                    oruga.config.setOptions(bootstrapConfig);
+                    break;
+                }
+            }
+
+            // add theme style
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = theme.cdn;
+            document.head.appendChild(link);
+        }
+
         // import example components
         const examples = import.meta.glob<DefineComponent>(
             "./examples/**/index.vue",
@@ -88,37 +125,13 @@ export default {
             );
         }
 
-        app.use(Oruga, {
-            iconPack: "fas",
-            iconComponent: "vue-fontawesome",
-        });
+        /** This contains same pollyfills for the docs because outdated themes. */
 
-        if (typeof window !== "undefined") {
-            const theme = loadTheme();
-
-            // update oruga config by theme config
-            switch (theme.key) {
-                case "theme-bulma": {
-                    bulmaConfig.iconPack = "fas";
-                    bulmaConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useProgrammatic() as any;
-                    oruga.config.setOptions(bulmaConfig);
-                    break;
-                }
-                case "theme-bootstrap": {
-                    bootstrapConfig.iconPack = "fas";
-                    bootstrapConfig.iconComponent = "vue-fontawesome";
-                    const { oruga } = useProgrammatic() as any;
-                    oruga.config.setOptions(bootstrapConfig);
-                    break;
-                }
-            }
-
-            // add theme style
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = theme.cdn;
-            document.head.appendChild(link);
-        }
+        // feature #549: rename inputitems to taginput
+        // copy inputitems config to taginput config if not given
+        // remove after themes are updated
+        const inputitems = oruga.config.getOption("inputitems");
+        const taginput = oruga.config.getOption("taginput");
+        if (!taginput) oruga.config.setOption("taginput", inputitems);
     },
 };

@@ -11,7 +11,6 @@ const maxDatetime = ref(null);
             <o-field label="Min Datetime">
                 <o-datetimepicker
                     v-model="minDatetime"
-                    rounded
                     placeholder="Click to select..."
                     icon="calendar"
                     editable />
@@ -19,7 +18,6 @@ const maxDatetime = ref(null);
             <o-field label="Max Datetime">
                 <o-datetimepicker
                     v-model="maxDatetime"
-                    rounded
                     placeholder="Click to select..."
                     icon="calendar"
                     editable />

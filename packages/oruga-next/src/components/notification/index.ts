@@ -1,79 +1,19 @@
-import Notification from "./Notification.vue";
-import NotificationNotice from "./NotificationNotice.vue";
+import type { App, Plugin } from "vue";
 
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
-import { merge } from "../../utils/helpers";
-import { VueInstance } from "../../utils/config";
+import Notification from "./Notification.vue";
+import NotificationProgrammatic from "./NotificationProgrammatic";
+
 import {
     registerComponent,
     registerComponentProgrammatic,
-} from "../../utils/plugins";
-import InstanceRegistry from "../..//utils/InstanceRegistry";
+} from "@/utils/plugins";
 
-import type { App, DefineComponent, Plugin } from "vue";
-import { createVNode, render } from "vue";
+/** export notification specific types */
+export type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
-let localVueInstance: App;
-
-const instances = new InstanceRegistry();
-
-const NotificationProgrammatic = {
-    open(params): InstanceType<typeof NotificationNotice> {
-        let newParams;
-        if (typeof params === "string") {
-            newParams = {
-                message: params,
-            };
-        } else {
-            newParams = params;
-        }
-
-        const defaultParam = {
-            programmatic: { instances },
-            position: getValueByPath(
-                getOptions(),
-                "notification.position",
-                "top-right",
-            ),
-            closable:
-                params.closable ||
-                getValueByPath(getOptions(), "notification.closable", false),
-        };
-        let slot;
-        if (Array.isArray(newParams.message)) {
-            slot = newParams.message;
-            delete newParams.message;
-        }
-
-        newParams.active = true;
-        const propsData = merge(defaultParam, newParams);
-        propsData.promise = new Promise((p1, p2) => {
-            propsData.programmatic.resolve = p1;
-            propsData.programmatic.reject = p2;
-        });
-
-        const app = localVueInstance || VueInstance;
-        propsData.propsNotification = Object.assign({}, propsData);
-        propsData.propsNotification.isActive = true;
-        const defaultSlot = () => {
-            return slot;
-        };
-        const vnode = createVNode(NotificationNotice, propsData, defaultSlot);
-        vnode.appContext = app._context;
-        render(vnode, document.createElement("div"));
-        return vnode.component.proxy as InstanceType<typeof NotificationNotice>;
-    },
-    closeAll(...args: any[]) {
-        instances.walk((entry) => {
-            entry.close(...args);
-        });
-    },
-};
-
+/** export notification plugin */
 export default {
     install(app: App) {
-        localVueInstance = app;
         registerComponent(app, Notification);
         registerComponentProgrammatic(
             app,
@@ -83,8 +23,5 @@ export default {
     },
 } as Plugin;
 
+/** export notification components */
 export { Notification as ONotification, NotificationProgrammatic };
-
-export interface ONotification {
-    content: string | DefineComponent[] | undefined;
-}

@@ -3,8 +3,9 @@ import type { App, Plugin } from "vue";
 import Slider from "./Slider.vue";
 import SliderTick from "./SliderTick.vue";
 
-import { registerComponent } from "../../utils/plugins";
+import { registerComponent } from "@/utils/plugins";
 
+/** export slider plugin */
 export default {
     install(app: App) {
         registerComponent(app, Slider);
@@ -12,4 +13,5 @@ export default {
     },
 } as Plugin;
 
+/** export slider components */
 export { Slider as OSlider, SliderTick as OSliderTick };

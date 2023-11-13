@@ -1,66 +1,62 @@
-<script lang="ts">
-import type { Component, PropType } from "vue";
-import { defineComponent } from "vue";
-import { getOptions } from "../../utils/config";
-import { getValueByPath } from "../../utils/helpers";
+<script setup lang="ts">
+import { computed, type Component, type PropType } from "vue";
+import { getOption } from "@/utils/config";
+import type { PropBind } from "@/types";
 
-export default defineComponent({
+defineOptions({
+    isOruga: true,
     name: "OPaginationButton",
-    inject: ["$pagination"],
     configField: "pagination",
-    props: {
-        page: {
-            type: Object,
-            required: true,
-        },
-        tag: {
-            type: [String, Object, Function] as PropType<string | Component>,
-            default: "a",
-            validator: (value) => {
-                if (typeof value === "string") {
-                    return (
-                        getValueByPath(getOptions(), "linkTags", [
-                            "a",
-                            "button",
-                            "input",
-                            "router-link",
-                            "nuxt-link",
-                        ]).indexOf(value) >= 0
-                    );
-                }
-                return true;
-            },
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        linkClass: [String, Array, Object],
-        linkCurrentClass: [String, Array, Object],
+});
+
+const props = defineProps({
+    number: { type: Number, default: undefined },
+    isCurrent: { type: Boolean, default: false },
+    click: {
+        type: Function as PropType<(event: Event) => void>,
+        required: true,
     },
-    computed: {
-        linkClasses() {
-            return [
-                this.linkClass || [...this.$pagination.linkClasses],
-                this.page.class,
-                {
-                    [this.linkCurrentClass ||
-                    this.$pagination.linkCurrentClasses]: this.page.isCurrent,
-                },
-            ];
+    ariaLabel: { type: String, default: undefined },
+    disabled: { type: Boolean, default: false },
+    tag: {
+        type: [String, Object, Function] as PropType<string | Component>,
+        default: "a",
+        validator: (value) => {
+            if (typeof value === "string")
+                return (
+                    getOption("linkTags", [
+                        "a",
+                        "button",
+                        "input",
+                        "router-link",
+                        "nuxt-link",
+                    ]).indexOf(value) >= 0
+                );
+            return true;
         },
-        href() {
-            if (this.tag === "a") {
-                return "#";
-            }
-            return "";
-        },
-        isDisabled() {
-            if (this.tag === "a") return null;
-            return this.disabled || this.page.disabled;
-        },
+    },
+    class: { type: String, default: undefined },
+    linkClass: {
+        type: Array as PropType<PropBind>,
+        required: true,
+    },
+    linkCurrentClass: {
+        type: [Array] as PropType<Array<string>>,
+        required: true,
     },
 });
+
+const href = computed(() => (props.tag === "a" ? "#" : ""));
+
+const isDisabled = computed(() => (props.tag === "a" ? null : props.disabled));
+
+// --- Computed Component Classes ---
+
+const linkClasses = computed(() => [
+    ...props.linkClass,
+    props.class,
+    ...(props.isCurrent ? props.linkCurrentClass : []),
+]);
 </script>
 
 <template>
@@ -71,9 +67,9 @@ export default defineComponent({
         :disabled="isDisabled"
         :class="linkClasses"
         v-bind="$attrs"
-        @click.prevent="page.click"
-        :aria-label="page['aria-label']"
-        :aria-current="page.isCurrent">
-        <slot>{{ page.number }}</slot>
+        :aria-label="ariaLabel"
+        :aria-current="isCurrent"
+        @click.prevent="click">
+        <slot>{{ number }}</slot>
     </component>
 </template>

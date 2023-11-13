@@ -1,39 +1,45 @@
-import type { App } from "vue";
+import { ref, type App } from "vue";
+import { getValueByPath, merge, setValueByPath } from "./helpers";
+import { setVueInstance } from "./plugins";
+import type { OrugaOptions } from "@/types";
 
-import { merge } from "./helpers";
-
-let config = {
+const globalOptions = ref<OrugaOptions>({
     iconPack: "mdi",
     useHtml5Validation: true,
     statusIcon: true,
     transformClasses: undefined,
+});
+
+export const setOptions = (options: OrugaOptions): void => {
+    globalOptions.value = options;
 };
 
-export const setOptions = (options: any) => {
-    config = options;
+export const getOptions = (): OrugaOptions => {
+    return globalOptions.value;
 };
 
-export const getOptions = () => {
-    return config;
+export const getOption = <T>(path: string, defaultValue?: T): T => {
+    return getValueByPath(globalOptions.value, path, defaultValue);
 };
 
-export let VueInstance: App;
-
-export const setVueInstance = (Vue: App) => {
-    VueInstance = Vue;
+export const setOption = <T>(path: string, defaultValue: T): void => {
+    setValueByPath(globalOptions.value, path, defaultValue);
 };
 
-export const Programmatic = {
+export const ConfigProgrammatic = {
+    getOption,
     getOptions,
-    setOptions(options: any) {
+    setOption,
+    setOptions(options: OrugaOptions): void {
         setOptions(merge(getOptions(), options, true));
     },
 };
 
-export const Plugin = {
-    install(Vue: App, options = {}) {
-        setVueInstance(Vue);
-        // Options
+export const ConfigPlugin = {
+    install(app: App, options?: OrugaOptions): void {
+        // set global vue instance
+        setVueInstance(app);
+        // set options
         setOptions(merge(getOptions(), options, true));
     },
 };

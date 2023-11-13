@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "vite",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
-    "build:vue:watch": "vite build --watch",
+    "build:vue:watch": "vite build --mode minify --watch",
     "build:lib": "rimraf dist && npm run test:ts && npm run build:vue",
     "build:lib:watch": "npm link && npm run build:vue:watch",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
@@ -72,7 +72,6 @@
     "@types/jest": "24.0.19",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.3.4",
-    "@vue/compiler-sfc": "^3.2.45",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^12.0.0",
@@ -100,7 +99,7 @@
     "vite-plugin-dts": "^3.5.4",
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "vue": "^3.2.45",
+    "vue": "^3.3.4",
     "vue-tsc": "^1.8.11"
   },
   "nyc": {
