@@ -119,6 +119,11 @@ const props = defineProps({
         type: String,
         default: () => getOption("modal.closeIconSize", "medium"),
     },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("modal.mobileBreakpoint"),
+    },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -203,7 +208,7 @@ const { isActive, close, cancel } = useProgrammaticComponent(
     },
 );
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const _teleport = computed(() =>
     typeof props.teleport === "boolean"

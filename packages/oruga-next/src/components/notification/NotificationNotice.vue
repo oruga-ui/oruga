@@ -62,8 +62,8 @@ const props = defineProps({
         type: Number,
         default: () => getOption("notification.duration", 2000),
     },
-    /** Show the Notification indefinitely until it is dismissed. */
-    indefinite: { type: Boolean, default: false },
+    /** Show the Notification infinitely until it is dismissed. */
+    infinite: { type: Boolean, default: false },
     /** If notice should queue with others notices (snackbar/toast/notification). */
     queue: {
         type: Boolean,
@@ -243,7 +243,7 @@ function showNotice(): void {
 
 /** Set timer to auto close message */
 function setAutoClose(): void {
-    if (!props.indefinite) {
+    if (!props.infinite) {
         // clear old timer
         if (timer.value) clearTimeout(timer.value);
         // set new timer

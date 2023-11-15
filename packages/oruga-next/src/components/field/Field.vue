@@ -23,11 +23,6 @@ defineOptions({
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
-    /** Mobile breakpoint as max-width value */
-    mobileBreakpoint: {
-        type: String,
-        default: () => getOption("field.mobileBreakpoint"),
-    },
     /**
      * Color of the field and help message, also adds a matching icon, optional.
      * Used by Input, Select and Autocomplete.
@@ -59,6 +54,11 @@ const props = defineProps({
     horizontal: { type: Boolean, default: false },
     /** Field automatically attach controls together */
     addons: { type: Boolean, default: true },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("field.mobileBreakpoint"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -80,7 +80,7 @@ const props = defineProps({
     ]),
 });
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 /** Set internal variant when prop change. */
 const fieldVariant = ref(props.variant);

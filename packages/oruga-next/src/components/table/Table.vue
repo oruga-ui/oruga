@@ -285,6 +285,11 @@ const props = defineProps({
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
     },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("table.mobileBreakpoint"),
+    },
     /** Accessibility label for the pagination next page button. */
     ariaNextLabel: {
         type: String,
@@ -559,7 +564,7 @@ const emits = defineEmits<{
     ): void;
 }>();
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const isMobileActive = computed(() => props.mobileCards && isMobile.value);
 

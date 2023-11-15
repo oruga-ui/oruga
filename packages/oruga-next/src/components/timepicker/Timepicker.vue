@@ -143,6 +143,11 @@ const props = defineProps({
     },
     /** Make the icon right clickable */
     iconRightClickable: { type: Boolean, default: false },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("timepicker.mobileBreakpoint"),
+    },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -219,7 +224,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const {
     defaultTimeFormatter,

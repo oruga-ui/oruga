@@ -71,14 +71,6 @@ const props = defineProps({
         default: () => getOption("autocomplete.size"),
     },
     /**
-     * Color of the control, optional
-     * @values primary, info, success, warning, danger, and any other custom color
-     */
-    variant: {
-        type: String,
-        default: () => getOption("autocomplete.variant"),
-    },
-    /**
      * Position of the dropdown
      * @values auto, top, bottom
      */
