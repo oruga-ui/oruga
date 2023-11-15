@@ -133,5 +133,17 @@ export default {
         const inputitems = oruga.config.getOption("inputitems");
         const taginput = oruga.config.getOption("taginput");
         if (!taginput) oruga.config.setOption("taginput", inputitems);
+
+        // adjust sidebar old to new position
+        const sidebar = oruga.config.getOption("sidebar");
+        if (sidebar) {
+            if (!sidebar.positionClass)
+                sidebar.positionClass = (val: any) => {
+                    if (val === "right") return sidebar.rightClass;
+                    else return " ";
+                };
+            if (!sidebar.inlineClass) sidebar.inlineClass = sidebar.staticClass;
+            oruga.config.setOption("sidebar", sidebar);
+        }
     },
 };
