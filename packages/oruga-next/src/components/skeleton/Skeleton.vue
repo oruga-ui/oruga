@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type PropType } from "vue";
+import { computed, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -66,17 +66,11 @@ const props = defineProps({
     ]),
 });
 
-const rootRef = ref();
-
-const itemStyle = computed(() =>
-    rootRef.value
-        ? {
-              height: toCssDimension(rootRef.value.height),
-              width: toCssDimension(rootRef.value.width),
-              borderRadius: props.circle ? "50%" : null,
-          }
-        : {},
-);
+const itemStyle = computed(() => ({
+    height: toCssDimension(props.height),
+    width: toCssDimension(props.width),
+    borderRadius: props.circle ? "50%" : null,
+}));
 
 // --- Computed Component Classes ---
 
@@ -106,7 +100,7 @@ const itemClasses = computed(() => [
 </script>
 
 <template>
-    <div v-if="active" ref="rootRef" data-oruga="skeleton" :class="rootClasses">
+    <div v-if="active" data-oruga="skeleton" :class="rootClasses">
         <div
             v-for="i in count"
             :key="i"
