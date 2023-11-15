@@ -62,8 +62,6 @@ const props = defineProps({
         validator: (value: string) =>
             ["left", "centered", "right"].indexOf(value) >= 0,
     },
-    /** Destroy tab on hide */
-    destroyOnHide: { type: Boolean, default: false },
     /**
      * Icon pack to use for the navigation
      * @values mdi, fa, fas and any other custom icon pack
@@ -99,12 +97,17 @@ const props = defineProps({
      */
     labelPosition: {
         type: String,
-        default: "bottom",
+        default: () => getOption("steps.labelPosition", "bottom"),
         validator: (value: string) =>
             ["bottom", "right", "left"].indexOf(value) > -1,
     },
     /** Rounded step markers */
     rounded: { type: Boolean, default: true },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("steps.mobileBreakpoint"),
+    },
     ariaNextLabel: { type: String, default: undefined },
     ariaPreviousLabel: { type: String, default: undefined },
     // add class props (will not be displayed in the docs)
@@ -143,7 +146,7 @@ const emits = defineEmits<{
     (e: "change", newValue: string | number, oldValue: string | number): void;
 }>();
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const rootRef = ref();
 

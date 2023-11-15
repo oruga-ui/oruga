@@ -87,6 +87,11 @@ const props = defineProps({
         type: String,
         default: () => getOption("pagination.iconNext", "chevron-right"),
     },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("pagination.mobileBreakpoint"),
+    },
     /** Accessibility label for the next page button. */
     ariaNextLabel: {
         type: String,
@@ -141,7 +146,7 @@ const emits = defineEmits<{
     (e: "change", event: number): void;
 }>();
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const current = usePropBinding("current", props, emits);
 

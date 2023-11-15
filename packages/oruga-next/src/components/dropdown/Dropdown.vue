@@ -154,6 +154,11 @@ const props = defineProps({
         validator: (value: string) =>
             ["menu", "list", "dialog"].indexOf(value) > -1,
     },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("dropdown.mobileBreakpoint"),
+    },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -238,7 +243,7 @@ watch(
     },
 );
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 // check if mobile modal should be shown
 const isMobileModal = computed(

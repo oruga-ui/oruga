@@ -226,6 +226,11 @@ const props = defineProps({
         type: String,
         default: () => getOption("datepicker.iconNext", "chevron-right"),
     },
+    /** Mobile breakpoint as max-width value */
+    mobileBreakpoint: {
+        type: String,
+        default: () => getOption("datepicker.mobileBreakpoint"),
+    },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
@@ -380,7 +385,7 @@ const emits = defineEmits<{
 
 const { defaultDateFormatter, defaultDateParser } = useDatepickerShare(props);
 
-const { isMobile } = useMatchMedia();
+const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
 const vmodel = useVModelBinding<Date | Date[]>(props, emits, { passive: true });
 

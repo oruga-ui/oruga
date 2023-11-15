@@ -61,8 +61,6 @@ const props = defineProps({
         validator: (value: string) =>
             ["left", "centered", "right"].indexOf(value) >= 0,
     },
-    /** Destroy tab on hide */
-    destroyOnHide: { type: Boolean, default: false },
     /**
      * Tab type
      * @values boxed, toggle

@@ -147,16 +147,18 @@ const props = defineProps({
         type: String,
         default: () => getOption("taginput.ariaCloseLabel"),
     },
-    /** Enable html 5 native validation */
-    useHtml5Validation: {
-        type: Boolean,
-        default: () => getOption("useHtml5Validation", true),
-    },
     /** Native options to use in HTML5 validation */
     autocomplete: {
         type: String,
         default: () => getOption("taginput.autocomplete", "off"),
     },
+    /** Enable html 5 native validation */
+    useHtml5Validation: {
+        type: Boolean,
+        default: () => getOption("useHtml5Validation", true),
+    },
+    /** The message which is shown when a validation error occurs */
+    validationMessage: { type: String, default: undefined },
     /**
      * Append the component to another part of the DOM.
      * Set `true` to append the component to the body.
