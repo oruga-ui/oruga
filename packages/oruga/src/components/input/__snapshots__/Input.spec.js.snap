@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OInput render correctly 1`] = `
-<div class="o-ctrl-input"><input type="text" autocomplete="off" class="o-input">
-    <!---->
-    <!---->
-    <!---->
-</div>
-`;
