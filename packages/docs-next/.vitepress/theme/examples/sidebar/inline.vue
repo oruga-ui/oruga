@@ -10,7 +10,7 @@ const reduce = ref(false);
     <section class="sidebar-page">
         <div class="sidebar-layout">
             <o-sidebar
-                position="static"
+                inline
                 :mobile="mobile"
                 :expand-on-hover="expandOnHover"
                 :reduce="reduce"
