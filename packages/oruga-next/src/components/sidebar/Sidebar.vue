@@ -280,9 +280,7 @@ function removeHandler(): void {
 
 /** Close fixed sidebar if clicked outside. */
 function clickedOutside(event: Event): void {
-    if (!props.inline || !isActive.value || isAnimating.value) return;
-    console.log(event.target, isActive.value);
-
+    if (props.inline || !isActive.value || isAnimating.value) return;
     if (props.overlay || !event.composedPath().includes(sidebarContent.value))
         event.preventDefault();
     cancel("outside");

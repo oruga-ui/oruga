@@ -5,7 +5,7 @@ const active = ref(false);
 const overlay = ref(true);
 const fullheight = ref(true);
 const fullwidth = ref(false);
-const right = ref(false);
+const position = ref("left");
 </script>
 
 <template>
@@ -14,7 +14,9 @@ const right = ref(false);
             <o-switch v-model="overlay" label="Overlay" />
             <o-switch v-model="fullheight" label="Fullheight" />
             <o-switch v-model="fullwidth" label="Fullwidth" />
-            <o-switch v-model="right" label="Right" />
+            <o-field label="Position">
+                <o-select v-model="position" :options="['left', 'right']" />
+            </o-field>
         </o-field>
 
         <o-button label="Show" @click="active = true" />
@@ -25,7 +27,7 @@ const right = ref(false);
             :fullheight="fullheight"
             :fullwidth="fullwidth"
             :overlay="overlay"
-            :right="right">
+            :position="position">
             <o-button
                 v-if="fullwidth"
                 icon-left="times"
