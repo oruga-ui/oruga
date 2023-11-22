@@ -15,6 +15,15 @@ const inspectData = [
         description: "Class of the filled part of the slider",
     },
     {
+        class: "sizeClass",
+        description: "Class of the vertical slider size",
+        properties: ["size"],
+        suffixes: ["small", "medium", "large"],
+        action: (cmp, data) => {
+            data.size = "large";
+        },
+    },
+    {
         class: "thumbRoundedClass",
         description: "Class when the slider is rounded",
         properties: ["rounded"],

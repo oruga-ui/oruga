@@ -12,8 +12,8 @@ import {
     useProviderParent,
     useVModelBinding,
 } from "@/composables";
-import type { PropBind } from "@/index";
 import { mod, isDefined } from "@/utils/helpers";
+import type { PropBind } from "@/types";
 import type { TabItem, TabItemComponent } from "./types";
 
 /**
@@ -50,9 +50,12 @@ const props = defineProps({
         default: () => getOption("tabs.size"),
     },
     /** Show tab in vertical layout */
-    vertical: { type: Boolean, default: false },
+    vertical: {
+        type: Boolean,
+        default: () => getOption("tabs.vertical", false),
+    },
     /**
-     * Position of the tab, optional
+     * Position of the tabs, optional
      * @values left, centered, right
      */
     position: {
@@ -65,7 +68,7 @@ const props = defineProps({
      * Tab type
      * @values boxed, toggle
      */
-    type: { type: String, default: "default" },
+    type: { type: String, default: () => getOption("tabs.type", "default") },
     /** Tabs will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
     /** Tab will have an animation */
@@ -88,7 +91,7 @@ const props = defineProps({
         "navTypeClass",
         "contentClass",
         "transitioningClass",
-        "tabItemWrapperClass",
+        "itemWrapperClass",
     ]),
 });
 
@@ -243,7 +246,7 @@ const rootClasses = computed(() => [
 ]);
 
 const itemWrapperClasses = computed(() => [
-    useComputedClass("tabItemWrapperClass", "o-tabs__nav-item-wrapper"),
+    useComputedClass("itemWrapperClass", "o-tabs__nav-item-wrapper"),
 ]);
 
 const navClasses = computed(() => [

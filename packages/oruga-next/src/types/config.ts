@@ -1,4 +1,6 @@
 import type { ValidatableFormElement } from "@/composables";
+import type { IconConfig } from "@/utils/icons";
+import type { DynamicComponent } from "./utils";
 
 export type ComponentContext = {
     props: Record<string, any>;
@@ -6,9 +8,9 @@ export type ComponentContext = {
     computed: Record<string, any>;
 };
 
-export type FieldFunction = (suffix: string, ctx: ComponentContext) => string;
+export type ClassFunction = (suffix: string, ctx: ComponentContext) => string;
 
-export type FieldObject = {
+export type ClassObject = {
     class: string;
     /**
      * In case you want to override Oruga existing classes completely,
@@ -19,43 +21,36 @@ export type FieldObject = {
 
 export type TransformFunction = (classes: string) => string;
 
-export type FieldDefinition = undefined | string | FieldFunction | FieldObject;
+export type ClassDefinition = undefined | string | ClassFunction | ClassObject;
 
-export type OrugaOptions = {
+export type ComponentConfigBase = Partial<{
+    /**
+     * In case you want to override existing Oruga classes completely,
+     * you can set the field override to true.
+     */
+    override: boolean;
+    /** Use this function in case you want to transform all applied classes' names. */
+    transformClasses: TransformFunction;
+}>;
+
+export type GlobalConfig = Partial<{
     /** Define the icon pack be used */
-    iconPack?: string;
+    iconPack: string;
+    /** Define custom icon packs */
+    customIconPacks: IconConfig[];
+    /** Define a specific icon component */
+    iconComponent: DynamicComponent;
     /** Enable HTML5 validation */
-    useHtml5Validation?: boolean;
+    useHtml5Validation: boolean;
+    /** Show input status icon using field and variant prop */
+    statusIcon: boolean;
     /** Custom HTML5 validation invalid handler */
-    invalidHandler?: (
+    invalidHandler: (
         validatable: ValidatableFormElement,
         fieldElement: Element,
     ) => void;
     /** You can use transformClasses globally if you need to transform classes for any component. */
-    transformClasses?: TransformFunction;
-    [key: string]:
-        | boolean
-        | Function
-        | FieldDefinition
-        | {
-              /**
-               * In case you want to override Oruga existing classes completely,
-               * you can set the field override to true.
-               */
-              override?: boolean;
-              /** Use this function in case you want to transform applied classes' names. */
-              transformClasses?: TransformFunction;
-              [key: string]: FieldDefinition | boolean;
-          };
-};
+    transformClasses: TransformFunction;
+}>;
 
-/** Vue native type which a v-bind prop must have */
-export type PropBind = (
-    | string
-    | {
-          [x: string]: string;
-      }
-    | {
-          [x: string]: boolean;
-      }
-)[];
+export interface OrugaOptions extends GlobalConfig {}

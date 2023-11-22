@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch, type PropType } from "vue";
+
 import ODatepicker from "../datepicker/Datepicker.vue";
 import OTimepicker from "../timepicker/Timepicker.vue";
 import OInput from "../input/Input.vue";
+
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
@@ -12,7 +14,7 @@ import {
     usePropBinding,
 } from "@/composables";
 import { isMobileAgent } from "@/utils/helpers";
-import { matchWithGroups } from "../datepicker/datepickerUtils";
+import { matchWithGroups } from "../datepicker/utils";
 import type { DatepickerProps } from "../datepicker/useDatepickerShare";
 import type { TimepickerProps } from "../timepicker/useTimepickerShare";
 
@@ -54,7 +56,7 @@ const props = defineProps({
     /** Max date to select */
     maxDatetime: { type: Date, default: undefined },
     /**
-     * Size of the control input, optional
+     * Size of the input control, optional
      * @values small, medium, large
      */
     size: {
@@ -72,6 +74,7 @@ const props = defineProps({
     disabled: { type: Boolean, default: false },
     /** Display datetimepicker inline */
     inline: { type: Boolean, default: false },
+    /** Open dropdown on focus */
     openOnFocus: {
         type: Boolean,
         default: () => getOption("datetimepicker.openOnFocus", true),
@@ -119,12 +122,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("datetimepicker.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("datetimepicker.icon", undefined),
     },
-    /** Icon name to be added on the right side */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("datetimepicker.iconRight", undefined),
@@ -633,3 +636,4 @@ const timepickerWrapperClasses = computed(() => [
         @blur="onBlur"
         @invalid="onInvalid" />
 </template>
+../datepicker/utils

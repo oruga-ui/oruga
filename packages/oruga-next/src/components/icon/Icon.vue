@@ -4,7 +4,7 @@ import { computed } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { useComputedClass, useClassProps } from "@/composables";
-import getIcons from "../../utils/icons";
+import getIcons from "@/utils/icons";
 
 /**
  * Icons take an important role of any application

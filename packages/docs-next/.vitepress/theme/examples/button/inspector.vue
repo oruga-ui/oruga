@@ -5,6 +5,13 @@ const inspectData = [
         description: "Class of the root element",
     },
     {
+        class: "wrapperClass",
+        description: "Class of the button elements wrapper",
+        action: (cmp, data) => {
+            data.expanded = true;
+        },
+    },
+    {
         class: "outlinedClass",
         description: "Class of the button outlined",
         properties: ["outlined"],
@@ -36,13 +43,6 @@ const inspectData = [
         class: "expandedClass",
         description: "Class of the button when expanded",
         properties: ["expanded"],
-        action: (cmp, data) => {
-            data.expanded = true;
-        },
-    },
-    {
-        class: "elementsWrapperClass",
-        description: "Class of the button elements wrapper",
         action: (cmp, data) => {
             data.expanded = true;
         },

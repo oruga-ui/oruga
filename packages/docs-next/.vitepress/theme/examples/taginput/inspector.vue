@@ -404,9 +404,9 @@ const inspectData = [
     {
         class: "counterClass",
         description: "Class of the counter element",
-        properties: ["hasCounter", "maxitems"],
+        properties: ["counter", "maxitems"],
         action: (cmp, data) => {
-            data.hasCounter = true;
+            data.counter = true;
             data.maxitems = 5;
         },
     },

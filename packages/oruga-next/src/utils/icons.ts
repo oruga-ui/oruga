@@ -1,6 +1,11 @@
 import { getOption } from "./config";
 import { merge } from "./helpers";
 
+export type IconConfig = {
+    sizes?: { default: string; [key: string]: string };
+    iconPrefix?: string;
+};
+
 const mdiIcons = {
     sizes: {
         default: "mdi-24px",

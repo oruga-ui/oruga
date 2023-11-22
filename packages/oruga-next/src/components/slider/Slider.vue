@@ -93,7 +93,7 @@ const props = defineProps({
      */
     format: {
         type: String,
-        default: "raw",
+        default: () => getOption("slider.format", "raw"),
         validator: (value: string) => ["raw", "percent"].indexOf(value) >= 0,
     },
     /** Date format locale */
@@ -104,7 +104,7 @@ const props = defineProps({
     /** Accessibility aria-label to to be passed to the slider thumb element. */
     ariaLabel: {
         type: [String, Array] as PropType<string | string[]>,
-        default: undefined,
+        default: () => getOption("slider.ariaLabel"),
     },
     // add class props (will not be displayed in the docs)
     ...useClassProps([

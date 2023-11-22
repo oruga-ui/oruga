@@ -70,9 +70,9 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "disabledClass",
-        "checkClass",
         "checkedClass",
-        "checkCheckedClass",
+        "inputClass",
+        "inputCheckedClass",
         "labelClass",
         "sizeClass",
         "variantClass",
@@ -145,10 +145,10 @@ const rootClasses = computed(() => [
     },
 ]);
 
-const checkClasses = computed(() => [
-    useComputedClass("checkClass", "o-radio__check"),
+const inputClasses = computed(() => [
+    useComputedClass("inputClass", "o-radio__check"),
     {
-        [useComputedClass("checkCheckedClass", "o-radio__check--checked")]:
+        [useComputedClass("inputCheckedClass", "o-radio__check--checked")]:
             isChecked.value,
     },
 ]);
@@ -171,7 +171,7 @@ const labelClasses = computed(() => [
             v-model="vmodel"
             type="radio"
             data-oruga-input="radio"
-            :class="checkClasses"
+            :class="inputClasses"
             :disabled="disabled"
             :required="required"
             :name="name"

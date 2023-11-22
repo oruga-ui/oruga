@@ -61,13 +61,17 @@ const inspectData = [
         },
     },
     {
-        class: "tabItemWrapperClass",
+        class: "itemWrapperClass",
         description: "Class of the tab item wrapper",
         specificity: "when <b>expandedClass</b> is applied",
     },
     {
         class: "contentClass",
         description: "Class of the tab content",
+    },
+    {
+        class: "transitioningClass",
+        description: "Class of the tab content when transitioning",
     },
     {
         class: "itemClass",

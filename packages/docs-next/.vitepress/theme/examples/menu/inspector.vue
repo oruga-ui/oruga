@@ -6,35 +6,35 @@ const inspectData = [
     },
     {
         class: "listClass",
-        description: "Class of the menu-list",
+        description: "Class of the menu list",
     },
     {
         class: "listLabelClass",
-        description: "Class of the menu-list label",
+        description: "Class of the menu list label",
     },
     {
         class: "itemClass",
-        description: "Class of the menu-item",
+        description: "Class of the menu item",
     },
     {
         class: "itemActiveClass",
-        description: "Class of the active menu-item",
+        description: "Class of the active menu item",
     },
     {
         class: "itemDisabledClass",
-        description: "Class of the disabled menu-item",
+        description: "Class of the disabled menu item",
     },
     {
         class: "itemIconTextClass",
-        description: "Class of the icon of menu-item",
+        description: "Class of the icon of menu item",
     },
     {
         class: "itemSubmenuClass",
-        description: "Class of the menu-item when is a submenu",
+        description: "Class of the menu item when is a submenu",
     },
     {
         class: "itemWrapperClass",
-        description: "Class of the root element of menu-item",
+        description: "Class of the root element of menu item",
     },
 ];
 </script>

@@ -39,7 +39,7 @@ import {
     escapeRegExpChars,
     removeDiacriticsFromString,
     uuid,
-} from "../../utils/helpers";
+} from "@/utils/helpers";
 import type { Column, TableColumn, TableColumnComponent } from "./types";
 import type { PropBind } from "@/types";
 
@@ -80,7 +80,7 @@ const props = defineProps({
     /** Show check/uncheck all checkbox in table header when checkable */
     headerCheckable: { type: Boolean, default: true },
     /**
-     * Position of the checkbox (if checkable is true)
+     * Position of the checkbox when checkable
      * @values left, right
      */
     checkboxPosition: {
@@ -89,7 +89,7 @@ const props = defineProps({
         validator: (value: string) => ["left", "right"].indexOf(value) >= 0,
     },
     /**
-     * Color of the checkbox when checkable, optional
+     * Color of the checkbox when checkable
      * @values primary, info, success, warning, danger, and any other custom color
      */
     checkboxVariant: {
@@ -322,8 +322,9 @@ const props = defineProps({
         "stripedClass",
         "narrowedClass",
         "hoverableClass",
+        "trSelectedClass",
+        "trCheckedClass",
         "thClass",
-        "tdClass",
         "thPositionClass",
         "thStickyClass",
         "thCheckboxClass",
@@ -332,18 +333,17 @@ const props = defineProps({
         "thUnselectableClass",
         "thSortIconClass",
         "thDetailedClass",
+        "thSubheadingClass",
+        "tdClass",
         "tdPositionClass",
         "tdStickyClass",
         "tdCheckboxClass",
         "tdDetailedChevronClass",
-        "trSelectedClass",
-        "trCheckedClass",
         "stickyHeaderClass",
         "scrollableClass",
         "mobileSortClass",
         "paginationWrapperClass",
         "mobileClass",
-        "thSubheadingClass",
     ]),
 });
 

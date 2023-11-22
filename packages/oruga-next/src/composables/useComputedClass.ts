@@ -3,7 +3,7 @@ import { getOptions } from "@/utils/config";
 import { blankIfUndefined, endsWith, getValueByPath } from "@/utils/helpers";
 
 import type {
-    FieldDefinition,
+    ClassDefinition,
     ComponentContext,
     TransformFunction,
 } from "@/types";
@@ -84,13 +84,13 @@ export function useComputedClass(
     );
 
     let globalClass =
-        getValueByPath<FieldDefinition>(
+        getValueByPath<ClassDefinition>(
             config,
             `${configField}.${field}.class`,
             "",
         ) ||
-        getValueByPath<FieldDefinition>(config, `${configField}.${field}`, "");
-    let currentClass = getValueByPath<FieldDefinition>(props, field, "");
+        getValueByPath<ClassDefinition>(config, `${configField}.${field}`, "");
+    let currentClass = getValueByPath<ClassDefinition>(props, field, "");
 
     if (Array.isArray(currentClass)) {
         currentClass = currentClass.join(" ");

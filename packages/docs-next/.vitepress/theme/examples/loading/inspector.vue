@@ -31,6 +31,15 @@ const inspectData = [
         },
     },
     {
+        class: "labelClass",
+        description: "Class for the loading label",
+        action: (cmp, data) => {
+            data.cancelable = true;
+            data.fullPage = false;
+            loading.value = true;
+        },
+    },
+    {
         class: "fullPageClass",
         description: "Class for the root element when fullpage",
         properties: ["fullPage"],
@@ -53,7 +62,8 @@ const inspectData = [
                 v-bind="props"
                 v-model:active="loading"
                 icon="sync-alt"
-                :icon-spin="true">
+                :icon-spin="true"
+                label="Loading...">
             </o-loading>
         </p>
         <b>Click on "Inspect" button to open the loading</b>

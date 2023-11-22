@@ -8,12 +8,6 @@ import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
 import type { ProgrammaticExpose } from "@/types";
 
-declare module "@/types" {
-    interface OrugaProgrammatic {
-        loading: typeof LoadingProgrammatic;
-    }
-}
-
 const instances = new InstanceRegistry<typeof Loading>();
 
 const LoadingProgrammatic = {

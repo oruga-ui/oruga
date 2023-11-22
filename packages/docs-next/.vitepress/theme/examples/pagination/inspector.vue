@@ -18,12 +18,12 @@ const inspectData = [
         warning: "Switch to mobile view to see it in action!",
     },
     {
-        class: "prevBtnClass",
-        description: "Class of the prev. button",
+        class: "prevButtonClass",
+        description: "Class of the prev button",
         specificity: "when <b>mobileClass</b> is applied",
     },
     {
-        class: "nextBtnClass",
+        class: "nextButtonClass",
         description: "Class of the next button",
         specificity: "when <b>mobileClass</b> is applied",
     },
@@ -47,7 +47,7 @@ const inspectData = [
     },
     {
         class: "ellipsisClass",
-        description: "Class of the pagination ellipsis ",
+        description: "Class of the pagination ellipsis",
         specificity: "when <b>mobileClass</b> is applied",
     },
     {

@@ -7,9 +7,9 @@ import {
     onBeforeUpdate,
     useAttrs,
     toRaw,
+    onMounted,
     type PropType,
     type Component,
-    onMounted,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -27,7 +27,7 @@ import {
     useEventListener,
 } from "@/composables";
 import { getValueByPath } from "@/utils/helpers";
-import type { PropBind } from "@/types";
+import type { DynamicComponent, PropBind } from "@/types";
 import { isClient } from "@/utils/ssr";
 import { unrefElement } from "@/utils/unrefElement";
 
@@ -52,12 +52,12 @@ const props = defineProps({
     type: { type: String, default: "text" },
     /** Menu tag name */
     menuTag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("autocomplete.menuTag", "div"),
     },
     /** Menu item tag name */
     itemTag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
@@ -165,14 +165,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("autocomplete.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("autocomplete.icon", undefined),
     },
     /** Makes the icon clickable */
     iconClickable: { type: Boolean, default: false },
-    /** Icon name to be added on the right side */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("autocomplete.iconRight", undefined),
@@ -220,7 +220,6 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
-        "expandedClass",
         "itemClass",
         "itemHoverClass",
         "itemGroupTitleClass",
@@ -228,6 +227,10 @@ const props = defineProps({
         "itemHeaderClass",
         "itemFooterClass",
     ]),
+    /**
+     * Classes to apply on internal input
+     * @ignore
+     */
     inputClasses: {
         type: Object,
         default: () => getOption("autocomplete.inputClasses", {}),
@@ -698,12 +701,7 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-acp"),
-    {
-        [useComputedClass("expandedClass", "o-acp--expanded")]: props.expanded,
-    },
-]);
+const rootClasses = computed(() => [useComputedClass("rootClass", "o-acp")]);
 
 const itemClasses = computed(() => [
     useComputedClass("itemClass", "o-acp__item"),
@@ -765,6 +763,7 @@ function itemOptionClasses(option): PropBind {
         :animation="animation"
         :position="position"
         :teleport="teleport"
+        :expanded="expanded"
         @close="onDropdownClose">
         <template #trigger>
             <o-input
@@ -785,6 +784,7 @@ function itemOptionClasses(option): PropBind {
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
                 :expanded="expanded"
                 :disabled="disabled"
+                :status-icon="statusIcon"
                 @update:model-value="onInput"
                 @focus="handleFocus"
                 @blur="onBlur"

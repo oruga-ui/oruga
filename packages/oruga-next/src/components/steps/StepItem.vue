@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    useSlots,
-    type ComputedRef,
-    type Component,
-    type PropType,
-} from "vue";
+import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -18,6 +11,7 @@ import {
 import { uuid } from "@/utils/helpers";
 
 import type { StepsComponent } from "./types";
+import type { DynamicComponent } from "@/types";
 
 /**
  * @displayName Step Item
@@ -38,10 +32,7 @@ const props = defineProps({
     /** Step marker content (when there is no icon) */
     step: { type: [String, Number], default: undefined },
     /** Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example */
-    variant: {
-        type: String,
-        default: () => getOption("tabs.variant"),
-    },
+    variant: { type: String, default: undefined },
     /** Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not */
     clickable: { type: Boolean, default: undefined },
     /** Show/hide item */
@@ -49,26 +40,27 @@ const props = defineProps({
     /** Icon on the left */
     icon: {
         type: String,
-        default: () => getOption("tabs.icon"),
+        default: () => getOption("steps.icon"),
     },
     /** Icon pack */
     iconPack: {
         type: String,
-        default: () => getOption("tabs.iconPack"),
+        default: () => getOption("steps.iconPack"),
     },
     /** Tabs item tag name */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
-        default: () => getOption("tabs.itemTag", "button"),
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption("steps.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility. */
     ariaRole: {
         type: String,
-        default: () => getOption("tabs.ariaRole", "tab"),
+        default: () => getOption("steps.ariaRole", "tab"),
     },
+    /** Sets a class to the item header */
+    headerClass: { type: String, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
-        "headerClass",
         "itemClass",
         "itemHeaderClass",
         "itemHeaderActiveClass",

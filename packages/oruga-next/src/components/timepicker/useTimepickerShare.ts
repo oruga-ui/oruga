@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import Timepicker from "./Timepicker.vue";
-import { matchWithGroups } from "../datepicker/datepickerUtils";
+import { matchWithGroups } from "../datepicker/utils";
 
 export type TimepickerProps = InstanceType<typeof Timepicker>["$props"];
 

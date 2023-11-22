@@ -4,7 +4,7 @@ import { computed, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { useComputedClass, useClassProps } from "@/composables";
-import { toCssDimension } from "../../utils/helpers";
+import { toCssDimension } from "@/utils/helpers";
 
 /**
  * A placeholder for content to load

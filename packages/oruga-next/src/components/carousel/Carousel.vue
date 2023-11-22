@@ -6,16 +6,16 @@ import {
     onMounted,
     ref,
     nextTick,
-    type PropType,
     readonly,
     toRaw,
+    type PropType,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
-import { getOption } from "../../utils/config";
-import { sign, mod, bound, isDefined } from "../../utils/helpers";
+import { getOption } from "@/utils/config";
+import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import {
     useComputedClass,
     useClassProps,

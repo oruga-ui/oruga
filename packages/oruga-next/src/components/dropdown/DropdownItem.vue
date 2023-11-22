@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
 import { computed, onMounted, type Component, type PropType } from "vue";
+
 import { useComputedClass, useClassProps } from "@/composables";
 import { getOption } from "@/utils/config";
 import { injectDropdown } from "./useDropdownShare";

@@ -9,10 +9,6 @@ const inspectData = [
         description: "Class of the checkbox label",
     },
     {
-        class: "checkClass",
-        description: "Class of the checkbox",
-    },
-    {
         class: "checkedClass",
         description: "Class of the root element when checked",
         action: (cmp, data) => {
@@ -20,14 +16,18 @@ const inspectData = [
         },
     },
     {
-        class: "checkCheckedClass",
+        class: "checkboxClass",
+        description: "Class of the checkbox",
+    },
+    {
+        class: "checkboxCheckedClass",
         description: "Class of the checkbox when checked",
         action: (cmp, data) => {
             data.checkbox = true;
         },
     },
     {
-        class: "checkIndeterminateClass",
+        class: "checkboxIndeterminateClass",
         description: "Class when checkbox is indeterminate",
         properties: ["indeterminate"],
         action: (cmp, data) => {

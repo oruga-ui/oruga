@@ -42,7 +42,7 @@ const props = defineProps({
         validator: (value: string) =>
             ["menu", "list", "dialog"].indexOf(value) > -1,
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: { type: String, default: undefined },
     /**
      * Icon pack to use

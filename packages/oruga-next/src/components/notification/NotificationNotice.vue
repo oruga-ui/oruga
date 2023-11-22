@@ -38,7 +38,7 @@ const props = defineProps({
     /** Props passed to the internal notification component. */
     notification: {
         type: Object as PropType<NotifcationProps>,
-        default: () => {},
+        default: () => ({}),
     },
     /**
      * Which position the notification will appear when programmatically.

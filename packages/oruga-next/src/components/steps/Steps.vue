@@ -13,8 +13,8 @@ import {
     useVModelBinding,
     useMatchMedia,
 } from "@/composables";
-import type { PropBind } from "@/index";
 import { isDefined } from "@/utils/helpers";
+import type { PropBind } from "@/types";
 import type { StepItem, StepItemComponent } from "./types";
 
 /**
@@ -84,9 +84,7 @@ const props = defineProps({
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation: { type: Boolean, default: true },
-    /**
-     * Step navigation is animated
-     */
+    /** Step navigation is animated */
     animated: {
         type: Boolean,
         default: () => getOption("steps.animated", true),
@@ -108,8 +106,16 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.mobileBreakpoint"),
     },
-    ariaNextLabel: { type: String, default: undefined },
-    ariaPreviousLabel: { type: String, default: undefined },
+    /** Accessibility next button aria label */
+    ariaNextLabel: {
+        type: String,
+        default: () => getOption("steps.ariaNextLabel"),
+    },
+    /** Accessibility previous button aria label  */
+    ariaPreviousLabel: {
+        type: String,
+        default: () => getOption("steps.ariaPreviousLabel"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",

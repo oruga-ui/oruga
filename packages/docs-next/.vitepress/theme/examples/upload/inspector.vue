@@ -30,7 +30,7 @@ const inspectData = [
     },
     {
         class: "hoveredClass",
-        description: "Upload class on dragging",
+        description: "Upload class when hovered",
         properties: ["dragDrop"],
         warning: "Drag & drop a file to see it in action!",
         action: (cmp, data) => {

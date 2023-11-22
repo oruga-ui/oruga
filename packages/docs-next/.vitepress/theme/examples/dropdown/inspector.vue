@@ -15,6 +15,16 @@ const inspectData = [
         description: "Class of the trigger element",
     },
     {
+        class: "teleportClass",
+        description: "Class when the dropdown is teleported",
+        action: (cmp, data) => {
+            data.teleport = true;
+            setTimeout(() => {
+                dropdownbtn.value.click();
+            }, 300);
+        },
+    },
+    {
         class: "menuMobileOverlayClass",
         description: "Class of the overlay when on mobile",
         warning: "Switch to mobile view to see it in action!",

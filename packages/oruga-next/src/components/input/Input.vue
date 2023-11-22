@@ -72,7 +72,7 @@ const props = defineProps({
     /** Same as native maxlength, plus character counter */
     maxlength: { type: Number, default: undefined },
     /** Show character counter when maxlength prop is passed */
-    hasCounter: {
+    counter: {
         type: Boolean,
         default: () => getOption("input.counter", false),
     },
@@ -86,14 +86,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("input.icon", undefined),
     },
     /** Makes the icon clickable */
     iconClickable: { type: Boolean, default: false },
-    /** Icon name to be added on the right side */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("input.iconRight", undefined),
@@ -438,7 +438,7 @@ const counterClasses = computed(() => [
             @click="rightIconClick" />
 
         <small
-            v-if="maxlength && hasCounter && isFocused && type !== 'number'"
+            v-if="maxlength && counter && isFocused && type !== 'number'"
             :class="counterClasses">
             {{ valueLength }} / {{ maxlength }}
         </small>

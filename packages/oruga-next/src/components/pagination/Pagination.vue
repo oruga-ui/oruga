@@ -116,8 +116,8 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
-        "prevBtnClass",
-        "nextBtnClass",
+        "prevButtonClass",
+        "nextButtonClass",
         "listItemClass",
         "listClass",
         "linkClass",
@@ -290,7 +290,7 @@ const rootClasses = computed(() => [
 ]);
 
 const prevBtnClasses = computed(() => [
-    useComputedClass("prevBtnClass", "o-pag__previous"),
+    useComputedClass("prevButtonClass", "o-pag__previous"),
     {
         [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
             !hasPrev.value,
@@ -298,7 +298,7 @@ const prevBtnClasses = computed(() => [
 ]);
 
 const nextBtnClasses = computed(() => [
-    useComputedClass("nextBtnClass", "o-pag__next"),
+    useComputedClass("nextButtonClass", "o-pag__next"),
     {
         [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
             !hasNext.value,

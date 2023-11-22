@@ -90,7 +90,6 @@ const props = defineProps({
         "checkCheckedClass",
         "checkSwitchClass",
         "roundedClass",
-        "elementsWrapperClass",
         "passiveVariantClass",
         "positionClass",
         "inputClass",

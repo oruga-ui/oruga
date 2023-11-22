@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    useSlots,
-    type ComputedRef,
-    type Component,
-    type PropType,
-} from "vue";
+import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -17,6 +10,7 @@ import {
 } from "@/composables";
 import { uuid } from "@/utils/helpers";
 import type { TabsComponent, TabItemComponent } from "./types";
+import type { DynamicComponent } from "@/types";
 
 /**
  * @displayName Tab Item
@@ -50,7 +44,7 @@ const props = defineProps({
     visible: { type: Boolean, default: true },
     /** Tabs item tag name */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("tabs.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility. */
@@ -58,9 +52,10 @@ const props = defineProps({
         type: String,
         default: () => getOption("tabs.ariaRole", "tab"),
     },
+    /** Sets a class to the item header */
+    headerClass: { type: String, default: undefined },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
-        "headerClass",
         "itemClass",
         "itemHeaderClass",
         "itemHeaderActiveClass",

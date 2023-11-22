@@ -17,8 +17,8 @@ import {
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
-import type { ProgrammaticInstance } from "@/index";
 import { isClient } from "@/utils/ssr";
+import type { ProgrammaticInstance } from "@/types";
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -55,7 +55,7 @@ const props = defineProps({
      */
     position: {
         type: String as PropType<"top" | "right" | "bottom" | "left">,
-        default: () => getOption("sidebar.position"),
+        default: () => getOption("sidebar.position", "left"),
     },
     /** Show sidebar in fullheight */
     fullheight: {
@@ -83,11 +83,6 @@ const props = defineProps({
     expandOnHover: {
         type: Boolean,
         default: getOption("sidebar.expandOnHover", false),
-    },
-    /** Expand sidebar on hover with fixed position when reduced or mobile is reduce */
-    expandOnHoverFixed: {
-        type: Boolean,
-        default: getOption("sidebar.expandOnHoverFixed", false),
     },
     /** Custom animation (transition name) */
     animation: {
@@ -177,7 +172,6 @@ const props = defineProps({
         "inlineClass",
         "reduceClass",
         "expandOnHoverClass",
-        "expandOnHoverFixedClass",
         "variantClass",
         "mobileClass",
         "scrollClipClass",
@@ -385,15 +379,6 @@ const contentClasses = computed(() => [
             "expandOnHoverClass",
             "o-side__content--mini-expand",
         )]: props.expandOnHover && props.mobile !== "fullwidth",
-    },
-    {
-        [useComputedClass(
-            "expandOnHoverFixedClass",
-            "o-side__content--expand-mini-hover-fixed",
-        )]:
-            props.expandOnHover &&
-            props.expandOnHoverFixed &&
-            props.mobile !== "fullwidth",
     },
     {
         [useComputedClass("visibleClass", "o-side__content--visible")]:
