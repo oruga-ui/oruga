@@ -7,20 +7,22 @@ declare module "@/types" {
             Partial<{
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class when slider is disabled */
+                /** Class when switch is disabled */
                 disabledClass: ClassDefinition;
                 /** Class of the outer switch check */
-                checkClass: ClassDefinition;
+                switchClass: ClassDefinition;
                 /** Class of the outer switch check when checked */
-                checkCheckedClass: ClassDefinition;
+                switchCheckedClass: ClassDefinition;
                 /** Class of the inner switch check */
-                checkSwitchClass: ClassDefinition;
+                switchCheckClass: ClassDefinition;
                 /** Class of the switch when rounded */
                 roundedClass: ClassDefinition;
                 /** Class of switch label position */
                 positionClass: ClassDefinition;
                 /** Root class of the native input checkbox */
                 inputClass: ClassDefinition;
+                /** Class of the native input element when checked */
+                inputCheckedClass: ClassDefinition;
                 /** Class of the switch label */
                 labelClass: ClassDefinition;
                 /** Class of the switch size */

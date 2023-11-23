@@ -15,6 +15,7 @@ const inspectData = [
     {
         class: "multilineClass",
         description: "Class of the tooltip content when is multiline",
+        properties: ["multiline"],
         action: (cmp, data) => {
             data.multiline = true;
         },
@@ -44,6 +45,10 @@ const inspectData = [
     {
         class: "alwaysClass",
         description: "Class of the tooltip trigger when is always visible",
+        properties: ["always"], 
+        action: (cmp, data) => {
+            data.always = true;
+        },
     },
     {
         class: "variantClass",
@@ -57,6 +62,7 @@ const inspectData = [
     {
         class: "teleportClass",
         description: "Class when the dropdown is teleported",
+        properties: ["teleport"],
         action: (cmp, data) => {
             data.teleport = true;
         },

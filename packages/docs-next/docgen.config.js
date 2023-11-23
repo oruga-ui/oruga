@@ -24,7 +24,6 @@ const IGNORE = [
     "TabItem",
     "StepItem",
     "MenuItem",
-    "MenuList",
     "Inspector",
     "DatepickerTable",
     "DatepickerTableRow",

@@ -719,11 +719,11 @@ const headerButtonsClasses = computed(() => [
     },
 ]);
 
-const prevBtnClasses = computed(() => [
+const prevButtonClasses = computed(() => [
     useComputedClass("prevButtonClass", "o-dpck__header__previous"),
 ]);
 
-const nextBtnClasses = computed(() => [
+const nextButtonClasses = computed(() => [
     useComputedClass("nextButtonClass", "o-dpck__header__next"),
 ]);
 
@@ -773,7 +773,7 @@ const footerClasses = computed(() => [
                 <div :class="headerButtonsClasses">
                     <OButton
                         v-if="!disabled"
-                        :class="prevBtnClasses"
+                        :class="prevButtonClasses"
                         :disabled="!showPrev"
                         :aria-label="ariaPreviousLabel"
                         :icon-pack="iconPack"
@@ -785,7 +785,7 @@ const footerClasses = computed(() => [
 
                     <OButton
                         v-if="!disabled"
-                        :class="nextBtnClasses"
+                        :class="nextButtonClasses"
                         :disabled="!showNext"
                         :aria-label="ariaNextLabel"
                         :icon-pack="iconPack"

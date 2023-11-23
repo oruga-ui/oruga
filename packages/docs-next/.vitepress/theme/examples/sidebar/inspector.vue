@@ -101,7 +101,7 @@ const inspectData = [
     },
     {
         class: "visibleClass",
-        description: "Class of the sidebar when sidebar is visible",
+        description: "Class of the sidebar content when sidebar is visible",
     },
     {
         class: "hiddenClass",

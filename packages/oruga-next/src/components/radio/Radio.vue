@@ -146,9 +146,9 @@ const rootClasses = computed(() => [
 ]);
 
 const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-radio__check"),
+    useComputedClass("inputClass", "o-radio__input"),
     {
-        [useComputedClass("inputCheckedClass", "o-radio__check--checked")]:
+        [useComputedClass("inputCheckedClass", "o-radio__input--checked")]:
             isChecked.value,
     },
 ]);
@@ -183,6 +183,7 @@ const labelClasses = computed(() => [
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
+
         <span
             v-if="label || $slots.default"
             :id="ariaLabelledby"

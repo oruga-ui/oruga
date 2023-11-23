@@ -67,7 +67,7 @@ declare module "@/types" {
                 wrapperClass: ClassDefinition;
                 /** Class of the Table footer */
                 footerClass: ClassDefinition;
-                /** Class of the Table when is empty */
+                /** Class of the Table when it is empty */
                 emptyClass: ClassDefinition;
                 /** Class of the Table row detail */
                 detailedClass: ClassDefinition;

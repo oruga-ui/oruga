@@ -96,7 +96,7 @@ const inspectData = [
     },
     {
         class: "emptyClass",
-        description: "Class of the Table when is empty",
+        description: "Class of the Table when it is empty",
         action: (cmp, data) => {
             data.isEmpty = true;
         },
@@ -242,6 +242,7 @@ const inspectData = [
     {
         class: "thSubheadingClass",
         description: "Class of the Table `th` subheading element",
+        properties: ["subheading"],
     },
     {
         class: "tdClass",

@@ -94,6 +94,7 @@ const inspectData = [
     {
         class: "itemHeaderDisabledClass",
         description: "Class of the tab item header when disabled",
+        properties: ["disabled"],
         subitem: true,
         suffixes: ["default", "boxed", "toggle"],
         action: (cmp, data) => {
@@ -103,12 +104,14 @@ const inspectData = [
     {
         class: "itemHeaderTypeClass",
         description: "Class of the tab item header type",
+        properties: ["type"],
         subitem: true,
         suffixes: ["default", "boxed", "toggle"],
     },
     {
         class: "itemHeaderIconClass",
         description: "Class of the tab item header icon",
+        properties: ["icon"],
         subitem: true,
     },
     {

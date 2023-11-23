@@ -10,12 +10,12 @@ declare module "@/types" {
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
-                /** Class of the checkbox */
-                checkboxClass: ClassDefinition;
-                /** Class of the checkbox when checked */
-                checkboxCheckedClass: ClassDefinition;
+                /** Class of the checkbox input */
+                inputClass: ClassDefinition;
+                /** Class of the checkbox input when checked */
+                inputCheckedClass: ClassDefinition;
                 /** Class when checkbox is indeterminate */
-                checkboxIndeterminateClass: ClassDefinition;
+                indeterminateClass: ClassDefinition;
                 /** Class of the checkbox labe */
                 labelClass: ClassDefinition;
                 /** Class of the checkbox size */

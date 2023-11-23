@@ -16,18 +16,18 @@ const inspectData = [
         },
     },
     {
-        class: "checkboxClass",
-        description: "Class of the checkbox",
+        class: "inputClass",
+        description: "Class of the checkbox input",
     },
     {
-        class: "checkboxCheckedClass",
-        description: "Class of the checkbox when checked",
+        class: "inputCheckedClass",
+        description: "Class of the checkbox input when checked",
         action: (cmp, data) => {
             data.checkbox = true;
         },
     },
     {
-        class: "checkboxIndeterminateClass",
+        class: "indeterminateClass",
         description: "Class when checkbox is indeterminate",
         properties: ["indeterminate"],
         action: (cmp, data) => {

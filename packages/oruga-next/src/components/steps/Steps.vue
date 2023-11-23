@@ -269,7 +269,7 @@ function performAction(newId: number | string): void {
 
 // --- Computed Component Classes ---
 
-const wrapperClasses = computed(() => [
+const rootClasses = computed(() => [
     useComputedClass("rootClass", "o-steps__wrapper"),
     {
         [useComputedClass("sizeClass", "o-steps--", props.size)]: props.size,
@@ -290,7 +290,7 @@ const wrapperClasses = computed(() => [
     },
 ]);
 
-const mainClasses = computed(() => [
+const wrapperClasses = computed(() => [
     useComputedClass("stepsClass", "o-steps"),
     {
         [useComputedClass("animatedClass", "o-steps--animated")]:
@@ -377,14 +377,15 @@ function itemClasses(childItem): PropBind {
 </script>
 
 <template>
-    <div :class="wrapperClasses" data-oruga="steps">
-        <nav :class="mainClasses">
+    <div :class="rootClasses" data-oruga="steps">
+        <nav :class="wrapperClasses">
             <div
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
                 :key="childItem.value"
                 :class="itemClasses(childItem)">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
+
                 <a
                     :class="stepLinkClasses(childItem)"
                     @click="isItemClickable(childItem) && itemClick(childItem)">
@@ -398,6 +399,7 @@ function itemClasses(childItem): PropBind {
                             {{ childItem.step }}
                         </span>
                     </div>
+
                     <div :class="stepLinkLabelClasses">
                         {{ childItem.label }}
                     </div>

@@ -135,7 +135,7 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "overlayClass",
-        "sceneClass",
+        "wrapperClass",
         "itemsClass",
         "itemsDraggingClass",
         "arrowIconClass",
@@ -468,8 +468,8 @@ const rootClasses = computed(() => [
     },
 ]);
 
-const sceneClasses = computed(() => [
-    useComputedClass("sceneClass", "o-car__scene"),
+const wrapperClasses = computed(() => [
+    useComputedClass("wrapperClass", "o-car__wrapper"),
 ]);
 
 const itemsClasses = computed(() => [
@@ -542,7 +542,7 @@ const indicatorClasses = computed(() => [
         data-oruga="carousel"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave">
-        <div :class="sceneClasses">
+        <div :class="wrapperClasses">
             <div
                 :class="itemsClasses"
                 :style="'transform:translateX(' + translation + 'px)'"

@@ -86,13 +86,14 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "disabledClass",
-        "checkClass",
-        "checkCheckedClass",
-        "checkSwitchClass",
+        "switchClass",
+        "switchCheckedClass",
+        "switchCheckClass",
         "roundedClass",
         "passiveVariantClass",
         "positionClass",
         "inputClass",
+        "inputCheckedClass",
         "labelClass",
         "sizeClass",
         "variantClass",
@@ -182,12 +183,16 @@ const rootClasses = computed(() => [
 
 const inputClasses = computed(() => [
     useComputedClass("inputClass", "o-switch__input"),
+    {
+        [useComputedClass("inputCheckedClass", "o-switch__input--checked")]:
+            isChecked.value,
+    },
 ]);
 
-const checkClasses = computed(() => [
-    useComputedClass("checkClass", "o-switch__check"),
+const switchClasses = computed(() => [
+    useComputedClass("switchClass", "o-switch__check"),
     {
-        [useComputedClass("checkCheckedClass", "o-switch__check--checked")]:
+        [useComputedClass("switchCheckedClass", "o-switch__check--checked")]:
             isChecked.value,
     },
     {
@@ -195,8 +200,8 @@ const checkClasses = computed(() => [
     },
 ]);
 
-const checkSwitchClasses = computed(() => [
-    useComputedClass("checkSwitchClass", "o-switch__check-switch"),
+const switchCheckClasses = computed(() => [
+    useComputedClass("switchCheckClass", "o-switch__check-switch"),
     {
         [useComputedClass("roundedClass", "o-switch--rounded")]: props.rounded,
     },
@@ -236,8 +241,8 @@ const labelClasses = computed(() => [
             @invalid="onInvalid"
             @input="onInput" />
 
-        <span :class="checkClasses">
-            <span :class="checkSwitchClasses"></span>
+        <span :class="switchClasses">
+            <span :class="switchCheckClasses"></span>
         </span>
 
         <span

@@ -38,7 +38,7 @@ declare module "@/types" {
                 noScrollClass: ClassDefinition;
                 /** Class of the sidebar when sidebar is hidden */
                 hiddenClass: ClassDefinition;
-                /** Class of the sidebar when sidebar is visible */
+                /** Class of the sidebar content when sidebar is visible */
                 visibleClass: ClassDefinition;
             }> &
             /** component props config definition */

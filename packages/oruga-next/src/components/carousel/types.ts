@@ -10,7 +10,7 @@ declare module "@/types" {
                 /** Class of the root element in overlay */
                 overlayClass: ClassDefinition;
                 /** Class of the wrapper element of carousel items */
-                sceneClass: ClassDefinition;
+                wrapperClass: ClassDefinition;
                 /** Class of slider element */
                 itemsClass: ClassDefinition;
                 /** Class of slider element on drag */

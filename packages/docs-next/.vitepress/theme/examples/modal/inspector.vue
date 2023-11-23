@@ -18,6 +18,7 @@ const inspectData = [
     {
         class: "activeClass",
         description: "Class of modal component when its active",
+        properties: ["active"],
         action: () => {
             isImageModalActive.value = true;
         },

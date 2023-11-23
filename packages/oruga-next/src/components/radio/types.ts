@@ -11,9 +11,9 @@ declare module "@/types" {
                 disabledClass: ClassDefinition;
                 /** Class of the root element when checked */
                 checkedClass: ClassDefinition;
-                /** Class of the native radio element */
+                /** Class of the native input element */
                 inputClass: ClassDefinition;
-                /** Class of the native radio element when checked */
+                /** Class of the native input element when checked */
                 inputCheckedClass: ClassDefinition;
                 /** Class of the radio label */
                 labelClass: ClassDefinition;

@@ -145,5 +145,82 @@ export default {
             if (!sidebar.inlineClass) sidebar.inlineClass = sidebar.staticClass;
             oruga.config.setOption("sidebar", sidebar);
         }
+
+        // adjust button classes
+        const button = oruga.config.getOption("button");
+        if (button) {
+            if (!button.wrapperClass)
+                button.wrapperClass = button.elementsWrapperClass;
+        }
+
+        // adjust carousel classes
+        const carousel = oruga.config.getOption("carousel");
+        if (carousel) {
+            if (!carousel.wrapperClass)
+                carousel.wrapperClass = carousel.sceneClass;
+        }
+
+        // adjust checkbox classes
+        const checkbox = oruga.config.getOption("checkbox");
+        if (checkbox) {
+            if (!checkbox.inputClass) checkbox.inputClass = checkbox.checkClass;
+            if (!checkbox.inputCheckedClass)
+                checkbox.inputCheckedClass = checkbox.checkCheckedClass;
+            if (!checkbox.indeterminateClass)
+                checkbox.indeterminateClass = checkbox.checkIndeterminateClass;
+        }
+
+        // adjust datepicker classes
+        const datepicker = oruga.config.getOption("datepicker");
+        if (datepicker) {
+            if (!datepicker.nextButtonClass)
+                datepicker.nextButtonClass = datepicker.nextBtnClass;
+            if (!datepicker.prevButtonClass)
+                datepicker.prevButtonClass = datepicker.prevBtnClass;
+        }
+
+        // adjust pagination classes
+        const pagination = oruga.config.getOption("pagination");
+        if (pagination) {
+            if (!pagination.nextButtonClass)
+                pagination.nextButtonClass = pagination.nextBtnClass;
+            if (!pagination.prevButtonClass)
+                pagination.prevButtonClass = pagination.prevBtnClass;
+        }
+
+        // adjust radio classes
+        const radio = oruga.config.getOption("radio");
+        if (radio) {
+            if (!radio.inputCheckedClass)
+                radio.inputCheckedClass = radio.checkCheckedClass;
+            if (!radio.inputClass) radio.inputClass = radio.checkClass;
+        }
+
+        // adjust switch classes
+        const switch_ = oruga.config.getOption("switch");
+
+        if (radio) {
+            if (!switch_.switchClass) switch_.switchClass = switch_.checkClass;
+            if (!switch_.switchCheckedClass)
+                switch_.switchCheckedClass = switch_.checkCheckedClass;
+            if (!switch_.switchCheckClass)
+                switch_.switchCheckClass = switch_.checkSwitchClass;
+        }
+
+        // adjust tabs classes
+        const tabs = oruga.config.getOption("tabs");
+        if (tabs) {
+            if (!tabs.itemWrapperClass)
+                tabs.itemWrapperClass = tabs.tabItemWrapperClass;
+        }
+
+        // adjust tooltip classes
+        const tooltip = oruga.config.getOption("tooltip");
+        if (tooltip) {
+            if (!tooltip.arrowPositionClass)
+                tooltip.arrowPositionClass = tooltip.arrowOrderClass;
+            if (!tooltip.positionClass)
+                tooltip.positionClass = tooltip.orderClass;
+        }
     },
 };
