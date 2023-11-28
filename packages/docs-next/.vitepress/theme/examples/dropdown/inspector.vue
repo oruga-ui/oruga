@@ -15,6 +15,17 @@ const inspectData = [
         description: "Class of the trigger element",
     },
     {
+        class: "teleportClass",
+        description: "Class when the dropdown is teleported",
+        properties: ["teleport"],
+        action: (cmp, data) => {
+            data.teleport = true;
+            setTimeout(() => {
+                dropdownbtn.value.click();
+            }, 300);
+        },
+    },
+    {
         class: "menuMobileOverlayClass",
         description: "Class of the overlay when on mobile",
         warning: "Switch to mobile view to see it in action!",
@@ -47,7 +58,7 @@ const inspectData = [
     {
         class: "menuActiveClass",
         description: "Class of dropdown menu when active",
-        properties: ["inline"],
+        properties: ["inline", "active"],
         action: () => {
             setTimeout(() => {
                 dropdownbtn.value.click();
@@ -66,7 +77,7 @@ const inspectData = [
         class: "menuPositionClass",
         description: "Class of dropdown menu position",
         properties: ["position"],
-        suffixes: ["top-right", "top-left", "bottom-left"],
+        suffixes: ["top-right", "top-left", "bottom-right", "bottom-left"],
         action: (cmp, data) => {
             data.position = "top-right";
             setTimeout(() => {

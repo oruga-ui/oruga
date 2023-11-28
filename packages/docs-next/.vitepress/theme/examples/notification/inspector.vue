@@ -1,6 +1,11 @@
 <script setup>
 const inspectData = [
     {
+        class: "rootClass",
+        description: "Class of the root element",
+        warning: "You have to declare a class when override mode",
+    },
+    {
         class: "noticeClass",
         description: "Root class of the notice",
         nospec: true,
@@ -23,9 +28,8 @@ const inspectData = [
         nospec: true,
     },
     {
-        class: "rootClass",
-        description: "Class of the root element",
-        warning: "You have to declare a class when override mode",
+        class: "noticeCustomContainerClass",
+        description: "Class of the custom container element",
     },
     {
         class: "closeClass",
@@ -77,10 +81,6 @@ const inspectData = [
         action: (cmp, data) => {
             data.variant = "warning";
         },
-    },
-    {
-        class: "noticeCustomContainerClass",
-        description: "Class of the custom container element",
     },
 ];
 </script>

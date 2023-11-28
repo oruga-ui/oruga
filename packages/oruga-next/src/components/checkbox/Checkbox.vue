@@ -77,10 +77,10 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "disabledClass",
-        "checkClass",
         "checkedClass",
-        "checkCheckedClass",
-        "checkIndeterminateClass",
+        "inputClass",
+        "inputCheckedClass",
+        "indeterminateClass",
         "labelClass",
         "sizeClass",
         "variantClass",
@@ -173,17 +173,15 @@ const rootClasses = computed(() => [
     },
 ]);
 
-const checkClasses = computed(() => [
-    useComputedClass("checkClass", "o-chk__check"),
+const inputClasses = computed(() => [
+    useComputedClass("inputClass", "o-chk__input"),
     {
-        [useComputedClass("checkCheckedClass", "o-chk__check--checked")]:
+        [useComputedClass("inputCheckedClass", "o-chk__input--checked")]:
             isChecked.value,
     },
     {
-        [useComputedClass(
-            "checkIndeterminateClass",
-            "o-chk__check--indeterminate",
-        )]: isIndeterminate.value,
+        [useComputedClass("indeterminateClass", "o-chk__input--indeterminate")]:
+            isIndeterminate.value,
     },
 ]);
 
@@ -205,7 +203,7 @@ const labelClasses = computed(() =>
             v-model="vmodel"
             type="checkbox"
             data-oruga-input="checkbox"
-            :class="checkClasses"
+            :class="inputClasses"
             :disabled="disabled"
             :required="required"
             :name="name"

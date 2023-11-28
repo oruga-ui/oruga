@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    ref,
-    computed,
-    toRaw,
-    type Component,
-    type PropType,
-    type Ref,
-} from "vue";
+import { ref, computed, toRaw, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -18,6 +11,7 @@ import {
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
+import type { DynamicComponent } from "@/types";
 
 /**
  * A menu list item
@@ -41,7 +35,7 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Menu item will be disabled */
     disabled: { type: Boolean, default: false },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: { type: String, default: undefined },
     /**
      * Icon pack to use
@@ -66,7 +60,7 @@ const props = defineProps({
     },
     /** Menu item tag name */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("menu.menuTag", "a"),
     },
     /**

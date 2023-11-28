@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-    ref,
-    computed,
-    watch,
-    nextTick,
-    type PropType,
-    type Component,
-} from "vue";
+import { ref, computed, watch, nextTick, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
@@ -18,6 +11,7 @@ import {
 } from "@/composables";
 import { isClient } from "@/utils/ssr";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
+import type { DynamicComponent } from "@/types";
 
 /**
  * Display a brief helper text to your user
@@ -78,7 +72,7 @@ const props = defineProps({
     multiline: { type: Boolean, default: false },
     /** Tooltip trigger tag name */
     triggerTag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("tooltip.triggerTag", "div"),
     },
     /**
@@ -120,13 +114,13 @@ const props = defineProps({
         "rootClass",
         "teleportClass",
         "contentClass",
-        "orderClass",
+        "positionClass",
         "triggerClass",
         "multilineClass",
         "alwaysClass",
         "variantClass",
         "arrowClass",
-        "arrowOrderClass",
+        "arrowPositionClass",
     ]),
 });
 
@@ -282,7 +276,7 @@ const arrowClasses = computed(() => [
     useComputedClass("arrowClass", "o-tip__arrow"),
     {
         [useComputedClass(
-            "arrowOrderClass",
+            "arrowPositionClass",
             "o-tip__arrow--",
             autoPosition.value,
         )]: autoPosition.value,
@@ -300,7 +294,7 @@ const contentClasses = computed(() => [
     useComputedClass("contentClass", "o-tip__content"),
     {
         [useComputedClass(
-            "orderClass",
+            "positionClass",
             "o-tip__content--",
             autoPosition.value,
         )]: autoPosition.value,

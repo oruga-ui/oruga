@@ -17,7 +17,7 @@ import {
     usePropBinding,
 } from "@/composables";
 
-import { getMonthNames, getWeekdayNames } from "./datepickerUtils";
+import { getMonthNames, getWeekdayNames } from "./utils";
 
 import {
     useDatepickerShare,
@@ -99,10 +99,12 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
+    /** Open dropdown on focus */
     openOnFocus: {
         type: Boolean,
         default: () => getOption("datepicker.openOnFocus", true),
     },
+    /** Close dropdown on click */
     closeOnClick: {
         type: Boolean,
         default: () => getOption("datepicker.closeOnClick", true),
@@ -179,12 +181,12 @@ const props = defineProps({
         type: Array as PropType<number[]>,
         default: () => getOption("datepicker.yearsRange", [-100, 10]),
     },
-    /** Dropdown trapFocus */
+    /** Trap dropdown on focus */
     trapFocus: {
         type: Boolean,
         default: () => getOption("datepicker.trapFocus", true),
     },
-    /** Dropdown position */
+    /** Position of the dropdown relative to the input */
     position: { type: String, default: undefined },
     /** Enable dropdown mobile modal */
     mobileModal: {
@@ -204,12 +206,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("datepicker.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("datepicker.icon", undefined),
     },
-    /** Icon name to be added on the right side */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("datepicker.iconRight", undefined),
@@ -265,8 +267,8 @@ const props = defineProps({
         "headerClass",
         "headerButtonsClass",
         "headerButtonsSizeClass",
-        "prevBtnClass",
-        "nextBtnClass",
+        "prevButtonClass",
+        "nextButtonClass",
         "listsClass",
         "footerClass",
         "tableClass",
@@ -275,9 +277,9 @@ const props = defineProps({
         "tableBodyClass",
         "tableRowClass",
         "tableCellClass",
+        "tableCellInvisibleClass",
         "tableCellSelectedClass",
         "tableCellFirstSelectedClass",
-        "tableCellInvisibleClass",
         "tableCellWithinSelectedClass",
         "tableCellLastSelectedClass",
         "tableCellFirstHoveredClass",
@@ -289,11 +291,9 @@ const props = defineProps({
         "tableCellNearbyClass",
         "tableCellEventsClass",
         "tableEventsClass",
-        "tableEventVariantClass",
         "tableEventClass",
+        "tableEventVariantClass",
         "tableEventIndicatorsClass",
-        "mobileClass",
-        /* datapickermonth classes */
         "monthClass",
         "monthBodyClass",
         "monthTableClass",
@@ -310,18 +310,31 @@ const props = defineProps({
         "monthCellSelectableClass",
         "monthCellUnselectableClass",
         "monthCellEventsClass",
+        "mobileClass",
     ]),
+    /**
+     * Class configuration for the internal input component
+     * @ignore
+     */
     inputClasses: {
         type: Object,
         default: () => getOption("datepicker.inputClasses", {}),
     },
+    /**
+     * Class configuration for the internal dropdown component
+     * @ignore
+     */
     dropdownClasses: {
         type: Object,
         default: () => getOption("datepicker.dropdownClasses", {}),
     },
-    selectListClasses: {
+    /**
+     * Class configuration for the internal select component
+     * @ignore
+     */
+    selectClasses: {
         type: Object,
-        default: () => getOption("datepicker.selectListClasses", {}),
+        default: () => getOption("datepicker.selectClasses", {}),
     },
 });
 
@@ -670,10 +683,6 @@ function onChangeNativePicker(value: string): void {
 
 // --- Computed Component Classes ---
 
-const selectListBind = computed(() => ({
-    ...props.selectListClasses,
-}));
-
 const dropdownClass = computed(() =>
     useComputedClass("dropdownClasses.rootClass", "o-dpck__dropdown"),
 );
@@ -710,12 +719,12 @@ const headerButtonsClasses = computed(() => [
     },
 ]);
 
-const prevBtnClasses = computed(() => [
-    useComputedClass("prevBtnClass", "o-dpck__header__previous"),
+const prevButtonClasses = computed(() => [
+    useComputedClass("prevButtonClass", "o-dpck__header__previous"),
 ]);
 
-const nextBtnClasses = computed(() => [
-    useComputedClass("nextBtnClass", "o-dpck__header__next"),
+const nextButtonClasses = computed(() => [
+    useComputedClass("nextButtonClass", "o-dpck__header__next"),
 ]);
 
 const listsClasses = computed(() => [
@@ -764,7 +773,7 @@ const footerClasses = computed(() => [
                 <div :class="headerButtonsClasses">
                     <OButton
                         v-if="!disabled"
-                        :class="prevBtnClasses"
+                        :class="prevButtonClasses"
                         :disabled="!showPrev"
                         :aria-label="ariaPreviousLabel"
                         :icon-pack="iconPack"
@@ -776,7 +785,7 @@ const footerClasses = computed(() => [
 
                     <OButton
                         v-if="!disabled"
-                        :class="nextBtnClasses"
+                        :class="nextButtonClasses"
                         :disabled="!showNext"
                         :aria-label="ariaNextLabel"
                         :icon-pack="iconPack"
@@ -792,7 +801,7 @@ const footerClasses = computed(() => [
                             v-model="focusedDateData.month"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectListBind">
+                            v-bind="selectClasses">
                             <option
                                 v-for="month in listOfMonths"
                                 :key="month.name"
@@ -805,7 +814,7 @@ const footerClasses = computed(() => [
                             v-model="focusedDateData.year"
                             :disabled="disabled"
                             :size="size"
-                            v-bind="selectListBind">
+                            v-bind="selectClasses">
                             <option
                                 v-for="year in listOfYears"
                                 :key="year"

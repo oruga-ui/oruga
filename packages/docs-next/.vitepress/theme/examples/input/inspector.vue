@@ -59,9 +59,9 @@ const inspectData = [
     {
         class: "counterClass",
         description: "Class of the counter element",
-        properties: ["hasCounter", "maxlength"],
+        properties: ["counter", "maxlength"],
         action: (cmp, data) => {
-            data.hasCounter = true;
+            data.counter = true;
             data.maxlength = 10;
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));

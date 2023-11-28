@@ -13,7 +13,7 @@ import {
     type DatepickerProps,
     type DatepickerEvent,
 } from "./useDatepickerShare";
-import { weeksInYear, firstWeekOffset } from "./datepickerUtils";
+import { weeksInYear, firstWeekOffset } from "./utils";
 import type { PropBind } from "@/types";
 
 defineOptions({

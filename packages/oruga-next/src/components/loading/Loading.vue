@@ -86,8 +86,8 @@ const props = defineProps({
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
-        "overlayClass",
         "fullPageClass",
+        "overlayClass",
         "iconClass",
         "labelClass",
     ]),
@@ -121,9 +121,7 @@ const { isActive, close, cancel } = useProgrammaticComponent(
 );
 
 onMounted(() => {
-    if (props.programmatic && props.container) {
-        displayInFullPage.value = false;
-    }
+    if (props.programmatic && props.container) displayInFullPage.value = false;
 });
 
 // --- Computed Component Classes ---

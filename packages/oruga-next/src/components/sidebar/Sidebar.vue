@@ -17,8 +17,8 @@ import {
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
-import type { ProgrammaticInstance } from "@/index";
 import { isClient } from "@/utils/ssr";
+import type { ProgrammaticInstance } from "@/types";
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -55,7 +55,7 @@ const props = defineProps({
      */
     position: {
         type: String as PropType<"top" | "right" | "bottom" | "left">,
-        default: () => getOption("sidebar.position"),
+        default: () => getOption("sidebar.position", "left"),
     },
     /** Show sidebar in fullheight */
     fullheight: {

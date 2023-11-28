@@ -13,8 +13,8 @@ import {
     useVModelBinding,
     useMatchMedia,
 } from "@/composables";
-import type { PropBind } from "@/index";
 import { isDefined } from "@/utils/helpers";
+import type { PropBind } from "@/types";
 import type { StepItem, StepItemComponent } from "./types";
 
 /**
@@ -84,9 +84,7 @@ const props = defineProps({
      * Next and previous buttons below the component. You can use this property if you want to use your own custom navigation items.
      */
     hasNavigation: { type: Boolean, default: true },
-    /**
-     * Step navigation is animated
-     */
+    /** Step navigation is animated */
     animated: {
         type: Boolean,
         default: () => getOption("steps.animated", true),
@@ -108,8 +106,16 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.mobileBreakpoint"),
     },
-    ariaNextLabel: { type: String, default: undefined },
-    ariaPreviousLabel: { type: String, default: undefined },
+    /** Accessibility next button aria label */
+    ariaNextLabel: {
+        type: String,
+        default: () => getOption("steps.ariaNextLabel"),
+    },
+    /** Accessibility previous button aria label  */
+    ariaPreviousLabel: {
+        type: String,
+        default: () => getOption("steps.ariaPreviousLabel"),
+    },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
         "rootClass",
@@ -263,7 +269,7 @@ function performAction(newId: number | string): void {
 
 // --- Computed Component Classes ---
 
-const wrapperClasses = computed(() => [
+const rootClasses = computed(() => [
     useComputedClass("rootClass", "o-steps__wrapper"),
     {
         [useComputedClass("sizeClass", "o-steps--", props.size)]: props.size,
@@ -284,7 +290,7 @@ const wrapperClasses = computed(() => [
     },
 ]);
 
-const mainClasses = computed(() => [
+const wrapperClasses = computed(() => [
     useComputedClass("stepsClass", "o-steps"),
     {
         [useComputedClass("animatedClass", "o-steps--animated")]:
@@ -371,14 +377,15 @@ function itemClasses(childItem): PropBind {
 </script>
 
 <template>
-    <div :class="wrapperClasses" data-oruga="steps">
-        <nav :class="mainClasses">
+    <div :class="rootClasses" data-oruga="steps">
+        <nav :class="wrapperClasses">
             <div
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
                 :key="childItem.value"
                 :class="itemClasses(childItem)">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
+
                 <a
                     :class="stepLinkClasses(childItem)"
                     @click="isItemClickable(childItem) && itemClick(childItem)">
@@ -392,6 +399,7 @@ function itemClasses(childItem): PropBind {
                             {{ childItem.step }}
                         </span>
                     </div>
+
                     <div :class="stepLinkLabelClasses">
                         {{ childItem.label }}
                     </div>

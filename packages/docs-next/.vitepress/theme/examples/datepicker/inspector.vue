@@ -79,8 +79,8 @@ const inspectData = [
         },
     },
     {
-        class: "prevBtnClass",
-        description: "Class of the prev. button inside the Datepicker box",
+        class: "prevButtonClass",
+        description: "Class of the prev button inside the Datepicker box",
         specificity: "when <b>mobileClass</b> is applied",
         action: (cmp, data) => {
             data.type = "";
@@ -88,7 +88,7 @@ const inspectData = [
         },
     },
     {
-        class: "nextBtnClass",
+        class: "nextButtonClass",
         description: "Class of the next button inside the Datepicker box",
         specificity: "when <b>mobileClass</b> is applied",
         action: (cmp, data) => {
@@ -375,6 +375,15 @@ const inspectData = [
         },
     },
     {
+        class: "monthTableClass",
+        description: "Class of the table container when type is month",
+        action: (cmp, data) => {
+            data.type = "month";
+            data.monthClass = "datepicker__,table__month";
+            openDatePicker();
+        },
+    },
+    {
         class: "monthCellClass",
         description: "Class of the table cell when type is month",
         action: (cmp, data) => {
@@ -459,6 +468,19 @@ const inspectData = [
         },
     },
     {
+        class: "monthCellWithinHoveredRangeClass",
+        description:
+            "Class of the table cell when hovered during range selection and cell is in range when type is month",
+        warning: "See it in action selecting a date range",
+        action: (cmp, data) => {
+            data.range = true;
+            data.inline = true;
+            data.type = "month";
+            data.monthClass = "datepicker__,table__month";
+            openDatePicker();
+        },
+    },
+    {
         class: "monthCellLastHoveredClass",
         description:
             "Class of the last table cell hovered during range selection when type is month",
@@ -502,17 +524,6 @@ const inspectData = [
         },
     },
     {
-        class: "monthCellNearbyClass",
-        description:
-            "Class of the table cell when nearby days (prev/next month) are selectable when type is month",
-        action: (cmp, data) => {
-            data.type = "month";
-            data.monthClass = "datepicker__,table__month";
-            data.nearbySelectableMonthDays = true;
-            openDatePicker();
-        },
-    },
-    {
         class: "monthEventsClass",
         description: "Class of the events container when type is month",
         action: (cmp, data) => {
@@ -533,21 +544,23 @@ const inspectData = [
     {
         class: "inputClasses",
         realClass: "inputClasses.rootClass",
-        description: "Classes to apply on internal input.",
+        description: "Classes to apply on internal input component",
         componentRef: "Input",
     },
     {
         class: "dropdownClasses",
         realClass: "dropdownClasses.rootClass",
-        description: "Classes to apply on dropdown.",
+        description: "Classes to apply on internal dropdown component",
         componentRef: "Dropdown",
         action: () => {
             openDatePicker();
         },
     },
     {
-        class: "selectListClasses",
-        description: "Classes to apply on select list (month and year).",
+        class: "selectClasses",
+        realClass: "selectClasses.rootClass",
+        description:
+            "Classes to apply on internal select component (month and year list)",
         componentRef: "Select",
         action: () => {
             openDatePicker();

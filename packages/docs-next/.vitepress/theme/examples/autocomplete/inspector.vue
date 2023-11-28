@@ -12,52 +12,8 @@ const inspectData = [
         description: "Class of the root element",
     },
     {
-        class: "menuClass",
-        description: "Class of the autocomplete menu",
-        action: (cmp) => {
-            const el = cmp.querySelector("input");
-            el.dispatchEvent(new Event("focus"));
-            el.dispatchEvent(
-                new KeyboardEvent("keydown", {
-                    bubbles: true,
-                    cancelable: true,
-                    key: "Q",
-                    char: "Q",
-                    shiftKey: true,
-                }),
-            );
-        },
-    },
-    {
-        class: "expandedClass",
-        description: "Class of the autocomplete menu expanded",
-        properties: ["expanded"],
-        action: (cmp, data) => {
-            data.expanded = true;
-        },
-    },
-    {
-        class: "menuPositionClass",
-        description: "Class of the autocomplete menu position",
-        properties: ["menu-position"],
-        suffixes: ["auto", "top", "bottom"],
-        action: (cmp) => {
-            const el = cmp.querySelector("input");
-            el.dispatchEvent(new Event("focus"));
-            el.dispatchEvent(
-                new KeyboardEvent("keydown", {
-                    bubbles: true,
-                    cancelable: true,
-                    key: "Q",
-                    char: "Q",
-                    shiftKey: true,
-                }),
-            );
-        },
-    },
-    {
         class: "itemClass",
-        description: "Class of the menu items.",
+        description: "Class of the menu items",
         action: (cmp) => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
@@ -74,7 +30,7 @@ const inspectData = [
     },
     {
         class: "itemHoverClass",
-        description: "Class of the menu items on hover.",
+        description: "Class of the menu items on hover",
         action: (cmp) => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
@@ -120,7 +76,7 @@ const inspectData = [
     },
     {
         class: "itemGroupTitleClass",
-        description: "Class of the menu items group title.",
+        description: "Class of the menu items group title",
         action: (cmp) => {
             const el = cmp.querySelector("input");
             el.dispatchEvent(new Event("focus"));
@@ -189,7 +145,7 @@ const inspectData = [
     {
         class: "inputClasses",
         realClass: "inputClasses.rootClass",
-        description: "Classes to apply on internal input.",
+        description: "Classes to apply on internal input component",
         componentRef: "Input",
     },
 ];

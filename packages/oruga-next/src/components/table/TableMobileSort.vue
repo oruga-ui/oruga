@@ -6,7 +6,7 @@ import OSelect from "../select/Select.vue";
 import OIcon from "../icon/Icon.vue";
 import OField from "../field/Field.vue";
 
-import { getValueByPath } from "../../utils/helpers";
+import { getValueByPath } from "@/utils/helpers";
 import type { TableColumn } from "./types";
 
 defineOptions({

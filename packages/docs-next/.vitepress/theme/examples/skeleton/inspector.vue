@@ -7,7 +7,6 @@ const inspectData = [
     {
         class: "animationClass",
         description: "Class of the skeleton animation",
-
         action: (cmp, data) => {
             data.animated = true;
         },

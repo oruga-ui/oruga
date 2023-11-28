@@ -48,7 +48,7 @@ const props = defineProps({
         default: () => getOption("taginput.size"),
     },
     /**
-     * Color of the each items, optional
+     * Color of the each item, optional
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -60,9 +60,9 @@ const props = defineProps({
     /** Same as native maxlength, plus character counter */
     maxlength: { type: Number, default: undefined },
     /** Show counter when maxlength or maxtags props are passed */
-    hasCounter: {
+    counter: {
         type: Boolean,
-        default: () => getOption("taginput.hasCounter", true),
+        default: () => getOption("taginput.counter", true),
     },
     /** Opens a dropdown with choices when the input field is focused */
     openOnFocus: { type: Boolean, default: false },
@@ -80,10 +80,10 @@ const props = defineProps({
     /**
      * Array of keys
      * (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
-     * which will add a item when typing (default comma, tab and enter)
+     * which will add a item when typing
      */
     confirmKeys: {
-        type: Array,
+        type: Array as PropType<string[]>,
         default: () => getOption("taginput.confirmKeys", [",", "Tab", "Enter"]),
     },
     /** Array of chars used to split when pasting a new string */
@@ -101,7 +101,7 @@ const props = defineProps({
     allowAutocomplete: { type: Boolean, default: false },
     /** Allow removing last item when pressing given keys, if input is empty */
     removeOnKeys: {
-        type: Array,
+        type: Array as PropType<string[]>,
         default: () => getOption("taginput.removeOnKeys", ["Backspace"]),
     },
     /** Function to validate the value of the item before adding */
@@ -130,12 +130,12 @@ const props = defineProps({
      */
     iconPack: {
         type: String,
-        default: () => getOption("taginput.iconPack", undefined),
+        default: () => getOption("taginput.iconPack"),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
-        default: () => getOption("taginput.icon", undefined),
+        default: () => getOption("taginput.icon"),
     },
     /** Icon name of close icon on selected item */
     closeIcon: {
@@ -177,6 +177,10 @@ const props = defineProps({
         "itemClass",
         "counterClass",
     ]),
+    /**
+     * Class configuration for the underlying autocomplete component
+     * @ignore
+     */
     autocompleteClasses: {
         type: Object,
         default: () => getOption("taginput.autocompleteClasses", {}),
@@ -521,7 +525,7 @@ const counterClasses = computed(() => [
         </div>
 
         <small
-            v-if="hasCounter && (maxitems || maxlength)"
+            v-if="counter && (maxitems || maxlength)"
             :class="counterClasses">
             <template v-if="maxlength && valueLength > 0">
                 <!--

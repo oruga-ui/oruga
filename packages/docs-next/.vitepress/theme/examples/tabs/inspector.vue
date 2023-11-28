@@ -61,13 +61,17 @@ const inspectData = [
         },
     },
     {
-        class: "tabItemWrapperClass",
+        class: "itemWrapperClass",
         description: "Class of the tab item wrapper",
         specificity: "when <b>expandedClass</b> is applied",
     },
     {
         class: "contentClass",
         description: "Class of the tab content",
+    },
+    {
+        class: "transitioningClass",
+        description: "Class of the tab content when transitioning",
     },
     {
         class: "itemClass",
@@ -90,6 +94,7 @@ const inspectData = [
     {
         class: "itemHeaderDisabledClass",
         description: "Class of the tab item header when disabled",
+        properties: ["disabled"],
         subitem: true,
         suffixes: ["default", "boxed", "toggle"],
         action: (cmp, data) => {
@@ -99,12 +104,14 @@ const inspectData = [
     {
         class: "itemHeaderTypeClass",
         description: "Class of the tab item header type",
+        properties: ["type"],
         subitem: true,
         suffixes: ["default", "boxed", "toggle"],
     },
     {
         class: "itemHeaderIconClass",
         description: "Class of the tab item header icon",
+        properties: ["icon"],
         subitem: true,
     },
     {

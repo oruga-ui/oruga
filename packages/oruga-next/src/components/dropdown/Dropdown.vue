@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    nextTick,
-    ref,
-    watch,
-    type Component,
-    type PropType,
-    type Ref,
-} from "vue";
+import { computed, nextTick, ref, watch, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -26,6 +18,7 @@ import { isClient } from "@/utils/ssr";
 import { provideDropdown } from "./useDropdownShare";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 import { unrefElement } from "@/utils/unrefElement";
+import type { DynamicComponent } from "@/types";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -108,12 +101,12 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Dropdown menu tag name */
     menuTag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("dropdown.menuTag", "div"),
     },
     /** Dropdown trigger tag name */
     triggerTag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("dropdown.triggerTag", "div"),
     },
     /**

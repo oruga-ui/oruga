@@ -27,7 +27,7 @@ const props = defineProps({
      */
     tag: {
         type: [String, Object, Function] as PropType<string | Component>,
-        default: "button",
+        default: () => getOption("button.tag", "button"),
     },
     /**
      * Color variant of the control, optional
@@ -60,7 +60,7 @@ const props = defineProps({
     iconLeft: { type: String, default: undefined },
     /** Icon name to show on the right */
     iconRight: { type: String, default: undefined },
-    /** Rounded style */
+    /** Enable rounded style */
     rounded: {
         type: Boolean,
         default: () => getOption("button.rounded", false),
@@ -94,8 +94,8 @@ const props = defineProps({
     iconBoth: { type: Boolean, default: false },
     // add class props (will not be displayed in the docs)
     ...useClassProps([
-        "elementsWrapperClass",
         "rootClass",
+        "wrapperClass",
         "outlinedClass",
         "loadingClass",
         "invertedClass",
@@ -182,8 +182,8 @@ const iconRightClasses = computed(() => [
     useComputedClass("iconRightClass", "o-btn__icon-right"),
 ]);
 
-const elementsWrapperClasses = computed(() => [
-    useComputedClass("elementsWrapperClass", "o-btn__wrapper"),
+const wrapperClasses = computed(() => [
+    useComputedClass("wrapperClass", "o-btn__wrapper"),
 ]);
 </script>
 
@@ -195,7 +195,7 @@ const elementsWrapperClasses = computed(() => [
         :class="rootClasses"
         :role="role"
         data-oruga="button">
-        <span :class="elementsWrapperClasses">
+        <span :class="wrapperClasses">
             <o-icon
                 v-if="iconLeft"
                 :pack="iconPack"

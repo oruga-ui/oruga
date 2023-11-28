@@ -62,13 +62,13 @@ const inspectData = [
     {
         class: "inputClasses",
         realClass: "inputClasses.rootClass",
-        description: "Classes to apply on internal input.",
+        description: "Classes to apply on internal input component",
         componentRef: "Input",
     },
     {
         class: "dropdownClasses",
         realClass: "dropdownClasses.rootClass",
-        description: "Classes to apply on dropdown.",
+        description: "Classes to apply on internal dropdown component",
         componentRef: "Dropdown",
         action: () => {
             openTimePicker();
@@ -77,7 +77,7 @@ const inspectData = [
     {
         class: "selectClasses",
         realClass: "selectClasses.selectClass",
-        description: "Classes to apply on select.",
+        description: "Classes to apply on internal select component",
         componentRef: "Select",
         action: () => {
             openTimePicker();

@@ -62,10 +62,12 @@ const props = defineProps({
     incrementHours: { type: Number, default: 1 },
     incrementMinutes: { type: Number, default: 1 },
     incrementSeconds: { type: Number, default: 1 },
+    /** Open dropdown on focus */
     openOnFocus: {
         type: Boolean,
         default: () => getOption("timepicker.openOnFocus", true),
     },
+    /** Close dropdown on click */
     closeOnClick: {
         type: Boolean,
         default: () => getOption("timepicker.closeOnClick", true),
@@ -131,12 +133,12 @@ const props = defineProps({
         type: String,
         default: () => getOption("timepicker.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("timepicker.icon", undefined),
     },
-    /** Icon name to be added on the right side */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("timepicker.iconRight", undefined),
@@ -172,14 +174,26 @@ const props = defineProps({
         "separatorClass",
         "footerClass",
     ]),
+    /**
+     * Class configuration for the internal input component
+     * @ignore
+     */
     inputClasses: {
         type: Object,
         default: () => getOption("timepicker.inputClasses", {}),
     },
+    /**
+     * Class configuration for the internal dropdown component
+     * @ignore
+     */
     dropdownClasses: {
         type: Object,
         default: () => getOption("timepicker.dropdownClasses", {}),
     },
+    /**
+     * Class configuration for the internal select component
+     * @ignore
+     */
     selectClasses: {
         type: Object,
         default: () => getOption("timepicker.selectClasses", {}),

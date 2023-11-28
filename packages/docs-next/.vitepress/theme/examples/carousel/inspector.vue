@@ -23,16 +23,16 @@ const inspectData = [
         },
     },
     {
-        class: "sceneClass",
+        class: "wrapperClass",
         description: "Class of the wrapper element of carousel items",
     },
     {
         class: "itemsClass",
-        description: "Class of slider element",
+        description: "Class of slider items",
     },
     {
         class: "itemsDraggingClass",
-        description: "Class of slider element on drag",
+        description: "Class of slider items on drag",
     },
     {
         class: "arrowIconClass",

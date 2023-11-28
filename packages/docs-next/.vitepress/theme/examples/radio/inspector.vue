@@ -9,10 +9,6 @@ const inspectData = [
         description: "Class of the radio label",
     },
     {
-        class: "checkClass",
-        description: "Class of the native radio element",
-    },
-    {
         class: "checkedClass",
         description: "Class of the root element when checked",
         action: (cmp, data) => {
@@ -20,8 +16,12 @@ const inspectData = [
         },
     },
     {
-        class: "checkCheckedClass",
-        description: "Class of the native radio element when checked",
+        class: "inputClass",
+        description: "Class of the native input element",
+    },
+    {
+        class: "inputCheckedClass",
+        description: "Class of the native input element when checked",
         action: (cmp, data) => {
             data.checkbox = "default";
         },

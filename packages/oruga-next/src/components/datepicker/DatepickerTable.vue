@@ -8,7 +8,7 @@ import {
     type DatepickerEvent,
     type FocusedDate,
 } from "./useDatepickerShare";
-import { weekBuilder } from "./datepickerUtils";
+import { weekBuilder } from "./utils";
 import { isDefined } from "@/utils/helpers";
 
 defineOptions({

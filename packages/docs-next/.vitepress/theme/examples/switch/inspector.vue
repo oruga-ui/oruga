@@ -12,19 +12,26 @@ const inspectData = [
         description: "Root class of the native input checkbox",
     },
     {
-        class: "checkClass",
-        description: "Class of the switch check",
-    },
-    {
-        class: "checkCheckedClass",
-        description: "Class of the switch check when checked",
+        class: "inputCheckedClass",
+        description: "Class of the native input element when checked",
         action: (cmp, data) => {
             data.checkValue.value = true;
         },
     },
     {
-        class: "checkSwitchClass",
-        description: "Class of the switch check",
+        class: "switchClass",
+        description: "Class of the outer switch check",
+    },
+    {
+        class: "switchCheckedClass",
+        description: "Class of the outer switch check when checked",
+        action: (cmp, data) => {
+            data.checkValue.value = true;
+        },
+    },
+    {
+        class: "switchCheckClass",
+        description: "Class of the inner switch check",
     },
     {
         class: "roundedClass",
@@ -36,7 +43,7 @@ const inspectData = [
     },
     {
         class: "disabledClass",
-        description: "Class when slider is disabled",
+        description: "Class when switch is disabled",
         properties: ["disabled"],
         action: (cmp, data) => {
             data.disabled = true;

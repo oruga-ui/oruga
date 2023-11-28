@@ -91,6 +91,24 @@ const inspectData = [
         description: "Class of the Table",
     },
     {
+        class: "wrapperClass",
+        description: "Class of the Table wrapper",
+    },
+    {
+        class: "emptyClass",
+        description: "Class of the Table when it is empty",
+        action: (cmp, data) => {
+            data.isEmpty = true;
+        },
+    },
+    {
+        class: "footerClass",
+        description: "Class of the Table footer",
+        action: (cmp, data) => {
+            data.tableClass = "inspector_table";
+        },
+    },
+    {
         class: "borderedClass",
         properties: ["bordered"],
         description: "Class of the Table when is bordered",
@@ -104,6 +122,16 @@ const inspectData = [
         description: "Class of the Table when rows are striped",
         action: (cmp, data) => {
             data.striped = true;
+        },
+    },
+    {
+        class: "detailedClass",
+        description: "Class of the Table row detail",
+        properties: ["detailed"],
+        warning: "Expand details to see it in action!",
+        action: (cmp, data) => {
+            data.tableClass = "inspector_table";
+            data.mobileCards = true;
         },
     },
     {
@@ -123,17 +151,6 @@ const inspectData = [
         },
     },
     {
-        class: "emptyClass",
-        description: "Class of the Table when is empty",
-        action: (cmp, data) => {
-            data.isEmpty = true;
-        },
-    },
-    {
-        class: "wrapperClass",
-        description: "Class of the Table wrapper",
-    },
-    {
         class: "stickyHeaderClass",
         properties: ["sticky-header"],
         description: "Class of the Table wrapper when header is sticky",
@@ -151,19 +168,25 @@ const inspectData = [
         },
     },
     {
-        class: "footerClass",
-        description: "Class of the Table footer",
+        class: "trSelectedClass",
+        description: "Class of the Table row when selected",
+        warning: "Select a row of the table to see it in action!",
         action: (cmp, data) => {
             data.tableClass = "inspector_table";
         },
     },
     {
-        class: "thClass",
-        description: "Class of the Table `th` element",
+        class: "trCheckedClass",
+        description: "Class of the Table row when checkable and checked",
+        warning: "Select a row of the table to see it in action!",
+        properties: ["checkable"],
+        action: (cmp, data) => {
+            data.checkable = true;
+        },
     },
     {
-        class: "tdClass",
-        description: "Class of the Table `td` element",
+        class: "thClass",
+        description: "Class of the Table `th` element",
     },
     {
         class: "thCheckboxClass",
@@ -180,33 +203,6 @@ const inspectData = [
         properties: ["detailed"],
         action: (cmp, data) => {
             data.detailed = true;
-        },
-    },
-    {
-        class: "tdCheckboxClass",
-        description: "Class of the Table `td` element when is checkable",
-        properties: ["checkable"],
-        action: (cmp, data) => {
-            data.checkable = true;
-        },
-    },
-    {
-        class: "detailedClass",
-        description: "Class of the Table row detail",
-        properties: ["detailed"],
-        warning: "Expand details to see it in action!",
-        action: (cmp, data) => {
-            data.tableClass = "inspector_table";
-            data.mobileCards = true;
-        },
-    },
-    {
-        class: "tdDetailedChevronClass",
-        properties: ["detailed"],
-        description:
-            "Class of the Table `td` element that contains the chevron to trigger details",
-        action: (cmp, data) => {
-            data.mobileCards = true;
         },
     },
     {
@@ -238,27 +234,36 @@ const inspectData = [
         properties: ["sticky"],
     },
     {
-        class: "trSelectedClass",
-        description: "Class of the Table row when selected",
-        warning: "Select a row of the table to see it in action!",
-        action: (cmp, data) => {
-            data.tableClass = "inspector_table";
-        },
+        class: "thSortIconClass",
+        description: "Class of the Table sort icon in the header",
+        warning:
+            "Click on 'First Name' header to sort elements and see it in action!",
     },
     {
-        class: "trCheckedClass",
-        description: "Class of the Table row when checkable and checked",
-        warning: "Select a row of the table to see it in action!",
+        class: "thSubheadingClass",
+        description: "Class of the Table `th` subheading element",
+        properties: ["subheading"],
+    },
+    {
+        class: "tdClass",
+        description: "Class of the Table `td` element",
+    },
+    {
+        class: "tdCheckboxClass",
+        description: "Class of the Table `td` element when is checkable",
         properties: ["checkable"],
         action: (cmp, data) => {
             data.checkable = true;
         },
     },
     {
-        class: "thSortIconClass",
-        description: "Class of the Table sort icon in the header",
-        warning:
-            "Click on 'First Name' header to sort elements and see it in action!",
+        class: "tdDetailedChevronClass",
+        properties: ["detailed"],
+        description:
+            "Class of the Table `td` element that contains the chevron to trigger details",
+        action: (cmp, data) => {
+            data.mobileCards = true;
+        },
     },
     {
         class: "tdPositionClass",

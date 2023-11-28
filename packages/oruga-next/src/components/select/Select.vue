@@ -76,16 +76,14 @@ const props = defineProps({
         type: String,
         default: () => getOption("select.iconPack", undefined),
     },
-    /** Icon name to be shown */
+    /** Icon to be shown */
     icon: {
         type: String,
         default: () => getOption("select.icon", undefined),
     },
     /** Makes the icon clickable */
     iconClickable: { type: Boolean, default: false },
-    /**
-     * 	Icon name to be added on the right side
-     */
+    /** Icon to be added on the right side */
     iconRight: {
         type: String,
         default: () => getOption("select.iconRight", undefined),
@@ -101,7 +99,7 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    /** Native options to use in HTML5 validation */
+    /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
         default: () => getOption("select.autocomplete", "off"),
