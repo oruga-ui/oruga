@@ -48,7 +48,7 @@ const props = defineProps({
         default: () => getOption("slider.variant"),
     },
     /**
-     * Vertical size of slider, optional
+     * Vertical size of slider
      * @values small, medium, large
      */
     size: {

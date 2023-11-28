@@ -37,7 +37,7 @@ const props = defineProps({
     /** Define column value as number */
     numeric: { type: Boolean, defaukt: false },
     /**
-     * Optional, position of column content
+     * Position of the column content
      * @values left, centered, right
      */
     position: {

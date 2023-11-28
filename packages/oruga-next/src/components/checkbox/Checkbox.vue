@@ -30,7 +30,7 @@ const props = defineProps({
     /** @model */
     modelValue: { type: [String, Number, Boolean, Array], default: undefined },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {

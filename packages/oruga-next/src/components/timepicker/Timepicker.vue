@@ -51,7 +51,7 @@ const props = defineProps({
     /** Same as native disabled */
     disabled: { type: Boolean, default: false },
     /**
-     * Size of the button, optional
+     * Size of the button
      * @values small, medium, large
      */
     size: {

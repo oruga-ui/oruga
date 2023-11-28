@@ -66,7 +66,7 @@ const props = defineProps({
         default: () => getOption("datepicker.monthNames", undefined),
     },
     /**
-     * Size of the control input, optional
+     * Size of the control input
      * @values small, medium, large
      */
     size: {

@@ -38,7 +38,7 @@ const props = defineProps({
     /** Whether siedbar is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /**
-     * Color of the sidebar, optional
+     * Color of the sidebar
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {

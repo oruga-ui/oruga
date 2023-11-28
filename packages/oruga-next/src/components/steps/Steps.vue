@@ -35,7 +35,7 @@ const props = defineProps({
     /** @model */
     modelValue: { type: [String, Number], default: undefined },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -43,7 +43,7 @@ const props = defineProps({
         default: () => getOption("steps.variant"),
     },
     /**
-     * Tab size, optional
+     * Tab size
      * @values small, medium, large
      */
     size: {
@@ -53,7 +53,7 @@ const props = defineProps({
     /** Show tab in vertical layout */
     vertical: { type: Boolean, default: false },
     /**
-     * Position of the tab, optional
+     * Position of the tab
      * @values left, centered, right
      */
     position: {
@@ -90,7 +90,7 @@ const props = defineProps({
         default: () => getOption("steps.animated", true),
     },
     /**
-     * Position of the marker label, optional
+     * Position of the marker label
      * @values bottom, right, left
      */
     labelPosition: {
