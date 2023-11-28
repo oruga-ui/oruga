@@ -63,7 +63,7 @@ const props = defineProps({
     /** Options / suggestions */
     data: { type: Array, default: () => [] },
     /**
-     * Size of the control, optional
+     * Size of the control
      * @values small, medium, large
      */
     size: {
@@ -84,7 +84,7 @@ const props = defineProps({
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
-    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group, optional */
+    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
     /** Function to format an option to a string for display in the input (as alternative to field prop) */
     formatter: {

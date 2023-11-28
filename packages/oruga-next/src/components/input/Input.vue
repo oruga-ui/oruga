@@ -44,7 +44,7 @@ const props = defineProps({
      */
     type: { type: String, default: "text" },
     /**
-     * Size of the control, optional
+     * Size of the control
      * @values small, medium, large
      */
     size: {
@@ -52,7 +52,7 @@ const props = defineProps({
         default: () => getOption("input.size"),
     },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {

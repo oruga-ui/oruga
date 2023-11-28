@@ -21,7 +21,7 @@ export type Column = Partial<{
     /** Define column value as number */
     numeric: boolean;
     /**
-     * Optional, position of column content
+     * Position of the column content
      * @values left, centered, right
      */
     position: string;

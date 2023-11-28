@@ -43,7 +43,7 @@ const props = defineProps({
         default: undefined,
     },
     /**
-     * Vertical size of input, optional
+     * Vertical size of input
      * @values small, medium, large
      */
     size: {
@@ -51,7 +51,7 @@ const props = defineProps({
         default: () => getOption("select.size"),
     },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {

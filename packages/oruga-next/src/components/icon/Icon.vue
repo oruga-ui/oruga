@@ -34,7 +34,7 @@ const props = defineProps({
         default: () => getOption("iconPack", "mdi"),
     },
     /**
-     * 	Color of the icon, optional
+     * 	Color of the icon
      *  @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -57,8 +57,8 @@ const props = defineProps({
      */
     customSize: { type: String, default: undefined },
     /**
-     * Add class to icon font, optional.
-     * See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes
+     * Add class to icon font.
+     * See icon library documentation for custom classes.
      */
     customClass: { type: String, default: undefined },
     /** When true makes icon clickable */

@@ -37,10 +37,10 @@ const props = defineProps({
     field: { type: String, default: "value" },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
-    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group, optional */
+    /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
     groupOptions: { type: String, default: undefined },
     /**
-     * Vertical size of the input control, optional
+     * Vertical size of the input control
      * @values small, medium, large
      */
     size: {
@@ -48,7 +48,7 @@ const props = defineProps({
         default: () => getOption("taginput.size"),
     },
     /**
-     * Color of the each item, optional
+     * Color of the each item
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {

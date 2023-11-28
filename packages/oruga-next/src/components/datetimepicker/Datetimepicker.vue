@@ -56,7 +56,7 @@ const props = defineProps({
     /** Max date to select */
     maxDatetime: { type: Date, default: undefined },
     /**
-     * Size of the input control, optional
+     * Size of the input control
      * @values small, medium, large
      */
     size: {

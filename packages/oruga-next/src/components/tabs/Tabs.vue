@@ -34,7 +34,7 @@ const props = defineProps({
     /** @model */
     modelValue: { type: [String, Number], default: 0 },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -42,7 +42,7 @@ const props = defineProps({
         default: () => getOption("tabs.variant"),
     },
     /**
-     * Tab size, optional
+     * Tab size
      * @values small, medium, large
      */
     size: {
@@ -55,7 +55,7 @@ const props = defineProps({
         default: () => getOption("tabs.vertical", false),
     },
     /**
-     * Position of the tabs, optional
+     * Position of the tabs
      * @values left, centered, right
      */
     position: {

@@ -30,7 +30,7 @@ const props = defineProps({
         default: () => getOption("button.tag", "button"),
     },
     /**
-     * Color variant of the control, optional
+     * Color variant of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
@@ -38,7 +38,7 @@ const props = defineProps({
         default: () => getOption("button.variant"),
     },
     /**
-     * Size of the control, optional
+     * Size of the control
      * @values small, medium, large
      */
     size: {

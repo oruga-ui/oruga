@@ -46,7 +46,7 @@ const props = defineProps({
         default: () => getOption("menu.iconPack"),
     },
     /**
-     * Icon size, optional
+     * Icon size
      * @values small, medium, large
      */
     iconSize: {

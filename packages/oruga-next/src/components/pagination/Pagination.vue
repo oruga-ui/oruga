@@ -42,7 +42,7 @@ const props = defineProps({
     /** Number of pagination items to show after current page. */
     rangeAfter: { type: Number, default: 1 },
     /**
-     * Pagination size, optional
+     * Pagination size
      * @values small, medium, large
      */
     size: {
@@ -60,7 +60,7 @@ const props = defineProps({
         default: () => getOption("pagination.rounded", false),
     },
     /**
-     * Buttons order, optional
+     * Buttons order
      * @values centered, right, left
      */
     order: {

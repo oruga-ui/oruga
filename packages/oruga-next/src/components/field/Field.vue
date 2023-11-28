@@ -24,7 +24,7 @@ const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
     /**
-     * Color of the field and help message, also adds a matching icon, optional.
+     * Color of the field and help message, also adds a matching icon.
      * Used by Input, Select and Autocomplete.
      * @values primary, info, success, warning, danger, and any other custom color
      */
@@ -32,7 +32,7 @@ const props = defineProps({
     /** Field label */
     label: { type: String, default: undefined },
     /**
-     * Vertical size of input, optional
+     * Vertical size of input
      * @values small, medium, large
      */
     labelSize: {

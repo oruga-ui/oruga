@@ -31,9 +31,16 @@ const props = defineProps({
     label: { type: String, default: undefined },
     /** Step marker content (when there is no icon) */
     step: { type: [String, Number], default: undefined },
-    /** Default style for the step, optional This will override parent type. Could be used to set a completed step to "success" for example */
+    /**
+     * Default style for the step.
+     * This will override parent type.
+     * Could be used to set a completed step to "success" for example
+     */
     variant: { type: String, default: undefined },
-    /** Item can be used directly to navigate. If undefined, previous steps are clickable while the others are not */
+    /**
+     * Item can be used directly to navigate.
+     * If undefined, previous steps are clickable while the others are not
+     */
     clickable: { type: Boolean, default: undefined },
     /** Show/hide item */
     visible: { type: Boolean, default: true },
@@ -52,7 +59,7 @@ const props = defineProps({
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("steps.itemTag", "button"),
     },
-    /** Role attribute to be passed to the div wrapper for better accessibility. */
+    /** Role attribute to be passed to the div wrapper for better accessibility */
     ariaRole: {
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),

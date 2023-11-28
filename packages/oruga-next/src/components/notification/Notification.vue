@@ -26,7 +26,7 @@ const props = defineProps({
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: true },
     /**
-     * Type (color) of the notification, optional
+     * Type (color) of the notification
      * @values info, success, warning, danger
      */
     type: {
@@ -37,7 +37,7 @@ const props = defineProps({
             -1,
     },
     /**
-     * Color of the control, optional
+     * Color of the control
      * @values primary, info, success, warning, danger, and any other custom color
      */
     variant: {
