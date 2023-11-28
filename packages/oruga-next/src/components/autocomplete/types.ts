@@ -23,7 +23,7 @@ declare module "@/types" {
                 itemHeaderClass: ClassDefinition;
                 /** Class of the menu footer item */
                 itemFooterClass: ClassDefinition;
-                /** Classes to apply on internal input */
+                /** Classes to apply on internal input component*/
                 inputClasses: ClassDefinition;
             }> &
             /** component props config definition */

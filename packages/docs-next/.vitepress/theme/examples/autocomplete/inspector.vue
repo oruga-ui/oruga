@@ -145,7 +145,7 @@ const inspectData = [
     {
         class: "inputClasses",
         realClass: "inputClasses.rootClass",
-        description: "Classes to apply on internal input",
+        description: "Classes to apply on internal input component",
         componentRef: "Input",
     },
 ];

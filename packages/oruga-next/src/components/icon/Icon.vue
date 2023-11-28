@@ -44,7 +44,7 @@ const props = defineProps({
     /** Icon name */
     icon: { type: String, default: undefined },
     /**
-     * Icon size, optional
+     * Icon size
      * @values small, medium, large
      */
     size: {
@@ -52,11 +52,14 @@ const props = defineProps({
         default: () => getOption("icon.size"),
     },
     /**
-     * Overrides icon font size, optional
+     * Overrides icon font size
      * @values Depends on library: null (smallest), fa-sm, fa-lg, fa-xl, mdi-18px, mdi-24px, mdi-36px, mdi-48px
      */
     customSize: { type: String, default: undefined },
-    /** Add class to icon font, optional. See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes */
+    /**
+     * Add class to icon font, optional.
+     * See here for MDI, here for FontAwesome 4 and here for FontAwesome 5 custom classes
+     */
     customClass: { type: String, default: undefined },
     /** When true makes icon clickable */
     clickable: { type: Boolean, default: false },

@@ -11,9 +11,9 @@ declare module "@/types" {
                 overlayClass: ClassDefinition;
                 /** Class of the wrapper element of carousel items */
                 wrapperClass: ClassDefinition;
-                /** Class of slider element */
+                /** Class of slider items */
                 itemsClass: ClassDefinition;
-                /** Class of slider element on drag */
+                /** Class of slider items on drag */
                 itemsDraggingClass: ClassDefinition;
                 /** Class of arrow elements */
                 arrowIconClass: ClassDefinition;

@@ -162,11 +162,11 @@ declare module "@/types" {
                 ariaNextLabel: string;
                 /** Accessibility previous button aria label  */
                 ariaPreviousLabel: string;
-                /** Class configuration for the underlying input component */
+                /** Class configuration for the internal input component */
                 inputClasses: OrugaOptions["input"];
-                /** Class configuration for the underlying dropdown component */
+                /** Class configuration for the internal dropdown component */
                 dropdownClasses: OrugaOptions["dropdown"];
-                /** Class configuration for the underlying select component */
+                /** Class configuration for the internal select component */
                 selectClasses: OrugaOptions["select"];
             }>;
     }

@@ -314,8 +314,8 @@ const inspectData = [
         },
     },
     {
-        class: "tableEventsClass",
-        description: "Class of the events container",
+        class: "tableEventClass",
+        description: "Class of the event",
         action: (cmp, data) => {
             data.type = "";
             data.tableClass = "datepicker__table";
@@ -323,8 +323,8 @@ const inspectData = [
         },
     },
     {
-        class: "tableEventClass",
-        description: "Class of the event",
+        class: "tableEventsClass",
+        description: "Class of the events container",
         action: (cmp, data) => {
             data.type = "";
             data.tableClass = "datepicker__table";
@@ -544,21 +544,23 @@ const inspectData = [
     {
         class: "inputClasses",
         realClass: "inputClasses.rootClass",
-        description: "Classes to apply on internal input",
+        description: "Classes to apply on internal input component",
         componentRef: "Input",
     },
     {
         class: "dropdownClasses",
         realClass: "dropdownClasses.rootClass",
-        description: "Classes to apply on dropdown",
+        description: "Classes to apply on internal dropdown component",
         componentRef: "Dropdown",
         action: () => {
             openDatePicker();
         },
     },
     {
-        class: "selectListClasses",
-        description: "Classes to apply on select list (month and year)",
+        class: "selectClasses",
+        realClass: "selectClasses.rootClass",
+        description:
+            "Classes to apply on internal select component (month and year list)",
         componentRef: "Select",
         action: () => {
             openDatePicker();

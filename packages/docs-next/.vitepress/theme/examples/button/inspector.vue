@@ -13,7 +13,7 @@ const inspectData = [
     },
     {
         class: "outlinedClass",
-        description: "Class of the button outlined",
+        description: "Class of the button when outlined",
         properties: ["outlined"],
         suffixes: ["primary", "info", "warning", "danger"],
         action: (cmp, data) => {

@@ -13,7 +13,7 @@ declare module "@/types" {
                 rootClass: ClassDefinition;
                 /** Class of the button elements wrapper */
                 wrapperClass: ClassDefinition;
-                /** Class of the button outlined */
+                /** Class of the button when outlined */
                 outlinedClass: ClassDefinition;
                 /** Class of the button with loading */
                 loadingClass: ClassDefinition;

@@ -175,7 +175,7 @@ const props = defineProps({
         "footerClass",
     ]),
     /**
-     * Class configuration for the underlying input component
+     * Class configuration for the internal input component
      * @ignore
      */
     inputClasses: {
@@ -183,7 +183,7 @@ const props = defineProps({
         default: () => getOption("timepicker.inputClasses", {}),
     },
     /**
-     * Class configuration for the underlying dropdown component
+     * Class configuration for the internal dropdown component
      * @ignore
      */
     dropdownClasses: {
@@ -191,7 +191,7 @@ const props = defineProps({
         default: () => getOption("timepicker.dropdownClasses", {}),
     },
     /**
-     * Class configuration for the underlying select component
+     * Class configuration for the internal select component
      * @ignore
      */
     selectClasses: {

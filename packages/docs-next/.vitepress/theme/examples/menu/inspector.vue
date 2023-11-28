@@ -1,4 +1,6 @@
 <script setup>
+const subitem = "menu-item";
+
 const inspectData = [
     {
         class: "rootClass",
@@ -15,32 +17,43 @@ const inspectData = [
     {
         class: "itemClass",
         description: "Class of the menu item",
+        subitem: true,
     },
     {
         class: "itemActiveClass",
         description: "Class of the active menu item",
+        subitem: true,
     },
     {
         class: "itemDisabledClass",
+        properties: ["disabled"],
         description: "Class of the disabled menu item",
+        subitem: true,
     },
     {
         class: "itemIconTextClass",
+        properties: ["icon"],
         description: "Class of the icon of menu item",
+        subitem: true,
     },
     {
         class: "itemSubmenuClass",
         description: "Class of the menu item when is a submenu",
+        subitem: true,
     },
     {
         class: "itemWrapperClass",
         description: "Class of the root element of menu item",
+        subitem: true,
     },
 ];
 </script>
 
 <template>
-    <inspector-wrapper v-slot="props" :inspect-data="inspectData">
+    <inspector-wrapper
+        v-slot="props"
+        :inspect-data="inspectData"
+        :subitem="subitem">
         <o-menu v-bind="props" label="Menu">
             <o-menu-item v-bind="props" icon="info-circle" label="Info" />
             <o-menu-item v-bind="props" icon="cog" label="Submenu" expanded>

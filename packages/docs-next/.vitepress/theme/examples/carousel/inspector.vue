@@ -28,11 +28,11 @@ const inspectData = [
     },
     {
         class: "itemsClass",
-        description: "Class of slider elements",
+        description: "Class of slider items",
     },
     {
         class: "itemsDraggingClass",
-        description: "Class of slider element on drag",
+        description: "Class of slider items on drag",
     },
     {
         class: "arrowIconClass",

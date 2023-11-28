@@ -228,7 +228,7 @@ const props = defineProps({
         "itemFooterClass",
     ]),
     /**
-     * Classes to apply on internal input
+     * Classes to apply on internal input component
      * @ignore
      */
     inputClasses: {

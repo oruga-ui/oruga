@@ -7,15 +7,15 @@ declare module "@/types" {
             Partial<{
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Upload class when draggable */
+                /** Class of the Upload when draggable */
                 draggableClass: ClassDefinition;
-                /** Class of the upload variant */
+                /** Class of the Upload variant */
                 variantClass: ClassDefinition;
-                /** Upload class when expanded */
+                /** Class of the Upload when expanded */
                 expandedClass: ClassDefinition;
-                /** Upload class when disabled */
+                /** Class of the Upload when disabled */
                 disabledClass: ClassDefinition;
-                /** Upload class when hovered */
+                /** Class of the Upload when hovered */
                 hoveredClass: ClassDefinition;
             }> &
             /** component props config definition */

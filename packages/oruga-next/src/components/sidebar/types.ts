@@ -36,7 +36,7 @@ declare module "@/types" {
                 scrollClipClass: ClassDefinition;
                 /** Class of the body when sidebar is not clipped */
                 noScrollClass: ClassDefinition;
-                /** Class of the sidebar when sidebar is hidden */
+                /** Class of the sidebar content when sidebar is hidden */
                 hiddenClass: ClassDefinition;
                 /** Class of the sidebar content when sidebar is visible */
                 visibleClass: ClassDefinition;
