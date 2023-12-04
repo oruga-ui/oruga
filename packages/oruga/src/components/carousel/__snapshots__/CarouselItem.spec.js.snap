@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OCarouselItem render correctly 1`] = `<div class="o-car__item" style="width: 0px;" value="item2"></div>`;

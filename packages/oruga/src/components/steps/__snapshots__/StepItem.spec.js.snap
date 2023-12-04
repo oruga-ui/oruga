@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OStepItem render correctly 1`] = `<div class="o-steps__item" id="step-2" style="display: none;"></div>`;

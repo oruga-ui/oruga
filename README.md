@@ -15,20 +15,15 @@
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
 
 <p align="center">
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga.svg?logo=npm" /></a>
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga.svg" /></a>
-    <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build.yml/badge.svg" /><a>
-    <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga" /></a>
-</p>
-
-*Oruga Next version for Vue 3.x*
-
-<p align="center">
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
     <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
     <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build-next.yml/badge.svg" /><a>
     <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga-next" /></a>
 </p>
+
+> [!NOTE]  
+> **_Oruga for Vue 2.x deprecated_**  
+> Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year, from now on Oruga for Vue 2 is deprecated. Further enhancements will only be developed for Oruga-next. See [#496](https://github.com/oruga-ui/oruga/issues/496).
 
 ### Contact us 👾
 
@@ -41,10 +36,6 @@
 <p align="center">
     <a href="https://ko-fi.com/orugaui"><img alt="Donate using Ko-fi"  src="https://img.shields.io/badge/donate-ko--fi-00AA00.svg?logo=ko-fi" /></a>
 </p>
-
-> [!NOTE]  
-> **_Oruga for Vue 2.x deprecated_**  
-> Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year, from now on Oruga for Vue 2 is deprecated and will not receive any further updates. Further enhancements will only be developed for Oruga-next. See [#496](https://github.com/oruga-ui/oruga/issues/496).
 
 
 ## Features
