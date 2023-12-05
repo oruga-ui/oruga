@@ -24,7 +24,7 @@ const props = defineProps({
     /** Make item clickable */
     clickable: { type: Boolean, default: false },
     // add class props (will not be displayed in the docs)
-    ...useClassProps(["itemClass", "itemActiveClass"]),
+    ...useClassProps(["itemClass", "itemActiveClass", "itemClickableClass"]),
 });
 
 // Inject functionalities and data from the parent carousel component
@@ -46,6 +46,10 @@ const itemClasses = computed(() => [
     {
         [useComputedClass("itemActiveClass", "o-car__item--active")]:
             isActive.value,
+    },
+    {
+        [useComputedClass("itemClickableClass", "o-car__item--clickable")]:
+            props.clickable,
     },
 ]);
 </script>

@@ -456,14 +456,18 @@ const rootClasses = computed(() => [
         [useComputedClass("mobileClass", "o-drop--mobile")]:
             isMobileModal.value && !hoverable.value,
     },
-    {
-        [useComputedClass("teleportClass", "o-drop--teleport")]:
-            !!props.teleport,
-    },
 ]);
 
 const triggerClasses = computed(() => [
     useComputedClass("triggerClass", "o-drop__trigger"),
+]);
+
+const positionWrapperClasses = computed(() => [
+    ...rootClasses.value,
+    {
+        [useComputedClass("teleportClass", "o-drop--teleport")]:
+            !!props.teleport,
+    },
 ]);
 
 const menuMobileOverlayClasses = computed(() => [
@@ -515,7 +519,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
-            :class="rootClasses"
+            :class="positionWrapperClasses"
             :trigger="triggerRef"
             :content="contentRef"
             :disabled="!isActive"

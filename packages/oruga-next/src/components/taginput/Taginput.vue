@@ -384,47 +384,47 @@ const autocompleteBind = computed(() => ({
     ...attrs,
     "root-class": useComputedClass(
         "autocompleteClasses.rootClass",
-        "o-inputit__autocomplete",
+        "o-taginput__autocomplete",
     ),
     "input-classes": {
         "input-class": useComputedClass(
             "autocompleteClasses.inputClasses.inputClass",
-            "o-inputit__input",
+            "o-taginput__input",
         ),
     },
     ...props.autocompleteClasses,
 }));
 
 const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-inputit"),
+    useComputedClass("rootClass", "o-taginput"),
     {
-        [useComputedClass("expandedClass", "o-inputit--expanded")]:
+        [useComputedClass("expandedClass", "o-taginput--expanded")]:
             props.expanded,
     },
 ]);
 
 const containerClasses = computed(() => [
-    useComputedClass("containerClass", "o-inputit__container"),
+    useComputedClass("containerClass", "o-taginput__container"),
     {
-        [useComputedClass("sizeClass", "o-inputit__container--", props.size)]:
+        [useComputedClass("sizeClass", "o-taginput__container--", props.size)]:
             props.size,
     },
 ]);
 
 const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-inputit__item"),
+    useComputedClass("itemClass", "o-taginput__item"),
     {
-        [useComputedClass("variantClass", "o-inputit__item--", props.variant)]:
+        [useComputedClass("variantClass", "o-taginput__item--", props.variant)]:
             props.variant,
     },
 ]);
 
 const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-inputit__item__close"),
+    useComputedClass("closeClass", "o-taginput__item__close"),
 ]);
 
 const counterClasses = computed(() => [
-    useComputedClass("counterClass", "o-inputit__counter"),
+    useComputedClass("counterClass", "o-taginput__counter"),
 ]);
 </script>
 

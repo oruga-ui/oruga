@@ -97,6 +97,10 @@ const rootClasses = computed(() => [
         [useComputedClass("itemActiveClass", "o-drop__item--active")]:
             isActive.value,
     },
+    {
+        [useComputedClass("itemClickableClass", "o-drop__item--clickable")]:
+            isClickable.value,
+    },
 ]);
 </script>
 

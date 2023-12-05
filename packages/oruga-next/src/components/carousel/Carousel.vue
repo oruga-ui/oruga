@@ -99,7 +99,7 @@ const props = defineProps({
     /** Show next / prev arrows only on hover */
     arrowsHover: {
         type: Boolean,
-        default: () => getOption("carousel.arrowHover", true),
+        default: () => getOption("carousel.arrowsHover", true),
     },
     /**
      * Icon pack to use

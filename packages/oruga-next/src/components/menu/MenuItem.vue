@@ -162,27 +162,27 @@ useProviderParent(rootRef, { data: provideData, key: "menu-item" });
 // --- Computed Component Classes ---
 
 const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-menu-item"),
+    useComputedClass("itemClass", "o-menu__item"),
     {
-        [useComputedClass("itemActiveClass", "o-menu-item--active")]:
+        [useComputedClass("itemActiveClass", "o-menu__item--active")]:
             isActive.value,
     },
     {
-        [useComputedClass("itemDisabledClass", "o-menu-item--disabled")]:
+        [useComputedClass("itemDisabledClass", "o-menu__item--disabled")]:
             props.disabled,
     },
     {
-        [useComputedClass("itemIconTextClass", "o-menu-item--icon-text")]:
+        [useComputedClass("itemIconTextClass", "o-menu__item--icon-text")]:
             props.icon,
     },
 ]);
 
 const submenuClasses = computed(() => [
-    useComputedClass("itemSubmenuClass", "o-menu-item__submenu"),
+    useComputedClass("itemSubmenuClass", "o-menu__item__submenu"),
 ]);
 
 const wrapperClasses = computed(() => [
-    useComputedClass("itemWrapperClass", "o-menu-item__wrapper"),
+    useComputedClass("itemWrapperClass", "o-menu__item__wrapper"),
 ]);
 </script>
 

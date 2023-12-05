@@ -119,7 +119,6 @@ const inspectData = [
         subitem: true,
         action: () => {
             setTimeout(() => {
-                this.currentMenu = "ac1";
                 dropdownbtn.value.click();
             }, 300);
         },
@@ -129,6 +128,17 @@ const inspectData = [
         subitem: true,
         description: "Class of the dropdown item when disabled",
         properties: ["disabled"],
+        action: () => {
+            setTimeout(() => {
+                dropdownbtn.value.click();
+            }, 300);
+        },
+    },
+    {
+        class: "itemClickableClass",
+        subitem: true,
+        description: "Class of the dropdown item when clickable",
+        properties: ["clickable"],
         action: () => {
             setTimeout(() => {
                 dropdownbtn.value.click();

@@ -44,6 +44,7 @@ const radio = ref("default");
                 variant="danger"
                 label="Danger" />
         </o-field>
+        
         <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>

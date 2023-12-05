@@ -281,8 +281,16 @@ function itemHeaderClasses(childItem): PropBind {
         useComputedClass("itemHeaderClass", "o-tabs__nav-item"),
         {
             [useComputedClass(
+                "itemHeaderTypeClass",
+                "o-tabs__nav-item-",
+                props.type,
+            )]: props.type,
+        },
+        {
+            [useComputedClass(
                 "itemHeaderActiveClass",
                 "o-tabs__nav-item-{*}--active",
+                props.type,
             )]: isActive(childItem),
         },
         {
@@ -291,13 +299,6 @@ function itemHeaderClasses(childItem): PropBind {
                 "o-tabs__nav-item-{*}--disabled",
                 props.type,
             )]: childItem.disabled,
-        },
-        {
-            [useComputedClass(
-                "itemHeaderTypeClass",
-                "o-tabs__nav-item-",
-                props.type,
-            )]: props.type,
         },
     ];
 }

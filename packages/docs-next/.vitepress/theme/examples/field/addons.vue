@@ -38,9 +38,9 @@
                     <o-button variant="primary" icon-right="caret-down" />
                 </template>
 
-                <o-dropdown-item>Action</o-dropdown-item>
-                <o-dropdown-item>Another action</o-dropdown-item>
-                <o-dropdown-item>Something else</o-dropdown-item>
+                <o-dropdown-item label="Action" />
+                <o-dropdown-item label="Another action" />
+                <o-dropdown-item label="Something else" />
             </o-dropdown>
         </o-field>
 
@@ -51,9 +51,9 @@
                     <o-button variant="primary" icon-right="caret-down" />
                 </template>
 
-                <o-dropdown-item>Action</o-dropdown-item>
-                <o-dropdown-item>Another action</o-dropdown-item>
-                <o-dropdown-item>Something else</o-dropdown-item>
+                <o-dropdown-item label="Action" />
+                <o-dropdown-item label="Another action" />
+                <o-dropdown-item label="Something else" />
             </o-dropdown>
             <o-button variant="primary" label="Button" />
         </o-field>
@@ -64,16 +64,14 @@
                     <o-button icon-right="caret-down" label="Filters" />
                 </template>
 
-                <o-dropdown-item value="open_issues">
-                    Open Issues and Pull Requests
-                </o-dropdown-item>
-                <o-dropdown-item value="your_issues">
-                    Your Issues
-                </o-dropdown-item>
-                <o-dropdown-item value="pull_requests">
-                    Your Pull Requests
-                </o-dropdown-item>
-                <o-dropdown-item value="everything">Everything</o-dropdown-item>
+                <o-dropdown-item
+                    value="open_issues"
+                    label="Open Issues and Pull Requests" />
+                <o-dropdown-item value="your_issues" label="Your Issues" />
+                <o-dropdown-item
+                    value="pull_requests"
+                    label="Your Pull Requests" />
+                <o-dropdown-item value="everything" label="Everything" />
             </o-dropdown>
             <o-input icon="search" type="search" placeholder="Search..." />
         </o-field>

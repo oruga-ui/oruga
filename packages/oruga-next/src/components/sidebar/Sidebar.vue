@@ -164,6 +164,7 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "activeClass",
+        "teleportClass",
         "overlayClass",
         "contentClass",
         "positionClass",
@@ -335,7 +336,14 @@ const rootClasses = computed(() => [
         [useComputedClass("mobileClass", "o-side--mobile")]: isMobile.value,
     },
     {
-        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
+        [useComputedClass("activeClass", "o-side--active")]: isActive.value,
+    },
+    {
+        [useComputedClass("teleportClass", "o-side--teleport")]:
+            !!props.teleport,
+    },
+    {
+        [useComputedClass("inlineClass", "o-side--inline")]: props.inline,
     },
 ]);
 
@@ -357,10 +365,6 @@ const contentClasses = computed(() => [
         )]: props.position,
     },
     {
-        [useComputedClass("inlineClass", "o-side__content--inline")]:
-            props.inline,
-    },
-    {
         [useComputedClass("fullheightClass", "o-side__content--fullheight")]:
             props.fullheight,
     },
@@ -369,14 +373,16 @@ const contentClasses = computed(() => [
             props.fullwidth || (props.mobile === "fullwidth" && isMobile.value),
     },
     {
-        [useComputedClass("reduceClass", "o-side__content--mini")]:
+        [useComputedClass("reduceClass", "o-side__content--reduced")]:
             props.reduce || (props.mobile === "reduced" && isMobile.value),
     },
     {
         [useComputedClass(
             "expandOnHoverClass",
-            "o-side__content--mini-expand",
-        )]: props.expandOnHover && props.mobile !== "fullwidth",
+            "o-side__content--reduced-expand",
+        )]:
+            props.expandOnHover &&
+            (!isMobile.value || props.mobile !== "fullwidth"),
     },
     {
         [useComputedClass("visibleClass", "o-side__content--visible")]:

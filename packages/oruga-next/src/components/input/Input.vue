@@ -333,9 +333,9 @@ function togglePasswordVisibility(): void {
 // --- Computed Component Classes ---
 
 const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-ctrl-input"),
+    useComputedClass("rootClass", "o-input__wrapper"),
     {
-        [useComputedClass("expandedClass", "o-ctrl-input--expanded")]:
+        [useComputedClass("expandedClass", "o-input__wrapper--expanded")]:
             props.expanded,
     },
 ]);
@@ -360,11 +360,11 @@ const inputClasses = computed(() => [
             props.type === "textarea",
     },
     {
-        [useComputedClass("iconLeftSpaceClass", "o-input-iconspace-left")]:
+        [useComputedClass("iconLeftSpaceClass", "o-input--iconspace-left")]:
             props.icon,
     },
     {
-        [useComputedClass("iconRightSpaceClass", "o-input-iconspace-right")]:
+        [useComputedClass("iconRightSpaceClass", "o-input--iconspace-right")]:
             hasIconRight.value,
     },
 ]);
