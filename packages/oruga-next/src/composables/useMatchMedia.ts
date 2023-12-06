@@ -1,6 +1,7 @@
 import { getCurrentInstance, ref } from "vue";
 import { getOption } from "@/utils/config";
 import { useEventListener } from "./useEventListener";
+import { isClient } from "@/utils/ssr";
 
 /**
  * Checks if the match media is mobile.
@@ -35,7 +36,9 @@ export function useMatchMedia(mobileBreakpoint?: string) {
     }
 
     // define match media query ref
-    mediaQuery.value = window.matchMedia(`(max-width: ${width})`);
+    mediaQuery.value = isClient
+        ? window.matchMedia(`(max-width: ${width})`)
+        : undefined;
 
     if (mediaQuery.value) {
         isMobile.value = mediaQuery.value.matches;
