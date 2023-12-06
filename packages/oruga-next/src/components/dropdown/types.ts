@@ -35,6 +35,8 @@ declare module "@/types" {
                 itemClass: ClassDefinition;
                 /** Class of the dropdown item when active  */
                 itemActiveClass: ClassDefinition;
+                /** Class of the dropdown item when clickable */
+                itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
             }> &

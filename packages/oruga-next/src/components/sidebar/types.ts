@@ -10,8 +10,10 @@ declare module "@/types" {
             Partial<{
                 /** Class of the root element */
                 rootClass: ClassDefinition;
-                /** Class of modal component when its active */
+                /** Class of sidebar component when its active */
                 activeClass: ClassDefinition;
+                /** Class of sidebar when teleported */
+                teleportClass: ClassDefinition;
                 /** Class of the sidebar overlay */
                 overlayClass: ClassDefinition;
                 /** Class of the sidebar content */

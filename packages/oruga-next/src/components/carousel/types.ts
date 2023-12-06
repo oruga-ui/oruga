@@ -37,6 +37,8 @@ declare module "@/types" {
                 itemClass: ClassDefinition;
                 /** Class of carousel item when is active */
                 itemActiveClass: ClassDefinition;
+                /** Class of carousel item when is clickable */
+                itemClickableClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{

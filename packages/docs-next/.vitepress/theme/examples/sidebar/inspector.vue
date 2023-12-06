@@ -16,9 +16,18 @@ const inspectData = [
     },
     {
         class: "activeClass",
-        description: "Class of modal component when its active",
+        properties: ["active"],
+        description: "Class of sidebar component when its active",
         action: () => {
             active.value = true;
+        },
+    },
+    {
+        class: "teleportClass",
+        properties: ["teleport"],
+        description: "Class of sidebar when teleported",
+        action: () => {
+            teleport.value = true;
         },
     },
     {

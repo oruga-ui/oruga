@@ -13,7 +13,7 @@ const selectedOptions = ref([]);
                     variant="primary"
                     type="button"
                     icon-right="caret-down">
-                    <span>Selected ({{ selectedOptions.length }})</span>
+                    Selected ({{ selectedOptions.length }})
                 </o-button>
             </template>
 

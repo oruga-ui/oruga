@@ -92,11 +92,11 @@ function resetMenu(excludedItems: ProviderItem[] = []): void {
 const rootClasses = computed(() => [useComputedClass("rootClass", "o-menu")]);
 
 const listClasses = computed(() => [
-    useComputedClass("listClass", "o-menu-list"),
+    useComputedClass("listClass", "o-menu__list"),
 ]);
 
 const labelClasses = computed(() => [
-    useComputedClass("listLabelClass", "o-menu-label"),
+    useComputedClass("listLabelClass", "o-menu__label"),
 ]);
 </script>
 

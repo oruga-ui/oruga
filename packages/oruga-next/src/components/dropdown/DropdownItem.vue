@@ -44,7 +44,12 @@ const props = defineProps({
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
     // add class props (will not be displayed in the docs)
-    ...useClassProps(["itemClass", "itemActiveClass", "itemDisabledClass"]),
+    ...useClassProps([
+        "itemClass",
+        "itemActiveClass",
+        "itemClickableClass",
+        "itemDisabledClass",
+    ]),
 });
 
 const emits = defineEmits<{
@@ -96,6 +101,10 @@ const rootClasses = computed(() => [
     {
         [useComputedClass("itemActiveClass", "o-drop__item--active")]:
             isActive.value,
+    },
+    {
+        [useComputedClass("itemClickableClass", "o-drop__item--clickable")]:
+            isClickable.value,
     },
 ]);
 </script>

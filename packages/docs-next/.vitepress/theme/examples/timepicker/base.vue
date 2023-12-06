@@ -11,7 +11,7 @@ const locale = ref(); // Browser locale
     <section>
         <o-field grouped>
             <o-field>
-                <o-switch v-model="enableSeconds">Enable seconds</o-switch>
+                <o-switch v-model="enableSeconds" label="Enable seconds" />
             </o-field>
             <o-field label="Locale">
                 <o-select v-model="locale">

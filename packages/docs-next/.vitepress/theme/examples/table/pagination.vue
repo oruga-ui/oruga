@@ -296,15 +296,11 @@ const data = ref(tableData);
             </o-table-column>
 
             <o-table-column v-slot="props" label="Gender">
-                <span>
-                    <o-icon
-                        pack="fas"
-                        :icon="
-                            props.row.gender === 'Male' ? 'mars' : 'venus'
-                        " />
+                <o-icon
+                    pack="fas"
+                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
 
-                    {{ props.row.gender }}
-                </span>
+                {{ props.row.gender }}
             </o-table-column>
         </o-table>
     </section>

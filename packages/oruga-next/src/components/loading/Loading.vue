@@ -9,6 +9,7 @@ import {
     useComputedClass,
     useClassProps,
     useProgrammaticComponent,
+    usePropBinding,
 } from "@/composables";
 import type { ProgrammaticInstance } from "@/types";
 
@@ -100,6 +101,11 @@ const emits = defineEmits<{
      */
     (e: "update:active", value: boolean): void;
     /**
+     * fullPage prop two-way binding
+     * @param value {boolean} - updated fullPage prop
+     */
+    (e: "update:fullPage", value: boolean): void;
+    /**
      * on component close event
      * @param value {any} - close event data
      */
@@ -108,7 +114,7 @@ const emits = defineEmits<{
 
 const rootRef = ref();
 
-const displayInFullPage = ref(props.fullPage);
+const displayInFullPage = usePropBinding("fullPage", props, emits);
 
 /** add programmatic usage to this component */
 const { isActive, close, cancel } = useProgrammaticComponent(

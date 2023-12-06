@@ -107,14 +107,10 @@ const hasMobileCards = ref(true);
             </o-table-column>
 
             <o-table-column v-slot="props" label="Gender">
-                <span>
-                    <o-icon
-                        pack="fas"
-                        :icon="
-                            props.row.gender === 'Male' ? 'mars' : 'venus'
-                        " />
-                    {{ props.row.gender }}
-                </span>
+                <o-icon
+                    pack="fas"
+                    :icon="props.row.gender === 'Male' ? 'mars' : 'venus'" />
+                {{ props.row.gender }}
             </o-table-column>
         </o-table>
     </section>

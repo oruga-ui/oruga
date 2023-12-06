@@ -62,8 +62,8 @@ const size = ref("");
             </o-field>
         </o-field>
         <o-field grouped>
-            <o-switch v-model="isSimple">Simple</o-switch>
-            <o-switch v-model="isRounded">Rounded</o-switch>
+            <o-switch v-model="isSimple" label="Simple" />
+            <o-switch v-model="isRounded" label="Rounded" />
         </o-field>
 
         <hr />

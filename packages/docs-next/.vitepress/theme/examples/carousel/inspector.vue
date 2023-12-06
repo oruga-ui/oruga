@@ -89,7 +89,14 @@ const inspectData = [
     },
     {
         class: "itemActiveClass",
+        subitem: true,
         description: "Class of carousel item when is active",
+    },
+    {
+        class: "itemClickableClass",
+        subitem: true,
+        properties: ["clickable"],
+        description: "Class of carousel item when is clickable",
     },
 ];
 </script>

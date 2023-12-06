@@ -29,6 +29,7 @@ const radio = ref("Jack");
                 label="Vane"
                 disabled />
         </o-field>
+        
         <p><b>Selection:</b> {{ radio }}</p>
     </section>
 </template>
