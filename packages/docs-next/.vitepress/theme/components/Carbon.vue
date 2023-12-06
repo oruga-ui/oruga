@@ -10,10 +10,12 @@ const route = useRoute();
 watch(
     () => route,
     (to: any, from: any) => {
-        const carbonadsObj: any = (window as any)._carbonads;
-        if (to.path !== from.path && typeof carbonadsObj === "object") {
-            // eslint-disable-next-line no-undef
-            carbonadsObj.refresh();
+        if (typeof window !== "undefined") {
+            const carbonadsObj: any = (window as any)._carbonads;
+            if (to.path !== from.path && typeof carbonadsObj === "object") {
+                // eslint-disable-next-line no-undef
+                carbonadsObj.refresh();
+            }
         }
     },
 );

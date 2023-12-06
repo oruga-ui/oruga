@@ -189,7 +189,7 @@ const { childItems } = useProviderParent(rootRef, { data: provideData });
 const activeIndex = useVModelBinding<number>(props, emits);
 const scrollIndex = ref(props.modelValue);
 
-const observer = ref(null);
+const resizeObserver = ref(null);
 const windowWidth = ref(0);
 
 const refresh_ = ref(0);
@@ -208,8 +208,8 @@ watch([() => props.itemsToList, () => props.itemsToShow], () => onRefresh());
 onMounted(() => {
     if (isClient) {
         if (window.ResizeObserver) {
-            observer.value = new window.ResizeObserver(onRefresh);
-            observer.value.observe(rootRef.value);
+            resizeObserver.value = new window.ResizeObserver(onRefresh);
+            resizeObserver.value.observe(rootRef.value);
         }
         onResized();
         startTimer();
@@ -218,7 +218,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     if (isClient) {
-        if (window.ResizeObserver) observer.value.disconnect();
+        if (window.ResizeObserver) resizeObserver.value.disconnect();
         dragEnd();
         pauseTimer();
     }
