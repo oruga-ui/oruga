@@ -1,5 +1,5 @@
-import { ref, type App } from "vue";
-import { getValueByPath, merge, setValueByPath } from "./helpers";
+import { ref, toRaw, type App } from "vue";
+import { getValueByPath, merge, clone, setValueByPath } from "./helpers";
 import { setVueInstance } from "./plugins";
 import type { OrugaOptions } from "@/types";
 
@@ -15,7 +15,7 @@ export const setOptions = (options: OrugaOptions): void => {
 };
 
 export const getOptions = (): OrugaOptions => {
-    return globalOptions.value;
+    return clone(toRaw(globalOptions.value));
 };
 
 export const getOption = <T>(path: string, defaultValue?: T): T => {
