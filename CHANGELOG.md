@@ -1,3 +1,37 @@
+# [0.8.0](https://github.com/mlmoravek/oruga/compare/v0.7.0...v0.8.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **datepicker:** infinity loop ([fc45dcf](https://github.com/mlmoravek/oruga/commit/fc45dcf92dfc9048d2e2301ae607190daba97d98))
+* docs-next ([7efc3c6](https://github.com/mlmoravek/oruga/commit/7efc3c68fd41e44bc96f969b3ef57fb08c5c2bc4))
+* **dropdown:** hover on mobile agent  ([4a5c0ab](https://github.com/mlmoravek/oruga/commit/4a5c0ab7cf751109ba2adf8890a75a7250c7130a)), closes [#609](https://github.com/mlmoravek/oruga/issues/609) [#609](https://github.com/mlmoravek/oruga/issues/609)
+* icon config and getOptions ([#670](https://github.com/mlmoravek/oruga/issues/670)) ([5e50591](https://github.com/mlmoravek/oruga/commit/5e505910e3c9231aac2b583db70384a1f504533a))
+* missing props ([#658](https://github.com/mlmoravek/oruga/issues/658)) ([e98dd22](https://github.com/mlmoravek/oruga/commit/e98dd22303f758e2217b67e2cd3bde8ec35cc4d3))
+* **mobile:** matchmedia ([#640](https://github.com/mlmoravek/oruga/issues/640)) ([8b948ed](https://github.com/mlmoravek/oruga/commit/8b948edc8084a299138154837389c523aad4033c))
+* select vmodel prop type ([#616](https://github.com/mlmoravek/oruga/issues/616)) ([60f67c5](https://github.com/mlmoravek/oruga/commit/60f67c55899068ef9382e8b266d7fb5940b912eb))
+* **sidebar:** update props ([#660](https://github.com/mlmoravek/oruga/issues/660)) ([6e2aa5d](https://github.com/mlmoravek/oruga/commit/6e2aa5d93db438022e2c259097c9bbdd5f232ba3))
+* **skeleton:** fix item style ([#659](https://github.com/mlmoravek/oruga/issues/659)) ([3586ae4](https://github.com/mlmoravek/oruga/commit/3586ae4cbd289c6c0e39abd05436f1478aca6e5a))
+* type errors ([5958afb](https://github.com/mlmoravek/oruga/commit/5958afb76313684214c910e165820c12bdc87fef))
+* window not defined for ssr ([#669](https://github.com/mlmoravek/oruga/issues/669)) ([a64cb79](https://github.com/mlmoravek/oruga/commit/a64cb79d1e6de046c771ddf744daa2ac80634d70))
+
+
+### Features
+
+* add window undefined checks ([#649](https://github.com/mlmoravek/oruga/issues/649)) ([df33d85](https://github.com/mlmoravek/oruga/commit/df33d85efc3d23c598217a737ccccb6f3b55b37c))
+* enhance oruga options type ([#663](https://github.com/mlmoravek/oruga/issues/663)) ([78df3e9](https://github.com/mlmoravek/oruga/commit/78df3e9ce35c6b146fefcf288ce94f6377654cc3))
+* implement teleport | update composables ([#652](https://github.com/mlmoravek/oruga/issues/652)) ([d0c9824](https://github.com/mlmoravek/oruga/commit/d0c98243831b42bd320f68c9825d77c3d79cc4a0)), closes [#487](https://github.com/mlmoravek/oruga/issues/487)
+* **inputs:** add [@input](https://github.com/input) event ([#654](https://github.com/mlmoravek/oruga/issues/654)) ([f91db4f](https://github.com/mlmoravek/oruga/commit/f91db4f78c80346cc9251a76eabc5da58b304739))
+* update programmatic oruga ([#605](https://github.com/mlmoravek/oruga/issues/605)) ([e7bdb07](https://github.com/mlmoravek/oruga/commit/e7bdb0738d94d6e4a799be1a962f80383abd90ac))
+* updates and fixes based on theme update ([#666](https://github.com/mlmoravek/oruga/issues/666)) ([6b97993](https://github.com/mlmoravek/oruga/commit/6b979937fd491813580aafbd9cdb3924a73a0290))
+
+
+### Reverts
+
+* Revert "chore(deps-dev): bump the npm_and_yarn at /packages/oruga security update group (#637)" (#641) ([67e93a2](https://github.com/mlmoravek/oruga/commit/67e93a2a72b158eb7ea8b7c6b51cb9fb721e769c)), closes [#637](https://github.com/mlmoravek/oruga/issues/637) [#641](https://github.com/mlmoravek/oruga/issues/641)
+
+
+
 # [0.7.0](https://github.com/oruga-ui/oruga/compare/v0.6.0...v0.7.0) (2023-09-20)
 
 
