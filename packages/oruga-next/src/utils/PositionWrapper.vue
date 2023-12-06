@@ -90,7 +90,11 @@ const disabled = computed(() =>
 const initialPosition = props.position;
 
 const scrollingParent = ref(undefined);
-const resizeObserver = new ResizeObserver(updatePositioning);
+const resizeObserver = ref(null);
+
+if (isClient && window.ResizeObserver) {
+    resizeObserver.value = new window.ResizeObserver(updatePositioning);
+}
 
 // on content or disable state change update event listener
 watch(
@@ -131,7 +135,8 @@ function addHandler(): void {
                 updatePositioning,
                 { passive: true },
             );
-            resizeObserver.observe(scrollingParent.value);
+            if (window.ResizeObserver)
+                resizeObserver.value.observe(scrollingParent.value);
         } else {
             document.addEventListener("scroll", updatePositioning, {
                 passive: true,
@@ -144,7 +149,7 @@ function addHandler(): void {
 /** remove event listener */
 function removeHandler(): void {
     if (isClient) {
-        resizeObserver?.disconnect();
+        if (window.ResizeObserver) resizeObserver.value?.disconnect();
         window.removeEventListener("resize", updatePositioning);
         document.removeEventListener("scroll", updatePositioning);
         scrollingParent.value = undefined;

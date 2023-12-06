@@ -23,8 +23,8 @@ const faIcons = () => {
         sizes: {
             default: null,
             small: null,
-            medium: faIconPrefix + "lg",
-            large: faIconPrefix + "2xl",
+            medium: "lg",
+            large: "2xl",
         },
         iconPrefix: faIconPrefix,
         internalIcons: {
