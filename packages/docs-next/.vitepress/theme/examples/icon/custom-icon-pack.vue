@@ -2,53 +2,52 @@
 import { ref, onBeforeMount, onBeforeUnmount } from "vue";
 import { useOruga } from "../../../../../oruga-next/dist/oruga";
 
-const customIconConfig = {
-    iconComponent: undefined,
-    customIconPacks: {
-        ionicons: {
-            sizes: {
-                default: "is-size-5",
-                small: "",
-                medium: "is-size-3",
-                large: "is-size-1",
-            },
-            iconPrefix: "ion-md-",
-            internalIcons: {
-                check: "checkmark",
-                information: "information",
-                alert: "alert",
-                "alert-circle": "alert",
-                "arrow-up": "arrow-up",
-                "chevron-right": "arrow-forward",
-                "chevron-left": "arrow-back",
-                "chevron-down": "arrow-down",
-                eye: "eye",
-                "eye-off": "eye-off",
-                "caret-down": "arrow-dropdown",
-                "caret-up": "arrow-dropup",
-                loading: "reload-outline",
-                times: "close-outline",
-                "close-circle": "close-circle-outline",
-            },
+const customIconPacks = {
+    ionicons: {
+        sizes: {
+            default: "is-size-5",
+            small: "",
+            medium: "is-size-3",
+            large: "is-size-1",
+        },
+        iconPrefix: "ion-md-",
+        internalIcons: {
+            check: "checkmark",
+            information: "information",
+            alert: "alert",
+            "alert-circle": "alert",
+            "arrow-up": "arrow-up",
+            "chevron-right": "arrow-forward",
+            "chevron-left": "arrow-back",
+            "chevron-down": "arrow-down",
+            eye: "eye",
+            "eye-off": "eye-off",
+            "caret-down": "arrow-dropdown",
+            "caret-up": "arrow-dropup",
+            loading: "reload-outline",
+            times: "close-outline",
+            "close-circle": "close-circle-outline",
         },
     },
 };
 
 // all code is only for example purpose
 
-const docsIcon = ref();
+const orugaOptions = ref();
 
 const oruga = useOruga();
 
 onBeforeMount(() => {
-    docsIcon.value = oruga.config.getOption("iconComponent");
-    oruga.config.setOption("customIconPacks", customIconConfig);
+    // save old settings
+    orugaOptions.value = oruga.config.getOptions();
+    // override custom settings
+    oruga.config.setOption("iconComponent", undefined);
+    oruga.config.setOption("customIconPacks", customIconPacks);
 });
 
 onBeforeUnmount(() => {
-    oruga.config.setOptions({
-        iconComponent: docsIcon.value,
-    });
+    // restore old settings
+    oruga.config.setOptions(orugaOptions.value);
 });
 </script>
 
