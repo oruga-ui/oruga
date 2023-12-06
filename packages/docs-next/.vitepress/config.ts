@@ -61,7 +61,7 @@ export default defineConfig({
     appearance: false,
     themeConfig: {
         logo: "/logo.png",
-        outline: [0, 3],
+        outline: [2, 3],
         search: {
             provider: "local",
         },
@@ -76,9 +76,7 @@ export default defineConfig({
             { text: "Expo", link: "/expo/" },
             {
                 text: "Support",
-                items: [
-                    { text: "Ko-fi", link: "https://ko-fi.com/orugaui" },
-                ],
+                items: [{ text: "Ko-fi", link: "https://ko-fi.com/orugaui" }],
             },
             {
                 text: `v${version}`,

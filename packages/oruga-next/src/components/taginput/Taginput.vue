@@ -367,8 +367,8 @@ function onKeydown(event: KeyboardEvent): void {
     }
 }
 
-function onInput(value: string): void {
-    emits("input", value.trim());
+function onInput(value: string | number): void {
+    emits("input", String(value).trim());
 }
 
 function handleOnBlur(event: Event): void {

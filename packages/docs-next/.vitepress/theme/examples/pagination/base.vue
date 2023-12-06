@@ -10,7 +10,7 @@ const nextIcon = ref("chevron-right");
 const total = ref(200);
 const current = ref(10);
 const perPage = ref(10);
-const order = ref("");
+const order = ref("left");
 const size = ref("");
 </script>
 
@@ -35,7 +35,7 @@ const size = ref("");
         <o-field grouped group-multiline>
             <o-field label="Order">
                 <o-select v-model="order">
-                    <option value="">default</option>
+                    <option value="left">left</option>
                     <option value="centered">centered</option>
                     <option value="right">right</option>
                 </o-select>

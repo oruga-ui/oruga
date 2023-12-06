@@ -10,7 +10,7 @@ jobs:
     strategy:
       max-parallel: 24
       matrix:
-        node-version: ['17.9.0']
+        node-version: ['20.10.0']
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }} 🪢
