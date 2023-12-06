@@ -122,6 +122,10 @@ export function defaultIfUndefined<T>(
         : defaultValue;
 }
 
+export function clone<T extends object>(obj: T): T {
+    return Object.assign({}, obj);
+}
+
 /**
  * Merge function to replace Object.assign with deep merging possibility
  */
@@ -215,8 +219,8 @@ export function toCssDimension(width: string | number): string | number {
     return width === undefined
         ? null
         : isNaN(width as number)
-        ? width
-        : width + "px";
+          ? width
+          : width + "px";
 }
 
 /**
