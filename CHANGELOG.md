@@ -1,3 +1,438 @@
+# [0.8.0](https://github.com/oruga-ui/oruga/compare/v0.7.0...v0.8.0) (2023-12-06)
+
+### Features
+* refactor all components from Option-API to Composition-API (script setup) ([#606](https://github.com/oruga-ui/oruga/issues/606))
+* removed default theme from build output (use `theme-oruga` instead)
+* add component types to build output
+* add OrugaOptions type definition (usefull for themes) ([#632](https://github.com/oruga-ui/oruga/issues/632)) ([#663](https://github.com/oruga-ui/oruga/issues/663)) ([78df3e9](https://github.com/oruga-ui/oruga/commit/78df3e9ce35c6b146fefcf288ce94f6377654cc3))
+* change `appendToBody` to `teleport` feature ([#603](https://github.com/oruga-ui/oruga/issues/603) ([#652](https://github.com/oruga-ui/oruga/issues/652)) ([d0c9824](https://github.com/oruga-ui/oruga/commit/d0c98243831b42bd320f68c9825d77c3d79cc4a0))
+* rename component `inputitems` to `taginput` ([#653](https://github.com/oruga-ui/oruga/issues/653))
+* change programmatic usage to `useOruga()` ([#605](https://github.com/oruga-ui/oruga/issues/605)) ([e7bdb07](https://github.com/oruga-ui/oruga/commit/e7bdb0738d94d6e4a799be1a962f80383abd90ac))
+* adjust component properties (see detailed component changes)
+* drop vue 2.x support 
+* docs: update component props/events/slots descriptions
+
+
+### Bug Fixes
+
+* **datepicker:** fix infinity loop ([#624](https://github.com/oruga-ui/oruga/issues/624)) ([fc45dcf](https://github.com/oruga-ui/oruga/commit/fc45dcf92dfc9048d2e2301ae607190daba97d98))
+* **dropdown:** fix hover on mobile agent ([#609](https://github.com/oruga-ui/oruga/issues/609)) ([#609](https://github.com/oruga-ui/oruga/issues/609)) ([4a5c0ab](https://github.com/oruga-ui/oruga/commit/4a5c0ab7cf751109ba2adf8890a75a7250c7130a))
+* **select:** fix vmodel prop type ([#616](https://github.com/oruga-ui/oruga/issues/616)) ([60f67c5](https://github.com/oruga-ui/oruga/commit/60f67c55899068ef9382e8b266d7fb5940b912eb))
+* **sidebar:** fix props ([#660](https://github.com/oruga-ui/oruga/issues/660)) ([6e2aa5d](https://github.com/oruga-ui/oruga/commit/6e2aa5d93db438022e2c259097c9bbdd5f232ba3))
+* **skeleton:** fix item style ([#659](https://github.com/oruga-ui/oruga/issues/659)) ([3586ae4](https://github.com/oruga-ui/oruga/commit/3586ae4cbd289c6c0e39abd05436f1478aca6e5a))
+* **ssr:** fix window not defined for ssr ([#669](https://github.com/oruga-ui/oruga/issues/669)) ([a64cb79](https://github.com/oruga-ui/oruga/commit/a64cb79d1e6de046c771ddf744daa2ac80634d70))
+* **docs:** fix component property generation ([#658](https://github.com/oruga-ui/oruga/issues/658)) ([e98dd22](https://github.com/oruga-ui/oruga/commit/e98dd22303f758e2217b67e2cd3bde8ec35cc4d3)) ([7efc3c6](https://github.com/oruga-ui/oruga/commit/7efc3c68fd41e44bc96f969b3ef57fb08c5c2bc4))
+
+
+### Detailed Component Changes
+
+#### Autocomplete
+
+**Changes props:**
+* remove `adppendToBody` prop
+* add `teleport` prop
+* rename `checkInfiniteScroll` to `checkScroll` prop
+* rename `customFormatter` to `formatter` prop
+* remame `debounceTyping` to `debounce` prop
+* add `iconRightVariant` prop
+* remame `menuPosition` to `position` prop
+* add `mobileModal` prop
+* add `placeholder` prop
+
+**Changes events:**
+* remove `@typing` event
+* add `@input` event
+* remove `@infinite-scroll` event
+* add `@scroll-start` event
+* add `@scroll-end` event
+
+**Changes classes:**
+* remove `expandedClass` class
+* remove `menuClass` class
+* remove `menuPositionClass` class
+
+#### Button
+
+**Changes props:**
+* remove `iconBoth` prop
+* add `role` prop
+
+**Changes classes:**
+* rename `elementsWrapperClass` to `wrapperClass` class
+
+#### Carousel
+
+**Changes props:**
+* rename `arrow` to `arrows` prop
+* rename `arrowHover` to `arrowsHover` prop
+* rename `hasDrag` to `dragable` prop
+* remove `asIndicator` prop
+* rename `indicator` to `indicators` prop
+
+**Changes classes:**
+* rename `sceneClass` to `wrapperClass` class
+* add `itemClickableClass` class
+
+#### Checkbox
+
+**Changes props:**
+* add `useHtml5Validation` prop
+
+**Changes events:**
+* add `@update:indeterminate` event
+* add `@focus` event
+* add `@blur` event
+* add `@invalid` event
+
+**Changes classes:**
+* rename `checkClass` to `inputClass` class
+* rename `checkCheckedClass` to `inputCheckedClass` class
+* rename `checkIndeterminateClass` to `indeterminateClass` class
+
+#### Collapse
+
+**Changes props:**
+* rename `contentId` to `ariaId` prop
+
+#### Datepicker
+
+**Changes props:**
+* remove `adppendToBody` prop
+* add `teleport` prop
+* add `active` prop
+* remove `autocomplete` prop
+* remove `maxlength` prop
+* remove `editable` prop
+* add `readonly` prop
+* remove `statusIcon` prop
+
+**Changes events:**
+* add `@icon-click` event
+* rename `@active-change` to `@update:active` event
+
+**Changes classes:**
+* remove `monthCellInvisibleClass` class
+* remove `monthCellNearbyClass` class
+* add `monthCellWithinHoveredRangeClass` class
+* remove `monthRowClass` class
+* add `monthTableClass` class
+* rename `nextBtnClass` to `nextButtonClass` class
+* rename `prevBtnClass` to `prevButtonClass` class
+
+#### Datetimepicker
+
+**Changes props:**
+* add `active` prop
+* remove `autocomplete` prop
+* remove `maxlength` prop
+* remove `editable` prop
+* add `readonly` prop
+* remove `statusIcon` prop
+
+**Changes events:**
+* add `@icon-click` event
+* rename `@active-change` to `@update:active` event
+* add `@range-start` event
+* add `@range-end` event
+
+#### Dropdown
+
+**Changes props:**
+* add `active` prop
+* remove `adppendToBody` prop
+* add `teleport` prop
+* remove `appendToBodyCopyParent` prop
+* add `checkScroll` prop
+* rename `canClose` to `closeable` prop
+* remove `closeOnClick` prop (merged into closeable)
+* add `delay` prop
+* rename `triggerTabindex` to `tabindex` prop
+* add `triggerTag` prop
+
+**Changes events:**
+* rename `@active-change` to `@update:active` event
+* add `@close` event
+* add `@scroll-start` event
+* add `@scroll-end` event
+
+**Changes classes:**
+* add `teleportClass` class
+
+#### Dropdown Item
+
+**Changes classes:**
+* add `itemClickableClass` class
+
+#### Input
+
+**Changes props:**
+* add `disabled` prop
+* rename `hasCoutner` to `counter` prop
+
+#### Loading
+
+**Changes props:**
+* rename `canCancel` to `cancelable` prop
+* add `label` prop
+
+**Changes events:**
+* add `@update:full-page` event
+
+**Changes classes:**
+* add `labelClass` class
+
+#### Menu
+* merge `Menu` and `MenuList` component
+
+**Changes props:**
+* rename `size` to `iconSize` prop 
+
+#### Modal
+
+**Changes props:**
+* rename `canCancel` to `cancelable` prop
+* add `container` prop
+* add `teleport` prop
+
+**Changes classes:**
+* add `activeClass` class
+
+#### Notification
+
+**Changes props:**
+* remove `autoClose` prop
+* remove `hasIcon` prop
+* rename `indefinite` to `infinite` prop
+
+#### Pagination
+
+**Changes events:**
+* remove `@update:active` event
+
+**Changes classes:**
+* rename `nextBtnClass` to `nextButtonClass` class
+* rename `prevBtnClass` to `prevButtonClass` class
+
+#### Radio
+
+**Changes props:**
+* add `autocomplete` prop
+* add `useHtml5Validation` prop
+
+**Changes events:**
+* add `@focus` event
+* add `@blur` event
+* add `@invalid` event
+
+**Changes classes:**
+* rename `checkCheckedClass` to `inputCheckedClass` class
+* rename `checkClass` to `inputClass` class
+
+#### Select
+
+**Changes props:**
+* add `iconClickable` prop
+* remove `maxlength` prop
+* add `iconRightClickable` prop
+* add `iconRightVariant` prop
+* add `options` prop
+
+**Changes events:**
+* add `@icon-click` event
+* add `@icon-right-click` event
+
+#### Sidebar
+
+**Changes props:**
+* rename `open` to `active` prop
+* add `animation` prop
+* rename `canCancel` to `cancelable` prop
+* add `component` prop
+* add `container` prop
+* add `events` prop
+* add `props` prop
+* add `teleport` prop
+* add `destroyOnHide` prop
+* add `inline` prop
+* add `onClose` prop
+* changed how `position` prop is working
+* remove `right` prop
+* remove `expandOnHoverFixed` prop
+
+**Changes events:**
+* rename `@update:open` to `@update:active` event
+
+**Changes classes:**
+* add `activeClass` class
+* remove `absoluteClass` class
+* remove `fixedClass` class
+* remove `staticClass` class
+* add `positionClass` class
+* remove `rightClass` class
+* remove `expandOnHoverFixedClass` class
+* add `noScrollClass` class
+* add `scrollClipClass` class
+* add `teleportClass` class
+* add `inlineClass` class
+
+#### Steps
+
+**Changes props:**
+* add `position` prop
+* add `size` prop
+* add `variant` prop
+
+**Changes classes:**
+* add `sizeClass` class
+
+#### StepItem
+
+**Changes props:**
+* add `ariaRole` prop
+* add `icon` prop
+* add `iconPack` prop
+* add `label` prop
+* add `tag` prop
+* add `value` prop
+* add `visible` prop
+
+**Changes events:**
+* add `@activate` event
+* add `@deactivate` event
+
+#### Switch
+
+**Changes props:**
+* add `autocomplete` prop
+* add `useHtml5Validation` 
+
+**Changes events:**
+* add `@input` event
+* add `@focus` event
+* add `@blur` event
+* add `@invalid` event
+
+**Changes classes:**
+* rename `checkClass` to `switchClass` class
+* rename `checkCheckedClass` to `switchCheckedClass` class
+* rename `checkSwitchClass` to `switchCheckClass` class
+* add `inputCheckedClass` class
+
+#### Table
+
+**Changes props:**
+* add `paginationSimple` prop
+
+**Changes classes:**
+* add `thSubheadingClass`class 
+
+TableColumn
+
+**Changes props:**
+* remove `customKey` prop
+
+#### Tabs
+
+**Changes props:**
+* add `position` prop
+* add `size` prop
+* add `variant` prop
+* add `vertical` prop
+
+**Changes events:**
+* add `@update:modelValue` event
+* add `@change` event
+
+**Changes classes:**
+* rename `tabItemWrapperClass` to `itemWrapperClass` class
+* add `transitioningClass` class
+
+#### TabItem
+
+**Changes props:**
+* add `ariaRole` prop
+* add `icon` prop
+* add `iconPack` prop
+* add `label` prop
+* add `value` prop
+* add `visible` prop
+
+**Changes events:**
+* add `@activate` event
+* add `@deactivate` event
+
+#### Taginput (old inputitems):
+* rename `inputitems` component into `taginput` 
+
+**Changes props:**
+* remove `adppendToBody` prop
+* add `teleport` prop
+* rename `checkInfiniteScroll` to `checkScroll` prop
+* add `keepOpen` prop
+* rename `onPasteSeparators` to `separators`  prop
+* remove `rounded` prop
+* remove `statusIcon` prop
+* rename `hasCoutner` to `counter` prop
+
+**Changes events:**
+* add `@scroll-start` event
+* add `@scroll-end` event
+* add `@icon-click` event
+* rename `@typing` to `@input` event
+
+#### Timepicker
+
+**Changes props:**
+* add `active` prop
+* remove `adppendToBody` prop
+* add `teleport` prop
+* remove `autocomplete` prop
+* remove `maxlength` prop
+* add `closeOnClick` prop
+* remove `editable` prop
+* add `iconRight` prop
+* add `iconRightClickable` prop
+* add `locale` prop
+* add `mobileModal` prop
+* add `readonly` prop
+* remove `statusIcon` prop
+* add `trapFocus` prop
+
+**Changes events:**
+* add `@icon-click` event
+* add `@icon-right-click` event
+* add `@update-active` event
+
+#### Tooltip
+
+**Changes props:**
+* remove `animated` prop
+* remove `adppendToBody` prop
+* add `teleport` prop
+* remove `autoClose` prop
+* add `closeable` prop
+* add `disabled` prop
+* add `triggerTag` prop
+
+**Changes events:**
+* add `@update:active` event
+
+**Changes classes:**
+* rename `arrowOrderClass` to `arrowPositionClass` class
+* rename `orderClass` to `positionClass` class
+* add `teleport` class
+
+#### Upload
+
+**Changes props:**
+* remove `autocomplete` prop
+* remove `maxlength` prop
+* remove `icon` prop
+* remove `iconPack` prop
+* remove `rounded` prop
+* remove `statusIcon` prop
+
+
 # [0.7.0](https://github.com/oruga-ui/oruga/compare/v0.6.0...v0.7.0) (2023-09-20)
 
 
