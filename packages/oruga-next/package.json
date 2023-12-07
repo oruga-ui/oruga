@@ -44,6 +44,7 @@
     "build:lib:watch": "npm link && npm run build:vue:watch",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
+    "test:cypress": "cypress run --component",
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
