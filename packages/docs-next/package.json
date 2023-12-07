@@ -20,7 +20,7 @@
     "@highlightjs/vue-plugin": "2.1.2",
     "@oruga-ui/theme-bootstrap": "^0.4.0",
     "@oruga-ui/theme-bulma": "^0.2.11",
-    "@oruga-ui/theme-oruga": "^0.0.1",
+    "@oruga-ui/theme-oruga": "^0.2.0",
     "highlight.js": "11.9.0",
     "markdown-it": "^13.0.2",
     "markdown-it-highlightjs": "^4.0.1"
