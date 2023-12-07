@@ -1,7 +1,14 @@
 <p align="center">
     <a href="https://oruga.io">
-        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs/.vuepress/public/logo.png" />
+        <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs-next/public/logo.png" />
     </a>
+</p>
+
+<p align="center">
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
+    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
+    <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build-next.yml/badge.svg" /><a>
+    <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga-next" /></a>
 </p>
 
 <p align="center">
@@ -14,12 +21,6 @@
 
 > Oruga is a lightweight library of UI components for [Vue.js](https://vuejs.org/) without CSS framework dependency
 
-<p align="center">
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/v/@oruga-ui/oruga-next.svg?logo=npm" /></a>
-    <a href="https://www.npmjs.com/package/@oruga-ui/oruga-next"><img src="https://img.shields.io/npm/dt/@oruga-ui/oruga-next.svg" /></a>
-    <a href="https://github.com/oruga-ui/oruga/actions"><img src="https://github.com/oruga-ui/oruga/actions/workflows/build-next.yml/badge.svg" /><a>
-    <a href="https://codecov.io/gh/oruga-ui/oruga"><img src="https://codecov.io/gh/oruga-ui/oruga/branch/develop/graph/badge.svg?flag=oruga-next" /></a>
-</p>
 
 > [!NOTE]  
 > **_Oruga for Vue 2.x deprecated_**  
@@ -66,44 +67,9 @@ Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ |
 
 ## Quick start
 
-🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 2.6+** or **version 3.x** 
+🐛 Oruga is available for [Vue.js](https://vuejs.org/) **version 3.x** 
 
 ### Setup Oruga
-
-#### Vue 2
-
-1. Install Oruga.
-
-```bash
-npm install @oruga-ui/oruga
-```
-
-2. Import the components:
-
- - To get started quickly, use `Oruga` to register all components:
-
-    ```js
-    import Vue from 'vue';
-    import Oruga from '@oruga-ui/oruga';
-    import '@oruga-ui/oruga/dist/oruga.css';
-    
-    Vue.use(Oruga);
-    ```
-
- - To use tree shaking, either register component manually:
-
-    ```js
-    import Vue from 'vue';
-    import { OField, OInput } from '@oruga-ui/oruga';
-    import '@oruga-ui/oruga/dist/oruga.css';
-    
-    Vue.component(OField);
-    Vue.component(OInput);
-    ```
-   
- - or [import them in your SFC](https://v2.vuejs.org/v2/guide/components-registration.html#Local-Registration-in-a-Module-System).
-
-#### Vue 3
 
 1. Install Oruga.
 
@@ -127,13 +93,14 @@ npm install @oruga-ui/oruga-next
 
     ```js
     import { createApp } from 'vue'
-    import { OField, OInput } from '@oruga-ui/oruga'
+    import { Field, Input } from '@oruga-ui/oruga'
     import '@oruga-ui/oruga/dist/oruga.css'
     
     createApp(...)
-      .component(OField)
-      .component(OInput)
+      .use(Field)
+      .use(Input)
     ```
+    
  - or [import them in your SFC](https://vuejs.org/guide/components/registration.html#local-registration).
 
 ### Customization
