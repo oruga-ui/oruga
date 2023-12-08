@@ -120,22 +120,15 @@ title: Autocomplete
 
 > Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                                                                      |
-| ----------------------------------------- | ---------------------------------------------------------------------------- |
-| $autocomplete-item-color                  | #000000                                                                      |
-| $autocomplete-item-disabled-opacity       | $base-disabled-opacity                                                       |
-| $autocomplete-item-font-size              | $base-font-size                                                              |
-| $autocomplete-item-hover-background-color | #f5f5f5                                                                      |
-| $autocomplete-item-hover-color            | #000000                                                                      |
-| $autocomplete-item-line-height            | $base-line-height                                                            |
-| $autocomplete-item-padding                | 0.375rem 1rem                                                                |
-| $autocomplete-menu-background             | #ffffff                                                                      |
-| $autocomplete-menu-border-radius          | $base-border-radius                                                          |
-| $autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
-| $autocomplete-menu-margin                 | 0                                                                            |
-| $autocomplete-menu-max-height             | 200px                                                                        |
-| $autocomplete-menu-padding                | 0.5rem 0 0.5rem 0                                                            |
-| $autocomplete-menu-zindex                 | 20                                                                           |
+| SASS Variable                             | Default                |
+| ----------------------------------------- | ---------------------- |
+| $autocomplete-item-color                  | #000000                |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity |
+| $autocomplete-item-font-size              | $base-font-size        |
+| $autocomplete-item-hover-background-color | #f5f5f5                |
+| $autocomplete-item-hover-color            | #000000                |
+| $autocomplete-item-line-height            | $base-line-height      |
+| $autocomplete-item-padding                | 0.375rem 1rem          |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 
@@ -143,22 +136,15 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
 
-| SASS Variable                             | Default                                                                      |
-| ----------------------------------------- | ---------------------------------------------------------------------------- |
-| $autocomplete-item-color                  | #000000                                                                      |
-| $autocomplete-item-disabled-opacity       | $base-disabled-opacity                                                       |
-| $autocomplete-item-font-size              | $base-font-size                                                              |
-| $autocomplete-item-hover-background-color | #f5f5f5                                                                      |
-| $autocomplete-item-hover-color            | #000000                                                                      |
-| $autocomplete-item-line-height            | $base-line-height                                                            |
-| $autocomplete-item-padding                | 0.375rem 1rem                                                                |
-| $autocomplete-menu-background             | #ffffff                                                                      |
-| $autocomplete-menu-border-radius          | $base-border-radius                                                          |
-| $autocomplete-menu-box-shadow             | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
-| $autocomplete-menu-margin                 | 0                                                                            |
-| $autocomplete-menu-max-height             | 200px                                                                        |
-| $autocomplete-menu-padding                | 0.5rem 0 0.5rem 0                                                            |
-| $autocomplete-menu-zindex                 | 20                                                                           |
+| SASS Variable                             | Default                |
+| ----------------------------------------- | ---------------------- |
+| $autocomplete-item-color                  | #000000                |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity |
+| $autocomplete-item-font-size              | $base-font-size        |
+| $autocomplete-item-hover-background-color | #f5f5f5                |
+| $autocomplete-item-hover-color            | #000000                |
+| $autocomplete-item-line-height            | $base-line-height      |
+| $autocomplete-item-padding                | 0.375rem 1rem          |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
 

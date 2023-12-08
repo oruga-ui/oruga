@@ -5,7 +5,6 @@
 ```scss
 // Settings
 $whitelist: () !default;
-$sass-vars: true !default;
 $css-vars: true !default;
 $prefix: "oruga-" !default;
 
