@@ -22,7 +22,7 @@ title: Timepicker
 
 ## Class props
 
-<inspector-Timepicker-viewer />
+<inspector-timepicker-viewer />
 
 </div>
 

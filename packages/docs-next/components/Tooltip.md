@@ -22,7 +22,7 @@ title: Tooltip
 
 ## Class props
 
-<inspector-Tooltip-viewer />
+<inspector-tooltip-viewer />
 
 </div>
 

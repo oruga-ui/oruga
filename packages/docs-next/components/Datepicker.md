@@ -22,7 +22,7 @@ title: Datepicker
 
 ## Class props
 
-<inspector-Datepicker-viewer />
+<inspector-datepicker-viewer />
 
 </div>
 

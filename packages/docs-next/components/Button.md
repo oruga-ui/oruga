@@ -22,7 +22,7 @@ title: Button
 
 ## Class props
 
-<inspector-Button-viewer />
+<inspector-button-viewer />
 
 </div>
 

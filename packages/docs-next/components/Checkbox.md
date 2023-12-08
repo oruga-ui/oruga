@@ -22,7 +22,7 @@ title: Checkbox
 
 ## Class props
 
-<inspector-Checkbox-viewer />
+<inspector-checkbox-viewer />
 
 </div>
 

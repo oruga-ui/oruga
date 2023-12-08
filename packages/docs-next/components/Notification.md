@@ -22,7 +22,7 @@ title: Notification
 
 ## Class props
 
-<inspector-Notification-viewer />
+<inspector-notification-viewer />
 
 </div>
 

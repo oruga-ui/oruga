@@ -22,7 +22,7 @@ title: Radio
 
 ## Class props
 
-<inspector-Radio-viewer />
+<inspector-radio-viewer />
 
 </div>
 

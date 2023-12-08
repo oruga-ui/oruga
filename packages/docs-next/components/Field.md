@@ -22,7 +22,7 @@ title: Field
 
 ## Class props
 
-<inspector-Field-viewer />
+<inspector-field-viewer />
 
 </div>
 

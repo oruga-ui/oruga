@@ -156,6 +156,7 @@ ${"<example-" + name.toLowerCase() + " />"}
 }
 
 function tmplClassProps(config, name) {
+    name = name.toLowerCase();
     try {
         name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name;
         return `

@@ -22,7 +22,7 @@ title: Table
 
 ## Class props
 
-<inspector-Table-viewer />
+<inspector-table-viewer />
 
 </div>
 

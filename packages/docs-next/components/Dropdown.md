@@ -22,7 +22,7 @@ title: Dropdown
 
 ## Class props
 
-<inspector-Dropdown-viewer />
+<inspector-dropdown-viewer />
 
 </div>
 

@@ -22,7 +22,7 @@ title: Autocomplete
 
 ## Class props
 
-<inspector-Autocomplete-viewer />
+<inspector-autocomplete-viewer />
 
 </div>
 

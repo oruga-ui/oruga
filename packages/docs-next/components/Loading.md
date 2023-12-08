@@ -22,7 +22,7 @@ title: Loading
 
 ## Class props
 
-<inspector-Loading-viewer />
+<inspector-loading-viewer />
 
 </div>
 

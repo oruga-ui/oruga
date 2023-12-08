@@ -22,7 +22,7 @@ title: Steps
 
 ## Class props
 
-<inspector-Steps-viewer />
+<inspector-steps-viewer />
 
 </div>
 

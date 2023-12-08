@@ -22,7 +22,7 @@ title: Upload
 
 ## Class props
 
-<inspector-Upload-viewer />
+<inspector-upload-viewer />
 
 </div>
 
