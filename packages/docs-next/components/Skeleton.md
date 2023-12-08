@@ -19,6 +19,11 @@ title: Skeleton
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Skeleton-viewer />
+
 </div>
 
 <div class="vp-doc">

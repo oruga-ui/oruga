@@ -19,6 +19,11 @@ title: Radio
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Radio-viewer />
+
 </div>
 
 <div class="vp-doc">

@@ -19,6 +19,11 @@ title: Steps
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Steps-viewer />
+
 </div>
 
 <div class="vp-doc">

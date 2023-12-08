@@ -19,6 +19,11 @@ title: Select
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Select-viewer />
+
 </div>
 
 <div class="vp-doc">

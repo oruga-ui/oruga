@@ -19,6 +19,11 @@ title: Icon
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Icon-viewer />
+
 </div>
 
 <div class="vp-doc">

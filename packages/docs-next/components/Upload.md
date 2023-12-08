@@ -19,6 +19,11 @@ title: Upload
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Upload-viewer />
+
 </div>
 
 <div class="vp-doc">

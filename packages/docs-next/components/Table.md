@@ -19,6 +19,11 @@ title: Table
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-Table-viewer />
+
 </div>
 
 <div class="vp-doc">
