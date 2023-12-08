@@ -12,19 +12,8 @@ title: Loading
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-loading />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Loading-viewer /
-Loading
-
 </div>
 
 <div class="vp-doc">

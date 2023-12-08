@@ -12,19 +12,8 @@ title: Table
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-table />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Table-viewer /
-Table
-
 </div>
 
 <div class="vp-doc">

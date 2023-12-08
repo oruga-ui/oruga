@@ -12,19 +12,8 @@ title: Select
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-select />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Select-viewer /
-Select
-
 </div>
 
 <div class="vp-doc">

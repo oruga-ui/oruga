@@ -12,19 +12,8 @@ title: Input
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-input />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Input-viewer /
-Input
-
 </div>
 
 <div class="vp-doc">

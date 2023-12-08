@@ -12,19 +12,8 @@ title: Radio
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-radio />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Radio-viewer /
-Radio
-
 </div>
 
 <div class="vp-doc">

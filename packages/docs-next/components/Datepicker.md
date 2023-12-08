@@ -12,19 +12,8 @@ title: Datepicker
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-datepicker />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Datepicker-viewer /
-Datepicker
-
 </div>
 
 <div class="vp-doc">

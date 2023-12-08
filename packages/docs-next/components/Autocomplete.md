@@ -12,19 +12,8 @@ title: Autocomplete
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-autocomplete />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Autocomplete-viewer /
-Autocomplete
-
 </div>
 
 <div class="vp-doc">

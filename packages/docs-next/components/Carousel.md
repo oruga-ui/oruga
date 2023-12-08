@@ -12,19 +12,8 @@ title: Carousel
 </div>
 
 <div class="vp-example">
-
-## Examples
-
-<example-carousel />
-
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Carousel-viewer /
-Carousel
-
 </div>
 
 <div class="vp-doc">
