@@ -19,6 +19,11 @@ title: Input
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-input-viewer />
+
 </div>
 
 <div class="vp-doc">

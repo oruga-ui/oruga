@@ -19,6 +19,11 @@ title: Modal
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-modal-viewer />
+
 </div>
 
 <div class="vp-doc">

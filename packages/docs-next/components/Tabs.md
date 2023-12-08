@@ -19,6 +19,11 @@ title: Tabs
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-tabs-viewer />
+
 </div>
 
 <div class="vp-doc">

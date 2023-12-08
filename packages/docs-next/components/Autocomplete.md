@@ -19,6 +19,11 @@ title: Autocomplete
 
 </div>
 <div class="vp-example">
+
+## Class props
+
+<inspector-autocomplete-viewer />
+
 </div>
 
 <div class="vp-doc">

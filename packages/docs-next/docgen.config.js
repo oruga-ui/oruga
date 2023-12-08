@@ -124,6 +124,7 @@ ${
 ${tmplExamples(component)}
 </div>
 <div class="vp-example">
+${tmplClassProps(config, component)}
 </div>
 `
         : ""
