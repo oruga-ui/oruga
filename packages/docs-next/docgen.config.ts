@@ -178,13 +178,11 @@ ${"<example-" + name.toLowerCase() + " />"}
 }
 
 function tmplClassProps(config: any, name: string) {
-    name = name.toLowerCase();
     try {
-        name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name;
         return `
 ## Class props
 
-<inspector-${name}-viewer />
+
 `;
     } catch (err) {
         return "";
