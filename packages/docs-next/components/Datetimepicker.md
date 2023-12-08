@@ -14,6 +14,12 @@ title: Datetimepicker
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Datetimepicker-viewer /
+Datetimepicker
+
 </div>
 
 <div class="vp-doc">

@@ -14,6 +14,12 @@ title: Collapse
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Collapse-viewer /
+Collapse
+
 </div>
 
 <div class="vp-doc">

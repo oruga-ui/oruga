@@ -14,6 +14,12 @@ title: Switch
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Switch-viewer /
+Switch
+
 </div>
 
 <div class="vp-doc">

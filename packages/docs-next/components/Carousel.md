@@ -14,6 +14,12 @@ title: Carousel
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Carousel-viewer /
+Carousel
+
 </div>
 
 <div class="vp-doc">

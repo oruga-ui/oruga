@@ -14,6 +14,12 @@ title: Pagination
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Pagination-viewer /
+Pagination
+
 </div>
 
 <div class="vp-doc">

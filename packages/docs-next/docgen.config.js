@@ -123,6 +123,7 @@ ${
 <div class="vp-example">
 </div>
 <div class="vp-example">
+${tmplClassProps(config, component)}
 </div>
 `
         : ""

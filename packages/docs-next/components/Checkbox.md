@@ -14,6 +14,12 @@ title: Checkbox
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Checkbox-viewer /
+Checkbox
+
 </div>
 
 <div class="vp-doc">

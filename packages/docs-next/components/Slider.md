@@ -14,6 +14,12 @@ title: Slider
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Slider-viewer /
+Slider
+
 </div>
 
 <div class="vp-doc">

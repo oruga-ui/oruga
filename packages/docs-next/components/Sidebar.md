@@ -14,6 +14,12 @@ title: Sidebar
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Sidebar-viewer /
+Sidebar
+
 </div>
 
 <div class="vp-doc">

@@ -14,6 +14,12 @@ title: Button
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Button-viewer /
+Button
+
 </div>
 
 <div class="vp-doc">

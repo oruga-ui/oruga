@@ -14,6 +14,12 @@ title: Menu
 <div class="vp-example">
 </div>
 <div class="vp-example">
+
+## Class props
+
+inspector-Menu-viewer /
+Menu
+
 </div>
 
 <div class="vp-doc">
