@@ -22,7 +22,7 @@ title: Select
 
 ## Class props
 
-<inspector-select-viewer />
+Select
 
 </div>
 

@@ -22,7 +22,7 @@ title: Menu
 
 ## Class props
 
-<inspector-menu-viewer />
+Menu
 
 </div>
 

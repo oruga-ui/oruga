@@ -22,7 +22,7 @@ title: Tabs
 
 ## Class props
 
-<inspector-tabs-viewer />
+Tabs
 
 </div>
 

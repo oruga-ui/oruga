@@ -22,7 +22,7 @@ title: Switch
 
 ## Class props
 
-<inspector-switch-viewer />
+Switch
 
 </div>
 

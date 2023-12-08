@@ -22,7 +22,7 @@ title: Slider
 
 ## Class props
 
-<inspector-slider-viewer />
+Slider
 
 </div>
 

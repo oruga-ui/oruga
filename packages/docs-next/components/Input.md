@@ -22,7 +22,7 @@ title: Input
 
 ## Class props
 
-<inspector-input-viewer />
+Input
 
 </div>
 

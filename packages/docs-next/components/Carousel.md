@@ -22,7 +22,7 @@ title: Carousel
 
 ## Class props
 
-<inspector-carousel-viewer />
+Carousel
 
 </div>
 

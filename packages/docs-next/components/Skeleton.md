@@ -22,7 +22,7 @@ title: Skeleton
 
 ## Class props
 
-<inspector-skeleton-viewer />
+Skeleton
 
 </div>
 

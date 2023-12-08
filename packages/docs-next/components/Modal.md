@@ -22,7 +22,7 @@ title: Modal
 
 ## Class props
 
-<inspector-modal-viewer />
+Modal
 
 </div>
 

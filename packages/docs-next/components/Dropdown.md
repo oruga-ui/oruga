@@ -22,7 +22,7 @@ title: Dropdown
 
 ## Class props
 
-<inspector-dropdown-viewer />
+Dropdown
 
 </div>
 
@@ -145,6 +145,7 @@ title: Dropdown
 | $dropdown-menu-background              | #ffffff                                                                      |
 | $dropdown-menu-border-radius           | $base-border-radius                                                          |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-margin                  | 0                                                                            |
 | $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
 | $dropdown-menu-width                   | 12rem                                                                        |
@@ -178,6 +179,7 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $dropdown-menu-background              | #ffffff                                                                      |
 | $dropdown-menu-border-radius           | $base-border-radius                                                          |
 | $dropdown-menu-box-shadow              | 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02) |
+| $dropdown-menu-spacer                  | 0px                                                                          |
 | $dropdown-menu-margin                  | 0                                                                            |
 | $dropdown-menu-padding                 | 0.5rem 0 0.5rem 0                                                            |
 | $dropdown-menu-width                   | 12rem                                                                        |

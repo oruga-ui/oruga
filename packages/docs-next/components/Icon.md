@@ -22,7 +22,7 @@ title: Icon
 
 ## Class props
 
-<inspector-icon-viewer />
+Icon
 
 </div>
 
