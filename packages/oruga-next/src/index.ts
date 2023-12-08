@@ -1,4 +1,4 @@
-import type { App } from "vue";
+import type { App, Plugin } from "vue";
 import type { OrugaOptions } from "./types";
 
 import * as plugins from "./components/plugins";
@@ -29,8 +29,8 @@ export { ConfigProgrammatic } from "./utils/config";
 export { useOruga } from "./utils/programmatic";
 
 // default export main oruga vue plugin
-export default {
-    install(app: App, options?: OrugaOptions): void {
+const plugin: Plugin = {
+    install(app: App, options: OrugaOptions = {}) {
         // set global vue instance
         setVueInstance(app);
         // set options
@@ -44,6 +44,9 @@ export default {
         registerComponentProgrammatic(app, "config", ConfigProgrammatic);
     },
 };
+
+export { plugin as Oruga };
+export default plugin;
 
 declare module "./types" {
     interface OrugaProgrammatic {
