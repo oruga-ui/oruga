@@ -12,13 +12,13 @@ title: Field
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-field />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Field-viewer /
-
 </div>
 
 <div class="vp-doc">

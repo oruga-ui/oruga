@@ -12,13 +12,13 @@ title: Timepicker
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-timepicker />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Timepicker-viewer /
-
 </div>
 
 <div class="vp-doc">

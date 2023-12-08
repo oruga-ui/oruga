@@ -12,13 +12,13 @@ title: Switch
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-switch />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Switch-viewer /
-
 </div>
 
 <div class="vp-doc">

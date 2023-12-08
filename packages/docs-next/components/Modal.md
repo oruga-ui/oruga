@@ -12,13 +12,13 @@ title: Modal
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-modal />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Modal-viewer /
-
 </div>
 
 <div class="vp-doc">

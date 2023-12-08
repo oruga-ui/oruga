@@ -12,13 +12,13 @@ title: Button
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-button />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Button-viewer /
-
 </div>
 
 <div class="vp-doc">

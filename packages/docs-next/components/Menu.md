@@ -12,13 +12,13 @@ title: Menu
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-menu />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Menu-viewer /
-
 </div>
 
 <div class="vp-doc">

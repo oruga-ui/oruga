@@ -12,13 +12,13 @@ title: Sidebar
 </div>
 
 <div class="vp-example">
+
+## Examples
+
+<example-sidebar />
+
 </div>
 <div class="vp-example">
-
-## Class props
-
-inspector-Sidebar-viewer /
-
 </div>
 
 <div class="vp-doc">

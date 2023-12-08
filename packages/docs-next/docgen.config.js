@@ -121,6 +121,7 @@ ${
     !isSubComponent
         ? `
 <div class="vp-example">
+${tmplExamples(component)}
 </div>
 <div class="vp-example">
 </div>
