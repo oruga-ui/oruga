@@ -91,9 +91,12 @@ title: Sidebar
 | $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)              |
 | $sidebar-box-shadow               | 5px 0px 13px 3px rgba($black, 0.1) |
 | $sidebar-content-background-color | $grey-lighter                      |
-| $sidebar-mobile-width             | 80px                               |
+| $sidebar-border-radius            | $base-border-radius                |
+| $sidebar-border-width             | 1px                                |
+| $sidebar-border-color             | rgba(0, 0, 0, 0.175)               |
+| $sidebar-reduced-width            | 80px                               |
 | $sidebar-width                    | 260px                              |
-| $sidebar-zindex                   | 38                                 |
+| $sidebar-zindex                   | 100                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 
@@ -106,9 +109,12 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 | $sidebar-overlay                  | hsla(0, 0%, 4%, 0.86)              |
 | $sidebar-box-shadow               | 5px 0px 13px 3px rgba($black, 0.1) |
 | $sidebar-content-background-color | $grey-lighter                      |
-| $sidebar-mobile-width             | 80px                               |
+| $sidebar-border-radius            | $base-border-radius                |
+| $sidebar-border-width             | 1px                                |
+| $sidebar-border-color             | rgba(0, 0, 0, 0.175)               |
+| $sidebar-reduced-width            | 80px                               |
 | $sidebar-width                    | 260px                              |
-| $sidebar-zindex                   | 38                                 |
+| $sidebar-zindex                   | 100                                |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_sidebar.scss)
 
