@@ -66,10 +66,12 @@ watch(inspectClass, ({ className, action }) => {
             <slot v-bind="{ ...classes, ...data }" />
         </ClientOnly>
 
-        <Inspector
-            :inspect-data="inspectData"
-            :subitem="subitem"
-            @inspect="inspectClass = $event" />
+        <ClientOnly>
+            <Inspector
+                :inspect-data="inspectData"
+                :subitem="subitem"
+                @inspect="inspectClass = $event" />
+        </ClientOnly>
     </div>
 </template>
 
