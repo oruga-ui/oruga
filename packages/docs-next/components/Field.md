@@ -19,11 +19,6 @@ title: Field
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-field-viewer />
-
 </div>
 
 <div class="vp-doc">

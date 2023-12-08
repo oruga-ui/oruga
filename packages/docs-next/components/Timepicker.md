@@ -19,11 +19,6 @@ title: Timepicker
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-timepicker-viewer />
-
 </div>
 
 <div class="vp-doc">

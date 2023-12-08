@@ -19,11 +19,6 @@ title: Slider
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-slider-viewer />
-
 </div>
 
 <div class="vp-doc">

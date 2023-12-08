@@ -19,11 +19,6 @@ title: Notification
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-notification-viewer />
-
 </div>
 
 <div class="vp-doc">

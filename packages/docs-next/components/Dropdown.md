@@ -19,11 +19,6 @@ title: Dropdown
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-dropdown-viewer />
-
 </div>
 
 <div class="vp-doc">

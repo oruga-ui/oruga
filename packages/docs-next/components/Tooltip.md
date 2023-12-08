@@ -19,11 +19,6 @@ title: Tooltip
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-tooltip-viewer />
-
 </div>
 
 <div class="vp-doc">

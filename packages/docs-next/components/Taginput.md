@@ -19,11 +19,6 @@ title: Taginput
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-taginput-viewer />
-
 </div>
 
 <div class="vp-doc">

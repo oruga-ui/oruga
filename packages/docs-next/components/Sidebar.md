@@ -19,11 +19,6 @@ title: Sidebar
 
 </div>
 <div class="vp-example">
-
-## Class props
-
-<inspector-sidebar-viewer />
-
 </div>
 
 <div class="vp-doc">
