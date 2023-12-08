@@ -55,49 +55,4 @@ Icon
 </div>
 
 <div class="vp-doc">
-// 
-## Sass variables
-
-<div class="theme-orugabase">
-
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable       | Default |
-| ------------------- | ------- |
-| $icon-spin-duration | 2s      |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
-
-</div><div class="theme-orugafull">
-
-> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
-
-| SASS Variable       | Default |
-| ------------------- | ------- |
-| $icon-spin-duration | 2s      |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_icon.scss)
-
-</div><div class="theme-bulma">
-
-> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
-
-| SASS Variable       | Default |
-| ------------------- | ------- |
-| $icon-spin-duration | 2s      |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bulma/tree/main/src/assets/scss/components/_icon.scss)
-
-</div><div class="theme-bootstrap">
-
-> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
-
-| SASS Variable                 | Default |
-| ----------------------------- | ------- |
-| $icon-spin-animation-duration | 1.5s    |
-
-See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_icon.scss)
-
-</div>
-
 </div>

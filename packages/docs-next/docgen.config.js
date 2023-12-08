@@ -141,7 +141,6 @@ ${
         : ""
 }
 <div class="vp-doc">
-// ${style ? tmplThemeStyle(config, style[0].description) : ""}
 </div>`;
         },
     },
