@@ -92,7 +92,7 @@
 #### Collapse
 
 **Changes props:**
-* rename `contentId` to `ariaId` prop
+* rename `ariaId` to `contentId` prop
 
 #### Datepicker
 
