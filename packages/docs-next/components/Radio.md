@@ -17,8 +17,7 @@ title: Radio
 
 ## Class props
 
-inspector-Radio-viewer /
-Radio
+<inspector-Radio-viewer />
 
 </div>
 

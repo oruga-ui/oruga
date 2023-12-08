@@ -17,8 +17,7 @@ title: Taginput
 
 ## Class props
 
-inspector-Taginput-viewer /
-Taginput
+<inspector-Taginput-viewer />
 
 </div>
 

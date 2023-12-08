@@ -17,8 +17,7 @@ title: Field
 
 ## Class props
 
-inspector-Field-viewer /
-Field
+<inspector-Field-viewer />
 
 </div>
 

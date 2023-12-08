@@ -17,8 +17,7 @@ title: Upload
 
 ## Class props
 
-inspector-Upload-viewer /
-Upload
+<inspector-Upload-viewer />
 
 </div>
 

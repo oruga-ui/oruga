@@ -17,8 +17,7 @@ title: Notification
 
 ## Class props
 
-inspector-Notification-viewer /
-Notification
+<inspector-Notification-viewer />
 
 </div>
 

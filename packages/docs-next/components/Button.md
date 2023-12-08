@@ -17,8 +17,7 @@ title: Button
 
 ## Class props
 
-inspector-Button-viewer /
-Button
+<inspector-Button-viewer />
 
 </div>
 

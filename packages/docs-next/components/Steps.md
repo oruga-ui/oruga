@@ -17,8 +17,7 @@ title: Steps
 
 ## Class props
 
-inspector-Steps-viewer /
-Steps
+<inspector-Steps-viewer />
 
 </div>
 

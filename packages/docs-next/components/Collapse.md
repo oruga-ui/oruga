@@ -17,8 +17,7 @@ title: Collapse
 
 ## Class props
 
-inspector-Collapse-viewer /
-Collapse
+<inspector-Collapse-viewer />
 
 </div>
 

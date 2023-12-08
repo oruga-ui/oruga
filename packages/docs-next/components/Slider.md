@@ -17,8 +17,7 @@ title: Slider
 
 ## Class props
 
-inspector-Slider-viewer /
-Slider
+<inspector-Slider-viewer />
 
 </div>
 

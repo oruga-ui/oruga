@@ -17,8 +17,7 @@ title: Sidebar
 
 ## Class props
 
-inspector-Sidebar-viewer /
-Sidebar
+<inspector-Sidebar-viewer />
 
 </div>
 

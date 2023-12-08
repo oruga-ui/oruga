@@ -17,8 +17,7 @@ title: Autocomplete
 
 ## Class props
 
-inspector-Autocomplete-viewer /
-Autocomplete
+<inspector-Autocomplete-viewer />
 
 </div>
 

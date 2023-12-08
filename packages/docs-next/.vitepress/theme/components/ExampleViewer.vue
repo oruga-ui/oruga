@@ -90,7 +90,7 @@ function copy(val: string) {
         <component :is="component" />
     </div>
     <div v-if="showCode" class="vp-doc odocs-mt">
-        <!-- <o-collapse
+        <o-collapse
             v-model:open="isOpen"
             root-class="odocs-panel"
             trigger-class="odocs-panel-trigger"
@@ -167,7 +167,7 @@ function copy(val: string) {
                     </div>
                 </div>
             </div>
-        </o-collapse> -->
+        </o-collapse>
     </div>
 </template>
 

@@ -159,8 +159,7 @@ function tmplClassProps(config, name) {
         return `
 ## Class props
 
-inspector-${name}-viewer /
-${name}
+<inspector-${name}-viewer />
 `;
     } catch (err) {
         return "";

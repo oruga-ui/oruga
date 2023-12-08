@@ -17,8 +17,7 @@ title: Select
 
 ## Class props
 
-inspector-Select-viewer /
-Select
+<inspector-Select-viewer />
 
 </div>
 

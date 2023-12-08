@@ -17,8 +17,7 @@ title: Icon
 
 ## Class props
 
-inspector-Icon-viewer /
-Icon
+<inspector-Icon-viewer />
 
 </div>
 

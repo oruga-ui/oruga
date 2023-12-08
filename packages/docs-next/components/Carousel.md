@@ -17,8 +17,7 @@ title: Carousel
 
 ## Class props
 
-inspector-Carousel-viewer /
-Carousel
+<inspector-Carousel-viewer />
 
 </div>
 

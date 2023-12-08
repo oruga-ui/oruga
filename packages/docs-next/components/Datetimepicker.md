@@ -17,8 +17,7 @@ title: Datetimepicker
 
 ## Class props
 
-inspector-Datetimepicker-viewer /
-Datetimepicker
+<inspector-Datetimepicker-viewer />
 
 </div>
 

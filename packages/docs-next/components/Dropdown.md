@@ -17,8 +17,7 @@ title: Dropdown
 
 ## Class props
 
-inspector-Dropdown-viewer /
-Dropdown
+<inspector-Dropdown-viewer />
 
 </div>
 

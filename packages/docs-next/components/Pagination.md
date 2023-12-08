@@ -17,8 +17,7 @@ title: Pagination
 
 ## Class props
 
-inspector-Pagination-viewer /
-Pagination
+<inspector-Pagination-viewer />
 
 </div>
 

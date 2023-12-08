@@ -17,8 +17,7 @@ title: Modal
 
 ## Class props
 
-inspector-Modal-viewer /
-Modal
+<inspector-Modal-viewer />
 
 </div>
 

@@ -17,8 +17,7 @@ title: Table
 
 ## Class props
 
-inspector-Table-viewer /
-Table
+<inspector-Table-viewer />
 
 </div>
 

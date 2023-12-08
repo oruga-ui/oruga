@@ -17,8 +17,7 @@ title: Input
 
 ## Class props
 
-inspector-Input-viewer /
-Input
+<inspector-Input-viewer />
 
 </div>
 

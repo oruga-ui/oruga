@@ -17,8 +17,7 @@ title: Menu
 
 ## Class props
 
-inspector-Menu-viewer /
-Menu
+<inspector-Menu-viewer />
 
 </div>
 
