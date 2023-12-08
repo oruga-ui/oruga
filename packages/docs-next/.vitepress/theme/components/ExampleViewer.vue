@@ -87,7 +87,9 @@ function copy(val: string) {
 
 <template>
     <div v-if="component" ref="nodeRef" class="odocs-example odocs-mt">
-        <component :is="component" />
+        <ClientOnly>
+            <component :is="component" />
+        </ClientOnly>
     </div>
     <div v-if="showCode" class="vp-doc odocs-mt">
         <!-- <o-collapse
