@@ -65,6 +65,29 @@ export default {
         app.component("Expo", Expo);
         app.component("Carbon", Carbon);
 
+        // import example components
+        const examples = import.meta.glob<DefineComponent>(
+            "./examples/**/index.vue",
+            { eager: true },
+        );
+        for (const path in examples) {
+            const v = path.split("/");
+            app.component("example-" + v[2], markRaw(examples[path].default));
+        }
+
+        // import inspector components
+        const inspectors = import.meta.glob<DefineComponent>(
+            "./examples/**/inspector.vue",
+            { eager: true },
+        );
+        for (const path in inspectors) {
+            const v = path.split("/");
+            app.component(
+                "inspector-" + v[2] + "-viewer",
+                markRaw(inspectors[path].default),
+            );
+        }
+
         // import oruga component with theme config
         app.use(Oruga, {
             iconPack: "fas",
@@ -100,29 +123,6 @@ export default {
             link.rel = "stylesheet";
             link.href = theme.cdn;
             document.head.appendChild(link);
-        }
-
-        // import example components
-        const examples = import.meta.glob<DefineComponent>(
-            "./examples/**/index.vue",
-            { eager: true },
-        );
-        for (const path in examples) {
-            const v = path.split("/");
-            app.component("example-" + v[2], markRaw(examples[path].default));
-        }
-
-        // import inspector components
-        const inspectors = import.meta.glob<DefineComponent>(
-            "./examples/**/inspector.vue",
-            { eager: true },
-        );
-        for (const path in inspectors) {
-            const v = path.split("/");
-            app.component(
-                "inspector-" + v[2] + "-viewer",
-                markRaw(inspectors[path].default),
-            );
         }
 
         /** This contains same pollyfills for the docs because outdated themes. */
