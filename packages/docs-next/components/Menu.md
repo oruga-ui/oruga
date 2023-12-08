@@ -22,6 +22,7 @@ title: Menu
 
 ## Class props
 
+inspector-Menu-viewer /
 Menu
 
 </div>
@@ -99,10 +100,10 @@ Menu
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

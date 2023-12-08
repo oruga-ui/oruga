@@ -22,6 +22,7 @@ title: Loading
 
 ## Class props
 
+inspector-Loading-viewer /
 Loading
 
 </div>
@@ -69,7 +70,7 @@ Loading
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

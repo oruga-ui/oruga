@@ -22,6 +22,7 @@ title: Slider
 
 ## Class props
 
+inspector-Slider-viewer /
 Slider
 
 </div>
@@ -102,10 +103,10 @@ Slider
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

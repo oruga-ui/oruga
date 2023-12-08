@@ -22,6 +22,7 @@ title: Table
 
 ## Class props
 
+inspector-Table-viewer /
 Table
 
 </div>
@@ -194,10 +195,10 @@ Table
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

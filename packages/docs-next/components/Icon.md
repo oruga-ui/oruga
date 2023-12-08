@@ -22,6 +22,7 @@ title: Icon
 
 ## Class props
 
+inspector-Icon-viewer /
 Icon
 
 </div>
@@ -54,7 +55,7 @@ Icon
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

@@ -22,6 +22,7 @@ title: Pagination
 
 ## Class props
 
+inspector-Pagination-viewer /
 Pagination
 
 </div>
@@ -76,7 +77,7 @@ Pagination
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

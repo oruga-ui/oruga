@@ -22,6 +22,7 @@ title: Checkbox
 
 ## Class props
 
+inspector-Checkbox-viewer /
 Checkbox
 
 </div>
@@ -75,7 +76,7 @@ Checkbox
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

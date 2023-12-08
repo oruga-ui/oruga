@@ -22,6 +22,7 @@ title: Input
 
 ## Class props
 
+inspector-Input-viewer /
 Input
 
 </div>
@@ -80,7 +81,7 @@ Input
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

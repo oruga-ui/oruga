@@ -22,6 +22,7 @@ title: Radio
 
 ## Class props
 
+inspector-Radio-viewer /
 Radio
 
 </div>
@@ -71,7 +72,7 @@ Radio
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

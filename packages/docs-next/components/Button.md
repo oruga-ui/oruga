@@ -22,6 +22,7 @@ title: Button
 
 ## Class props
 
+inspector-Button-viewer /
 Button
 
 </div>
@@ -65,7 +66,7 @@ Button
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

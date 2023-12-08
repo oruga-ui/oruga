@@ -22,6 +22,7 @@ title: Select
 
 ## Class props
 
+inspector-Select-viewer /
 Select
 
 </div>
@@ -81,7 +82,7 @@ Select
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

@@ -22,6 +22,7 @@ title: Collapse
 
 ## Class props
 
+inspector-Collapse-viewer /
 Collapse
 
 </div>
@@ -63,7 +64,7 @@ Collapse
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

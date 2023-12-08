@@ -22,6 +22,7 @@ title: Taginput
 
 ## Class props
 
+inspector-Taginput-viewer /
 Taginput
 
 </div>
@@ -105,7 +106,7 @@ Taginput
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

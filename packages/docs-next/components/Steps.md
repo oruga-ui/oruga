@@ -22,6 +22,7 @@ title: Steps
 
 ## Class props
 
+inspector-Steps-viewer /
 Steps
 
 </div>
@@ -111,10 +112,10 @@ Steps
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

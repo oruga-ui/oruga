@@ -22,6 +22,7 @@ title: Switch
 
 ## Class props
 
+inspector-Switch-viewer /
 Switch
 
 </div>
@@ -76,7 +77,7 @@ Switch
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

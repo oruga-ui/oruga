@@ -22,6 +22,7 @@ title: Tabs
 
 ## Class props
 
+inspector-Tabs-viewer /
 Tabs
 
 </div>
@@ -104,10 +105,10 @@ Tabs
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

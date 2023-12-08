@@ -22,6 +22,7 @@ title: Timepicker
 
 ## Class props
 
+inspector-Timepicker-viewer /
 Timepicker
 
 </div>
@@ -101,7 +102,7 @@ Timepicker
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

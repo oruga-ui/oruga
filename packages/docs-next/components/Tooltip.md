@@ -22,6 +22,7 @@ title: Tooltip
 
 ## Class props
 
+inspector-Tooltip-viewer /
 Tooltip
 
 </div>
@@ -72,7 +73,7 @@ Tooltip
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

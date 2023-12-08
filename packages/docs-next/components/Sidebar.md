@@ -22,6 +22,7 @@ title: Sidebar
 
 ## Class props
 
+inspector-Sidebar-viewer /
 Sidebar
 
 </div>
@@ -79,7 +80,7 @@ Sidebar
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

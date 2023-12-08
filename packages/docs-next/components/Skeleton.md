@@ -22,6 +22,7 @@ title: Skeleton
 
 ## Class props
 
+inspector-Skeleton-viewer /
 Skeleton
 
 </div>
@@ -53,7 +54,7 @@ Skeleton
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

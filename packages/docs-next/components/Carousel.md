@@ -22,6 +22,7 @@ title: Carousel
 
 ## Class props
 
+inspector-Carousel-viewer /
 Carousel
 
 </div>
@@ -107,10 +108,10 @@ Carousel
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

@@ -141,7 +141,7 @@ ${
         : ""
 }
 <div class="vp-doc">
-${style ? tmplThemeStyle(config, style[0].description) : ""}
+// ${style ? tmplThemeStyle(config, style[0].description) : ""}
 </div>`;
         },
     },
@@ -160,6 +160,8 @@ function tmplClassProps(config, name) {
         name = NAME_FOLDER_MAPPING[name] ? NAME_FOLDER_MAPPING[name] : name;
         return `
 ## Class props
+
+inspector-${name}-viewer /
 ${name}
 `;
     } catch (err) {

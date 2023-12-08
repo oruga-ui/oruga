@@ -22,6 +22,7 @@ title: Notification
 
 ## Class props
 
+inspector-Notification-viewer /
 Notification
 
 </div>
@@ -113,10 +114,10 @@ Notification
 </div>
 
 <div class="vp-doc">
-
+// 
 </div>
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

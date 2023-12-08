@@ -22,6 +22,7 @@ title: Modal
 
 ## Class props
 
+inspector-Modal-viewer /
 Modal
 
 </div>
@@ -80,7 +81,7 @@ Modal
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">

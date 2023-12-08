@@ -22,6 +22,7 @@ title: Datepicker
 
 ## Class props
 
+inspector-Datepicker-viewer /
 Datepicker
 
 </div>
@@ -120,7 +121,7 @@ Datepicker
 </div>
 
 <div class="vp-doc">
-
+// 
 ## Sass variables
 
 <div class="theme-orugabase">
