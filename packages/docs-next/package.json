@@ -10,6 +10,7 @@
     "docs:dev": "concurrently \"vue-docgen --watch\" \"vitepress dev\"",
     "docs:gen": "vue-docgen",
     "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview docs",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "update": "ncu -u"
   },
