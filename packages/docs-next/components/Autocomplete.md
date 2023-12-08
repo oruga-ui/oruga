@@ -17,7 +17,7 @@ title: Autocomplete
 
 ## Class props
 
-<inspector-Autocomplete-viewer />
+inspector-Autocomplete-viewer /
 
 </div>
 
@@ -108,4 +108,56 @@ title: Autocomplete
 </div>
 
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                             | Default                |
+| ----------------------------------------- | ---------------------- |
+| $autocomplete-item-color                  | #000000                |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity |
+| $autocomplete-item-font-size              | $base-font-size        |
+| $autocomplete-item-hover-background-color | #f5f5f5                |
+| $autocomplete-item-hover-color            | #000000                |
+| $autocomplete-item-line-height            | $base-line-height      |
+| $autocomplete-item-padding                | 0.375rem 1rem          |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                             | Default                |
+| ----------------------------------------- | ---------------------- |
+| $autocomplete-item-color                  | #000000                |
+| $autocomplete-item-disabled-opacity       | $base-disabled-opacity |
+| $autocomplete-item-font-size              | $base-font-size        |
+| $autocomplete-item-hover-background-color | #f5f5f5                |
+| $autocomplete-item-hover-color            | #000000                |
+| $autocomplete-item-line-height            | $base-line-height      |
+| $autocomplete-item-padding                | 0.375rem 1rem          |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_autocomplete.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                 | Default |
+| ----------------------------- | ------- |
+| $autocomplete-menu-max-height | 200px   |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_autocomplete.scss)
+
+</div>
+
 </div>

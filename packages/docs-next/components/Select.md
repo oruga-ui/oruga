@@ -17,7 +17,7 @@ title: Select
 
 ## Class props
 
-<inspector-Select-viewer />
+inspector-Select-viewer /
 
 </div>
 
@@ -76,4 +76,71 @@ title: Select
 </div>
 
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                 | Default                                               |
+| ----------------------------- | ----------------------------------------------------- |
+| $select-background-color      | #fff                                                  |
+| $select-border-color          | $grey-lighter                                         |
+| $select-border-width          | 1px                                                   |
+| $select-border-style          | solid                                                 |
+| $select-border-radius         | $base-border-radius                                   |
+| $select-rounded-border-radius | $base-rounded-border-radius                           |
+| $select-box-shadow            | none                                                  |
+| $select-color                 | #363636                                               |
+| $select-icon-zindex           | 4                                                     |
+| $select-height                | $control-height                                       |
+| $select-arrow-size            | 1rem                                                  |
+| $select-line-height           | $base-line-height                                     |
+| $select-margin                | 0                                                     |
+| $select-max-width             | 100%                                                  |
+| $select-width                 | 100%                                                  |
+| $select-placeholder-opacity   | $base-disabled-opacity                                |
+| $select-padding               | $control-padding-vertical $control-padding-horizontal |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                 | Default                                               |
+| ----------------------------- | ----------------------------------------------------- |
+| $select-background-color      | #fff                                                  |
+| $select-border-color          | $grey-lighter                                         |
+| $select-border-width          | 1px                                                   |
+| $select-border-style          | solid                                                 |
+| $select-border-radius         | $base-border-radius                                   |
+| $select-rounded-border-radius | $base-rounded-border-radius                           |
+| $select-box-shadow            | none                                                  |
+| $select-color                 | #363636                                               |
+| $select-icon-zindex           | 4                                                     |
+| $select-height                | $control-height                                       |
+| $select-arrow-size            | 1rem                                                  |
+| $select-line-height           | $base-line-height                                     |
+| $select-margin                | 0                                                     |
+| $select-max-width             | 100%                                                  |
+| $select-width                 | 100%                                                  |
+| $select-placeholder-opacity   | $base-disabled-opacity                                |
+| $select-padding               | $control-padding-vertical $control-padding-horizontal |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_select.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div>
+
 </div>

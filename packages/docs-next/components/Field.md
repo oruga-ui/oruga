@@ -17,7 +17,7 @@ title: Field
 
 ## Class props
 
-<inspector-Field-viewer />
+inspector-Field-viewer /
 
 </div>
 
@@ -57,4 +57,58 @@ title: Field
 </div>
 
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                  | Default      |
+| ------------------------------ | ------------ |
+| $field-label-color             | #363636      |
+| $field-label-font-weight       | 600          |
+| $field-margin-bottom           | 0.75rem      |
+| $field-message-font-size       | 0.75rem      |
+| $field-message-margin-top      | 0.25rem      |
+| $field-margin-right            | 0.37rem      |
+| $field-horizontal-label-margin | 0 1.5rem 0 0 |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                  | Default      |
+| ------------------------------ | ------------ |
+| $field-label-color             | #363636      |
+| $field-label-font-weight       | 600          |
+| $field-margin-bottom           | 0.75rem      |
+| $field-message-font-size       | 0.75rem      |
+| $field-message-margin-top      | 0.25rem      |
+| $field-margin-right            | 0.37rem      |
+| $field-horizontal-label-margin | 0 1.5rem 0 0 |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_field.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable                 | Default             |
+| ----------------------------- | ------------------- |
+| $input-field-grouped-spacer   | 0.5rem              |
+| $input-field-margin-bottom    | $spacer             |
+| $input-field-btn-border-color | $input-border-color |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_field.scss)
+
+</div>
+
 </div>

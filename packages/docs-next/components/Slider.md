@@ -17,7 +17,7 @@ title: Slider
 
 ## Class props
 
-<inspector-Slider-viewer />
+inspector-Slider-viewer /
 
 </div>
 
@@ -97,6 +97,92 @@ title: Slider
 </div>
 
 <div class="vp-doc">
+
 </div>
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                 | Default                     |
+| ----------------------------- | --------------------------- |
+| $slider-background            | transparent                 |
+| $slider-margin                | 1em 0                       |
+| $slider-mark-size             | 0.75rem                     |
+| $slider-font-size             | $base-font-size             |
+| $slider-rounded-borded-radius | $base-rounded-border-radius |
+| $slider-thumb-background      | $white                      |
+| $slider-thumb-border          | 1px solid $grey-light       |
+| $slider-thumb-radius          | $base-border-radius         |
+| $slider-thumb-shadow          | none                        |
+| $slider-thumb-to-track-ratio  | 2                           |
+| $slider-thumb-transform       | scale(1.25)                 |
+| $slider-tick-background       | $primary                    |
+| $slider-tick-radius           | $base-border-radius         |
+| $slider-tick-to-track-ratio   | 0.5                         |
+| $slider-tick-width            | 3px                         |
+| $slider-track-background      | $grey-lighter               |
+| $slider-fill-background       | $primary                    |
+| $slider-track-border-radius   | $base-border-radius         |
+| $slider-track-border          | 0px solid $grey             |
+| $slider-track-disabled        | 0.5                         |
+| $slider-track-radius          | $base-border-radius         |
+| $slider-track-shadow          | 0px 0px 0px $grey           |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                 | Default                     |
+| ----------------------------- | --------------------------- |
+| $slider-background            | transparent                 |
+| $slider-margin                | 1em 0                       |
+| $slider-mark-size             | 0.75rem                     |
+| $slider-font-size             | $base-font-size             |
+| $slider-rounded-borded-radius | $base-rounded-border-radius |
+| $slider-thumb-background      | $white                      |
+| $slider-thumb-border          | 1px solid $grey-light       |
+| $slider-thumb-radius          | $base-border-radius         |
+| $slider-thumb-shadow          | none                        |
+| $slider-thumb-to-track-ratio  | 2                           |
+| $slider-thumb-transform       | scale(1.25)                 |
+| $slider-tick-background       | $primary                    |
+| $slider-tick-radius           | $base-border-radius         |
+| $slider-tick-to-track-ratio   | 0.5                         |
+| $slider-tick-width            | 3px                         |
+| $slider-track-background      | $grey-lighter               |
+| $slider-fill-background       | $primary                    |
+| $slider-track-border-radius   | $base-border-radius         |
+| $slider-track-border          | 0px solid $grey             |
+| $slider-track-disabled        | 0.5                         |
+| $slider-track-radius          | $base-border-radius         |
+| $slider-track-shadow          | 0px 0px 0px $grey           |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_slider.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable       | Default               |
+| ------------------- | --------------------- |
+| $slider-tick-width  | 0.25rem               |
+| $slider-tick-height | 0.25rem               |
+| $slider-tick-radius | 50%                   |
+| $slider-tick-bg     | var(--#{$prefix}gray) |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_slider.scss)
+
+</div>
+
 </div>

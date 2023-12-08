@@ -123,7 +123,6 @@ ${
 <div class="vp-example">
 </div>
 <div class="vp-example">
-${tmplClassProps(config, component)}
 </div>
 `
         : ""
@@ -140,6 +139,7 @@ ${
         : ""
 }
 <div class="vp-doc">
+${style ? tmplThemeStyle(config, style[0].description) : ""}
 </div>`;
         },
     },

@@ -17,7 +17,7 @@ title: Taginput
 
 ## Class props
 
-<inspector-Taginput-viewer />
+inspector-Taginput-viewer /
 
 </div>
 
@@ -100,4 +100,88 @@ title: Taginput
 </div>
 
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                   | Default                              |
+| ------------------------------- | ------------------------------------ |
+| $taginput-background-color      | $input-background-color              |
+| $taginput-height                | calc(2em - 1px)                      |
+| $taginput-padding               | calc(0.275em - 1px) 0 0              |
+| $taginput-border-color          | $grey-lighter                        |
+| $taginput-border-style          | solid                                |
+| $taginput-border-width          | 1px                                  |
+| $taginput-border-radius         | $base-border-radius                  |
+| $taginput-color                 | #363636                              |
+| $taginput-line-height           | $base-line-height                    |
+| $taginput-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1) |
+| $taginput-max-width             | 100%                                 |
+| $taginput-width                 | 100%                                 |
+| $taginput-counter-font-size     | 0.75rem                              |
+| $taginput-counter-margin        | 0.25rem 0 0 0.5rem                   |
+| $taginput-item-background-color | $primary                             |
+| $taginput-item-color            | $primary-invert                      |
+| $taginput-item-border-radius    | $base-border-radius                  |
+| $taginput-item-margin           | 0 0 0 0.275em                        |
+| $taginput-item-padding          | 0 0.75em 0 0.75em                    |
+| $taginput-margin-icon-to-text   | 0.1875em                             |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                   | Default                              |
+| ------------------------------- | ------------------------------------ |
+| $taginput-background-color      | $input-background-color              |
+| $taginput-height                | calc(2em - 1px)                      |
+| $taginput-padding               | calc(0.275em - 1px) 0 0              |
+| $taginput-border-color          | $grey-lighter                        |
+| $taginput-border-style          | solid                                |
+| $taginput-border-width          | 1px                                  |
+| $taginput-border-radius         | $base-border-radius                  |
+| $taginput-color                 | #363636                              |
+| $taginput-line-height           | $base-line-height                    |
+| $taginput-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1) |
+| $taginput-max-width             | 100%                                 |
+| $taginput-width                 | 100%                                 |
+| $taginput-counter-font-size     | 0.75rem                              |
+| $taginput-counter-margin        | 0.25rem 0 0 0.5rem                   |
+| $taginput-item-background-color | $primary                             |
+| $taginput-item-color            | $primary-invert                      |
+| $taginput-item-border-radius    | $base-border-radius                  |
+| $taginput-item-margin           | 0 0 0 0.275em                        |
+| $taginput-item-padding          | 0 0.75em 0 0.75em                    |
+| $taginput-margin-icon-to-text   | 0.1875em                             |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_taginput.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable               | Default            |
+| --------------------------- | ------------------ |
+| $taginput-badge-bg          | $light             |
+| $taginput-badge-color       | $dark              |
+| $taginput-badge-font-size   | 0.9em              |
+| $taginput-badge-margin      | 0.25em             |
+| $taginput-badge-icon-space  | 0.25em             |
+| $taginput-counter-margin    | 0.25rem 0 0 0.5rem |
+| $taginput-counter-font-size | 0.75rem            |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_taginput.scss)
+
+</div>
+
 </div>

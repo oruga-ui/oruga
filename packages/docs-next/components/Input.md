@@ -17,7 +17,7 @@ title: Input
 
 ## Class props
 
-<inspector-Input-viewer />
+inspector-Input-viewer /
 
 </div>
 
@@ -75,4 +75,82 @@ title: Input
 </div>
 
 <div class="vp-doc">
+
+## Sass variables
+
+<div class="theme-orugabase">
+
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                | Default                                               |
+| ---------------------------- | ----------------------------------------------------- |
+| $input-background-color      | #ffffff                                               |
+| $input-border-color          | $grey-lighter                                         |
+| $input-border-style          | solid                                                 |
+| $input-border-width          | 1px                                                   |
+| $input-border-radius         | $base-border-radius                                   |
+| $input-rounded-border-radius | $base-rounded-border-radius                           |
+| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
+| $input-color                 | #363636                                               |
+| $input-icon-zindex           | 4                                                     |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-height                | $control-height                                       |
+| $input-line-height           | $base-line-height                                     |
+| $input-margin                | 0                                                     |
+| $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-textarea-max-height   | 600px                                                 |
+| $input-textarea-min-height   | 120px                                                 |
+| $input-textarea-padding      | 0.625em                                               |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
+
+</div><div class="theme-orugafull">
+
+> Current theme ➜ _[Oruga Full](https://github.com/oruga-ui/theme-oruga)_
+
+| SASS Variable                | Default                                               |
+| ---------------------------- | ----------------------------------------------------- |
+| $input-background-color      | #ffffff                                               |
+| $input-border-color          | $grey-lighter                                         |
+| $input-border-style          | solid                                                 |
+| $input-border-width          | 1px                                                   |
+| $input-border-radius         | $base-border-radius                                   |
+| $input-rounded-border-radius | $base-rounded-border-radius                           |
+| $input-box-shadow            | inset 0 1px 2px hsla(0, 0%, 4%, 0.1)                  |
+| $input-color                 | #363636                                               |
+| $input-icon-zindex           | 4                                                     |
+| $input-counter-font-size     | 0.75rem                                               |
+| $input-counter-margin        | 0.25rem 0 0 0.5rem                                    |
+| $input-height                | $control-height                                       |
+| $input-line-height           | $base-line-height                                     |
+| $input-margin                | 0                                                     |
+| $input-padding               | $control-padding-vertical $control-padding-horizontal |
+| $input-textarea-max-height   | 600px                                                 |
+| $input-textarea-min-height   | 120px                                                 |
+| $input-textarea-padding      | 0.625em                                               |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/src/assets/scss/components/_input.scss)
+
+</div><div class="theme-bulma">
+
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
+
+<p>The theme does not have any custom variables for this component.</p>
+</div><div class="theme-bootstrap">
+
+> Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
+
+| SASS Variable          | Default      |
+| ---------------------- | ------------ |
+| $input-icon-color      | $input-color |
+| $input-icon-spacer     | 0.75rem      |
+| $input-icon-padding-sm | 2rem         |
+| $input-icon-padding    | 2.5rem       |
+| $input-icon-padding-lg | 3rem         |
+
+See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_input.scss)
+
+</div>
+
 </div>
