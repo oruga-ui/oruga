@@ -1,3 +1,11 @@
+## [0.8.1](https://github.com/oruga-ui/oruga/compare/v0.8.0...v0.8.1) (2023-12-10)
+
+### Bug Fixes
+* **build:** fix types export ([#681](https://github.com/oruga-ui/oruga/commit/3973bb22961197a9e36d6274e2fa7cf97d6a4498))
+* **docs:** fix ssr hydration error ([#680](https://github.com/oruga-ui/oruga/commit/4d8301f873efc7f6580d5cddfe84038ccd3cd0bb))
+
+
+
 # [0.8.0](https://github.com/oruga-ui/oruga/compare/v0.7.0...v0.8.0) (2023-12-06)
 
 ### Features
