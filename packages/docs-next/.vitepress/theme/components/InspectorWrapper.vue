@@ -61,12 +61,17 @@ watch(inspectClass, ({ className, action }) => {
             <b>'Classes applied to the element'</b>
             <div class="odocs-classes-applied">{{ classesApplied }}</div>
         </div>
-        <slot v-bind="{ ...classes, ...data }" />
 
-        <inspector
-            :inspect-data="inspectData"
-            :subitem="subitem"
-            @inspect="inspectClass = $event" />
+        <ClientOnly>
+            <slot v-bind="{ ...classes, ...data }" />
+        </ClientOnly>
+
+        <ClientOnly>
+            <Inspector
+                :inspect-data="inspectData"
+                :subitem="subitem"
+                @inspect="inspectClass = $event" />
+        </ClientOnly>
     </div>
 </template>
 
