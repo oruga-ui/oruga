@@ -133,6 +133,7 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "expandedClass",
+        "textareaClass",
         "iconLeftSpaceClass",
         "iconRightSpaceClass",
         "inputClass",
@@ -216,8 +217,8 @@ const valueLength = computed(() =>
     typeof vmodel.value === "string"
         ? vmodel.value.length
         : typeof vmodel.value === "number"
-        ? vmodel.value.toString().length
-        : 0,
+          ? vmodel.value.toString().length
+          : 0,
 );
 
 onMounted(() => {

@@ -47,13 +47,17 @@ const inspectData = [
         description: "Class of next arrow element",
     },
     {
+        class: "indicatorClass",
+        description: "Class of indicator link element",
+    },
+    {
         class: "indicatorsClass",
-        description: "Class of indicators element",
+        description: "Class of indicators wrapper element",
     },
     {
         class: "indicatorsInsideClass",
         properties: ["indicatorInside"],
-        description: "Class of indicators element when inside",
+        description: "Class of indicators wrapper element when inside",
         action: (cmp, data) => {
             data.indicatorInside = true;
         },
@@ -61,7 +65,8 @@ const inspectData = [
     {
         class: "indicatorsInsidePositionClass",
         properties: ["indicatorInside", "indicatorPosition"],
-        description: "Class of indicators element when inside and position",
+        description:
+            "Class of indicators wrapper element when inside and position",
         action: (cmp, data) => {
             data.indicatorInside = true;
             data.indicatorPosition = "top";

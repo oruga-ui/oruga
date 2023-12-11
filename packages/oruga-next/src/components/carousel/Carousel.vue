@@ -141,6 +141,7 @@ const props = defineProps({
         "arrowIconClass",
         "arrowIconPrevClass",
         "arrowIconNextClass",
+        "indicatorClass",
         "indicatorsClass",
         "indicatorsInsideClass",
         "indicatorsInsidePositionClass",

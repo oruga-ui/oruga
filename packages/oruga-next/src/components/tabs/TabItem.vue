@@ -104,8 +104,8 @@ function activate(oldIndex: number): void {
                 ? "slide-down"
                 : "slide-next"
             : parent.value.vertical
-            ? "slide-up"
-            : "slide-prev";
+              ? "slide-up"
+              : "slide-prev";
     // emit event
     emits("activate");
 }
@@ -118,8 +118,8 @@ function deactivate(newIndex: number): void {
                 ? "slide-down"
                 : "slide-next"
             : parent.value.vertical
-            ? "slide-up"
-            : "slide-prev";
+              ? "slide-up"
+              : "slide-prev";
     // emit event
     emits("deactivate");
 }
