@@ -13,7 +13,7 @@ export interface OptionsItem<V = unknown> {
     [index: string]: any;
 }
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         select?: ComponentConfigBase &
             /** component class config definition */

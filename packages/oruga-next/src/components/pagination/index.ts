@@ -4,6 +4,9 @@ import Pagination from "./Pagination.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export pagination specific types */
+export type * from "./types";
+
 /** export pagination plugin */
 export default {
     install(app: App) {

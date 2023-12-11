@@ -5,6 +5,9 @@ import TabItem from "./TabItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export tabs specific types */
+export type * from "./types";
+
 /** export tabs plugin */
 export default {
     install(app: App) {

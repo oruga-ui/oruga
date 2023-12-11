@@ -24,7 +24,7 @@ export type StepsComponent = {
 
 export type StepItem = Omit<ProviderItem, "data"> & StepItemComponent;
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         steps?: ComponentConfigBase &
             /** component class config definition */

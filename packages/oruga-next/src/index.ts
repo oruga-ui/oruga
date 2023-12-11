@@ -48,7 +48,7 @@ const plugin: Plugin = {
 export { plugin as Oruga };
 export default plugin;
 
-declare module "./types" {
+declare module "./index" {
     interface OrugaProgrammatic {
         config: typeof ConfigProgrammatic;
     }

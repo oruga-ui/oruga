@@ -9,7 +9,7 @@ import { getOption } from "@/utils/config";
 import type { ProgrammaticExpose, ProgrammaticInstance } from "@/types";
 import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaProgrammatic {
         notification: typeof NotificationProgrammatic;
     }

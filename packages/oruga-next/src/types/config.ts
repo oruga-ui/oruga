@@ -8,7 +8,10 @@ export type ComponentContext = {
     computed: Record<string, any>;
 };
 
-export type ClassFunction = (suffix: string, ctx: ComponentContext) => string;
+export type ClassFunction = (
+    suffix: string,
+    ctx: ComponentContext,
+) => string | undefined;
 
 export type ClassObject = {
     class: string;
