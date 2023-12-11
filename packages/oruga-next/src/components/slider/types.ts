@@ -8,7 +8,7 @@ export type SliderComponent = {
     max: number;
 };
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         slider?: ComponentConfigBase &
             /** component class config definition */

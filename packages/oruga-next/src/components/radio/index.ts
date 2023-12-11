@@ -4,6 +4,9 @@ import Radio from "./Radio.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export radio specific types */
+export type * from "./types";
+
 /** export radio plugin */
 export default {
     install(app: App) {

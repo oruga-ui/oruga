@@ -8,7 +8,7 @@ export type NotifcationNoticeProps = InstanceType<
     typeof NotificationNotice
 >["$props"];
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         notification?: ComponentConfigBase &
             /** component class config definition */

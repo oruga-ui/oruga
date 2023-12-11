@@ -4,6 +4,9 @@ import Taginput from "./Taginput.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export taginput specific types */
+export type * from "./types";
+
 /** export taginput plugin */
 export default {
     install(Vue: App) {

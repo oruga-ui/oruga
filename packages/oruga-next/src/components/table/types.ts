@@ -54,7 +54,7 @@ export type TableColumnComponent = Column & {
 
 export type TableColumn = Omit<ProviderItem, "data"> & TableColumnComponent;
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         table?: ComponentConfigBase &
             /** component class config definition */

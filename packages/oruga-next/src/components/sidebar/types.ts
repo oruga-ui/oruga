@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar.vue";
 
 export type SidebarProps = InstanceType<typeof Sidebar>["$props"];
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         sidebar?: ComponentConfigBase &
             /** component class config definition */

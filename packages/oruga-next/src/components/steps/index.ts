@@ -5,6 +5,9 @@ import StepItem from "./StepItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export steps specific types */
+export type * from "./types";
+
 /** export steps plugin */
 export default {
     install(app: App) {
