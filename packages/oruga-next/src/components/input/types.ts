@@ -9,6 +9,8 @@ declare module "../../index" {
                 rootClass: ClassDefinition;
                 /** Class of input when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of input when type textarea */
+                textareaClass: ClassDefinition;
                 /** Class of the left icon space inside the input */
                 iconLeftSpaceClass: ClassDefinition;
                 /** Class of the right icon space inside the input */

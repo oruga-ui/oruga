@@ -33,6 +33,14 @@ const inspectData = [
         description: "Class of the native input element",
     },
     {
+        class: "textareaClass",
+        description: "Class of input when type textarea ",
+        properties: ["type"],
+        action: (cmp, data) => {
+            data.type = "textarea";
+        },
+    },
+    {
         class: "roundedClass",
         description: "Class of input when rounded",
         properties: ["rounded"],
