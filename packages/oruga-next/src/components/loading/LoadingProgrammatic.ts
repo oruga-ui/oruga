@@ -6,12 +6,22 @@ import type { LoadingProps } from "./types";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
-import type { ProgrammaticExpose } from "@/types";
+import type { OrugaOptions, ProgrammaticExpose } from "@/types";
+
+declare module "../../index" {
+    interface OrugaProgrammatic {
+        loading: typeof LoadingProgrammatic;
+    }
+}
 
 const instances = new InstanceRegistry<typeof Loading>();
 
+type ProgrammaticProps = Readonly<
+    string | (LoadingProps & OrugaOptions["loading"])
+>;
+
 const LoadingProgrammatic = {
-    open(params: Readonly<string | LoadingProps>): ProgrammaticExpose {
+    open(params: ProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {

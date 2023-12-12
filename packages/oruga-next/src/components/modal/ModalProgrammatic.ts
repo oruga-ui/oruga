@@ -6,7 +6,7 @@ import type { ModalProps } from "./types";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
-import type { ProgrammaticExpose } from "@/types";
+import type { OrugaOptions, ProgrammaticExpose } from "@/types";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -16,8 +16,12 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof Modal>();
 
+type ProgrammaticProps = Readonly<
+    string | (ModalProps & OrugaOptions["modal"])
+>;
+
 const ModalProgrammatic = {
-    open(params: Readonly<string | ModalProps>): ProgrammaticExpose {
+    open(params: ProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
