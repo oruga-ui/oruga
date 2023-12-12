@@ -9,6 +9,10 @@ declare module "../../index" {
                 rootClass: ClassDefinition;
                 /** Class of input when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the input container */
+                containerClass: ClassDefinition;
+                /** Class of the input container size */
+                sizeClass: ClassDefinition;
                 /** Class of the entered item variant */
                 variantClass: ClassDefinition;
                 /** Class of the close button of entered item */

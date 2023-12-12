@@ -172,6 +172,8 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "expandedClass",
+        "containerClass",
+        "sizeClass",
         "variantClass",
         "closeClass",
         "itemClass",
