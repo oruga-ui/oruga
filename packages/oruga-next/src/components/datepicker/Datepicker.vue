@@ -430,8 +430,8 @@ watch(
                     ? props.dateCreator()
                     : value[value.length - 1]
                 : !value
-                ? props.dateCreator()
-                : value;
+                  ? props.dateCreator()
+                  : value;
             if (
                 !isArray ||
                 (isArray &&
