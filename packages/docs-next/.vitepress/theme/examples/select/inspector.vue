@@ -56,6 +56,14 @@ const inspectData = [
         },
     },
     {
+        class: "disabledClass",
+        description: "Class of select when disabled ",
+        properties: ["disabled"],
+        action: (cmp, data) => {
+            data.disabled = true;
+        },
+    },
+    {
         class: "iconLeftClass",
         description: "Class of the left icon",
         properties: ["icon"],
