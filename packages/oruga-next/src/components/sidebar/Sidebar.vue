@@ -238,8 +238,8 @@ const transitionName = computed(() => {
             ? "slide-down"
             : "slide-next"
         : vertical
-        ? "slide-up"
-        : "slide-prev";
+          ? "slide-up"
+          : "slide-prev";
 });
 
 const hideOnMobile = computed(
