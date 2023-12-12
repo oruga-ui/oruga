@@ -138,6 +138,7 @@ const props = defineProps({
         "iconRightSpaceClass",
         "inputClass",
         "roundedClass",
+        "disabledClass",
         "iconLeftClass",
         "iconRightClass",
         "counterClass",
@@ -355,6 +356,10 @@ const inputClasses = computed(() => [
             "o-input--",
             statusVariant.value || props.variant,
         )]: statusVariant.value || props.variant,
+    },
+    {
+        [useComputedClass("disabledClass", "o-input--disabled")]:
+            props.disabled,
     },
     {
         [useComputedClass("textareaClass", "o-input__textarea")]:

@@ -19,6 +19,8 @@ declare module "../../index" {
                 inputClass: ClassDefinition;
                 /** Class of input when rounded */
                 roundedClass: ClassDefinition;
+                /** Class of input when disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the left icon */
                 iconLeftClass: ClassDefinition;
                 /** Class of the right icon */
