@@ -6,7 +6,11 @@ import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
 import { getOption } from "@/utils/config";
-import type { ProgrammaticExpose, ProgrammaticInstance } from "@/types";
+import type {
+    OrugaOptions,
+    ProgrammaticExpose,
+    ProgrammaticInstance,
+} from "@/types";
 import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 declare module "../../index" {
@@ -17,10 +21,13 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof NotificationNotice>();
 
+type ProgrammaticProps = Readonly<
+    | string
+    | (NotifcationNoticeProps & NotifcationProps & OrugaOptions["notification"])
+>;
+
 const NotificationProgrammatic = {
-    open(
-        params: Readonly<string | (NotifcationNoticeProps & NotifcationProps)>,
-    ): ProgrammaticExpose {
+    open(params: ProgrammaticProps): ProgrammaticExpose {
         const componentParams =
             typeof params === "string"
                 ? {
