@@ -3,7 +3,7 @@
 Oruga is a <b>lightweight UI components library</b> for [Vue.js](https://vuejs.org/)<b> without any dependency.</b><br>
 It offers a <b>set of easily customisable components </b> and <b>doesn't depend on any specific style or CSS framework</b> (like Bootstrap, Bulma, TailwindCSS, etc).
 Therefore, it <b>doesn't provide a grid system or CSS utilities</b>, but you can <b>integrate any CSS framework</b> you like (see the [demo](#examples)).<br>
-Oruga provides you with a set of functional components, so you can <b>focus only on the UI/UX aspects</b> of your application 
+Oruga provides you with a set of functional components, so you can <b>focus only on the UI/UX aspects</b> of your application
 and can be entirely flexible for future changes without having to touch a line of JavaScript.
 
 
@@ -38,7 +38,7 @@ yarn add @oruga-ui/oruga-next
 ```
 
 ```html [Cdn]
-<script src="https://cdn.jsdelivr.net/npm/@oruga-ui/oruga-next/dist/oruga.min.js"></script>
+<script src="https://unpkg.com/@oruga-ui/oruga-next/dist/oruga.js"></script>
 ```
 
 :::
@@ -98,7 +98,6 @@ yarn add @oruga-ui/theme-oruga
 
 ```html [Cdn]
 <link rel="stylesheet" href="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.css" />
-<script src="https://unpkg.com/@oruga-ui/theme-oruga/dist/oruga.min.js"></script>
 ```
 :::
 
@@ -131,21 +130,21 @@ To understand how the plugins work with Nuxt.js, take a look at the [NuxtJS plug
 
 ## Community
 
-Community involvement and contribution is one of the most important aspects of an open source project. 
+Community involvement and contribution is one of the most important aspects of an open source project.
 We invite you to contribute to this project!
 There are many ways to help — from creating pull requests to our open source code bases, to filing issues so we can improve Oruga for everyone.
 
-If you need generalized help or want to make connections within the community, consider joining the official Discord. 
+If you need generalized help or want to make connections within the community, consider joining the official Discord.
 
 [Join the Oruga Discord server →](https://discord.gg/RuKuBYN)
 
-**Open issues on GitHub (bugs and features)** - 
-[GitHub issues](https://github.com/oruga-ui/oruga/issues/new/choose) are for feature requests and bug reports. 
-If you've found a bug, please create a GitHub issue! 
+**Open issues on GitHub (bugs and features)** -
+[GitHub issues](https://github.com/oruga-ui/oruga/issues/new/choose) are for feature requests and bug reports.
+If you've found a bug, please create a GitHub issue!
 Feature requests are always welcome. If you have an idea for improvements, let us know!
 
-**Create a theme to share** - 
-We have created some [themes](themes) for you. 
+**Create a theme to share** -
+We have created some [themes](themes) for you.
 However, if you have created a nice theme for Oruga? Let us know! We will be happy to include links to and share high quality content in our docs.
 
 ## Examples
@@ -170,4 +169,3 @@ This simple demo shows a simple recipe website. Oruga components like Input, Rad
 
 - [Oruga UI Components without CSS Framework Dependency - Article by Walter Tommasi](https://dev.to/jtommy/oruga-ui-components-library-without-css-framework-dependency-4m3m)
 - [Oruga, the new kid on the block - Article by Andrea Stagi](https://dev.to/astagi/oruga-the-new-kid-on-the-block-1n55)
- 
