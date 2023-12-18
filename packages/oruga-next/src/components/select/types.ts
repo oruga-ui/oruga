@@ -32,6 +32,8 @@ declare module "../../index" {
                 multipleClass: ClassDefinition;
                 /** Class of select when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of select when disabled */
+                disabledClass: ClassDefinition;
                 /** Class of the left icon */
                 iconLeftClass: ClassDefinition;
                 /** Class of the right icon */

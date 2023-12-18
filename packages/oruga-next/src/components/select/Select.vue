@@ -62,6 +62,8 @@ const props = defineProps({
     placeholder: { type: String, default: undefined },
     /** Allow multiple selection */
     multiple: { type: Boolean, default: false },
+    /** Same as native disabled */
+    disabled: { type: Boolean, default: false },
     /** Makes input full width when inside a grouped or addon field */
     expanded: { type: Boolean, default: false },
     /** Makes the element rounded */
@@ -118,6 +120,7 @@ const props = defineProps({
         "roundedClass",
         "multipleClass",
         "expandedClass",
+        "disabledClass",
         "iconLeftClass",
         "iconRightClass",
         "sizeClass",
@@ -261,6 +264,9 @@ const selectClasses = computed(() => [
         )]: statusVariant.value || props.variant,
     },
     {
+        [useComputedClass("disabledClass", "o-sel--disabled")]: props.disabled,
+    },
+    {
         [useComputedClass("iconLeftSpaceClass", "o-sel-iconspace-left")]:
             props.icon,
     },
@@ -307,6 +313,7 @@ const iconRightClasses = computed(() => [
             :autocomplete="autocomplete"
             :multiple="multiple"
             :size="nativeSize"
+            :disabled="disabled"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">

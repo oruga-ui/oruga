@@ -49,6 +49,14 @@ const inspectData = [
         },
     },
     {
+        class: "disabledClass",
+        description: "Class of input when disabled ",
+        properties: ["disabled"],
+        action: (cmp, data) => {
+            data.disabled = true;
+        },
+    },
+    {
         class: "iconLeftClass",
         description: "Class of the left icon",
         properties: ["icon"],
