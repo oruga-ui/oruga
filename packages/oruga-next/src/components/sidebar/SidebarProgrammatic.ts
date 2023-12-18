@@ -6,7 +6,7 @@ import type { SidebarProps } from "./types";
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
-import type { ProgrammaticExpose } from "@/types";
+import type { OrugaOptions, ProgrammaticExpose } from "@/types";
 
 declare module "../../index" {
     interface OrugaProgrammatic {
@@ -16,8 +16,10 @@ declare module "../../index" {
 
 const instances = new InstanceRegistry<typeof Sidebar>();
 
+type ProgrammaticProps = Readonly<SidebarProps & OrugaOptions["sidebar"]>;
+
 const SidebarProgrammatic = {
-    open(params: Readonly<SidebarProps>): ProgrammaticExpose {
+    open(params: ProgrammaticProps): ProgrammaticExpose {
         const defaultParams = {
             programmatic: { instances },
             active: true, // set the active state to true
