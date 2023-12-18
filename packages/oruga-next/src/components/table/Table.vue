@@ -587,7 +587,7 @@ const tableData = computed(() => {
     // if no customRowKey is given and data are objects, create unique row id for each row
     return props.data.map((row) =>
         !props.customRowKey && typeof row === "object"
-            ? Object.assign(row, { __rowKey: uuid() })
+            ? Object.assign({ __rowKey: uuid() }, row)
             : row,
     );
 });
