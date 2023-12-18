@@ -4,6 +4,9 @@ import Autocomplete from "./Autocomplete.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export autocomplete specific types */
+export type * from "./types";
+
 /** export autocomplete plugin */
 export default {
     install(app: App) {

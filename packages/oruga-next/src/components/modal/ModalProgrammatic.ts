@@ -8,7 +8,7 @@ import { VueInstance } from "@/utils/plugins";
 import { merge } from "@/utils/helpers";
 import type { ProgrammaticExpose } from "@/types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaProgrammatic {
         modal: typeof ModalProgrammatic;
     }

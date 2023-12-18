@@ -5,6 +5,9 @@ import CarouselItem from "./CarouselItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export carousel specific types */
+export type * from "./types";
+
 /** export carousel plugin */
 export default {
     install(app: App) {

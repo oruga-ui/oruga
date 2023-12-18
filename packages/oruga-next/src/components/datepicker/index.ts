@@ -6,6 +6,9 @@ export type { DatepickerEvent, FocusedDate } from "./useDatepickerShare";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export datepicker specific types */
+export type * from "./types";
+
 /** export datepicker plugin */
 export default {
     install(app: App) {

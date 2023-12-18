@@ -4,7 +4,7 @@ import type {
     DynamicComponent,
 } from "@/types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         datetimepicker?: ComponentConfigBase &
             /** component class config definition */

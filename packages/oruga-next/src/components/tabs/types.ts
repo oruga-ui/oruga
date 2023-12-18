@@ -28,7 +28,7 @@ export type TabsComponent = {
 
 export type TabItem = Omit<ProviderItem, "data"> & TabItemComponent;
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         tabs?: ComponentConfigBase &
             /** component class config definition */
@@ -91,7 +91,7 @@ declare module "@/types" {
                 /** Icon pack */
                 iconPack: string;
                 /** Tabs item tag name */
-                tag: DynamicComponent;
+                itemTag: DynamicComponent;
                 /** Role attribute to be passed to the div wrapper for better accessibility. */
                 ariaRole: string;
             }>;

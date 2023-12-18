@@ -381,6 +381,18 @@ const inspectData = [
         },
     },
     {
+        class: "containerClass",
+        description: "Class of the input container",
+    },
+    {
+        class: "sizeClass",
+        description: "Class of the input container size",
+        properties: ["size"],
+        action: (cmp, data) => {
+            data.size = "large";
+        },
+    },
+    {
         class: "itemClass",
         description: "Class of the entered item",
     },

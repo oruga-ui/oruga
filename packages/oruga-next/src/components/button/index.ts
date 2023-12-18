@@ -4,6 +4,9 @@ import Button from "./Button.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export button specific types */
+export type * from "./types";
+
 /** export button plugin */
 export default {
     install(app: App) {

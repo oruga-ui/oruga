@@ -4,6 +4,9 @@ import Switch from "./Switch.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
+/** export switch specific types */
+export type * from "./types";
+
 /** export switch plugin */
 export default {
     install(app: App) {

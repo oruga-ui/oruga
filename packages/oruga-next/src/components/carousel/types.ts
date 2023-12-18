@@ -1,6 +1,6 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         carousel?: ComponentConfigBase &
             /** component class config definition */
@@ -21,11 +21,13 @@ declare module "@/types" {
                 arrowIconPrevClass: ClassDefinition;
                 /** Class of next arrow element */
                 arrowIconNextClass: ClassDefinition;
-                /** Class of indicators element */
+                /** Class of indicator link element */
+                indicatorClass: ClassDefinition;
+                /** Class of indicators wrapper element */
                 indicatorsClass: ClassDefinition;
-                /** Class of indicators element when inside */
+                /** Class of indicators wrapper element when inside */
                 indicatorsInsideClass: ClassDefinition;
-                /** Class of indicators element when inside and position */
+                /** Class of indicators wrapper element when inside and position */
                 indicatorsInsidePositionClass: ClassDefinition;
                 /** Class of indicator item element */
                 indicatorItemClass: ClassDefinition;

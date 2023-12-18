@@ -1,6 +1,6 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         collapse?: ComponentConfigBase &
             /** component class config definition */

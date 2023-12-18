@@ -4,13 +4,13 @@ import LoadingProgrammatic from "./LoadingProgrammatic";
 
 export type LoadingProps = InstanceType<typeof Loading>["$props"];
 
-declare module "@/types" {
-    interface OrugaProgrammatic {
+declare module "../../index" {
+    export interface OrugaProgrammatic {
         loading: typeof LoadingProgrammatic;
     }
 }
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         loading?: ComponentConfigBase &
             /** component class config definition */

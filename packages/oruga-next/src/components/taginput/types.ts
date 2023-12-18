@@ -1,6 +1,6 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
 
-declare module "@/types" {
+declare module "../../index" {
     interface OrugaOptions {
         taginput?: ComponentConfigBase &
             /** component class config definition */
@@ -9,6 +9,10 @@ declare module "@/types" {
                 rootClass: ClassDefinition;
                 /** Class of input when expanded */
                 expandedClass: ClassDefinition;
+                /** Class of the input container */
+                containerClass: ClassDefinition;
+                /** Class of the input container size */
+                sizeClass: ClassDefinition;
                 /** Class of the entered item variant */
                 variantClass: ClassDefinition;
                 /** Class of the close button of entered item */

@@ -70,7 +70,7 @@ const props = defineProps({
     /** Adds the reveal password functionality */
     passwordReveal: { type: Boolean, default: false },
     /** Same as native maxlength, plus character counter */
-    maxlength: { type: Number, default: undefined },
+    maxlength: { type: [Number, String], default: undefined },
     /** Show character counter when maxlength prop is passed */
     counter: {
         type: Boolean,
@@ -133,6 +133,7 @@ const props = defineProps({
     ...useClassProps([
         "rootClass",
         "expandedClass",
+        "textareaClass",
         "iconLeftSpaceClass",
         "iconRightSpaceClass",
         "inputClass",
@@ -216,8 +217,8 @@ const valueLength = computed(() =>
     typeof vmodel.value === "string"
         ? vmodel.value.length
         : typeof vmodel.value === "number"
-        ? vmodel.value.toString().length
-        : 0,
+          ? vmodel.value.toString().length
+          : 0,
 );
 
 onMounted(() => {
