@@ -1,19 +1,27 @@
-import type { Prop } from "vue";
+// import type { Prop } from "vue";
+import type { ClassFunction, InstanceClassDefinition } from "@/types";
 
 /** Define a list of classes as probs to a component */
-export function useClassProps(classes: string[]): ClassPropRecord {
+export function useClassProps<T extends string[]>(classes: T): ArrayAsProps<T> {
     return classes
         .map((c) => ({
             [c]: {
-                type: [String, Function, Array],
+                type: [String, Array, Function as ClassFunction],
                 default: undefined,
             },
         }))
         .reduce((a, b) => Object.assign(a, b), {});
 }
 
-export type ClassPropRecord<T = Record<string, ClassProp>> = {
-    [K in keyof T]: ClassProp;
+type ArrayAsProps<T extends string[]> = {
+    [K in T[number]]: {
+        type: InstanceClassDefinition;
+        default: undefined;
+    };
 };
 
-type ClassProp = Prop<string | Function | Array<string>, undefined>;
+// export type ClassPropRecord<T = Record<string, ClassProp>> = {
+//     [K in keyof T]: ClassProp;
+// };
+
+// type ClassProp = Prop<string | Function | Array<string>, undefined>;
