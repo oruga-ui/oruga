@@ -94,7 +94,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 const vmodel = useVModelBinding<Object | Object[] | File | File[]>(
     props,
@@ -210,15 +210,11 @@ function checkType(file: File): boolean {
 
 function onClick(event: Event): void {
     if (props.disabled) return;
+
+    // click input if not drag and drop is used
     if (!props.dragDrop) {
         event.preventDefault();
-        // click input if not drag and drop is used
-        const clickEvent = new MouseEvent("click", {
-            view: window,
-            bubbles: true,
-            cancelable: false,
-        });
-        inputRef.value.dispatchEvent(clickEvent);
+        inputRef.value.click();
     }
 }
 
@@ -251,12 +247,13 @@ const draggableClasses = computed(() => [
 </script>
 
 <template>
-    <label :class="rootClasses" data-oruga="upload" @click="onClick">
+    <label :class="rootClasses" data-oruga="upload">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
+                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
             -->
-            <slot />
+            <slot :onclick="onClick" />
         </template>
 
         <div
