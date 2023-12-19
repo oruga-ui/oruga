@@ -18,18 +18,18 @@ import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { getValueByPath } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
+import { unrefElement } from "@/utils/unrefElement";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
     useDebounce,
     useEventListener,
 } from "@/composables";
-import { getValueByPath } from "@/utils/helpers";
-import type { DynamicComponent, PropBind } from "@/types";
-import { isClient } from "@/utils/ssr";
-import { unrefElement } from "@/utils/unrefElement";
+
+import type { ComponentClass, DynamicComponent, PropBind } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -217,16 +217,35 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("autocomplete.teleport", false),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "itemClass",
-        "itemHoverClass",
-        "itemGroupTitleClass",
-        "itemEmptyClass",
-        "itemHeaderClass",
-        "itemFooterClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHoverclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemGroupTitleclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemEmptyclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemFooterclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Classes to apply on internal input component
      * @ignore

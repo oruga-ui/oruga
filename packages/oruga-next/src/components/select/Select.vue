@@ -5,9 +5,9 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -15,7 +15,7 @@ import {
 import { injectField } from "../field/useFieldShare";
 
 import type { OptionsItem } from "./types";
-import { uuid } from "@/utils/helpers";
+import type { ComponentClass } from "@/types";
 
 /**
  * Select an item in a dropdown list. Use with Field to access all functionalities
@@ -111,23 +111,63 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("statusIcon", true),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "selectClass",
-        "iconLeftSpaceClass",
-        "iconRightSpaceClass",
-        "roundedClass",
-        "multipleClass",
-        "expandedClass",
-        "disabledClass",
-        "iconLeftClass",
-        "iconRightClass",
-        "sizeClass",
-        "variantClass",
-        "placeholderClass",
-        "arrowClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    selectclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconLeftSpaceclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconRightSpaceclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    roundedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    multipleclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconLeftclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconRightclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    placeholderclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

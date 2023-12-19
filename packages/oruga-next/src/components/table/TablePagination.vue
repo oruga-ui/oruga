@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { usePropBinding } from "@/composables";
+import type { PropType } from "vue";
+
 import OPagination from "../pagination/Pagination.vue";
+
+import { usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -11,7 +16,10 @@ defineOptions({
 const props = defineProps({
     current: { type: Number, default: undefined },
     paginated: { type: Boolean, default: false },
-    rootClass: { type: [String, Array, Object], default: undefined },
+    rootClass: {
+        type: [String, Array, Object] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed, ref, watch, toValue, nextTick } from "vue";
+import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "@/utils/SlotComponent";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { mod, isDefined } from "@/utils/helpers";
 import {
-    useClassProps,
     useComputedClass,
     useProviderParent,
     useVModelBinding,
 } from "@/composables";
-import { mod, isDefined } from "@/utils/helpers";
-import type { PropBind } from "@/types";
+
 import type { TabItem, TabItemComponent } from "./types";
+import type { ComponentClass, PropBind } from "@/types";
 
 /**
  * Responsive horizontal navigation tabs, switch between contents with ease
@@ -78,21 +78,55 @@ const props = defineProps({
     },
     /** Show tab items multiline when there is no space */
     multiline: { type: Boolean, default: false },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "positionClass",
-        "expandedClass",
-        "verticalClass",
-        "multilineClass",
-        "navTabsClass",
-        "navSizeClass",
-        "navPositionClass",
-        "navTypeClass",
-        "contentClass",
-        "transitioningClass",
-        "itemWrapperClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    verticalclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    multilineclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    navTabsclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    navSizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    navPositionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    navTypeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    transitioningclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemWrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

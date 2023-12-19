@@ -25,14 +25,6 @@ import OTablePagination from "./TablePagination.vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
-    useClassProps,
-    useProviderParent,
-    usePropBinding,
-    useMatchMedia,
-    useDebounce,
-} from "@/composables";
-import {
     getValueByPath,
     indexOf,
     toCssDimension,
@@ -40,8 +32,16 @@ import {
     removeDiacriticsFromString,
     uuid,
 } from "@/utils/helpers";
+import {
+    useComputedClass,
+    useProviderParent,
+    usePropBinding,
+    useMatchMedia,
+    useDebounce,
+} from "@/composables";
+
 import type { Column, TableColumn, TableColumnComponent } from "./types";
-import type { PropBind } from "@/types";
+import type { ComponentClass, PropBind } from "@/types";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -310,41 +310,135 @@ const props = defineProps({
         type: String,
         default: () => getOption("table.ariaCurrentLabel"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "tableClass",
-        "wrapperClass",
-        "footerClass",
-        "emptyClass",
-        "detailedClass",
-        "borderedClass",
-        "stripedClass",
-        "narrowedClass",
-        "hoverableClass",
-        "trSelectedClass",
-        "trCheckedClass",
-        "thClass",
-        "thPositionClass",
-        "thStickyClass",
-        "thCheckboxClass",
-        "thCurrentSortClass",
-        "thSortableClass",
-        "thUnselectableClass",
-        "thSortIconClass",
-        "thDetailedClass",
-        "thSubheadingClass",
-        "tdClass",
-        "tdPositionClass",
-        "tdStickyClass",
-        "tdCheckboxClass",
-        "tdDetailedChevronClass",
-        "stickyHeaderClass",
-        "scrollableClass",
-        "mobileSortClass",
-        "paginationWrapperClass",
-        "mobileClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    wrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    footerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    emptyclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    detailedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    borderedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stripedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    narrowedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    hoverableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    trSelectedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    trCheckedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thPositionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thStickyclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thCheckboxclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thCurrentSortclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thSortableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thUnselectableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thSortIconclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thDetailedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thSubheadingclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tdclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tdPositionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tdStickyclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tdCheckboxclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tdDetailedChevronclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stickyHeaderclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    scrollableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileSortclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    paginationWrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -723,8 +817,8 @@ function onArrowPressed(pos: number, event: KeyboardEvent): void {
         index < 0
             ? 0
             : index > visibleRows.value.length - 1
-            ? visibleRows.value.length - 1
-            : index;
+              ? visibleRows.value.length - 1
+              : index;
 
     const row = visibleRows.value[index];
 
@@ -1556,7 +1650,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
-                                    @update:modelValue="checkAll" />
+                                    @update:model-value="checkAll" />
                             </slot>
                         </th>
                         <th
@@ -1626,7 +1720,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                         autocomplete="off"
                                         :variant="checkboxVariant"
                                         :disabled="isAllUncheckable"
-                                        @update:modelValue="checkAll" />
+                                        @update:model-value="checkAll" />
                                 </slot>
                             </template>
                         </th>
@@ -1732,7 +1826,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row)"
-                                    @update:modelValue="checkRow(row, index)" />
+                                    @update:model-value="
+                                        checkRow(row, index)
+                                    " />
                             </td>
 
                             <!-- row data columns -->
@@ -1775,7 +1871,9 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                     autocomplete="off"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row)"
-                                    @update:modelValue="checkRow(row, index)" />
+                                    @update:model-value="
+                                        checkRow(row, index)
+                                    " />
                             </td>
                         </tr>
 

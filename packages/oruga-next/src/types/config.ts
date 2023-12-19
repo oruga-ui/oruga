@@ -24,7 +24,7 @@ export type ClassObject = {
 
 export type TransformFunction = (classes: string) => string;
 
-export type InstanceClassDefinition = string | Array<string> | ClassFunction;
+export type ComponentClass = string | Array<string> | ClassFunction;
 
 export type ClassDefinition =
     | string

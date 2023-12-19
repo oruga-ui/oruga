@@ -3,13 +3,14 @@ import { computed, ref, watch, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { File } from "@/utils/ssr";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { File } from "@/utils/ssr";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Upload one or more files
@@ -60,15 +61,31 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "draggableClass",
-        "variantClass",
-        "expandedClass",
-        "disabledClass",
-        "hoveredClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    draggableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    hoveredclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

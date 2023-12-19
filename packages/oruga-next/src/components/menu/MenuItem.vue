@@ -5,13 +5,13 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     usePropBinding,
     useProviderChild,
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
-import type { DynamicComponent } from "@/types";
+
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * A menu list item
@@ -71,15 +71,31 @@ const props = defineProps({
         type: String,
         default: getOption("menu.itemAriaRole", "menuitem"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "itemClass",
-        "itemActiveClass",
-        "itemDisabledClass",
-        "itemIconTextClass",
-        "itemSubmenuClass",
-        "itemWrapperClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    itemclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemActiveclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemDisabledclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemIconTextclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemSubmenuclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemWrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

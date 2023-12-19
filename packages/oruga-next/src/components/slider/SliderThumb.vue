@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from "vue";
+
 import OTooltip from "../tooltip/Tooltip.vue";
-import type { SliderProps } from "./types";
+
 import { isClient } from "@/utils/ssr";
+
+import type { SliderProps } from "./types";
+import type { ComponentClass } from "@/types";
 
 /**
  * @displayName Slider Thumb
@@ -20,10 +24,13 @@ const props = defineProps({
     modelValue: { type: Number, required: true },
     sliderSize: { type: Function as PropType<() => number>, required: true },
     thumbWrapperClasses: {
-        type: [String, Function, Array],
+        type: [String, Function, Array] as PropType<ComponentClass>,
         required: true,
     },
-    thumbClasses: { type: [String, Function, Array], required: true },
+    thumbClasses: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        required: true,
+    },
 });
 
 const emits = defineEmits<{

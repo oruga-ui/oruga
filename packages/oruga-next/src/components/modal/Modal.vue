@@ -11,18 +11,18 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
+import { vTrapFocus } from "@/directives/trapFocus";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { removeElement, toCssDimension } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
 import {
     useComputedClass,
-    useClassProps,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
-import { vTrapFocus } from "@/directives/trapFocus";
-import { removeElement, toCssDimension } from "@/utils/helpers";
-import { isClient } from "@/utils/ssr";
-import type { ProgrammaticInstance } from "@/types";
+
+import type { ComponentClass, ProgrammaticInstance } from "@/types";
 
 /**
  * Classic modal overlay to include any content you may need
@@ -163,18 +163,43 @@ const props = defineProps({
      * @ignore
      */
     promise: { type: Promise, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "activeClass",
-        "overlayClass",
-        "contentClass",
-        "closeClass",
-        "fullScreenClass",
-        "mobileClass",
-        "scrollClipClass",
-        "noScrollClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    activeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    overlayclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    closeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    fullScreenclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    scrollClipclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    noScrollclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

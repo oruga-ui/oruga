@@ -11,13 +11,10 @@ import {
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useComputedClass,
-    useClassProps,
-    useProgrammaticComponent,
-} from "@/composables";
-import type { PropBind, ProgrammaticInstance } from "@/types";
+import { useComputedClass, useProgrammaticComponent } from "@/composables";
+
 import type { NotifcationProps } from "./types";
+import type { PropBind, ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
  * Notification Notice is used for the programmatic usage
@@ -107,12 +104,20 @@ const props = defineProps({
      * @ignore
      */
     promise: { type: Promise, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "noticeClass",
-        "noticePositionClass",
-        "noticeCustomContainerClass",
-    ]),
+    // class props (will not be displayed in the docs)
+
+    noticeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    noticePositionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    noticeCustomContainerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

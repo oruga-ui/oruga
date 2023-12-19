@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps } from "@/composables";
 import getIcons from "@/utils/icons";
+import { useComputedClass } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Icons take an important role of any application
@@ -72,14 +74,27 @@ const props = defineProps({
      * @ignore
      */
     both: { type: Boolean, default: false },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "clickableClass",
-        "spinClass",
-        "sizeClass",
-        "variantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    clickableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    spinclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const rootStyle = computed(() => {

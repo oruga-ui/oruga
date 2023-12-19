@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
+import type { ComponentClass } from "@/index";
 
 /**
  * Select an option from a set
@@ -66,17 +66,39 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "disabledClass",
-        "checkedClass",
-        "inputClass",
-        "inputCheckedClass",
-        "labelClass",
-        "sizeClass",
-        "variantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    checkedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputCheckedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

@@ -11,14 +11,14 @@ import {
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { isClient } from "@/utils/ssr";
 import {
     useComputedClass,
-    useClassProps,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
-import { isClient } from "@/utils/ssr";
-import type { ProgrammaticInstance } from "@/types";
+
+import type { ComponentClass, ProgrammaticInstance } from "@/types";
 
 /**
  * A sidebar to use as left/right overlay or static
@@ -160,26 +160,75 @@ const props = defineProps({
      * @ignore
      */
     promise: { type: Promise, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "activeClass",
-        "teleportClass",
-        "overlayClass",
-        "contentClass",
-        "positionClass",
-        "fullheightClass",
-        "fullwidthClass",
-        "inlineClass",
-        "reduceClass",
-        "expandOnHoverClass",
-        "variantClass",
-        "mobileClass",
-        "scrollClipClass",
-        "noScrollClass",
-        "hiddenClass",
-        "visibleClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    activeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    teleportclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    overlayclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    fullheightclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    fullwidthclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inlineclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    reduceclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandOnHoverclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    crollClipclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    noScrollclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    hiddenclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    visibleclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

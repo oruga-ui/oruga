@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, type Component, type PropType } from "vue";
 import { getOption } from "@/utils/config";
+
 import type { PropBind } from "@/types";
 
 defineOptions({

@@ -6,13 +6,14 @@ import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { getValueByPath } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { getValueByPath } from "@/utils/helpers";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A simple tag input field that can have autocomplete functionality
@@ -168,17 +169,39 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("taginput.teleport", false),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "expandedClass",
-        "containerClass",
-        "sizeClass",
-        "variantClass",
-        "closeClass",
-        "itemClass",
-        "counterClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    containerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    closeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    counterclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Class configuration for the underlying autocomplete component
      * @ignore

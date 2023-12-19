@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, toValue, nextTick, ref, watch } from "vue";
+import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { isDefined } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useProviderParent,
     useVModelBinding,
     useMatchMedia,
 } from "@/composables";
-import { isDefined } from "@/utils/helpers";
-import type { PropBind } from "@/types";
+
 import type { StepItem, StepItemComponent } from "./types";
+import type { ComponentClass, PropBind } from "@/types";
 
 /**
  * Responsive horizontal process steps
@@ -116,26 +116,75 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.ariaPreviousLabel"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "sizeClass",
-        "verticalClass",
-        "positionClass",
-        "stepsClass",
-        "animatedClass",
-        "stepMarkerRoundedClass",
-        "stepDividerClass",
-        "stepMarkerClass",
-        "stepContentClass",
-        "stepContentTransitioningClass",
-        "stepNavigationClass",
-        "stepLinkClass",
-        "stepLinkClickableClass",
-        "stepLinkLabelClass",
-        "stepLinkLabelPositionClass",
-        "mobileClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    verticalclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepsclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    animatedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepMarkerRoundedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepDividerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepMarkerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepContentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepContentTransitioningclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepNavigationclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepLinkclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepLinkClickableclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepLinkLabelclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    stepLinkLabelPositionclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

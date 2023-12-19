@@ -3,8 +3,10 @@ import { computed, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps, usePropBinding } from "@/composables";
 import { uuid } from "@/utils/helpers";
+import { useComputedClass, usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An easy way to toggle what you want
@@ -38,8 +40,19 @@ const props = defineProps({
         default: () => getOption("collapse.position", "top"),
         validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps(["rootClass", "triggerClass", "contentClass"]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    triggerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

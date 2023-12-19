@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { computed, watch, nextTick } from "vue";
+import { computed, watch, nextTick, type PropType } from "vue";
 
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useComputedClass,
-    useClassProps,
-    useMatchMedia,
-    usePropBinding,
-} from "@/composables";
+import { useComputedClass, useMatchMedia, usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A responsive and flexible pagination
@@ -113,24 +110,67 @@ const props = defineProps({
         type: String,
         default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "prevButtonClass",
-        "nextButtonClass",
-        "listItemClass",
-        "listClass",
-        "linkClass",
-        "linkCurrentClass",
-        "ellipsisClass",
-        "infoClass",
-        "orderClass",
-        "simpleClass",
-        "roundedClass",
-        "linkDisabledClass",
-        "sizeClass",
-        "mobileClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    prevButtonclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    nextButtonclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listItemclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkCurrentclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    ellipsisclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    infoclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    orderclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    simpleclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    roundedclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkDisabledclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

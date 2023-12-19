@@ -8,13 +8,14 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
 } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
@@ -166,14 +167,27 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "sizeClass",
-        "boxClass",
-        "separatorClass",
-        "footerClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    izeclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    boxclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    separatorclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    footerclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Class configuration for the internal input component
      * @ignore

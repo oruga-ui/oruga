@@ -7,16 +7,18 @@ import OInput from "../input/Input.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { isMobileAgent } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useInputHandler,
     usePropBinding,
 } from "@/composables";
-import { isMobileAgent } from "@/utils/helpers";
+
 import { matchWithGroups } from "../datepicker/utils";
 import type { DatepickerProps } from "../datepicker/useDatepickerShare";
 import type { TimepickerProps } from "../timepicker/useTimepickerShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
@@ -150,8 +152,15 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps(["datepickerWrapperClass", "timepickerWrapperClass"]),
+    // class props (will not be displayed in the docs)
+    datepickerWrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    timepickerWrapperclass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

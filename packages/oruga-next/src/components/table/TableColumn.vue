@@ -7,8 +7,10 @@ import {
     getCurrentInstance,
     type PropType,
 } from "vue";
+
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
+
 import type { TableColumnComponent, Column } from "./types";
 
 /**
