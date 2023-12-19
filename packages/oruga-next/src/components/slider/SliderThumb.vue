@@ -6,7 +6,7 @@ import OTooltip from "../tooltip/Tooltip.vue";
 import { isClient } from "@/utils/ssr";
 
 import type { SliderProps } from "./types";
-import type { ComponentClass } from "@/types";
+import type { PropBind } from "@/types";
 
 /**
  * @displayName Slider Thumb
@@ -24,11 +24,11 @@ const props = defineProps({
     modelValue: { type: Number, required: true },
     sliderSize: { type: Function as PropType<() => number>, required: true },
     thumbWrapperClasses: {
-        type: [String, Function, Array] as PropType<ComponentClass>,
+        type: [String, Object] as PropType<PropBind>,
         required: true,
     },
     thumbClasses: {
-        type: [String, Function, Array] as PropType<ComponentClass>,
+        type: [String, Object] as PropType<PropBind>,
         required: true,
     },
 });
