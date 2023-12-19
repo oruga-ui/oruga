@@ -7,8 +7,8 @@ const file = ref(null);
 <template>
     <section>
         <o-field class="file">
-            <o-upload v-model="file">
-                <o-button tag="a" variant="primary">
+            <o-upload v-slot="{ onclick }" v-model="file">
+                <o-button tag="a" variant="primary" @click="onclick">
                     <o-icon icon="upload" />
                     <span>Click to upload</span>
                 </o-button>
