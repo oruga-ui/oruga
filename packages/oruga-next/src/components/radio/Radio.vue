@@ -9,7 +9,8 @@ import {
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import type { ComponentClass } from "@/index";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Select an option from a set

@@ -260,7 +260,6 @@ const props = defineProps({
         default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
     },
     // class props (will not be displayed in the docs)
-
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -461,7 +460,6 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-
     /**
      * Class configuration for the internal input component
      * @ignore
