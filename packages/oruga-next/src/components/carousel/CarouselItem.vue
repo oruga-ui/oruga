@@ -22,15 +22,15 @@ const props = defineProps({
     /** Make item clickable */
     clickable: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemActiveclass: {
+    itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemClickableclass: {
+    itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

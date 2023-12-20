@@ -117,71 +117,71 @@ const props = defineProps({
         default: () => getOption("steps.ariaPreviousLabel"),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    verticalclass: {
+    verticalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionclass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepsclass: {
+    stepsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    animatedclass: {
+    animatedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepMarkerRoundedclass: {
+    stepMarkerRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepDividerclass: {
+    stepDividerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepMarkerclass: {
+    stepMarkerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepContentclass: {
+    stepContentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepContentTransitioningclass: {
+    stepContentTransitioningClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepNavigationclass: {
+    stepNavigationClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepLinkclass: {
+    stepLinkClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepLinkClickableclass: {
+    stepLinkClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepLinkLabelclass: {
+    stepLinkLabelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stepLinkLabelPositionclass: {
+    stepLinkLabelPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

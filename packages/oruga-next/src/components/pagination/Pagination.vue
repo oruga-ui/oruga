@@ -111,63 +111,63 @@ const props = defineProps({
         default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    prevButtonclass: {
+    prevButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    nextButtonclass: {
+    nextButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    listItemclass: {
+    listItemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    listclass: {
+    listClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    linkclass: {
+    linkClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    linkCurrentclass: {
+    linkCurrentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    ellipsisclass: {
+    ellipsisClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    infoclass: {
+    infoClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    orderclass: {
+    orderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    simpleclass: {
+    simpleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    roundedclass: {
+    roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    linkDisabledclass: {
+    linkDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -369,7 +369,7 @@ const linkCurrentClasses = computed(() => [
     useComputedClass("linkCurrentClass", "o-pag__link--current"),
 ]);
 
-const listItemClass = computed(() =>
+const listItemClasses = computed(() =>
     useComputedClass("listItemClass", "o-pag__item"),
 );
 
@@ -435,7 +435,7 @@ defineExpose({ last, first, prev, next });
 
         <ul v-else :class="listClasses">
             <!--First-->
-            <li v-if="hasFirst" :class="listItemClass">
+            <li v-if="hasFirst" :class="listItemClasses">
                 <slot v-bind="getPage(1)">
                     <o-pagination-button
                         v-bind="getPage(1)"
@@ -443,7 +443,7 @@ defineExpose({ last, first, prev, next });
                         :link-current-class="linkCurrentClasses" />
                 </slot>
             </li>
-            <li v-if="hasFirstEllipsis" :class="listItemClass">
+            <li v-if="hasFirstEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
@@ -451,7 +451,7 @@ defineExpose({ last, first, prev, next });
             <li
                 v-for="page in pagesInRange"
                 :key="page.number"
-                :class="listItemClass">
+                :class="listItemClasses">
                 <slot v-bind="page">
                     <o-pagination-button
                         v-bind="page"
@@ -461,10 +461,10 @@ defineExpose({ last, first, prev, next });
             </li>
 
             <!--Last-->
-            <li v-if="hasLastEllipsis" :class="listItemClass">
+            <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
-            <li v-if="hasLast" :class="listItemClass">
+            <li v-if="hasLast" :class="listItemClasses">
                 <!-- 
                     @slot Pagination button slot
                     @binding {number} number - page number 

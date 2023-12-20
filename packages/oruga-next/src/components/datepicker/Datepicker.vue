@@ -261,203 +261,203 @@ const props = defineProps({
     },
     // class props (will not be displayed in the docs)
 
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    boxclass: {
+    boxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    headerclass: {
+    headerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    headerButtonsclass: {
+    headerButtonsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    headerButtonsSizeclass: {
+    headerButtonsSizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    prevButtonclass: {
+    prevButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    nextButtonclass: {
+    nextButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    listsclass: {
+    listsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    footerclass: {
+    footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableclass: {
+    tableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableHeadclass: {
+    tableHeadClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableHeadCellclass: {
+    tableHeadCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableBodyclass: {
+    tableBodyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableRowclass: {
+    tableRowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellclass: {
+    tableCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellInvisibleclass: {
+    tableCellInvisibleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellSelectedclass: {
+    tableCellSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellFirstSelectedclass: {
+    tableCellFirstSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellWithinSelectedclass: {
+    tableCellWithinSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellLastSelectedclass: {
+    tableCellLastSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellFirstHoveredclass: {
+    tableCellFirstHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellWithinHoveredclass: {
+    tableCellWithinHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellLastHoveredclass: {
+    tableCellLastHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellTodayclass: {
+    tableCellTodayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellSelectableclass: {
+    tableCellSelectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellUnselectableclass: {
+    tableCellUnselectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellNearbyclass: {
+    tableCellNearbyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableCellEventsclass: {
+    tableCellEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableEventsclass: {
+    tableEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableEventclass: {
+    tableEventClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableEventVariantclass: {
+    tableEventVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableEventIndicatorsclass: {
+    tableEventIndicatorsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthclass: {
+    monthClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthBodyclass: {
+    monthBodyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthTableclass: {
+    monthTableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellclass: {
+    monthCellClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellSelectedclass: {
+    monthCellSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellFirstSelectedclass: {
+    monthCellFirstSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellWithinSelectedclass: {
+    monthCellWithinSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellLastSelectedclass: {
+    monthCellLastSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellWithinHoveredRangeclass: {
+    monthCellWithinHoveredRangeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellFirstHoveredclass: {
+    monthCellFirstHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellWithinHoveredclass: {
+    monthCellWithinHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellLastHoveredclass: {
+    monthCellLastHoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellTodayclass: {
+    monthCellTodayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellSelectableclass: {
+    monthCellSelectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellUnselectableclass: {
+    monthCellUnselectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    monthCellEventsclass: {
+    monthCellEventsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

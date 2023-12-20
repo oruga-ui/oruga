@@ -58,27 +58,27 @@ const props = defineProps({
             ["left", "centered", "right"].indexOf(value) > -1,
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    animationclass: {
+    animationClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionclass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemRoundedclass: {
+    itemRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -218,31 +218,31 @@ const props = defineProps({
         default: () => getOption("autocomplete.teleport", false),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHoverclass: {
+    itemHoverClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemGroupTitleclass: {
+    itemGroupTitleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemEmptyclass: {
+    itemEmptyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHeaderclass: {
+    itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemFooterclass: {
+    itemFooterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -62,27 +62,27 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    draggableclass: {
+    draggableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    expandedclass: {
+    expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    hoveredclass: {
+    hoveredClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

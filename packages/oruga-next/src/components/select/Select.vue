@@ -112,59 +112,59 @@ const props = defineProps({
         default: () => getOption("statusIcon", true),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    selectclass: {
+    selectClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconLeftSpaceclass: {
+    iconLeftSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconRightSpaceclass: {
+    iconRightSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    roundedclass: {
+    roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    multipleclass: {
+    multipleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    expandedclass: {
+    expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconLeftclass: {
+    iconLeftClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconRightclass: {
+    iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    placeholderclass: {
+    placeholderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowclass: {
+    arrowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

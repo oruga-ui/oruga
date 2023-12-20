@@ -163,47 +163,47 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    teleportclass: {
+    teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    triggerclass: {
+    triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    inlineclass: {
+    inlineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    menuMobileOverlayclass: {
+    menuMobileOverlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    menuclass: {
+    menuClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    menuPositionclass: {
+    menuPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    menuActiveclass: {
+    menuActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    expandedclass: {
+    expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

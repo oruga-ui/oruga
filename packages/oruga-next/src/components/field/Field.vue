@@ -62,67 +62,67 @@ const props = defineProps({
         default: () => getOption("field.mobileBreakpoint"),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    horizontalclass: {
+    horizontalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    groupedclass: {
+    groupedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    groupMultilineclass: {
+    groupMultilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    labelclass: {
+    labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    labelSizeclass: {
+    labelSizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    labelHorizontalclass: {
+    labelHorizontalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    bodyclass: {
+    bodyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    bodyHorizontalclass: {
+    bodyHorizontalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    addonsclass: {
+    addonsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    messageclass: {
+    messageClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantMessageclass: {
+    variantMessageClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantLabelclass: {
+    variantLabelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    focusedclass: {
+    focusedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    filledclass: {
+    filledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

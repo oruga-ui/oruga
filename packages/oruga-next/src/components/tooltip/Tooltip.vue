@@ -111,43 +111,43 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    teleportclass: {
+    teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    contentclass: {
+    contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionclass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    triggerclass: {
+    triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    multilineclass: {
+    multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    alwaysclass: {
+    alwaysClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowclass: {
+    arrowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowPositionclass: {
+    arrowPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

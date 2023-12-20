@@ -47,19 +47,19 @@ const props = defineProps({
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
     // class props (will not be displayed in the docs)
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemActiveclass: {
+    itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemClickableclass: {
+    itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemDisabledclass: {
+    itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -132,55 +132,55 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    expandedclass: {
+    expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    textareaclass: {
+    textareaClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconLeftSpaceclass: {
+    iconLeftSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconRightSpaceclass: {
+    iconRightSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    inputclass: {
+    inputClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    roundedclass: {
+    roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconLeftclass: {
+    iconLeftClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconRightclass: {
+    iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    counterclass: {
+    counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

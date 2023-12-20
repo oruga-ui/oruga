@@ -133,63 +133,63 @@ const props = defineProps({
         default: () => ({}),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    overlayclass: {
+    overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    wrapperclass: {
+    wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemsclass: {
+    itemsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemsDraggingclass: {
+    itemsDraggingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowIconclass: {
+    arrowIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowIconPrevclass: {
+    arrowIconPrevClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    arrowIconNextclass: {
+    arrowIconNextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorclass: {
+    indicatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorsclass: {
+    indicatorsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorsInsideclass: {
+    indicatorsInsideClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorsInsidePositionclass: {
+    indicatorsInsidePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorItemclass: {
+    indicatorItemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorItemActiveclass: {
+    indicatorItemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    indicatorItemStyleclass: {
+    indicatorItemStyleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

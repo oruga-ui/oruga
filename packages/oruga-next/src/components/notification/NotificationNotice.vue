@@ -106,15 +106,15 @@ const props = defineProps({
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
 
-    noticeclass: {
+    noticeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    noticePositionclass: {
+    noticePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    noticeCustomContainerclass: {
+    noticeCustomContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

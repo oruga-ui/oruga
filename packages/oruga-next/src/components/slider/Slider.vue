@@ -105,43 +105,43 @@ const props = defineProps({
         default: () => getOption("slider.ariaLabel"),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    trackclass: {
+    trackClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    fillclass: {
+    fillClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thumbRoundedclass: {
+    thumbRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thumbDraggingclass: {
+    thumbDraggingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thumbWrapperclass: {
+    thumbWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thumbclass: {
+    thumbClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -85,23 +85,23 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    fullPageclass: {
+    fullPageClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    overlayclass: {
+    overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    iconclass: {
+    iconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    labelclass: {
+    labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

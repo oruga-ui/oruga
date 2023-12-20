@@ -168,23 +168,23 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    izeclass: {
+    izeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    boxclass: {
+    boxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    separatorclass: {
+    separatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    footerclass: {
+    footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

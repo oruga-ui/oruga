@@ -63,23 +63,23 @@ const props = defineProps({
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHeaderclass: {
+    itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHeaderActiveclass: {
+    itemHeaderActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHeaderPreviousclass: {
+    itemHeaderPreviousClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemHeaderVariantclass: {
+    itemHeaderVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

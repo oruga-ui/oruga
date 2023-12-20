@@ -161,71 +161,71 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    activeclass: {
+    activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    teleportclass: {
+    teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    overlayclass: {
+    overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    contentclass: {
+    contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionclass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    fullheightclass: {
+    fullheightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    fullwidthclass: {
+    fullwidthClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    inlineclass: {
+    inlineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    reduceclass: {
+    reduceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    expandOnHoverclass: {
+    expandOnHoverClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    crollClipclass: {
+    crollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    noScrollclass: {
+    noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    hiddenclass: {
+    hiddenClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    visibleclass: {
+    visibleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

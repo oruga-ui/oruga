@@ -164,39 +164,39 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    activeclass: {
+    activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    overlayclass: {
+    overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    contentclass: {
+    contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    closeclass: {
+    closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    fullScreenclass: {
+    fullScreenClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    scrollClipclass: {
+    scrollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    noScrollclass: {
+    noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -72,27 +72,27 @@ const props = defineProps({
         default: getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
-    itemclass: {
+    itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemActiveclass: {
+    itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemDisabledclass: {
+    itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemIconTextclass: {
+    itemIconTextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemSubmenuclass: {
+    itemSubmenuClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    itemWrapperclass: {
+    itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

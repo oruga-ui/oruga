@@ -311,131 +311,131 @@ const props = defineProps({
         default: () => getOption("table.ariaCurrentLabel"),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tableclass: {
+    tableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    wrapperclass: {
+    wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    footerclass: {
+    footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    emptyclass: {
+    emptyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    detailedclass: {
+    detailedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    borderedclass: {
+    borderedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stripedclass: {
+    stripedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    narrowedclass: {
+    narrowedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    hoverableclass: {
+    hoverableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    trSelectedclass: {
+    trSelectedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    trCheckedclass: {
+    trCheckedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thclass: {
+    thClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thPositionclass: {
+    thPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thStickyclass: {
+    thStickyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thCheckboxclass: {
+    thCheckboxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thCurrentSortclass: {
+    thCurrentSortClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thSortableclass: {
+    thSortableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thUnselectableclass: {
+    thUnselectableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thSortIconclass: {
+    thSortIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thDetailedclass: {
+    thDetailedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    thSubheadingclass: {
+    thSubheadingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tdclass: {
+    tdClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tdPositionclass: {
+    tdPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tdStickyclass: {
+    tdStickyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tdCheckboxclass: {
+    tdCheckboxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    tdDetailedChevronclass: {
+    tdDetailedChevronClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    stickyHeaderclass: {
+    stickyHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    scrollableclass: {
+    scrollableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileSortclass: {
+    mobileSortClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    paginationWrapperclass: {
+    paginationWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    mobileclass: {
+    mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

@@ -84,55 +84,55 @@ const props = defineProps({
         default: () => getOption("useHtml5Validation", true),
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    disabledclass: {
+    disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    switchclass: {
+    switchClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    switchCheckedclass: {
+    switchCheckedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    switchCheckclass: {
+    switchCheckClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    roundedclass: {
+    roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    passiveVariantclass: {
+    passiveVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionclass: {
+    positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    inputclass: {
+    inputClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    inputCheckedclass: {
+    inputCheckedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    labelclass: {
+    labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    sizeclass: {
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantclass: {
+    variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
 
         default: undefined,

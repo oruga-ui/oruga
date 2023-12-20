@@ -41,15 +41,15 @@ const props = defineProps({
         validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
     },
     // class props (will not be displayed in the docs)
-    rootclass: {
+    rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    triggerclass: {
+    triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    contentclass: {
+    contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -77,20 +77,20 @@ function toggle(): void {
 
 // --- Computed Component Classes ---
 
-const rootClass = computed(() => [useComputedClass("rootClass", "o-clps")]);
+const rootClasses = computed(() => [useComputedClass("rootClass", "o-clps")]);
 
-const triggerClass = computed(() => [
+const triggerClasses = computed(() => [
     useComputedClass("triggerClass", "o-clps__trigger"),
 ]);
 
-const contentClass = computed(() => [
+const contentClasses = computed(() => [
     useComputedClass("contentClass", "o-clps__content"),
 ]);
 </script>
 
 <template>
-    <div :class="rootClass" data-oruga="collapse">
-        <div v-if="position === 'top'" :class="triggerClass" @click="toggle">
+    <div :class="rootClasses" data-oruga="collapse">
+        <div v-if="position === 'top'" :class="triggerClasses" @click="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
@@ -99,7 +99,7 @@ const contentClass = computed(() => [
         </div>
 
         <Transition :name="animation">
-            <div v-show="isOpen" :id="contentId" :class="contentClass">
+            <div v-show="isOpen" :id="contentId" :class="contentClasses">
                 <!--
                     @slot Default content
                 -->
@@ -107,7 +107,10 @@ const contentClass = computed(() => [
             </div>
         </Transition>
 
-        <div v-if="position === 'bottom'" :class="triggerClass" @click="toggle">
+        <div
+            v-if="position === 'bottom'"
+            :class="triggerClasses"
+            @click="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
