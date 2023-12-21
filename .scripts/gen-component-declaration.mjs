@@ -30,6 +30,8 @@ function getComponents(dir) {
     .map(f => f.includes("\\") ? f.substring(f.lastIndexOf("\\") + 1) : f)
     // remove .vue suffix
     .map(f => f.substring(0, f.indexOf(".vue")))
+    // filter blacklist 
+    .filter((key) => !IGNORE.includes(key))
 }
 
 function exist (path) {
@@ -44,11 +46,12 @@ function generateComponentsType () {
 
   const components = {}
   globalComponents
-    .filter((key) => !IGNORE.includes(key))
+    // add global O prefix
     .map((dir) => "O" + dir)
+    // add type declaration
     .forEach((key) => {
-    components[key] = `(typeof import("@oruga-ui/oruga-next"))["${key}"];`;
-  });
+      components[key] = `(typeof import("@oruga-ui/oruga-next"))["${key}"];`;
+    });
 
   const lines = Object.entries(components)
     .filter(([name]) => components[name])
