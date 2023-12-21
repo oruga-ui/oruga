@@ -12,7 +12,7 @@ import {
 } from "@/composables";
 import { isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import type { PropBind } from "@/types";
+import type { ComponentClass, PropBind } from "@/types";
 
 /**
  * This is a internal used component.
@@ -43,8 +43,8 @@ const props = defineProps({
         type: [String, Object] as PropType<PropBind>,
         required: true,
     },
-    boxClasses: {
-        type: [String, Object] as PropType<PropBind>,
+    boxClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
         required: true,
     },
 });
@@ -226,7 +226,7 @@ const dropdownBind = computed(() => ({
             <o-dropdown-item
                 override
                 tag="div"
-                :item-class="boxClasses"
+                :item-class="boxClass"
                 :disabled="picker.disabled"
                 :clickable="false">
                 <slot />

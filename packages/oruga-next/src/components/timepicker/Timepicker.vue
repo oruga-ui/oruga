@@ -744,7 +744,7 @@ const footerClasses = computed(() => [
         :native-step="nativeStep"
         :dropdown-class="dropdownClass"
         :root-classes="rootClasses"
-        :box-classes="boxClasses"
+        :box-class="boxClasses"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"
