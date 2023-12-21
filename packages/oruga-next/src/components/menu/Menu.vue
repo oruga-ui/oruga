@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, toRaw } from "vue";
+import { ref, computed, toRaw, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A simple menu
@@ -60,8 +61,19 @@ const props = defineProps({
         type: String,
         default: () => getOption("menu.iconSize"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps(["rootClass", "listClass", "listLabelClass"]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listLabelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const rootRef = ref();

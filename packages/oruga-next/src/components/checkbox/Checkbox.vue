@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     usePropBinding,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Select a single or grouped options
@@ -73,18 +74,43 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "disabledClass",
-        "checkedClass",
-        "inputClass",
-        "inputCheckedClass",
-        "indeterminateClass",
-        "labelClass",
-        "sizeClass",
-        "variantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    checkedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputCheckedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indeterminateClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

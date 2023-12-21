@@ -6,12 +6,10 @@ import OSliderTick from "./SliderTick.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useComputedClass,
-    useClassProps,
-    useProviderParent,
-} from "@/composables";
+import { useComputedClass, useProviderParent } from "@/composables";
+
 import type { SliderComponent } from "./types";
+import type { ComponentClass } from "@/types";
 
 /**
  * A slider to select a value or range from a given range
@@ -106,22 +104,59 @@ const props = defineProps({
         type: [String, Array] as PropType<string | string[]>,
         default: () => getOption("slider.ariaLabel"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "sizeClass",
-        "trackClass",
-        "fillClass",
-        "thumbRoundedClass",
-        "thumbDraggingClass",
-        "disabledClass",
-        "thumbWrapperClass",
-        "thumbClass",
-        "variantClass",
-    ]),
-    tickClass: { type: [String, Function, Array], default: undefined },
-    tickHiddenClass: { type: [String, Function, Array], default: undefined },
-    tickLabelClass: { type: [String, Function, Array], default: undefined },
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    trackClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    fillClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thumbRoundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thumbDraggingClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thumbWrapperClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    thumbClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tickClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tickHiddenClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tickLabelClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

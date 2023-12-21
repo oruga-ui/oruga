@@ -5,7 +5,9 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps } from "@/composables";
+import { useComputedClass } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -92,23 +94,63 @@ const props = defineProps({
      * @ignore
      */
     iconBoth: { type: Boolean, default: false },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "wrapperClass",
-        "outlinedClass",
-        "loadingClass",
-        "invertedClass",
-        "expandedClass",
-        "roundedClass",
-        "disabledClass",
-        "iconClass",
-        "iconLeftClass",
-        "iconRightClass",
-        "labelClass",
-        "sizeClass",
-        "variantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    wrapperClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    outlinedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    loadingClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    invertedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    roundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconLeftClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const computedTag = computed(() =>

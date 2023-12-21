@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Switch between two opposing states
@@ -82,22 +83,60 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("useHtml5Validation", true),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "disabledClass",
-        "switchClass",
-        "switchCheckedClass",
-        "switchCheckClass",
-        "roundedClass",
-        "passiveVariantClass",
-        "positionClass",
-        "inputClass",
-        "inputCheckedClass",
-        "labelClass",
-        "sizeClass",
-        "variantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    switchClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    switchCheckedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    switchCheckClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    roundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    passiveVariantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inputCheckedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

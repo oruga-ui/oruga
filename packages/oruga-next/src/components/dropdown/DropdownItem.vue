@@ -1,10 +1,13 @@
 <script setup lang="ts" generic="T">
 import { computed, onMounted, type Component, type PropType } from "vue";
 
-import { useComputedClass, useClassProps } from "@/composables";
 import { getOption } from "@/utils/config";
-import { injectDropdown } from "./useDropdownShare";
 import { uuid } from "@/utils/helpers";
+import { useComputedClass } from "@/composables";
+
+import { injectDropdown } from "./useDropdownShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * @displayName Dropdown Item
@@ -43,13 +46,23 @@ const props = defineProps({
         type: String,
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "itemClass",
-        "itemActiveClass",
-        "itemClickableClass",
-        "itemDisabledClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    itemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemClickableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemDisabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

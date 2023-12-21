@@ -8,13 +8,14 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
 } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a time, uses native timepicker for mobile
@@ -166,14 +167,27 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "sizeClass",
-        "boxClass",
-        "separatorClass",
-        "footerClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    izeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    boxClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    separatorClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    footerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Class configuration for the internal input component
      * @ignore
@@ -730,7 +744,7 @@ const footerClasses = computed(() => [
         :native-step="nativeStep"
         :dropdown-class="dropdownClass"
         :root-classes="rootClasses"
-        :box-classes="boxClasses"
+        :box-class="boxClasses"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"

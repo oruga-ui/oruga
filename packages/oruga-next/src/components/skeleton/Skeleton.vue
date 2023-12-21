@@ -3,8 +3,10 @@ import { computed, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
+import { useComputedClass } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A placeholder for content to load
@@ -55,15 +57,31 @@ const props = defineProps({
         validator: (value: string) =>
             ["left", "centered", "right"].indexOf(value) > -1,
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "animationClass",
-        "positionClass",
-        "itemClass",
-        "itemRoundedClass",
-        "sizeClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    animationClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemRoundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const itemStyle = computed(() => ({

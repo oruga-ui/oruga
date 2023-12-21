@@ -5,7 +5,9 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps, usePropBinding } from "@/composables";
+import { useComputedClass, usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Bold notification blocks to alert your users of something
@@ -109,16 +111,35 @@ const props = defineProps({
         type: String,
         default: () => getOption("notification.closeIconSize"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "closeClass",
-        "contentClass",
-        "iconClass",
-        "positionClass",
-        "variantClass",
-        "wrapperClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    closeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    wrapperClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

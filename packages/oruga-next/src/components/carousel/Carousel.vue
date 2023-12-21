@@ -16,15 +16,15 @@ import OIcon from "../icon/Icon.vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useEventListener,
     useProviderParent,
 } from "@/composables";
-import type { PropBind } from "@/types";
-import { isClient } from "@/utils/ssr";
+
+import type { ComponentClass, PropBind } from "@/types";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -132,23 +132,67 @@ const props = defineProps({
         type: Object as PropType<Record<number, any>>,
         default: () => ({}),
     },
-    ...useClassProps([
-        "rootClass",
-        "overlayClass",
-        "wrapperClass",
-        "itemsClass",
-        "itemsDraggingClass",
-        "arrowIconClass",
-        "arrowIconPrevClass",
-        "arrowIconNextClass",
-        "indicatorClass",
-        "indicatorsClass",
-        "indicatorsInsideClass",
-        "indicatorsInsidePositionClass",
-        "indicatorItemClass",
-        "indicatorItemActiveClass",
-        "indicatorItemStyleClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    overlayClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    wrapperClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemsDraggingClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowIconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowIconPrevClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowIconNextClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorsInsideClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorsInsidePositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorItemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorItemActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    indicatorItemStyleClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
