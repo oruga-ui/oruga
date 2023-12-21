@@ -1,3 +1,22 @@
+## [0.8.2](https://github.com/oruga-ui/oruga/compare/v0.8.1...v0.8.2) (2023-12-21)
+
+
+### Bug Fixes
+
+* **docs:** add missing props ([#697](https://github.com/oruga-ui/oruga/issues/697)) ([13d27de](https://github.com/oruga-ui/oruga/commit/13d27de116c58f79b2ed09b7a970d523656851a7))
+* **docs:** update oruga-next cdn link ([#684](https://github.com/oruga-ui/oruga/issues/684)) ([d68308b](https://github.com/oruga-ui/oruga/commit/d68308bb90499fd6322d150cf5a174fa2de8eb71))
+* **programmatic:** adjust open params type ([#690](https://github.com/oruga-ui/oruga/issues/690)) ([9e8ad3a](https://github.com/oruga-ui/oruga/commit/9e8ad3a321fca51910cd29825025c758fc28c12a))
+* **table:** reorder params from Object.assign to allow for non-extensible objects ([#689](https://github.com/oruga-ui/oruga/issues/689)) ([dc2b9cf](https://github.com/oruga-ui/oruga/commit/dc2b9cfd3dde2b8cb4e225c607a58dd41a6fe767))
+* **types:** fix type export ([#687](https://github.com/oruga-ui/oruga/issues/687)) ([829279d](https://github.com/oruga-ui/oruga/commit/829279d6880614c144ff478daa29c17d585811ad))
+* **upload:** update click handler ([1f08a2a](https://github.com/oruga-ui/oruga/commit/1f08a2a802f5a1183383655e12eb17b41df89824))
+
+
+### Features
+
+* **input|select:** add disabledClass ([#691](https://github.com/oruga-ui/oruga/issues/691)) ([c13f324](https://github.com/oruga-ui/oruga/commit/c13f324db8b9d2512223a80cbdd2d3f439bfea8f))
+* **type:** add volar.d.ts generation ([#694](https://github.com/oruga-ui/oruga/issues/691)) ([fb191a8](https://github.com/oruga-ui/oruga/commit/fb191a8ad8933197fc16bebb1e5b592f828669d4))
+
+
 ## [0.8.1](https://github.com/oruga-ui/oruga/compare/v0.8.0...v0.8.1) (2023-12-10)
 
 ### Bug Fixes
