@@ -105,6 +105,20 @@ yarn add @oruga-ui/theme-oruga
 @import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
 ```
 
+### Volar support
+If you are using Volar, you can specify global component types by configuring `compilerOptions.types` in `tsconfig.json`.
+
+```js
+// tsconfig.json
+{
+  "compilerOptions": {
+    // ...
+    "types": ["@oruga-ui/oruga-next/volar"]
+  }
+}
+```
+
+
 ## Nuxt module
 
 Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
