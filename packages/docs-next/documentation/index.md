@@ -21,6 +21,8 @@ In addition, if you don't want to style everything yourself, we've created sever
 --- | --- | --- | --- | --- |
 Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
+> IE is not supported.
+
 💅 For more info about components customisation, go to [#customisation](/documentation/customisation).
 
 🕹 To see Oruga in action, go to [#examples](#examples).
@@ -43,6 +45,12 @@ yarn add @oruga-ui/oruga-next
 
 :::
 
+::: warning _Oruga for Vue 2.x deprecated_  
+Due to [EOL for Vue 2.x](https://v2.vuejs.org/lts/) at the end of the year 2023, from now on Oruga for Vue 2 ([`@oruga-ui/oruga`](https://www.npmjs.com/package/@oruga-ui/oruga)) is deprecated. 
+Further enhancements will only be developed for [`@oruga-ui/oruga-next`](https://www.npmjs.com/package/@oruga-ui/oruga-next).
+:::
+
+
 ### Full bundle import
 
 You can import all Oruga components using the main plugin export:
@@ -52,6 +60,14 @@ import { createApp } from 'vue';
 import Oruga from '@oruga-ui/oruga-next';
 
 createApp(...).use(Oruga);
+```
+
+After the installation, you can use all the components in your SFC like this.
+
+```html
+<template>
+  <o-button>oruga-ui</o-button>
+</template>
 ```
 
 ### Individual components imports (tree shaking)
@@ -104,6 +120,20 @@ yarn add @oruga-ui/theme-oruga
 ```scss
 @import '@oruga-ui/theme-oruga/dist/scss/oruga-full.scss';
 ```
+
+### Volar support
+If you are using Volar, you can specify global component types by configuring `compilerOptions.types` in `tsconfig.json`.
+
+```js
+// tsconfig.json
+{
+  "compilerOptions": {
+    // ...
+    "types": ["@oruga-ui/oruga-next/volar"]
+  }
+}
+```
+
 
 ## Nuxt module
 
