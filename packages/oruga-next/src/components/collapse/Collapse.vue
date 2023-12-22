@@ -90,7 +90,13 @@ const contentClasses = computed(() => [
 
 <template>
     <div :class="rootClasses" data-oruga="collapse">
-        <div v-if="position === 'top'" :class="triggerClasses" @click="toggle">
+        <div
+            v-if="position === 'top'"
+            :class="triggerClasses"
+            role="button"
+            tabindex="0"
+            @click="toggle"
+            @keydown.enter="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
@@ -110,7 +116,10 @@ const contentClasses = computed(() => [
         <div
             v-if="position === 'bottom'"
             :class="triggerClasses"
-            @click="toggle">
+            role="button"
+            tabindex="0"
+            @click="toggle"
+            @keydown.enter="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
