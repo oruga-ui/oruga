@@ -55,8 +55,8 @@ const props = defineProps({
     required: { type: Boolean, default: false },
     /** Same as native name */
     name: { type: String, default: undefined },
-    /** Accessibility label to establish relationship between the checkbox and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
+    /** Accessibility id to establish relationship between the input and control label */
+    id: { type: String, default: () => uuid() },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -183,12 +183,16 @@ const labelClasses = computed(() => [
 
 <template>
     <label
-        ref="label"
         :class="rootClasses"
+        :for="id"
         data-oruga="radio"
+        role="radio"
+        :aria-checked="isChecked"
+        tabindex="0"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input
+            :id="id"
             v-bind="$attrs"
             ref="inputRef"
             v-model="vmodel"
@@ -200,17 +204,13 @@ const labelClasses = computed(() => [
             :name="name"
             :autocomplete="autocomplete"
             :value="nativeValue"
-            :aria-labelledby="ariaLabelledby"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
 
-        <span
-            v-if="label || $slots.default"
-            :id="ariaLabelledby"
-            :class="labelClasses">
+        <span v-if="label || $slots.default" :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->

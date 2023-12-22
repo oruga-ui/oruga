@@ -4,6 +4,7 @@ import { computed, ref, watch, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
+import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
     useVModelBinding,
@@ -54,6 +55,8 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Replace last chosen files every time (like native file input element) */
     native: { type: Boolean, default: true },
+    /** Accessibility id to establish relationship between the input and control label' */
+    id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -264,7 +267,7 @@ const draggableClasses = computed(() => [
 </script>
 
 <template>
-    <label :class="rootClasses" data-oruga="upload">
+    <label :class="rootClasses" data-oruga="upload" :for="id">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
@@ -276,8 +279,12 @@ const draggableClasses = computed(() => [
         <div
             v-else
             :class="draggableClasses"
+            role="button"
+            tabindex="0"
             @mouseenter="updateDragDropFocus(true)"
             @mouseleave="updateDragDropFocus(false)"
+            @focus="updateDragDropFocus(true)"
+            @focusout="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
             @dragleave.prevent="updateDragDropFocus(false)"
             @dragenter.prevent="updateDragDropFocus(true)"
@@ -289,6 +296,7 @@ const draggableClasses = computed(() => [
         </div>
 
         <input
+            :id="id"
             ref="inputRef"
             type="file"
             v-bind="$attrs"

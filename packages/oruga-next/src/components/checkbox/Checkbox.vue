@@ -62,8 +62,8 @@ const props = defineProps({
     trueValue: { type: [String, Number, Boolean], default: true },
     /** Overrides the returned value when it's not checked */
     falseValue: { type: [String, Number, Boolean], default: false },
-    /** Accessibility label to establish relationship between the checkbox and control label */
-    ariaLabelledby: { type: String, default: () => uuid() },
+    /** Accessibility id to establish relationship between the input and control label */
+    id: { type: String, default: () => uuid() },
     /** Same as native autocomplete options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -218,12 +218,16 @@ const labelClasses = computed(() =>
 
 <template>
     <label
-        ref="label"
         :class="rootClasses"
+        :for="id"
         data-oruga="checkbox"
+        role="checkbox"
+        :aria-checked="isChecked"
+        tabindex="0"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input
+            :id="id"
             v-bind="$attrs"
             ref="inputRef"
             v-model="vmodel"
@@ -238,17 +242,13 @@ const labelClasses = computed(() =>
             :indeterminate.prop="indeterminate"
             :true-value="trueValue"
             :false-value="falseValue"
-            :aria-labelledby="ariaLabelledby"
             @click.stop
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
 
-        <span
-            v-if="label || $slots.default"
-            :id="ariaLabelledby"
-            :class="labelClasses">
+        <span v-if="label || $slots.default" :class="labelClasses">
             <!--
                 @slot Content slot, default is label prop
             -->
