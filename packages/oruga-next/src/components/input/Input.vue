@@ -13,6 +13,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { uuid } from "@/utils/helpers";
 import {
     useComputedClass,
     useVModelBinding,
@@ -40,6 +41,8 @@ const props = defineProps({
     ...baseComponentProps,
     /** @model */
     modelValue: { type: [String, Number], default: "" },
+    /** Input label, unnecessary when default slot is used */
+    label: { type: String, default: undefined },
     /**
      * Input type, like native
      * @values Any native input type, and textarea
@@ -119,6 +122,8 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("statusIcon", true),
     },
+    /** Accessibility id to establish relationship between the input and control label */
+    id: { type: String, default: () => uuid() },
     /** Native options to use in HTML5 validation */
     autocomplete: {
         type: String,
@@ -181,6 +186,10 @@ const props = defineProps({
         default: undefined,
     },
     variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -425,10 +434,29 @@ const iconRightClasses = computed(() => [
 const counterClasses = computed(() => [
     useComputedClass("counterClass", "o-input__counter"),
 ]);
+
+const labelClasses = computed(() => [
+    useComputedClass("labelClass", "o-radio__label"),
+]);
 </script>
 
 <template>
-    <div data-oruga="input" :class="rootClasses">
+    <label
+        ref="label"
+        :class="rootClasses"
+        :for="id"
+        data-oruga="input"
+        role="textbox"
+        tabindex="0"
+        @click.stop="setFocus"
+        @keydown.prevent.enter="setFocus">
+        <span v-if="label || $slots.default" :class="labelClasses">
+            <!--
+                @slot Override the label, default is label prop 
+            -->
+            <slot>{{ label }}</slot>
+        </span>
+
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -440,6 +468,7 @@ const counterClasses = computed(() => [
 
         <input
             v-if="type !== 'textarea'"
+            :id="id"
             v-bind="$attrs"
             ref="inputRef"
             v-model="vmodel"
@@ -457,6 +486,7 @@ const counterClasses = computed(() => [
 
         <textarea
             v-else
+            :id="id"
             v-bind="$attrs"
             ref="textareaRef"
             v-model="vmodel"
@@ -487,5 +517,5 @@ const counterClasses = computed(() => [
             :class="counterClasses">
             {{ valueLength }} / {{ maxlength }}
         </small>
-    </div>
+    </label>
 </template>

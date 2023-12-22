@@ -5,6 +5,10 @@ const inspectData = [
         description: "Class of the root element",
     },
     {
+        class: "labelClass",
+        description: "Class of the input label",
+    },
+    {
         class: "expandedClass",
         description: "Class of input when expanded",
         properties: ["expanded"],

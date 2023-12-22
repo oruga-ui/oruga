@@ -31,6 +31,8 @@ declare module "../../index" {
                 sizeClass: ClassDefinition;
                 /** Class of the input variant */
                 variantClass: ClassDefinition;
+                /** Class of the input label */
+                labelClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{
