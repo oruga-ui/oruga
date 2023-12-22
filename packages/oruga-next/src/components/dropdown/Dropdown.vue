@@ -142,11 +142,9 @@ const props = defineProps({
      * Use menu only in situations where your dropdown is related to a navigation menu.
      * @values list, menu, dialog
      */
-    ariaRole: {
+    role: {
         type: String,
         default: getOption("dropdown.ariaRole", "list"),
-        validator: (value: string) =>
-            ["menu", "list", "dialog"].indexOf(value) > -1,
     },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {

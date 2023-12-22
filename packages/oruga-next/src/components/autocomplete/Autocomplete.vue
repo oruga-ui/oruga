@@ -819,7 +819,7 @@ function itemOptionClasses(option): PropBind {
             v-if="$slots.header"
             ref="headerRef"
             :tag="itemTag"
-            aria-role="button"
+            role="button"
             :tabindex="0"
             :class="itemHeaderClasses"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
@@ -857,7 +857,7 @@ function itemOptionClasses(option): PropBind {
                 :value="option"
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
-                aria-role="button"
+                role="button"
                 :tabindex="0"
                 @click="(value, event) => setSelected(value, !keepOpen, event)">
                 <!--
@@ -891,7 +891,7 @@ function itemOptionClasses(option): PropBind {
             v-if="$slots.footer"
             ref="footerRef"
             :tag="itemTag"
-            aria-role="button"
+            role="button"
             :tabindex="0"
             :class="itemFooterClasses"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">

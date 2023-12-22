@@ -191,7 +191,7 @@ const dropdownBind = computed(() => ({
             :inline="picker.inline"
             :mobile-modal="picker.mobileModal"
             :trap-focus="picker.trapFocus"
-            :aria-role="ariaRole"
+            :role="ariaRole"
             :aria-modal="!picker.inline"
             :trigger-tabindex="-1"
             :teleport="picker.teleport"

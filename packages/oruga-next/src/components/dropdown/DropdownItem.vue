@@ -40,9 +40,9 @@ const props = defineProps({
     /**
      * Role attribute to be passed to the list item for better accessibility.
      * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem
+     * @values listitem, menuitem, button
      */
-    ariaRole: {
+    role: {
         type: String,
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
@@ -126,7 +126,7 @@ const rootClasses = computed(() => [
     <component
         :is="tag"
         :class="rootClasses"
-        :role="ariaRole"
+        :role="role"
         :tabindex="tabindex"
         data-oruga="dropdown-item"
         @click="selectItem">
