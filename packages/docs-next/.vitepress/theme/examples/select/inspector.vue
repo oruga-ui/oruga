@@ -11,6 +11,13 @@ const inspectData = [
         },
     },
     {
+        class: "labelClass",
+        description: "Class of the input label",
+        action: () => {
+            selectedOptions.value = null;
+        },
+    },
+    {
         class: "iconLeftSpaceClass",
         description: "Class of the left icon space inside the select",
         properties: ["icon"],

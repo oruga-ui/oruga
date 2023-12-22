@@ -37,6 +37,8 @@ const props = defineProps({
         type: [String, Number, Boolean, Object, Array],
         default: null,
     },
+    /** Input label, unnecessary when default slot is used */
+    label: { type: String, default: undefined },
     /** Select options, unnecessary when default slot is used */
     options: {
         type: Array as PropType<string[] | OptionsItem[]>,
@@ -94,6 +96,8 @@ const props = defineProps({
     iconRightClickable: { type: Boolean, default: false },
     /** Variant of right icon */
     iconRightVariant: { type: String, default: undefined },
+    /** Accessibility id to establish relationship between the input and control label */
+    id: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -165,6 +169,10 @@ const props = defineProps({
         default: undefined,
     },
     arrowClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
@@ -331,10 +339,28 @@ const iconLeftClasses = computed(() => [
 const iconRightClasses = computed(() => [
     useComputedClass("iconRightClass", "o-sel__icon-right"),
 ]);
+
+const labelClasses = computed(() => [
+    useComputedClass("labelClass", "o-radio__label"),
+]);
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="select">
+    <label
+        :class="rootClasses"
+        :for="id"
+        data-oruga="select"
+        role="listbox"
+        tabindex="0"
+        @click.stop="setFocus"
+        @keydown.prevent.enter="setFocus">
+        <span v-if="label || $slots.default" :class="labelClasses">
+            <!--
+                @slot Override the label, default is label prop 
+            -->
+            <slot>{{ label }}</slot>
+        </span>
+
         <o-icon
             v-if="icon"
             :class="iconLeftClasses"
@@ -345,6 +371,7 @@ const iconRightClasses = computed(() => [
             @click="iconClick('icon-click', $event)" />
 
         <select
+            :id="id"
             v-bind="$attrs"
             ref="selectRef"
             v-model="vmodel"
@@ -392,5 +419,5 @@ const iconRightClasses = computed(() => [
             :variant="rightIconVariant"
             both
             @click="rightIconClick" />
-    </div>
+    </label>
 </template>

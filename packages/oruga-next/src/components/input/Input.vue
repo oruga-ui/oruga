@@ -442,7 +442,6 @@ const labelClasses = computed(() => [
 
 <template>
     <label
-        ref="label"
         :class="rootClasses"
         :for="id"
         data-oruga="input"

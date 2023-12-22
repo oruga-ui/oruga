@@ -46,6 +46,8 @@ declare module "../../index" {
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
+                /** Class of the input label */
+                labelClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{
