@@ -526,7 +526,12 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
 </script>
 
 <template>
-    <div data-oruga="dropdown" :class="rootClasses" @mouseleave="onHoverLeave">
+    <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
+    <div
+        data-oruga="dropdown"
+        :class="rootClasses"
+        @mouseleave="onHoverLeave"
+        @focusout="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"
@@ -546,6 +551,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 {{ label }}
             </slot>
         </component>
+
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
@@ -562,6 +568,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
+
             <transition :name="animation">
                 <component
                     :is="menuTag"
@@ -570,7 +577,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     v-trap-focus="trapFocus"
                     :class="menuClasses"
                     :aria-hidden="!isActive"
-                    :role="ariaRole"
+                    :role="role"
                     :aria-modal="!inline"
                     :style="menuStyle">
                     <!--
