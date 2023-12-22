@@ -379,7 +379,11 @@ defineExpose({ close, promise: props.promise });
                 :role="ariaRole"
                 :aria-label="ariaLabel"
                 :aria-modal="ariaModal">
-                <div :class="overlayClasses" @click="cancel('outside')" />
+                <div
+                    :class="overlayClasses"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    @click="cancel('outside')" />
                 <div :class="contentClasses" :style="customStyle">
                     <!-- injected component for programmatic usage -->
                     <component

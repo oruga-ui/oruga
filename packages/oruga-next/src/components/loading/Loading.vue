@@ -177,8 +177,13 @@ defineExpose({ close, promise: props.promise });
             v-if="isActive"
             ref="rootRef"
             data-oruga="loading"
+            role="dialog"
             :class="rootClasses">
-            <div :class="overlayClasses" @click="cancel('outside')" />
+            <div
+                :class="overlayClasses"
+                tabindex="-1"
+                aria-hidden="true"
+                @click="cancel('outside')" />
             <!-- 
                 @slot Override icon and label
                 @binding {close} close - function to close the component

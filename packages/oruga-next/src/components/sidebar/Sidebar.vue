@@ -467,6 +467,8 @@ defineExpose({ close, promise: props.promise });
             data-oruga="sidebar">
             <div
                 v-if="overlay && isActive"
+                tabindex="-1"
+                aria-hidden="true"
                 :class="overlayClasses"
                 @click="(evt) => clickedOutside(evt)" />
             <transition
