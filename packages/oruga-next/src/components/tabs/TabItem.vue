@@ -45,7 +45,7 @@ const props = defineProps({
         default: () => getOption("tabs.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility. */
-    ariaRole: {
+    role: {
         type: String,
         default: () => getOption("tabs.ariaRole", "tab"),
     },
@@ -176,8 +176,7 @@ const headerTextClasses = computed(() => [
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole">
+            :role="role">
             <!-- 
                 @slot Tab item content
             -->

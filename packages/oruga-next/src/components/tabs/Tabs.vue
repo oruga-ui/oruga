@@ -354,6 +354,7 @@ function itemHeaderClasses(childItem): PropBind {
                 :key="childItem.value"
                 :class="itemWrapperClasses"
                 role="tab"
+                tabindex="0"
                 :aria-controls="`${childItem.value}-content`"
                 :aria-selected="isActive(childItem) ? 'true' : 'false'"
                 @keydown.left.prevent="prev"
@@ -378,8 +379,10 @@ function itemHeaderClasses(childItem): PropBind {
                 <component
                     :is="childItem.tag"
                     v-else
+                    role="button"
                     :class="itemHeaderClasses(childItem)"
-                    @click="itemClick(childItem)">
+                    @click="itemClick(childItem)"
+                    @keydown.enter="itemClick(childItem)">
                     <o-icon
                         v-if="childItem.icon"
                         :root-class="childItem.headerIconClasses"

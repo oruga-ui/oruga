@@ -50,13 +50,13 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.iconPack"),
     },
-    /** Tabs item tag name */
+    /** Step item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("steps.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility */
-    ariaRole: {
+    role: {
         type: String,
         default: () => getOption("steps.ariaRole", "tab"),
     },
@@ -167,10 +167,9 @@ const elementClasses = computed(() => [
             v-show="isActive && visible"
             ref="rootRef"
             :class="elementClasses"
-            :data-id="`tabs-${item.identifier}`"
+            :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"
-            :tabindex="isActive ? 0 : -1"
-            :role="ariaRole">
+            :role="role">
             <!-- 
                 @slot Step item content
             -->
