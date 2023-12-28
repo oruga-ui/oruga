@@ -67,27 +67,7 @@ createApp(...)
     .use(Oruga, {
         autocomplete: {
             rootClass: 'myautocomplete-root',
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
-            ...
-        }
-    });
-```
-
-If you use individual imports you can customize each compoment using the `Config` plugin.
-
-```js
-import { createApp } from 'vue';
-import { OAutocomplete, OSidebar, Config } from '@oruga-ui/oruga-next';
-
-createApp(...)
-    .component(OAutocomplete)
-    .component(OSidebar)
-    .use(Config, {
-        autocomplete: {
-            rootClass: 'autocomplete-root',
-            menuClass: 'autocomplete-menu',
-            itemClass: 'autocomplete-item',
             ...
         }
     });
@@ -97,10 +77,9 @@ You can also use an `array` to specify more than one class or a `function` to ex
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         autocomplete: {
-            rootClass: 'autocomplete-root',
-            menuClass: ['autocomplete-menu', 'super-menu'],
+            rootClass: ['autocomplete-root', 'additional-class']
             menuPositionClass: {
                 class: (suffix) => {
                     return `autocomplete-menu-${suffix}`
@@ -154,7 +133,6 @@ createApp(...)
         autocomplete: {
             override: true,
             rootClass: 'myautocomplete-root',
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
             ...
         }
@@ -181,13 +159,12 @@ You can also specify the override behaviour for each class:
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         autocomplete: {
             rootClass: {
                 class: 'myautocomplete-root',
                 override: true
             },
-            menuClass: 'myautocomplete-menu',
             itemClass: 'myautocomplete-item',
             ...
         }
@@ -200,7 +177,7 @@ In case you want to transform applied `classes` you can use `transformClasses` f
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         button: {
             transformClasses: (appliedClasses) => {
                 return appliedClasses.replace(/-/g, '--')
@@ -214,7 +191,7 @@ You can also use `transformClasses` globally if you need to transform classes fo
 
 ```js
 createApp(...)
-    .use(Config, {
+    .use(Oruga, {
         transformClasses: (appliedClasses) => {
             return appliedClasses.replace(/-/g, '--')
         }
@@ -230,7 +207,6 @@ You can also add and override classes to a component directly using class proper
 ```html
 <o-autocomplete 
     root-class="autocomplete-root" 
-    menu-class="autocomplete-menu" 
     item-class="autocomplete-item" />
 ```
 
@@ -239,12 +215,19 @@ You can also add and override classes to a component directly using class proper
 
 As alternative Oruga allows to customize each components providing and overriding the `Config` object programmatically:
 ```js
-import { useOruga } from '@oruga-ui/oruga-next';
+import { OAutocomplete, ConfigProgrammatic } from '@oruga-ui/oruga-next';
 
-const oruga = useOruga();
+createApp(...)
+    .use(OAutocomplete);
 
-const config = oruga.config.getOptions();
+const myThemeConfig = {
+    autocomplete: {
+        rootClass: 'autocomplete-root',
+        itemClass: 'autocomplete-item',
+        ...
+    }
+    ...
+}
 
-oruga.config.setOptions(myThemeConfig);
+ConfigProgrammatic.setOptions(myThemeConfig);
 ```
-
