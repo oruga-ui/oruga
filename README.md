@@ -51,7 +51,7 @@ Oruga provides you with a set of functional components, so you can focus only on
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
-In addition, if you don't want to style everything yourself, we've created several themes to provide you with a variety of ready-to-use styles. 🦋
+In addition, if you don't want to style everything yourself, we've created several [themes](https://oruga.io/documentation/themes.html) to provide you with a variety of ready-to-use styles. 🦋
 
 ## Documentation
 
@@ -118,40 +118,16 @@ If you want to see an example with a fully customized registration form using `T
 
 ### Using Oruga with Nuxt
 
-Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
+Oruga doesn't provide a [Nuxt.js](https://nuxtjs.org) module at the moment.
 
-Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file:
-
-```js
-module.exports = {
-  modules: ['@oruga-ui/oruga/nuxt']
-}
-```
-
-You can also extend and/or override classes in this section:
+You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing:
 
 ```js
-module.exports = {
-  modules: [
-    [
-      '@oruga-ui/oruga/nuxt',
-      {
-        button: {
-          override: true
-        }
-      }
-    ]
-  ]
-}
-```
+import Oruga from '@oruga-ui/oruga-next';
 
-Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plugins` folder containing
-
-```js
-import Vue from 'vue'
-import Oruga from '@oruga-ui/oruga'
-
-Vue.use(Oruga)
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(Oruga);
+});
 ```
 
 To make this plugin available in your app, add this file to the `plugins` array in your `nuxt.config.js`
