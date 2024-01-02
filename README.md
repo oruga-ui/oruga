@@ -41,17 +41,23 @@
 
 ## Features
 
+Oruga is a lightweight UI components library for [Vue.js](https://vuejs.org/) without any dependency.
+It offers a set of easily customisable components and doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS, etc...). Therefore, it doesn't provide a grid system or CSS utilities, but you can integrate any CSS framework you like.
+Oruga provides you with a set of functional components, so you can focus only on the UI/UX aspects of your application and can be entirely flexible for future changes without having to touch a line of JavaScript.
+
 * **CSS framework agnostic**: No dependency on a specific CSS framework/library but you can easily integrate the components with one of them because they are fully customizable in different ways
 * **Components with steroids**: most of the components aren't a simple wrapper of native elements but they add new and custom features
 * **Lightweight**: no other internal dependency and import only components that you need
 
-Oruga doesn't depend on any specific style or CSS framework (like Bootstrap, Bulma, TailwindCSS etc...) and it doesn't provide any grid system or CSS utility, it just offer a set of components easy to customize. Oruga wants you to focus only on UI/UX aspects of your application and be totally flexible to future changes without having to touch a line of JavaScript.
+If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
+
+In addition, if you don't want to style everything yourself, we've created several themes to provide you with a variety of ready-to-use styles. 🦋
 
 ## Documentation
 
 Browse [online documentation here](https://oruga.io/documentation/).
 
-💅 For more info about components customization, [read carefully the "customization" section](https://oruga.io/documentation/#customization) in the documentation.
+💅 For more info about components customization, [read carefully the "customization" section](https://oruga.io/documentation/customisation.html) in the documentation.
 
 🕹 To see Oruga in action, go to the [Example section](https://oruga.io/documentation/#examples) in the documentation.
 
@@ -61,9 +67,9 @@ Note: the documentation source code is in the `docs` directory, it serves as the
 
 🌎 Oruga has been tested in all major browsers
 
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) |
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
 --- | --- | --- | --- | --- |
-Latest ✔ | Latest ✔ | 10+ ✔ | Latest ✔ | 6.1+ ✔ |
+Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 ## Quick start
 
@@ -84,7 +90,6 @@ npm install @oruga-ui/oruga-next
     ```js
     import { createApp } from 'vue'
     import Oruga from '@oruga-ui/oruga-next';
-    import '@oruga-ui/oruga-next/dist/oruga.css';
     
     createApp(...).use(Oruga);
     ```
@@ -93,27 +98,29 @@ npm install @oruga-ui/oruga-next
 
     ```js
     import { createApp } from 'vue'
-    import { Field, Input } from '@oruga-ui/oruga'
-    import '@oruga-ui/oruga/dist/oruga.css'
+    import { OField, OInput } from '@oruga-ui/oruga'
     
     createApp(...)
-      .use(Field)
-      .use(Input)
+      .use(OField)
+      .use(OInput)
     ```
     
  - or [import them in your SFC](https://vuejs.org/guide/components/registration.html#local-registration).
 
 ### Customization
 
-Please [read carefully the "customization" section](https://oruga.io/documentation/#customization) in Oruga documentation.
+Oruga's superpower is its configurability and its CSS framework agnostic approach.
+Each component can be individually customised and configured by defining specific classes using a class-mapping approach. Therefore, Oruga comes without any styling by default. However, there are several official predefined configurations called themes, which you can include and extend to give your application a individual look and feel. And all components came with predefined classes by default.
 
-If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind)(source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
+Please [read the "customization" section](https://oruga.io/documentation/customisation.html) in Oruga documentation.
+
+If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
 
 ### Using Oruga with Nuxt
 
 Oruga provides a [Nuxt.js](https://nuxtjs.org) module to easily integrate the library in your Nuxt.js app.
 
-Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file.
+Add `@oruga-ui/oruga/nuxt` to `modules` section of your `nuxt.config.js` file:
 
 ```js
 module.exports = {
@@ -121,7 +128,7 @@ module.exports = {
 }
 ```
 
-You can also extend and/or override classes in this section (see how to [add new classes](#adding-new-classes) or [override existing classes](#overriding-classes) in Oruga)
+You can also extend and/or override classes in this section:
 
 ```js
 module.exports = {
@@ -143,7 +150,6 @@ Alternatively you can use Nuxt.js plugins system adding a file (e.g. `oruga.js`)
 ```js
 import Vue from 'vue'
 import Oruga from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
 
 Vue.use(Oruga)
 ```
@@ -170,10 +176,6 @@ While it's still in beta, versions will follow this pattern: **v0.Y.Z**, where:
 
 * **Y**: Major (breaking changes)
 * **Z**: Minor or patch
-
-## Roadmap
-
-* [v1](https://github.com/oruga-ui/oruga/projects/1)
 
 ## Core Team
 
