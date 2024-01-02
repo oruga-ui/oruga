@@ -45,10 +45,10 @@ export default defineComponent({
                     <p class="card-header-title">
                         {{ collapse.title }}
                     </p>
-                    <a class="card-header-icon">
-                        <o-icon :icon="props.open ? 'caret-up' : 'caret-down'">
-                        </o-icon>
-                    </a>
+                    <span class="card-header-icon">
+                        <o-icon
+                            :icon="props.open ? 'caret-up' : 'caret-down'" />
+                    </span>
                 </div>
             </template>
             <div class="card-content">
