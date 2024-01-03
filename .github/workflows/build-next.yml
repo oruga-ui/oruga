@@ -10,7 +10,7 @@ jobs:
     strategy:
       max-parallel: 24
     steps:
-      - uses: actions/checkout@4
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
