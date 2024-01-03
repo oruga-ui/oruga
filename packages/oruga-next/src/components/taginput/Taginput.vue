@@ -455,7 +455,7 @@ const counterClasses = computed(() => [
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
-        <div :class="containerClasses" @click="hasInput && onFocus()">
+        <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
             <!--
                 @slot Override selected items
                 @binding {unknown[]} items - selected items
