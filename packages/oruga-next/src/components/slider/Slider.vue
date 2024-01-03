@@ -367,7 +367,13 @@ const thumbWrapperClasses = computed(() => [
 </script>
 
 <template>
-    <div :class="rootClasses" data-oruga="slider" @click="onSliderClick">
+    <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/click-events-have-key-events -->
+    <div
+        :class="rootClasses"
+        data-oruga="slider"
+        tabindex="0"
+        role="group"
+        @click="onSliderClick">
         <div ref="sliderRef" :class="trackClasses">
             <div :class="fillClasses" :style="barStyle" />
             <template v-if="ticks">

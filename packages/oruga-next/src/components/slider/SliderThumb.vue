@@ -224,8 +224,8 @@ function setPosition(percent: number): void {
             <div
                 v-bind="$attrs"
                 :class="thumbClasses"
-                :tabindex="disabled ? null : 0"
                 role="slider"
+                tabindex="0"
                 :aria-label="ariaLabel"
                 :aria-valuenow="modelValue"
                 :aria-valuemin="min"
