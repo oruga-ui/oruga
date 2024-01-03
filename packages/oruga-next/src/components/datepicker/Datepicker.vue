@@ -11,19 +11,19 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
 } from "@/composables";
 
 import { getMonthNames, getWeekdayNames } from "./utils";
-
 import {
     useDatepickerShare,
     type DatepickerEvent,
     type FocusedDate,
 } from "./useDatepickerShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -259,59 +259,207 @@ const props = defineProps({
         type: String,
         default: () => getOption("datepicker.ariaNextLabel", "Previous Page"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "sizeClass",
-        "boxClass",
-        "headerClass",
-        "headerButtonsClass",
-        "headerButtonsSizeClass",
-        "prevButtonClass",
-        "nextButtonClass",
-        "listsClass",
-        "footerClass",
-        "tableClass",
-        "tableHeadClass",
-        "tableHeadCellClass",
-        "tableBodyClass",
-        "tableRowClass",
-        "tableCellClass",
-        "tableCellInvisibleClass",
-        "tableCellSelectedClass",
-        "tableCellFirstSelectedClass",
-        "tableCellWithinSelectedClass",
-        "tableCellLastSelectedClass",
-        "tableCellFirstHoveredClass",
-        "tableCellWithinHoveredClass",
-        "tableCellLastHoveredClass",
-        "tableCellTodayClass",
-        "tableCellSelectableClass",
-        "tableCellUnselectableClass",
-        "tableCellNearbyClass",
-        "tableCellEventsClass",
-        "tableEventsClass",
-        "tableEventClass",
-        "tableEventVariantClass",
-        "tableEventIndicatorsClass",
-        "monthClass",
-        "monthBodyClass",
-        "monthTableClass",
-        "monthCellClass",
-        "monthCellSelectedClass",
-        "monthCellFirstSelectedClass",
-        "monthCellWithinSelectedClass",
-        "monthCellLastSelectedClass",
-        "monthCellWithinHoveredRangeClass",
-        "monthCellFirstHoveredClass",
-        "monthCellWithinHoveredClass",
-        "monthCellLastHoveredClass",
-        "monthCellTodayClass",
-        "monthCellSelectableClass",
-        "monthCellUnselectableClass",
-        "monthCellEventsClass",
-        "mobileClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    boxClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    headerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    headerButtonsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    headerButtonsSizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    prevButtonClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    nextButtonClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    footerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableHeadClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableHeadCellClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableBodyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableRowClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellInvisibleClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellFirstSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellWithinSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellLastSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellFirstHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellWithinHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellLastHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellTodayClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellSelectableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellUnselectableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellNearbyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableCellEventsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableEventsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableEventClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableEventVariantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tableEventIndicatorsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthBodyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthTableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellFirstSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellWithinSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellLastSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellWithinHoveredRangeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellFirstHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellWithinHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellLastHoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellTodayClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellSelectableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellUnselectableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    monthCellEventsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     /**
      * Class configuration for the internal input component
      * @ignore
@@ -751,7 +899,7 @@ const footerClasses = computed(() => [
         :stay-open="multiple"
         :dropdown-class="dropdownClass"
         :root-classes="rootClasses"
-        :box-classes="boxClasses"
+        :box-class="boxClasses"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"

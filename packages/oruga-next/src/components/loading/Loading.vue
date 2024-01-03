@@ -7,11 +7,11 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     useComputedClass,
-    useClassProps,
     useProgrammaticComponent,
     usePropBinding,
 } from "@/composables";
-import type { ProgrammaticInstance } from "@/types";
+
+import type { ComponentClass, ProgrammaticInstance } from "@/types";
 
 /**
  * A simple loading overlay
@@ -84,14 +84,27 @@ const props = defineProps({
      * @ignore
      */
     promise: { type: Promise, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "fullPageClass",
-        "overlayClass",
-        "iconClass",
-        "labelClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    fullPageClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    overlayClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    iconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

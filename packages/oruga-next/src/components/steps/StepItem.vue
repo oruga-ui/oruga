@@ -3,15 +3,11 @@ import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useClassProps,
-    useComputedClass,
-    useProviderChild,
-} from "@/composables";
 import { uuid } from "@/utils/helpers";
+import { useComputedClass, useProviderChild } from "@/composables";
 
 import type { StepsComponent } from "./types";
-import type { DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * @displayName Step Item
@@ -66,14 +62,27 @@ const props = defineProps({
     },
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "itemClass",
-        "itemHeaderClass",
-        "itemHeaderActiveClass",
-        "itemHeaderPreviousClass",
-        "itemHeaderVariantClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    itemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderPreviousClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderVariantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

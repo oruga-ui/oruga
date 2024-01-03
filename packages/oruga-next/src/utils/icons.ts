@@ -4,6 +4,7 @@ import { merge } from "./helpers";
 export type IconConfig = {
     sizes?: { default: string; [key: string]: string };
     iconPrefix?: string;
+    internalIcons?: Record<string, string>;
 };
 
 const mdiIcons = {
@@ -48,8 +49,8 @@ const faIcons = () => {
     };
 };
 
-const getIcons = () => {
-    let icons = {
+const getIcons = (): Record<string, IconConfig> => {
+    let icons: Record<string, IconConfig> = {
         mdi: mdiIcons,
         fa: faIcons(),
         fas: faIcons(),
@@ -59,7 +60,8 @@ const getIcons = () => {
         fal: faIcons(),
     };
 
-    const customIconPacks = getOption("customIconPacks");
+    const customIconPacks =
+        getOption<Record<string, IconConfig>>("customIconPacks");
     if (customIconPacks) icons = merge(icons, customIconPacks, true);
 
     return icons;

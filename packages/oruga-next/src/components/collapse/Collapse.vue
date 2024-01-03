@@ -3,8 +3,10 @@ import { computed, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps, usePropBinding } from "@/composables";
 import { uuid } from "@/utils/helpers";
+import { useComputedClass, usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * An easy way to toggle what you want
@@ -38,8 +40,19 @@ const props = defineProps({
         default: () => getOption("collapse.position", "top"),
         validator: (value: string) => ["top", "bottom"].indexOf(value) > -1,
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps(["rootClass", "triggerClass", "contentClass"]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    triggerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -64,20 +77,20 @@ function toggle(): void {
 
 // --- Computed Component Classes ---
 
-const rootClass = computed(() => [useComputedClass("rootClass", "o-clps")]);
+const rootClasses = computed(() => [useComputedClass("rootClass", "o-clps")]);
 
-const triggerClass = computed(() => [
+const triggerClasses = computed(() => [
     useComputedClass("triggerClass", "o-clps__trigger"),
 ]);
 
-const contentClass = computed(() => [
+const contentClasses = computed(() => [
     useComputedClass("contentClass", "o-clps__content"),
 ]);
 </script>
 
 <template>
-    <div :class="rootClass" data-oruga="collapse">
-        <div v-if="position === 'top'" :class="triggerClass" @click="toggle">
+    <div :class="rootClasses" data-oruga="collapse">
+        <div v-if="position === 'top'" :class="triggerClasses" @click="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 
@@ -86,7 +99,7 @@ const contentClass = computed(() => [
         </div>
 
         <Transition :name="animation">
-            <div v-show="isOpen" :id="contentId" :class="contentClass">
+            <div v-show="isOpen" :id="contentId" :class="contentClasses">
                 <!--
                     @slot Default content
                 -->
@@ -94,7 +107,10 @@ const contentClass = computed(() => [
             </div>
         </Transition>
 
-        <div v-if="position === 'bottom'" :class="triggerClass" @click="toggle">
+        <div
+            v-if="position === 'bottom'"
+            :class="triggerClasses"
+            @click="toggle">
             <!--
                 @slot Define the collapse trigger
                 @binding {boolean} open collapse open state 

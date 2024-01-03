@@ -1,6 +1,6 @@
 {
   "name": "@oruga-ui/oruga-next",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "homepage": "https://oruga.io",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
@@ -23,6 +23,7 @@
     "src",
     "nuxt",
     "types/*.d.ts",
+    "volar.d.ts",
     "README.md"
   ],
   "sideEffects": [
@@ -40,7 +41,7 @@
     "dev": "vite",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
     "build:vue:watch": "vite build --mode minify --watch",
-    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue",
+    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue && npm run gen-volar-dts",
     "build:lib:watch": "npm link && npm run build:vue:watch",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
@@ -48,6 +49,7 @@
     "test:ts": "vue-tsc --noEmit --skipLibCheck",
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
+    "gen-volar-dts": "node ../../.scripts/gen-component-declaration.mjs --bundle --platform=node",
     "update": "ncu -u"
   },
   "keywords": [

@@ -62,9 +62,9 @@ title: Upload
 
 ### Slots
 
-| Name    | Description     | Bindings |
-| ------- | --------------- | -------- |
-| default | Default content |          |
+| Name    | Description     | Bindings                                                                           |
+| ------- | --------------- | ---------------------------------------------------------------------------------- |
+| default | Default content | **onclick** `(event:Event): void` - click handler, only needed if a button is used |
 
 </div>
 

@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch } from "vue";
+import { computed, ref, useSlots, watch, type PropType } from "vue";
 
 import OFieldBody from "./FieldBody.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useClassProps, useMatchMedia } from "@/composables";
+import { useComputedClass, useMatchMedia } from "@/composables";
 
 import { injectField, provideField } from "../field/useFieldShare";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Fields are used to add functionality to controls and to attach/group components and elements together
@@ -59,25 +61,71 @@ const props = defineProps({
         type: String,
         default: () => getOption("field.mobileBreakpoint"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "horizontalClass",
-        "groupedClass",
-        "groupMultilineClass",
-        "labelClass",
-        "labelSizeClass",
-        "labelHorizontalClass",
-        "bodyClass",
-        "bodyHorizontalClass",
-        "addonsClass",
-        "messageClass",
-        "variantMessageClass",
-        "variantLabelClass",
-        "mobileClass",
-        "focusedClass",
-        "filledClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    horizontalClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    groupedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    groupMultilineClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelSizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    labelHorizontalClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    bodyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    bodyHorizontalClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    addonsClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    messageClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantMessageClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantLabelClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    focusedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    filledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);

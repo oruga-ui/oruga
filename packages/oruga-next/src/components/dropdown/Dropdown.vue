@@ -3,22 +3,23 @@ import { computed, nextTick, ref, watch, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { vTrapFocus } from "@/directives/trapFocus";
+import { toCssDimension, isMobileAgent } from "@/utils/helpers";
+import { isClient } from "@/utils/ssr";
+import { unrefElement } from "@/utils/unrefElement";
+import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useMatchMedia,
     useEventListener,
     usePropBinding,
     useClickOutside,
 } from "@/composables";
-import { vTrapFocus } from "@/directives/trapFocus";
-import { toCssDimension, isMobileAgent } from "@/utils/helpers";
-import { isClient } from "@/utils/ssr";
+
 import { provideDropdown } from "./useDropdownShare";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
-import { unrefElement } from "@/utils/unrefElement";
-import type { DynamicComponent } from "@/types";
+
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -161,20 +162,51 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("dropdown.teleport", false),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "teleportClass",
-        "triggerClass",
-        "inlineClass",
-        "menuMobileOverlayClass",
-        "menuClass",
-        "menuPositionClass",
-        "menuActiveClass",
-        "mobileClass",
-        "disabledClass",
-        "expandedClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    teleportClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    triggerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    inlineClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    menuMobileOverlayClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    menuClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    menuPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    menuActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { computed, type Ref } from "vue";
+import { computed, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
-import {
-    useComputedClass,
-    useClassProps,
-    useProviderChild,
-} from "@/composables";
+import { useComputedClass, useProviderChild } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A Slideshow item used by the carousel
@@ -23,8 +21,19 @@ const props = defineProps({
     ...baseComponentProps,
     /** Make item clickable */
     clickable: { type: Boolean, default: false },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps(["itemClass", "itemActiveClass", "itemClickableClass"]),
+    // class props (will not be displayed in the docs)
+    itemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemClickableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 // Inject functionalities and data from the parent carousel component

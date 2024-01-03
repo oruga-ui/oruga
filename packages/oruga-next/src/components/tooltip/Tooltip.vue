@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, type PropType } from "vue";
+
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { isClient } from "@/utils/ssr";
+import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     useComputedClass,
-    useClassProps,
     usePropBinding,
     useEventListener,
     useClickOutside,
 } from "@/composables";
-import { isClient } from "@/utils/ssr";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
-import type { DynamicComponent } from "@/types";
+
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * Display a brief helper text to your user
@@ -109,19 +110,47 @@ const props = defineProps({
         type: [Boolean, String, Object],
         default: () => getOption("dropdown.teleport", false),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "teleportClass",
-        "contentClass",
-        "positionClass",
-        "triggerClass",
-        "multilineClass",
-        "alwaysClass",
-        "variantClass",
-        "arrowClass",
-        "arrowPositionClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    teleportClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    contentClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    positionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    triggerClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    multilineClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    alwaysClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    arrowPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

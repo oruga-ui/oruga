@@ -3,14 +3,11 @@ import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useClassProps,
-    useComputedClass,
-    useProviderChild,
-} from "@/composables";
 import { uuid } from "@/utils/helpers";
+import { useComputedClass, useProviderChild } from "@/composables";
+
 import type { TabsComponent, TabItemComponent } from "./types";
-import type { DynamicComponent } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * @displayName Tab Item
@@ -54,16 +51,35 @@ const props = defineProps({
     },
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "itemClass",
-        "itemHeaderClass",
-        "itemHeaderActiveClass",
-        "itemHeaderDisabledClass",
-        "itemHeaderTypeClass",
-        "itemHeaderIconClass",
-        "itemHeaderTextClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    itemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderDisabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderTypeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderIconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    itemHeaderTextClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{

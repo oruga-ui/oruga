@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, type ComputedRef } from "vue";
+import { computed, type ComputedRef, type PropType } from "vue";
 import { useComputedClass, useProviderChild } from "@/composables";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 
 import type { SliderComponent } from "./types";
+import type { ComponentClass } from "@/types";
 
 /**
  * @displayName Slider Tick
@@ -22,9 +23,18 @@ const props = defineProps({
     value: { type: Number, required: true },
     /** Tick label */
     label: { type: String, default: undefined },
-    tickClass: { type: [String, Function, Array], default: undefined },
-    tickHiddenClass: { type: [String, Function, Array], default: undefined },
-    tickLabelClass: { type: [String, Function, Array], default: undefined },
+    tickClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tickHiddenClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    tickLabelClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 // Inject functionalities and data from the parent carousel component

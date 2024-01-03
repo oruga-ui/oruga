@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { computed, watch, nextTick } from "vue";
+import { computed, watch, nextTick, type PropType } from "vue";
 
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import {
-    useComputedClass,
-    useClassProps,
-    useMatchMedia,
-    usePropBinding,
-} from "@/composables";
+import { useComputedClass, useMatchMedia, usePropBinding } from "@/composables";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * A responsive and flexible pagination
@@ -113,24 +110,67 @@ const props = defineProps({
         type: String,
         default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
     },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "prevButtonClass",
-        "nextButtonClass",
-        "listItemClass",
-        "listClass",
-        "linkClass",
-        "linkCurrentClass",
-        "ellipsisClass",
-        "infoClass",
-        "orderClass",
-        "simpleClass",
-        "roundedClass",
-        "linkDisabledClass",
-        "sizeClass",
-        "mobileClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    prevButtonClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    nextButtonClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listItemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    listClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkCurrentClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    ellipsisClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    infoClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    orderClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    simpleClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    roundedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    linkDisabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    sizeClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    mobileClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -329,7 +369,7 @@ const linkCurrentClasses = computed(() => [
     useComputedClass("linkCurrentClass", "o-pag__link--current"),
 ]);
 
-const listItemClass = computed(() =>
+const listItemClasses = computed(() =>
     useComputedClass("listItemClass", "o-pag__item"),
 );
 
@@ -395,7 +435,7 @@ defineExpose({ last, first, prev, next });
 
         <ul v-else :class="listClasses">
             <!--First-->
-            <li v-if="hasFirst" :class="listItemClass">
+            <li v-if="hasFirst" :class="listItemClasses">
                 <slot v-bind="getPage(1)">
                     <o-pagination-button
                         v-bind="getPage(1)"
@@ -403,7 +443,7 @@ defineExpose({ last, first, prev, next });
                         :link-current-class="linkCurrentClasses" />
                 </slot>
             </li>
-            <li v-if="hasFirstEllipsis" :class="listItemClass">
+            <li v-if="hasFirstEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
 
@@ -411,7 +451,7 @@ defineExpose({ last, first, prev, next });
             <li
                 v-for="page in pagesInRange"
                 :key="page.number"
-                :class="listItemClass">
+                :class="listItemClasses">
                 <slot v-bind="page">
                     <o-pagination-button
                         v-bind="page"
@@ -421,10 +461,10 @@ defineExpose({ last, first, prev, next });
             </li>
 
             <!--Last-->
-            <li v-if="hasLastEllipsis" :class="listItemClass">
+            <li v-if="hasLastEllipsis" :class="listItemClasses">
                 <span :class="ellipsisClasses">&hellip;</span>
             </li>
-            <li v-if="hasLast" :class="listItemClass">
+            <li v-if="hasLast" :class="listItemClasses">
                 <!-- 
                     @slot Pagination button slot
                     @binding {number} number - page number 

@@ -3,13 +3,14 @@ import { computed, ref, watch, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { File } from "@/utils/ssr";
 import {
     useComputedClass,
-    useClassProps,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
-import { File } from "@/utils/ssr";
+
+import type { ComponentClass } from "@/types";
 
 /**
  * Upload one or more files
@@ -60,15 +61,31 @@ const props = defineProps({
     },
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
-    // add class props (will not be displayed in the docs)
-    ...useClassProps([
-        "rootClass",
-        "draggableClass",
-        "variantClass",
-        "expandedClass",
-        "disabledClass",
-        "hoveredClass",
-    ]),
+    // class props (will not be displayed in the docs)
+    rootClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    draggableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    variantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    expandedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    disabledClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    hoveredClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -94,7 +111,7 @@ const emits = defineEmits<{
     (e: "invalid", event: Event): void;
 }>();
 
-const inputRef = ref();
+const inputRef = ref<HTMLInputElement>();
 
 const vmodel = useVModelBinding<Object | Object[] | File | File[]>(
     props,
@@ -210,15 +227,11 @@ function checkType(file: File): boolean {
 
 function onClick(event: Event): void {
     if (props.disabled) return;
+
+    // click input if not drag and drop is used
     if (!props.dragDrop) {
         event.preventDefault();
-        // click input if not drag and drop is used
-        const clickEvent = new MouseEvent("click", {
-            view: window,
-            bubbles: true,
-            cancelable: false,
-        });
-        inputRef.value.dispatchEvent(clickEvent);
+        inputRef.value.click();
     }
 }
 
@@ -251,12 +264,13 @@ const draggableClasses = computed(() => [
 </script>
 
 <template>
-    <label :class="rootClasses" data-oruga="upload" @click="onClick">
+    <label :class="rootClasses" data-oruga="upload">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
+                @binding {(event:Event): void} onclick - click handler, only needed if a button is used
             -->
-            <slot />
+            <slot :onclick="onClick" />
         </template>
 
         <div
