@@ -469,8 +469,9 @@ const monthCellClasses = computed(() => [
                         :tabindex="
                             focusedDate.month === date.getMonth() ? null : -1
                         "
-                        @click.prevent="selectDate(date)"
                         @mouseenter="onRangeHoverEndDate(date)"
+                        @focus="onRangeHoverEndDate(date)"
+                        @click.prevent="selectDate(date)"
                         @keydown.prevent="onKeydown($event, date)">
                         {{ monthNames[date.getMonth()] }}
                         <div v-if="eventsDateMatch(date).length" class="events">

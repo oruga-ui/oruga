@@ -365,7 +365,8 @@ const tableEventsClasses = computed(() => [
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
+            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
+            @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
         </a>
         <template v-for="(weekDay, idx) in week" :key="idx">
