@@ -9,14 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 24
-      matrix:
-        node-version: ['20.10.0']
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }} 🪢
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies 📦
         run: npm install && npm run bootstrap
       - name: Run lint and component tests 🧪
