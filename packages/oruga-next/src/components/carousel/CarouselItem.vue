@@ -2,6 +2,7 @@
 import { computed, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
 import { useComputedClass, useProviderChild } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -34,6 +35,11 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Role attribute to be passed to the div wrapper for better accessibility */
+    role: {
+        type: String,
+        default: () => getOption("carousel.ariaRole", "option"),
+    },
 });
 
 // Inject functionalities and data from the parent carousel component
@@ -43,7 +49,7 @@ const isActive = computed(() => parent.value.activeIndex === item.value.index);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
-function onClick(event: MouseEvent): void {
+function onClick(event: Event): void {
     if (isActive.value) parent.value.onClick(event);
     if (props.clickable) parent.value.setActive(item.value.index);
 }
@@ -64,12 +70,18 @@ const itemClasses = computed(() => [
 </script>
 
 <template>
+    <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
     <div
         :class="itemClasses"
         :style="itemStyle"
         :data-id="`carousel-${item.identifier}`"
         data-oruga="carousel-item"
-        @click="onClick">
+        :role="role"
+        tabindex="0"
+        aria-roledescription="item"
+        :aria-selected="isActive"
+        @click="onClick"
+        @keypress.enter="onClick">
         <!--
             @slot Default content
         -->

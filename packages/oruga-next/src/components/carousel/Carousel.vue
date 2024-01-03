@@ -581,16 +581,25 @@ const indicatorClasses = computed(() => [
 </script>
 
 <template>
+    <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events, vuejs-accessibility/no-static-element-interactions -->
     <div
         ref="rootRef"
         :class="rootClasses"
         data-oruga="carousel"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave">
+        role="region"
+        @mouseover="onMouseEnter"
+        @mouseleave="onMouseLeave"
+        @keydown.left="onPrev"
+        @keydown.right="onNext">
         <div :class="wrapperClasses">
+            <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
             <div
                 :class="itemsClasses"
                 :style="'transform:translateX(' + translation + 'px)'"
+                tabindex="0"
+                role="group"
+                draggable="true"
+                aria-roledescription="carousel"
                 @mousedown="onDragStart"
                 @touchstart="onDragStart">
                 <!--
@@ -619,7 +628,10 @@ const indicatorClasses = computed(() => [
                         :icon="iconPrev"
                         :size="iconSize"
                         both
-                        @click="onPrev" />
+                        role="button"
+                        tabindex="0"
+                        @click="onPrev"
+                        @keydown.enter="onPrev" />
                     <o-icon
                         v-show="hasNext"
                         :class="arrowIconNextClasses"
@@ -627,7 +639,10 @@ const indicatorClasses = computed(() => [
                         :icon="iconNext"
                         :size="iconSize"
                         both
-                        @click="onNext" />
+                        role="button"
+                        tabindex="0"
+                        @click="onNext"
+                        @keydown.enter="onNext" />
                 </template>
             </slot>
         </div>
@@ -644,13 +659,17 @@ const indicatorClasses = computed(() => [
             :indicator-index="indicatorIndex"
             name="indicators">
             <template v-if="childItems.length">
-                <div v-if="indicators" :class="indicatorsClasses">
+                <div v-if="indicators" :class="indicatorsClasses" role="group">
                     <a
                         v-for="(_, index) in indicatorCount"
                         :key="index"
                         :class="indicatorClasses"
+                        role="button"
+                        tabindex="0"
+                        @focus="onModeChange('hover', index)"
                         @mouseover="onModeChange('hover', index)"
-                        @click="onModeChange('click', index)">
+                        @click="onModeChange('click', index)"
+                        @keypress.enter="onModeChange('click', index)">
                         <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 
