@@ -7,12 +7,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Always release the tip of the default branch
           ref: develop
-      - uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
@@ -20,9 +21,10 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: npm install
-      - run: npm run bootstrap
-      - run: npm run publish:lib:oruga-next
+      - name: Install dependencies 📦
+        run: npm install && npm run bootstrap
+      - name: Build lib
+        run: npm run publish:lib:oruga-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm i extract-changelog-release
