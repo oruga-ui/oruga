@@ -208,7 +208,8 @@ const wrapperClasses = computed(() => [
         :role="ariaRole"
         :class="wrapperClasses"
         :data-id="identifier"
-        data-oruga="menu-item">
+        data-oruga="menu-item"
+        aria-roledescription="item">
         <component
             :is="tag"
             v-bind="$attrs"

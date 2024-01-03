@@ -176,7 +176,8 @@ const headerTextClasses = computed(() => [
             :class="elementClasses"
             :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"
-            :role="role">
+            :role="role"
+            aria-roledescription="item">
             <!-- 
                 @slot Tab item content
             -->

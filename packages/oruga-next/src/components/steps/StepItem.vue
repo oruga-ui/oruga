@@ -169,7 +169,8 @@ const elementClasses = computed(() => [
             :class="elementClasses"
             :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"
-            :role="role">
+            :role="role"
+            aria-roledescription="item">
             <!-- 
                 @slot Step item content
             -->
