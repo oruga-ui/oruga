@@ -46,7 +46,7 @@ export type GlobalConfig = Partial<{
     /** Define the icon pack be used */
     iconPack: string;
     /** Define custom icon packs */
-    customIconPacks: IconConfig[];
+    customIconPacks: Record<string, IconConfig>;
     /** Define a specific icon component */
     iconComponent: DynamicComponent;
     /** Enable HTML5 validation */
