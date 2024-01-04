@@ -181,13 +181,8 @@ const autoPosition = ref(props.position);
 /** update autoPosition on prop change */
 watch(
     () => props.position,
-    (v) => {
-        autoPosition.value = v;
-        console.log(v);
-    },
+    (v) => autoPosition.value = v,
 );
-
-watch(autoPosition, (v) => console.log(v));
 
 // --- Event Handler ---
 
