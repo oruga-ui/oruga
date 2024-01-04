@@ -81,7 +81,7 @@ const props = defineProps({
             ["auto", "top", "bottom"].indexOf(value) >= 0,
     },
     /** Property of the object (if data is array of objects) to use as display text, and to keep track of selected option */
-    field: { type: String, default: "value" },
+    field: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as display text of group */
     groupField: { type: String, default: undefined },
     /** Property of the object (if `data` is array of objects) to use as key to get items array of each group */
