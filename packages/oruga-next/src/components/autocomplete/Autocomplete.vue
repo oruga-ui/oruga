@@ -787,8 +787,8 @@ function itemOptionClasses(option): PropBind {
         <template #trigger>
             <o-input
                 ref="inputRef"
-                v-model="vmodel"
                 v-bind="inputBind"
+                v-model="vmodel"
                 :type="type"
                 :size="size"
                 :rounded="rounded"
