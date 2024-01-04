@@ -213,10 +213,11 @@ You can also add and override classes to a component directly using class proper
 
 ## Programmatic usage
 
-As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html) or [`Sidebar]`(/components/Sidebar.html).
+As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html) or [`Sidebar`](/components/Sidebar.html).
 This interface gives you access to all registered programmatic components.
 
 The config can be customised for each component by overriding the `Config` object programmatically:
+
 ```js
 import { useOruga } from '@oruga-ui/oruga-next';
 
@@ -237,15 +238,35 @@ oruga.config.setOptions(myThemeConfig);
 ```
 
 If you use individual imports instead of the default global plugin export, the programmatic config will not be registered to the `useOruga()` interface by default.
-However, you can customise each component using the dedicated `ConfigProgrammatic` plugin:
+But you can add the config interface by adding the dedicated `ConfigPlugin` plugin:
 
 ```js
 import { createApp } from 'vue';
-import { OAutocomplete, OSidebar, ConfigProgrammatic } from '@oruga-ui/oruga-next';
+import { OAutocomplete, OSidebar, ConfigPlugin, useOruga } from '@oruga-ui/oruga-next';
 
 createApp(...)
     .component(OAutocomplete)
-    .component(OSidebar);
+    .component(OSidebar)
+    .use(ConfigPlugin);
+
+const oruga = useOruga();
+
+const config = oruga.config.getOptions();
+
+config.setOption("autocomplete", {
+    rootClass: 'autocomplete-root',
+    itemClass: 'autocomplete-item',
+    ...
+});
+
+config.setOption("sidebar", { ... });
+```
+
+However, you can also customise each component by using the dedicated `ConfigProgrammatic` object:
+
+```js
+import { createApp } from 'vue';
+import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
 
 const config = ConfigProgrammatic.getOptions();
 
