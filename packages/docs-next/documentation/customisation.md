@@ -26,7 +26,7 @@ Here you can inspect the elements affected by each class property using the `Cla
 
 
 
-## Global configuration
+## Configuration
 
 The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
@@ -111,18 +111,6 @@ createApp(...)
     });
 ```
 
-### Global Props
-
-| Field              | Description                                                                                                                                                                                  | Default |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
-| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
-| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
-| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
-| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
-
-Have a look at the docs of each component to know all the customisable fields/props by config.
-
 ### Overriding classes
 
 In case you want to override existing default Oruga classes completely, you can act as above and set the field `override` to true:
@@ -199,8 +187,7 @@ createApp(...)
     })
 ```
 
-
-## Individual configuration
+### Component properties
 
 You can also add and override classes to a component directly using class properties:
 
@@ -209,6 +196,18 @@ You can also add and override classes to a component directly using class proper
     root-class="autocomplete-root" 
     item-class="autocomplete-item" />
 ```
+
+## Global Props
+
+| Field              | Description                                                                                                                                                                                  | Default |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| statusIcon         | Show status icon using field and variant prop                                                                                                                                                | true    |
+| statusVariantIcon  | Default mapping of variant and icon name                                                                                                                                                     | <code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;'success': 'check',<br>&nbsp;&nbsp;'danger': 'alert-circle',<br>&nbsp;&nbsp;'info':'information', <br>&nbsp;&nbsp;'warning': 'alert'<br>} </code> |
+| useHtml5Validation | Default form components use-html5-validation attribute                                                                                                                                       | true    |
+| iconPack           | Icon pack used internally and on the Icon component attribute                                                                                                                                | 'mdi'   |
+| reportInvalidInput | Callback function that allows for custom behavior when HTML constraint validation would visually report that a field is invalid. Takes the input and its parent field (if any) as arguments. | <code style='white-space: nowrap; padding: 0;'>null</code> |
+
+Have a look at the docs of each component to know all the customisable fields/props by config.
 
 
 ## Programmatic usage
@@ -265,7 +264,6 @@ config.setOption("sidebar", { ... });
 However, you can also customise each component by using the dedicated `ConfigProgrammatic` object:
 
 ```js
-import { createApp } from 'vue';
 import { ConfigProgrammatic } from '@oruga-ui/oruga-next';
 
 const config = ConfigProgrammatic.getOptions();
@@ -282,7 +280,7 @@ const myThemeConfig = {
 ConfigProgrammatic.setOptions(myThemeConfig);
 ```
 
-If you use the default global plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed with `useOruga()`;
+If you use the default global plugin export or any plugin of a component with a programmatic interface, this interface will be registered and can be accessed with `useOruga()`:
 
 ```js
 import { useOruga } from "@oruga-ui/oruga-next";
