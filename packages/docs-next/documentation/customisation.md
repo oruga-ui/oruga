@@ -9,9 +9,9 @@ And <b>all components came with predefined classes </b> by default.
 
 You can customise component classes in 3 different ways:
 
-- [Global configuration](#global-configuration)
-- [Individual configuration](#overriding-configuration)
-- [Programmatically configuration](#using-configuration)
+- [Global configuration](#global)
+- [Individual configuration](#individual)
+- [Programmatically configuration](#programmatic)
 
 ::: info
 Although all components have predefined classes, Oruga allows you to easily override the style of existing components by appending one or more classes, either globally or programmatically, to individual components.
@@ -26,7 +26,7 @@ Here you can inspect the elements affected by each class property using the `Cla
 
 
 
-## Configuration
+## Configuration {#global}
 
 The easiest way to customise your components is set up a global configuration object with a <i>class-mapping</i> for each component.
 
@@ -187,7 +187,7 @@ createApp(...)
     })
 ```
 
-### Component properties
+### Component properties {#individual}
 
 You can also add and override classes to a component directly using class properties:
 
@@ -210,7 +210,7 @@ You can also add and override classes to a component directly using class proper
 Have a look at the docs of each component to know all the customisable fields/props by config.
 
 
-## Programmatic usage
+## Programmatic usage {#programmatic}
 
 As alternative Oruga provide a programmatic interface `useOruga()` to access the config as well as programmatic component interfaces such as [`Modal`](/components/Modal.html) or [`Sidebar`](/components/Sidebar.html).
 This interface gives you access to all registered programmatic components.
