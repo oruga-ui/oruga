@@ -189,7 +189,7 @@ createApp(...)
 
 ### Component properties {#individual}
 
-You can also add and override classes to a component directly using class properties:
+You can also add and override classes to a component directly using `class` properties:
 
 ```html
 <o-autocomplete 
