@@ -438,7 +438,7 @@ function itemClasses(childItem): PropBind {
                 <component
                     :is="childItem.tag"
                     role="button"
-                    :tabindex="isItemClickable(childItem) ? 0 : -1"
+                    :tabindex="isItemClickable(childItem) ? 0 : null"
                     :class="stepLinkClasses(childItem)"
                     @click="isItemClickable(childItem) && itemClick(childItem)"
                     @keydown.enter="

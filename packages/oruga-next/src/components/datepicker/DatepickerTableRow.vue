@@ -365,7 +365,7 @@ const tableEventsClasses = computed(() => [
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            :tabindex="datepicker.weekNumberClickable ? '0' : '-1'"
+            :tabindex="datepicker.weekNumberClickable ? '0' : null"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
@@ -377,8 +377,8 @@ const tableEventsClasses = computed(() => [
                 :class="cellClasses(weekDay)"
                 :tabindex="
                     day === weekDay.getDate() && month === weekDay.getMonth()
-                        ? 0
-                        : -1
+                        ? null
+                        : 0
                 "
                 @click.prevent="selectDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
