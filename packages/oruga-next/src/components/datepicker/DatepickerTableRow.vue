@@ -359,30 +359,30 @@ const tableEventsClasses = computed(() => [
 
 <template>
     <div :class="tableRowClasses">
-        <a
+        <button
             v-if="datepicker.showWeekNumber"
             :class="tableCellClasses"
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
+            :tabindex="datepicker.weekNumberClickable ? '0' : '-1'"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
-        </a>
+        </button>
         <template v-for="(weekDay, idx) in week" :key="idx">
-            <a
+            <button
                 v-if="!datepicker.disabled && isDateSelectable(weekDay, month)"
                 :ref="(el) => setDayRef(weekDay, el)"
                 :class="cellClasses(weekDay)"
-                role="button"
-                href="#"
                 :tabindex="
                     day === weekDay.getDate() && month === weekDay.getMonth()
-                        ? null
+                        ? 0
                         : -1
                 "
                 @click.prevent="selectDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
+                @focus="setRangeHoverEndDate(weekDay)"
                 @keydown="onKeydown($event, weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
                 <div
@@ -393,7 +393,7 @@ const tableEventsClasses = computed(() => [
                         :key="index"
                         :class="eventClasses(event)" />
                 </div>
-            </a>
+            </button>
             <div v-else :key="idx" :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>
