@@ -266,7 +266,10 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
 
-const items = useVModelBinding<any[]>(props, emits, { passive: true, deep: true });
+const items = useVModelBinding<any[]>(props, emits, {
+    passive: true,
+    deep: true,
+});
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
