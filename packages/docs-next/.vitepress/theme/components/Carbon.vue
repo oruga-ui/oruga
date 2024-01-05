@@ -21,7 +21,7 @@ watch(
 );
 
 onMounted(() => {
-    if (new URL(location.href).hostname !== "oruga.io") return;
+    if (new URL(location.href).hostname !== "oruga-ui.com") return;
 
     nextTick(() => {
         const newScript = document.createElement("script");

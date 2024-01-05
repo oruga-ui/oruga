@@ -38,7 +38,7 @@ import themes from "../themes.json";
 
 // load last used theme or set a default one
 function loadTheme() {
-    const cache = localStorage.getItem("oruga.io:theme");
+    const cache = localStorage.getItem("oruga-ui.com:theme");
     if (cache && cache !== "undefined") {
         try {
             const themeConfig = JSON.parse(cache);

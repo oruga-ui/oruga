@@ -1,7 +1,7 @@
 {
   "name": "root",
   "version": "0.8.2",
-  "homepage": "https://oruga.io",
+  "homepage": "https://oruga-ui.com",
   "description": "UI components for Vue.js and CSS framework agnostic",
   "author": "Walter Tommasi <tommsi20@gmail.com>",
   "license": "MIT",
