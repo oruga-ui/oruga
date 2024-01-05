@@ -1538,6 +1538,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
 </script>
 
 <template>
+    <!-- eslint-disable vuejs-accessibility/aria-props -->
     <div ref="rootRef" :class="rootClasses" data-oruga="table">
         <div ref="slotRef" style="display: none">
             <!--
@@ -1612,6 +1613,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
         </template>
 
         <div :class="tableWrapperClasses" :style="tableWrapperStyle">
+            <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
             <table
                 :class="tableClasses"
                 :tabindex="!focusable ? null : 0"
@@ -1785,6 +1787,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     <template
                         v-for="(row, index) in visibleRows"
                         :key="getRowKey(row) + 'row'">
+                        <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events -->
                         <tr
                             :class="rowClasses(row, index)"
                             :draggable="canDragRow"
