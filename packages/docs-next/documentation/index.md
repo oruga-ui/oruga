@@ -143,7 +143,6 @@ You can use Nuxt.js plugins system adding a file (e.g. `oruga.js`) in your `plug
 
 ```js
 import Oruga from '@oruga-ui/oruga-next';
-import '@oruga-ui/oruga-next/dist/oruga.css';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(Oruga);

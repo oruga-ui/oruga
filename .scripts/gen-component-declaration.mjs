@@ -27,7 +27,7 @@ function getComponents(dir) {
     // filter only vue files and remove test files
     .filter(f => f.includes(".vue") && !f.includes("tests"))
     // remove path
-    .map(f => f.includes("\\") ? f.substring(f.lastIndexOf("\\") + 1) : f)
+    .map(f => path.basename(f))
     // remove .vue suffix
     .map(f => f.substring(0, f.indexOf(".vue")))
     // filter blacklist 

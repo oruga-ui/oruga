@@ -691,7 +691,9 @@ const dataTotal = ref(
     props.backendPagination ? props.total : tableData.value.length,
 );
 
-const tableCurrentPage = usePropBinding<number>("currentPage", props, emits);
+const tableCurrentPage = usePropBinding<number>("currentPage", props, emits, {
+    passive: true,
+});
 
 /**
  * When table rows data change:
@@ -1572,11 +1574,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                 (paginationPosition === 'top' || paginationPosition === 'both')
             ">
             <!--
-                @slot Override pagination label 
+                @slot Override pagination label
                 @binding {number} current - current page
                 @binding {number} per-page - rows per page
-                @binding {number} total - total rows count 
-                @binding {(page: number): void } change - on page change event 
+                @binding {number} total - total rows count
+                @binding {(page: number): void } change - on page change event
             -->
             <slot
                 name="pagination"
@@ -1602,7 +1604,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     :root-class="paginationWrapperClasses"
                     @change="(page) => $emit('page-change', page)">
                     <!--
-                        @slot Additional slot if table is paginated 
+                        @slot Additional slot if table is paginated
                     -->
                     <slot name="top-left" />
                 </o-table-pagination>
@@ -1634,7 +1636,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             v-if="checkable && checkboxPosition === 'left'"
                             :class="thCheckboxClasses">
                             <!--
-                                @slot Override check all checkbox 
+                                @slot Override check all checkbox
                                 @binding {boolean} is-all-checked - if all rows are checked
                                 @binding {boolean} is-all-uncheckable - if check all is uncheckable
                                 @binding {(): void} check-all - check all function
@@ -1705,7 +1707,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             :class="thCheckboxClasses">
                             <template v-if="headerCheckable">
                                 <!--
-                                    @slot Override check all checkbox 
+                                    @slot Override check all checkbox
                                     @binding {boolean} is-all-checked - if all rows are checked
                                     @binding {boolean} is-all-uncheckable - if check all is uncheckable
                                     @binding {(): void} check-all - check all function
@@ -1884,7 +1886,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                 :class="detailedClasses">
                                 <td :colspan="columnCount">
                                     <!--
-                                        @slot Place row detail content here 
+                                        @slot Place row detail content here
                                         @binding {unknown} row - row conent
                                         @binding {number} index - row index
                                     -->
@@ -1896,7 +1898,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             </tr>
                         </transition>
                         <!--
-                            @slot Place row detail content here 
+                            @slot Place row detail content here
                             @binding {unknown} row - row conent
                             @binding {number} index - row index
                         -->
@@ -1944,7 +1946,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                 </tfoot>
             </table>
             <!--
-                @slot Override loading component 
+                @slot Override loading component
                 @binding {boolean} loading - is loading enabled
             -->
             <slot name="loading" :loading="loading">
@@ -1960,11 +1962,11 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                         paginationPosition === 'both'))
             ">
             <!--
-                @slot Override pagination label 
-                @binding {number} current - current page 
-                @binding {number} per-page - rows per page 
-                @binding {number} total - total rows count 
-                @binding {(page: number): void } change - on page change event 
+                @slot Override pagination label
+                @binding {number} current - current page
+                @binding {number} per-page - rows per page
+                @binding {number} total - total rows count
+                @binding {(page: number): void } change - on page change event
             -->
             <slot
                 name="pagination"
@@ -1990,7 +1992,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     :root-class="paginationWrapperClasses"
                     @change="(page) => $emit('page-change', page)">
                     <!--
-                        @slot Additional slot if table is paginated 
+                        @slot Additional slot if table is paginated
                     -->
                     <slot name="bottom-left" />
                 </o-table-pagination>
