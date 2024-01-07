@@ -8,7 +8,7 @@ title: Carousel
 
 > A Slideshow for cycling images in confined spaces
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

@@ -8,7 +8,7 @@ title: Button
 
 > The classic button, in different colors, sizes, and states
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

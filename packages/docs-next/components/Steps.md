@@ -8,7 +8,7 @@ title: Steps
 
 > Responsive horizontal process steps
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

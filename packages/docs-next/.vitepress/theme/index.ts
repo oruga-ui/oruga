@@ -10,7 +10,6 @@ import InspectorWrapper from "./components/InspectorWrapper.vue";
 import Inspector from "./components/Inspector.vue";
 import ExampleViewer from "./components/ExampleViewer.vue";
 import Expo from "./components/Expo.vue";
-import Carbon from "./components/Carbon.vue";
 
 import Oruga, { useOruga } from "../../../oruga-next/dist/oruga";
 
@@ -63,7 +62,6 @@ export default {
         app.component("Inspector", Inspector);
         app.component("ExampleViewer", ExampleViewer);
         app.component("Expo", Expo);
-        app.component("Carbon", Carbon);
 
         // import example components
         const examples = import.meta.glob<DefineComponent>(
