@@ -8,7 +8,7 @@ title: Radio
 
 > Select an option from a set
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

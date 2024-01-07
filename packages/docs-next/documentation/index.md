@@ -11,7 +11,7 @@ If you need a component library and want to easily apply your [custom styles](/d
 
 In addition, if you don't want to style everything yourself, we've created several [themes](/documentation/themes) to provide you with a variety of ready-to-use styles. 🦋
 
-<Carbon />
+
 
 ## Availability
 
