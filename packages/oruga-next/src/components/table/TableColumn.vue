@@ -37,7 +37,7 @@ const props = defineProps({
     /** Column fixed width */
     width: { type: [Number, String], default: undefined },
     /** Define column value as number */
-    numeric: { type: Boolean, defaukt: false },
+    numeric: { type: Boolean, default: false },
     /**
      * Position of the column content
      * @values left, centered, right
@@ -49,9 +49,9 @@ const props = defineProps({
             ["left", "centered", "right"].indexOf(value) > -1,
     },
     /** Enable an additional searchbar below the column header */
-    searchable: { type: Boolean, defaukt: false },
+    searchable: { type: Boolean, default: false },
     /** Enable column sortability */
-    sortable: { type: Boolean, defaukt: false },
+    sortable: { type: Boolean, default: false },
     /** Define whether the column is visible or not */
     visible: { type: Boolean, default: true },
     /** Define a custom sort function */
@@ -67,9 +67,9 @@ const props = defineProps({
         default: undefined,
     },
     /** Whether the column is sticky or not */
-    sticky: { type: Boolean, defaukt: false },
+    sticky: { type: Boolean, default: false },
     /** Make header selectable */
-    headerSelectable: { type: Boolean, defaukt: false },
+    headerSelectable: { type: Boolean, default: false },
     /** Adds native attributes to th */
     thAttrs: {
         type: Function as PropType<(column: Column) => object>,
