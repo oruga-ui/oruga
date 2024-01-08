@@ -36,7 +36,7 @@ type ComputedClass = readonly [
  * calculate classes based on class definitions
  */
 export function defineClasses(
-    classDefinitions: ComputedClass[],
+    ...classDefinitions: ComputedClass[]
 ): Ref<PropBind> {
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();

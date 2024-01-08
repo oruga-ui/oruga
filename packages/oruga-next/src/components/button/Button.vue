@@ -167,7 +167,7 @@ const computedDisabled = computed(() => (props.disabled ? true : null));
 
 // --- Computed Component Classes ---
 
-const rootClasses = defineClasses([
+const rootClasses = defineClasses(
     ["rootClass", "o-btn"],
     [
         "sizeClass",
@@ -209,19 +209,17 @@ const rootClasses = defineClasses([
     ["loadingClass", "o-btn--loading", null, computed(() => props.loading)],
     ["roundedClass", "o-btn--rounded", null, computed(() => props.rounded)],
     ["disabledClass", "o-btn--disabled", null, computed(() => props.disabled)],
-]);
+);
 
-const labelClasses = defineClasses([["labelClass", "o-btn__label"]]);
+const labelClasses = defineClasses(["labelClass", "o-btn__label"]);
 
-const iconClasses = defineClasses([["iconClass", "o-btn__icon"]]);
+const iconClasses = defineClasses(["iconClass", "o-btn__icon"]);
 
-const iconLeftClasses = defineClasses([["iconLeftClass", "o-btn__icon-left"]]);
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-btn__icon-left"]);
 
-const iconRightClasses = defineClasses([
-    ["iconRightClass", "o-btn__icon-right"],
-]);
+const iconRightClasses = defineClasses(["iconRightClass", "o-btn__icon-right"]);
 
-const wrapperClasses = defineClasses([["wrapperClass", "o-btn__wrapper"]]);
+const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
 </script>
 
 <template>
