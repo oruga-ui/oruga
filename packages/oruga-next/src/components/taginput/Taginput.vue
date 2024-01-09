@@ -501,6 +501,7 @@ const counterClasses = computed(() => [
                 :check-scroll="checkScroll"
                 :teleport="teleport"
                 :confirm-keys="confirmKeys"
+                :placeholder="placeholder"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="handleOnBlur"
