@@ -33,7 +33,7 @@ type ComputedClass = readonly [
 ];
 
 /**
- * calculate classes based on class definitions
+ * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
     ...classDefinitions: ComputedClass[]
@@ -68,12 +68,6 @@ export function defineClasses(
             // if apply is not defined or true
             const applied = !isDefined(apply) || toValue(apply);
 
-            console.log(
-                "defineClass - computed class:",
-                computedClass,
-                applied,
-            );
-
             // return class bind property
             return { [computedClass]: applied };
         }
@@ -82,8 +76,7 @@ export function defineClasses(
         if (isDefined(suffix)) {
             const unwatch = watch(
                 () => toValue(suffix),
-                (suffix) => {
-                    console.log("defineClass - suffix changed:", index, suffix);
+                () => {
                     // recompute the class bind property
                     const classBind = getClassBind();
                     // update class binding property by class index
@@ -93,21 +86,21 @@ export function defineClasses(
             watcher.push(unwatch);
         }
 
-        // if apply is defined, watch apply chaned and update apply state, no need of recalculation here
+        // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
         if (isDefined(apply)) {
             const unwatch = watch(
                 () => toValue(apply),
                 (applied) => {
-                    console.log("defineClass - apply changed:", index, applied);
                     // get class binding property by class index
                     const classBind = classes.value[index];
-                    if (typeof classBind === "object") {
-                        // update the apply class binding state
-                        Object.keys(classBind).forEach(
-                            (key) => (classBind[key] = applied),
-                        );
-                    }
-                    // updatge the class binding property by class index
+                    if (typeof classBind !== "object") return;
+
+                    // update the apply class binding state
+                    Object.keys(classBind).forEach(
+                        (key) => (classBind[key] = applied),
+                    );
+
+                    // update the class binding property by class index
                     classes.value[index] = classBind;
                 },
             );
@@ -118,13 +111,14 @@ export function defineClasses(
         return getClassBind();
     });
 
-    // remove watch handler if defined
+    // remove watch handler if any defined
     onUnmounted(() => {
         watcher.forEach((unwatch) => {
             if (typeof unwatch === "function") unwatch();
         });
     });
 
+    // return reactive classes
     return classes;
 }
 
@@ -242,15 +236,15 @@ function computeClass(
     return appliedClasses;
 }
 
-const suffixProcessor = (input: string, suffix: string): string => {
+function suffixProcessor(input: string, suffix: string): string {
     return blankIfUndefined(input)
         .split(" ")
         .filter((cls) => cls.length > 0)
         .map((cls) => cls + blankIfUndefined(suffix))
         .join(" ");
-};
+}
 
-const getContext = (vm: ComponentInternalInstance): ComponentContext => {
+function getContext(vm: ComponentInternalInstance): ComponentContext {
     const computedNames = vm.proxy?.$options.computed
         ? Object.keys(vm.proxy.$options.computed)
         : [];
@@ -275,4 +269,4 @@ const getContext = (vm: ComponentInternalInstance): ComponentContext => {
         data: vm.proxy.$data,
         computed: computedProps,
     };
-};
+}
