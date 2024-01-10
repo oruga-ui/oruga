@@ -8,7 +8,7 @@ title: Pagination
 
 > A responsive and flexible pagination
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

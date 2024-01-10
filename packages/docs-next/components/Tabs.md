@@ -8,7 +8,7 @@ title: Tabs
 
 > Responsive horizontal navigation tabs, switch between contents with ease
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

@@ -8,7 +8,7 @@ title: Table
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

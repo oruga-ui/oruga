@@ -32,6 +32,3 @@ features:
     title: Lightweight
     details: Oruga has no other internal dependencies (except for Vue.js), and you can import only the components you need.
 ---
-<div style="padding: 1rem; display: flex; align-items: center; justify-content: center;">
-  <Carbon />
-</div>

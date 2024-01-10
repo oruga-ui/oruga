@@ -111,7 +111,6 @@ ${since ? `Since: ${since[0].description}\n` : ""}
 ${version ? `Version: ${version[0].description}\n` : ""}
 ${see ? see.map((s) => `[See](${s.description})\n`) : ""}
 ${link ? link.map((l) => `[See](${l.description})\n`) : ""}
-<Carbon />
 </div>
 ${docsBlocks ? docsBlocks : ""}
 `
@@ -178,7 +177,7 @@ function tmplProps(props, name, description) {
 ${description ? "> " + description : ""}
 
 \`\`\`html
-<o-${tag}></o-${tag}> 
+<o-${tag}></o-${tag}>
 \`\`\`
 
 ### Props
@@ -309,7 +308,7 @@ function tmplThemeStyle(config, name) {
             .split(";")
             .filter((d) => !!d);
 
-        return ` 
+        return `
 | SASS Variable  | Default |
 | -------------- | ------- |
 ${variables
@@ -334,7 +333,7 @@ ${THEMES.map(
     (theme) =>
         `<div class="${theme.key}">
 
-> Current theme ➜ _[${theme.label}](${theme.git})_ 
+> Current theme ➜ _[${theme.label}](${theme.git})_
 
 ${renderThemeVariables(theme)}
 </div>`,
@@ -372,7 +371,7 @@ function createThemeDocs() {
 
         const md = `<div class="${theme.key}">
 
-> Current theme ➜ _[${theme.label}](${theme.git})_ 
+> Current theme ➜ _[${theme.label}](${theme.git})_
 
 \`\`\`scss
 ${file.join("\n")}

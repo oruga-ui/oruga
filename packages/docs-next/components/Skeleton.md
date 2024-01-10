@@ -8,7 +8,7 @@ title: Skeleton
 
 > A placeholder for content to load
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

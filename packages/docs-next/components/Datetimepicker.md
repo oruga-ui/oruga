@@ -8,7 +8,7 @@ title: Datetimepicker
 
 > An input with a simple dropdown/modal for selecting a date and time, uses native datetimepicker for mobile
 
-<Carbon />
+
 </div>
 
 <div class="vp-example">

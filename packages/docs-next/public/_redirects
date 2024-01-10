@@ -1,2 +1,5 @@
+## redirects from oruga.io to oruga-ui.com until expiry
+https://oruga.io/*    https://oruga-ui.com/:splat    301!
+
 ## fix previous seo path (google)
 /guide /documentation 301!
