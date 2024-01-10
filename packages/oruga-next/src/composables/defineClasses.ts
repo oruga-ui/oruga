@@ -37,7 +37,7 @@ type ComputedClass = readonly [
  */
 export function defineClasses(
     ...classDefinitions: ComputedClass[]
-): Ref<PropBind> {
+): Ref<PropBind[]> {
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -46,7 +46,7 @@ export function defineClasses(
         );
 
     // reactive classes container
-    const classes = ref<PropBind>([]);
+    const classes = ref<PropBind[]>([]);
     // watcher references
     const watcher: WatchStopHandle[] = [];
 
@@ -56,7 +56,7 @@ export function defineClasses(
         const suffix = defintion[2];
         const apply = defintion[3];
 
-        function getClassBind(): PropBind[number] {
+        function getClassBind(): PropBind {
             // compute class based on definition parameter
             const computedClass = computeClass(
                 vm,

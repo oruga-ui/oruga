@@ -237,7 +237,7 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
                 :icon="iconLeft"
                 :size="size"
                 :both="iconBoth"
-                :class="{ ...iconClasses, ...iconLeftClasses }" />
+                :class="[...iconClasses, ...iconLeftClasses]" />
             <span v-if="label || $slots.default" :class="labelClasses">
                 <!--
                     @slot Override the label, default is label prop 
@@ -250,7 +250,7 @@ const wrapperClasses = defineClasses(["wrapperClass", "o-btn__wrapper"]);
                 :icon="iconRight"
                 :size="size"
                 :both="iconBoth"
-                :class="{ ...iconClasses, ...iconRightClasses }" />
+                :class="[...iconClasses, ...iconRightClasses]" />
         </span>
     </component>
 </template>
