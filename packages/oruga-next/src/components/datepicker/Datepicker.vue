@@ -697,7 +697,7 @@ const listOfYears = computed(() => {
     }
 
     return Array.from(
-        { length: latestYear - earliestYear || 1 },
+        { length: latestYear - earliestYear + 1 || 1 },
         (value, index) => earliestYear + index,
     ).reverse();
 });
