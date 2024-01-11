@@ -20,8 +20,8 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import { unrefElement } from "@/utils/unrefElement";
 import {
+    unrefElement,
     useComputedClass,
     useVModelBinding,
     useInputHandler,
@@ -791,8 +791,7 @@ function itemOptionClasses(option): PropBind {
         :position="position"
         :teleport="teleport"
         :expanded="expanded"
-        @close="onDropdownClose"
-    >
+        @close="onDropdownClose">
         <template #trigger>
             <o-input
                 ref="inputRef"
@@ -821,8 +820,7 @@ function itemOptionClasses(option): PropBind {
                 @keydown.up.prevent="navigateItem(-1)"
                 @keydown.down.prevent="navigateItem(1)"
                 @icon-click="(event) => $emit('icon-click', event)"
-                @icon-right-click="rightIconClick"
-            />
+                @icon-right-click="rightIconClick" />
         </template>
 
         <o-dropdown-item
@@ -832,8 +830,7 @@ function itemOptionClasses(option): PropBind {
             aria-role="button"
             :tabindex="0"
             :class="itemHeaderClasses"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')"
-        >
+            @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
             <!--
                 @slot Define an additional header
             -->
@@ -845,8 +842,7 @@ function itemOptionClasses(option): PropBind {
                 v-if="element.group"
                 :key="groupindex + 'group'"
                 :tag="itemTag"
-                :class="itemGroupClasses"
-            >
+                :class="itemGroupClasses">
                 <!--
                     @slot Override the option grpup
                     @binding {object} group - options group
@@ -856,8 +852,7 @@ function itemOptionClasses(option): PropBind {
                     v-if="$slots.group"
                     name="group"
                     :group="element.group"
-                    :index="groupindex"
-                />
+                    :index="groupindex" />
                 <span v-else>
                     {{ element.group }}
                 </span>
@@ -872,8 +867,7 @@ function itemOptionClasses(option): PropBind {
                 :class="itemOptionClasses(option)"
                 aria-role="button"
                 :tabindex="0"
-                @click="(value, event) => setSelected(value, !keepOpen, event)"
-            >
+                @click="(value, event) => setSelected(value, !keepOpen, event)">
                 <!--
                     @slot Override the select option
                     @binding {object} option - option object
@@ -884,8 +878,7 @@ function itemOptionClasses(option): PropBind {
                     v-if="$slots.default"
                     :option="option"
                     :value="getValue(option)"
-                    :index="index"
-                />
+                    :index="index" />
                 <span v-else>
                     {{ getValue(option) }}
                 </span>
@@ -895,8 +888,7 @@ function itemOptionClasses(option): PropBind {
         <o-dropdown-item
             v-if="isEmpty && $slots.empty"
             :tag="itemTag"
-            :class="itemEmptyClasses"
-        >
+            :class="itemEmptyClasses">
             <!--
                 @slot Define content for empty state 
             -->
@@ -910,8 +902,7 @@ function itemOptionClasses(option): PropBind {
             aria-role="button"
             :tabindex="0"
             :class="itemFooterClasses"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')"
-        >
+            @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">
             <!--
                 @slot Define an additional footer
             -->
