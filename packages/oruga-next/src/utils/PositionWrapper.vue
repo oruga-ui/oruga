@@ -9,8 +9,7 @@ import {
     type PropType,
 } from "vue";
 import { isClient } from "./ssr";
-import { unrefElement } from "./unrefElement";
-import { getScrollingParent } from "@/composables";
+import { getScrollingParent, unrefElement } from "@/composables";
 
 type Position = "top" | "bottom" | "left" | "right";
 

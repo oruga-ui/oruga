@@ -1,6 +1,6 @@
-import { unrefElement } from "@/utils/unrefElement";
 import { type MaybeRefOrGetter } from "vue";
 import { useEventListener } from "./useEventListener";
+import { unrefElement } from "./unrefElement";
 
 /**
  * Listen for clicks outside of an element.
