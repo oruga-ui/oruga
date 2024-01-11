@@ -9,7 +9,7 @@ import { isClient } from "@/utils/ssr";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     unrefElement,
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     useEventListener,
@@ -473,53 +473,49 @@ provideDropdown(provideData);
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-drop"),
-    {
-        [useComputedClass("disabledClass", "o-drop--disabled")]: props.disabled,
-    },
-    {
-        [useComputedClass("expandedClass", "o-drop--expanded")]: props.expanded,
-    },
-    {
-        [useComputedClass("inlineClass", "o-drop--inline")]: props.inline,
-    },
-    {
-        [useComputedClass("mobileClass", "o-drop--mobile")]:
-            isMobileModal.value && !hoverable.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-drop"],
+    ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
+    ["expandedClass", "o-drop--expanded", null, computed(() => props.expanded)],
+    ["inlineClass", "o-drop--inline", null, computed(() => props.inline)],
+    [
+        "mobileClass",
+        "o-drop--mobile",
+        null,
+        computed(() => isMobileModal.value && !hoverable.value),
+    ],
+);
+
+const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
+
+const positionWrapperClasses = defineClasses([
+    "teleportClass",
+    "o-drop--teleport",
+    null,
+    computed(() => !!props.teleport),
 ]);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-drop__trigger"),
+const menuMobileOverlayClasses = defineClasses([
+    "menuMobileOverlayClass",
+    "o-drop__overlay",
 ]);
 
-const positionWrapperClasses = computed(() => [
-    ...rootClasses.value,
-    {
-        [useComputedClass("teleportClass", "o-drop--teleport")]:
-            !!props.teleport,
-    },
-]);
+const menuClasses = defineClasses(
+    ["menuClass", "o-drop__menu"],
+    [
+        "menuPositionClass",
+        "o-drop__menu--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
 
-const menuMobileOverlayClasses = computed(() => [
-    useComputedClass("menuMobileOverlayClass", "o-drop__overlay"),
-]);
-
-const menuClasses = computed(() => [
-    useComputedClass("menuClass", "o-drop__menu"),
-    {
-        [useComputedClass(
-            "menuPositionClass",
-            "o-drop__menu--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass("menuActiveClass", "o-drop__menu--active")]:
-            isActive.value || props.inline,
-    },
-]);
+    [
+        "menuActiveClass",
+        "o-drop__menu--active",
+        null,
+        computed(() => isActive.value || props.inline),
+    ],
+);
 
 // --- Expose Public Functionality ---
 
@@ -551,7 +547,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
-            :class="positionWrapperClasses"
+            :class="[...rootClasses, ...positionWrapperClasses]"
             :trigger="triggerRef"
             :content="contentRef"
             :disabled="!isActive"
