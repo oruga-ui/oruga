@@ -33,6 +33,7 @@ defineOptions({
     isOruga: true,
     name: "OModal",
     configField: "modal",
+    inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -92,10 +93,6 @@ const props = defineProps({
         validator: (value: string) =>
             ["dialog", "alertdialog"].indexOf(value) >= 0,
     },
-    /** Accessibility aria-modal to be passed to the div wrapper element */
-    ariaModal: { type: Boolean, default: () => getOption("modal.ariaModal") },
-    /** Accessibility aria-label to be passed to the div wrapper element */
-    ariaLabel: { type: String, default: () => getOption("modal.ariaLabel") },
     /** Destroy modal on hide */
     destroyOnHide: {
         type: Boolean,
@@ -371,14 +368,14 @@ defineExpose({ close, promise: props.promise });
             @before-leave="beforeLeave">
             <div
                 v-show="isActive"
+                v-bind="$attrs"
                 ref="rootRef"
                 v-trap-focus="trapFocus"
                 data-oruga="modal"
                 :class="rootClasses"
                 :tabindex="-1"
                 :role="ariaRole"
-                :aria-label="ariaLabel"
-                :aria-modal="ariaModal">
+                :aria-modal="isActive">
                 <div
                     :class="overlayClasses"
                     tabindex="-1"

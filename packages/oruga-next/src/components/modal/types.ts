@@ -48,10 +48,6 @@ declare module "../../index" {
                 trapFocus: boolean;
                 /** Role attribute to be passed to the div wrapper for better accessibility */
                 ariaRole: string;
-                /** Accessibility aria-modal to be passed to the div wrapper element */
-                ariaModal: string;
-                /** Accessibility aria-label to be passed to the div wrapper element */
-                ariaLabel: string;
                 /** Destroy modal on hide */
                 destroyOnHide: boolean;
                 /** Automatically focus modal when active */
