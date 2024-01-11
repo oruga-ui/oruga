@@ -6,9 +6,9 @@ import { getOption } from "@/utils/config";
 import { vTrapFocus } from "@/directives/trapFocus";
 import { toCssDimension, isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
-import { unrefElement } from "@/utils/unrefElement";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
+    unrefElement,
     useComputedClass,
     useVModelBinding,
     useMatchMedia,
