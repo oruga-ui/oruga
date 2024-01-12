@@ -11,14 +11,14 @@ import {
 
 import { injectField } from "./useFieldShare";
 
-import type { PropBind } from "@/types";
+import type { ClassBind } from "@/types";
 
 export default defineComponent({
     name: "OFieldBody",
     configField: "field",
     props: {
         classes: {
-            type: Array as PropType<PropBind[]>,
+            type: Array as PropType<ClassBind[]>,
             default: undefined,
         },
     },

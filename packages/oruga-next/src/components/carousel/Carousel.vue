@@ -25,7 +25,7 @@ import {
     useProviderParent,
 } from "@/composables";
 
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -534,7 +534,7 @@ const arrowIconNextClasses = defineClasses([
     "o-car__arrow__icon-next",
 ]);
 
-function indicatorItemClasses(index): Ref<PropBind[]> {
+function indicatorItemClasses(index): Ref<ClassBind[]> {
     return defineClasses(
         ["indicatorItemClass", "o-car__indicator__item"],
         [

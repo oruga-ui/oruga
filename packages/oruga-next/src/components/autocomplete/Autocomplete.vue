@@ -30,7 +30,7 @@ import {
     useEventListener,
 } from "@/composables";
 
-import type { ComponentClass, DynamicComponent, PropBind } from "@/types";
+import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -753,7 +753,7 @@ const itemFooterClasses = defineClasses(
     ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
 );
 
-function itemOptionClasses(option): Ref<PropBind[]> {
+function itemOptionClasses(option): Ref<ClassBind[]> {
     const optionClasses = defineClasses([
         "itemHoverClass",
         "o-acp__item--hover",

@@ -11,10 +11,14 @@ import {
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useProgrammaticComponent } from "@/composables";
+import {
+    defineClasses,
+    getActiveClasses,
+    useProgrammaticComponent,
+} from "@/composables";
 
 import type { NotifcationProps } from "./types";
-import type { PropBind, ProgrammaticInstance, ComponentClass } from "@/types";
+import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
  * Notification Notice is used for the programmatic usage
@@ -161,18 +165,18 @@ watch(
 onBeforeMount(() => {
     if (
         rootClasses.value &&
-        positionClasses("top") &&
-        positionClasses("bottom")
+        positionBottomClasses.value &&
+        positionTopClasses.value
     ) {
         parentTop.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("top").join(
+            `&>.${rootClasses.value.join(".")}.${positionTopClasses.value.join(
                 ".",
             )}`,
         );
         parentBottom.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("bottom").join(
+            `&>.${rootClasses.value.join(
                 ".",
-            )}`,
+            )}.${positionBottomClasses.value.join(".")}`,
         );
 
         if (parentTop.value && parentBottom.value) return;
@@ -181,29 +185,30 @@ onBeforeMount(() => {
             parentTop.value = document.createElement("div");
             parentTop.value.className = `${rootClasses.value.join(
                 " ",
-            )} ${positionClasses("top").join(" ")}`;
+            )} ${positionTopClasses.value.join(" ")}`;
         }
 
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
             parentBottom.value.className = `${rootClasses.value.join(
                 " ",
-            )} ${positionClasses("bottom").join(" ")}`;
+            )} ${positionBottomClasses.value.join(" ")}`;
         }
 
         container.value.appendChild(parentTop.value);
         container.value.appendChild(parentBottom.value);
 
         if (container.value.tagName !== "BODY") {
-            const classes = noticeCustomContainerClasses.value;
-            if (classes && classes.length) {
+            const classes = getActiveClasses(
+                noticeCustomContainerClasses.value,
+            );
+            if (classes?.length)
                 classes
                     .filter((c) => !!c)
                     .forEach((c: string) => {
                         parentTop.value.classList.add(c);
                         parentBottom.value.classList.add(c);
                     });
-            }
         }
     }
 });
@@ -265,19 +270,22 @@ function handleClose(...args: any[]): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("noticeClass", "o-notices"),
+const rootClasses = defineClasses(["noticeClass", "o-notices"]);
+
+const positionTopClasses = defineClasses([
+    "noticePositionClass",
+    "o-notices--",
+    "top",
+]);
+const positionBottomClasses = defineClasses([
+    "noticePositionClass",
+    "o-notices--",
+    "bottom",
 ]);
 
-function positionClasses(position): PropBind {
-    return [useComputedClass("noticePositionClass", "o-notices--", position)];
-}
-
-const noticeCustomContainerClasses = computed(() => [
-    useComputedClass(
-        "noticeCustomContainerClass",
-        "o-notices__custom-container",
-    ),
+const noticeCustomContainerClasses = defineClasses([
+    "noticeCustomContainerClass",
+    "o-notices__custom-container",
 ]);
 
 // --- Expose Public Functionality ---
