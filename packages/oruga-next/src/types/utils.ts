@@ -1,7 +1,11 @@
 import type { Component } from "vue";
 
+export type ClassBind = {
+    [x: string]: boolean;
+};
+
 /** Vue native type which a v-bind prop must have */
-export type PropBind =
+export type PropBin =
     | string
     | {
           [x: string]: string;

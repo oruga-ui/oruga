@@ -18,7 +18,7 @@ import {
 } from "@/utils/helpers";
 
 import type {
-    PropBind,
+    ClassBind,
     ClassDefinition,
     ComponentContext,
     TransformFunction,
@@ -32,12 +32,19 @@ type ComputedClass = readonly [
     apply?: MaybeRefOrGetter<boolean>,
 ];
 
+/** Helperfunction to get all active classes from a class binding list */
+export function getActiveClasses(binds: ClassBind[]): string[] {
+    return binds.flatMap((bind) =>
+        Object.keys(bind).filter((key) => bind[key]),
+    );
+}
+
 /**
  * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
     ...classDefinitions: ComputedClass[]
-): Ref<PropBind[]> {
+): Ref<ClassBind[]> {
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();
     if (!vm)
@@ -46,7 +53,7 @@ export function defineClasses(
         );
 
     // reactive classes container
-    const classes = ref<PropBind[]>([]);
+    const classes = ref<ClassBind[]>([]);
     // watcher references
     const watcher: WatchStopHandle[] = [];
 
@@ -56,7 +63,7 @@ export function defineClasses(
         const suffix = defintion[2];
         const apply = defintion[3];
 
-        function getClassBind(): PropBind {
+        function getClassBind(): ClassBind {
             // compute class based on definition parameter
             const computedClass = computeClass(
                 vm,
@@ -93,7 +100,6 @@ export function defineClasses(
                 (applied) => {
                     // get class binding property by class index
                     const classBind = classes.value[index];
-                    if (typeof classBind !== "object") return;
 
                     // update the apply class binding state
                     Object.keys(classBind).forEach(
