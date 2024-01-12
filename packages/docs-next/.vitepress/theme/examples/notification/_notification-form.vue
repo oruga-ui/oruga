@@ -1,4 +1,8 @@
 <script setup>
+defineOptions({
+    inheritAttrs: false,
+});
+
 defineProps({
     email: { type: String, default: "" },
     password: { type: String, default: "" },
