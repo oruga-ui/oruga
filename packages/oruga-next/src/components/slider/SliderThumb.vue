@@ -24,11 +24,11 @@ const props = defineProps({
     modelValue: { type: Number, required: true },
     sliderSize: { type: Function as PropType<() => number>, required: true },
     thumbWrapperClasses: {
-        type: [String, Object] as PropType<PropBind>,
+        type: Array as PropType<PropBind[]>,
         required: true,
     },
     thumbClasses: {
-        type: [String, Object] as PropType<PropBind>,
+        type: Array as PropType<PropBind[]>,
         required: true,
     },
 });

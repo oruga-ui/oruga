@@ -5,7 +5,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -237,30 +237,27 @@ function onClick(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-upl"),
-    {
-        [useComputedClass("expandedClass", "o-upl--expanded")]: props.expanded,
-    },
-    {
-        [useComputedClass("disabledClass", "o-upl--disabled")]: props.disabled,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-upl"],
+    ["expandedClass", "o-upl--expanded", null, computed(() => props.expanded)],
+    ["disabledClass", "o-upl--disabled", null, computed(() => props.disabled)],
+);
 
-const draggableClasses = computed(() => [
-    useComputedClass("draggableClass", "o-upl__draggable"),
-    {
-        [useComputedClass("hoveredClass", "o-upl__draggable--hovered")]:
-            !props.variant && dragDropFocus.value,
-    },
-    {
-        [useComputedClass(
-            "variantClass",
-            "o-upl__draggable--hovered-",
-            props.variant,
-        )]: props.variant && dragDropFocus.value,
-    },
-]);
+const draggableClasses = defineClasses(
+    ["draggableClass", "o-upl__draggable"],
+    [
+        "hoveredClass",
+        "o-upl__draggable--hovered",
+        null,
+        computed(() => !props.variant && dragDropFocus.value),
+    ],
+    [
+        "variantClass",
+        "o-upl__draggable--hovered-",
+        computed(() => props.variant),
+        computed(() => props.variant && dragDropFocus.value),
+    ],
+);
 </script>
 
 <template>

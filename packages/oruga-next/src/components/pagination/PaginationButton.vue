@@ -38,11 +38,11 @@ const props = defineProps({
     },
     class: { type: String, default: undefined },
     linkClass: {
-        type: Array as PropType<PropBind>,
+        type: Array as PropType<PropBind[]>,
         required: true,
     },
     linkCurrentClass: {
-        type: [Array] as PropType<Array<string>>,
+        type: [Array] as PropType<PropBind[]>,
         required: true,
     },
 });

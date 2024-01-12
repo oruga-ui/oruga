@@ -4,7 +4,7 @@ import { computed, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -92,29 +92,37 @@ const itemStyle = computed(() => ({
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-sklt"),
-    {
-        [useComputedClass("positionClass", "o-sklt--", props.position)]:
-            props.position,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-sklt"],
+    [
+        "positionClass",
+        "o-sklt--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-sklt__item"),
-    {
-        [useComputedClass("itemRoundedClass", "o-sklt__item--rounded")]:
-            props.rounded,
-    },
-    {
-        [useComputedClass("animationClass", "o-sklt__item--animated")]:
-            props.animated,
-    },
-    {
-        [useComputedClass("sizeClass", "o-sklt__item--", props.size)]:
-            props.size,
-    },
-]);
+const itemClasses = defineClasses(
+    ["itemClass", "o-sklt__item"],
+    [
+        "itemRoundedClass",
+        "o-sklt__item--rounded",
+        null,
+        computed(() => !!props.rounded),
+    ],
+    [
+        "animationClass",
+        "o-sklt__item--animated",
+        null,
+        computed(() => props.animated),
+    ],
+    [
+        "sizeClass",
+        "o-sklt__item--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
 </script>
 
 <template>

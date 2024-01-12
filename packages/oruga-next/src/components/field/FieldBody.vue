@@ -18,7 +18,7 @@ export default defineComponent({
     configField: "field",
     props: {
         classes: {
-            type: Array as PropType<PropBind>,
+            type: Array as PropType<PropBind[]>,
             default: undefined,
         },
     },

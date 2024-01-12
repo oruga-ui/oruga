@@ -4,7 +4,7 @@ import { ref, computed, toRaw, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
@@ -101,15 +101,11 @@ function resetMenu(excludedItems: ProviderItem[] = []): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-menu")]);
+const rootClasses = defineClasses(["rootClass", "o-menu"]);
 
-const listClasses = computed(() => [
-    useComputedClass("listClass", "o-menu__list"),
-]);
+const listClasses = defineClasses(["listClass", "o-menu__list"]);
 
-const labelClasses = computed(() => [
-    useComputedClass("listLabelClass", "o-menu__label"),
-]);
+const labelClasses = defineClasses(["listLabelClass", "o-menu__label"]);
 </script>
 
 <template>
