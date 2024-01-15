@@ -101,7 +101,7 @@ const providedData = computed<TableColumnComponent>(() => ({
     $el: vm.proxy,
     $slots: slots,
     style: style.value,
-    thAttrsData: tdAttrsData.value,
+    thAttrsData: thAttrsData.value,
     tdAttrsData: tdAttrsData.value,
     isHeaderUnselectable: isHeaderUnselectable.value,
 }));
