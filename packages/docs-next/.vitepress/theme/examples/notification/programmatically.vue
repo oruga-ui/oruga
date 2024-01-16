@@ -51,7 +51,7 @@ async function component() {
         component: NotificationForm,
         position: "bottom-right",
         variant: "warning",
-        indefinite: true,
+        infinite: true,
     });
 
     // wait until the notification got closed
@@ -107,7 +107,9 @@ async function component() {
 .toast-notification {
     margin: 0.5em 0;
     text-align: center;
-    box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%);
+    box-shadow:
+        0 1px 4px rgb(0 0 0 / 12%),
+        0 0 6px rgb(0 0 0 / 4%);
     border-radius: 2em;
     padding: 0.75em 1.5em;
     pointer-events: auto;
