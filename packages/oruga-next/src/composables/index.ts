@@ -1,5 +1,4 @@
 export * from "./unrefElement";
-export * from "./useComputedClass";
 export * from "./defineClasses";
 export * from "./usePropValue";
 export * from "./useEventListener";

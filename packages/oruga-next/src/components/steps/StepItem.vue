@@ -4,7 +4,7 @@ import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { useComputedClass, useProviderChild } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import type { StepsComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
@@ -153,9 +153,7 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const elementClasses = computed(() => [
-    useComputedClass("itemClass", "o-steps__item"),
-]);
+const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
 </script>
 
 <template>
