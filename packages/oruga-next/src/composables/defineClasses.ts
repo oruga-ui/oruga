@@ -33,11 +33,8 @@ type ComputedClass = readonly [
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
-export function getActiveClasses(binds: ClassBind[]): string[] {
-    return binds.flatMap((bind) =>
-        Object.keys(bind).filter((key) => bind[key]),
-    );
-}
+export const getActiveClasses = (binds: ClassBind[]): string[] =>
+    binds.flatMap((bind) => Object.keys(bind).filter((key) => bind[key]));
 
 /**
  * Calculate dynamic classes based on class definitions
