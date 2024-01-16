@@ -14,5 +14,5 @@ export type PropBind =
           [x: string]: boolean;
       };
 
-/** Vue native dynamic component is property value type */
+/** Vue native dynamic component 'is' property value type */
 export type DynamicComponent = string | object | CallableFunction | Component;
