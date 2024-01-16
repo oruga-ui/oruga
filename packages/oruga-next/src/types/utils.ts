@@ -5,7 +5,7 @@ export type ClassBind = {
 };
 
 /** Vue native type which a v-bind prop must have */
-export type PropBin =
+export type PropBind =
     | string
     | {
           [x: string]: string;
