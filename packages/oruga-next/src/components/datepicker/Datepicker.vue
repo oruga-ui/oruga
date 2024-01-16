@@ -10,10 +10,11 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
+    getActiveClasses,
 } from "@/composables";
 
 import { getMonthNames, getWeekdayNames } from "./utils";
@@ -831,57 +832,51 @@ function onChangeNativePicker(value: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = computed(() =>
-    useComputedClass("dropdownClasses.rootClass", "o-dpck__dropdown"),
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-dpck__dropdown",
+]);
+
+const rootClasses = defineClasses(
+    ["rootClass", "o-dpck"],
+    [
+        "sizeClass",
+        "o-dpck--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["mobileClass", "o-dpck--mobile", null, isMobile],
+    ["expandedClass", "o-dpck--expanded", null, computed(() => props.expanded)],
 );
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-dpck"),
-    {
-        [useComputedClass("sizeClass", "o-dpck--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("mobileClass", "o-dpck--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("expandedClass", "o-dpck--expanded")]: props.expanded,
-    },
+const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
+
+const headerClasses = defineClasses(["headerClass", "o-dpck__header"]);
+
+const headerButtonsClasses = defineClasses(
+    ["headerButtonsClass", "o-dpck__header__buttons"],
+    [
+        "headerButtonsSizeClass",
+        "o-dpck__header__buttons--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
+
+const prevButtonClasses = defineClasses([
+    "prevButtonClass",
+    "o-dpck__header__previous",
 ]);
 
-const boxClasses = computed(() => [
-    useComputedClass("boxClass", "o-dpck__box"),
+const nextButtonClasses = defineClasses([
+    "nextButtonClass",
+    "o-dpck__header__next",
 ]);
 
-const headerClasses = computed(() => [
-    useComputedClass("headerClass", "o-dpck__header"),
-]);
+const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
 
-const headerButtonsClasses = computed(() => [
-    useComputedClass("headerButtonsClass", "o-dpck__header__buttons"),
-    {
-        [useComputedClass(
-            "headerButtonsSizeClass",
-            "o-dpck__header__buttons--",
-            props.size,
-        )]: props.size,
-    },
-]);
-
-const prevButtonClasses = computed(() => [
-    useComputedClass("prevButtonClass", "o-dpck__header__previous"),
-]);
-
-const nextButtonClasses = computed(() => [
-    useComputedClass("nextButtonClass", "o-dpck__header__next"),
-]);
-
-const listsClasses = computed(() => [
-    useComputedClass("listsClass", "o-dpck__header__list"),
-]);
-
-const footerClasses = computed(() => [
-    useComputedClass("footerClass", "o-dpck__footer"),
-]);
+const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
 </script>
 
 <template>
@@ -897,9 +892,9 @@ const footerClasses = computed(() => [
         :native-max="formatNative(maxDate)"
         :native-min="formatNative(minDate)"
         :stay-open="multiple"
-        :dropdown-class="dropdownClass"
+        :dropdown-class="dropdownClass[0]"
         :root-classes="rootClasses"
-        :box-class="boxClasses"
+        :box-class="boxClassBind"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"

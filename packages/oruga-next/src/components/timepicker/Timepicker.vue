@@ -7,10 +7,11 @@ import OPickerWrapper from "../datepicker/PickerWrapper.vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     usePropBinding,
+    getActiveClasses,
 } from "@/composables";
 
 import { useTimepickerMixins } from "./useTimepickerShare";
@@ -690,43 +691,44 @@ function onChangeNativePicker(date: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = computed(() =>
-    useComputedClass("dropdownClasses.rootClass", "o-tpck__dropdown"),
-);
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-tpck__dropdown",
+]);
+
+const selectSelectClasses = defineClasses([
+    "selectClasses.selectClass",
+    "o-tpck__select",
+]);
+
+const selectPlaceholderClasses = defineClasses([
+    "selectClasses.placeholderClass",
+    "o-tpck__select-placeholder",
+]);
 
 const selectBind = computed(() => ({
-    "select-class": useComputedClass(
-        "selectClasses.selectClass",
-        "o-tpck__select",
-    ),
-    "placeholder-class": useComputedClass(
-        "selectClasses.placeholderClass",
-        "o-tpck__select-placeholder",
-    ),
+    "select-class": selectSelectClasses.value,
+    "placeholder-class": selectPlaceholderClasses.value,
     ...props.selectClasses,
 }));
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-tpck"),
-    {
-        [useComputedClass("sizeClass", "o-tpck--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("mobileClass", "o-tpck--mobile")]: isMobile.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-tpck"],
+    [
+        "sizeClass",
+        "o-tpck--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["mobileClass", "o-tpck--mobile", null, isMobile],
+);
 
-const boxClasses = computed(() => [
-    useComputedClass("boxClass", "o-tpck__box"),
-]);
+const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 
-const separatorClasses = computed(() => [
-    useComputedClass("separatorClass", "o-tpck__separtor"),
-]);
+const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
 
-const footerClasses = computed(() => [
-    useComputedClass("footerClass", "o-tpck__footer"),
-]);
+const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
 </script>
 
 <template>
@@ -742,9 +744,9 @@ const footerClasses = computed(() => [
         :native-max="formatNative(maxTime)"
         :native-min="formatNative(minTime)"
         :native-step="nativeStep"
-        :dropdown-class="dropdownClass"
+        :dropdown-class="dropdownClass[0]"
         :root-classes="rootClasses"
-        :box-class="boxClasses"
+        :box-class="boxClassBind"
         @change="onChange"
         @native-change="onChangeNativePicker"
         @focus="$emit('focus', $event)"
