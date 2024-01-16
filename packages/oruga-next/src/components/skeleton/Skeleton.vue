@@ -108,7 +108,7 @@ const itemClasses = defineClasses(
         "itemRoundedClass",
         "o-sklt__item--rounded",
         null,
-        computed(() => !!props.rounded),
+        computed(() => props.rounded),
     ],
     [
         "animationClass",
