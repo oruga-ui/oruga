@@ -241,7 +241,7 @@ const rootClasses = defineClasses(
     ],
     ["mobileClass", "o-field--mobile", null, isMobile],
     ["focusedClass", "o-field--focused", null, isFocused],
-    ["filledClass", "o-field--filled", null, isFilled.value],
+    ["filledClass", "o-field--filled", null, isFilled],
 );
 
 const messageClasses = defineClasses(

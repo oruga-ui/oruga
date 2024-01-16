@@ -348,11 +348,11 @@ const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
 const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
 const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
-const scrollClass = computed(() => {
-    const classes =
-        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value;
-    return getActiveClasses(classes);
-});
+const scrollClass = computed(() =>
+    getActiveClasses(
+        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
+    ),
+);
 
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
