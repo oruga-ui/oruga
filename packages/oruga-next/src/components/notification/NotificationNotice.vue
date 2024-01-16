@@ -164,35 +164,35 @@ watch(
 /** Create or inject notice dom container elements. */
 onBeforeMount(() => {
     if (
-        rootClasses.value &&
+        noticeClasses.value &&
         positionBottomClasses.value &&
         positionTopClasses.value
     ) {
+        const rootClasses = getActiveClasses(noticeClasses.value);
+        const topClasses = getActiveClasses(positionTopClasses.value);
+        const bottomClasses = getActiveClasses(positionBottomClasses.value);
+
         parentTop.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionTopClasses.value.join(
-                ".",
-            )}`,
+            `&>.${rootClasses.join(".")}.${topClasses.join(".")}`,
         );
         parentBottom.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(
-                ".",
-            )}.${positionBottomClasses.value.join(".")}`,
+            `&>.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
         );
 
         if (parentTop.value && parentBottom.value) return;
 
         if (!parentTop.value) {
             parentTop.value = document.createElement("div");
-            parentTop.value.className = `${rootClasses.value.join(
+            parentTop.value.className = `${rootClasses.join(
                 " ",
-            )} ${positionTopClasses.value.join(" ")}`;
+            )} ${topClasses.join(" ")}`;
         }
 
         if (!parentBottom.value) {
             parentBottom.value = document.createElement("div");
-            parentBottom.value.className = `${rootClasses.value.join(
+            parentBottom.value.className = `${rootClasses.join(
                 " ",
-            )} ${positionBottomClasses.value.join(" ")}`;
+            )} ${bottomClasses.join(" ")}`;
         }
 
         container.value.appendChild(parentTop.value);
@@ -270,7 +270,7 @@ function handleClose(...args: any[]): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = defineClasses(["noticeClass", "o-notices"]);
+const noticeClasses = defineClasses(["noticeClass", "o-notices"]);
 
 const positionTopClasses = defineClasses([
     "noticePositionClass",
