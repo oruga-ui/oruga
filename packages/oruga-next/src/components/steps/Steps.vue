@@ -236,8 +236,10 @@ watch(
 
 const activeItem = computed(() =>
     isDefined(activeId)
-        ? items.value.find((item) => item.value === activeId.value) ||
-          items.value[0]
+        ? typeof activeId.value === "number"
+            ? items.value[activeId.value]
+                : items.value.find((item) => item.value === activeId.value) ||
+                items.value[0]
         : items.value[0],
 );
 
