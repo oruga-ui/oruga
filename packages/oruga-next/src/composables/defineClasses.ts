@@ -1,6 +1,7 @@
 import {
     ref,
     watch,
+    isRef,
     toValue,
     onUnmounted,
     getCurrentInstance,
@@ -9,6 +10,7 @@ import {
     type ComponentInternalInstance,
     type WatchStopHandle,
 } from "vue";
+
 import { getOptions } from "@/utils/config";
 import {
     isDefined,
@@ -33,8 +35,8 @@ type ComputedClass = readonly [
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
-export const getActiveClasses = (binds: ClassBind[]): string[] =>
-    binds.flatMap((bind) => Object.keys(bind).filter((key) => bind[key]));
+export const getActiveClasses = (classes: ClassBind[]): string[] =>
+    classes.flatMap((bind) => Object.keys(bind).filter((key) => bind[key]));
 
 /**
  * Calculate dynamic classes based on class definitions
@@ -77,7 +79,7 @@ export function defineClasses(
         }
 
         // if suffix is defined, watch suffix changed and recalculate class
-        if (isDefined(suffix)) {
+        if (isDefined(suffix) && isRef(suffix)) {
             const unwatch = watch(
                 () => toValue(suffix),
                 () => {
@@ -91,7 +93,7 @@ export function defineClasses(
         }
 
         // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
-        if (isDefined(apply)) {
+        if (isDefined(apply) && isRef(apply)) {
             const unwatch = watch(
                 () => toValue(apply),
                 (applied) => {
@@ -114,12 +116,13 @@ export function defineClasses(
         return getClassBind();
     });
 
-    // remove watch handler if any defined
-    onUnmounted(() => {
-        watcher.forEach((unwatch) => {
-            if (typeof unwatch === "function") unwatch();
+    if (watcher.length)
+        // remove watch handler if any defined
+        onUnmounted(() => {
+            watcher.forEach((unwatch) => {
+                if (typeof unwatch === "function") unwatch();
+            });
         });
-    });
 
     // return reactive classes
     return classes;

@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    ref,
-    watch,
-    toValue,
-    nextTick,
-    type PropType,
-    type Ref,
-} from "vue";
+import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 import OSlotComponent from "@/utils/SlotComponent";
@@ -329,30 +321,25 @@ const contentClasses = defineClasses(
     ],
 );
 
-function itemHeaderClasses(childItem): Ref<ClassBind[]> {
+function itemHeaderClasses(childItem): ClassBind[] {
     const classes = defineClasses(
         ["itemHeaderClass", "o-tabs__nav-item"],
-        [
-            "itemHeaderTypeClass",
-            "o-tabs__nav-item-",
-            computed(() => props.type),
-            computed(() => !!props.type),
-        ],
+        ["itemHeaderTypeClass", "o-tabs__nav-item-", props.type, !!props.type],
         [
             "itemHeaderActiveClass",
             "o-tabs__nav-item-{*}--active",
-            computed(() => props.type),
-            computed(() => isActive(childItem)),
+            props.type,
+            isActive(childItem),
         ],
         [
             "itemHeaderDisabledClass",
             "o-tabs__nav-item-{*}--disabled",
-            computed(() => props.type),
-            computed(() => childItem.disabled),
+            props.type,
+            childItem.disabled,
         ],
     );
 
-    return computed(() => [...childItem.headerClass, ...classes.value]);
+    return [...childItem.headerClass, ...classes.value];
 }
 </script>
 

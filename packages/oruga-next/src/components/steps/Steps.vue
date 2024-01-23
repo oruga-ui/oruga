@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    toValue,
-    nextTick,
-    ref,
-    watch,
-    type PropType,
-    type Ref,
-} from "vue";
+import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
@@ -394,48 +386,48 @@ const stepLinkLabelClasses = defineClasses([
     "o-steps__title",
 ]);
 
-function stepLinkClasses(childItem: StepItem): Ref<ClassBind[]> {
+function stepLinkClasses(childItem: StepItem): ClassBind[] {
     return defineClasses(
         ["stepLinkClass", "o-steps__link"],
         [
             "stepLinkLabelPositionClass",
             "o-steps__link-label-",
-            computed(() => props.labelPosition),
-            computed(() => !!props.labelPosition),
+            props.labelPosition,
+            !!props.labelPosition,
         ],
         [
             "stepLinkClickableClass",
             "o-steps__link-clickable",
             null,
-            computed(() => isItemClickable(childItem)),
+            isItemClickable(childItem),
         ],
-    );
+    ).value;
 }
 
-function itemClasses(childItem): Ref<ClassBind[]> {
+function itemClasses(childItem): ClassBind[] {
     const classes = defineClasses(
         ["itemHeaderClass", "o-steps__nav-item"],
         [
             "itemHeaderVariantClass",
             "o-steps__nav-item--",
-            computed(() => childItem.variant || props.variant),
-            computed(() => childItem.variant || props.variant),
+            childItem.variant || props.variant,
+            childItem.variant || props.variant,
         ],
         [
             "itemHeaderActiveClass",
             "o-steps__nav-item-active",
             null,
-            computed(() => childItem.value === activeItem.value.value),
+            childItem.value === activeItem.value.value,
         ],
         [
             "itemHeaderPreviousClass",
             "o-steps__nav-item-previous",
             null,
-            computed(() => activeItem.value.index > childItem.index),
+            activeItem.value.index > childItem.index,
         ],
     );
 
-    return computed(() => [...childItem.headerClass, ...classes.value]);
+    return [...childItem.headerClass, ...classes.value];
 }
 </script>
 

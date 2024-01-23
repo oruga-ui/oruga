@@ -10,7 +10,6 @@ import {
     onMounted,
     type PropType,
     type Component,
-    type Ref,
 } from "vue";
 
 import OInput from "../input/Input.vue";
@@ -753,15 +752,15 @@ const itemFooterClasses = defineClasses(
     ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
 );
 
-function itemOptionClasses(option): Ref<ClassBind[]> {
+function itemOptionClasses(option): ClassBind[] {
     const optionClasses = defineClasses([
         "itemHoverClass",
         "o-acp__item--hover",
         null,
-        computed(() => toRaw(option) === toRaw(hoveredOption.value)),
+        toRaw(option) === toRaw(hoveredOption.value),
     ]);
 
-    return computed(() => [...itemClasses.value, ...optionClasses.value]);
+    return [...itemClasses.value, ...optionClasses.value];
 }
 </script>
 

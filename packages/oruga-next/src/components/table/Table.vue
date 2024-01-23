@@ -9,7 +9,6 @@ import {
     toValue,
     type PropType,
     type ComputedRef,
-    type Ref,
 } from "vue";
 
 import OCheckbox from "../checkbox/Checkbox.vue";
@@ -1469,93 +1468,62 @@ const thSortIconClasses = defineClasses([
     "o-table__th__sort-icon",
 ]);
 
-function thStickyClasses(column: Column): Ref<ClassBind[]> {
-    return defineClasses([
-        "thStickyClass",
-        "o-table__th--sticky",
-        null,
-        computed(() => column.sticky),
-    ]);
-}
-
-function thClasses(column: TableColumn): Ref<ClassBind[]> {
+function thClasses(column: TableColumn): ClassBind[] {
     const classes = defineClasses(
         [
             "thCurrentSortClass",
             "o-table__th-current-sort",
             null,
-            computed(() => isColumnSorted(column)),
+            isColumnSorted(column),
         ],
-        [
-            "thSortableClass",
-            "o-table__th--sortable",
-            null,
-            computed(() => column.sortable),
-        ],
+        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
         [
             "thUnselectableClass",
             "o-table__th--unselectable",
             null,
-            computed(() => column.isHeaderUnselectable),
+            column.isHeaderUnselectable,
         ],
         [
             "thPositionClass",
             "o-table__th--",
-            computed(() => column.position),
-            computed(() => !!column.position),
+            column.position,
+            !!column.position,
         ],
+        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
     );
-    const stickyClasses = thStickyClasses(column);
 
-    return computed(() => [
-        ...thBaseClasses.value,
-        ...stickyClasses.value,
-        ...classes.value,
-    ]);
+    return [...thBaseClasses.value, ...classes.value];
 }
 
-function rowClasses(row: unknown, index: number): Ref<ClassBind[]> {
+function rowClasses(row: unknown, index: number): ClassBind[] {
     const classes = defineClasses(
         [
             "trSelectedClass",
             "o-table__tr--selected",
             null,
-            computed(() => isRowSelected(row, props.selected)),
+            isRowSelected(row, props.selected),
         ],
-        [
-            "trCheckedClass",
-            "o-table__tr--checked",
-            null,
-            computed(() => isRowChecked(row)),
-        ],
+        ["trCheckedClass", "o-table__tr--checked", null, isRowChecked(row)],
     );
 
     const rowClass = props.rowClass(row, index);
 
-    return computed(() => [...classes.value, { [rowClass]: true }]);
+    return [...classes.value, { [rowClass]: true }];
 }
 
-function tdClasses(
-    row: unknown,
-    column: TableColumnComponent,
-): Ref<ClassBind[]> {
+function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
     const classes = defineClasses(
         [
             "tdPositionClass",
             "o-table__td--",
-            computed(() => column.position),
-            computed(() => !!column.position),
+            column.position,
+            !!column.position,
         ],
 
-        [
-            "tdStickyClass",
-            "o-table__td--sticky",
-            null,
-            computed(() => column.sticky),
-        ],
+        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
     );
 
-    return computed(() => [...tdBaseClasses.value, ...classes.value]);
+    return [...tdBaseClasses.value, ...classes.value];
 }
 </script>
 

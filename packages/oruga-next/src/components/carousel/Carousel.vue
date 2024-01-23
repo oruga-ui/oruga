@@ -9,7 +9,6 @@ import {
     readonly,
     toRaw,
     type PropType,
-    type Ref,
 } from "vue";
 
 import OIcon from "../icon/Icon.vue";
@@ -534,22 +533,22 @@ const arrowIconNextClasses = defineClasses([
     "o-car__arrow__icon-next",
 ]);
 
-function indicatorItemClasses(index): Ref<ClassBind[]> {
+function indicatorItemClasses(index): ClassBind[] {
     return defineClasses(
         ["indicatorItemClass", "o-car__indicator__item"],
         [
             "indicatorItemActiveClass",
             "o-car__indicator__item--active",
             null,
-            computed(() => indicatorIndex.value === index),
+            indicatorIndex.value === index,
         ],
         [
             "indicatorItemStyleClass",
             "o-car__indicator__item--",
-            computed(() => props.indicatorStyle),
-            computed(() => !!props.indicatorStyle),
+            props.indicatorStyle,
+            !!props.indicatorStyle,
         ],
-    );
+    ).value;
 }
 
 const indicatorsClasses = defineClasses(
