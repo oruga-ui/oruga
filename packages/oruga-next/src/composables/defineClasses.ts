@@ -3,12 +3,12 @@ import {
     watch,
     isRef,
     toValue,
-    onUnmounted,
     getCurrentInstance,
+    effectScope,
+    onScopeDispose,
     type MaybeRefOrGetter,
     type Ref,
     type ComponentInternalInstance,
-    type WatchStopHandle,
 } from "vue";
 
 import { getOptions } from "@/utils/config";
@@ -51,10 +51,11 @@ export function defineClasses(
             "defineClasses must be called within a component setup function.",
         );
 
+    // create an effect scope object to capture reactive effects
+    const scope = effectScope();
+
     // reactive classes container
     const classes = ref<ClassBind[]>([]);
-    // watcher references
-    const watcher: WatchStopHandle[] = [];
 
     classes.value = classDefinitions.map((defintion, index) => {
         const className = defintion[0];
@@ -80,49 +81,50 @@ export function defineClasses(
 
         // if suffix is defined, watch suffix changed and recalculate class
         if (isDefined(suffix) && isRef(suffix)) {
-            const unwatch = watch(
-                () => toValue(suffix),
-                () => {
-                    // recompute the class bind property
-                    const classBind = getClassBind();
-                    // update class binding property by class index
-                    classes.value[index] = classBind;
-                },
-            );
-            watcher.push(unwatch);
+            scope.run(() => {
+                watch(
+                    () => toValue(suffix),
+                    () => {
+                        // recompute the class bind property
+                        const classBind = getClassBind();
+                        // update class binding property by class index
+                        classes.value[index] = classBind;
+                    },
+                );
+            });
         }
 
         // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
         if (isDefined(apply) && isRef(apply)) {
-            const unwatch = watch(
-                () => toValue(apply),
-                (applied) => {
-                    // get class binding property by class index
-                    const classBind = classes.value[index];
+            scope.run(() => {
+                watch(
+                    () => toValue(apply),
+                    (applied) => {
+                        // get class binding property by class index
+                        const classBind = classes.value[index];
 
-                    // update the apply class binding state
-                    Object.keys(classBind).forEach(
-                        (key) => (classBind[key] = applied),
-                    );
+                        // update the apply class binding state
+                        Object.keys(classBind).forEach(
+                            (key) => (classBind[key] = applied),
+                        );
 
-                    // update the class binding property by class index
-                    classes.value[index] = classBind;
-                },
-            );
-            watcher.push(unwatch);
+                        // update the class binding property by class index
+                        classes.value[index] = classBind;
+                    },
+                );
+            });
         }
 
         // return computed class based on parameter
         return getClassBind();
     });
 
-    if (watcher.length)
-        // remove watch handler if any defined
-        onUnmounted(() => {
-            watcher.forEach((unwatch) => {
-                if (typeof unwatch === "function") unwatch();
-            });
-        });
+    // Registers a dispose callback on the current active effect scope.
+    // The callback will be invoked when the associated effect scope is stopped.
+    onScopeDispose(() => {
+        // stop all effects when appropriate
+        if (scope) scope.stop();
+    });
 
     // return reactive classes
     return classes;
