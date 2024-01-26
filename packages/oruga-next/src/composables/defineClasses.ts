@@ -6,6 +6,7 @@ import {
     getCurrentInstance,
     effectScope,
     onScopeDispose,
+    getCurrentScope,
     type MaybeRefOrGetter,
     type Ref,
     type ComponentInternalInstance,
@@ -30,8 +31,12 @@ type ComputedClass = readonly [
 ];
 
 /** Helperfunction to get all active classes from a class binding list */
-export const getActiveClasses = (classes: ClassBind[]): string[] =>
-    classes.flatMap((bind) => Object.keys(bind).filter((key) => bind[key]));
+export const getActiveClasses = (classes: ClassBind[]): string[] => {
+    if (!classes) return [];
+    return classes.flatMap((bind) =>
+        Object.keys(bind).filter((key) => bind[key]),
+    );
+};
 
 /**
  * Calculate dynamic classes based on class definitions
@@ -114,12 +119,14 @@ export function defineClasses(
         return getClassBind();
     });
 
-    // Registers a dispose callback on the current active effect scope.
-    // The callback will be invoked when the associated effect scope is stopped.
-    onScopeDispose(() => {
-        // stop all effects when appropriate
-        if (scope) scope.stop();
-    });
+    // check if there is a current active effect scope
+    if (getCurrentScope())
+        // Registers a dispose callback on the current active effect scope.
+        // The callback will be invoked when the associated effect scope is stopped.
+        onScopeDispose(() => {
+            // stop all effects when appropriate
+            if (scope) scope.stop();
+        });
 
     // return reactive classes
     return classes;
@@ -256,5 +263,6 @@ const getProps = (vm: ComponentInternalInstance): ComponentProps => {
         .filter((key) => key.endsWith("Props"))
         .forEach((key) => (props = { ...props, ...props[key] }));
 
-    return props;
+    // TODO: revert object escape
+    return { props };
 };
