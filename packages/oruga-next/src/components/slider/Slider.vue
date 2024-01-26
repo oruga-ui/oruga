@@ -290,21 +290,21 @@ function sliderSize(): number {
 
 function onSliderClick(event: MouseEvent): void {
     if (props.disabled || isTrackClickDisabled.value) return;
-    const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
+    const sliderOffsetLeft = sliderRef.value.getBoundingClientRect().left;
     const percent = ((event.clientX - sliderOffsetLeft) / sliderSize()) * 100;
     const targetValue = props.min + (percent * (props.max - props.min)) / 100;
     const diffFirst = Math.abs(targetValue - valueStart.value);
     if (!isRange.value) {
         if (diffFirst < props.step / 2) return;
-        this.$refs.button1.setPosition(percent);
+        thumbStartRef.value.setPosition(percent);
     } else {
         const diffSecond = Math.abs(targetValue - valueEnd.value);
         if (diffFirst <= diffSecond) {
             if (diffFirst < props.step / 2) return;
-            this.$refs["button1"].setPosition(percent);
+            thumbStartRef.value.setPosition(percent);
         } else {
             if (diffSecond < props.step / 2) return;
-            this.$refs["button2"].setPosition(percent);
+            thumbEndRef.value.setPosition(percent);
         }
     }
     emitValue("change");
