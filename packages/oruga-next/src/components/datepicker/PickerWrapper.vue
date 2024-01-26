@@ -8,6 +8,7 @@ import OInput from "../input/Input.vue";
 import { isMobileAgent } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
+    getActiveClasses,
     useEventListener,
     useInputHandler,
     usePropBinding,
@@ -39,11 +40,11 @@ const props = defineProps({
     nativeMin: { type: [String, Number], default: undefined },
     nativeMax: { type: [String, Number], default: undefined },
     stayOpen: { type: Boolean, default: false },
-    dropdownClass: {
-        type: Object as PropType<ClassBind>,
+    rootClasses: {
+        type: Array as PropType<ClassBind[]>,
         required: true,
     },
-    rootClasses: {
+    dropdownClasses: {
         type: Array as PropType<ClassBind[]>,
         required: true,
     },
@@ -178,7 +179,7 @@ const inputBind = computed(() => ({
 }));
 
 const dropdownBind = computed(() => ({
-    "root-class": props.dropdownClass,
+    "root-class": getActiveClasses(props.dropdownClasses),
     ...picker.value.dropdownClasses,
 }));
 </script>

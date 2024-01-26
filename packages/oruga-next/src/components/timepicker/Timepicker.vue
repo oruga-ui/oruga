@@ -691,11 +691,6 @@ function onChangeNativePicker(date: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = defineClasses([
-    "dropdownClasses.rootClass",
-    "o-tpck__dropdown",
-]);
-
 const selectSelectClasses = defineClasses([
     "selectClasses.selectClass",
     "o-tpck__select",
@@ -723,12 +718,17 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-tpck--mobile", null, isMobile],
 );
 
-const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
-
 const separatorClasses = defineClasses(["separatorClass", "o-tpck__separtor"]);
 
 const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
+
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-tpck__dropdown",
+]);
+
+const boxClasses = defineClasses(["boxClass", "o-tpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 </script>
 
 <template>
@@ -744,7 +744,7 @@ const footerClasses = defineClasses(["footerClass", "o-tpck__footer"]);
         :native-max="formatNative(maxTime)"
         :native-min="formatNative(minTime)"
         :native-step="nativeStep"
-        :dropdown-class="dropdownClass[0]"
+        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
         @change="onChange"

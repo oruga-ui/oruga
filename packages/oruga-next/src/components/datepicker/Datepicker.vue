@@ -832,11 +832,6 @@ function onChangeNativePicker(value: string): void {
 
 // --- Computed Component Classes ---
 
-const dropdownClass = defineClasses([
-    "dropdownClasses.rootClass",
-    "o-dpck__dropdown",
-]);
-
 const rootClasses = defineClasses(
     ["rootClass", "o-dpck"],
     [
@@ -848,9 +843,6 @@ const rootClasses = defineClasses(
     ["mobileClass", "o-dpck--mobile", null, isMobile],
     ["expandedClass", "o-dpck--expanded", null, computed(() => props.expanded)],
 );
-
-const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
-const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 
 const headerClasses = defineClasses(["headerClass", "o-dpck__header"]);
 
@@ -877,6 +869,14 @@ const nextButtonClasses = defineClasses([
 const listsClasses = defineClasses(["listsClass", "o-dpck__header__list"]);
 
 const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
+
+const dropdownClass = defineClasses([
+    "dropdownClasses.rootClass",
+    "o-tpck__dropdown",
+]);
+
+const boxClasses = defineClasses(["boxClass", "o-dpck__box"]);
+const boxClassBind = computed(() => getActiveClasses(boxClasses.value));
 </script>
 
 <template>
@@ -892,7 +892,7 @@ const footerClasses = defineClasses(["footerClass", "o-dpck__footer"]);
         :native-max="formatNative(maxDate)"
         :native-min="formatNative(minDate)"
         :stay-open="multiple"
-        :dropdown-class="dropdownClass[0]"
+        :dropdown-classes="dropdownClass"
         :root-classes="rootClasses"
         :box-class="boxClassBind"
         @change="onChange"
