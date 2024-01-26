@@ -387,7 +387,7 @@ const stepLinkLabelClasses = defineClasses([
 ]);
 
 function stepLinkClasses(childItem: StepItem): ClassBind[] {
-    return defineClasses(
+    const classes = defineClasses(
         ["stepLinkClass", "o-steps__link"],
         [
             "stepLinkLabelPositionClass",
@@ -401,17 +401,19 @@ function stepLinkClasses(childItem: StepItem): ClassBind[] {
             null,
             isItemClickable(childItem),
         ],
-    ).value;
+    );
+
+    return classes.value;
 }
 
-function itemClasses(childItem): ClassBind[] {
+function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
     const classes = defineClasses(
         ["itemHeaderClass", "o-steps__nav-item"],
         [
             "itemHeaderVariantClass",
             "o-steps__nav-item--",
             childItem.variant || props.variant,
-            childItem.variant || props.variant,
+            !!childItem.variant || !!props.variant,
         ],
         [
             "itemHeaderActiveClass",
@@ -427,7 +429,8 @@ function itemClasses(childItem): ClassBind[] {
         ],
     );
 
-    return [...childItem.headerClass, ...classes.value];
+    const headerClass = { [childItem.headerClass || ""]: true };
+    return [headerClass, ...classes.value];
 }
 </script>
 

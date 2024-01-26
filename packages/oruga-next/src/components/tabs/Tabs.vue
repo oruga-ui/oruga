@@ -247,7 +247,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 function performAction(newId: number | string): void {
     const oldValue = activeId.value;
     const oldTab = isDefined(oldValue)
-        ? items.value.find((item) => item.value === oldValue)[0]
+        ? items.value.find((item) => item.value === oldValue) || items.value[0]
         : items.value[0];
     activeId.value = newId;
     nextTick(() => {
@@ -321,7 +321,9 @@ const contentClasses = defineClasses(
     ],
 );
 
-function itemHeaderClasses(childItem): ClassBind[] {
+function itemHeaderClasses(
+    childItem: (typeof items.value)[number],
+): ClassBind[] {
     const classes = defineClasses(
         ["itemHeaderClass", "o-tabs__nav-item"],
         ["itemHeaderTypeClass", "o-tabs__nav-item-", props.type, !!props.type],
@@ -338,8 +340,9 @@ function itemHeaderClasses(childItem): ClassBind[] {
             childItem.disabled,
         ],
     );
+    const headerClass = { [childItem.headerClass || ""]: true };
 
-    return [...childItem.headerClass, ...classes.value];
+    return [headerClass, ...classes.value];
 }
 </script>
 
