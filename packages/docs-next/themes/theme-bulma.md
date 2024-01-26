@@ -1,6 +1,6 @@
 <div class="theme-bulma">
 
-> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_ 
+> Current theme ➜ _[Bulma](https://github.com/oruga-ui/theme-bulma)_
 
 ```scss
 $speed-slow: 150ms !default;

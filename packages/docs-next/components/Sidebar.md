@@ -8,7 +8,6 @@ title: Sidebar
 
 > A sidebar to use as left/right overlay or static
 
-
 </div>
 
 <div class="vp-example">

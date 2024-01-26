@@ -8,7 +8,6 @@ title: Steps
 
 > Responsive horizontal process steps
 
-
 </div>
 
 <div class="vp-example">

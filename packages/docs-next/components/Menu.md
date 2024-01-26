@@ -8,7 +8,6 @@ title: Menu
 
 > A simple menu
 
-
 </div>
 
 <div class="vp-example">
