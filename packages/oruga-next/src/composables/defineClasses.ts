@@ -12,17 +12,12 @@ import {
 } from "vue";
 
 import { getOptions } from "@/utils/config";
-import {
-    isDefined,
-    blankIfUndefined,
-    endsWith,
-    getValueByPath,
-} from "@/utils/helpers";
+import { isDefined, blankIfUndefined, getValueByPath } from "@/utils/helpers";
 
 import type {
     ClassBind,
     ClassDefinition,
-    ComponentContext,
+    ComponentProps,
     TransformFunction,
 } from "@/types";
 
@@ -194,8 +189,8 @@ function computeClass(
         currentClass = currentClass.join(" ");
     }
     if (typeof currentClass === "function") {
-        const context = getContext(vm);
-        currentClass = currentClass(suffix, context);
+        const props = getProps(vm);
+        currentClass = currentClass(suffix, props);
     } else {
         currentClass = suffixProcessor(currentClass as string, suffix);
     }
@@ -205,8 +200,8 @@ function computeClass(
         globalClass = globalClass.join(" ");
     }
     if (typeof globalClass === "function") {
-        const context = getContext(vm);
-        globalClass = globalClass(suffix, context);
+        const props = getProps(vm);
+        globalClass = globalClass(suffix, props);
     } else {
         globalClass = suffixProcessor(globalClass as string, suffix);
     }
@@ -252,11 +247,7 @@ function suffixProcessor(input: string, suffix: string): string {
         .join(" ");
 }
 
-function getContext(vm: ComponentInternalInstance): ComponentContext {
-    const computedNames = vm.proxy?.$options.computed
-        ? Object.keys(vm.proxy.$options.computed)
-        : [];
-
+const getProps = (vm: ComponentInternalInstance): ComponentProps => {
     let props = vm.proxy.$props;
 
     // get all props which ends with "Props", these are compressed parent props
@@ -265,16 +256,5 @@ function getContext(vm: ComponentInternalInstance): ComponentContext {
         .filter((key) => key.endsWith("Props"))
         .forEach((key) => (props = { ...props, ...props[key] }));
 
-    const computedProps = computedNames
-        .filter((e) => !endsWith(e, "Classes"))
-        .reduce((o, key) => {
-            o[key] = vm.proxy[key];
-            return o;
-        }, {});
-
-    return {
-        props: props,
-        data: vm.proxy.$data,
-        computed: computedProps,
-    };
-}
+    return props;
+};
