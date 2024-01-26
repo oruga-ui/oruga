@@ -132,7 +132,7 @@ function onLeftKeyDown(): void {
         parseFloat(currentPosition.value) -
         (step.value / (max.value - min.value)) * 100;
     setPosition(newPosition.value);
-    this.$parent.emitValue("change");
+    emits("change");
 }
 
 function onRightKeyDown(): void {
@@ -209,6 +209,8 @@ function setPosition(percent: number): void {
 
     if (!dragging.value && value !== oldValue.value) oldValue.value = value;
 }
+
+defineExpose({ setPosition });
 </script>
 
 <template>
