@@ -341,11 +341,12 @@ function handleScroll(): void {
     if (!isClient) return;
 
     if (props.scroll === "clip") {
-        if (scrollClass.value) {
-            if (isActive.value)
+        if (scrollClass.value?.length) {
+            if (isActive.value) {
                 document.documentElement.classList.add(...scrollClass.value);
-            else
+            } else {
                 document.documentElement.classList.remove(...scrollClass.value);
+            }
         }
         return;
     }
