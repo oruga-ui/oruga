@@ -8,7 +8,6 @@ title: Autocomplete
 
 > Extended input that provide suggestions while the user types
 
-
 </div>
 
 <div class="vp-example">
@@ -51,7 +50,7 @@ title: Autocomplete
 | debounce             | Number of milliseconds to delay before to emit input event                                                                                                                       | number                                           | -                                                 | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>autocomplete: {<br>&nbsp;&nbsp;debounce: 400<br>}</code>             |
 | disabled             | Same as native input disabled                                                                                                                                                    | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
 | expanded             | Makes input full width when inside a grouped or addon field                                                                                                                      | boolean                                          | -                                                 | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                                      |
-| field                | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option                                                                | string                                           | -                                                 | <code style='white-space: nowrap; padding: 0;'>"value"</code>                                                                                                    |
+| field                | Property of the object (if data is array of objects) to use as display text, and to keep track of selected option                                                                | string                                           | -                                                 |                                                                                                                                                                  |
 | formatter            | Function to format an option to a string for display in the input (as alternative to field prop)                                                                                 | (value: string \| number) =&gt; string \| number | -                                                 |                                                                                                                                                                  |
 | groupField           | Property of the object (if `data` is array of objects) to use as display text of group                                                                                           | string                                           | -                                                 |                                                                                                                                                                  |
 | groupOptions         | Property of the object (if `data` is array of objects) to use as key to get items array of each group                                                                            | string                                           | -                                                 |                                                                                                                                                                  |
@@ -102,13 +101,13 @@ title: Autocomplete
 
 ### Slots
 
-| Name    | Description                    | Bindings                                                                                                         |
-| ------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| header  | Define an additional header    |                                                                                                                  |
-| group   | Override the option grpup      | **group** `object` - options group<br/>**index** `number` - option index                                         |
-| default | Override the select option     | **option** `object` - option object<br/>**value** `unknown` - option value<br/>**index** `number` - option index |
-| empty   | Define content for empty state |                                                                                                                  |
-| footer  | Define an additional footer    |                                                                                                                  |
+| Name    | Description                    | Bindings   |
+| ------- | ------------------------------ | ---------- |
+| header  | Define an additional header    |            |
+| group   | Override the option grpup      | <br/>      |
+| default | Override the select option     | <br/><br/> |
+| empty   | Define content for empty state |            |
+| footer  | Define an additional footer    |            |
 
 </div>
 

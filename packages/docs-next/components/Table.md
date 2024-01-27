@@ -8,7 +8,6 @@ title: Table
 
 > Tabulated data are sometimes needed, it's even better when it's responsive
 
-
 </div>
 
 <div class="vp-example">
@@ -163,24 +162,24 @@ title: Table
 
 ### Props
 
-| Prop name        | Description                                                      | Type                                                | Values                      | Default                                                    |
-| ---------------- | ---------------------------------------------------------------- | --------------------------------------------------- | --------------------------- | ---------------------------------------------------------- |
-| customSearch     | Define a custom funtion for the filter search                    | (row: unknown, filter: string) =&gt; boolean        | -                           |                                                            |
-| customSort       | Define a custom sort function                                    | (a: Column, b: Column, isAsc: boolean) =&gt; number | -                           |                                                            |
-| field            | Define an object property key if data is an object               | string                                              | -                           |                                                            |
-| headerSelectable | Make header selectable                                           | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'></code>     |
-| label            | Define the column label                                          | string                                              | -                           |                                                            |
-| meta             | Add addtional meta information for the column for custom purpose | string\|number\|boolean\|func\|object\|array        | -                           |                                                            |
-| numeric          | Define column value as number                                    | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'></code>     |
-| position         | Position of the column content                                   | string                                              | `left`, `centered`, `right` |                                                            |
-| searchable       | Enable an additional searchbar below the column header           | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'></code>     |
-| sortable         | Enable column sortability                                        | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'></code>     |
-| sticky           | Whether the column is sticky or not                              | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'></code>     |
-| subheading       | Define a column sub heading                                      | string                                              | -                           |                                                            |
-| tdAttrs          | Adds native attributes to td                                     | (row: unknown, column: Column) =&gt; object         | -                           | Default function (see source code)                         |
-| thAttrs          | Adds native attributes to th                                     | (column: Column) =&gt; object                       | -                           | Default function (see source code)                         |
-| visible          | Define whether the column is visible or not                      | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>true</code> |
-| width            | Column fixed width                                               | number\|string                                      | -                           |                                                            |
+| Prop name        | Description                                                      | Type                                                | Values                      | Default                                                     |
+| ---------------- | ---------------------------------------------------------------- | --------------------------------------------------- | --------------------------- | ----------------------------------------------------------- |
+| customSearch     | Define a custom funtion for the filter search                    | (row: unknown, filter: string) =&gt; boolean        | -                           |                                                             |
+| customSort       | Define a custom sort function                                    | (a: Column, b: Column, isAsc: boolean) =&gt; number | -                           |                                                             |
+| field            | Define an object property key if data is an object               | string                                              | -                           |                                                             |
+| headerSelectable | Make header selectable                                           | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| label            | Define the column label                                          | string                                              | -                           |                                                             |
+| meta             | Add addtional meta information for the column for custom purpose | string\|number\|boolean\|func\|object\|array        | -                           |                                                             |
+| numeric          | Define column value as number                                    | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| position         | Position of the column content                                   | string                                              | `left`, `centered`, `right` |                                                             |
+| searchable       | Enable an additional searchbar below the column header           | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| sortable         | Enable column sortability                                        | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| sticky           | Whether the column is sticky or not                              | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| subheading       | Define a column sub heading                                      | string                                              | -                           |                                                             |
+| tdAttrs          | Adds native attributes to td                                     | (row: unknown, column: Column) =&gt; object         | -                           | Default function (see source code)                          |
+| thAttrs          | Adds native attributes to th                                     | (column: Column) =&gt; object                       | -                           | Default function (see source code)                          |
+| visible          | Define whether the column is visible or not                      | boolean                                             | -                           | <code style='white-space: nowrap; padding: 0;'>true</code>  |
+| width            | Column fixed width                                               | number\|string                                      | -                           |                                                             |
 
 ### Slots
 

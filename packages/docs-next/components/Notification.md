@@ -8,7 +8,6 @@ title: Notification
 
 > Bold notification blocks to alert your users of something
 
-
 </div>
 
 <div class="vp-example">

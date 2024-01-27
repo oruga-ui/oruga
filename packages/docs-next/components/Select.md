@@ -8,7 +8,6 @@ title: Select
 
 > Select an item in a dropdown list. Use with Field to access all functionalities
 
-
 </div>
 
 <div class="vp-example">

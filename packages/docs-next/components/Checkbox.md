@@ -8,7 +8,6 @@ title: Checkbox
 
 > Select a single or grouped options
 
-
 </div>
 
 <div class="vp-example">

@@ -1,6 +1,6 @@
 <div class="theme-orugabase">
 
-> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_ 
+> Current theme ➜ _[Oruga Base](https://github.com/oruga-ui/theme-oruga)_
 
 ```scss
 // Settings

@@ -8,7 +8,6 @@ title: Pagination
 
 > A responsive and flexible pagination
 
-
 </div>
 
 <div class="vp-example">

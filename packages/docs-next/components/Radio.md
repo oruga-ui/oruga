@@ -8,7 +8,6 @@ title: Radio
 
 > Select an option from a set
 
-
 </div>
 
 <div class="vp-example">
