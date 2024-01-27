@@ -8,7 +8,6 @@ title: Tooltip
 
 > Display a brief helper text to your user
 
-
 </div>
 
 <div class="vp-example">

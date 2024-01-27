@@ -8,7 +8,6 @@ title: Button
 
 > The classic button, in different colors, sizes, and states
 
-
 </div>
 
 <div class="vp-example">
