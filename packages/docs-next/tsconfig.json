@@ -7,11 +7,16 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "baseUrl": ".",
-    "types": [ "node", "vite/client"],
+    "types": ["node", "vite/client", "./volar.d.ts"]
+
+  },
+  "vueCompilerOptions": {
+    "strictTemplates": true
   },
   "include": [
     ".vitepress/**/*",
-    "docgen.config.ts"
+    "docgen.config.ts",
+    "volar.d.ts"
   ],
   "exclude": [
     "node_modules"
