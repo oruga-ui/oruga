@@ -38,7 +38,7 @@ function exist (path) {
   return fs.existsSync(path)
 }
 
-function generateComponentsType () {  
+function generateComponentsType (module, file) {  
   if(!exist(path.resolve(TYPE_ROOT, componentDirectory))) 
     throw new Error("Path not exist: " + componentDirectory);
 
@@ -50,7 +50,7 @@ function generateComponentsType () {
     .map((dir) => "O" + dir)
     // add type declaration
     .forEach((key) => {
-      components[key] = `(typeof import("@oruga-ui/oruga-next"))["${key}"];`;
+      components[key] = `(typeof import("${module}"))["${key}"];`;
     });
 
   const lines = Object.entries(components)
@@ -71,7 +71,10 @@ declare module "vue" {
 export {};
 `;
 
-  fs.writeFileSync(path.resolve(TYPE_ROOT, 'volar.d.ts'), code, 'utf-8')
+  fs.writeFileSync(path.resolve(TYPE_ROOT, file), code, 'utf-8')
 }
 
-generateComponentsType()
+// generate main package volar file
+generateComponentsType("@oruga-ui/oruga-next", 'volar.d.ts');
+// generate docs package volar file 
+generateComponentsType("../oruga-next/dist/types", '../docs-next/volar.d.ts');

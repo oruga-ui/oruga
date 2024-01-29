@@ -70,8 +70,8 @@ const size = ref("");
         <o-pagination
             v-model:current="current"
             :total="total"
-            :range-before="rangeBefore"
-            :range-after="rangeAfter"
+            :range-before="rangeBefore || 0"
+            :range-after="rangeAfter || 0"
             :order="order"
             :size="size"
             :simple="isSimple"
