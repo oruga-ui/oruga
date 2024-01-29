@@ -101,13 +101,13 @@ title: Autocomplete
 
 ### Slots
 
-| Name    | Description                    | Bindings   |
-| ------- | ------------------------------ | ---------- |
-| header  | Define an additional header    |            |
-| group   | Override the option grpup      | <br/>      |
-| default | Override the select option     | <br/><br/> |
-| empty   | Define content for empty state |            |
-| footer  | Define an additional footer    |            |
+| Name    | Description                    | Bindings                                                                                                         |
+| ------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| header  | Define an additional header    |                                                                                                                  |
+| group   | Override the option grpup      | **group** `object` - options group<br/>**index** `number` - option index                                         |
+| default | Override the select option     | **option** `object` - option object<br/>**value** `unknown` - option value<br/>**index** `number` - option index |
+| empty   | Define content for empty state |                                                                                                                  |
+| footer  | Define an additional footer    |                                                                                                                  |
 
 </div>
 

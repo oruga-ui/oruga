@@ -201,9 +201,10 @@ See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-oruga/tree/main/
 
 > Current theme ➜ _[Bootstrap](https://github.com/oruga-ui/theme-bootstrap)_
 
-| SASS Variable         | Default       |
-| --------------------- | ------------- |
-| $dropdown-menu-zindex | $zindex-modal |
+| SASS Variable                   | Default                |
+| ------------------------------- | ---------------------- |
+| $dropdown-modal-menu-zindex     | $zindex-modal          |
+| $dropdown-modal-backdrop-zindex | $zindex-modal-backdrop |
 
 See ➜ 📄 [Full scss file](https://github.com/oruga-ui/theme-bootstrap/tree/main/src/assets/scss/components/_dropdown.scss)
 
