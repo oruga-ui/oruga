@@ -92,10 +92,7 @@ const { childItems } = useProviderParent<{ reset: () => void }>(rootRef, {
 
 function resetMenu(excludedItems: ProviderItem[] = []): void {
     childItems.value.forEach((item) => {
-        if (!excludedItems.includes(toRaw(item))) {
-            console.log(item);
-            item.data.reset();
-        }
+        if (!excludedItems.includes(toRaw(item))) item.data.reset();
     });
 }
 
