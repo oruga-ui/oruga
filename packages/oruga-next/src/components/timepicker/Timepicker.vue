@@ -702,8 +702,8 @@ const selectPlaceholderClasses = defineClasses([
 ]);
 
 const selectBind = computed(() => ({
-    "select-class": selectSelectClasses.value,
-    "placeholder-class": selectPlaceholderClasses.value,
+    "select-class": getActiveClasses(selectSelectClasses.value),
+    "placeholder-class": getActiveClasses(selectPlaceholderClasses.value),
     ...props.selectClasses,
 }));
 

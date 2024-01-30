@@ -318,7 +318,7 @@ function cellClasses(day: Date): ClassBind[] {
 }
 
 function eventClasses(event: DatepickerEvent): ClassBind[] {
-    return defineClasses(
+    const classes = defineClasses(
         ["tableEventClass", "o-dpck__table__event"],
         [
             "tableEventVariantClass",
@@ -332,7 +332,8 @@ function eventClasses(event: DatepickerEvent): ClassBind[] {
             datepicker.value.indicators,
             !!datepicker.value.indicators,
         ],
-    ).value;
+    );
+    return classes.value;
 }
 
 const tableRowClasses = defineClasses(["tableRowClass", "o-dpck__table__row"]);
