@@ -266,7 +266,10 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
 
-const items = useVModelBinding<any[]>(props, emits, { passive: true, deep: true });
+const items = useVModelBinding<any[]>(props, emits, {
+    passive: true,
+    deep: true,
+});
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -479,7 +482,7 @@ const counterClasses = computed(() => [
             </slot>
 
             <o-autocomplete
-                v-if="hasInput"
+                v-show="hasInput"
                 ref="autocompleteRef"
                 v-model="newItem"
                 v-bind="autocompleteBind"
