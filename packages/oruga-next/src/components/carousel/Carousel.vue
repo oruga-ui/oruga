@@ -326,8 +326,8 @@ const translation = computed(
 
 const total = computed(() => childItems.value.length);
 
-const indicatorCount = computed(
-    () => Math.ceil(total.value / settings.value.itemsToList) + 1,
+const indicatorCount = computed(() =>
+    Math.ceil(total.value / settings.value.itemsToList),
 );
 
 const indicatorIndex = computed(() =>
@@ -350,7 +350,7 @@ function onPrev(): void {
 
 const hasNext = computed(
     () =>
-        (settings.value.repeat || scrollIndex.value < total.value) &&
+        (settings.value.repeat || scrollIndex.value < total.value - 1) &&
         hasArrows.value,
 );
 
