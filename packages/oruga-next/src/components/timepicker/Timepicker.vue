@@ -106,6 +106,7 @@ const props = defineProps({
         type: [Array, Function] as PropType<Date[] | ((date: Date) => boolean)>,
         default: () => [],
     },
+    /** Reset the time inputs when meridian changes */
     resetOnMeridianChange: {
         type: Boolean,
         default: false,
@@ -290,12 +291,12 @@ watch(
             minutesSelected.value = value.getMinutes();
             secondsSelected.value = value.getSeconds();
             meridienSelected.value =
-                value.getHours() >= 12 ? pmString : amString;
+                value.getHours() >= 12 ? pmString.value : amString.value;
         } else {
             hoursSelected.value = null;
             minutesSelected.value = null;
             secondsSelected.value = null;
-            meridienSelected.value = amString;
+            meridienSelected.value = amString.value;
         }
     },
     { immediate: true },
@@ -574,7 +575,7 @@ function updateDateSelected(
         minutes != null &&
         ((!isHourFormat24.value && meridiens !== null) || isHourFormat24.value)
     ) {
-        let time = null;
+        let time: Date = null;
         if (vmodel.value) {
             time = new Date(vmodel.value);
         } else {
