@@ -165,12 +165,12 @@ onBeforeMount(() => {
         positionClasses("bottom")
     ) {
         parentTop.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("top").join(
+            `.${rootClasses.value.join(".")}.${positionClasses("top").join(
                 ".",
             )}`,
         );
         parentBottom.value = container.value.querySelector(
-            `&>.${rootClasses.value.join(".")}.${positionClasses("bottom").join(
+            `.${rootClasses.value.join(".")}.${positionClasses("bottom").join(
                 ".",
             )}`,
         );
