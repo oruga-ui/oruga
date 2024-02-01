@@ -489,7 +489,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
             </slot>
 
             <o-autocomplete
-                v-if="hasInput"
+                v-show="hasInput"
                 ref="autocompleteRef"
                 v-model="newItem"
                 v-bind="autocompleteBind"

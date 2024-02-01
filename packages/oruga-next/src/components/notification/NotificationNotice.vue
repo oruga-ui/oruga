@@ -173,10 +173,10 @@ onBeforeMount(() => {
         const bottomClasses = getActiveClasses(positionBottomClasses.value);
 
         parentTop.value = container.value.querySelector(
-            `&>.${rootClasses.join(".")}.${topClasses.join(".")}`,
+            `.${rootClasses.join(".")}.${topClasses.join(".")}`,
         );
         parentBottom.value = container.value.querySelector(
-            `&>.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
+            `.${rootClasses.join(".")}.${bottomClasses.join(".")}`,
         );
 
         if (parentTop.value && parentBottom.value) return;
