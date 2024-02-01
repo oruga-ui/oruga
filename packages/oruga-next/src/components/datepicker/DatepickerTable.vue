@@ -4,7 +4,7 @@ import { computed, ref, type PropType } from "vue";
 import ODatepickerTableRow from "./DatepickerTableRow.vue";
 
 import { isDefined } from "@/utils/helpers";
-import { useComputedClass, usePropBinding } from "@/composables";
+import { defineClasses, usePropBinding } from "@/composables";
 
 import { weekBuilder } from "./utils";
 import {
@@ -234,25 +234,26 @@ function onChangeFocus(date: Date): void {
 
 // --- Computed Component Classes ---
 
-const tableClasses = computed(() => [
-    useComputedClass("tableClass", "o-dpck__table"),
+const tableClasses = defineClasses(["tableClass", "o-dpck__table"]);
+
+const tableHeadClasses = defineClasses([
+    "tableHeadClass",
+    "o-dpck__table__head",
 ]);
 
-const tableHeadClasses = computed(() => [
-    useComputedClass("tableHeadClass", "o-dpck__table__head"),
+const tableCellClasses = defineClasses([
+    "tableCellClass",
+    "o-dpck__table__cell",
 ]);
 
-const tableCellClasses = computed(() => [
-    useComputedClass("tableCellClass", "o-dpck__table__cell"),
+const tableHeadCellClasses = defineClasses([
+    "tableHeadCellClass",
+    "o-dpck__table__head-cell",
 ]);
 
-const tableHeadCellClasses = computed(() => [
-    useComputedClass("tableHeadCellClass", "o-dpck__table__head-cell"),
-    ...tableCellClasses.value,
-]);
-
-const tableBodyClasses = computed(() => [
-    useComputedClass("tableBodyClass", "o-dpck__table__body"),
+const tableBodyClasses = defineClasses([
+    "tableBodyClass",
+    "o-dpck__table__body",
 ]);
 </script>
 
@@ -262,7 +263,7 @@ const tableBodyClasses = computed(() => [
             <div
                 v-for="(day, index) in visibleDayNames"
                 :key="index"
-                :class="tableHeadCellClasses">
+                :class="[...tableCellClasses, ...tableHeadCellClasses]">
                 <span>{{ day }}</span>
             </div>
         </header>

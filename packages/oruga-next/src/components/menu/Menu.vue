@@ -4,7 +4,7 @@ import { ref, computed, toRaw, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useProviderParent,
     type ProviderItem,
 } from "@/composables";
@@ -92,24 +92,17 @@ const { childItems } = useProviderParent<{ reset: () => void }>(rootRef, {
 
 function resetMenu(excludedItems: ProviderItem[] = []): void {
     childItems.value.forEach((item) => {
-        if (!excludedItems.includes(toRaw(item))) {
-            console.log(item);
-            item.data.reset();
-        }
+        if (!excludedItems.includes(toRaw(item))) item.data.reset();
     });
 }
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-menu")]);
+const rootClasses = defineClasses(["rootClass", "o-menu"]);
 
-const listClasses = computed(() => [
-    useComputedClass("listClass", "o-menu__list"),
-]);
+const listClasses = defineClasses(["listClass", "o-menu__list"]);
 
-const labelClasses = computed(() => [
-    useComputedClass("listLabelClass", "o-menu__label"),
-]);
+const labelClasses = defineClasses(["listLabelClass", "o-menu__label"]);
 </script>
 
 <template>

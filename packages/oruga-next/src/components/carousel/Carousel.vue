@@ -18,13 +18,13 @@ import { getOption } from "@/utils/config";
 import { sign, mod, bound, isDefined } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useEventListener,
     useProviderParent,
 } from "@/composables";
 
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * A Slideshow for cycling images in confined spaces
@@ -505,78 +505,68 @@ function dragEnd(event?: TouchEvent | MouseEvent): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-car"),
-    {
-        [useComputedClass("overlayClass", "o-car__overlay")]: props.overlay,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-car"],
+    ["overlayClass", "o-car__overlay", null, computed(() => props.overlay)],
+);
+
+const wrapperClasses = defineClasses(["wrapperClass", "o-car__wrapper"]);
+
+const itemsClasses = defineClasses(
+    ["itemsClass", "o-car__items"],
+    ["itemsDraggingClass", "o-car__items--dragging", null, isDragging],
+);
+
+const arrowIconClasses = defineClasses([
+    "arrowIconClass",
+    "o-car__arrow__icon",
 ]);
 
-const wrapperClasses = computed(() => [
-    useComputedClass("wrapperClass", "o-car__wrapper"),
+const arrowIconPrevClasses = defineClasses([
+    "arrowIconPrevClass",
+    "o-car__arrow__icon-prev",
 ]);
 
-const itemsClasses = computed(() => [
-    useComputedClass("itemsClass", "o-car__items"),
-    {
-        [useComputedClass("itemsDraggingClass", "o-car__items--dragging")]:
-            isDragging.value,
-    },
+const arrowIconNextClasses = defineClasses([
+    "arrowIconNextClass",
+    "o-car__arrow__icon-next",
 ]);
 
-const arrowIconClasses = computed(() => [
-    useComputedClass("arrowIconClass", "o-car__arrow__icon"),
-]);
-
-const arrowIconPrevClasses = computed(() => [
-    ...arrowIconClasses.value,
-    useComputedClass("arrowIconPrevClass", "o-car__arrow__icon-prev"),
-]);
-
-const arrowIconNextClasses = computed(() => [
-    ...arrowIconClasses.value,
-    useComputedClass("arrowIconNextClass", "o-car__arrow__icon-next"),
-]);
-
-function indicatorItemClasses(index): PropBind {
-    return [
-        useComputedClass("indicatorItemClass", "o-car__indicator__item"),
-        {
-            [useComputedClass(
-                "indicatorItemActiveClass",
-                "o-car__indicator__item--active",
-            )]: indicatorIndex.value === index,
-        },
-        {
-            [useComputedClass(
-                "indicatorItemStyleClass",
-                "o-car__indicator__item--",
-                props.indicatorStyle,
-            )]: props.indicatorStyle,
-        },
-    ];
+function indicatorItemClasses(index): ClassBind[] {
+    return defineClasses(
+        ["indicatorItemClass", "o-car__indicator__item"],
+        [
+            "indicatorItemActiveClass",
+            "o-car__indicator__item--active",
+            null,
+            indicatorIndex.value === index,
+        ],
+        [
+            "indicatorItemStyleClass",
+            "o-car__indicator__item--",
+            props.indicatorStyle,
+            !!props.indicatorStyle,
+        ],
+    ).value;
 }
 
-const indicatorsClasses = computed(() => [
-    useComputedClass("indicatorsClass", "o-car__indicators"),
-    {
-        [useComputedClass(
-            "indicatorsInsideClass",
-            "o-car__indicators--inside",
-        )]: props.indicatorInside,
-    },
-    {
-        [useComputedClass(
-            "indicatorsInsidePositionClass",
-            "o-car__indicators--inside--",
-            props.indicatorPosition,
-        )]: props.indicatorInside && props.indicatorPosition,
-    },
-]);
+const indicatorsClasses = defineClasses(
+    ["indicatorsClass", "o-car__indicators"],
+    [
+        "indicatorsInsideClass",
+        "o-car__indicators--inside",
+        null,
+        computed(() => !!props.indicatorInside),
+    ],
+    [
+        "indicatorsInsidePositionClass",
+        "o-car__indicators--inside--",
+        computed(() => props.indicatorPosition),
+        computed(() => props.indicatorInside && !!props.indicatorPosition),
+    ],
+);
 
-const indicatorClasses = computed(() => [
-    useComputedClass("indicatorClass", "o-car__indicator"),
-]);
+const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
 </script>
 
 <template>
@@ -613,7 +603,7 @@ const indicatorClasses = computed(() => [
                 <template v-if="arrows">
                     <o-icon
                         v-show="hasPrev"
-                        :class="arrowIconPrevClasses"
+                        :class="[...arrowIconClasses, ...arrowIconPrevClasses]"
                         :pack="iconPack"
                         :icon="iconPrev"
                         :size="iconSize"
@@ -621,7 +611,7 @@ const indicatorClasses = computed(() => [
                         @click="onPrev" />
                     <o-icon
                         v-show="hasNext"
-                        :class="arrowIconNextClasses"
+                        :class="[...arrowIconClasses, ...arrowIconNextClasses]"
                         :pack="iconPack"
                         :icon="iconNext"
                         :size="iconSize"

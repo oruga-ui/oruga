@@ -7,7 +7,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -277,60 +277,57 @@ function rightIconClick(event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-ctrl-sel"),
-    {
-        [useComputedClass("expandedClass", "o-ctrl-sel--expanded")]:
-            props.expanded,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-ctrl-sel"],
+    [
+        "expandedClass",
+        "o-ctrl-sel--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
 
-const selectClasses = computed(() => [
-    useComputedClass("selectClass", "o-sel"),
-    {
-        [useComputedClass("roundedClass", "o-sel--rounded")]: props.rounded,
-    },
-    {
-        [useComputedClass("multipleClass", "o-sel--multiple")]: props.multiple,
-    },
-    {
-        [useComputedClass("sizeClass", "o-sel--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass(
-            "variantClass",
-            "o-sel--",
-            statusVariant.value || props.variant,
-        )]: statusVariant.value || props.variant,
-    },
-    {
-        [useComputedClass("disabledClass", "o-sel--disabled")]: props.disabled,
-    },
-    {
-        [useComputedClass("iconLeftSpaceClass", "o-sel-iconspace-left")]:
-            props.icon,
-    },
-    {
-        [useComputedClass("iconRightSpaceClass", "o-sel-iconspace-right")]:
-            props.iconRight,
-    },
-    {
-        [useComputedClass("placeholderClass", "o-sel--placeholder")]:
-            placeholderVisible.value,
-    },
-    {
-        [useComputedClass("arrowClass", "o-sel-arrow")]:
-            !props.iconRight && !props.multiple,
-    },
-]);
+const selectClasses = defineClasses(
+    ["selectClass", "o-sel"],
+    ["roundedClass", "o-sel--rounded", null, computed(() => props.rounded)],
+    ["multipleClass", "o-sel--multiple", null, computed(() => props.multiple)],
+    [
+        "sizeClass",
+        "o-sel--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-sel--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
+    ["disabledClass", "o-sel--disabled", null, computed(() => props.disabled)],
+    [
+        "iconLeftSpaceClass",
+        "o-sel-iconspace-left",
+        null,
+        computed(() => !!props.icon),
+    ],
+    [
+        "iconRightSpaceClass",
+        "o-sel-iconspace-right",
+        null,
+        computed(() => !!props.iconRight),
+    ],
+    ["placeholderClass", "o-sel--placeholder", null, placeholderVisible],
+    [
+        "arrowClass",
+        "o-sel-arrow",
+        null,
+        computed(() => !props.iconRight && !props.multiple),
+    ],
+);
 
-const iconLeftClasses = computed(() => [
-    useComputedClass("iconLeftClass", "o-sel__icon-left"),
-]);
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-sel__icon-left"]);
 
-const iconRightClasses = computed(() => [
-    useComputedClass("iconRightClass", "o-sel__icon-right"),
-]);
+const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
 </script>
 
 <template>

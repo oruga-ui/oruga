@@ -8,14 +8,14 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useProviderParent,
     useVModelBinding,
     useMatchMedia,
 } from "@/composables";
 
 import type { StepItem, StepItemComponent } from "./types";
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * Responsive horizontal process steps
@@ -318,110 +318,119 @@ function performAction(newId: number | string): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-steps__wrapper"),
-    {
-        [useComputedClass("sizeClass", "o-steps--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("verticalClass", "o-steps__wrapper-vertical")]:
-            props.vertical,
-    },
-    {
-        [useComputedClass(
-            "positionClass",
-            "o-steps__wrapper-position-",
-            props.position,
-        )]: props.position && props.vertical,
-    },
-    {
-        [useComputedClass("mobileClass", "o-steps--mobile")]: isMobile.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-steps__wrapper"],
+    [
+        "sizeClass",
+        "o-steps--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "verticalClass",
+        "o-steps__wrapper-vertical",
+        null,
+        computed(() => props.vertical),
+    ],
+    [
+        "positionClass",
+        "o-steps__wrapper-position-",
+        computed(() => props.position),
+        computed(() => props.position && props.vertical),
+    ],
+    ["mobileClass", "o-steps--mobile", null, isMobile],
+);
+
+const wrapperClasses = defineClasses(
+    ["stepsClass", "o-steps"],
+    [
+        "animatedClass",
+        "o-steps--animated",
+        null,
+        computed(() => props.animated),
+    ],
+);
+
+const stepDividerClasses = defineClasses([
+    "stepDividerClass",
+    "o-steps__divider",
 ]);
 
-const wrapperClasses = computed(() => [
-    useComputedClass("stepsClass", "o-steps"),
-    {
-        [useComputedClass("animatedClass", "o-steps--animated")]:
-            props.animated,
-    },
+const stepMarkerClasses = defineClasses(
+    ["stepMarkerClass", "o-steps__marker"],
+    [
+        "stepMarkerRoundedClass",
+        "o-steps__marker--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+);
+
+const stepContentClasses = defineClasses(
+    ["stepContentClass", "o-steps__content"],
+    [
+        "stepContentTransitioningClass",
+        "o-steps__content-transitioning",
+        null,
+        isTransitioning,
+    ],
+);
+
+const stepNavigationClasses = defineClasses([
+    "stepNavigationClass",
+    "o-steps__navigation",
 ]);
 
-const stepDividerClasses = computed(() => [
-    useComputedClass("stepDividerClass", "o-steps__divider"),
+const stepLinkLabelClasses = defineClasses([
+    "stepLinkLabelClass",
+    "o-steps__title",
 ]);
 
-const stepMarkerClasses = computed(() => [
-    useComputedClass("stepMarkerClass", "o-steps__marker"),
-    {
-        [useComputedClass(
-            "stepMarkerRoundedClass",
-            "o-steps__marker--rounded",
-        )]: props.rounded,
-    },
-]);
+function stepLinkClasses(childItem: StepItem): ClassBind[] {
+    const classes = defineClasses(
+        ["stepLinkClass", "o-steps__link"],
+        [
+            "stepLinkLabelPositionClass",
+            "o-steps__link-label-",
+            props.labelPosition,
+            !!props.labelPosition,
+        ],
+        [
+            "stepLinkClickableClass",
+            "o-steps__link-clickable",
+            null,
+            isItemClickable(childItem),
+        ],
+    );
 
-const stepContentClasses = computed(() => [
-    useComputedClass("stepContentClass", "o-steps__content"),
-    {
-        [useComputedClass(
-            "stepContentTransitioningClass",
-            "o-steps__content-transitioning",
-        )]: isTransitioning.value,
-    },
-]);
-
-const stepNavigationClasses = computed(() => [
-    useComputedClass("stepNavigationClass", "o-steps__navigation"),
-]);
-
-const stepLinkLabelClasses = computed(() => [
-    useComputedClass("stepLinkLabelClass", "o-steps__title"),
-]);
-
-function stepLinkClasses(childItem: StepItem): PropBind {
-    return [
-        useComputedClass("stepLinkClass", "o-steps__link"),
-        {
-            [useComputedClass(
-                "stepLinkLabelPositionClass",
-                "o-steps__link-label-",
-                props.labelPosition,
-            )]: props.labelPosition,
-        },
-        {
-            [useComputedClass(
-                "stepLinkClickableClass",
-                "o-steps__link-clickable",
-            )]: isItemClickable(childItem),
-        },
-    ];
+    return classes.value;
 }
 
-function itemClasses(childItem): PropBind {
-    return [
-        childItem.headerClass,
-        useComputedClass("itemHeaderClass", "o-steps__nav-item"),
-        {
-            [useComputedClass(
-                "itemHeaderVariantClass",
-                "o-steps__nav-item--",
-                childItem.variant || props.variant,
-            )]: childItem.variant || props.variant,
-        },
-        {
-            [useComputedClass(
-                "itemHeaderActiveClass",
-                "o-steps__nav-item-active",
-            )]: childItem.value === activeItem.value.value,
-        },
-        {
-            [useComputedClass(
-                "itemHeaderPreviousClass",
-                "o-steps__nav-item-previous",
-            )]: activeItem.value.index > childItem.index,
-        },
-    ];
+function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
+    const classes = defineClasses(
+        ["itemHeaderClass", "o-steps__nav-item"],
+        [
+            "itemHeaderVariantClass",
+            "o-steps__nav-item--",
+            childItem.variant || props.variant,
+            !!childItem.variant || !!props.variant,
+        ],
+        [
+            "itemHeaderActiveClass",
+            "o-steps__nav-item-active",
+            null,
+            childItem.value === activeItem.value.value,
+        ],
+        [
+            "itemHeaderPreviousClass",
+            "o-steps__nav-item-previous",
+            null,
+            activeItem.value.index > childItem.index,
+        ],
+    );
+
+    const headerClass = { [childItem.headerClass || ""]: true };
+    return [headerClass, ...classes.value];
 }
 </script>
 

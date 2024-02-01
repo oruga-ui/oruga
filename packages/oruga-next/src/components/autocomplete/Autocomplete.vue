@@ -22,14 +22,14 @@ import { getValueByPath } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
     useDebounce,
     useEventListener,
 } from "@/composables";
 
-import type { ComponentClass, DynamicComponent, PropBind } from "@/types";
+import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 
 /**
  * Extended input that provide suggestions while the user types
@@ -728,48 +728,39 @@ const inputBind = computed(() => ({
     ...props.inputClasses,
 }));
 
-const rootClasses = computed(() => [useComputedClass("rootClass", "o-acp")]);
+const rootClasses = defineClasses(["rootClass", "o-acp"]);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-acp__item"),
+const itemClasses = defineClasses(["itemClass", "o-acp__item"]);
+
+const itemEmptyClasses = defineClasses([
+    "itemEmptyClass",
+    "o-acp__item--empty",
 ]);
 
-const itemEmptyClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemEmptyClass", "o-acp__item--empty"),
+const itemGroupClasses = defineClasses([
+    "itemGroupTitleClass",
+    "o-acp__item-group-title",
 ]);
 
-const itemGroupClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemGroupTitleClass", "o-acp__item-group-title"),
-]);
+const itemHeaderClasses = defineClasses(
+    ["itemHeaderClass", "o-acp__item-header"],
+    ["itemHoverClass", "o-acp__item--hover", null, headerHovered],
+);
 
-const itemHeaderClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemHeaderClass", "o-acp__item-header"),
-    {
-        [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-            headerHovered.value,
-    },
-]);
+const itemFooterClasses = defineClasses(
+    ["itemFooterClass", "o-acp__item-footer"],
+    ["itemHoverClass", "o-acp__item--hover", null, footerHovered],
+);
 
-const itemFooterClasses = computed(() => [
-    ...itemClasses.value,
-    useComputedClass("itemFooterClass", "o-acp__item-footer"),
-    {
-        [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-            footerHovered.value,
-    },
-]);
+function itemOptionClasses(option): ClassBind[] {
+    const optionClasses = defineClasses([
+        "itemHoverClass",
+        "o-acp__item--hover",
+        null,
+        toRaw(option) === toRaw(hoveredOption.value),
+    ]);
 
-function itemOptionClasses(option): PropBind {
-    return [
-        ...itemClasses.value,
-        {
-            [useComputedClass("itemHoverClass", "o-acp__item--hover")]:
-                toRaw(option) === toRaw(hoveredOption.value),
-        },
-    ];
+    return [...itemClasses.value, ...optionClasses.value];
 }
 </script>
 
@@ -829,7 +820,7 @@ function itemOptionClasses(option): PropBind {
             :tag="itemTag"
             aria-role="button"
             :tabindex="0"
-            :class="itemHeaderClasses"
+            :class="[...itemClasses, ...itemHeaderClasses]"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
             <!--
                 @slot Define an additional header
@@ -842,7 +833,7 @@ function itemOptionClasses(option): PropBind {
                 v-if="element.group"
                 :key="groupindex + 'group'"
                 :tag="itemTag"
-                :class="itemGroupClasses">
+                :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
                     @slot Override the option grpup
                     @binding {object} group - options group
@@ -888,7 +879,7 @@ function itemOptionClasses(option): PropBind {
         <o-dropdown-item
             v-if="isEmpty && $slots.empty"
             :tag="itemTag"
-            :class="itemEmptyClasses">
+            :class="[...itemClasses, ...itemEmptyClasses]">
             <!--
                 @slot Define content for empty state 
             -->
@@ -901,7 +892,7 @@ function itemOptionClasses(option): PropBind {
             :tag="itemTag"
             aria-role="button"
             :tabindex="0"
-            :class="itemFooterClasses"
+            :class="[...itemClasses, ...itemFooterClasses]"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">
             <!--
                 @slot Define an additional footer
