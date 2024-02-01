@@ -359,7 +359,7 @@ function onNext(): void {
 }
 
 function switchTo(index: number, onlyMove?: boolean): void {
-    if (settings.value.repeat) index = mod(index, total.value + 1);
+    if (settings.value.repeat) index = mod(index, total.value);
 
     index = bound(index, 0, total.value);
     scrollIndex.value = index;
@@ -411,8 +411,7 @@ function startTimer(): void {
     if (!props.autoplay || timer.value) return;
     isPaused.value = false;
     timer.value = setInterval(() => {
-        if (!props.repeat && activeIndex.value >= childItems.value.length - 1)
-            pauseTimer();
+        if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
@@ -581,7 +580,7 @@ const indicatorClasses = computed(() => [
 </script>
 
 <template>
-    <!-- eslint-disable-next-line vuejs-accessibility/mouse-events-have-key-events, vuejs-accessibility/no-static-element-interactions -->
+    <!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
     <div
         ref="rootRef"
         :class="rootClasses"
@@ -589,6 +588,8 @@ const indicatorClasses = computed(() => [
         role="region"
         @mouseover="onMouseEnter"
         @mouseleave="onMouseLeave"
+        @focus="onMouseEnter"
+        @blur="onMouseLeave"
         @keydown.left="onPrev"
         @keydown.right="onNext">
         <div :class="wrapperClasses">
