@@ -4,7 +4,7 @@ import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { useComputedClass, useProviderChild } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import type { TabsComponent, TabItemComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
@@ -152,16 +152,16 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const elementClasses = computed(() => [
-    useComputedClass("itemClass", "o-tab-item__content"),
+const elementClasses = defineClasses(["itemClass", "o-tab-item__content"]);
+
+const headerIconClasses = defineClasses([
+    "itemHeaderIconClass",
+    "o-tabs__nav-item-icon",
 ]);
 
-const headerIconClasses = computed(() => [
-    useComputedClass("itemHeaderIconClass", "o-tabs__nav-item-icon"),
-]);
-
-const headerTextClasses = computed(() => [
-    useComputedClass("itemHeaderTextClass", "o-tabs__nav-item-text"),
+const headerTextClasses = defineClasses([
+    "itemHeaderTextClass",
+    "o-tabs__nav-item-text",
 ]);
 </script>
 

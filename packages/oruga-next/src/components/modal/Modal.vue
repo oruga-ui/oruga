@@ -17,7 +17,8 @@ import { getOption } from "@/utils/config";
 import { removeElement, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
-    useComputedClass,
+    defineClasses,
+    getActiveClasses,
     useMatchMedia,
     useProgrammaticComponent,
 } from "@/composables";
@@ -269,8 +270,8 @@ onBeforeUnmount(() => {
             ? savedScrollTop.value
             : document.documentElement.scrollTop;
         if (scrollClass.value) {
-            document.body.classList.remove(scrollClass.value);
-            document.documentElement.classList.remove(scrollClass.value);
+            document.body.classList.remove(...scrollClass.value);
+            document.documentElement.classList.remove(...scrollClass.value);
         }
         document.documentElement.scrollTop = scrollto;
         document.body.style.top = null;
@@ -283,8 +284,9 @@ function handleScroll(): void {
     if (props.scroll === "clip") {
         if (scrollClass.value) {
             if (isActive.value)
-                document.documentElement.classList.add(scrollClass.value);
-            else document.documentElement.classList.remove(scrollClass.value);
+                document.documentElement.classList.add(...scrollClass.value);
+            else
+                document.documentElement.classList.remove(...scrollClass.value);
         }
         return;
     }
@@ -294,8 +296,8 @@ function handleScroll(): void {
         : document.documentElement.scrollTop;
 
     if (scrollClass.value) {
-        if (isActive.value) document.body.classList.add(scrollClass.value);
-        else document.body.classList.remove(scrollClass.value);
+        if (isActive.value) document.body.classList.add(...scrollClass.value);
+        else document.body.classList.remove(...scrollClass.value);
     }
 
     if (isActive.value) {
@@ -320,37 +322,35 @@ function beforeLeave(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-modal"),
-    {
-        [useComputedClass("mobileClass", "o-modal--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("activeClass", "o-modal--active")]: isActive.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-modal"],
+    ["mobileClass", "o-modal--mobile", null, isMobile],
+    ["activeClass", "o-modal--active", null, isActive],
+);
 
-const overlayClasses = computed(() => [
-    useComputedClass("overlayClass", "o-modal__overlay"),
-]);
+const overlayClasses = defineClasses(["overlayClass", "o-modal__overlay"]);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-modal__content"),
-    {
-        [useComputedClass("fullScreenClass", "o-modal__content--full-screen")]:
-            props.fullScreen,
-    },
-]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-modal__content"],
+    [
+        "fullScreenClass",
+        "o-modal__content--full-screen",
+        null,
+        computed(() => props.fullScreen),
+    ],
+);
 
-const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-modal__close"),
-]);
+const closeClasses = defineClasses(["closeClass", "o-modal__close"]);
+
+const scrollClasses = defineClasses(["scrollClipClass", "o-clipped"]);
+const noScrollClasses = defineClasses(["noScrollClass", "o-noscroll"]);
 
 const scrollClass = computed(() =>
-    props.scroll === "clip"
-        ? useComputedClass("scrollClipClass", "o-clipped")
-        : useComputedClass("noScrollClass", "o-noscroll"),
+    getActiveClasses(
+        props.scroll === "clip" ? scrollClasses.value : noScrollClasses.value,
+    ),
 );
+
 // computed ref must be computed at least once for programmatic usage
 scrollClass.value;
 

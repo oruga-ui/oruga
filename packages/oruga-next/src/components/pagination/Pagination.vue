@@ -6,7 +6,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useMatchMedia, usePropBinding } from "@/composables";
+import { defineClasses, useMatchMedia, usePropBinding } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -321,65 +321,66 @@ function changePage(page: number, event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-pag"),
-    {
-        [useComputedClass("orderClass", "o-pag--", props.order)]: props.order,
-    },
-    {
-        [useComputedClass("sizeClass", "o-pag--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("simpleClass", "o-pag--simple")]: props.simple,
-    },
-    {
-        [useComputedClass("mobileClass", "o-pag--mobile")]: isMobile.value,
-    },
-]);
-
-const prevBtnClasses = computed(() => [
-    useComputedClass("prevButtonClass", "o-pag__previous"),
-    {
-        [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
-            !hasPrev.value,
-    },
-]);
-
-const nextBtnClasses = computed(() => [
-    useComputedClass("nextButtonClass", "o-pag__next"),
-    {
-        [useComputedClass("linkDisabledClass", "o-pag__link--disabled")]:
-            !hasNext.value,
-    },
-]);
-
-const infoClasses = computed(() => [
-    useComputedClass("infoClass", "o-pag__info"),
-]);
-
-const ellipsisClasses = computed(() => [
-    useComputedClass("ellipsisClass", "o-pag__ellipsis"),
-]);
-
-const listClasses = computed(() => [
-    useComputedClass("listClass", "o-pag__list"),
-]);
-
-const linkClasses = computed(() => [
-    useComputedClass("linkClass", "o-pag__link"),
-    {
-        [useComputedClass("roundedClass", "o-pag__link--rounded")]:
-            props.rounded,
-    },
-]);
-
-const linkCurrentClasses = computed(() => [
-    useComputedClass("linkCurrentClass", "o-pag__link--current"),
-]);
-
-const listItemClasses = computed(() =>
-    useComputedClass("listItemClass", "o-pag__item"),
+const rootClasses = defineClasses(
+    ["rootClass", "o-pag"],
+    [
+        "orderClass",
+        "o-pag--",
+        computed(() => props.order),
+        computed(() => !!props.order),
+    ],
+    [
+        "sizeClass",
+        "o-pag--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    ["simpleClass", "o-pag--simple", null, computed(() => props.simple)],
+    ["mobileClass", "o-pag--mobile", null, isMobile],
 );
+
+const prevBtnClasses = defineClasses(
+    ["prevButtonClass", "o-pag__previous"],
+    [
+        "linkDisabledClass",
+        "o-pag__link--disabled",
+        null,
+        computed(() => !hasPrev.value),
+    ],
+);
+
+const nextBtnClasses = defineClasses(
+    ["nextButtonClass", "o-pag__next"],
+    [
+        "linkDisabledClass",
+        "o-pag__link--disabled",
+        null,
+        computed(() => !hasNext.value),
+    ],
+);
+
+const infoClasses = defineClasses(["infoClass", "o-pag__info"]);
+
+const ellipsisClasses = defineClasses(["ellipsisClass", "o-pag__ellipsis"]);
+
+const listClasses = defineClasses(["listClass", "o-pag__list"]);
+
+const linkClasses = defineClasses(
+    ["linkClass", "o-pag__link"],
+    [
+        "roundedClass",
+        "o-pag__link--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+);
+
+const linkCurrentClasses = defineClasses([
+    "linkCurrentClass",
+    "o-pag__link--current",
+]);
+
+const listItemClasses = defineClasses(["listItemClass", "o-pag__item"]);
 
 // --- Expose Public Functionality ---
 

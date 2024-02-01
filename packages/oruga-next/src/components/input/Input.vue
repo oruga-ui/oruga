@@ -15,7 +15,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -382,62 +382,62 @@ function togglePasswordVisibility(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-input__wrapper"),
-    {
-        [useComputedClass("expandedClass", "o-input__wrapper--expanded")]:
-            props.expanded,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-input__wrapper"],
+    [
+        "expandedClass",
+        "o-input__wrapper--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
+
+const inputClasses = defineClasses(
+    ["inputClass", "o-input"],
+    ["roundedClass", "o-input--rounded", null, computed(() => props.rounded)],
+    [
+        "sizeClass",
+        "o-input--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-input--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
+    [
+        "disabledClass",
+        "o-input--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "textareaClass",
+        "o-input__textarea",
+        null,
+        computed(() => props.type === "textarea"),
+    ],
+    [
+        "iconLeftSpaceClass",
+        "o-input--iconspace-left",
+        null,
+        computed(() => !!props.icon),
+    ],
+    ["iconRightSpaceClass", "o-input--iconspace-right", null, hasIconRight],
+);
+
+const iconLeftClasses = defineClasses(["iconLeftClass", "o-input__icon-left"]);
+
+const iconRightClasses = defineClasses([
+    "iconRightClass",
+    "o-input__icon-right",
 ]);
 
-const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-input"),
-    {
-        [useComputedClass("roundedClass", "o-input--rounded")]: props.rounded,
-    },
-    {
-        [useComputedClass("sizeClass", "o-input--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass(
-            "variantClass",
-            "o-input--",
-            statusVariant.value || props.variant,
-        )]: statusVariant.value || props.variant,
-    },
-    {
-        [useComputedClass("disabledClass", "o-input--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("textareaClass", "o-input__textarea")]:
-            props.type === "textarea",
-    },
-    {
-        [useComputedClass("iconLeftSpaceClass", "o-input--iconspace-left")]:
-            props.icon,
-    },
-    {
-        [useComputedClass("iconRightSpaceClass", "o-input--iconspace-right")]:
-            hasIconRight.value,
-    },
-]);
+const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
 
-const iconLeftClasses = computed(() => [
-    useComputedClass("iconLeftClass", "o-input__icon-left"),
-]);
-
-const iconRightClasses = computed(() => [
-    useComputedClass("iconRightClass", "o-input__icon-right"),
-]);
-
-const counterClasses = computed(() => [
-    useComputedClass("counterClass", "o-input__counter"),
-]);
-
-const labelClasses = computed(() => [
-    useComputedClass("labelClass", "o-radio__label"),
-]);
+const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
 </script>
 
 <template>

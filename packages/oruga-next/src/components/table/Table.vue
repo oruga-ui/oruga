@@ -33,15 +33,16 @@ import {
     uuid,
 } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useProviderParent,
     usePropBinding,
     useMatchMedia,
     useDebounce,
+    getActiveClasses,
 } from "@/composables";
 
 import type { Column, TableColumn, TableColumnComponent } from "./types";
-import type { ComponentClass, PropBind } from "@/types";
+import type { ComponentClass, ClassBind } from "@/types";
 
 /**
  * Tabulated data are sometimes needed, it's even better when it's responsive
@@ -1363,177 +1364,166 @@ function handleColumnDragLeave(
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-table__root"),
-    {
-        [useComputedClass("mobileClass", "o-table__wrapper--mobile")]:
-            isMobileActive.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-table__root"],
+    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+);
+
+const tableClasses = defineClasses(
+    ["tableClass", "o-table"],
+    [
+        "borderedClass",
+        "o-table--bordered",
+        null,
+        computed(() => props.bordered),
+    ],
+    ["stripedClass", "o-table--striped", null, computed(() => props.striped)],
+    [
+        "narrowedClass",
+        "o-table--narrowed",
+        null,
+        computed(() => props.narrowed),
+    ],
+    [
+        "hoverableClass",
+        "o-table--hoverable",
+        null,
+        computed(
+            () =>
+                (props.hoverable || props.focusable) &&
+                !!visibleRows.value.length,
+        ),
+    ],
+    [
+        "emptyClass",
+        "o-table--table__empty",
+        null,
+        computed(() => !visibleRows.value.length),
+    ],
+);
+
+const tableWrapperClasses = defineClasses(
+    ["wrapperClass", "o-table__wrapper"],
+    [
+        "stickyHeaderClass",
+        "o-table__wrapper--sticky-header",
+        null,
+        computed(() => props.stickyHeader),
+    ],
+    ["scrollableClass", "o-table__wrapper--scrollable", null, isScrollable],
+    ["mobileClass", "o-table__wrapper--mobile", null, isMobileActive],
+);
+
+const footerClasses = defineClasses(["footerClass", "o-table__footer"]);
+
+const thBaseClasses = defineClasses(["thClass", "o-table__th"]);
+
+const tdBaseClasses = defineClasses(["tdClass", "o-table__td"]);
+
+const thCheckboxClasses = defineClasses([
+    "thCheckboxClass",
+    "o-table__th-checkbox",
 ]);
 
-const tableClasses = computed(() => [
-    useComputedClass("tableClass", "o-table"),
-    {
-        [useComputedClass("borderedClass", "o-table--bordered")]:
-            props.bordered,
-    },
-    {
-        [useComputedClass("stripedClass", "o-table--striped")]: props.striped,
-    },
-    {
-        [useComputedClass("narrowedClass", "o-table--narrowed")]:
-            props.narrowed,
-    },
-    {
-        [useComputedClass("hoverableClass", "o-table--hoverable")]:
-            (props.hoverable || props.focusable) && visibleRows.value.length,
-    },
-    {
-        [useComputedClass("emptyClass", "o-table--table__empty")]:
-            !visibleRows.value.length,
-    },
+const thDetailedClasses = defineClasses([
+    "thDetailedClass",
+    "o-table__th--detailed",
 ]);
 
-const tableWrapperClasses = computed(() => [
-    useComputedClass("wrapperClass", "o-table__wrapper"),
-    {
-        [useComputedClass(
-            "stickyHeaderClass",
-            "o-table__wrapper--sticky-header",
-        )]: props.stickyHeader,
-    },
-    {
-        [useComputedClass("scrollableClass", "o-table__wrapper--scrollable")]:
-            isScrollable.value,
-    },
-    {
-        [useComputedClass("mobileClass", "o-table__wrapper--mobile")]:
-            isMobileActive.value,
-    },
+const thSubheadingClasses = defineClasses(["thSubheadingClass", "o-table__th"]);
+
+const tdCheckboxClasses = defineClasses(
+    ["tdCheckboxClass", "o-table__td-checkbox"],
+    [
+        "thStickyClass",
+        "o-table__th--sticky",
+        null,
+        computed(() => props.stickyCheckbox),
+    ],
+);
+
+const detailedClasses = defineClasses(["detailedClass", "o-table__detail"]);
+
+const tdDetailedChevronClasses = defineClasses([
+    "tdDetailedChevronClass",
+    "o-table__td-chevron",
 ]);
 
-const footerClasses = computed(() => [
-    useComputedClass("footerClass", "o-table__footer"),
+const mobileSortClasses = defineClasses([
+    "mobileSortClass",
+    "o-table__mobile-sort",
 ]);
 
-const thBaseClasses = computed(() => [
-    useComputedClass("thClass", "o-table__th"),
+const paginationWrapperClasses = defineClasses([
+    "paginationWrapperClass",
+    "o-table__pagination",
 ]);
 
-const tdBaseClasses = computed(() => [
-    useComputedClass("tdClass", "o-table__td"),
+const paginationWrapperRootClasses = computed(() =>
+    getActiveClasses(paginationWrapperClasses.value),
+);
+
+const thSortIconClasses = defineClasses([
+    "thSortIconClass",
+    "o-table__th__sort-icon",
 ]);
 
-const thCheckboxClasses = computed(() => [
-    ...thBaseClasses.value,
-    useComputedClass("thCheckboxClass", "o-table__th-checkbox"),
-]);
+function thClasses(column: TableColumn): ClassBind[] {
+    const classes = defineClasses(
+        [
+            "thCurrentSortClass",
+            "o-table__th-current-sort",
+            null,
+            isColumnSorted(column),
+        ],
+        ["thSortableClass", "o-table__th--sortable", null, column.sortable],
+        [
+            "thUnselectableClass",
+            "o-table__th--unselectable",
+            null,
+            column.isHeaderUnselectable,
+        ],
+        [
+            "thPositionClass",
+            "o-table__th--",
+            column.position,
+            !!column.position,
+        ],
+        ["thStickyClass", "o-table__th--sticky", null, column.sticky],
+    );
 
-const thDetailedClasses = computed(() => [
-    ...thBaseClasses.value,
-    useComputedClass("thDetailedClass", "o-table__th--detailed"),
-]);
-
-const thSubheadingClasses = computed(() => [
-    ...thBaseClasses.value,
-    useComputedClass("thSubheadingClass", "o-table__th"),
-]);
-
-const tdCheckboxClasses = computed(() => [
-    ...tdBaseClasses.value,
-    useComputedClass("tdCheckboxClass", "o-table__td-checkbox"),
-    ...thStickyClasses({ sticky: props.stickyCheckbox }),
-]);
-
-const detailedClasses = computed(() => [
-    useComputedClass("detailedClass", "o-table__detail"),
-]);
-
-const tdDetailedChevronClasses = computed(() => [
-    ...tdBaseClasses.value,
-    useComputedClass("tdDetailedChevronClass", "o-table__td-chevron"),
-]);
-
-const mobileSortClasses = computed(() => [
-    useComputedClass("mobileSortClass", "o-table__mobile-sort"),
-]);
-
-const paginationWrapperClasses = computed(() => [
-    useComputedClass("paginationWrapperClass", "o-table__pagination"),
-]);
-
-function thClasses(column: TableColumn): PropBind {
-    return [
-        ...thBaseClasses.value,
-        ...thStickyClasses(column),
-        {
-            [useComputedClass(
-                "thCurrentSortClass",
-                "o-table__th-current-sort",
-            )]: isColumnSorted(column),
-        },
-        {
-            [useComputedClass("thSortableClass", "o-table__th--sortable")]:
-                column.sortable,
-        },
-        {
-            [useComputedClass(
-                "thUnselectableClass",
-                "o-table__th--unselectable",
-            )]: column.isHeaderUnselectable,
-        },
-        {
-            [useComputedClass(
-                "thPositionClass",
-                "o-table__th--",
-                column.position,
-            )]: column.position,
-        },
-    ];
+    return [...thBaseClasses.value, ...classes.value];
 }
 
-function thStickyClasses(column: Column): PropBind {
-    return [
-        {
-            [useComputedClass("thStickyClass", "o-table__th--sticky")]:
-                column.sticky,
-        },
-    ];
+function rowClasses(row: unknown, index: number): ClassBind[] {
+    const classes = defineClasses(
+        [
+            "trSelectedClass",
+            "o-table__tr--selected",
+            null,
+            isRowSelected(row, props.selected),
+        ],
+        ["trCheckedClass", "o-table__tr--checked", null, isRowChecked(row)],
+    );
+
+    const rowClass = props.rowClass(row, index);
+
+    return [...classes.value, { [rowClass]: true }];
 }
 
-function rowClasses(row: unknown, index: number): PropBind {
-    return [
-        props.rowClass(row, index),
-        {
-            [useComputedClass("trSelectedClass", "o-table__tr--selected")]:
-                isRowSelected(row, props.selected),
-        },
-        {
-            [useComputedClass("trCheckedClass", "o-table__tr--checked")]:
-                isRowChecked(row),
-        },
-    ];
-}
+function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
+    const classes = defineClasses(
+        [
+            "tdPositionClass",
+            "o-table__td--",
+            column.position,
+            !!column.position,
+        ],
 
-function thSortIconClasses(): PropBind {
-    return [useComputedClass("thSortIconClass", "o-table__th__sort-icon")];
-}
+        ["tdStickyClass", "o-table__td--sticky", null, column.sticky],
+    );
 
-function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
-    return [
-        ...tdBaseClasses.value,
-        {
-            [useComputedClass(
-                "tdPositionClass",
-                "o-table__td--",
-                column.position,
-            )]: column.position,
-        },
-        {
-            [useComputedClass("tdStickyClass", "o-table__td--sticky")]:
-                column.sticky,
-        },
-    ];
+    return [...tdBaseClasses.value, ...classes.value];
 }
 </script>
 
@@ -1602,7 +1592,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"
                     :aria-current-label="ariaCurrentLabel"
-                    :root-class="paginationWrapperClasses"
+                    :root-class="paginationWrapperRootClasses"
                     @change="(page) => $emit('page-change', page)">
                     <!--
                         @slot Additional slot if table is paginated
@@ -1633,10 +1623,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     <tr>
                         <th
                             v-if="showDetailRowIcon"
-                            :class="thDetailedClasses" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]" />
                         <th
                             v-if="checkable && checkboxPosition === 'left'"
-                            :class="thCheckboxClasses">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]">
                             <!--
                                 @slot Override check all checkbox
                                 @binding {boolean} is-all-checked - if all rows are checked
@@ -1693,7 +1683,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                             column.sortable &&
                                             isColumnSorted(column)
                                         "
-                                        :class="thSortIconClasses()">
+                                        :class="thSortIconClasses">
                                         <o-icon
                                             :icon="sortIcon"
                                             :pack="iconPack"
@@ -1706,7 +1696,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                         </th>
                         <th
                             v-if="checkable && checkboxPosition === 'right'"
-                            :class="thCheckboxClasses">
+                            :class="[...thBaseClasses, ...thCheckboxClasses]">
                             <template v-if="headerCheckable">
                                 <!--
                                     @slot Override check all checkbox
@@ -1732,7 +1722,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     <tr v-if="hasSearchablenewColumns">
                         <th
                             v-if="showDetailRowIcon"
-                            :class="thDetailedClasses" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
@@ -1762,7 +1752,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     <tr v-if="hasCustomSubheadings">
                         <th
                             v-if="showDetailRowIcon"
-                            :class="thDetailedClasses" />
+                            :class="[...thBaseClasses, ...thDetailedClasses]" />
                         <th v-if="checkable && checkboxPosition === 'left'" />
                         <th
                             v-for="(column, index) in visibleColumns"
@@ -1770,7 +1760,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                                 column.identifier + ':' + index + 'subheading'
                             "
                             :style="isMobileActive ? {} : column.style"
-                            :class="thSubheadingClasses">
+                            :class="[...thBaseClasses, ...thSubheadingClasses]">
                             <template v-if="column.$slots?.subheading">
                                 <o-slot-component
                                     :component="column.$el"
@@ -1810,7 +1800,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             <!-- detailed toggle column -->
                             <td
                                 v-if="showDetailRowIcon"
-                                :class="tdDetailedChevronClasses">
+                                :class="[
+                                    ...tdBaseClasses,
+                                    ...tdDetailedChevronClasses,
+                                ]">
                                 <o-icon
                                     v-if="hasDetailedVisible(row)"
                                     :icon="detailIcon"
@@ -1825,7 +1818,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             <!-- checkable column left -->
                             <td
                                 v-if="checkable && checkboxPosition === 'left'"
-                                :class="tdCheckboxClasses">
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...tdCheckboxClasses,
+                                ]">
                                 <o-checkbox
                                     :model-value="isRowChecked(row)"
                                     autocomplete="off"
@@ -1870,7 +1866,10 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                             <!-- checkable column right -->
                             <td
                                 v-if="checkable && checkboxPosition === 'right'"
-                                :class="tdCheckboxClasses">
+                                :class="[
+                                    ...thBaseClasses,
+                                    ...tdCheckboxClasses,
+                                ]">
                                 <o-checkbox
                                     :model-value="isRowChecked(row)"
                                     autocomplete="off"
@@ -1992,7 +1991,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): PropBind {
                     :aria-previous-label="ariaPreviousLabel"
                     :aria-page-label="ariaPageLabel"
                     :aria-current-label="ariaCurrentLabel"
-                    :root-class="paginationWrapperClasses"
+                    :root-class="paginationWrapperRootClasses"
                     @change="(page) => $emit('page-change', page)">
                     <!--
                         @slot Additional slot if table is paginated

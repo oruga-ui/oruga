@@ -4,7 +4,7 @@ import { ref, computed, toRaw, type PropType, type Ref } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     usePropBinding,
     useProviderChild,
     useProviderParent,
@@ -177,28 +177,31 @@ useProviderParent(rootRef, { data: provideData, key: "menu-item" });
 
 // --- Computed Component Classes ---
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-menu__item"),
-    {
-        [useComputedClass("itemActiveClass", "o-menu__item--active")]:
-            isActive.value,
-    },
-    {
-        [useComputedClass("itemDisabledClass", "o-menu__item--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("itemIconTextClass", "o-menu__item--icon-text")]:
-            props.icon,
-    },
+const itemClasses = defineClasses(
+    ["itemClass", "o-menu__item"],
+    ["itemActiveClass", "o-menu__item--active", null, isActive],
+    [
+        "itemDisabledClass",
+        "o-menu__item--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "itemIconTextClass",
+        "o-menu__item--icon-text",
+        null,
+        computed(() => !!props.icon),
+    ],
+);
+
+const submenuClasses = defineClasses([
+    "itemSubmenuClass",
+    "o-menu__item__submenu",
 ]);
 
-const submenuClasses = computed(() => [
-    useComputedClass("itemSubmenuClass", "o-menu__item__submenu"),
-]);
-
-const wrapperClasses = computed(() => [
-    useComputedClass("itemWrapperClass", "o-menu__item__wrapper"),
+const wrapperClasses = defineClasses([
+    "itemWrapperClass",
+    "o-menu__item__wrapper",
 ]);
 </script>
 

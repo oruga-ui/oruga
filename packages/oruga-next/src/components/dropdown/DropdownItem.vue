@@ -3,7 +3,7 @@ import { computed, onMounted, type Component, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import { injectDropdown } from "./useDropdownShare";
 
@@ -105,21 +105,17 @@ function selectItem(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("itemClass", "o-drop__item"),
-    {
-        [useComputedClass("itemDisabledClass", "o-drop__item--disabled")]:
-            parentDropdown.value.props.disabled || props.disabled,
-    },
-    {
-        [useComputedClass("itemActiveClass", "o-drop__item--active")]:
-            isActive.value,
-    },
-    {
-        [useComputedClass("itemClickableClass", "o-drop__item--clickable")]:
-            isClickable.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["itemClass", "o-drop__item"],
+    [
+        "itemDisabledClass",
+        "o-drop__item--disabled",
+        null,
+        computed(() => parentDropdown.value.props.disabled || props.disabled),
+    ],
+    ["itemActiveClass", "o-drop__item--active", null, isActive],
+    ["itemClickableClass", "o-drop__item--clickable", null, isClickable],
+);
 </script>
 
 <template>

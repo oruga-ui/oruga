@@ -6,7 +6,7 @@ import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
-    useComputedClass,
+    defineClasses,
     usePropBinding,
     useEventListener,
     useClickOutside,
@@ -284,58 +284,61 @@ function onClose(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-tip"),
-    {
-        [useComputedClass("teleportClass", "o-tip--teleport")]:
-            !!props.teleport,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-tip"],
+    [
+        "teleportClass",
+        "o-tip--teleport",
+        null,
+        computed(() => !!props.teleport),
+    ],
+);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-tip__trigger"),
-]);
+const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
 
-const arrowClasses = computed(() => [
-    useComputedClass("arrowClass", "o-tip__arrow"),
-    {
-        [useComputedClass(
-            "arrowPositionClass",
-            "o-tip__arrow--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass(
-            "variantArrowClass",
-            "o-tip__arrow--",
-            props.variant,
-        )]: props.variant,
-    },
-]);
+const arrowClasses = defineClasses(
+    ["arrowClass", "o-tip__arrow"],
+    [
+        "arrowPositionClass",
+        "o-tip__arrow--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "variantArrowClass",
+        "o-tip__arrow--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const contentClasses = computed(() => [
-    useComputedClass("contentClass", "o-tip__content"),
-    {
-        [useComputedClass(
-            "positionClass",
-            "o-tip__content--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass("variantClass", "o-tip__content--", props.variant)]:
-            props.variant,
-    },
-    {
-        [useComputedClass("multilineClass", "o-tip__content--multiline")]:
-            props.multiline,
-    },
-    {
-        [useComputedClass("alwaysClass", "o-tip__content--always")]:
-            props.always,
-    },
-]);
+const contentClasses = defineClasses(
+    ["contentClass", "o-tip__content"],
+    [
+        "positionClass",
+        "o-tip__content--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "variantClass",
+        "o-tip__content--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
+        "multilineClass",
+        "o-tip__content--multiline",
+        null,
+        computed(() => props.multiline),
+    ],
+    [
+        "alwaysClass",
+        "o-tip__content--always",
+        null,
+        computed(() => props.always),
+    ],
+);
 </script>
 
 <template>

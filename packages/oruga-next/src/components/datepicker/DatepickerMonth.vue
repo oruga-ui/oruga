@@ -7,15 +7,17 @@ import {
     type PropType,
     type ComponentPublicInstance,
 } from "vue";
-import { useComputedClass } from "@/composables";
+
 import { isDefined } from "@/utils/helpers";
+import { defineClasses } from "@/composables";
+
 import {
     type DatepickerProps,
     type DatepickerEvent,
     type FocusedDate,
 } from "./useDatepickerShare";
 
-import type { PropBind } from "@/types";
+import type { ClassBind } from "@/types";
 
 defineOptions({
     name: "ODatepickerMonth",
@@ -301,157 +303,154 @@ function onRangeHoverEndDate(day: Date): void {
 
 // --- Computed Component Classes ---
 
-/**
- * Build cellClasses for cell using validations
- */
-function cellClasses(day: Date): PropBind {
-    function dateMatch(dateOne, dateTwo, multiple = false): boolean {
-        // if either date is null or undefined, return false
-        if (!dateOne || !dateTwo || multiple) return false;
-        if (Array.isArray(dateTwo))
-            return dateTwo.some(
-                (date) =>
-                    dateOne.getFullYear() === date.getFullYear() &&
-                    dateOne.getMonth() === date.getMonth(),
-            );
-        return (
-            dateOne.getFullYear() === dateTwo.getFullYear() &&
-            dateOne.getMonth() === dateTwo.getMonth()
-        );
-    }
-    function dateWithin(dateOne, dates, multiple = false): boolean {
-        if (!Array.isArray(dates) || multiple) return false;
-        return dateOne > dates[0] && dateOne < dates[1];
-    }
-    function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
-        if (!Array.isArray(dates) || !multiple) return false;
-        return dates.some(
+function dateMatch(dateOne, dateTwo, multiple = false): boolean {
+    // if either date is null or undefined, return false
+    if (!dateOne || !dateTwo || multiple) return false;
+    if (Array.isArray(dateTwo))
+        return dateTwo.some(
             (date) =>
-                dateOne.getDate() === date.getDate() &&
                 dateOne.getFullYear() === date.getFullYear() &&
                 dateOne.getMonth() === date.getMonth(),
         );
-    }
+    return (
+        dateOne.getFullYear() === dateTwo.getFullYear() &&
+        dateOne.getMonth() === dateTwo.getMonth()
+    );
+}
 
-    return [
-        ...monthCellClasses.value,
-        {
-            [useComputedClass(
-                "monthCellSelectedClass",
-                "o-dpck__month__cell--selected",
-            )]:
-                dateMatch(day, props.modelValue, datepicker.value.multiple) ||
+function dateWithin(dateOne, dates, multiple = false): boolean {
+    if (!Array.isArray(dates) || multiple) return false;
+    return dateOne > dates[0] && dateOne < dates[1];
+}
+
+function dateMultipleSelected(dateOne, dates, multiple = false): boolean {
+    if (!Array.isArray(dates) || !multiple) return false;
+    return dates.some(
+        (date) =>
+            dateOne.getDate() === date.getDate() &&
+            dateOne.getFullYear() === date.getFullYear() &&
+            dateOne.getMonth() === date.getMonth(),
+    );
+}
+
+const monthClasses = defineClasses(["monthClass", "o-dpck__month"]);
+
+const monthBodyClasses = defineClasses([
+    "monthBodyClass",
+    "o-dpck__month__body",
+]);
+
+const monthTableClasses = defineClasses([
+    "monthTableClass",
+    "o-dpck__month__table",
+]);
+
+const monthCellClasses = defineClasses(
+    ["monthCellClass", "o-dpck__month__cell"],
+    ["monthCellEventsClass", "o-dpck__month__cell--events", null, hasEvents],
+);
+
+/**
+ * Build cellClasses for cell using validations
+ */
+function cellClasses(day: Date): ClassBind[] {
+    const classes = defineClasses(
+        [
+            "monthCellSelectedClass",
+            "o-dpck__month__cell--selected",
+            null,
+            dateMatch(day, props.modelValue, datepicker.value.multiple) ||
                 dateWithin(day, props.modelValue, datepicker.value.multiple) ||
                 dateMultipleSelected(
                     day,
                     multipleSelectedDates.value,
                     datepicker.value.multiple,
                 ),
-        },
-        {
-            [useComputedClass(
-                "monthCellFirstSelectedClass",
-                "o-dpck__month__cell--first-selected",
-            )]: dateMatch(
+        ],
+
+        [
+            "monthCellFirstSelectedClass",
+            "o-dpck__month__cell--first-selected",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[0],
                 datepicker.value.multiple,
             ),
-        },
-        {
-            [useComputedClass(
-                "monthCellWithinSelectedClass",
-                "o-dpck__month__cell--within-selected",
-            )]: dateWithin(day, props.modelValue, datepicker.value.multiple),
-        },
-        {
-            [useComputedClass(
-                "monthCellLastSelectedClass",
-                "o-dpck__month__cell--last-selected",
-            )]: dateMatch(
+        ],
+        [
+            "monthCellWithinSelectedClass",
+            "o-dpck__month__cell--within-selected",
+            null,
+            dateWithin(day, props.modelValue, datepicker.value.multiple),
+        ],
+        [
+            "monthCellLastSelectedClass",
+            "o-dpck__month__cell--last-selected",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.modelValue) && props.modelValue[1],
                 datepicker.value.multiple,
             ),
-        },
-        {
-            [useComputedClass(
-                "monthCellWithinHoveredRangeClass",
-                "o-dpck__month__cell--within-hovered-range",
-            )]:
-                hoveredDateRange.value &&
+        ],
+        [
+            "monthCellWithinHoveredRangeClass",
+            "o-dpck__month__cell--within-hovered-range",
+            null,
+            hoveredDateRange.value &&
                 hoveredDateRange.value.length === 2 &&
                 (dateMatch(day, hoveredDateRange.value) ||
                     dateWithin(day, hoveredDateRange.value)),
-        },
-        {
-            [useComputedClass(
-                "monthCellFirstHoveredClass",
-                "o-dpck__month__cell--first-hovered",
-            )]: dateMatch(
+        ],
+        [
+            "monthCellFirstHoveredClass",
+            "o-dpck__month__cell--first-hovered",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(hoveredDateRange.value) &&
                     hoveredDateRange.value[0],
             ),
-        },
-        {
-            [useComputedClass(
-                "monthCellWithinHoveredClass",
-                "o-dpck__month__cell--within-hovered",
-            )]: dateWithin(day, hoveredDateRange.value),
-        },
-        {
-            [useComputedClass(
-                "monthCellLastHoveredClass",
-                "o-dpck__month__cell--last-hovered",
-            )]: dateMatch(
+        ],
+        [
+            "monthCellWithinHoveredClass",
+            "o-dpck__month__cell--within-hovered",
+            null,
+            dateWithin(day, hoveredDateRange.value),
+        ],
+        [
+            "monthCellLastHoveredClass",
+            "o-dpck__month__cell--last-hovered",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(hoveredDateRange.value) &&
                     hoveredDateRange.value[1],
             ),
-        },
-        {
-            [useComputedClass(
-                "monthCellTodayClass",
-                "o-dpck__month__cell--today",
-            )]: dateMatch(day, datepicker.value.dateCreator()),
-        },
-        {
-            [useComputedClass(
-                "monthCellSelectableclass",
-                "o-dpck__month__cell--selectable",
-            )]: isDateSelectable(day) && !datepicker.value.disabled,
-        },
-        {
-            [useComputedClass(
-                "monthCellUnselectableClass",
-                "o-dpck__month__cell--unselectable",
-            )]: !isDateSelectable(day) || datepicker.value.disabled,
-        },
-        {
-            [useComputedClass(
-                "monthCellEventsClass",
-                "o-dpck__month__cell--events",
-            )]: hasEvents.value,
-        },
-    ];
+        ],
+        [
+            "monthCellTodayClass",
+            "o-dpck__month__cell--today",
+            null,
+            dateMatch(day, datepicker.value.dateCreator()),
+        ],
+        [
+            "monthCellSelectableclass",
+            "o-dpck__month__cell--selectable",
+            null,
+            isDateSelectable(day) && !datepicker.value.disabled,
+        ],
+        [
+            "monthCellUnselectableClass",
+            "o-dpck__month__cell--unselectable",
+            null,
+            !isDateSelectable(day) || datepicker.value.disabled,
+        ],
+    );
+
+    return [...monthCellClasses.value, ...classes.value];
 }
-
-const monthClasses = computed(() => [
-    useComputedClass("monthClass", "o-dpck__month"),
-]);
-
-const monthBodyClasses = computed(() => [
-    useComputedClass("monthBodyClass", "o-dpck__month__body"),
-]);
-
-const monthTableClasses = computed(() => [
-    useComputedClass("monthTableClass", "o-dpck__month__table"),
-]);
-
-const monthCellClasses = computed(() => [
-    useComputedClass("monthCellClass", "o-dpck__month__cell"),
-]);
 </script>
 
 <template>

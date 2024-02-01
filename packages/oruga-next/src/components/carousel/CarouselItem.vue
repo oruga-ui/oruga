@@ -3,7 +3,7 @@ import { computed, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useProviderChild } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -56,17 +56,16 @@ function onClick(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-car__item"),
-    {
-        [useComputedClass("itemActiveClass", "o-car__item--active")]:
-            isActive.value,
-    },
-    {
-        [useComputedClass("itemClickableClass", "o-car__item--clickable")]:
-            props.clickable,
-    },
-]);
+const itemClasses = defineClasses(
+    ["itemClass", "o-car__item"],
+    ["itemActiveClass", "o-car__item--active", null, isActive],
+    [
+        "itemClickableClass",
+        "o-car__item--clickable",
+        null,
+        computed(() => props.clickable),
+    ],
+);
 </script>
 
 <template>

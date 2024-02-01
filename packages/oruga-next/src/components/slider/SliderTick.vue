@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, type PropType } from "vue";
-import { useComputedClass, useProviderChild } from "@/composables";
+import { defineClasses, useProviderChild } from "@/composables";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 
@@ -56,16 +56,14 @@ const tickStyle = computed(() => ({ left: position.value + "%" }));
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("tickClass", "o-slide__tick"),
-    {
-        [useComputedClass("tickHiddenClass", "o-slide__tick--hidden")]:
-            hidden.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["tickClass", "o-slide__tick"],
+    ["tickHiddenClass", "o-slide__tick--hidden", null, hidden],
+);
 
-const tickLabelClasses = computed(() => [
-    useComputedClass("tickLabelClass", "o-slide__tick-label"),
+const tickLabelClasses = defineClasses([
+    "tickLabelClass",
+    "o-slide__tick-label",
 ]);
 </script>
 

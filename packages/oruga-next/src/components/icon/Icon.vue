@@ -4,7 +4,7 @@ import { computed, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import getIcons from "@/utils/icons";
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import type { ComponentClass } from "@/types";
 
@@ -160,23 +160,28 @@ function getEquivalentIconOf(value): string {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-icon"),
-    {
-        [useComputedClass("clickableClass", "o-icon--clickable")]:
-            props.clickable,
-    },
-    {
-        [useComputedClass("spinClass", "o-icon--spin")]: props.spin,
-    },
-    {
-        [useComputedClass("sizeClass", "o-icon--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("variantClass", "o-icon--", computedVariant.value)]:
-            computedVariant.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-icon"],
+    [
+        "clickableClass",
+        "o-icon--clickable",
+        null,
+        computed(() => props.clickable),
+    ],
+    ["spinClass", "o-icon--spin", null, computed(() => props.spin)],
+    [
+        "sizeClass",
+        "o-icon--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "variantClass",
+        "o-icon--",
+        computedVariant,
+        computed(() => !!computedVariant.value),
+    ],
+);
 </script>
 
 <template>

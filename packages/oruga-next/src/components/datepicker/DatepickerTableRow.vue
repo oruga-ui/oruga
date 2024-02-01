@@ -8,7 +8,7 @@ import {
     type ComponentPublicInstance,
 } from "vue";
 
-import { useComputedClass } from "@/composables";
+import { defineClasses } from "@/composables";
 
 import { weeksInYear, firstWeekOffset } from "./utils";
 import {
@@ -17,7 +17,7 @@ import {
     type DatepickerEvent,
 } from "./useDatepickerShare";
 
-import type { PropBind } from "@/types";
+import type { ClassBind } from "@/types";
 
 defineOptions({
     name: "ODatepickerTableRow",
@@ -182,178 +182,177 @@ function setRangeHoverEndDate(day): void {
 
 // --- Computed Component Classes ---
 
-/** Build cellClasses for cell using validations */
-function cellClasses(day: Date): PropBind {
-    function dateMatch(dateOne, dateTwo, multiple = false): boolean {
-        // if either date is null or undefined, return false
-        // if using multiple flag, return false
-        if (!dateOne || !dateTwo || multiple) return false;
+function dateMatch(dateOne, dateTwo, multiple = false): boolean {
+    // if either date is null or undefined, return false
+    // if using multiple flag, return false
+    if (!dateOne || !dateTwo || multiple) return false;
 
-        if (Array.isArray(dateTwo)) {
-            return dateTwo.some(
-                (date) =>
-                    dateOne.getDate() === date.getDate() &&
-                    dateOne.getFullYear() === date.getFullYear() &&
-                    dateOne.getMonth() === date.getMonth(),
-            );
-        }
-        return (
-            dateOne.getDate() === dateTwo.getDate() &&
-            dateOne.getFullYear() === dateTwo.getFullYear() &&
-            dateOne.getMonth() === dateTwo.getMonth()
+    if (Array.isArray(dateTwo)) {
+        return dateTwo.some(
+            (date) =>
+                dateOne.getDate() === date.getDate() &&
+                dateOne.getFullYear() === date.getFullYear() &&
+                dateOne.getMonth() === date.getMonth(),
         );
     }
+    return (
+        dateOne.getDate() === dateTwo.getDate() &&
+        dateOne.getFullYear() === dateTwo.getFullYear() &&
+        dateOne.getMonth() === dateTwo.getMonth()
+    );
+}
 
-    function dateWithin(dateOne, dates, multiple = false): boolean {
-        if (!Array.isArray(dates) || multiple) return false;
-        return dateOne > dates[0] && dateOne < dates[1];
-    }
+function dateWithin(dateOne, dates, multiple = false): boolean {
+    if (!Array.isArray(dates) || multiple) return false;
+    return dateOne > dates[0] && dateOne < dates[1];
+}
 
-    return [
-        ...tableCellClasses.value,
-        {
-            [useComputedClass(
-                "tableCellSelectedClass",
-                "o-dpck__table__cell--selected",
-            )]:
-                dateMatch(day, props.selectedDate) ||
+/** Build cellClasses for cell using validations */
+function cellClasses(day: Date): ClassBind[] {
+    const classes = defineClasses(
+        [
+            "tableCellSelectedClass",
+            "o-dpck__table__cell--selected",
+            null,
+            dateMatch(day, props.selectedDate) ||
                 dateWithin(day, props.selectedDate, datepicker.value.multiple),
-        },
-        {
-            [useComputedClass(
-                "tableCellFirstSelectedClass",
-                "o-dpck__table__cell--first-selected",
-            )]: dateMatch(
+        ],
+        [
+            "tableCellFirstSelectedClass",
+            "o-dpck__table__cell--first-selected",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.selectedDate) && props.selectedDate[0],
                 datepicker.value.multiple,
             ),
-        },
-        {
-            [useComputedClass(
-                "tableCellWithinSelectedClass",
-                "o-dpck__table__cell--within-selected",
-            )]: dateWithin(day, props.selectedDate, datepicker.value.multiple),
-        },
-        {
-            [useComputedClass(
-                "tableCellLastSelectedClass",
-                "o-dpck__table__cell--last-selected",
-            )]: dateMatch(
+        ],
+        [
+            "tableCellWithinSelectedClass",
+            "o-dpck__table__cell--within-selected",
+            null,
+            dateWithin(day, props.selectedDate, datepicker.value.multiple),
+        ],
+        [
+            "tableCellLastSelectedClass",
+            "o-dpck__table__cell--last-selected",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.selectedDate) && props.selectedDate[1],
                 datepicker.value.multiple,
             ),
-        },
-        {
-            [useComputedClass(
-                "tableCellFirstHoveredClass",
-                "o-dpck__table__cell--first-hovered",
-            )]: dateMatch(
+        ],
+        [
+            "tableCellFirstHoveredClass",
+            "o-dpck__table__cell--first-hovered",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.hoveredDateRange) &&
                     props.hoveredDateRange[0],
             ),
-        },
-        {
-            [useComputedClass(
-                "tableCellWithinHoveredClass",
-                "o-dpck__table__cell--within-hovered",
-            )]: dateWithin(day, props.hoveredDateRange),
-        },
-        {
-            [useComputedClass(
-                "tableCellLastHoveredClass",
-                "o-dpck__table__cell--last-hovered",
-            )]: dateMatch(
+        ],
+        [
+            "tableCellWithinHoveredClass",
+            "o-dpck__table__cell--within-hovered",
+            null,
+            dateWithin(day, props.hoveredDateRange),
+        ],
+        [
+            "tableCellLastHoveredClass",
+            "o-dpck__table__cell--last-hovered",
+            null,
+            dateMatch(
                 day,
                 Array.isArray(props.hoveredDateRange) &&
                     props.hoveredDateRange[1],
             ),
-        },
-        {
-            [useComputedClass(
-                "tableCellTodayClass",
-                "o-dpck__table__cell--today",
-            )]: dateMatch(day, datepicker.value.dateCreator()),
-        },
-        {
-            [useComputedClass(
-                "tableCellSelectableClass",
-                "o-dpck__table__cell--selectable",
-            )]:
-                isDateSelectable(day, props.month) &&
-                !datepicker.value.disabled,
-        },
-        {
-            [useComputedClass(
-                "tableCellUnselectableClass",
-                "o-dpck__table__cell--unselectable",
-            )]:
-                !isDateSelectable(day, props.month) ||
-                datepicker.value.disabled,
-        },
-        {
-            [useComputedClass(
-                "tableCellInvisibleClass",
-                "o-dpck__table__cell--invisible",
-            )]:
-                !datepicker.value.nearbyMonthDays &&
-                day.getMonth() !== props.month,
-        },
-        {
-            [useComputedClass(
-                "tableCellNearbyClass",
-                "o-dpck__table__cell--nearby",
-            )]:
-                datepicker.value.nearbySelectableMonthDays &&
-                day.getMonth() !== props.month,
-        },
-        {
-            [useComputedClass(
-                "tableCellEventsClass",
-                "o-dpck__table__cell--events",
-            )]: hasEvents.value,
-        },
-        {
-            [useComputedClass(
-                "tableCellTodayClass",
-                "o-dpck__table__cell--today",
-            )]: dateMatch(day, datepicker.value.dateCreator()),
-        },
-    ];
-}
+        ],
+        [
+            "tableCellTodayClass",
+            "o-dpck__table__cell--today",
+            null,
+            dateMatch(day, datepicker.value.dateCreator()),
+        ],
+        [
+            "tableCellSelectableClass",
+            "o-dpck__table__cell--selectable",
+            null,
+            isDateSelectable(day, props.month) && !datepicker.value.disabled,
+        ],
+        [
+            "tableCellUnselectableClass",
+            "o-dpck__table__cell--unselectable",
+            null,
+            !isDateSelectable(day, props.month) || datepicker.value.disabled,
+        ],
 
-function eventClasses(event: DatepickerEvent): PropBind {
+        [
+            "tableCellInvisibleClass",
+            "o-dpck__table__cell--invisible",
+            null,
+            !datepicker.value.nearbyMonthDays && day.getMonth() !== props.month,
+        ],
+
+        [
+            "tableCellNearbyClass",
+            "o-dpck__table__cell--nearby",
+            null,
+            datepicker.value.nearbySelectableMonthDays &&
+                day.getMonth() !== props.month,
+        ],
+        [
+            "tableCellTodayClass",
+            "o-dpck__table__cell--today",
+            null,
+            dateMatch(day, datepicker.value.dateCreator()),
+        ],
+    );
+
     return [
-        useComputedClass("tableEventClass", "o-dpck__table__event"),
-        {
-            [useComputedClass(
-                "tableEventVariantClass",
-                "o-dpck__table__event--",
-                event.type,
-            )]: event.type,
-        },
-        {
-            [useComputedClass(
-                "tableEventIndicatorsClass",
-                "o-dpck__table__event--",
-                datepicker.value.indicators,
-            )]: datepicker.value.indicators,
-        },
+        ...tableCellClasses.value,
+        ...cellEventsClass.value,
+        ...classes.value,
     ];
 }
 
-const tableRowClasses = computed(() => [
-    useComputedClass("tableRowClass", "o-dpck__table__row"),
+function eventClasses(event: DatepickerEvent): ClassBind[] {
+    const classes = defineClasses(
+        ["tableEventClass", "o-dpck__table__event"],
+        [
+            "tableEventVariantClass",
+            "o-dpck__table__event--",
+            event.type,
+            !!event.type,
+        ],
+        [
+            "tableEventIndicatorsClass",
+            "o-dpck__table__event--",
+            datepicker.value.indicators,
+            !!datepicker.value.indicators,
+        ],
+    );
+    return classes.value;
+}
+
+const tableRowClasses = defineClasses(["tableRowClass", "o-dpck__table__row"]);
+
+const tableCellClasses = defineClasses([
+    "tableCellClass",
+    "o-dpck__table__cell",
 ]);
 
-const tableCellClasses = computed(() => [
-    useComputedClass("tableCellClass", "o-dpck__table__cell"),
+const tableEventsClasses = defineClasses([
+    "tableEventsClass",
+    "o-dpck__table__events",
 ]);
 
-const tableEventsClasses = computed(() => [
-    useComputedClass("tableEventsClass", "o-dpck__table__events"),
+const cellEventsClass = defineClasses([
+    "tableCellEventsClass",
+    "o-dpck__table__cell--events",
+    null,
+    hasEvents,
 ]);
 </script>
 
