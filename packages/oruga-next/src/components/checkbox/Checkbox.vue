@@ -220,16 +220,16 @@ const labelClasses = computed(() =>
     <label
         :class="rootClasses"
         :for="id"
-        data-oruga="checkbox"
         role="checkbox"
         :aria-checked="isChecked"
         tabindex="0"
+        data-oruga="checkbox"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input
             :id="id"
-            v-bind="$attrs"
             ref="inputRef"
+            v-bind="$attrs"
             v-model="vmodel"
             type="checkbox"
             data-oruga-input="checkbox"
