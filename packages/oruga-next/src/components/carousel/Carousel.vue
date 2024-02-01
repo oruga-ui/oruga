@@ -359,7 +359,7 @@ function onNext(): void {
 }
 
 function switchTo(index: number, onlyMove?: boolean): void {
-    if (settings.value.repeat) index = mod(index, total.value + 1);
+    if (settings.value.repeat) index = mod(index, total.value);
 
     index = bound(index, 0, total.value);
     scrollIndex.value = index;
@@ -411,8 +411,7 @@ function startTimer(): void {
     if (!props.autoplay || timer.value) return;
     isPaused.value = false;
     timer.value = setInterval(() => {
-        if (!props.repeat && activeIndex.value >= childItems.value.length - 1)
-            pauseTimer();
+        if (!props.repeat && !hasNext.value) pauseTimer();
         else onNext();
     }, props.interval);
 }
