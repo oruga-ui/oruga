@@ -482,7 +482,7 @@ const counterClasses = computed(() => [
             </slot>
 
             <o-autocomplete
-                v-if="hasInput"
+                v-show="hasInput"
                 ref="autocompleteRef"
                 v-model="newItem"
                 v-bind="autocompleteBind"
