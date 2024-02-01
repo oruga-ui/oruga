@@ -8,7 +8,6 @@ title: Switch
 
 > Switch between two opposing states
 
-<Carbon />
 </div>
 
 <div class="vp-example">

@@ -8,7 +8,6 @@ title: Upload
 
 > Upload one or more files
 
-<Carbon />
 </div>
 
 <div class="vp-example">

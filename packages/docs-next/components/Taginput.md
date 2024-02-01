@@ -8,7 +8,6 @@ title: Taginput
 
 > A simple tag input field that can have autocomplete functionality
 
-<Carbon />
 </div>
 
 <div class="vp-example">

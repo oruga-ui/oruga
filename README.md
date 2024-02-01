@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://oruga.io">
+    <a href="https://oruga-ui.com">
         <img width="240" src="https://github.com/oruga-ui/oruga/raw/master/packages/docs-next/public/logo.png" />
     </a>
 </p>
@@ -51,15 +51,15 @@ Oruga provides you with a set of functional components, so you can focus only on
 
 If you need a component library and want to easily apply your custom styles, Oruga is the library for you! 🐛
 
-In addition, if you don't want to style everything yourself, we've created several [themes](https://oruga.io/documentation/themes.html) to provide you with a variety of ready-to-use styles. 🦋
+In addition, if you don't want to style everything yourself, we've created several [themes](https://oruga-ui.com/documentation/themes.html) to provide you with a variety of ready-to-use styles. 🦋
 
 ## Documentation
 
-Browse [online documentation here](https://oruga.io/documentation/).
+Browse [online documentation here](https://oruga-ui.com/documentation/).
 
-💅 For more info about components customization, [read carefully the "customization" section](https://oruga.io/documentation/customisation.html) in the documentation.
+💅 For more info about components customization, [read carefully the "customization" section](https://oruga-ui.com/documentation/customisation.html) in the documentation.
 
-🕹 To see Oruga in action, go to the [Example section](https://oruga.io/documentation/#examples) in the documentation.
+🕹 To see Oruga in action, go to the [Example section](https://oruga-ui.com/documentation/#examples) in the documentation.
 
 Note: the documentation source code is in the `docs` directory, it serves as the demo as well.
 
@@ -112,7 +112,7 @@ npm install @oruga-ui/oruga-next
 Oruga's superpower is its configurability and its CSS framework agnostic approach.
 Each component can be individually customised and configured by defining specific classes using a class-mapping approach. Therefore, Oruga comes without any styling by default. However, there are several official predefined configurations called themes, which you can include and extend to give your application a individual look and feel. And all components came with predefined classes by default.
 
-Please [read the "customization" section](https://oruga.io/documentation/customisation.html) in Oruga documentation.
+Please [read the "customization" section](https://oruga-ui.com/documentation/customisation.html) in Oruga documentation.
 
 If you want to see an example with a fully customized registration form using `Tailwind`, `Bulma`, `Bootstrap` or `Material` CSS framework have a look at the official [Oruga multiframework example](https://oruga-multiframework-demo.netlify.app/tailwind) (source code available [here](https://github.com/oruga-ui/demo-multiframework)) or if you're more familiar with TailwindCSS 2 give our official [TailwindCSS Demo](https://oruga-tailwindcss-demo.netlify.app/) a try (source code [here](https://github.com/oruga-ui/demo-tailwindcss))
 

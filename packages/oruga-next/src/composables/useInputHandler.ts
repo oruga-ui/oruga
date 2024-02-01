@@ -7,9 +7,9 @@ import {
     type Component,
 } from "vue";
 import { injectField } from "@/components/field/useFieldShare";
+import { unrefElement } from "./unrefElement";
 import { getOption } from "@/utils/config";
 import { isSSR } from "@/utils/ssr";
-import { unrefElement } from "@/utils/unrefElement";
 
 // This should cover all types of HTML elements that have properties related to
 // HTML constraint validation, e.g. .form and .validity.
@@ -63,6 +63,10 @@ export function useInputHandler(
 
     const element = computed<ValidatableFormElement>(() => {
         const el = unrefElement(inputRef as Component);
+        if (!el) {
+            console.warn("useInputHandler: inputRef contains no element");
+            return undefined;
+        }
         if (el.getAttribute("data-oruga-input"))
             // if element is the input element
             return el as ValidatableFormElement;
@@ -70,7 +74,9 @@ export function useInputHandler(
         const inputs = el.querySelector("[data-oruga-input]");
 
         if (!inputs) {
-            console.warn("Underlaying Oruga input component not found");
+            console.warn(
+                "useInputHandler: Underlaying Oruga input component not found",
+            );
             return undefined;
         }
         // return underlaying the input element

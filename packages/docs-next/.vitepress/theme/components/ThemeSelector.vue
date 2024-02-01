@@ -20,7 +20,7 @@ selectedTheme.value = loadTheme();
 
 // load last used theme or set a default one
 function loadTheme() {
-    const cache = localStorage.getItem("oruga.io:theme");
+    const cache = localStorage.getItem("oruga-ui.com:theme");
     if (cache && cache !== "undefined") {
         try {
             const themeConfig = JSON.parse(cache);
@@ -35,7 +35,7 @@ function loadTheme() {
 
 function onThemeChange(theme) {
     selectedTheme.value = theme;
-    localStorage.setItem("oruga.io:theme", JSON.stringify(theme));
+    localStorage.setItem("oruga-ui.com:theme", JSON.stringify(theme));
     location.reload();
 }
 </script>

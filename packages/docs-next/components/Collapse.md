@@ -8,7 +8,6 @@ title: Collapse
 
 > An easy way to toggle what you want
 
-<Carbon />
 </div>
 
 <div class="vp-example">

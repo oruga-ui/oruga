@@ -3,7 +3,7 @@
         <o-button label="Button" />
         <o-button
             tag="a"
-            href="https://oruga.io"
+            href="https://oruga-ui.com"
             target="_blank"
             label="Anchor" />
         <o-button tag="input" native-type="submit" value="Submit input" />

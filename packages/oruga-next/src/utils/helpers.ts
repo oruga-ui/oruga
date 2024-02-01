@@ -211,10 +211,6 @@ export function escapeRegExpChars(value: string): string {
     return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
-export function endsWith(str: string, suffix: string): boolean {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-
 export function toCssDimension(width: string | number): string | number {
     return width === undefined
         ? null

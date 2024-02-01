@@ -1,10 +1,10 @@
 import { getCurrentInstance, type ComponentInternalInstance } from "vue";
 import { getOptions } from "@/utils/config";
-import { blankIfUndefined, endsWith, getValueByPath } from "@/utils/helpers";
+import { blankIfUndefined, getValueByPath } from "@/utils/helpers";
 
 import type {
     ClassDefinition,
-    ComponentContext,
+    ComponentProps,
     TransformFunction,
 } from "@/types";
 
@@ -16,11 +16,7 @@ const defaultSuffixProcessor = (input: string, suffix: string): string => {
         .join(" ");
 };
 
-const getContext = (vm: ComponentInternalInstance): ComponentContext => {
-    const computedNames = vm.proxy?.$options.computed
-        ? Object.keys(vm.proxy.$options.computed)
-        : [];
-
+const getProps = (vm: ComponentInternalInstance): ComponentProps => {
     let props = vm.proxy.$props;
 
     // get all props which ends with "Props", these are compressed parent props
@@ -29,18 +25,7 @@ const getContext = (vm: ComponentInternalInstance): ComponentContext => {
         .filter((key) => key.endsWith("Props"))
         .forEach((key) => (props = { ...props, ...props[key] }));
 
-    const computedProps = computedNames
-        .filter((e) => !endsWith(e, "Classes"))
-        .reduce((o, key) => {
-            o[key] = vm.proxy[key];
-            return o;
-        }, {});
-
-    return {
-        props: props,
-        data: vm.proxy.$data,
-        computed: computedProps,
-    };
+    return props;
 };
 
 /**
@@ -112,8 +97,8 @@ export function useComputedClass(
         currentClass = currentClass.join(" ");
     }
     if (typeof currentClass === "function") {
-        const context = getContext(vm);
-        currentClass = currentClass(suffix, context);
+        const props = getProps(vm);
+        currentClass = currentClass(suffix, props);
     } else {
         currentClass = defaultSuffixProcessor(currentClass as string, suffix);
     }
@@ -123,8 +108,8 @@ export function useComputedClass(
         globalClass = globalClass.join(" ");
     }
     if (typeof globalClass === "function") {
-        const context = getContext(vm);
-        globalClass = globalClass(suffix, context);
+        const props = getProps(vm);
+        globalClass = globalClass(suffix, props);
     } else {
         globalClass = defaultSuffixProcessor(globalClass as string, suffix);
     }

@@ -8,7 +8,6 @@ title: Input
 
 > Get user Input. Use with Field to access all functionalities
 
-<Carbon />
 </div>
 
 <div class="vp-example">
