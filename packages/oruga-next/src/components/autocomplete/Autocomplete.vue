@@ -781,9 +781,11 @@ function itemOptionClasses(option): ClassBind[] {
         v-model:active="isActive"
         data-oruga="autocomplete"
         :class="rootClasses"
+        :menu-tabindex="-1"
         :menu-tag="menuTag"
         scrollable
         :tabindex="-1"
+        :trap-focus="false"
         :triggers="[]"
         :disabled="disabled"
         :closeable="closeableOptions"
@@ -830,7 +832,7 @@ function itemOptionClasses(option): ClassBind[] {
             ref="headerRef"
             :tag="itemTag"
             aria-role="button"
-            :tabindex="0"
+            :tabindex="-1"
             :class="[...itemClasses, ...itemHeaderClasses]"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
             <!--
@@ -844,6 +846,7 @@ function itemOptionClasses(option): ClassBind[] {
                 v-if="element.group"
                 :key="groupindex + 'group'"
                 :tag="itemTag"
+                :tabindex="-1"
                 :class="[...itemClasses, ...itemGroupClasses]">
                 <!--
                     @slot Override the option grpup
@@ -868,7 +871,7 @@ function itemOptionClasses(option): ClassBind[] {
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
                 aria-role="button"
-                :tabindex="0"
+                :tabindex="-1"
                 @click="(value, event) => setSelected(value, !keepOpen, event)">
                 <!--
                     @slot Override the select option
@@ -902,7 +905,7 @@ function itemOptionClasses(option): ClassBind[] {
             ref="footerRef"
             :tag="itemTag"
             aria-role="button"
-            :tabindex="0"
+            :tabindex="-1"
             :class="[...itemClasses, ...itemFooterClasses]"
             @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">
             <!--

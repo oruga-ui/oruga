@@ -100,6 +100,8 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
+    /** Tabindex of dropdown menu element. */
+    menuTabindex: { type: Number, default: null },
     /** Dropdown menu tag name */
     menuTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
@@ -566,6 +568,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     v-show="(!disabled && (isActive || isHovered)) || inline"
                     ref="contentRef"
                     v-trap-focus="trapFocus"
+                    :tabindex="menuTabindex"
                     :class="menuClasses"
                     :aria-hidden="!isActive"
                     :role="ariaRole"
