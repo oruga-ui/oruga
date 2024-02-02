@@ -360,15 +360,17 @@ watch(
     (value) => {
         // Check if selected is invalid
         const currentValue = getValue(selectedOption.value);
-        if (currentValue && currentValue !== value) setSelected(null, false);
+        if (currentValue && currentValue !== value) {
+            setSelected(null, false);
 
-        nextTick(() => {
-            // Close dropdown if data is empty
-            if (isEmpty.value && !slots.empty) isActive.value = false;
-            // Close dropdown if input is clear or else open it
-            else if (isFocused.value && (!props.openOnFocus || value))
-                isActive.value = !!value;
-        });
+            nextTick(() => {
+                // Close dropdown if data is empty
+                if (isEmpty.value && !slots.empty) isActive.value = false;
+                // Close dropdown if input is clear or else open it
+                else if (isFocused.value && (!props.openOnFocus || value))
+                    isActive.value = !!value;
+            });
+        }
     },
 );
 
