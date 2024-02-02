@@ -650,6 +650,15 @@ function handleFocus(event: Event): void {
     onFocus(event);
 }
 
+/**
+ * Blur listener.
+ * Close on blur.
+ */
+function handleBlur(event: Event): void {
+    isActive.value = false;
+    onBlur(event);
+}
+
 /** emit input change event */
 function onInput(value: string | number): void {
     const currentValue = getValue(selectedOption.value);
@@ -807,7 +816,7 @@ function itemOptionClasses(option): ClassBind[] {
                 :status-icon="statusIcon"
                 @update:model-value="onInput"
                 @focus="handleFocus"
-                @blur="onBlur"
+                @blur="handleBlur"
                 @invalid="onInvalid"
                 @keydown="onKeydown"
                 @keydown.up.prevent="navigateItem(-1)"
