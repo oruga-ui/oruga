@@ -4,7 +4,6 @@ import {
     nextTick,
     ref,
     watch,
-    onBeforeUpdate,
     useAttrs,
     toRaw,
     onMounted,
@@ -327,13 +326,14 @@ const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
 
-function setItemRef(el: HTMLElement | Component): void {
+function setItemRef(
+    el: HTMLElement | Component,
+    groupIndex: number,
+    itemIndex: number,
+): void {
+    if (groupIndex === 0 && itemIndex === 0) itemRefs.value.splice(0);
     if (el) itemRefs.value.push(el);
 }
-
-onBeforeUpdate(() => {
-    itemRefs.value = [];
-});
 
 // use form input functionalities
 const { checkHtml5Validity, onInvalid, onFocus, onBlur, isFocused } =
@@ -866,7 +866,7 @@ function itemOptionClasses(option): ClassBind[] {
             <o-dropdown-item
                 v-for="(option, index) in element.items"
                 :key="groupindex + ':' + index"
-                :ref="setItemRef"
+                :ref="(el) => setItemRef(el, groupindex, index)"
                 :value="option"
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
