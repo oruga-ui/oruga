@@ -75,10 +75,11 @@ title: Select
 
 ### Slots
 
-| Name        | Description                               | Bindings |
-| ----------- | ----------------------------------------- | -------- |
-| default     | Override the label, default is label prop |          |
-| placeholder | Override the placeholder                  |          |
+| Name        | Description                                   | Bindings |
+| ----------- | --------------------------------------------- | -------- |
+| label       | Override the label, default is label prop     |          |
+| placeholder | Override the placeholder                      |          |
+| default     | Override the options, default is options prop |          |
 
 </div>
 

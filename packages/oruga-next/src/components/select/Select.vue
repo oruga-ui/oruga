@@ -347,13 +347,13 @@ const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
         data-oruga="select"
         role="listbox"
         tabindex="0"
-        @click.stop="setFocus"
+        @click="setFocus"
         @keydown.prevent.enter="setFocus">
-        <span v-if="label || $slots.default" :class="labelClasses">
+        <span v-if="label || $slots.label" :class="labelClasses">
             <!--
                 @slot Override the label, default is label prop 
             -->
-            <slot>{{ label }}</slot>
+            <slot name="label">{{ label }}</slot>
         </span>
 
         <o-icon
