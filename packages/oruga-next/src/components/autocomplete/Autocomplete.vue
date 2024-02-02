@@ -30,6 +30,16 @@ import {
 
 import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
 
+enum SpecialOption {
+    Header,
+    Footer,
+}
+
+/** True if the specified option is a special option. */
+function isSpecialOption(option: any): option is SpecialOption {
+    return option in SpecialOption;
+}
+
 /**
  * Extended input that provide suggestions while the user types
  * @displayName Autocomplete
@@ -474,7 +484,9 @@ function getValue(option: unknown): string {
 /** Set which option is currently hovered. */
 function setHovered(option: unknown): void {
     if (option === undefined) return;
-    hoveredOption.value = option;
+    hoveredOption.value = isSpecialOption(option) ? null : option;
+    headerHovered.value = option === SpecialOption.Header;
+    footerHovered.value = option === SpecialOption.Footer;
 }
 
 /**
@@ -514,26 +526,24 @@ function selectFirstOption(): void {
 }
 
 /** Check if header or footer was selected. */
-function selectHeaderOrFoterByClick(
+function selectHeaderOrFooterByClick(
     event: Event,
-    origin?: "header" | "footer",
+    origin?: SpecialOption,
     closeDropdown = true,
 ): void {
     if (
         props.selectableHeader &&
-        (headerHovered.value || origin === "header")
+        (headerHovered.value || origin === SpecialOption.Header)
     ) {
         emits("select-header", event);
-        headerHovered.value = false;
         if (origin) setHovered(null);
         if (closeDropdown) isActive.value = false;
     }
     if (
         props.selectableFooter &&
-        (footerHovered.value || origin === "footer")
+        (footerHovered.value || origin === SpecialOption.Footer)
     ) {
         emits("select-footer", event);
-        footerHovered.value = false;
         if (origin) setHovered(null);
         if (closeDropdown) isActive.value = false;
     }
@@ -571,12 +581,10 @@ function navigateItem(direction: 1 | -1): void {
     index = index < 0 ? 0 : index;
 
     // set hover state
-    footerHovered.value = false;
-    headerHovered.value = false;
     if (footerRef.value && props.selectableFooter && index === data.length - 1)
-        footerHovered.value = true;
+        setHovered(SpecialOption.Footer);
     else if (headerRef.value && props.selectableHeader && index === 0)
-        headerHovered.value = true;
+        setHovered(SpecialOption.Header);
     else setHovered(data[index] !== undefined ? data[index] : null);
 
     // get items from input
@@ -626,7 +634,7 @@ function onKeydown(event: KeyboardEvent): void {
         if (hoveredOption.value === null) {
             // header and footer uses headerHovered && footerHovered. If header or footer
             // was selected then fire event otherwise just return so a value isn't selected
-            selectHeaderOrFoterByClick(event, null, closeDropdown);
+            selectHeaderOrFooterByClick(event, null, closeDropdown);
             return;
         }
         setSelected(hoveredOption.value, closeDropdown, event);
@@ -834,7 +842,9 @@ function itemOptionClasses(option): ClassBind[] {
             aria-role="button"
             :tabindex="-1"
             :class="[...itemClasses, ...itemHeaderClasses]"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'header')">
+            @click="
+                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Header)
+            ">
             <!--
                 @slot Define an additional header
             -->
@@ -907,7 +917,9 @@ function itemOptionClasses(option): ClassBind[] {
             aria-role="button"
             :tabindex="-1"
             :class="[...itemClasses, ...itemFooterClasses]"
-            @click="(v, e) => selectHeaderOrFoterByClick(e, 'footer')">
+            @click="
+                (v, e) => selectHeaderOrFooterByClick(e, SpecialOption.Footer)
+            ">
             <!--
                 @slot Define an additional footer
             -->
