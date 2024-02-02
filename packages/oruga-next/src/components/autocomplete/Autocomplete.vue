@@ -17,7 +17,7 @@ import ODropdownItem from "../dropdown/DropdownItem.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { getValueByPath } from "@/utils/helpers";
+import { getValueByPath, uuid } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
 import {
     unrefElement,
@@ -360,6 +360,9 @@ const hoveredOption = ref(null);
 const headerHovered = ref(false);
 const footerHovered = ref(false);
 
+const hoveredId = ref(null);
+const menuId = uuid();
+
 /**
  * When updating input's value
  *   1. If value isn't the same as selected, set null
@@ -400,9 +403,9 @@ watch(
             const data = computedData.value
                 .map((d) => d.items)
                 .reduce((a, b) => [...a, ...b], []);
-            if (!data.some((d) => getValue(d) === hoveredValue)) {
-                setHovered(null);
-            }
+            const index = data.findIndex((d) => getValue(d) === hoveredValue);
+            if (index >= 0) nextTick(() => setHoveredIdToIndex(index));
+            else setHovered(null);
         }
     },
 );
@@ -487,6 +490,13 @@ function setHovered(option: unknown): void {
     hoveredOption.value = isSpecialOption(option) ? null : option;
     headerHovered.value = option === SpecialOption.Header;
     footerHovered.value = option === SpecialOption.Footer;
+    hoveredId.value = null;
+}
+
+/** Set which option is the aria-activedescendant by index. */
+function setHoveredIdToIndex(index: number): void {
+    const element = unrefElement(itemRefs.value[index]);
+    hoveredId.value = element ? element.id : null;
 }
 
 /**
@@ -519,6 +529,7 @@ function selectFirstOption(): void {
         if (nonEmptyElements.length) {
             const option = nonEmptyElements[0].items[0];
             setHovered(option);
+            setHoveredIdToIndex(0);
         } else {
             setHovered(null);
         }
@@ -596,6 +607,9 @@ function navigateItem(direction: 1 | -1): void {
 
     const element = unrefElement(items[index]);
     if (!element) return;
+
+    // set aria-activedescendant
+    hoveredId.value = element.id;
 
     // define scroll position
     const dropdownMenu = unrefElement(dropdownRef.value.$content);
@@ -786,12 +800,15 @@ function itemOptionClasses(option): ClassBind[] {
 <template>
     <o-dropdown
         ref="dropdownRef"
+        v-model="selectedOption"
         v-model:active="isActive"
         data-oruga="autocomplete"
         :class="rootClasses"
+        :menu-id="menuId"
         :menu-tabindex="-1"
         :menu-tag="menuTag"
         scrollable
+        aria-role="listbox"
         :tabindex="-1"
         :trap-focus="false"
         :triggers="[]"
@@ -820,7 +837,11 @@ function itemOptionClasses(option): ClassBind[] {
                 :maxlength="maxlength"
                 :autocomplete="autocomplete"
                 :use-html5-validation="false"
+                role="combobox"
+                :aria-activedescendant="hoveredId"
                 :aria-autocomplete="keepFirst ? 'both' : 'list'"
+                :aria-controls="menuId"
+                :aria-expanded="isActive"
                 :expanded="expanded"
                 :disabled="disabled"
                 :status-icon="statusIcon"
@@ -839,7 +860,9 @@ function itemOptionClasses(option): ClassBind[] {
             v-if="$slots.header"
             ref="headerRef"
             :tag="itemTag"
-            aria-role="button"
+            :id="`${menuId}-header`"
+            aria-role="option"
+            :aria-selected="headerHovered"
             :tabindex="-1"
             :class="[...itemClasses, ...itemHeaderClasses]"
             @click="
@@ -877,10 +900,12 @@ function itemOptionClasses(option): ClassBind[] {
                 v-for="(option, index) in element.items"
                 :key="groupindex + ':' + index"
                 :ref="(el) => setItemRef(el, groupindex, index)"
+                :id="`${menuId}-${groupindex}-${index}`"
                 :value="option"
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
-                aria-role="button"
+                aria-role="option"
+                :aria-selected="toRaw(option) === toRaw(hoveredOption)"
                 :tabindex="-1"
                 @click="(value, event) => setSelected(value, !keepOpen, event)">
                 <!--
@@ -914,7 +939,9 @@ function itemOptionClasses(option): ClassBind[] {
             v-if="$slots.footer"
             ref="footerRef"
             :tag="itemTag"
-            aria-role="button"
+            :id="`${menuId}-footer`"
+            aria-role="option"
+            :aria-selected="footerHovered"
             :tabindex="-1"
             :class="[...itemClasses, ...itemFooterClasses]"
             @click="
