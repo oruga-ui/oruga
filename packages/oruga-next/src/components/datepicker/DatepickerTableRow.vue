@@ -358,19 +358,22 @@ const cellEventsClass = defineClasses([
 
 <template>
     <div :class="tableRowClasses">
-        <button
+        <!-- eslint-disable-next-line vuejs-accessibility/interactive-supports-focus -->
+        <div
             v-if="datepicker.showWeekNumber"
             :class="tableCellClasses"
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            :tabindex="datepicker.weekNumberClickable ? '0' : null"
+            :tabindex="datepicker.weekNumberClickable ? 0 : null"
+            role="button"
             @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
             @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
-        </button>
+        </div>
         <template v-for="(weekDay, idx) in week" :key="idx">
-            <button
+            <!-- eslint-disable-next-line vuejs-accessibility/interactive-supports-focus -->
+            <div
                 v-if="!datepicker.disabled && isDateSelectable(weekDay, month)"
                 :ref="(el) => setDayRef(weekDay, el)"
                 :class="cellClasses(weekDay)"
@@ -379,6 +382,7 @@ const cellEventsClass = defineClasses([
                         ? null
                         : 0
                 "
+                role="button"
                 @click.prevent="selectDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
                 @focus="setRangeHoverEndDate(weekDay)"
@@ -392,7 +396,7 @@ const cellEventsClass = defineClasses([
                         :key="index"
                         :class="eventClasses(event)" />
                 </div>
-            </button>
+            </div>
             <div v-else :key="idx" :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>
