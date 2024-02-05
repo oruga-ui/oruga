@@ -4,6 +4,7 @@ import { computed, ref, watch, type PropType } from "vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { File } from "@/utils/ssr";
+import { uuid } from "@/utils/helpers";
 import {
     defineClasses,
     useVModelBinding,
@@ -54,6 +55,8 @@ const props = defineProps({
     expanded: { type: Boolean, default: false },
     /** Replace last chosen files every time (like native file input element) */
     native: { type: Boolean, default: true },
+    /** Accessibility label to establish relationship between the input and control label */
+    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -261,7 +264,7 @@ const draggableClasses = defineClasses(
 </script>
 
 <template>
-    <label :class="rootClasses" data-oruga="upload">
+    <label :id="ariaLabelledby" :class="rootClasses" data-oruga="upload">
         <template v-if="!dragDrop">
             <!--
                 @slot Default content
@@ -273,6 +276,8 @@ const draggableClasses = defineClasses(
         <div
             v-else
             :class="draggableClasses"
+            role="button"
+            tabindex="0"
             @mouseenter="updateDragDropFocus(true)"
             @mouseleave="updateDragDropFocus(false)"
             @dragover.prevent="updateDragDropFocus(true)"
@@ -286,12 +291,13 @@ const draggableClasses = defineClasses(
         </div>
 
         <input
+            v-bind="$attrs"
             ref="inputRef"
             type="file"
-            v-bind="$attrs"
             :multiple="multiple"
             :accept="accept"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @change="onFileChange"
             @focus="onFocus"
             @blur="onBlur" />

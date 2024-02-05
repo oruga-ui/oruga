@@ -358,30 +358,33 @@ const cellEventsClass = defineClasses([
 
 <template>
     <div :class="tableRowClasses">
-        <a
+        <div
             v-if="datepicker.showWeekNumber"
             :class="tableCellClasses"
             :style="{
                 cursor: datepicker.weekNumberClickable ? 'pointer' : 'auto',
             }"
-            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))">
+            :tabindex="datepicker.weekNumberClickable ? 0 : null"
+            role="button"
+            @click.prevent="clickWeekNumber(getWeekNumber(week[6]))"
+            @keydown.enter.prevent="clickWeekNumber(getWeekNumber(week[6]))">
             <span>{{ getWeekNumber(week[6]) }}</span>
-        </a>
+        </div>
         <template v-for="(weekDay, idx) in week" :key="idx">
-            <a
+            <div
                 v-if="!datepicker.disabled && isDateSelectable(weekDay, month)"
                 :ref="(el) => setDayRef(weekDay, el)"
                 :class="cellClasses(weekDay)"
                 role="button"
-                href="#"
                 :tabindex="
                     day === weekDay.getDate() && month === weekDay.getMonth()
                         ? null
-                        : -1
+                        : 0
                 "
                 @click.prevent="selectDate(weekDay)"
                 @mouseenter="setRangeHoverEndDate(weekDay)"
-                @keydown="onKeydown($event, weekDay)">
+                @focus="setRangeHoverEndDate(weekDay)"
+                @keydown.enter.prevent="onKeydown($event, weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
                 <div
                     v-if="eventsDateMatch(weekDay).length"
@@ -391,7 +394,7 @@ const cellEventsClass = defineClasses([
                         :key="index"
                         :class="eventClasses(event)" />
                 </div>
-            </a>
+            </div>
             <div v-else :key="idx" :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>

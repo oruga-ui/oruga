@@ -177,7 +177,8 @@ const headerTextClasses = defineClasses([
             :data-id="`tabs-${item.identifier}`"
             data-oruga="tabs-item"
             :tabindex="isActive ? 0 : -1"
-            :role="ariaRole">
+            :role="ariaRole"
+            aria-roledescription="item">
             <!-- 
                 @slot Tab item content
             -->

@@ -40,7 +40,7 @@ const props = defineProps({
     /**
      * Role attribute to be passed to the list item for better accessibility.
      * Use menuitem only in situations where your dropdown is related to a navigation menu.
-     * @values listitem, menuitem
+     * @values listitem, menuitem, button
      */
     ariaRole: {
         type: String,

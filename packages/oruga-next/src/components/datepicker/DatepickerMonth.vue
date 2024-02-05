@@ -458,7 +458,7 @@ function cellClasses(day: Date): ClassBind[] {
         <div :class="monthBodyClasses">
             <div :class="monthTableClasses">
                 <template v-for="(date, idx) in monthDates" :key="idx">
-                    <a
+                    <div
                         v-if="!datepicker.disabled && isDateSelectable(date)"
                         :ref="(el) => setMonthRef(date, el)"
                         :class="cellClasses(date)"
@@ -466,10 +466,11 @@ function cellClasses(day: Date): ClassBind[] {
                         href="#"
                         :disabled="datepicker.disabled"
                         :tabindex="
-                            focusedDate.month === date.getMonth() ? null : -1
+                            focusedDate.month === date.getMonth() ? null : 0
                         "
                         @click.prevent="selectDate(date)"
                         @mouseenter="onRangeHoverEndDate(date)"
+                        @focus="onRangeHoverEndDate(date)"
                         @keydown.prevent="onKeydown($event, date)">
                         {{ monthNames[date.getMonth()] }}
                         <div v-if="eventsDateMatch(date).length" class="events">
@@ -479,7 +480,7 @@ function cellClasses(day: Date): ClassBind[] {
                                 class="event"
                                 :class="event.type" />
                         </div>
-                    </a>
+                    </div>
                     <div v-else :class="cellClasses(date)">
                         {{ monthNames[date.getMonth()] }}
                     </div>

@@ -444,9 +444,14 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                 :class="itemClasses(childItem)">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
 
-                <a
+                <component
+                    :is="childItem.tag"
+                    role="button"
                     :class="stepLinkClasses(childItem)"
-                    @click="isItemClickable(childItem) && itemClick(childItem)">
+                    @click="isItemClickable(childItem) && itemClick(childItem)"
+                    @keydown.enter="
+                        isItemClickable(childItem) && itemClick(childItem)
+                    ">
                     <div :class="stepMarkerClasses">
                         <o-icon
                             v-if="childItem.icon"
@@ -461,7 +466,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                     <div :class="stepLinkLabelClasses">
                         {{ childItem.label }}
                     </div>
-                </a>
+                </component>
             </div>
         </nav>
 

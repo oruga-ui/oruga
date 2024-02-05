@@ -50,7 +50,7 @@ const props = defineProps({
         type: String,
         default: () => getOption("steps.iconPack"),
     },
-    /** Tabs item tag name */
+    /** Step item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("steps.itemTag", "button"),
@@ -165,10 +165,11 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
             v-show="isActive && visible"
             ref="rootRef"
             :class="elementClasses"
-            :data-id="`tabs-${item.identifier}`"
+            :data-id="`steps-${item.identifier}`"
             data-oruga="steps-item"
             :tabindex="isActive ? 0 : -1"
-            :role="ariaRole">
+            :role="ariaRole"
+            aria-roledescription="item">
             <!-- 
                 @slot Step item content
             -->

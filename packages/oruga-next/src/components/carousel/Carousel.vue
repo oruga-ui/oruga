@@ -574,12 +574,21 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
         ref="rootRef"
         :class="rootClasses"
         data-oruga="carousel"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave">
+        role="region"
+        @mouseover="onMouseEnter"
+        @mouseleave="onMouseLeave"
+        @focus="onMouseEnter"
+        @blur="onMouseLeave"
+        @keydown.left="onPrev"
+        @keydown.right="onNext">
         <div :class="wrapperClasses">
             <div
                 :class="itemsClasses"
                 :style="'transform:translateX(' + translation + 'px)'"
+                tabindex="0"
+                role="group"
+                draggable="true"
+                aria-roledescription="carousel"
                 @mousedown="onDragStart"
                 @touchstart="onDragStart">
                 <!--
@@ -608,7 +617,10 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                         :icon="iconPrev"
                         :size="iconSize"
                         both
-                        @click="onPrev" />
+                        role="button"
+                        tabindex="0"
+                        @click="onPrev"
+                        @keydown.enter="onPrev" />
                     <o-icon
                         v-show="hasNext"
                         :class="[...arrowIconClasses, ...arrowIconNextClasses]"
@@ -616,7 +628,10 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                         :icon="iconNext"
                         :size="iconSize"
                         both
-                        @click="onNext" />
+                        role="button"
+                        tabindex="0"
+                        @click="onNext"
+                        @keydown.enter="onNext" />
                 </template>
             </slot>
         </div>
@@ -633,13 +648,17 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
             :indicator-index="indicatorIndex"
             name="indicators">
             <template v-if="childItems.length">
-                <div v-if="indicators" :class="indicatorsClasses">
-                    <a
+                <div v-if="indicators" :class="indicatorsClasses" role="group">
+                    <div
                         v-for="(_, index) in indicatorCount"
                         :key="index"
                         :class="indicatorClasses"
+                        role="button"
+                        tabindex="0"
+                        @focus="onModeChange('hover', index)"
                         @mouseover="onModeChange('hover', index)"
-                        @click="onModeChange('click', index)">
+                        @click="onModeChange('click', index)"
+                        @keypress.enter="onModeChange('click', index)">
                         <!--
                             @slot Override the indicator elements
                             @binding {index} index indicator index 
@@ -647,7 +666,7 @@ const indicatorClasses = defineClasses(["indicatorClass", "o-car__indicator"]);
                         <slot :index="index" name="indicator">
                             <span :class="indicatorItemClasses(index)" />
                         </slot>
-                    </a>
+                    </div>
                 </div>
             </template>
         </slot>
