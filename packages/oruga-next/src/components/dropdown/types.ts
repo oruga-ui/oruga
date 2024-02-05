@@ -54,6 +54,10 @@ declare module "../../index" {
                 trapFocus: boolean;
                 /** Makes the component check if menu reached scroll start or end and emit scroll events. */
                 checkScroll: boolean;
+                /** HTML element ID of dropdown menu element. */
+                menuId: string;
+                /** Tabindex of dropdown menu element. */
+                menuTabindex: number;
                 /** Dropdown menu tag name */
                 menuTag: DynamicComponent;
                 /** Dropdown trigger tag name */
