@@ -13,6 +13,7 @@ import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
+import { uuid } from "@/utils/helpers";
 import {
     defineClasses,
     useVModelBinding,
@@ -124,6 +125,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.autocomplete", "off"),
     },
+    /** Accessibility label to establish relationship between the checkbox and control label */
+    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -452,6 +455,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
             :autocomplete="autocomplete"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -468,6 +472,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
             :style="computedStyles"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"

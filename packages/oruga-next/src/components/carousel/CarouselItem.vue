@@ -2,6 +2,7 @@
 import { computed, type PropType, type Ref } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
+import { getOption } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
 import type { ComponentClass } from "@/types";
@@ -21,6 +22,11 @@ const props = defineProps({
     ...baseComponentProps,
     /** Make item clickable */
     clickable: { type: Boolean, default: false },
+    /** Role attribute to be passed to the div wrapper for better accessibility */
+    ariaRole: {
+        type: String,
+        default: () => getOption("carousel.ariaRole", "option"),
+    },
     // class props (will not be displayed in the docs)
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -43,7 +49,7 @@ const isActive = computed(() => parent.value.activeIndex === item.value.index);
 
 const itemStyle = computed(() => ({ width: `${parent.value.itemWidth}px` }));
 
-function onClick(event: MouseEvent): void {
+function onClick(event: Event): void {
     if (isActive.value) parent.value.onClick(event);
     if (props.clickable) parent.value.setActive(item.value.index);
 }
@@ -68,7 +74,11 @@ const itemClasses = defineClasses(
         :style="itemStyle"
         :data-id="`carousel-${item.identifier}`"
         data-oruga="carousel-item"
-        @click="onClick">
+        :role="ariaRole"
+        aria-roledescription="item"
+        :aria-selected="isActive"
+        @click="onClick"
+        @keypress.enter="onClick">
         <!--
             @slot Default content
         -->

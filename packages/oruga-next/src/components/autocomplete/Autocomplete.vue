@@ -7,6 +7,7 @@ import {
     useAttrs,
     toRaw,
     onMounted,
+    useSlots,
     type PropType,
     type Component,
 } from "vue";
@@ -322,14 +323,7 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const slots = defineSlots<{
-    header(): any;
-    group(props: { group: object; index: number }): any;
-    default(props: { option: object; value: unknown; index: number }): any;
-    empty(): any;
-    footer(): any;
-}>();
-
+const slots = useSlots();
 const inputRef = ref<InstanceType<typeof OInput>>();
 const dropdownRef = ref<InstanceType<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
@@ -858,9 +852,9 @@ function itemOptionClasses(option): ClassBind[] {
 
         <o-dropdown-item
             v-if="$slots.header"
+            :id="`${menuId}-header`"
             ref="headerRef"
             :tag="itemTag"
-            :id="`${menuId}-header`"
             aria-role="option"
             :aria-selected="headerHovered"
             :tabindex="-1"
@@ -898,9 +892,9 @@ function itemOptionClasses(option): ClassBind[] {
 
             <o-dropdown-item
                 v-for="(option, index) in element.items"
+                :id="`${menuId}-${groupindex}-${index}`"
                 :key="groupindex + ':' + index"
                 :ref="(el) => setItemRef(el, groupindex, index)"
-                :id="`${menuId}-${groupindex}-${index}`"
                 :value="option"
                 :tag="itemTag"
                 :class="itemOptionClasses(option)"
@@ -937,9 +931,9 @@ function itemOptionClasses(option): ClassBind[] {
 
         <o-dropdown-item
             v-if="$slots.footer"
+            :id="`${menuId}-footer`"
             ref="footerRef"
             :tag="itemTag"
-            :id="`${menuId}-footer`"
             aria-role="option"
             :aria-selected="footerHovered"
             :tabindex="-1"

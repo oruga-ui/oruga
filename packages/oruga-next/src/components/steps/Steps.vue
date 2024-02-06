@@ -436,17 +436,26 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
 
 <template>
     <div :class="rootClasses" data-oruga="steps">
-        <nav :class="wrapperClasses">
-            <div
+        <ol
+            :class="wrapperClasses"
+            :aria-orientation="vertical ? 'vertical' : 'horizontal'">
+            <li
                 v-for="(childItem, index) in items"
                 v-show="childItem.visible"
                 :key="childItem.value"
-                :class="itemClasses(childItem)">
+                :class="itemClasses(childItem)"
+                :aria-selected="childItem.value === activeItem.value">
                 <span v-if="index > 0" :class="stepDividerClasses"> </span>
 
-                <a
+                <component
+                    :is="childItem.tag"
+                    role="button"
+                    :tabindex="isItemClickable(childItem) ? 0 : null"
                     :class="stepLinkClasses(childItem)"
-                    @click="isItemClickable(childItem) && itemClick(childItem)">
+                    @click="isItemClickable(childItem) && itemClick(childItem)"
+                    @keydown.enter="
+                        isItemClickable(childItem) && itemClick(childItem)
+                    ">
                     <div :class="stepMarkerClasses">
                         <o-icon
                             v-if="childItem.icon"
@@ -461,9 +470,9 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                     <div :class="stepLinkLabelClasses">
                         {{ childItem.label }}
                     </div>
-                </a>
-            </div>
-        </nav>
+                </component>
+            </li>
+        </ol>
 
         <section :class="stepContentClasses">
             <!--

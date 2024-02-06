@@ -219,6 +219,8 @@ const labelClasses = defineClasses(["labelClass", "o-chk__label"]);
         ref="label"
         :class="rootClasses"
         data-oruga="checkbox"
+        role="checkbox"
+        :aria-checked="isChecked"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

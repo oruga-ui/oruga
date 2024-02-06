@@ -484,6 +484,8 @@ defineExpose({ close, promise: props.promise });
             <div
                 v-if="overlay && isActive"
                 :class="overlayClasses"
+                :tabindex="-1"
+                aria-hidden="true"
                 @click="(evt) => clickedOutside(evt)" />
             <transition
                 :name="transitionName"

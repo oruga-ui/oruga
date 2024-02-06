@@ -198,7 +198,7 @@ const dropdownBind = computed(() => ({
             :trap-focus="picker.trapFocus"
             :aria-role="ariaRole"
             :aria-modal="!picker.inline"
-            :trigger-tabindex="-1"
+            :tabindex="-1"
             :teleport="picker.teleport"
             :triggers="triggers">
             <template v-if="!picker.inline" #trigger>

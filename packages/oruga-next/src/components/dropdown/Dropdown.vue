@@ -100,9 +100,9 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
-    /** HTML element ID of dropdown menu element. */
+    /** HTML element ID of the dropdown menu element */
     menuId: { type: String, default: null },
-    /** Tabindex of dropdown menu element. */
+    /** Tabindex of the dropdown menu element */
     menuTabindex: { type: Number, default: null },
     /** Dropdown menu tag name */
     menuTag: {
@@ -528,7 +528,11 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
 </script>
 
 <template>
-    <div data-oruga="dropdown" :class="rootClasses" @mouseleave="onHoverLeave">
+    <div
+        data-oruga="dropdown"
+        :class="rootClasses"
+        @mouseleave="onHoverLeave"
+        @focusout="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"
@@ -548,6 +552,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 {{ label }}
             </slot>
         </component>
+
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
@@ -564,14 +569,15 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
+
             <transition :name="animation">
                 <component
                     :is="menuTag"
                     v-show="(!disabled && (isActive || isHovered)) || inline"
+                    :id="menuId"
                     ref="contentRef"
                     v-trap-focus="trapFocus"
                     :tabindex="menuTabindex"
-                    :id="menuId"
                     :class="menuClasses"
                     :aria-hidden="!isActive"
                     :role="ariaRole"

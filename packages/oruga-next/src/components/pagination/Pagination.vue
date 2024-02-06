@@ -256,12 +256,20 @@ const pagesInRange = computed(() => {
 });
 
 /** Get properties for a page */
-function getPage(num: number, ariaLabel?: string) {
+function getPage(
+    num: number,
+    ariaLabel?: string,
+): {
+    number: number;
+    isCurrent: boolean;
+    click: (event: Event) => void;
+    ariaLabel: string;
+} {
     return {
         number: num,
         isCurrent: props.current === num,
         click: (event: Event): void => changePage(num, event),
-        "aria-label": ariaLabel || getAriaPageLabel(num, props.current === num),
+        ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
     };
 }
 

@@ -94,6 +94,8 @@ const props = defineProps({
     iconRightClickable: { type: Boolean, default: false },
     /** Variant of right icon */
     iconRightVariant: { type: String, default: undefined },
+    /** Accessibility label to establish relationship between the input and control label */
+    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -351,6 +353,7 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
             :multiple="multiple"
             :size="nativeSize"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid">
