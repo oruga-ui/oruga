@@ -463,7 +463,6 @@ function cellClasses(day: Date): ClassBind[] {
                         :ref="(el) => setMonthRef(date, el)"
                         :class="cellClasses(date)"
                         role="button"
-                        href="#"
                         :disabled="datepicker.disabled"
                         :tabindex="
                             focusedDate.month === date.getMonth() ? null : 0

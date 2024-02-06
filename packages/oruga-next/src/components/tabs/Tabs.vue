@@ -362,15 +362,8 @@ function itemHeaderClasses(
                 :key="childItem.value"
                 :class="itemWrapperClasses"
                 role="tab"
-                tabindex="0"
                 :aria-controls="`${childItem.value}-content`"
-                :aria-selected="isActive(childItem) ? 'true' : 'false'"
-                @keydown.left.prevent="prev"
-                @keydown.right.prevent="next"
-                @keydown.up.prevent="prev"
-                @keydown.down.prevent="next"
-                @keydown.home.prevent="homePressed"
-                @keydown.end.prevent="endPressed">
+                :aria-selected="isActive(childItem) ? 'true' : 'false'">
                 <o-slot-component
                     v-if="childItem.$slots.header"
                     :component="childItem"
@@ -378,6 +371,7 @@ function itemHeaderClasses(
                     name="header"
                     :class="itemHeaderClasses(childItem)"
                     @click="itemClick(childItem)"
+                    @keydown.enter="itemClick(childItem)"
                     @keydown.left.prevent="prev"
                     @keydown.right.prevent="next"
                     @keydown.up.prevent="prev"
@@ -388,9 +382,16 @@ function itemHeaderClasses(
                     :is="childItem.tag"
                     v-else
                     role="button"
+                    :tabindex="0"
                     :class="itemHeaderClasses(childItem)"
                     @click="itemClick(childItem)"
-                    @keydown.enter="itemClick(childItem)">
+                    @keydown.enter="itemClick(childItem)"
+                    @keydown.left.prevent="prev"
+                    @keydown.right.prevent="next"
+                    @keydown.up.prevent="prev"
+                    @keydown.down.prevent="next"
+                    @keydown.home.prevent="homePressed"
+                    @keydown.end.prevent="endPressed">
                     <o-icon
                         v-if="childItem.icon"
                         :root-class="

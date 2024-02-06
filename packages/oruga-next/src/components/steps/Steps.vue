@@ -447,6 +447,7 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
                 <component
                     :is="childItem.tag"
                     role="button"
+                    :tabindex="isItemClickable(childItem) ? 0 : null"
                     :class="stepLinkClasses(childItem)"
                     @click="isItemClickable(childItem) && itemClick(childItem)"
                     @keydown.enter="

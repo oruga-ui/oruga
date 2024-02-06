@@ -188,7 +188,6 @@ const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
         data-oruga="radio"
         role="radio"
         :aria-checked="isChecked"
-        tabindex="0"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

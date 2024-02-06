@@ -254,7 +254,6 @@ const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
         data-oruga="switch"
         role="switch"
         :aria-checked="isChecked"
-        tabindex="0"
         @click="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

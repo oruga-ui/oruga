@@ -75,7 +75,6 @@ const itemClasses = defineClasses(
         :data-id="`carousel-${item.identifier}`"
         data-oruga="carousel-item"
         :role="ariaRole"
-        tabindex="0"
         aria-roledescription="item"
         :aria-selected="isActive"
         @click="onClick"

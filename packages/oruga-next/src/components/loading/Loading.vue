@@ -172,7 +172,7 @@ defineExpose({ close, promise: props.promise });
             :class="rootClasses">
             <div
                 :class="overlayClasses"
-                tabindex="-1"
+                :tabindex="-1"
                 aria-hidden="true"
                 @click="cancel('outside')" />
             <!-- 
