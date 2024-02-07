@@ -18,7 +18,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@highlightjs/vue-plugin": "2.1.2",
-    "@oruga-ui/theme-bootstrap": "^0.5.2",
+    "@oruga-ui/theme-bootstrap": "^0.5.3",
     "@oruga-ui/theme-bulma": "^0.2.11",
     "@oruga-ui/theme-oruga": "^0.2.2",
     "highlight.js": "11.9.0",
