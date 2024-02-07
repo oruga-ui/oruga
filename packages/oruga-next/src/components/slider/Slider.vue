@@ -6,7 +6,7 @@ import OSliderTick from "./SliderTick.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useProviderParent } from "@/composables";
+import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
@@ -326,43 +326,48 @@ function onDragEnd(): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-slide"),
-    {
-        [useComputedClass("sizeClass", "o-slide--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("disabledClass", "o-slide--disabled")]:
-            props.disabled,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-slide"],
+    [
+        "sizeClass",
+        "o-slide--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "disabledClass",
+        "o-slide--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+);
 
-const trackClasses = computed(() => [
-    useComputedClass("trackClass", "o-slide__track"),
-]);
+const trackClasses = defineClasses(["trackClass", "o-slide__track"]);
 
-const fillClasses = computed(() => [
-    useComputedClass("fillClass", "o-slide__fill"),
-    {
-        [useComputedClass("variantClass", "o-slide__fill--", props.variant)]:
-            props.variant,
-    },
-]);
+const fillClasses = defineClasses(
+    ["fillClass", "o-slide__fill"],
+    [
+        "variantClass",
+        "o-slide__fill--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const thumbClasses = computed(() => [
-    useComputedClass("thumbClass", "o-slide__thumb"),
-    {
-        [useComputedClass("thumbDraggingClass", "o-slide__thumb--dragging")]:
-            dragging.value,
-    },
-    {
-        [useComputedClass("thumbRoundedClass", "o-slide__thumb--rounded")]:
-            props.rounded,
-    },
-]);
+const thumbClasses = defineClasses(
+    ["thumbClass", "o-slide__thumb"],
+    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
+    [
+        "thumbRoundedClass",
+        "o-slide__thumb--rounded",
+        null,
+        computed(() => props.rounded),
+    ],
+);
 
-const thumbWrapperClasses = computed(() => [
-    useComputedClass("thumbWrapperClass", "o-slide__thumb-wrapper"),
+const thumbWrapperClasses = defineClasses([
+    "thumbWrapperClass",
+    "o-slide__thumb-wrapper",
 ]);
 </script>
 

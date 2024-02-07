@@ -93,9 +93,10 @@ title: Carousel
 
 ### Props
 
-| Prop name | Description         | Type    | Values | Default                                                     |
-| --------- | ------------------- | ------- | ------ | ----------------------------------------------------------- |
-| clickable | Make item clickable | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code> |
+| Prop name | Description                                                             | Type    | Values | Default                                                                                                                                               |
+| --------- | ----------------------------------------------------------------------- | ------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ariaRole  | Role attribute to be passed to the div wrapper for better accessibility | string  | -      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>carousel: {<br>&nbsp;&nbsp;ariaRole: "option"<br>}</code> |
+| clickable | Make item clickable                                                     | boolean | -      | <code style='white-space: nowrap; padding: 0;'>false</code>                                                                                           |
 
 ### Slots
 

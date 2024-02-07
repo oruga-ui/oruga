@@ -5,7 +5,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -150,35 +150,35 @@ function onInput(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-radio"),
-    {
-        [useComputedClass("checkedClass", "o-radio--checked")]: isChecked.value,
-    },
-    {
-        [useComputedClass("sizeClass", "o-radio--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("disabledClass", "o-radio--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("variantClass", "o-radio--", props.variant)]:
-            props.variant,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-radio"],
+    ["checkedClass", "o-radio--checked", null, isChecked],
+    [
+        "sizeClass",
+        "o-radio--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "disabledClass",
+        "o-radio--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "variantClass",
+        "o-radio--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-radio__input"),
-    {
-        [useComputedClass("inputCheckedClass", "o-radio__input--checked")]:
-            isChecked.value,
-    },
-]);
+const inputClasses = defineClasses(
+    ["inputClass", "o-radio__input"],
+    ["inputCheckedClass", "o-radio__input--checked", null, isChecked],
+);
 
-const labelClasses = computed(() => [
-    useComputedClass("labelClass", "o-radio__label"),
-]);
+const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
 </script>
 
 <template>
@@ -186,6 +186,8 @@ const labelClasses = computed(() => [
         ref="label"
         :class="rootClasses"
         data-oruga="radio"
+        role="radio"
+        :aria-checked="isChecked"
         @click.stop="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

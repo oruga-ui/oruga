@@ -2,7 +2,7 @@
 import { computed, type Component, type PropType } from "vue";
 import { getOption } from "@/utils/config";
 
-import type { PropBind } from "@/types";
+import type { ClassBind } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -38,11 +38,11 @@ const props = defineProps({
     },
     class: { type: String, default: undefined },
     linkClass: {
-        type: Array as PropType<PropBind>,
+        type: Array as PropType<ClassBind[]>,
         required: true,
     },
     linkCurrentClass: {
-        type: [Array] as PropType<Array<string>>,
+        type: Array as PropType<ClassBind[]>,
         required: true,
     },
 });

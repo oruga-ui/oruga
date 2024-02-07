@@ -5,7 +5,7 @@ import OFieldBody from "./FieldBody.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
-import { useComputedClass, useMatchMedia } from "@/composables";
+import { defineClasses, useMatchMedia } from "@/composables";
 
 import { injectField, provideField } from "../field/useFieldShare";
 
@@ -231,78 +231,74 @@ provideField(provideData);
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-field"),
-    {
-        [useComputedClass("horizontalClass", "o-field--horizontal")]:
-            props.horizontal,
-    },
-    {
-        [useComputedClass("mobileClass", "o-field--mobile")]: isMobile.value,
-    },
-    {
-        [useComputedClass("focusedClass", "o-field--focused")]: isFocused.value,
-    },
-    {
-        [useComputedClass("filledClass", "o-field--filled")]: isFilled.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-field"],
+    [
+        "horizontalClass",
+        "o-field--horizontal",
+        null,
+        computed(() => !!props.horizontal),
+    ],
+    ["mobileClass", "o-field--mobile", null, isMobile],
+    ["focusedClass", "o-field--focused", null, isFocused],
+    ["filledClass", "o-field--filled", null, isFilled],
+);
+
+const messageClasses = defineClasses(
+    ["messageClass", "o-field__message"],
+    [
+        "variantMessageClass",
+        "o-field__message-",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
+    ],
+);
+
+const labelClasses = defineClasses(
+    ["labelClass", "o-field__label"],
+    [
+        "labelSizeClass",
+        "o-field__label-",
+        computed(() => props.labelSize),
+        computed(() => !!props.labelSize),
+    ],
+    [
+        "variantLabelClass",
+        "o-field__label-",
+        fieldVariant,
+        computed(() => !!fieldVariant.value),
+    ],
+);
+
+const labelHorizontalClasses = defineClasses([
+    "labelHorizontalClass",
+    "o-field__horizontal-label",
 ]);
 
-const messageClasses = computed(() => [
-    useComputedClass("messageClass", "o-field__message"),
-    {
-        [useComputedClass(
-            "variantMessageClass",
-            "o-field__message-",
-            fieldVariant.value,
-        )]: fieldVariant.value,
-    },
+const bodyClasses = defineClasses(["bodyClass", "o-field__body"]);
+
+const bodyHorizontalClasses = defineClasses([
+    "bodyHorizontalClass",
+    "o-field__horizontal-body",
 ]);
 
-const labelClasses = computed(() => [
-    useComputedClass("labelClass", "o-field__label"),
-    {
-        [useComputedClass(
-            "labelSizeClass",
-            "o-field__label-",
-            props.labelSize,
-        )]: props.labelSize,
-    },
-    {
-        [useComputedClass(
-            "variantLabelClass",
-            "o-field__label-",
-            fieldVariant.value,
-        )]: fieldVariant.value,
-    },
-]);
+const innerFieldClasses = defineClasses(
+    ["rootClass", "o-field"],
+    [
+        "groupMultilineClass",
+        "o-field--grouped-multiline",
+        null,
+        computed(() => props.groupMultiline),
+    ],
 
-const labelHorizontalClasses = computed(() => [
-    useComputedClass("labelHorizontalClass", "o-field__horizontal-label"),
-]);
-
-const bodyClasses = computed(() => [
-    useComputedClass("bodyClass", "o-field__body"),
-]);
-
-const bodyHorizontalClasses = computed(() => [
-    useComputedClass("bodyHorizontalClass", "o-field__horizontal-body"),
-]);
-
-const innerFieldClasses = computed(() => [
-    useComputedClass("rootClass", "o-field"),
-    {
-        [useComputedClass("groupMultilineClass", "o-field--grouped-multiline")]:
-            props.groupMultiline,
-    },
-    {
-        [useComputedClass("groupedClass", "o-field--grouped")]: props.grouped,
-    },
-    {
-        [useComputedClass("addonsClass", "o-field--addons")]:
-            !props.grouped && hasAddons(),
-    },
-]);
+    ["groupedClass", "o-field--grouped", null, computed(() => props.grouped)],
+    [
+        "addonsClass",
+        "o-field--addons",
+        null,
+        computed(() => !props.grouped && hasAddons()),
+    ],
+);
 </script>
 
 <template>

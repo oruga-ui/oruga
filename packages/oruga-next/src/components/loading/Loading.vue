@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, type PropType } from "vue";
+import { ref, onMounted, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
-    useComputedClass,
+    defineClasses,
     useProgrammaticComponent,
     usePropBinding,
 } from "@/composables";
@@ -145,25 +145,16 @@ onMounted(() => {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-load"),
-    {
-        [useComputedClass("fullPageClass", "o-load--fullpage")]:
-            displayInFullPage.value,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-load"],
+    ["fullPageClass", "o-load--fullpage", null, displayInFullPage],
+);
 
-const overlayClasses = computed(() => [
-    useComputedClass("overlayClass", "o-load__overlay"),
-]);
+const overlayClasses = defineClasses(["overlayClass", "o-load__overlay"]);
 
-const iconClasses = computed(() => [
-    useComputedClass("iconClass", "o-load__icon"),
-]);
+const iconClasses = defineClasses(["iconClass", "o-load__icon"]);
 
-const labelClasses = computed(() => [
-    useComputedClass("labelClass", "o-load__label"),
-]);
+const labelClasses = defineClasses(["labelClass", "o-load__label"]);
 
 // --- Expose Public Functionality ---
 
@@ -177,8 +168,13 @@ defineExpose({ close, promise: props.promise });
             v-if="isActive"
             ref="rootRef"
             data-oruga="loading"
+            role="dialog"
             :class="rootClasses">
-            <div :class="overlayClasses" @click="cancel('outside')" />
+            <div
+                :class="overlayClasses"
+                :tabindex="-1"
+                aria-hidden="true"
+                @click="cancel('outside')" />
             <!-- 
                 @slot Override icon and label
                 @binding {close} close - function to close the component

@@ -9,7 +9,7 @@ import { isClient } from "@/utils/ssr";
 import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     unrefElement,
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useMatchMedia,
     useEventListener,
@@ -100,6 +100,10 @@ const props = defineProps({
     },
     /** Dropdown will be expanded (full-width) */
     expanded: { type: Boolean, default: false },
+    /** HTML element ID of the dropdown menu element */
+    menuId: { type: String, default: null },
+    /** Tabindex of the dropdown menu element */
+    menuTabindex: { type: Number, default: null },
     /** Dropdown menu tag name */
     menuTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
@@ -140,13 +144,13 @@ const props = defineProps({
     /**
      * Role attribute to be passed to the list container for better accessibility.
      * Use menu only in situations where your dropdown is related to a navigation menu.
-     * @values list, menu, dialog
+     * @values list, listbox, menu, dialog
      */
     ariaRole: {
         type: String,
         default: getOption("dropdown.ariaRole", "list"),
         validator: (value: string) =>
-            ["menu", "list", "dialog"].indexOf(value) > -1,
+            ["list", "listbox", "menu", "dialog"].indexOf(value) > -1,
     },
     /** Mobile breakpoint as max-width value */
     mobileBreakpoint: {
@@ -473,53 +477,49 @@ provideDropdown(provideData);
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-drop"),
-    {
-        [useComputedClass("disabledClass", "o-drop--disabled")]: props.disabled,
-    },
-    {
-        [useComputedClass("expandedClass", "o-drop--expanded")]: props.expanded,
-    },
-    {
-        [useComputedClass("inlineClass", "o-drop--inline")]: props.inline,
-    },
-    {
-        [useComputedClass("mobileClass", "o-drop--mobile")]:
-            isMobileModal.value && !hoverable.value,
-    },
+const rootClasses = defineClasses(
+    ["rootClass", "o-drop"],
+    ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
+    ["expandedClass", "o-drop--expanded", null, computed(() => props.expanded)],
+    ["inlineClass", "o-drop--inline", null, computed(() => props.inline)],
+    [
+        "mobileClass",
+        "o-drop--mobile",
+        null,
+        computed(() => isMobileModal.value && !hoverable.value),
+    ],
+);
+
+const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
+
+const positionWrapperClasses = defineClasses([
+    "teleportClass",
+    "o-drop--teleport",
+    null,
+    computed(() => !!props.teleport),
 ]);
 
-const triggerClasses = computed(() => [
-    useComputedClass("triggerClass", "o-drop__trigger"),
+const menuMobileOverlayClasses = defineClasses([
+    "menuMobileOverlayClass",
+    "o-drop__overlay",
 ]);
 
-const positionWrapperClasses = computed(() => [
-    ...rootClasses.value,
-    {
-        [useComputedClass("teleportClass", "o-drop--teleport")]:
-            !!props.teleport,
-    },
-]);
+const menuClasses = defineClasses(
+    ["menuClass", "o-drop__menu"],
+    [
+        "menuPositionClass",
+        "o-drop__menu--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
 
-const menuMobileOverlayClasses = computed(() => [
-    useComputedClass("menuMobileOverlayClass", "o-drop__overlay"),
-]);
-
-const menuClasses = computed(() => [
-    useComputedClass("menuClass", "o-drop__menu"),
-    {
-        [useComputedClass(
-            "menuPositionClass",
-            "o-drop__menu--",
-            autoPosition.value,
-        )]: autoPosition.value,
-    },
-    {
-        [useComputedClass("menuActiveClass", "o-drop__menu--active")]:
-            isActive.value || props.inline,
-    },
-]);
+    [
+        "menuActiveClass",
+        "o-drop__menu--active",
+        null,
+        computed(() => isActive.value || props.inline),
+    ],
+);
 
 // --- Expose Public Functionality ---
 
@@ -528,14 +528,18 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
 </script>
 
 <template>
-    <div data-oruga="dropdown" :class="rootClasses" @mouseleave="onHoverLeave">
+    <div
+        data-oruga="dropdown"
+        :class="rootClasses"
+        @mouseleave="onHoverLeave"
+        @focusout="onHoverLeave">
         <component
             :is="triggerTag"
             v-if="!inline"
             ref="triggerRef"
             :tabindex="disabled ? null : tabindex"
             :class="triggerClasses"
-            aria-haspopup="true"
+            :aria-haspopup="ariaRole === 'list' ? true : ariaRole"
             @click="onClick"
             @contextmenu="onContextMenu"
             @mouseenter="onHover"
@@ -548,10 +552,11 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 {{ label }}
             </slot>
         </component>
+
         <PositionWrapper
             v-model:position="autoPosition"
             :teleport="teleport"
-            :class="positionWrapperClasses"
+            :class="[...rootClasses, ...positionWrapperClasses]"
             :trigger="triggerRef"
             :content="contentRef"
             :disabled="!isActive"
@@ -564,16 +569,19 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
+
             <transition :name="animation">
                 <component
                     :is="menuTag"
                     v-show="(!disabled && (isActive || isHovered)) || inline"
+                    :id="menuId"
                     ref="contentRef"
                     v-trap-focus="trapFocus"
+                    :tabindex="menuTabindex"
                     :class="menuClasses"
                     :aria-hidden="!isActive"
                     :role="ariaRole"
-                    :aria-modal="!inline"
+                    :aria-modal="!inline && trapFocus"
                     :style="menuStyle">
                     <!--
                         @slot Place dropdown items here 

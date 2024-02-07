@@ -8,11 +8,7 @@ import OInput from "../input/Input.vue";
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isMobileAgent } from "@/utils/helpers";
-import {
-    useComputedClass,
-    useInputHandler,
-    usePropBinding,
-} from "@/composables";
+import { defineClasses, useInputHandler, usePropBinding } from "@/composables";
 
 import { matchWithGroups } from "../datepicker/utils";
 import type { DatepickerProps } from "../datepicker/useDatepickerShare";
@@ -552,12 +548,14 @@ function onChangeNativePicker(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const datepickerWrapperClasses = computed(() => [
-    useComputedClass("datepickerWrapperClass", "o-dtpck__date"),
+const datepickerWrapperClasses = defineClasses([
+    "datepickerWrapperClass",
+    "o-dtpck__date",
 ]);
 
-const timepickerWrapperClasses = computed(() => [
-    useComputedClass("timepickerWrapperClass", "o-dtpck__time"),
+const timepickerWrapperClasses = defineClasses([
+    "timepickerWrapperClass",
+    "o-dtpck__time",
 ]);
 </script>
 

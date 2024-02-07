@@ -5,7 +5,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -194,61 +194,57 @@ function onInput(event: Event): void {
 
 // --- Computed Component Classes ---
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-switch"),
-    {
-        [useComputedClass("sizeClass", "o-switch--", props.size)]: props.size,
-    },
-    {
-        [useComputedClass("disabledClass", "o-switch--disabled")]:
-            props.disabled,
-    },
-    {
-        [useComputedClass("variantClass", "o-switch--", props.variant)]:
-            props.variant,
-    },
-    {
-        [useComputedClass("positionClass", "o-switch--", props.position)]:
-            props.position,
-    },
-    {
-        [useComputedClass(
-            "passiveVariantClass",
-            "o-switch--",
-            props.passiveVariant + "-passive",
-        )]: props.passiveVariant,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-switch"],
+    [
+        "sizeClass",
+        "o-switch--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+    [
+        "disabledClass",
+        "o-switch--disabled",
+        null,
+        computed(() => props.disabled),
+    ],
+    [
+        "variantClass",
+        "o-switch--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+    [
+        "positionClass",
+        "o-switch--",
+        computed(() => props.position),
+        computed(() => !!props.position),
+    ],
+    [
+        "passiveVariantClass",
+        "o-switch--",
+        computed(() => props.passiveVariant + "-passive"),
+        computed(() => !!props.passiveVariant),
+    ],
+);
 
-const inputClasses = computed(() => [
-    useComputedClass("inputClass", "o-switch__input"),
-    {
-        [useComputedClass("inputCheckedClass", "o-switch__input--checked")]:
-            isChecked.value,
-    },
-]);
+const inputClasses = defineClasses(
+    ["inputClass", "o-switch__input"],
+    ["inputCheckedClass", "o-switch__input--checked", null, isChecked],
+);
 
-const switchClasses = computed(() => [
-    useComputedClass("switchClass", "o-switch__check"),
-    {
-        [useComputedClass("switchCheckedClass", "o-switch__check--checked")]:
-            isChecked.value,
-    },
-    {
-        [useComputedClass("roundedClass", "o-switch--rounded")]: props.rounded,
-    },
-]);
+const switchClasses = defineClasses(
+    ["switchClass", "o-switch__check"],
+    ["switchCheckedClass", "o-switch__check--checked", null, isChecked],
+    ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
+);
 
-const switchCheckClasses = computed(() => [
-    useComputedClass("switchCheckClass", "o-switch__check-switch"),
-    {
-        [useComputedClass("roundedClass", "o-switch--rounded")]: props.rounded,
-    },
-]);
+const switchCheckClasses = defineClasses(
+    ["switchCheckClass", "o-switch__check-switch"],
+    ["roundedClass", "o-switch--rounded", null, computed(() => props.rounded)],
+);
 
-const labelClasses = computed(() => [
-    useComputedClass("labelClass", "o-switch__label"),
-]);
+const labelClasses = defineClasses(["labelClass", "o-switch__label"]);
 </script>
 
 <template>
@@ -256,6 +252,8 @@ const labelClasses = computed(() => [
         ref="label"
         :class="rootClasses"
         data-oruga="switch"
+        role="switch"
+        :aria-checked="isChecked"
         @click="setFocus"
         @keydown.prevent.enter="setFocus">
         <input

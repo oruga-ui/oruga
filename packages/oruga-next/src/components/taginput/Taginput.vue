@@ -8,7 +8,7 @@ import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import {
-    useComputedClass,
+    defineClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -266,7 +266,10 @@ const emits = defineEmits<{
 
 const autocompleteRef = ref<InstanceType<typeof OAutocomplete>>();
 
-const items = useVModelBinding<any[]>(props, emits, { passive: true, deep: true });
+const items = useVModelBinding<any[]>(props, emits, {
+    passive: true,
+    deep: true,
+});
 
 // use form input functionalities
 const { setFocus, onFocus, onBlur, onInvalid } = useInputHandler(
@@ -405,57 +408,64 @@ function handleOnBlur(event: Event): void {
 // --- Computed Component Classes ---
 
 const attrs = useAttrs();
+
+const autocompleteRootClasses = defineClasses([
+    "autocompleteClasses.rootClass",
+    "o-taginput__autocomplete",
+]);
+
+const autocompleteInputClasses = defineClasses([
+    "autocompleteClasses.inputClasses.inputClass",
+    "o-taginput__input",
+]);
+
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": useComputedClass(
-        "autocompleteClasses.rootClass",
-        "o-taginput__autocomplete",
-    ),
+    "root-class": autocompleteRootClasses.value,
     "input-classes": {
-        "input-class": useComputedClass(
-            "autocompleteClasses.inputClasses.inputClass",
-            "o-taginput__input",
-        ),
+        "input-class": autocompleteInputClasses.value,
     },
     ...props.autocompleteClasses,
 }));
 
-const rootClasses = computed(() => [
-    useComputedClass("rootClass", "o-taginput"),
-    {
-        [useComputedClass("expandedClass", "o-taginput--expanded")]:
-            props.expanded,
-    },
-]);
+const rootClasses = defineClasses(
+    ["rootClass", "o-taginput"],
+    [
+        "expandedClass",
+        "o-taginput--expanded",
+        null,
+        computed(() => props.expanded),
+    ],
+);
 
-const containerClasses = computed(() => [
-    useComputedClass("containerClass", "o-taginput__container"),
-    {
-        [useComputedClass("sizeClass", "o-taginput__container--", props.size)]:
-            props.size,
-    },
-]);
+const containerClasses = defineClasses(
+    ["containerClass", "o-taginput__container"],
+    [
+        "sizeClass",
+        "o-taginput__container--",
+        computed(() => props.size),
+        computed(() => !!props.size),
+    ],
+);
 
-const itemClasses = computed(() => [
-    useComputedClass("itemClass", "o-taginput__item"),
-    {
-        [useComputedClass("variantClass", "o-taginput__item--", props.variant)]:
-            props.variant,
-    },
-]);
+const itemClasses = defineClasses(
+    ["itemClass", "o-taginput__item"],
+    [
+        "variantClass",
+        "o-taginput__item--",
+        computed(() => props.variant),
+        computed(() => !!props.variant),
+    ],
+);
 
-const closeClasses = computed(() => [
-    useComputedClass("closeClass", "o-taginput__item__close"),
-]);
+const closeClasses = defineClasses(["closeClass", "o-taginput__item__close"]);
 
-const counterClasses = computed(() => [
-    useComputedClass("counterClass", "o-taginput__counter"),
-]);
+const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
 </script>
 
 <template>
     <div data-oruga="taginput" :class="rootClasses">
-        <div :class="containerClasses" @click="hasInput && onFocus()">
+        <div :class="containerClasses" @focus="onFocus" @blur="onBlur">
             <!--
                 @slot Override selected items
                 @binding {unknown[]} items - selected items
@@ -479,7 +489,7 @@ const counterClasses = computed(() => [
             </slot>
 
             <o-autocomplete
-                v-if="hasInput"
+                v-show="hasInput"
                 ref="autocompleteRef"
                 v-model="newItem"
                 v-bind="autocompleteBind"
