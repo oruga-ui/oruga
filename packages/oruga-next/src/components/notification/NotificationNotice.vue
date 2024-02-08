@@ -21,7 +21,7 @@ import type { NotifcationProps } from "./types";
 import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
- * Notification Notice is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage
  * @displayName Notification Notice
  */
 defineOptions({
@@ -36,11 +36,6 @@ const props = defineProps({
     ...baseComponentProps,
     /** Whether notification is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: true },
-    /** Props passed to the internal notification component. */
-    notification: {
-        type: Object as PropType<NotifcationProps>,
-        default: () => ({}),
-    },
     /**
      * Which position the notification will appear when programmatically.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
@@ -94,6 +89,14 @@ const props = defineProps({
     container: {
         type: [Object, String] as PropType<string | HTMLElement>,
         default: () => getOption("notification.container", "body"),
+    },
+    /**
+     * Props passed to the internal notification component.
+     * @ignore
+     */
+    notification: {
+        type: Object as PropType<NotifcationProps>,
+        default: () => ({}),
     },
     /**
      * This is used internally for programmatic usage.
