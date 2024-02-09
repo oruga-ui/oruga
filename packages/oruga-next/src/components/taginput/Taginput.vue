@@ -9,6 +9,7 @@ import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import {
     defineClasses,
+    getActiveClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -421,9 +422,9 @@ const autocompleteInputClasses = defineClasses([
 
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": autocompleteRootClasses.value,
+    "root-class": getActiveClasses(autocompleteRootClasses.value),
     "input-classes": {
-        "input-class": autocompleteInputClasses.value,
+        "input-class": getActiveClasses(autocompleteInputClasses.value),
     },
     ...props.autocompleteClasses,
 }));
