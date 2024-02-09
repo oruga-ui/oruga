@@ -76,6 +76,15 @@ const props = defineProps({
         type: Boolean,
         default: () => getOption("tabs.animated", true),
     },
+    /**
+     * Transition animation name
+     */
+     animation: {
+        type: String,
+        default: undefined,
+    },
+    /** Appear prop for transition */
+    animateInitially: { type: Boolean, default: false },
     /** Show tab items multiline when there is no space */
     multiline: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
@@ -150,6 +159,8 @@ const provideData = computed(() => ({
     activeId: activeId.value,
     type: props.type,
     vertical: props.vertical,
+    animation: props.animation,
+    animateInitially: props.animateInitially,
 }));
 
 /** Provide functionalities and data to child item components */
@@ -246,7 +257,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 function performAction(newId: number | string): void {
     const oldValue = activeId.value;
     const oldTab = isDefined(oldValue)
-        ? items.value.find((item) => item.value === oldValue)[0]
+        ? items.value.find((item) => item.value === oldValue)
         : items.value[0];
     activeId.value = newId;
     nextTick(() => {

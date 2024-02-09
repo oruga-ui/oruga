@@ -115,13 +115,14 @@ const isTransitioning = ref(false);
 /** Activate element, alter animation name based on the index. */
 function activate(oldIndex: number): void {
     transitionName.value =
-        item.value.index < oldIndex
+        parent.value.animation || 
+        (item.value.index < oldIndex
             ? parent.value.vertical
                 ? "slide-down"
                 : "slide-next"
             : parent.value.vertical
               ? "slide-up"
-              : "slide-prev";
+              : "slide-prev");
     // emit event
     emits("activate");
 }
@@ -129,13 +130,14 @@ function activate(oldIndex: number): void {
 /** Deactivate element, alter animation name based on the index. */
 function deactivate(newIndex: number): void {
     transitionName.value =
-        newIndex < item.value.index
+        parent.value.animation || 
+        (newIndex < item.value.index
             ? parent.value.vertical
                 ? "slide-down"
                 : "slide-next"
             : parent.value.vertical
               ? "slide-up"
-              : "slide-prev";
+              : "slide-prev");
     // emit event
     emits("deactivate");
 }
@@ -168,6 +170,7 @@ const headerTextClasses = computed(() => [
 <template>
     <Transition
         :name="transitionName"
+        :appear="parent.animateInitially"
         @after-enter="afterEnter"
         @before-leave="beforeLeave">
         <div

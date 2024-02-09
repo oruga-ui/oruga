@@ -24,6 +24,8 @@ export type TabsComponent = {
     activeId: number;
     type: string;
     vertical: boolean;
+    animation: string;
+    animateInitially: boolean;
 };
 
 export type TabItem = Omit<ProviderItem, "data"> & TabItemComponent;
@@ -84,6 +86,10 @@ declare module "../../index" {
                 vertical: boolean;
                 /** Tab will have an animation */
                 animated: string;
+                /** Transition animation name */
+                animation: string;
+                /** Appear prop for transition */
+                animateInitially: boolean;
                 /** Tab type */
                 type: string;
                 /** Icon on the left */
