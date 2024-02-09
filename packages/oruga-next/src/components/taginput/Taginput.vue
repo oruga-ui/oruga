@@ -513,6 +513,7 @@ const counterClasses = defineClasses(["counterClass", "o-taginput__counter"]);
                 :confirm-keys="confirmKeys"
                 :placeholder="placeholder"
                 :validation-message="validationMessage"
+                :expanded="expanded"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="handleOnBlur"
