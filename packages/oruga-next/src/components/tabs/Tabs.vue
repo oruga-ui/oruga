@@ -246,7 +246,7 @@ function clickFirstViableChild(startingIndex: number, forward: boolean): void {
 function performAction(newId: number | string): void {
     const oldValue = activeId.value;
     const oldTab = isDefined(oldValue)
-        ? items.value.find((item) => item.value === oldValue)[0]
+        ? items.value.find((item) => item.value === oldValue)
         : items.value[0];
     activeId.value = newId;
     nextTick(() => {
