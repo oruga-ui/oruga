@@ -15,6 +15,7 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 /**
  * This is a internal used component.
@@ -83,7 +84,7 @@ const isMobileNative = computed(
     () => picker.value.mobileNative && isMobileAgent.any(),
 );
 
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
+const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const inputRef = ref<InstanceType<typeof OInput>>();
 const nativeInputRef = ref<InstanceType<typeof OInput>>();
 

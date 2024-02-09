@@ -1,13 +1,13 @@
-<script setup lang="ts" generic="T">
-import { computed, onMounted, type Component, type PropType } from "vue";
+<script setup lang="ts" generic="T = string">
+import { computed, onMounted, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
-import { injectDropdown } from "./useDropdownShare";
+import { injectDropdown } from "./utils";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * @displayName Dropdown Item
@@ -32,7 +32,7 @@ const props = defineProps({
     clickable: { type: Boolean, default: true },
     /** Dropdown item tag name */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
+        type: [String, Object, Function] as PropType<DynamicComponent>,
         default: () => getOption("dropdown.itemTag", "div"),
     },
     /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
@@ -68,38 +68,37 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * onclick event
-     * @param value {[String, Number, Boolean, Object, Array]} value prop data
+     * @param value {T} value prop data
      * @param event {event} Native Event
      */
     (e: "click", value: T, event: Event): void;
 }>();
 
 // inject parent dropdown component if used inside one
-const { parentDropdown } = injectDropdown<T>();
+const { dropdown } = injectDropdown<T>();
 
 onMounted(() => {
-    if (!parentDropdown.value)
-        throw new Error("You should wrap oDropdownItem on a oDropdown");
+    if (!dropdown.value)
+        throw new Error(
+            "You should wrap ODropdownItem with an ODropdown component",
+        );
 });
 
 const isClickable = computed(
-    () =>
-        !parentDropdown.value.props.disabled &&
-        !props.disabled &&
-        props.clickable,
+    () => !dropdown.value.props.disabled && !props.disabled && props.clickable,
 );
 
 const isActive = computed(() => {
-    if (parentDropdown.value.selected === null) return false;
-    if (parentDropdown.value.props.multiple)
-        return parentDropdown.value.selected.indexOf(props.value as T) >= 0;
-    return props.value === parentDropdown.value.selected;
+    if (dropdown.value.selected === null) return false;
+    if (dropdown.value.props.multiple && Array.isArray(dropdown.value.selected))
+        return dropdown.value.selected.indexOf(props.value as T) >= 0;
+    return props.value === dropdown.value.selected;
 });
 
 /** Click listener, select the item. */
 function selectItem(event: Event): void {
     if (!isClickable.value) return;
-    parentDropdown.value.selectItem(props.value as T);
+    dropdown.value.selectItem(props.value as T);
     emits("click", props.value as T, event);
 }
 
@@ -111,7 +110,7 @@ const rootClasses = defineClasses(
         "itemDisabledClass",
         "o-drop__item--disabled",
         null,
-        computed(() => parentDropdown.value.props.disabled || props.disabled),
+        computed(() => dropdown.value.props.disabled || props.disabled),
     ],
     ["itemActiveClass", "o-drop__item--active", null, isActive],
     ["itemClickableClass", "o-drop__item--clickable", null, isClickable],

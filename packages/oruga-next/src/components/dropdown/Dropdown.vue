@@ -1,5 +1,8 @@
-<script setup lang="ts">
-import { computed, nextTick, ref, watch, type PropType, type Ref } from "vue";
+<script
+    setup
+    lang="ts"
+    generic="T = string, Multiple extends boolean = boolean">
+import { computed, nextTick, ref, watch, type PropType } from "vue";
 
 import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
@@ -10,16 +13,16 @@ import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     unrefElement,
     defineClasses,
-    useVModelBinding,
     useMatchMedia,
     useEventListener,
-    usePropBinding,
     useClickOutside,
 } from "@/composables";
 
-import { provideDropdown } from "./useDropdownShare";
+import { provideDropdown, type DropdownProps } from "./utils";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
+
+type ModelValueType = Multiple extends true ? T[] : T;
 
 /**
  * Dropdowns are very versatile, can used as a quick menu or even like a select for discoverable content
@@ -36,13 +39,24 @@ defineOptions({
 const props = defineProps({
     // add global shared props (will not be displayed in the docs)
     ...baseComponentProps,
-    /** @model */
+    /**
+     * Value of the current selected item
+     * @model
+     */
     modelValue: {
-        type: [String, Number, Boolean, Object, Array],
+        type: [
+            String,
+            Number,
+            Boolean,
+            Object,
+            Array,
+        ] as PropType<ModelValueType>,
         default: undefined,
     },
     /** The active state of the dropdown, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
+    /** Allows multiple selections */
+    multiple: { type: Boolean as PropType<Multiple>, default: false },
     /** Trigger label, unnecessary when trgger slot is used */
     label: { type: String, default: undefined },
     /** Dropdown is disabled */
@@ -86,8 +100,6 @@ const props = defineProps({
         type: String,
         default: () => getOption("dropdown.animation", "fade"),
     },
-    /** Allows multiple selections */
-    multiple: { type: Boolean, default: false },
     /** Trap focus inside the dropdown. */
     trapFocus: {
         type: Boolean,
@@ -216,12 +228,9 @@ const props = defineProps({
 const emits = defineEmits<{
     /**
      * modelValue prop two-way binding
-     * @param value {[String, Number, Boolean, Object, Array]} updated modelValue prop
+     * @param value {T | T[]} updated modelValue prop
      */
-    (
-        e: "update:modelValue",
-        value: [string, number, boolean, object, Array<any>],
-    ): void;
+    (e: "update:modelValue", value: Multiple extends true ? T[] : T): void;
     /**
      * active prop two-way binding
      * @param value {boolean} updated active prop
@@ -229,9 +238,9 @@ const emits = defineEmits<{
     (e: "update:active", value: boolean): void;
     /**
      * on change event
-     * @param value {any} selected value
+     * @param value {T | T[]} selected value
      */
-    (e: "change", value: any): void;
+    (e: "change", value: Multiple extends true ? T[] : T): void;
     /**
      * on close event
      * @param method {string} close method
@@ -243,15 +252,16 @@ const emits = defineEmits<{
     (e: "scroll-end"): void;
 }>();
 
-const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
-    props,
-    emits,
-    { passive: true },
-) as Ref<any>;
-
-const isActive = usePropBinding<boolean>("active", props, emits, {
-    passive: true,
-});
+const vmodel = defineModel<ModelValueType>();
+// const vmodel = useVModelBinding<[string, number, boolean, object, Array<any>]>(
+//     props,
+//     emits,
+//     { passive: true },
+// ) as Ref<any>;
+const isActive = defineModel<boolean>("active");
+// const isActive = usePropBinding<boolean>("active", props, emits, {
+//     passive: true,
+// });
 
 const autoPosition = ref(props.position);
 
@@ -261,16 +271,16 @@ watch(
     (v) => (autoPosition.value = v),
 );
 
-/** toggle isActive value when prop is changed */
-watch(
-    () => props.active,
-    (value) => {
-        if (!value) isActive.value = value;
-        // if not active, toggle after clickOutside event
-        // this fixes toggling programmatic
-        else setTimeout(() => (isActive.value = value));
-    },
-);
+// /** toggle isActive value when prop is changed */
+// watch(
+//     () => props.active,
+//     (value) => {
+//         if (!value) isActive.value = value;
+//         // if not active, toggle after clickOutside event
+//         // this fixes toggling programmatic
+//         else setTimeout(() => (isActive.value = value));
+//     },
+// );
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
@@ -366,6 +376,7 @@ function onFocus(): void {
 }
 
 const isHovered = ref(false);
+
 function onHover(): void {
     if (!isMobileNative.value && props.triggers.indexOf("hover") >= 0) {
         isHovered.value = true;
@@ -435,19 +446,21 @@ function checkDropdownScroll(): void {
  *   2. Emit input event to update the user v-model.
  *   3. Close the dropdown.
  */
-function selectItem(value: any): void {
+function selectItem(value: ModelValueType): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
                 // Add value
-                vmodel.value = [...vmodel.value, value];
+                vmodel.value = [...vmodel.value, value] as ModelValueType;
             } else {
                 // Remove value
-                vmodel.value = vmodel.value.filter((val) => val !== value);
+                vmodel.value = vmodel.value.filter(
+                    (val) => val !== value,
+                ) as ModelValueType;
             }
         } else {
             // Init value array
-            vmodel.value = [value];
+            vmodel.value = [value] as ModelValueType;
         }
         emits("change", vmodel.value);
     } else {
@@ -467,7 +480,7 @@ function selectItem(value: any): void {
 
 // Provided data is a computed ref to enjure reactivity.
 const provideData = computed(() => ({
-    props,
+    props: props as DropdownProps,
     selected: vmodel.value,
     selectItem,
 }));
@@ -512,7 +525,6 @@ const menuClasses = defineClasses(
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
-
     [
         "menuActiveClass",
         "o-drop__menu--active",
@@ -566,6 +578,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                 <div
                     v-if="isMobileModal"
                     v-show="isActive"
+                    :tabindex="-1"
                     :class="menuMobileOverlayClasses"
                     :aria-hidden="!isActive" />
             </transition>
@@ -579,10 +592,10 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     v-trap-focus="trapFocus"
                     :tabindex="menuTabindex"
                     :class="menuClasses"
-                    :aria-hidden="!isActive"
+                    :style="menuStyle"
                     :role="ariaRole"
-                    :aria-modal="!inline && trapFocus"
-                    :style="menuStyle">
+                    :aria-hidden="!isActive"
+                    :aria-modal="!inline && trapFocus">
                     <!--
                         @slot Place dropdown items here 
                         @binding {boolean} active - dropdown active state

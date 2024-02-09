@@ -30,6 +30,7 @@ import {
 } from "@/composables";
 
 import type { ComponentClass, DynamicComponent, ClassBind } from "@/types";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 enum SpecialOption {
     Header,
@@ -325,7 +326,7 @@ const emits = defineEmits<{
 
 const slots = useSlots();
 const inputRef = ref<InstanceType<typeof OInput>>();
-const dropdownRef = ref<InstanceType<typeof ODropdown>>();
+const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
 const footerRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const itemRefs = ref([]);
