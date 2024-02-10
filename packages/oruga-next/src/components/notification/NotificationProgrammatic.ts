@@ -1,6 +1,7 @@
 import { createVNode, render } from "vue";
 
 import NotificationNotice from "./NotificationNotice.vue";
+import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
@@ -11,7 +12,6 @@ import type {
     ProgrammaticExpose,
     ProgrammaticInstance,
 } from "@/types";
-import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 declare module "../../index" {
     interface OrugaProgrammatic {

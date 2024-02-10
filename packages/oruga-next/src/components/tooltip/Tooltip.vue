@@ -74,7 +74,7 @@ const props = defineProps({
     /** Tooltip trigger tag name */
     triggerTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("tooltip.triggerTag", "div"),
+        default: () => getOption<DynamicComponent>("tooltip.triggerTag", "div"),
     },
     /**
      * Tooltip trigger events
@@ -111,42 +111,52 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the dropdown is teleported */
     teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger position */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger */
     triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content when is multiline */
     multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger when is always visible */
     alwaysClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow */
     arrowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow position */
     arrowPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
