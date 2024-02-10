@@ -4,7 +4,6 @@ import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
 import {
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: undefined },
     /**

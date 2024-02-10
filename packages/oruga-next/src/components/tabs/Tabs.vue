@@ -2,9 +2,8 @@
 import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
-import OSlotComponent from "@/utils/SlotComponent";
+import OSlotComponent from "../utils/SlotComponent";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: 0 },
     /**
@@ -419,3 +418,4 @@ function itemHeaderClasses(
         </section>
     </div>
 </template>
+@/components/utils/SlotComponent

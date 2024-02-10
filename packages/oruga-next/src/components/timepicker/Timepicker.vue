@@ -2,9 +2,8 @@
 import { computed, ref, watch, type PropType } from "vue";
 
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../datepicker/PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Date as PropType<Date>, default: undefined },
     /** The active state of the dropdown */

@@ -3,7 +3,6 @@ import { ref, onMounted, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -26,8 +25,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether loading is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Loader will overlay the full page. */

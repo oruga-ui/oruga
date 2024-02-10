@@ -4,7 +4,6 @@ import { computed, watch, nextTick, type PropType } from "vue";
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { defineClasses, useMatchMedia, usePropBinding } from "@/composables";
 
@@ -23,8 +22,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Total count of items */
     total: { type: Number, default: undefined },
     /** Items count for each page */
