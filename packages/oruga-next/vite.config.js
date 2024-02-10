@@ -18,7 +18,10 @@ const baseFolder = "./src/components/";
 
 const components = fs
     .readdirSync(baseFolder)
-    .filter((f) => fs.statSync(path.join(baseFolder, f)).isDirectory());
+    // filter only folder
+    .filter((f) => fs.statSync(path.join(baseFolder, f)).isDirectory())
+    // filter util components
+    .filter((f) => !f.includes("utils"));
 
 const entries = {
     index: resolve(__dirname, "./src/index.ts"),

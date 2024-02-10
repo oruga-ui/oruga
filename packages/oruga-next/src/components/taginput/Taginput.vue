@@ -4,7 +4,6 @@ import { computed, nextTick, ref, useAttrs, watch, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import {
@@ -28,8 +27,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Array, default: () => [] },
     /** Items data */

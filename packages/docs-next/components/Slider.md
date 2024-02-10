@@ -49,6 +49,7 @@ title: Slider
 | locale            | Date format locale                                                    | string \| string[] | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>{<br>&nbsp;&nbsp;locale: undefined<br>}</code>                 |
 | max               | Maximum value                                                         | number             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>100</code>                                                                                                  |
 | min               | Minimum value                                                         | number             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>0</code>                                                                                                    |
+| override          | Override existing theme classes completely                            | boolean            | -                                                                               |                                                                                                                                                            |
 | rounded           | Rounded thumb                                                         | boolean            | -                                                                               | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;rounded: false<br>}</code>            |
 | size              | Vertical size of slider                                               | string             | `small`, `medium`, `large`                                                      | <div><small>From <b>config</b>:</small></div><code style='white-space: nowrap; padding: 0;'>slider: {<br>&nbsp;&nbsp;size: undefined<br>}</code>           |
 | step              | Step interval of ticks                                                | number             | -                                                                               | <code style='white-space: nowrap; padding: 0;'>1</code>                                                                                                    |
@@ -87,10 +88,11 @@ title: Slider
 
 ### Props
 
-| Prop name | Description          | Type   | Values | Default                                                |
-| --------- | -------------------- | ------ | ------ | ------------------------------------------------------ |
-| label     | Tick label           | string | -      |                                                        |
-| value     | Value of single tick | number | -      | <code style='white-space: nowrap; padding: 0;'></code> |
+| Prop name | Description                                | Type    | Values | Default                                                |
+| --------- | ------------------------------------------ | ------- | ------ | ------------------------------------------------------ |
+| label     | Tick label                                 | string  | -      |                                                        |
+| override  | Override existing theme classes completely | boolean | -      |                                                        |
+| value     | Value of single tick                       | number  | -      | <code style='white-space: nowrap; padding: 0;'></code> |
 
 ### Slots
 

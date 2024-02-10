@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { toCssDimension } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
@@ -20,8 +19,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Show or hide loader	 */
     active: { type: Boolean, default: true },
     /** Show a loading animation */

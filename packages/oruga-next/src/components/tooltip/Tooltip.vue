@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
+import PositionWrapper from "../utils/PositionWrapper.vue";
+
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     defineClasses,
     usePropBinding,
@@ -26,8 +26,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Tooltip text, unnecessary when content slot is used */

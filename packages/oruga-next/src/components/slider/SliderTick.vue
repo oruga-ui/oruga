@@ -2,8 +2,6 @@
 import { computed, type ComputedRef, type PropType } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import { baseComponentProps } from "@/utils/SharedProps";
-
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
 
@@ -17,8 +15,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Value of single tick */
     value: { type: Number, required: true },
     /** Tick label */

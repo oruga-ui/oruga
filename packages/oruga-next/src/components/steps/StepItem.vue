@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -19,8 +18,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Item value (it will be used as v-model of wrapper component) */
     value: { type: [String, Number], default: () => uuid() },
     /** Item label */

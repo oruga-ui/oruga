@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, usePropBinding } from "@/composables";
@@ -20,8 +19,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether collapse is open or not, use v-model:open to make it two-way binding */
     open: { type: Boolean, default: true },
     /** Custom animation (transition name) */

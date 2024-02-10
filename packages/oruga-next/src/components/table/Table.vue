@@ -15,14 +15,12 @@ import OCheckbox from "../checkbox/Checkbox.vue";
 import OIcon from "../icon/Icon.vue";
 import OInput from "../input/Input.vue";
 import OLoading from "../loading/Loading.vue";
-
-import OSlotComponent from "@/utils/SlotComponent";
+import OSlotComponent from "../utils/SlotComponent";
 
 import OTableMobileSort from "./TableMobileSort.vue";
 import OTableColumn from "./TableColumn.vue";
 import OTablePagination from "./TablePagination.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     getValueByPath,
@@ -58,8 +56,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Table data */
     data: { type: Array as PropType<unknown[]>, default: () => [] },
     /** Table columns */
@@ -1999,3 +1997,4 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
         </template>
     </div>
 </template>
+@/components/utils/SlotComponent

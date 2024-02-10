@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType, type Ref } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -25,8 +24,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** The active state of the menu item, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Menu item label */

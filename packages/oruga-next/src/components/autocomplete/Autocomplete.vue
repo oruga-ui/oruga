@@ -16,7 +16,6 @@ import OInput from "../input/Input.vue";
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath, uuid } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
@@ -54,8 +53,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: "" },
     /** Input type */

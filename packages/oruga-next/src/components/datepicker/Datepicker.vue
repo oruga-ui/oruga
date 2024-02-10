@@ -3,11 +3,10 @@ import { computed, ref, watch, type PropType } from "vue";
 
 import OButton from "../button/Button.vue";
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "./PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerWrapper.vue";
 import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -38,8 +37,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
         type: [Date, Array] as PropType<Date | Date[]>,

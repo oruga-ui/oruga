@@ -4,7 +4,6 @@ import { computed, ref, watch, type PropType } from "vue";
 import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { defineClasses, useProviderParent } from "@/composables";
 
@@ -24,8 +23,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: {
         type: [Number, Array] as PropType<number | number[]>,

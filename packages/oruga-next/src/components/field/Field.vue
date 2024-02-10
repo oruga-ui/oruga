@@ -3,7 +3,6 @@ import { computed, ref, useSlots, watch, type PropType } from "vue";
 
 import OFieldBody from "./FieldBody.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { defineClasses, useMatchMedia } from "@/composables";
 
@@ -23,8 +22,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /**
      * Color of the field and help message, also adds a matching icon.
      * Used by Input, Select and Autocomplete.
