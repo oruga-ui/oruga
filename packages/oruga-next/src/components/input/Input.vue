@@ -134,8 +134,8 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
-        /** Class of the root element */
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },

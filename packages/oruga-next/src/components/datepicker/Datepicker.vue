@@ -24,6 +24,7 @@ import {
 } from "./useDatepickerShare";
 
 import type { ComponentClass } from "@/types";
+import type { OrugaOptions } from "@/index";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile
@@ -516,7 +517,8 @@ const props = defineProps({
      */
     inputClasses: {
         type: Object,
-        default: () => getOption("datepicker.inputClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["input"]>("datepicker.inputClasses", {}),
     },
     /**
      * Class configuration for the internal dropdown component
@@ -524,7 +526,11 @@ const props = defineProps({
      */
     dropdownClasses: {
         type: Object,
-        default: () => getOption("datepicker.dropdownClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["dropdown"]>(
+                "datepicker.dropdownClasses",
+                {},
+            ),
     },
     /**
      * Class configuration for the internal select component
@@ -532,7 +538,8 @@ const props = defineProps({
      */
     selectClasses: {
         type: Object,
-        default: () => getOption("datepicker.selectClasses", {}),
+        default: () =>
+            getOption<OrugaOptions["select"]>("datepicker.selectClasses", {}),
     },
 });
 

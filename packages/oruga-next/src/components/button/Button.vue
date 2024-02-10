@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, type Component, type PropType } from "vue";
+import { computed, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
 import { getOption } from "@/utils/config";
 import { defineClasses } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * The classic button, in different colors, sizes, and states
@@ -27,8 +27,8 @@ const props = defineProps({
      * @values button, a, input, router-link, nuxt-link (or other nuxt alias)
      */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
-        default: () => getOption("button.tag", "button"),
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption<DynamicComponent>("button.tag", "button"),
     },
     /**
      * Color variant of the control

@@ -45,12 +45,8 @@ declare module "../../index" {
                 clearable: boolean;
                 /** Icon name to be added on the clear button */
                 clearIcon: string;
-                /** Show status icon using field and variant prop */
-                statusIcon: boolean;
                 /** Native options to use in HTML5 validation */
                 autocomplete: string;
-                /** Enable html 5 native validation */
-                useHtml5Validation: boolean;
                 /** Append the component to another part of the DOM.
 Set `true` to append the component to the body.
 In addition, any CSS selector string or an actual DOM node can be used. */

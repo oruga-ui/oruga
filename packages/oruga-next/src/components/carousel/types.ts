@@ -1,14 +1,16 @@
-import type {
-    ClassDefinition,
-    ComponentConfigBase,
-    DynamicComponent,
-} from "@/types";
+import type { ClassDefinition, ComponentConfigBase } from "@/types";
 
 // Auto generated component theme config definition
 declare module "../../index" {
     interface OrugaOptions {
         carousel?: ComponentConfigBase &
             Partial<{
+                /** Icon pack to use */
+                iconPack: string;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the wrapper element of carousel items */
+                wrapperClass: ClassDefinition;
                 /** Timer interval for `autoplay` */
                 interval: number;
                 /** Position of the indicator - depends on used theme */
@@ -23,20 +25,14 @@ declare module "../../index" {
                 arrows: boolean;
                 /** Show next / prev arrows only on hover */
                 arrowsHover: boolean;
-                /** Icon pack to use */
-                iconPack: string;
                 /** Icon size */
                 iconSize: string;
                 /** Icon name for previous icon */
                 iconPrev: string;
                 /** Icon name for next icon */
                 iconNext: string;
-                /** Class of the root element */
-                rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
                 overlayClass: ClassDefinition;
-                /** Class of the wrapper element of carousel items */
-                wrapperClass: ClassDefinition;
                 /** Class of slider items */
                 itemsClass: ClassDefinition;
                 /** Class of slider items on drag */
@@ -61,10 +57,10 @@ declare module "../../index" {
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
-                /** Role attribute to be passed to the div wrapper for better accessibility */
-                ariaRole: string;
                 /** Class of carousel item */
                 itemClass: ClassDefinition;
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                ariaRole: string;
                 /** Class of carousel item when is active */
                 itemActiveClass: ClassDefinition;
                 /** Class of carousel item when is clickable */

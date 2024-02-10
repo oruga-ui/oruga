@@ -1,14 +1,70 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
 
+// Auto generated component theme config definition
 declare module "../../index" {
     interface OrugaOptions {
         datepicker?: ComponentConfigBase &
-            /** component class config definition */
             Partial<{
+                /** Size of the control input */
+                size: string;
+                /** Open dropdown on focus */
+                openOnFocus: boolean;
+                /** Enable dropdown mobile modal */
+                mobileModal: boolean;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Icon to be shown */
+                icon: string;
+                /** Icon to be added on the right side */
+                iconRight: string;
+                /** Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used. */
+                teleport: string | boolean | Record<string, any>;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
+                /** Class configuration for the internal input component */
+                inputClasses: Record<string, any>;
                 /** Class of the Datepicker size */
                 sizeClass: ClassDefinition;
+                /** Icon name for previous icon */
+                iconPrev: string;
+                /** Icon name for next icon */
+                iconNext: string;
+                /** Set custom day names, else use names based on locale */
+                dayNames: string[];
+                /** Set custom month names, else use names based on locale */
+                monthNames: string[];
+                /** Close dropdown on click */
+                closeOnClick: boolean;
+                /** Custom function to format a date into a string */
+                dateFormatter: (date: Date | Date[]) => string;
+                /** Custom function to parse a string into a date */
+                dateParser: (date: string) => Date;
+                /** Date creator function, default is `new Date()` */
+                dateCreator: () => Date;
+                /** Define a list of weeks which can not be selected */
+                unselectableDaysOfWeek: number[];
+                /** Show nearby month days */
+                nearbyMonthDays: boolean;
+                /** Define if nearby month days can be selected */
+                nearbySelectableMonthDays: boolean;
+                /** Show weeek numbers */
+                showWeekNumber: boolean;
+                /** Define if weeek numbers are clickable */
+                weekNumberClickable: boolean;
+                /** Set the first day of a week */
+                firstDayOfWeek: number;
+                /** Define the range of years to show */
+                yearsRange: number[];
+                /** Trap dropdown on focus */
+                trapFocus: boolean;
+                /** Enable mobile native input if mobile agent */
+                mobileNative: boolean;
+                /** Mobile breakpoint as max-width value */
+                mobileBreakpoint: string;
+                /** Accessibility next button aria label */
+                ariaNextLabel: string;
                 /** Class of the Datepicker box where you choose the date */
                 boxClass: ClassDefinition;
                 /** Class of the Datepicker header inside the box */
@@ -88,11 +144,11 @@ declare module "../../index" {
                 /** Class of the last selected table cell during range selection when type is month */
                 monthCellLastSelectedClass: ClassDefinition;
                 /** Class of the first hovered table cell during range selection when type is month */
-                monthCellFirstHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection when type is month */
-                monthCellWithinHoveredClass: ClassDefinition;
-                /** Class of the table cell when hovered during range selection and cell is in range when type is month */
                 monthCellWithinHoveredRangeClass: ClassDefinition;
+                /** Class of the table cell when hovered during range selection when type is month */
+                monthCellFirstHoveredClass: ClassDefinition;
+                /** Class of the table cell when hovered during range selection and cell is in range when type is month */
+                monthCellWithinHoveredClass: ClassDefinition;
                 /** Class of the last table cell hovered during range selection when type is month */
                 monthCellLastHoveredClass: ClassDefinition;
                 /** Class of the table cell of the current day when type is month */
@@ -101,73 +157,14 @@ declare module "../../index" {
                 monthCellSelectableClass: ClassDefinition;
                 /** Class of the table cell that is unselectable when type is month */
                 monthCellUnselectableClass: ClassDefinition;
-                /**Class of the events container when type is month */
+                /** Class of the events container when type is month */
                 monthCellEventsClass: ClassDefinition;
                 /** Class of the Datepicker when on mobile */
                 mobileClass: ClassDefinition;
-            }> &
-            /** component props config definition */
-            Partial<{
-                /** Set custom day names, else use names based on locale */
-                dayNames: string[];
-                /** Set custom month names, else use names based on locale */
-                monthNames: string[];
-                /** Size of the control */
-                size: string;
-                /** Open dropdown on focus */
-                openOnFocus: boolean;
-                /** Close dropdown on click */
-                closeOnClick: boolean;
-                /** Custom function to format a date into a string */
-                dateFormatter: (date: Date | Date[]) => string;
-                /** Custom function to parse a string into a date */
-                dateParser: (date: string) => Date;
-                /** Date creator function, default is `new Date()` */
-                dateCreator: () => Date;
-                /** Define a list of weeks which can not be selected */
-                unselectableDaysOfWeek: number[];
-                /** Show nearby month days */
-                nearbyMonthDays: boolean;
-                /** Define if nearby month days can be selected */
-                nearbySelectableMonthDays: boolean;
-                /** Show weeek numbers */
-                showWeekNumber: boolean;
-                /** Define if weeek numbers are clickable */
-                weekNumberClickable: boolean;
-                /** Set the first day of a week */
-                firstDayOfWeek: number;
-                /** Define the range of years to show */
-                yearsRange: number[];
-                /** Trap dropdown on focus */
-                trapFocus: boolean;
-                /** Enable dropdown mobile modal */
-                mobileModal: boolean;
-                /** Enable mobile native input if mobile agent */
-                mobileNative: boolean;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon to be shown */
-                icon: string;
-                /** Icon to be added on the right side */
-                iconRight: string;
-                /** Icon name for previous icon */
-                iconPrev: string;
-                /** Icon name for next icon */
-                iconNext: string;
-                /** Mobile breakpoint as max-width value */
-                mobileBreakpoint: string;
-                /**  Append the component to another part of the DOM. */
-                teleport: boolean | string;
-                /** Accessibility next button aria label */
-                ariaNextLabel: string;
-                /** Accessibility previous button aria label  */
-                ariaPreviousLabel: string;
-                /** Class configuration for the internal input component */
-                inputClasses: OrugaOptions["input"];
                 /** Class configuration for the internal dropdown component */
-                dropdownClasses: OrugaOptions["dropdown"];
+                dropdownClasses: Record<string, any>;
                 /** Class configuration for the internal select component */
-                selectClasses: OrugaOptions["select"];
+                selectClasses: Record<string, any>;
             }>;
     }
 }

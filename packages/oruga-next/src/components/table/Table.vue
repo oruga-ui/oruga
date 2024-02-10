@@ -355,7 +355,7 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    /** Class of the Table when rows are narrowed */
+    /** Class of the Table when is hoverable */
     hoverableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
