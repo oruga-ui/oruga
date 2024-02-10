@@ -430,4 +430,3 @@ function itemHeaderClasses(
         </section>
     </div>
 </template>
-@/components/utils/SlotComponent ./types

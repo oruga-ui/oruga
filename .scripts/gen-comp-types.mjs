@@ -14,7 +14,6 @@ if(!exist(path.resolve(__dirname, componentDirectory)))
 
 // create component meta checker
 const checker = createComponentMetaChecker(
-    // Write your tsconfig path
     path.resolve(__dirname, './tsconfig.json'),
     {
         forceUseTs: true,

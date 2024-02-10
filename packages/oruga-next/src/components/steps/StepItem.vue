@@ -181,4 +181,3 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
         </div>
     </Transition>
 </template>
-./types

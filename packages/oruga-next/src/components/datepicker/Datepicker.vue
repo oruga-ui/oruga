@@ -23,8 +23,7 @@ import {
     type FocusedDate,
 } from "./useDatepickerShare";
 
-import type { ComponentClass } from "@/types";
-import type { OrugaOptions } from "@/index";
+import type { ComponentClass, OrugaOptions } from "@/types";
 
 /**
  * An input with a simple dropdown/modal for selecting a date, uses native datepicker for mobile

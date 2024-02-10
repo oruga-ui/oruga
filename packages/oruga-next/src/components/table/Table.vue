@@ -2029,4 +2029,3 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
         </template>
     </div>
 </template>
-@/components/utils/SlotComponent ./types

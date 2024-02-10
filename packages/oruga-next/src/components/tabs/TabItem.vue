@@ -192,4 +192,3 @@ const headerTextClasses = defineClasses([
         </div>
     </Transition>
 </template>
-./types

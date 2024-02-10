@@ -528,4 +528,3 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
         </slot>
     </div>
 </template>
-./types

@@ -427,4 +427,3 @@ const thumbWrapperClasses = defineClasses([
         </div>
     </div>
 </template>
-./types

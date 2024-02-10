@@ -16,7 +16,7 @@ import {
     useProgrammaticComponent,
 } from "@/composables";
 
-import type { NotifcationProps } from "./index";
+import type { NotifcationProps } from "./types";
 import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**

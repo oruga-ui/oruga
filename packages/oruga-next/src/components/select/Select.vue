@@ -407,4 +407,3 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
             @click="rightIconClick" />
     </div>
 </template>
-./types

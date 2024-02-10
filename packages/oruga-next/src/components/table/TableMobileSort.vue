@@ -114,4 +114,3 @@ function sort(event?: Event): void {
         </o-field>
     </div>
 </template>
-./types

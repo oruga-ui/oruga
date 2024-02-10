@@ -77,4 +77,3 @@ const tickLabelClasses = defineClasses([
         </span>
     </div>
 </template>
-./types

@@ -3,8 +3,9 @@ import type {
     ComponentSlots,
 } from "vue-component-type-helpers";
 import type { ProviderItem } from "@/composables";
-import TabItem from "./TabItem.vue";
 import type { ClassBind } from "@/types";
+
+import TabItem from "./TabItem.vue";
 
 export type TabItemProps = ComponentProps<typeof TabItem>;
 

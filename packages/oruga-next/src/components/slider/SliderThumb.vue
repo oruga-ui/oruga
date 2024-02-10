@@ -249,4 +249,3 @@ defineExpose({ setPosition });
         </o-tooltip>
     </div>
 </template>
-./types

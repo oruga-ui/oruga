@@ -1,9 +1,10 @@
-import type { ProviderItem } from "@/composables";
-import StepItem from "./StepItem.vue";
 import type {
     ComponentProps,
     ComponentSlots,
 } from "vue-component-type-helpers";
+import type { ProviderItem } from "@/composables";
+
+import StepItem from "./StepItem.vue";
 
 export type StepItemProps = ComponentProps<typeof StepItem>;
 
