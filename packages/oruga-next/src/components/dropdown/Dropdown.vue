@@ -512,7 +512,6 @@ const menuClasses = defineClasses(
         autoPosition,
         computed(() => !!autoPosition.value),
     ],
-
     [
         "menuActiveClass",
         "o-drop__menu--active",
