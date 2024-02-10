@@ -4,36 +4,17 @@ import type {
     DynamicComponent,
 } from "@/types";
 
+// Auto generated component theme config definition
 declare module "../../index" {
     interface OrugaOptions {
         autocomplete?: ComponentConfigBase &
-            /** component class config definition */
             Partial<{
-                /** Class of the root element */
-                rootClass: ClassDefinition;
-                /** Class of the menu items */
-                itemClass: ClassDefinition;
-                /** Class of the menu items on hover */
-                itemHoverClass: ClassDefinition;
-                /** Class of the menu items group title */
-                itemGroupTitleClass: ClassDefinition;
-                /** Class of the menu empty placeholder item */
-                itemEmptyClass: ClassDefinition;
-                /** Class of the menu header item */
-                itemHeaderClass: ClassDefinition;
-                /** Class of the menu footer item */
-                itemFooterClass: ClassDefinition;
-                /** Classes to apply on internal input component*/
-                inputClasses: ClassDefinition;
-            }> &
-            /** component props config definition */
-            Partial<{
+                /** Size of the control */
+                size: string;
                 /** Menu tag name */
                 menuTag: DynamicComponent;
                 /** Menu item tag name */
                 itemTag: DynamicComponent;
-                /** Size of the control */
-                size: string;
                 /** Position of the dropdown */
                 position: string;
                 /** Makes the component check if list reached scroll start or end and emit scroll events. */
@@ -49,7 +30,7 @@ declare module "../../index" {
                 /** Keep open dropdown list after select */
                 keepOpen: boolean;
                 /** Max height of dropdown content */
-                maxHeight: number | string;
+                maxHeight: string | number;
                 /** Dropdown content (items) are shown into a modal on mobile */
                 mobileModal: boolean;
                 /** Transition name to apply on dropdown list */
@@ -64,10 +45,32 @@ declare module "../../index" {
                 clearable: boolean;
                 /** Icon name to be added on the clear button */
                 clearIcon: string;
+                /** Show status icon using field and variant prop */
+                statusIcon: boolean;
                 /** Native options to use in HTML5 validation */
                 autocomplete: string;
-                /** Append the component to another part of the DOM. */
-                teleport: boolean | string;
+                /** Enable html 5 native validation */
+                useHtml5Validation: boolean;
+                /** Append the component to another part of the DOM.
+Set `true` to append the component to the body.
+In addition, any CSS selector string or an actual DOM node can be used. */
+                teleport: string | boolean | Record<string, any>;
+                /** Class of the root element */
+                rootClass: ClassDefinition;
+                /** Class of the menu items */
+                itemClass: ClassDefinition;
+                /** Class of the menu items on hover */
+                itemHoverClass: ClassDefinition;
+                /** Class of the menu items group title */
+                itemGroupTitleClass: ClassDefinition;
+                /** Class of the menu empty placeholder item */
+                itemEmptyClass: ClassDefinition;
+                /** Class of the menu header item */
+                itemHeaderClass: ClassDefinition;
+                /** Class of the menu footer item */
+                itemFooterClass: ClassDefinition;
+                /** Classes to apply on internal input component */
+                inputClasses: Record<string, any>;
             }>;
     }
 }

@@ -9,7 +9,10 @@ import {
 } from "@/utils/plugins";
 
 /** export notification specific types */
-export type { NotifcationNoticeProps, NotifcationProps } from "./types";
+export type {
+    NotifcationNoticeProps,
+    NotifcationProps,
+} from "./NotificationProgrammatic";
 
 /** export notification plugin */
 export default {

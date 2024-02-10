@@ -1,14 +1,4 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
-import Loading from "./Loading.vue";
-import LoadingProgrammatic from "./LoadingProgrammatic";
-
-export type LoadingProps = InstanceType<typeof Loading>["$props"];
-
-declare module "../../index" {
-    export interface OrugaProgrammatic {
-        loading: typeof LoadingProgrammatic;
-    }
-}
 
 declare module "../../index" {
     interface OrugaOptions {

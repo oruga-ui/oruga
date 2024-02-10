@@ -1,7 +1,4 @@
 import type { ClassDefinition, ComponentConfigBase } from "@/types";
-import type Modal from "./Modal.vue";
-
-export type ModalProps = InstanceType<typeof Modal>["$props"];
 
 declare module "../../index" {
     interface OrugaOptions {

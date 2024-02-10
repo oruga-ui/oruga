@@ -1,10 +1,36 @@
-import type { ClassDefinition, ComponentConfigBase } from "@/types";
+import type {
+    ClassDefinition,
+    ComponentConfigBase,
+    DynamicComponent,
+} from "@/types";
 
+// Auto generated component theme config definition
 declare module "../../index" {
     interface OrugaOptions {
         carousel?: ComponentConfigBase &
-            /** component class config definition */
             Partial<{
+                /** Timer interval for `autoplay` */
+                interval: number;
+                /** Position of the indicator - depends on used theme */
+                indicatorPosition: string;
+                /** Style of the indicator - depends on used theme */
+                indicatorStyle: string;
+                /** Number of items to show at once */
+                itemsToShow: number;
+                /** Number of items to switch at once */
+                itemsToList: number;
+                /** Show next / prev arrows */
+                arrows: boolean;
+                /** Show next / prev arrows only on hover */
+                arrowsHover: boolean;
+                /** Icon pack to use */
+                iconPack: string;
+                /** Icon size */
+                iconSize: string;
+                /** Icon name for previous icon */
+                iconPrev: string;
+                /** Icon name for next icon */
+                iconNext: string;
                 /** Class of the root element */
                 rootClass: ClassDefinition;
                 /** Class of the root element in overlay */
@@ -35,37 +61,14 @@ declare module "../../index" {
                 indicatorItemActiveClass: ClassDefinition;
                 /** Class of indicator element to separate different styles */
                 indicatorItemStyleClass: ClassDefinition;
+                /** Role attribute to be passed to the div wrapper for better accessibility */
+                ariaRole: string;
                 /** Class of carousel item */
                 itemClass: ClassDefinition;
                 /** Class of carousel item when is active */
                 itemActiveClass: ClassDefinition;
                 /** Class of carousel item when is clickable */
                 itemClickableClass: ClassDefinition;
-            }> &
-            /** component props config definition */
-            Partial<{
-                /** Timer interval for `autoplay` */
-                interval: number;
-                /** Position of the indicator - depends on used theme */
-                indicatorPosition: string;
-                /** Style of the indicator - depends on used theme */
-                indicatorStyle: string;
-                /** Number of items to show at once*/
-                itemsToShow: number;
-                /** Number of items to switch at once */
-                itemsToList: number;
-                /** Show next / prev arrows */
-                arrows: boolean;
-                /** Show next / prev arrows only on hover */
-                arrowsHover: boolean;
-                /** Icon pack to use */
-                iconPack: string;
-                /** Icon size */
-                iconSize: string;
-                /** Icon name for previous icon */
-                iconPrev: string;
-                /** Icon name for next icon */
-                iconNext: string;
             }>;
     }
 }

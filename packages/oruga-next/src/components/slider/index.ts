@@ -6,7 +6,7 @@ import SliderTick from "./SliderTick.vue";
 import { registerComponent } from "@/utils/plugins";
 
 /** export slider specific types */
-export type * from "./types";
+export type * from "./utils";
 
 /** export slider plugin */
 export default {
