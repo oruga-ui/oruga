@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs, type PropType, ref, watch, nextTick } from "vue";
+import type { ComponentExposed } from "vue-component-type-helpers";
 
 import ODropdown from "../dropdown/Dropdown.vue";
 import ODropdownItem from "../dropdown/DropdownItem.vue";
@@ -15,7 +16,6 @@ import {
 } from "@/composables";
 
 import type { ClassBind, ComponentClass } from "@/types";
-import type { ComponentExposed } from "vue-component-type-helpers";
 
 /**
  * This is a internal used component.
@@ -41,18 +41,9 @@ const props = defineProps({
     nativeMin: { type: [String, Number], default: undefined },
     nativeMax: { type: [String, Number], default: undefined },
     stayOpen: { type: Boolean, default: false },
-    rootClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-    dropdownClasses: {
-        type: Array as PropType<ClassBind[]>,
-        required: true,
-    },
-    boxClass: {
-        type: Array as PropType<ComponentClass>,
-        required: true,
-    },
+    rootClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    dropdownClasses: { type: Array as PropType<ClassBind[]>, required: true },
+    boxClass: { type: Array as PropType<ComponentClass>, required: true },
 });
 
 const emits = defineEmits<{
@@ -85,8 +76,8 @@ const isMobileNative = computed(
 );
 
 const dropdownRef = ref<ComponentExposed<typeof ODropdown>>();
-const inputRef = ref<InstanceType<typeof OInput>>();
-const nativeInputRef = ref<InstanceType<typeof OInput>>();
+const inputRef = ref<ComponentExposed<typeof OInput>>();
+const nativeInputRef = ref<ComponentExposed<typeof OInput>>();
 
 const elementRef = computed(() =>
     isMobileNative.value ? nativeInputRef.value : inputRef.value,

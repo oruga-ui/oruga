@@ -84,7 +84,7 @@ const { dropdown } = injectDropdown<T>();
 onMounted(() => {
     if (!dropdown.value)
         throw new Error(
-            "You should wrap ODropdownItem with an ODropdown component",
+            "ODropdownItem should be wrapped with an ODropdown component",
         );
 });
 

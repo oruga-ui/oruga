@@ -74,11 +74,11 @@ const emits = defineEmits<{
     (e: "update:position", value: string);
 }>();
 
-const to = computed(() =>
+const teleportTo = computed(() =>
     typeof props.teleport === "boolean" ? "body" : props.teleport,
 );
 
-const disabled = computed(() =>
+const teleportDisabled = computed(() =>
     typeof props.teleport === "boolean" || !props.teleport
         ? !props.teleport
         : false,
@@ -299,8 +299,8 @@ const anchors = (rect: DOMRect): Record<Position, Point> => ({
 </script>
 
 <template>
-    <Teleport :to="to" :disabled="disabled">
-        <template v-if="disabled">
+    <Teleport :to="teleportTo" :disabled="teleportDisabled">
+        <template v-if="teleportDisabled">
             <slot />
         </template>
         <template v-else>

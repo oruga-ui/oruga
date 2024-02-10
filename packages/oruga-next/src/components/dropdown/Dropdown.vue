@@ -450,7 +450,7 @@ function checkDropdownScroll(): void {
     }
 }
 
-// --- Field Dependency Injection Feature ---
+// --- Dependency Injection Feature ---
 
 /**
  * Click listener from DropdownItem.
@@ -462,27 +462,27 @@ function selectItem(value: ModelValueType): void {
     if (props.multiple) {
         if (vmodel.value && Array.isArray(vmodel.value)) {
             if (vmodel.value.indexOf(value) === -1) {
-                // Add value
+                // add a value
                 vmodel.value = [...vmodel.value, value] as ModelValueType;
             } else {
-                // Remove value
+                // remove a value
                 vmodel.value = vmodel.value.filter(
                     (val) => val !== value,
                 ) as ModelValueType;
             }
         } else {
-            // Init value array
+            // init new value array
             vmodel.value = [value] as ModelValueType;
         }
         emits("change", vmodel.value);
     } else {
         if (vmodel.value !== value) {
-            // Upodate value
+            // update a single value
             vmodel.value = value;
             emits("change", vmodel.value);
         }
-    }
-    if (!props.multiple) {
+
+        // close dropdown if cancel option 'content' is enabled
         if (cancelOptions.value.indexOf("content") < 0) return;
         emits("close", "content");
         isActive.value = false;
@@ -619,3 +619,4 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
         </PositionWrapper>
     </div>
 </template>
+./types
