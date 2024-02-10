@@ -34,13 +34,14 @@ function generateComponentsType (module, file) {
   const code = `// Auto generated component declarations
 declare module "vue" {
     export interface GlobalComponents {
-        ${lines.join('\n    ')}
+        ${lines.join(`
+        `)}
     }
 }
 export {};
 `;
 
-  fs.writeFileSync(path.resolve(TYPE_ROOT, file), code, 'utf-8')
+  fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
 }
 
 // generate main package volar file

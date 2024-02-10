@@ -26,7 +26,7 @@ const checker = createComponentMetaChecker(
 // get all component folders
 const component_folders = getFolders(componentDirectory);
 
-component_folders.map(folder => {
+const components = component_folders.map(folder => {
     const name = folder.toLowerCase();
     const folderPath = path.resolve(__dirname, componentDirectory, folder);
 
@@ -71,34 +71,34 @@ component_folders.map(folder => {
         idx === self.findIndex(p => p.name === item.name)
     );
 
-    if(name =="menu") console.log(props);
+    return { name, props };
+});
 
-    const hasTagProp = props.some(prop => prop.type === "DynamicComponent");
-
-    const code = `${hasTagProp ? `import type {
+    
+const code = `import type {
     ClassDefinition,
     ComponentConfigBase,
     DynamicComponent,
-} from "@/types";`: `import type { ClassDefinition, ComponentConfigBase } from "@/types";`
-}
+} from "@/types";
 
 // Auto generated component theme config definition
-declare module "../../index" {
+declare module "../index" {
     interface OrugaOptions {
-        ${name.toLowerCase()}?: ComponentConfigBase &
+        ${components.map(({name, props}) => 
+            `${name.toLowerCase()}?: ComponentConfigBase &
             Partial<{${
-            props.map(prop => {
-                return `
+            props.map(prop =>`
                 /** ${prop.description} */
                 ${prop.name}: ${prop.type};`
-            }).join("")
-        }
-            }>;
+            ).join("")
+            }
+            }>;`
+        ).join(`
+        `)}
     }
 }
 `;
 
-    const file = path.resolve(__dirname, componentDirectory, name, "types.ts");
-    fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
+const file = path.resolve(__dirname, componentDirectory, "types.ts");
+fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
 
-});
