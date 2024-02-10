@@ -41,7 +41,7 @@
     "dev": "vite",
     "build:vue": "rimraf dist && vite build && vite build --mode minify",
     "build:vue:watch": "vite build --mode minify --watch",
-    "build:lib": "rimraf dist && npm run test:ts && npm run build:vue && npm run gen-volar-dts",
+    "build:lib": "rimraf dist && npm run test:ts && npm run gen-volar-dts && npm run build:vue && npm run gen-volar-dts",
     "build:lib:watch": "npm link && npm run build:vue:watch",
     "publish:lib": "cp ../../README.md . && npm run build:lib && npm publish",
     "test": "rm -rf .nyc_output coverage && NODE_ENV=test cypress run --component",
