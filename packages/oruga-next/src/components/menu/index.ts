@@ -5,9 +5,6 @@ import MenuItem from "./MenuItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export menu specific types */
-export type * from "./types";
-
 /** export menu plugin */
 export default {
     install(app: App) {

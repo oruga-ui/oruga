@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -19,8 +18,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Item value (it will be used as v-model of wrapper component) */
     value: { type: [String, Number], default: () => uuid() },
     /** Item label */
@@ -42,7 +41,7 @@ const props = defineProps({
     /** Tabs item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("tabs.itemTag", "button"),
+        default: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility. */
     ariaRole: {
@@ -52,30 +51,37 @@ const props = defineProps({
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the tab item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header */
     itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header when active */
     itemHeaderActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header when disabled */
     itemHeaderDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header type */
     itemHeaderTypeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header icon */
     itemHeaderIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header text */
     itemHeaderTextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

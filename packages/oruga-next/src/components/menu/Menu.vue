@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, toRaw, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -24,8 +23,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Menu label */
     label: { type: String, default: undefined },
     /** If sub menu items are collapsible */
@@ -62,14 +61,17 @@ const props = defineProps({
         default: () => getOption("menu.iconSize"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu list */
     listClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu list label */
     listLabelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

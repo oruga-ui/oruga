@@ -1,5 +1,6 @@
-import type { Component, DefineComponent, PropType } from "vue";
+import type { DefineComponent, PropType } from "vue";
 import { defineComponent, h } from "vue";
+import type { DynamicComponent } from "@/types";
 
 /** This components renders a specific slot and only the slot of another component */
 export default defineComponent({
@@ -13,8 +14,8 @@ export default defineComponent({
         props: { type: Object, default: () => {} },
         /** Tag name of the slot wrapper element */
         tag: {
-            type: [String, Object, Function] as PropType<string | Component>,
-            default: "div",
+            type: [String, Object, Function] as PropType<DynamicComponent>,
+            default: "div" as DynamicComponent,
         },
     },
     render() {

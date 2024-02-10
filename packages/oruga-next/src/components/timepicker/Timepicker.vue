@@ -2,9 +2,8 @@
 import { computed, ref, watch, type PropType } from "vue";
 
 import OSelect from "../select/Select.vue";
-import OPickerWrapper from "../datepicker/PickerWrapper.vue";
+import OPickerWrapper from "../utils/PickerWrapper.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Date as PropType<Date>, default: undefined },
     /** The active state of the dropdown */
@@ -170,22 +169,27 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    izeClass: {
+    /** Class of the Timepicker component size */
+    sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker component box where you choose the date */
     boxClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker separator */
     separatorClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker footer */
     footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

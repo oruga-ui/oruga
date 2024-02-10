@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, type ComputedRef, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
@@ -19,8 +18,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Item value (it will be used as v-model of wrapper component) */
     value: { type: [String, Number], default: () => uuid() },
     /** Item label */
@@ -53,7 +52,7 @@ const props = defineProps({
     /** Step item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("steps.itemTag", "button"),
+        default: () => getOption<DynamicComponent>("steps.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility */
     ariaRole: {
@@ -63,22 +62,27 @@ const props = defineProps({
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the content item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the nav item */
     itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the nav item when active */
     itemHeaderActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the nav item behind the active one */
     itemHeaderPreviousClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the nav item with variant (default value by parent steps component) */
     itemHeaderVariantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

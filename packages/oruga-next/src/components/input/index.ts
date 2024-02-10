@@ -4,9 +4,6 @@ import Input from "./Input.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export input specific types */
-export type * from "./types";
-
 /** export input plugin */
 export default {
     install(app: App) {

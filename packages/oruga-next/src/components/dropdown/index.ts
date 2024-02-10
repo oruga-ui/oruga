@@ -5,9 +5,6 @@ import DropdownItem from "./DropdownItem.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export dropdown specific types */
-export type * from "./types";
-
 /** export dropdown plugin */
 export default {
     install(app: App) {

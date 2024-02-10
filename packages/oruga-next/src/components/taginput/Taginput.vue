@@ -4,11 +4,11 @@ import { computed, nextTick, ref, useAttrs, watch, type PropType } from "vue";
 import OIcon from "../icon/Icon.vue";
 import OAutocomplete from "../autocomplete/Autocomplete.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { getValueByPath } from "@/utils/helpers";
 import {
     defineClasses,
+    getActiveClasses,
     useVModelBinding,
     useInputHandler,
 } from "@/composables";
@@ -28,8 +28,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: Array, default: () => [] },
     /** Items data */
@@ -170,34 +170,42 @@ const props = defineProps({
         default: () => getOption("taginput.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input container */
     containerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input container size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the entered item variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the close button of entered item */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the entered item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -421,9 +429,9 @@ const autocompleteInputClasses = defineClasses([
 
 const autocompleteBind = computed(() => ({
     ...attrs,
-    "root-class": autocompleteRootClasses.value,
+    "root-class": getActiveClasses(autocompleteRootClasses.value),
     "input-classes": {
-        "input-class": autocompleteInputClasses.value,
+        "input-class": getActiveClasses(autocompleteInputClasses.value),
     },
     ...props.autocompleteClasses,
 }));

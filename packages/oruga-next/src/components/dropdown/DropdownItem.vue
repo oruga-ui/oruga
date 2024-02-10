@@ -33,7 +33,7 @@ const props = defineProps({
     /** Dropdown item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("dropdown.itemTag", "div"),
+        default: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
     },
     /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
     tabindex: { type: [Number, String], default: 0 },
@@ -47,18 +47,22 @@ const props = defineProps({
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the dropdown item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when active  */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when clickable */
     itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when disabled */
     itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
