@@ -8,7 +8,7 @@ import OField from "../field/Field.vue";
 
 import { getValueByPath } from "@/utils/helpers";
 
-import type { TableColumn } from "./types";
+import type { TableColumn } from "./utils";
 import type { ClassBind } from "@/types";
 
 defineOptions({

@@ -11,7 +11,7 @@ import {
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent, Column } from "./types";
+import type { TableColumnComponent, Column } from "./utils";
 
 /**
  * @displayName Table Column

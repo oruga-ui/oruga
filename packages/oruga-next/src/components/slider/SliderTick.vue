@@ -2,7 +2,7 @@
 import { computed, type ComputedRef, type PropType } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { SliderComponent } from "./types";
+import type { SliderComponent } from "./utils";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -25,10 +25,12 @@ const props = defineProps({
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider tick is hidden */
     tickHiddenClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of tick label */
     tickLabelClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,

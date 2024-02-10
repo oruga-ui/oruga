@@ -148,10 +148,12 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the Datepicker wrapper */
     datepickerWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Timepicker wrapper */
     timepickerWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

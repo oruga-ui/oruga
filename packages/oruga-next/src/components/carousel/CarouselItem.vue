@@ -27,14 +27,17 @@ const props = defineProps({
         default: () => getOption("carousel.ariaRole", "option"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of carousel item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of carousel item when is active */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of carousel item when is clickable */
     itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

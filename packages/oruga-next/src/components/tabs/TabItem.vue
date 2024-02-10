@@ -5,7 +5,7 @@ import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { TabsComponent, TabItemComponent } from "./types";
+import type { TabsComponent, TabItemComponent } from "./utils";
 import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
@@ -41,7 +41,7 @@ const props = defineProps({
     /** Tabs item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("tabs.itemTag", "button"),
+        default: () => getOption<DynamicComponent>("tabs.itemTag", "button"),
     },
     /** Role attribute to be passed to the div wrapper for better accessibility. */
     ariaRole: {
@@ -51,30 +51,37 @@ const props = defineProps({
     /** Sets a class to the item header */
     headerClass: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the tab item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header */
     itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header when active */
     itemHeaderActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header when disabled */
     itemHeaderDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header type */
     itemHeaderTypeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header icon */
     itemHeaderIconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item header text */
     itemHeaderTextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

@@ -16,7 +16,7 @@ import {
     useProgrammaticComponent,
 } from "@/composables";
 
-import type { NotifcationProps } from "./types";
+import type { NotifcationProps } from "./index";
 import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
@@ -111,14 +111,17 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Root class of the notice */
     noticeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the notice when positioned */
     noticePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the custom container element */
     noticeCustomContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

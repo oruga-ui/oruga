@@ -7,7 +7,7 @@ import OSliderTick from "./SliderTick.vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, useProviderParent } from "@/composables";
 
-import type { SliderComponent } from "./types";
+import type { SliderComponent } from "./utils";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -104,54 +104,67 @@ const props = defineProps({
         default: () => getOption("slider.ariaLabel"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the vertical slider size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the slider track */
     trackClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the filled part of the slider */
     fillClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the slider is rounded */
     thumbRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the thumb gets dragged */
     thumbDraggingClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider is disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the thumb wrapper */
     thumbWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the thumb */
     thumbClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the slider variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of slider tick */
     tickClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when slider tick is hidden */
     tickHiddenClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of tick label */
     tickLabelClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,

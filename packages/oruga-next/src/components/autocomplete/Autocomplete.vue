@@ -62,12 +62,14 @@ const props = defineProps({
     /** Menu tag name */
     menuTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("autocomplete.menuTag", "div"),
+        default: () =>
+            getOption<DynamicComponent>("autocomplete.menuTag", "div"),
     },
     /** Menu item tag name */
     itemTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("autocomplete.itemTag", "div"),
+        default: () =>
+            getOption<DynamicComponent>("autocomplete.itemTag", "div"),
     },
     /** Options / suggestions */
     data: { type: Array, default: () => [] },
@@ -227,30 +229,37 @@ const props = defineProps({
         default: () => getOption("autocomplete.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items on hover */
     itemHoverClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu items group title */
     itemGroupTitleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu empty placeholder item */
     itemEmptyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu header item */
     itemHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu footer item */
     itemFooterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

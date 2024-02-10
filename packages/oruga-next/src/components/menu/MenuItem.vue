@@ -60,7 +60,7 @@ const props = defineProps({
     /** Menu item tag name */
     tag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("menu.menuTag", "a"),
+        default: () => getOption<DynamicComponent>("menu.menuTag", "a"),
     },
     /**
      * Role attribute to be passed to the list item for better accessibility.
@@ -71,26 +71,32 @@ const props = defineProps({
         default: getOption("menu.itemAriaRole", "menuitem"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the menu item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the active menu item */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the disabled menu item */
     itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the icon of menu item */
     itemIconTextClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu item when is a submenu */
     itemSubmenuClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the root element of menu item */
     itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

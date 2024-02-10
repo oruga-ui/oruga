@@ -61,14 +61,17 @@ const props = defineProps({
         default: () => getOption("menu.iconSize"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu list */
     listClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the menu list label */
     listLabelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
