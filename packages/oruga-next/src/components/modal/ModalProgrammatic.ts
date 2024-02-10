@@ -1,7 +1,7 @@
 import { createVNode, render } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
 
 import Modal from "./Modal.vue";
+import type { ModalProps } from "./types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
@@ -13,8 +13,6 @@ declare module "../../index" {
         modal: typeof ModalProgrammatic;
     }
 }
-
-export type ModalProps = ComponentProps<typeof Modal>;
 
 const instances = new InstanceRegistry<typeof Modal>();
 

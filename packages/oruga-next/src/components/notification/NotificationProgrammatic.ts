@@ -1,8 +1,7 @@
 import { createVNode, render } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
 
 import NotificationNotice from "./NotificationNotice.vue";
-import Notification from "./Notification.vue";
+import type { NotifcationNoticeProps, NotifcationProps } from "./types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
@@ -19,10 +18,6 @@ declare module "../../index" {
         notification: typeof NotificationProgrammatic;
     }
 }
-
-export type NotifcationProps = ComponentProps<typeof Notification>;
-
-export type NotifcationNoticeProps = ComponentProps<typeof NotificationNotice>;
 
 const instances = new InstanceRegistry<typeof NotificationNotice>();
 

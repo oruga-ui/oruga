@@ -6,7 +6,7 @@ import TableColumn from "./TableColumn.vue";
 import { registerComponent } from "@/utils/plugins";
 
 /** export table specific types */
-export type { Column } from "./utils";
+export type { Column } from "./types";
 
 /** export table plugin */
 export default {

@@ -39,7 +39,7 @@ import {
     getActiveClasses,
 } from "@/composables";
 
-import type { Column, TableColumn, TableColumnComponent } from "./utils";
+import type { Column, TableColumn, TableColumnComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -2029,4 +2029,4 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
         </template>
     </div>
 </template>
-@/components/utils/SlotComponent
+@/components/utils/SlotComponent ./types

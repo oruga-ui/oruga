@@ -9,7 +9,7 @@ import {
 } from "@/utils/plugins";
 
 /** export loading specific types */
-export type { LoadingProps } from "./LoadingProgrammatic";
+export type { LoadingProps } from "./types";
 
 /** export loading plugin */
 export default {

@@ -7,7 +7,7 @@ import OSliderTick from "./SliderTick.vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, useProviderParent } from "@/composables";
 
-import type { SliderComponent } from "./utils";
+import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -427,3 +427,4 @@ const thumbWrapperClasses = defineClasses([
         </div>
     </div>
 </template>
+./types

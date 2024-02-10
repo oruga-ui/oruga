@@ -5,7 +5,7 @@ import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { StepsComponent } from "./utils";
+import type { StepsComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
@@ -181,3 +181,4 @@ const elementClasses = defineClasses(["itemClass", "o-steps__item"]);
         </div>
     </Transition>
 </template>
+./types

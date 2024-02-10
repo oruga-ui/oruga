@@ -13,7 +13,7 @@ import {
     useMatchMedia,
 } from "@/composables";
 
-import type { StepItem, StepItemComponent } from "./utils";
+import type { StepItem, StepItemComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -528,3 +528,4 @@ function itemClasses(childItem: (typeof items.value)[number]): ClassBind[] {
         </slot>
     </div>
 </template>
+./types

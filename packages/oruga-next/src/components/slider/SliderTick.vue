@@ -2,7 +2,7 @@
 import { computed, type ComputedRef, type PropType } from "vue";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { SliderComponent } from "./utils";
+import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -77,3 +77,4 @@ const tickLabelClasses = defineClasses([
         </span>
     </div>
 </template>
+./types

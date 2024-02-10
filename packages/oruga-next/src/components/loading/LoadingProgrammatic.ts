@@ -1,7 +1,7 @@
 import { createVNode, render } from "vue";
-import type { ComponentProps } from "vue-component-type-helpers";
 
 import Loading from "./Loading.vue";
+import type { LoadingProps } from "./types";
 
 import InstanceRegistry from "@/utils/InstanceRegistry";
 import { VueInstance } from "@/utils/plugins";
@@ -13,8 +13,6 @@ declare module "../../index" {
         loading: typeof LoadingProgrammatic;
     }
 }
-
-export type LoadingProps = ComponentProps<typeof Loading>;
 
 const instances = new InstanceRegistry<typeof Loading>();
 

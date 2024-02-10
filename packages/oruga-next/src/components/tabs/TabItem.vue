@@ -5,7 +5,7 @@ import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import { defineClasses, useProviderChild } from "@/composables";
 
-import type { TabsComponent, TabItemComponent } from "./utils";
+import type { TabsComponent, TabItemComponent } from "./types";
 import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
@@ -192,3 +192,4 @@ const headerTextClasses = defineClasses([
         </div>
     </Transition>
 </template>
+./types

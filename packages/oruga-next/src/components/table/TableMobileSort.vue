@@ -8,7 +8,7 @@ import OField from "../field/Field.vue";
 
 import { getValueByPath } from "@/utils/helpers";
 
-import type { TableColumn } from "./utils";
+import type { TableColumn } from "./types";
 import type { ClassBind } from "@/types";
 
 defineOptions({
@@ -114,3 +114,4 @@ function sort(event?: Event): void {
         </o-field>
     </div>
 </template>
+./types

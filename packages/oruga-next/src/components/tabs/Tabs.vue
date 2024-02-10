@@ -13,7 +13,7 @@ import {
     useVModelBinding,
 } from "@/composables";
 
-import type { TabItem, TabItemComponent } from "./utils";
+import type { TabItem, TabItemComponent } from "./types";
 import type { ComponentClass, ClassBind } from "@/types";
 
 /**
@@ -430,4 +430,4 @@ function itemHeaderClasses(
         </section>
     </div>
 </template>
-@/components/utils/SlotComponent
+@/components/utils/SlotComponent ./types

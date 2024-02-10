@@ -5,7 +5,7 @@ import OTooltip from "../tooltip/Tooltip.vue";
 
 import { isClient } from "@/utils/ssr";
 
-import type { SliderProps } from "./utils";
+import type { SliderProps } from "./types";
 import type { ClassBind } from "@/types";
 
 /**
@@ -249,3 +249,4 @@ defineExpose({ setPosition });
         </o-tooltip>
     </div>
 </template>
+./types

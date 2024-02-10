@@ -11,7 +11,7 @@ import {
 import { useProviderChild } from "@/composables";
 import { toCssDimension } from "@/utils/helpers";
 
-import type { TableColumnComponent, Column } from "./utils";
+import type { TableColumnComponent, Column } from "./types";
 
 /**
  * @displayName Table Column
@@ -166,3 +166,4 @@ onBeforeMount(() => {
         </template>
     </span>
 </template>
+./types

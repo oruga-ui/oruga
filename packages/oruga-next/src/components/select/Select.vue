@@ -13,7 +13,7 @@ import {
 
 import { injectField } from "../field/useFieldShare";
 
-import type { OptionsItem } from "./utils";
+import type { OptionsItem } from "./types";
 import type { ComponentClass } from "@/types";
 
 /**
@@ -407,3 +407,4 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
             @click="rightIconClick" />
     </div>
 </template>
+./types
