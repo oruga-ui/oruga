@@ -175,6 +175,10 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    hasIconRightClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -384,6 +388,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    ["hasIconRightClass", "", null, computed(() => hasIconRight.value)],
 );
 
 const inputClasses = defineClasses(
