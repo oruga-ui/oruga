@@ -23,7 +23,7 @@ import type {
 } from "@/types";
 
 // named tuple as prop definition
-type ComputedClass = readonly [
+export type ComputedClass = readonly [
     className: string,
     defaultClass: string,
     suffix?: MaybeRefOrGetter<string>,
@@ -42,7 +42,7 @@ export const getActiveClasses = (classes: ClassBind[]): string[] => {
  * Calculate dynamic classes based on class definitions
  */
 export function defineClasses(
-    ...classDefinitions: ComputedClass[]
+    ...classDefinitions: Array<ComputedClass | undefined>
 ): Ref<ClassBind[]> {
     // getting a hold of the internal instance of the component in setup()
     const vm = getCurrentInstance();

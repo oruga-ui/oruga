@@ -10,6 +10,7 @@ import {
     defineClasses,
     useVModelBinding,
     useInputHandler,
+    type ComputedClass,
 } from "@/composables";
 
 import { injectField } from "../field/useFieldShare";
@@ -283,7 +284,7 @@ function rightIconClick(event): void {
 
 // --- Computed Component Classes ---
 
-const variantComputedClass = [
+const variantComputedClass: ComputedClass = [
     "variantClass",
     "o-sel--",
     computed(() => statusVariant.value || props.variant),
