@@ -50,7 +50,8 @@
     "test:watch": "rm -rf .nyc_output coverage && NODE_ENV=test cypress open --component",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
     "gen-volar-dts": "node ../../.scripts/gen-component-declaration.mjs --bundle --platform=node",
-    "update": "ncu -u"
+    "update": "ncu -u",
+    "pack:lib": "echo \"$PWD/$(npm pack)\""
   },
   "keywords": [
     "oruga",
