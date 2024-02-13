@@ -46,6 +46,12 @@ declare module "../../index" {
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
+                /** Class of the select arrow */
+                rootPositionClass: ClassDefinition;
+                /** Class of the select arrow */
+                rootActiveClass: ClassDefinition;
+                /** Class of the select arrow */
+                hoverableClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{
@@ -61,6 +67,8 @@ declare module "../../index" {
                 icon: string;
                 /** Icon to be added on the right side */
                 iconRight: string;
+                /** Whether to display the variant class on the root element rather than the select element */
+                variantClassOnRoot: boolean;
             }>;
     }
 }

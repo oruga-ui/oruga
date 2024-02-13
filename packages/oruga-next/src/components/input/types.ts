@@ -31,6 +31,8 @@ declare module "../../index" {
                 sizeClass: ClassDefinition;
                 /** Class of the input variant */
                 variantClass: ClassDefinition;
+                /** Class to display is a right icon is present */
+                hasIconRightClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{

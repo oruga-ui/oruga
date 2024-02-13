@@ -39,6 +39,12 @@ declare module "../../index" {
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
+                /** Class prefix used when position is applied to root element */
+                rootPositionClass: ClassDefinition;
+                /** Active class for root element */
+                rootActiveClass: ClassDefinition;
+                /** Class when hoverable */
+                hoverableClass: ClassDefinition;
             }> &
             /** component props config definition */
             Partial<{
@@ -72,6 +78,8 @@ declare module "../../index" {
                 mobileBreakpoint: string;
                 /**  Append the component to another part of the DOM. */
                 teleport: boolean | string;
+                /**  Whether to display the position class on the root element rather than the menu */
+                useRootPositionClass: boolean;
             }>;
     }
 }

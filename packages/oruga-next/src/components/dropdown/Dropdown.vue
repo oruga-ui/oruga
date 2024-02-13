@@ -15,6 +15,7 @@ import {
     useEventListener,
     usePropBinding,
     useClickOutside,
+    type ComputedClass,
 } from "@/composables";
 
 import { provideDropdown } from "./useDropdownShare";
@@ -210,6 +211,10 @@ const props = defineProps({
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
+    },
+    useRootPositionClass: {
+        type: Boolean,
+        default: () => getOption("dropdown.useRootPositionClass", false),
     },
     rootPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
@@ -489,6 +494,20 @@ provideDropdown(provideData);
 
 // --- Computed Component Classes ---
 
+const rootPositionComputedClass: ComputedClass = [
+    "rootPositionClass",
+    "is-",
+    autoPosition,
+    computed(() => !!autoPosition.value),
+];
+
+const menuPositionComputedClass: ComputedClass = [
+    "menuPositionClass",
+    "o-drop__menu--",
+    autoPosition,
+    computed(() => !!autoPosition.value),
+];
+
 const rootClasses = defineClasses(
     ["rootClass", "o-drop"],
     ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
@@ -500,13 +519,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => isMobileModal.value && !hoverable.value),
     ],
-    // TODO : this should only render for bulma. How??? Or maybe I don't need to care?
-    [
-        "rootPositionClass",
-        "is-",
-        autoPosition,
-        computed(() => !!autoPosition.value),
-    ],
+    props.useRootPositionClass ? rootPositionComputedClass : undefined,
     [
         "rootActiveClass",
         "",
@@ -532,13 +545,7 @@ const menuMobileOverlayClasses = defineClasses([
 
 const menuClasses = defineClasses(
     ["menuClass", "o-drop__menu"],
-    [
-        "menuPositionClass",
-        "o-drop__menu--",
-        autoPosition,
-        computed(() => !!autoPosition.value),
-    ],
-
+    props.useRootPositionClass ? undefined : menuPositionComputedClass,
     [
         "menuActiveClass",
         "o-drop__menu--active",
