@@ -211,6 +211,18 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    rootPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    rootActiveClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    hoverableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -488,6 +500,20 @@ const rootClasses = defineClasses(
         null,
         computed(() => isMobileModal.value && !hoverable.value),
     ],
+    // TODO : this should only render for bulma. How??? Or maybe I don't need to care?
+    [
+        "rootPositionClass",
+        "is-",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
+    [
+        "rootActiveClass",
+        "",
+        null,
+        computed(() => isActive.value || props.inline),
+    ],
+    ["hoverableClass", "", null, computed(() => hoverable.value)],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-drop__trigger"]);
@@ -545,7 +571,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
             @mouseenter="onHover"
             @focus.capture="onFocus">
             <!--
-                @slot Override the trigger element, default is label prop 
+                @slot Override the trigger element, default is label prop
                 @binding {boolean} active - dropdown active state
             -->
             <slot name="trigger" :active="isActive">
@@ -584,7 +610,7 @@ defineExpose({ $trigger: triggerRef, $content: contentRef });
                     :aria-modal="!inline && trapFocus"
                     :style="menuStyle">
                     <!--
-                        @slot Place dropdown items here 
+                        @slot Place dropdown items here
                         @binding {boolean} active - dropdown active state
                         @binding {boolean} toggle - toggle active state function
                     -->
