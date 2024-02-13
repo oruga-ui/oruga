@@ -57,67 +57,69 @@ export function defineClasses(
     // reactive classes container
     const classes = ref<ClassBind[]>([]);
 
-    classes.value = classDefinitions.map((defintion, index) => {
-        const className = defintion[0];
-        const defaultClass = defintion[1];
-        const suffix = defintion[2];
-        const apply = defintion[3];
+    classes.value = classDefinitions
+        .filter((cc) => typeof cc !== "undefined")
+        .map((defintion, index) => {
+            const className = defintion[0];
+            const defaultClass = defintion[1];
+            const suffix = defintion[2];
+            const apply = defintion[3];
 
-        function getClassBind(): ClassBind {
-            // compute class based on definition parameter
-            const computedClass = computeClass(
-                vm,
-                className,
-                defaultClass,
-                toValue(suffix),
-            );
-
-            // if apply is not defined or true
-            const applied = !isDefined(apply) || toValue(apply);
-
-            // return class bind property
-            return { [computedClass]: applied };
-        }
-
-        // if suffix is defined, watch suffix changed and recalculate class
-        if (isDefined(suffix) && isRef(suffix)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(suffix),
-                    () => {
-                        // recompute the class bind property
-                        const classBind = getClassBind();
-                        // update class binding property by class index
-                        classes.value[index] = classBind;
-                    },
+            function getClassBind(): ClassBind {
+                // compute class based on definition parameter
+                const computedClass = computeClass(
+                    vm,
+                    className,
+                    defaultClass,
+                    toValue(suffix),
                 );
-            });
-        }
 
-        // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
-        if (isDefined(apply) && isRef(apply)) {
-            scope.run(() => {
-                watch(
-                    () => toValue(apply),
-                    (applied) => {
-                        // get class binding property by class index
-                        const classBind = classes.value[index];
+                // if apply is not defined or true
+                const applied = !isDefined(apply) || toValue(apply);
 
-                        // update the apply class binding state
-                        Object.keys(classBind).forEach(
-                            (key) => (classBind[key] = applied),
-                        );
+                // return class bind property
+                return { [computedClass]: applied };
+            }
 
-                        // update the class binding property by class index
-                        classes.value[index] = classBind;
-                    },
-                );
-            });
-        }
+            // if suffix is defined, watch suffix changed and recalculate class
+            if (isDefined(suffix) && isRef(suffix)) {
+                scope.run(() => {
+                    watch(
+                        () => toValue(suffix),
+                        () => {
+                            // recompute the class bind property
+                            const classBind = getClassBind();
+                            // update class binding property by class index
+                            classes.value[index] = classBind;
+                        },
+                    );
+                });
+            }
 
-        // return computed class based on parameter
-        return getClassBind();
-    });
+            // if apply is defined, watch apply changed and update apply state (no need of recalculation here)
+            if (isDefined(apply) && isRef(apply)) {
+                scope.run(() => {
+                    watch(
+                        () => toValue(apply),
+                        (applied) => {
+                            // get class binding property by class index
+                            const classBind = classes.value[index];
+
+                            // update the apply class binding state
+                            Object.keys(classBind).forEach(
+                                (key) => (classBind[key] = applied),
+                            );
+
+                            // update the class binding property by class index
+                            classes.value[index] = classBind;
+                        },
+                    );
+                });
+            }
+
+            // return computed class based on parameter
+            return getClassBind();
+        });
 
     // check if there is a current active effect scope
     if (getCurrentScope())

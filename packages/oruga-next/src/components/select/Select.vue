@@ -170,9 +170,9 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    rootStatusVariantClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
+    variantClassOnRoot: {
+        type: Boolean,
+        default: () => getOption("select.variantClassOnRoot", false),
     },
 });
 
@@ -283,6 +283,13 @@ function rightIconClick(event): void {
 
 // --- Computed Component Classes ---
 
+const variantComputedClass = [
+    "variantClass",
+    "o-sel--",
+    computed(() => statusVariant.value || props.variant),
+    computed(() => !!statusVariant.value || !!props.variant),
+];
+
 const rootClasses = defineClasses(
     ["rootClass", "o-ctrl-sel"],
     [
@@ -291,13 +298,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    // Bulma needs the variant class on the root element but others need it on the select itself. This dupes variantClass, which isn't ideal for a number of reasons. The alternative is refactoring to add it to different elements based on a secondary config var. TODO : how do i do that? can i do that?
-    [
-        "rootVariantClass",
-        "is-",
-        computed(() => statusVariant.value || props.variant),
-        computed(() => !!statusVariant.value || !!props.variant),
-    ],
+    props.variantClassOnRoot ? variantComputedClass : undefined,
 );
 
 const selectClasses = defineClasses(
@@ -310,12 +311,7 @@ const selectClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    [
-        "variantClass",
-        "o-sel--",
-        computed(() => statusVariant.value || props.variant),
-        computed(() => !!statusVariant.value || !!props.variant),
-    ],
+    props.variantClassOnRoot ? undefined : variantComputedClass,
     ["disabledClass", "o-sel--disabled", null, computed(() => props.disabled)],
     [
         "iconLeftSpaceClass",
