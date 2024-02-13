@@ -13,6 +13,7 @@ import {
 
 // export all types
 export * from "./types";
+export * from "./components/types";
 
 // export all vue components
 export * from "./components";

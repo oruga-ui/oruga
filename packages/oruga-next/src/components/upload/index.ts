@@ -4,9 +4,6 @@ import Upload from "./Upload.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export upload specific types */
-export type * from "./types";
-
 /** export upload plugin */
 export default {
     install(app: App) {

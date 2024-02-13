@@ -2,9 +2,8 @@
 import { computed, ref, watch, toValue, nextTick, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
-import OSlotComponent from "@/utils/SlotComponent";
+import OSlotComponent from "../utils/SlotComponent";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { mod, isDefined } from "@/utils/helpers";
 import {
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: 0 },
     /**
@@ -80,50 +79,62 @@ const props = defineProps({
     /** Show tab items multiline when there is no space */
     multiline: { type: Boolean, default: false },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when when is vertical and its position changes */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when vertical */
     verticalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Tabs component when multiline */
     multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Tabs component nav tabs */
     navTabsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Size of the navigation */
     navSizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Tabs component nav position */
     navPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Type of the navigation */
     navTypeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab content when transitioning */
     transitioningClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tab item wrapper */
     itemWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

@@ -4,7 +4,6 @@ import { computed, toValue, nextTick, ref, watch, type PropType } from "vue";
 import OButton from "../button/Button.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { isDefined } from "@/utils/helpers";
 import {
@@ -30,8 +29,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: undefined },
     /**
@@ -117,70 +116,87 @@ const props = defineProps({
         default: () => getOption("steps.ariaPreviousLabel"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Size of the steps */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger */
     verticalClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component when is vertical and its position changes */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the steps container */
     stepsClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of Steps component when animation gets triggered */
     animatedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps markers trigger when are rounded */
     stepMarkerRoundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component dividers */
     stepDividerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component marker */
     stepMarkerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component content */
     stepContentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component content when transition is happening */
     stepContentTransitioningClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component navigation element */
     stepNavigationClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component link */
     stepLinkClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Steps component link when clickable */
     stepLinkClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Step component link label */
     stepLinkLabelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Step component link label when positioned */
     stepLinkLabelPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of steps component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

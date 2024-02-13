@@ -15,14 +15,12 @@ import OCheckbox from "../checkbox/Checkbox.vue";
 import OIcon from "../icon/Icon.vue";
 import OInput from "../input/Input.vue";
 import OLoading from "../loading/Loading.vue";
-
-import OSlotComponent from "@/utils/SlotComponent";
+import OSlotComponent from "../utils/SlotComponent";
 
 import OTableMobileSort from "./TableMobileSort.vue";
 import OTableColumn from "./TableColumn.vue";
 import OTablePagination from "./TablePagination.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     getValueByPath,
@@ -58,8 +56,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Table data */
     data: { type: Array as PropType<unknown[]>, default: () => [] },
     /** Table columns */
@@ -312,130 +310,162 @@ const props = defineProps({
         default: () => getOption("table.ariaCurrentLabel"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table */
     tableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table wrapper */
     wrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table footer */
     footerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table when it is empty */
     emptyClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table row detail */
     detailedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table when is bordered */
     borderedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table when rows are striped */
     stripedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table when rows are narrowed */
     narrowedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table when is hoverable */
     hoverableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    trSelectedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    trCheckedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thCurrentSortClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thSortableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thUnselectableClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thSortIconClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thDetailedClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    thSubheadingClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    tdClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    tdPositionClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    tdStickyClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    tdCheckboxClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
-    tdDetailedChevronClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+    /** Class of the Table wrapper when header is sticky */
     stickyHeaderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table wrapper when its content is scrollable */
     scrollableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table row when selected */
+    trSelectedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table row when checkable and checked */
+    trCheckedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element */
+    thClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element when component is positioned */
+    thPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element when component is sticky" */
+    thStickyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element when is checkable */
+    thCheckboxClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element currently sorted */
+    thCurrentSortClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the sortable Table `th` element */
+    thSortableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element that is unsortable */
+    thUnselectableClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table sort icon in the header */
+    thSortIconClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` element of the detail column of triggers */
+    thDetailedClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `th` subheading element */
+    thSubheadingClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `td` element */
+    tdClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `td` element when component is positioned */
+    tdPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `td` element when component is sticky */
+    tdStickyClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `td` element when is checkable */
+    tdCheckboxClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the Table `td` element that contains the chevron to trigger details */
+    tdDetailedChevronClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the sortable form wrapper on mobile */
     mobileSortClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table pagination wrapper */
     paginationWrapperClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the Table component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

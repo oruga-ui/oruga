@@ -9,7 +9,6 @@ import {
     type Component,
 } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -21,7 +20,7 @@ import type { NotifcationProps } from "./types";
 import type { ProgrammaticInstance, ComponentClass } from "@/types";
 
 /**
- * Notification Notice is used for the programmatic usage
+ * Notification Notice is an extension of the Notification component and is used for the programmatic usage
  * @displayName Notification Notice
  */
 defineOptions({
@@ -32,15 +31,10 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether notification is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: true },
-    /** Props passed to the internal notification component. */
-    notification: {
-        type: Object as PropType<NotifcationProps>,
-        default: () => ({}),
-    },
     /**
      * Which position the notification will appear when programmatically.
      * @values top-right, top, top-left, bottom-right, bottom, bottom-left
@@ -96,6 +90,14 @@ const props = defineProps({
         default: () => getOption("notification.container", "body"),
     },
     /**
+     * Props passed to the internal notification component.
+     * @ignore
+     */
+    notification: {
+        type: Object as PropType<NotifcationProps>,
+        default: () => ({}),
+    },
+    /**
      * This is used internally for programmatic usage.
      * @ignore
      */
@@ -109,14 +111,17 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Root class of the notice */
     noticeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the notice when positioned */
     noticePositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the custom container element */
     noticeCustomContainerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

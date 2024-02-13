@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, type PropType } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
+import PositionWrapper from "../utils/PositionWrapper.vue";
+
 import { getOption } from "@/utils/config";
 import { isClient } from "@/utils/ssr";
-import PositionWrapper from "@/utils/PositionWrapper.vue";
 import {
     defineClasses,
     usePropBinding,
@@ -26,8 +26,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether tooltip is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Tooltip text, unnecessary when content slot is used */
@@ -74,7 +74,7 @@ const props = defineProps({
     /** Tooltip trigger tag name */
     triggerTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("tooltip.triggerTag", "div"),
+        default: () => getOption<DynamicComponent>("tooltip.triggerTag", "div"),
     },
     /**
      * Tooltip trigger events
@@ -111,42 +111,52 @@ const props = defineProps({
         default: () => getOption("dropdown.teleport", false),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class when the dropdown is teleported */
     teleportClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger position */
     positionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger */
     triggerClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip content when is multiline */
     multilineClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip trigger when is always visible */
     alwaysClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow */
     arrowClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the tooltip arrow position */
     arrowPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

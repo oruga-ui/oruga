@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, type PropType, type Ref } from "vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { defineClasses, useProviderChild } from "@/composables";
 
@@ -18,8 +17,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Make item clickable */
     clickable: { type: Boolean, default: false },
     /** Role attribute to be passed to the div wrapper for better accessibility */
@@ -28,14 +27,17 @@ const props = defineProps({
         default: () => getOption("carousel.ariaRole", "option"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of carousel item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of carousel item when is active */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of carousel item when is clickable */
     itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
