@@ -170,6 +170,10 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    rootStatusVariantClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
 });
 
 const emits = defineEmits<{
@@ -287,6 +291,13 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
+    // Bulma needs the variant class on the root element but others need it on the select itself. This dupes variantClass, which isn't ideal for a number of reasons. The alternative is refactoring to add it to different elements based on a secondary config var. TODO : how do i do that? can i do that?
+    [
+        "rootVariantClass",
+        "is-",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
 );
 
 const selectClasses = defineClasses(
@@ -359,7 +370,7 @@ const iconRightClasses = defineClasses(["iconRightClass", "o-sel__icon-right"]);
             @invalid="onInvalid">
             <template v-if="placeholder || $slots.placeholder">
                 <option v-if="placeholderVisible" :value="null" disabled hidden>
-                    <!-- 
+                    <!--
                         @slot Override the placeholder
                     -->
                     <slot name="placeholder">
