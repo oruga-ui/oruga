@@ -472,6 +472,14 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
+                /**  Whether to display the position class on the root element rather than the menu */
+                useRootPositionClass: boolean;
+                /** Class prefix used when position is applied to root element */
+                rootPositionClass: ClassDefinition;
+                /** Active class for root element */
+                rootActiveClass: ClassDefinition;
+                /** Class when hoverable */
+                hoverableClass: ClassDefinition;
             }>;
         field?: ComponentConfigBase &
             Partial<{
@@ -578,6 +586,8 @@ See icon library documentation for custom classes. */
                 iconRightSpaceClass: ClassDefinition;
                 /** Class of the counter element */
                 counterClass: ClassDefinition;
+                /** Class to display is a right icon is present */
+                hasIconRightClass: ClassDefinition;
             }>;
         loading?: ComponentConfigBase &
             Partial<{
@@ -848,6 +858,8 @@ but will set body to position fixed, might break some layouts. */
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
+                /** Whether to display the variant class on the root element rather than the select element */
+                variantClassOnRoot: boolean;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{
