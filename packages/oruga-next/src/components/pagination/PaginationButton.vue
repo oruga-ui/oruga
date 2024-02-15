@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, type Component, type PropType } from "vue";
-import { getOption } from "@/utils/config";
+import { computed, type PropType } from "vue";
 
-import type { ClassBind } from "@/types";
+import type { ClassBind, DynamicComponent } from "@/types";
 
 defineOptions({
     isOruga: true,
@@ -20,21 +19,8 @@ const props = defineProps({
     ariaLabel: { type: String, default: undefined },
     disabled: { type: Boolean, default: false },
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
-        default: "a",
-        validator: (value) => {
-            if (typeof value === "string")
-                return (
-                    getOption("linkTags", [
-                        "a",
-                        "button",
-                        "input",
-                        "router-link",
-                        "nuxt-link",
-                    ]).indexOf(value) >= 0
-                );
-            return true;
-        },
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: "button" as DynamicComponent,
     },
     class: { type: String, default: undefined },
     linkClass: {
@@ -46,10 +32,6 @@ const props = defineProps({
         required: true,
     },
 });
-
-const href = computed(() => (props.tag === "a" ? "#" : ""));
-
-const isDisabled = computed(() => (props.tag === "a" ? null : props.disabled));
 
 // --- Computed Component Classes ---
 
@@ -64,13 +46,14 @@ const linkClasses = computed(() => [
     <component
         :is="tag"
         role="button"
-        :href="href"
-        :disabled="isDisabled"
+        tabindex="0"
+        :disabled="disabled"
         :class="linkClasses"
         v-bind="$attrs"
         :aria-label="ariaLabel"
         :aria-current="isCurrent"
-        @click.prevent="click">
+        @click.prevent="click"
+        @keydown.enter.prevent="click">
         <slot>{{ number }}</slot>
     </component>
 </template>
