@@ -328,13 +328,14 @@ function onInput(event: Event): void {
 
 // --- Icon Feature ---
 
-const hasIconRight = computed(
-    () =>
+const hasIconRight = computed(() => {
+    return !!(
         props.passwordReveal ||
         (props.statusIcon && statusVariantIcon.value) ||
         (props.clearable && vmodel.value && props.clearIcon) ||
-        props.iconRight,
-);
+        props.iconRight
+    );
+});
 
 const computedIconRight = computed(() => {
     if (props.passwordReveal) {
@@ -400,7 +401,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    ["hasIconRightClass", "", null, computed(() => hasIconRight.value)],
+    ["hasIconRightClass", "", null, hasIconRight],
 );
 
 const inputClasses = defineClasses(
