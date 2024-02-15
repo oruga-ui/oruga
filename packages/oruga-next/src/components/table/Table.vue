@@ -1506,7 +1506,7 @@ function rowClasses(row: unknown, index: number): ClassBind[] {
         ["trCheckedClass", "o-table__tr--checked", null, isRowChecked(row)],
     );
 
-    const rowClass = props.rowClass(row, index);
+    const rowClass = props.rowClass(row, index) || "";
 
     return [...classes.value, { [rowClass]: true }];
 }
@@ -1640,6 +1640,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     v-if="headerCheckable"
                                     :model-value="isAllChecked"
                                     autocomplete="off"
+                                    name="row_check_all"
                                     :variant="checkboxVariant"
                                     :disabled="isAllUncheckable"
                                     @update:model-value="checkAll" />
@@ -1710,6 +1711,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                     <o-checkbox
                                         :model-value="isAllChecked"
                                         autocomplete="off"
+                                        name="row_check_all"
                                         :variant="checkboxVariant"
                                         :disabled="isAllUncheckable"
                                         @update:model-value="checkAll" />
@@ -1741,6 +1743,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                 <o-input
                                     v-else
                                     v-model="filters[column.field]"
+                                    :name="`column_${column.field}_filter`"
                                     :type="column.numeric ? 'number' : 'text'"
                                     @[filtersEvent]="onFiltersEvent" />
                             </template>
@@ -1822,6 +1825,7 @@ function tdClasses(row: unknown, column: TableColumnComponent): ClassBind[] {
                                 <o-checkbox
                                     :model-value="isRowChecked(row)"
                                     autocomplete="off"
+                                    :name="`row_${index}_check`"
                                     :variant="checkboxVariant"
                                     :disabled="!isRowCheckable(row)"
                                     @update:model-value="
