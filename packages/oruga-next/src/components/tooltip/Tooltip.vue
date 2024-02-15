@@ -10,6 +10,7 @@ import {
     usePropBinding,
     useEventListener,
     useClickOutside,
+    type ComputedClass,
 } from "@/composables";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
@@ -161,6 +162,10 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    positionClassOnRoot: {
+        type: Boolean,
+        default: () => getOption("tooltip.positionClassOnRoot", false),
+    },
 });
 
 const emits = defineEmits<{
@@ -294,6 +299,13 @@ function onClose(): void {
 
 // --- Computed Component Classes ---
 
+const positionComputedClass: ComputedClass = [
+    "positionClass",
+    "o-tip__content--",
+    autoPosition,
+    computed(() => !!autoPosition.value),
+];
+
 const rootClasses = defineClasses(
     ["rootClass", "o-tip"],
     [
@@ -302,6 +314,7 @@ const rootClasses = defineClasses(
         null,
         computed(() => !!props.teleport),
     ],
+    props.positionClassOnRoot ? positionComputedClass : undefined,
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
@@ -324,12 +337,7 @@ const arrowClasses = defineClasses(
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tip__content"],
-    [
-        "positionClass",
-        "o-tip__content--",
-        autoPosition,
-        computed(() => !!autoPosition.value),
-    ],
+    props.positionClassOnRoot ? undefined : positionComputedClass,
     [
         "variantClass",
         "o-tip__content--",

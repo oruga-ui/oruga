@@ -1441,6 +1441,8 @@ In addition, any CSS selector string or an actual DOM node can be used. */
                 alwaysClass: ClassDefinition;
                 /** Class of the tooltip arrow position */
                 arrowPositionClass: ClassDefinition;
+                /** Whether to display the position class on the root element rather than the content element */
+                positionClassOnRoot: boolean;
             }>;
         upload?: ComponentConfigBase &
             Partial<{
