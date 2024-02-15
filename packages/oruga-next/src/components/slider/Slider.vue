@@ -5,7 +5,11 @@ import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
 import { getOption } from "@/utils/config";
-import { defineClasses, useProviderParent } from "@/composables";
+import {
+    type ComputedClass,
+    defineClasses,
+    useProviderParent,
+} from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";
@@ -168,6 +172,10 @@ const props = defineProps({
     tickLabelClass: {
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
+    },
+    draggingClassOnWrapper: {
+        type: Boolean,
+        default: () => getOption("slider.draggingClassOnWrapper", false),
     },
 });
 
@@ -366,9 +374,16 @@ const fillClasses = defineClasses(
     ],
 );
 
+const draggingComputedClass: ComputedClass = [
+    "thumbDraggingClass",
+    "o-slide__thumb--dragging",
+    null,
+    dragging,
+];
+
 const thumbClasses = defineClasses(
     ["thumbClass", "o-slide__thumb"],
-    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
+    props.draggingClassOnWrapper ? undefined : draggingComputedClass,
     [
         "thumbRoundedClass",
         "o-slide__thumb--rounded",
@@ -377,10 +392,10 @@ const thumbClasses = defineClasses(
     ],
 );
 
-const thumbWrapperClasses = defineClasses([
-    "thumbWrapperClass",
-    "o-slide__thumb-wrapper",
-]);
+const thumbWrapperClasses = defineClasses(
+    ["thumbWrapperClass", "o-slide__thumb-wrapper"],
+    props.draggingClassOnWrapper ? draggingComputedClass : undefined,
+);
 </script>
 
 <template>
@@ -397,7 +412,7 @@ const thumbWrapperClasses = defineClasses([
                     :tick-label-class="tickLabelClass" />
             </template>
 
-            <!-- 
+            <!--
                 @slot Define additional slider ticks here
              -->
             <slot />
