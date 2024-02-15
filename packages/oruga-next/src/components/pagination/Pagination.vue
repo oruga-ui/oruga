@@ -7,7 +7,7 @@ import OIcon from "../icon/Icon.vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, useMatchMedia, usePropBinding } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * A responsive and flexible pagination
@@ -64,6 +64,12 @@ const props = defineProps({
         default: () => getOption("pagination.order", "right"),
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
+    },
+    /** Pagination button tag name */
+    buttonTag: {
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () =>
+            getOption<DynamicComponent>("pagination.buttonTag", "button"),
     },
     /**
      * Icon pack to use
@@ -250,7 +256,7 @@ const hasNext = computed(() => props.current < pageCount.value);
  * Get near pages, 1 before and 1 after the current.
  * Also add the click event to the array.
  */
-const pagesInRange = computed(() => {
+const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     if (props.simple) return;
 
     let left = Math.max(1, props.current - props.rangeBefore);
@@ -278,12 +284,14 @@ function getPage(
     isCurrent: boolean;
     click: (event: Event) => void;
     ariaLabel: string;
+    tag: DynamicComponent;
 } {
     return {
         number: num,
         isCurrent: props.current === num,
         click: (event: Event): void => changePage(num, event),
         ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
+        tag: props.buttonTag,
     };
 }
 
