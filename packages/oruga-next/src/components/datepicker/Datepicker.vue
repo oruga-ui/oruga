@@ -8,21 +8,12 @@ import ODatepickerTable from "./DatepickerTable.vue";
 import ODatepickerMonth from "./DatepickerMonth.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    getActiveClasses,
-    useVModelBinding,
-    useMatchMedia,
-    usePropBinding,
-} from "@/composables";
+import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
+import { useDatepickerMixin } from "./useDatepickerMixin";
 import { getMonthNames, getWeekdayNames } from "./utils";
-import {
-    useDatepickerShare,
-    type DatepickerEvent,
-    type FocusedDate,
-} from "./useDatepickerShare";
 
+import type { DatepickerEvent, FocusedDate } from "./types";
 import type { ComponentClass, OrugaOptions } from "@/types";
 
 /**
@@ -600,14 +591,15 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerShare(props);
+const { defaultDateFormatter, defaultDateParser } = useDatepickerMixin(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
-const vmodel = useVModelBinding<Date | Date[]>(props, emits, { passive: true });
+/** modelvalue of selected date */
+const vmodel = defineModel<Date | Date[]>();
 
 /** Dropdown active state */
-const isActive = usePropBinding<boolean>("active", props, emits);
+const isActive = defineModel<boolean>("active");
 
 /** modelValue formated into string */
 const formattedValue = computed(() =>

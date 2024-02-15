@@ -10,13 +10,9 @@ import {
 
 import { defineClasses } from "@/composables";
 
+import { useDatepickerMixin } from "./useDatepickerMixin";
 import { weeksInYear, firstWeekOffset } from "./utils";
-import {
-    useDatepickerShare,
-    type DatepickerProps,
-    type DatepickerEvent,
-} from "./useDatepickerShare";
-
+import type { DatepickerProps, DatepickerEvent } from "./types";
 import type { ClassBind } from "@/types";
 
 defineOptions({
@@ -47,7 +43,7 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerShare(props.pickerProps);
+const { isDateSelectable } = useDatepickerMixin(props.pickerProps);
 
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 
@@ -72,6 +68,12 @@ watch(
                 if (ref) ref.focus();
             });
     },
+);
+
+watch(
+    () => props.month,
+    // clear day refs on month change
+    () => (dayRefs.value = new Map()),
 );
 
 function clickWeekNumber(week: number): void {
@@ -182,7 +184,11 @@ function setRangeHoverEndDate(day): void {
 
 // --- Computed Component Classes ---
 
-function dateMatch(dateOne, dateTwo, multiple = false): boolean {
+function dateMatch(
+    dateOne: Date,
+    dateTwo: Date | Date[],
+    multiple = false,
+): boolean {
     // if either date is null or undefined, return false
     // if using multiple flag, return false
     if (!dateOne || !dateTwo || multiple) return false;
@@ -202,7 +208,11 @@ function dateMatch(dateOne, dateTwo, multiple = false): boolean {
     );
 }
 
-function dateWithin(dateOne, dates, multiple = false): boolean {
+function dateWithin(
+    dateOne: Date,
+    dates: Date | Date[],
+    multiple = false,
+): boolean {
     if (!Array.isArray(dates) || multiple) return false;
     return dateOne > dates[0] && dateOne < dates[1];
 }
@@ -395,7 +405,7 @@ const cellEventsClass = defineClasses([
                         :class="eventClasses(event)" />
                 </div>
             </div>
-            <div v-else :key="idx" :class="cellClasses(weekDay)">
+            <div v-else :class="cellClasses(weekDay)">
                 <span>{{ weekDay.getDate() }}</span>
             </div>
         </template>
