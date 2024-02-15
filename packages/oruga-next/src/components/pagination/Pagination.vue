@@ -68,7 +68,8 @@ const props = defineProps({
     /** Pagination button tag name */
     buttonTag: {
         type: [String, Object, Function] as PropType<DynamicComponent>,
-        default: () => getOption("pagination.buttonTag", "button"),
+        default: () =>
+            getOption<DynamicComponent>("pagination.buttonTag", "button"),
     },
     /**
      * Icon pack to use

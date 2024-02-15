@@ -761,7 +761,7 @@ but will set body to position fixed, might break some layouts. */
                 /** Buttons order */
                 order: string;
                 /** Pagination button tag name */
-                buttonTag: string;
+                buttonTag: DynamicComponent;
                 /** Accessibility label for the page button. */
                 ariaPageLabel: string;
                 /** Accessibility label for the current page button. */
