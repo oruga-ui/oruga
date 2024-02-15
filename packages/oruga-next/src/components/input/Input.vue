@@ -370,6 +370,14 @@ function rightIconClick(event: Event): void {
 const isPasswordVisible = ref(false);
 const inputType = ref(props.type);
 
+const computedInputType = computed(() => {
+    if (props.passwordReveal) {
+        return isPasswordVisible.value ? "input" : "password";
+    } else {
+        return inputType.value;
+    }
+});
+
 // update inputType on type prop change
 watch(
     () => props.type,
@@ -387,7 +395,6 @@ const passwordVisibleIcon = computed(() =>
  */
 function togglePasswordVisibility(): void {
     isPasswordVisible.value = !isPasswordVisible.value;
-    inputType.value = isPasswordVisible.value ? "text" : "password";
     nextTick(() => setFocus());
 }
 
@@ -467,7 +474,7 @@ const counterClasses = defineClasses(["counterClass", "o-input__counter"]);
             ref="inputRef"
             v-model="vmodel"
             :data-oruga-input="inputType"
-            :type="inputType"
+            :type="computedInputType"
             :class="inputClasses"
             :maxlength="maxlength"
             :autocomplete="autocomplete"
