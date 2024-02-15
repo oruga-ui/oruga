@@ -46,7 +46,7 @@ const linkClasses = computed(() => [
     <component
         :is="tag"
         role="button"
-        tabindex="0"
+        :tabindex="disabled ? null : 0"
         :disabled="disabled"
         :class="linkClasses"
         v-bind="$attrs"
