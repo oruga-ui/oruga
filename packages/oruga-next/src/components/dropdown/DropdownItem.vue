@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { computed, onMounted, type Component, type PropType } from "vue";
+import { computed, onMounted, type PropType } from "vue";
 
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
@@ -7,7 +7,7 @@ import { defineClasses } from "@/composables";
 
 import { injectDropdown } from "./useDropdownShare";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * @displayName Dropdown Item
@@ -32,8 +32,8 @@ const props = defineProps({
     clickable: { type: Boolean, default: true },
     /** Dropdown item tag name */
     tag: {
-        type: [String, Object, Function] as PropType<string | Component>,
-        default: () => getOption("dropdown.itemTag", "div"),
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () => getOption<DynamicComponent>("dropdown.itemTag", "div"),
     },
     /** Set the tabindex attribute on the dropdown item div (-1 to prevent selection via tab key) */
     tabindex: { type: [Number, String], default: 0 },
@@ -47,18 +47,22 @@ const props = defineProps({
         default: getOption("dropdown.itemAriaRole", "listitem"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the dropdown item */
     itemClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when active  */
     itemActiveClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when clickable */
     itemClickableClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the dropdown item when disabled */
     itemDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

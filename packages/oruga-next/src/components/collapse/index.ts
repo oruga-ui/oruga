@@ -4,9 +4,6 @@ import Collapse from "./Collapse.vue";
 
 import { registerComponent } from "@/utils/plugins";
 
-/** export collapse specific types */
-export type * from "./types";
-
 /** export collapse plugin */
 export default {
     install(app: App) {

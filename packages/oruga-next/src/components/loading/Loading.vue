@@ -3,7 +3,6 @@ import { ref, onMounted, type PropType } from "vue";
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import {
     defineClasses,
@@ -26,8 +25,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether loading is active or not, use v-model:active to make it two-way binding. */
     active: { type: Boolean, default: false },
     /** Loader will overlay the full page. */
@@ -85,22 +84,27 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the root element when fullpage */
     fullPageClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the loading overlay */
     overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the loading icon */
     iconClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the loading label */
     labelClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -172,7 +176,7 @@ defineExpose({ close, promise: props.promise });
             :class="rootClasses">
             <div
                 :class="overlayClasses"
-                tabindex="-1"
+                :tabindex="-1"
                 aria-hidden="true"
                 @click="cancel('outside')" />
             <!-- 

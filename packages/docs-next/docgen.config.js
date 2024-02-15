@@ -30,6 +30,7 @@ const IGNORE = [
     "DatepickerTableRow",
     "DatepickerMonth",
     "PickerWrapper",
+    "PositionWrapper",
     "NotificationNotice",
     "CarouselItem",
 ];

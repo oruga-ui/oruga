@@ -12,7 +12,6 @@ import {
 import OIcon from "../icon/Icon.vue";
 
 import { vTrapFocus } from "@/directives/trapFocus";
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { removeElement, toCssDimension } from "@/utils/helpers";
 import { isClient } from "@/utils/ssr";
@@ -38,8 +37,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Whether modal is active or not, use v-model:active to make it two-way binding */
     active: { type: Boolean, default: false },
     /** Display modal as full screen */
@@ -162,38 +161,47 @@ const props = defineProps({
      */
     promise: { type: Promise, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of modal component when its active */
     activeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal overlay */
     overlayClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal content */
     contentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the close button */
     closeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when fullscreen */
     fullScreenClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of modal component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when scroll is clip */
     scrollClipClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the modal when scroll is not clip */
     noScrollClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,

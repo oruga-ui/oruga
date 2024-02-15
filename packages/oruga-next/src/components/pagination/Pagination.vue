@@ -4,11 +4,10 @@ import { computed, watch, nextTick, type PropType } from "vue";
 import OPaginationButton from "./PaginationButton.vue";
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { defineClasses, useMatchMedia, usePropBinding } from "@/composables";
 
-import type { ComponentClass } from "@/types";
+import type { ComponentClass, DynamicComponent } from "@/types";
 
 /**
  * A responsive and flexible pagination
@@ -23,8 +22,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** Total count of items */
     total: { type: Number, default: undefined },
     /** Items count for each page */
@@ -65,6 +64,12 @@ const props = defineProps({
         default: () => getOption("pagination.order", "right"),
         validator: (value: string) =>
             ["centered", "right", "left"].indexOf(value) >= 0,
+    },
+    /** Pagination button tag name */
+    buttonTag: {
+        type: [String, Object, Function] as PropType<DynamicComponent>,
+        default: () =>
+            getOption<DynamicComponent>("pagination.buttonTag", "button"),
     },
     /**
      * Icon pack to use
@@ -111,62 +116,77 @@ const props = defineProps({
         default: () => getOption("pagination.ariaCurrentLabel", "Current page"),
     },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the prev button */
     prevButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the next button */
     nextButtonClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    listItemClass: {
-        type: [String, Array, Function] as PropType<ComponentClass>,
-        default: undefined,
-    },
+    /** Class of the pagination list */
     listClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the pagination list items */
+    listItemClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
+    },
+    /** Class of the link button */
     linkClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the current link */
     linkCurrentClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the pagination ellipsis */
     ellipsisClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the info in `simple` mode */
     infoClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the pagination order */
     orderClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the pagination in `simple` mode */
     simpleClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the pagination when rounded */
     roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the disabled link */
     linkDisabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class for the pagination size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of pagination component when on mobile */
     mobileClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -236,7 +256,7 @@ const hasNext = computed(() => props.current < pageCount.value);
  * Get near pages, 1 before and 1 after the current.
  * Also add the click event to the array.
  */
-const pagesInRange = computed(() => {
+const pagesInRange = computed<ReturnType<typeof getPage>[]>(() => {
     if (props.simple) return;
 
     let left = Math.max(1, props.current - props.rangeBefore);
@@ -264,12 +284,14 @@ function getPage(
     isCurrent: boolean;
     click: (event: Event) => void;
     ariaLabel: string;
+    tag: DynamicComponent;
 } {
     return {
         number: num,
         isCurrent: props.current === num,
         click: (event: Event): void => changePage(num, event),
         ariaLabel: ariaLabel || getAriaPageLabel(num, props.current === num),
+        tag: props.buttonTag,
     };
 }
 

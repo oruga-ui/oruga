@@ -161,6 +161,8 @@ const inspectData = [
             :data="filtered"
             icon="search"
             clearable
+            selectable-header
+            selectable-footer
             @select="(option) => (selected = option)">
             <template #empty>No results found</template>
             <template #header>Header slot (optional)</template>

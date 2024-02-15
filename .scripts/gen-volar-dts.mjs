@@ -3,43 +3,12 @@ import fs from 'fs-extra'
 import path from 'path'
 import process from 'process'
 
-const componentDirectory = './src/components';
+import { componentDirectory, getComponents, exist } from "./utils.mjs";
 
-// Components to be ignored for creating volar type 
-const IGNORE = [
-  "FieldBody",
-  "SliderThumb",
-  "TableMobileSort",
-  "TablePagination",
-  "PaginationButton",
-  "DatepickerTable",
-  "DatepickerTableRow",
-  "DatepickerMonth",
-  "PickerWrapper",
-  "NotificationNotice",
-];
-
-const TYPE_ROOT = process.cwd()
-
-function getComponents(dir) {
-  const files = fs.readdirSync(dir, { recursive: true });
-  return files
-    // filter only vue files and remove test files
-    .filter(f => f.includes(".vue") && !f.includes("tests"))
-    // remove path
-    .map(f => path.basename(f))
-    // remove .vue suffix
-    .map(f => f.substring(0, f.indexOf(".vue")))
-    // filter blacklist 
-    .filter((key) => !IGNORE.includes(key))
-}
-
-function exist (path) {
-  return fs.existsSync(path)
-}
+const __dirname = process.cwd();
 
 function generateComponentsType (module, file) {  
-  if(!exist(path.resolve(TYPE_ROOT, componentDirectory))) 
+  if(!exist(path.resolve(__dirname, componentDirectory))) 
     throw new Error("Path not exist: " + componentDirectory);
 
   const globalComponents = getComponents(componentDirectory);
@@ -64,14 +33,15 @@ function generateComponentsType (module, file) {
 
   const code = `// Auto generated component declarations
 declare module "vue" {
-  export interface GlobalComponents {
-    ${lines.join('\n    ')}
-  }
+    export interface GlobalComponents {
+        ${lines.join(`
+        `)}
+    }
 }
 export {};
 `;
 
-  fs.writeFileSync(path.resolve(TYPE_ROOT, file), code, 'utf-8')
+  fs.writeFileSync(path.resolve(__dirname, file), code, 'utf-8')
 }
 
 // generate main package volar file

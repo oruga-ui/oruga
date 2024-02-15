@@ -1,3 +1,37 @@
+## [0.8.3](https://github.com/oruga-ui/oruga/compare/v0.8.2...v0.8.3) (2024-02-06)
+
+
+### Bug Fixes
+
+* **autocomplete:** allow empty slot display and formatter prop usage ([6c9a60d](https://github.com/oruga-ui/oruga/commit/6c9a60d8188b87becb7bfb540281430c30be734a))
+* **autocomplete:** change input vbind vmodel prop order ([3297e4b](https://github.com/oruga-ui/oruga/commit/3297e4b9911174214694968adf4b8680841ecd9e))
+* **autocomplete:** close dropdown on enter or tab key press ([#761](https://github.com/oruga-ui/oruga/issues/761)) ([796ed9f](https://github.com/oruga-ui/oruga/commit/796ed9f356b6e415d66f2322476114ee5babf30d))
+* **carousel:** adjust indicator index out of range ([#752](https://github.com/oruga-ui/oruga/issues/752)) ([eca9d38](https://github.com/oruga-ui/oruga/commit/eca9d38b4079423bc96f9f906580608172519159))
+* **carousel:** fix repeat index ([#757](https://github.com/oruga-ui/oruga/issues/757)) ([68e4dee](https://github.com/oruga-ui/oruga/commit/68e4dee9db1a888494d14bb2c1d809694574b6cd))
+* **datepicker:** fix datepicker component shows wrong year range when adding max date and min date props ([#731](https://github.com/oruga-ui/oruga/issues/731)) ([9094188](https://github.com/oruga-ui/oruga/commit/90941884a194dbcd406ae143783b480a47c369e2))
+* **notification:** adjust querySelector ([#756](https://github.com/oruga-ui/oruga/issues/756)) ([13b0d37](https://github.com/oruga-ui/oruga/commit/13b0d379bd1e2aa72b356d9986841e450341f54d))
+* **slider:** remove `this` references ([#746](https://github.com/oruga-ui/oruga/issues/746)) ([9942c0f](https://github.com/oruga-ui/oruga/commit/9942c0f55ccd3d7685f6f54764ac775f525e2122))
+* **table:** fix binding current page ([672680a](https://github.com/oruga-ui/oruga/commit/672680ad44cb2f6a50615726a43bbc12470c57ed))
+* **tablecolumn:** remove typo in the props ([#727](https://github.com/oruga-ui/oruga/issues/727)) ([6c8238b](https://github.com/oruga-ui/oruga/commit/6c8238bb818eafd5eeebc2fb71e74948442c837e))
+* **table:** fix wrong use of thAttrsData ([da4c7c5](https://github.com/oruga-ui/oruga/commit/da4c7c521e697dbc65e11b426f1b1e566087578e))
+* **taginput:** only hide input field instead of unmount ([#754](https://github.com/oruga-ui/oruga/issues/754)) ([cd1bcf7](https://github.com/oruga-ui/oruga/commit/cd1bcf73d817fcc1120677f5d9703528cda78b0e))
+* **taginput:** pass missing placeholder props to autocomplete component ([928863a](https://github.com/oruga-ui/oruga/commit/928863a1edc64cef3100c86ec8025b3cd4c590fd))
+* **taginput:** watch TagInput v-model prop with deep in order to trigger update:modelValue ([#722](https://github.com/oruga-ui/oruga/issues/722)) ([96843a4](https://github.com/oruga-ui/oruga/commit/96843a4b9e8832f328f359a69b7eea8c53b6772c))
+* **timepicker:** fix meridien bug ([#753](https://github.com/oruga-ui/oruga/issues/753)) ([f302c27](https://github.com/oruga-ui/oruga/commit/f302c27b026a4fe498c35b0941c9f9b5de02f539))
+* **tooltip:** remove console.log usage in Tooltip component  ([bbf8161](https://github.com/oruga-ui/oruga/commit/bbf81619245749d5517acd09832843ab6ab365c2))
+* **types:** fix customIconPacks config ([#715](https://github.com/oruga-ui/oruga/issues/715)) ([a123a5e](https://github.com/oruga-ui/oruga/commit/a123a5e1bcaec01065b17a17e5cbe732f60ad113))
+* **types:** fix volar type generation ([#702](https://github.com/oruga-ui/oruga/issues/702)) ([1bfd747](https://github.com/oruga-ui/oruga/commit/1bfd747d71a949b1c2926f33a3e4f47e8f9569a9))
+* update ClassFunction second parameter from context to props ([#743](https://github.com/oruga-ui/oruga/issues/743)) ([035b619](https://github.com/oruga-ui/oruga/commit/035b61942e2b8bf58efc500c386e8b4230da3fd2))
+* fix Vue 3.4 getCurrentInstance() bug by convert useComputedClass to defineClass ([#725](https://github.com/oruga-ui/oruga/issues/725)) ([0a7f9b4](https://github.com/oruga-ui/oruga/commit/0a7f9b475b87e657c77db1482829a02626327ffe))
+
+
+### Features
+
+* enhance a11y ([#762](https://github.com/oruga-ui/oruga/issues/762)) ([41b1c54](https://github.com/oruga-ui/oruga/commit/41b1c5474a3c493a08c921b3f3cf4c708cb47d5d))
+* **useInputHandler:** add input not given warning ([#747](https://github.com/oruga-ui/oruga/issues/747)) ([49e9c4e](https://github.com/oruga-ui/oruga/commit/49e9c4e1bd7e66d0cf0209d6dc9e30ce9f595961))
+
+
+
 ## [0.8.2](https://github.com/oruga-ui/oruga/compare/v0.8.1...v0.8.2) (2023-12-21)
 
 

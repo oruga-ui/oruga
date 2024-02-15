@@ -11,12 +11,7 @@ import {
 import { isDefined } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
-import {
-    type DatepickerProps,
-    type DatepickerEvent,
-    type FocusedDate,
-} from "./useDatepickerShare";
-
+import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
 import type { ClassBind } from "@/types";
 
 defineOptions({
@@ -458,15 +453,14 @@ function cellClasses(day: Date): ClassBind[] {
         <div :class="monthBodyClasses">
             <div :class="monthTableClasses">
                 <template v-for="(date, idx) in monthDates" :key="idx">
-                    <a
+                    <div
                         v-if="!datepicker.disabled && isDateSelectable(date)"
                         :ref="(el) => setMonthRef(date, el)"
                         :class="cellClasses(date)"
                         role="button"
-                        href="#"
                         :disabled="datepicker.disabled"
                         :tabindex="
-                            focusedDate.month === date.getMonth() ? null : -1
+                            focusedDate.month === date.getMonth() ? null : 0
                         "
                         @mouseenter="onRangeHoverEndDate(date)"
                         @focus="onRangeHoverEndDate(date)"
@@ -480,7 +474,7 @@ function cellClasses(day: Date): ClassBind[] {
                                 class="event"
                                 :class="event.type" />
                         </div>
-                    </a>
+                    </div>
                     <div v-else :class="cellClasses(date)">
                         {{ monthNames[date.getMonth()] }}
                     </div>

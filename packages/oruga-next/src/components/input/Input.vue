@@ -11,7 +11,6 @@ import {
 
 import OIcon from "../icon/Icon.vue";
 
-import { baseComponentProps } from "@/utils/SharedProps";
 import { getOption } from "@/utils/config";
 import { uuid } from "@/utils/helpers";
 import {
@@ -37,8 +36,8 @@ defineOptions({
 });
 
 const props = defineProps({
-    // add global shared props (will not be displayed in the docs)
-    ...baseComponentProps,
+    /** Override existing theme classes completely */
+    override: { type: Boolean, default: undefined },
     /** @model */
     modelValue: { type: [String, Number], default: "" },
     /** Input label, unnecessary when default slot is used */
@@ -129,6 +128,8 @@ const props = defineProps({
         type: String,
         default: () => getOption("input.autocomplete", "off"),
     },
+    /** Accessibility label to establish relationship between the checkbox and control label */
+    ariaLabelledby: { type: String, default: () => uuid() },
     /** Enable html 5 native validation */
     useHtml5Validation: {
         type: Boolean,
@@ -137,54 +138,67 @@ const props = defineProps({
     /** The message which is shown when a validation error occurs */
     validationMessage: { type: String, default: undefined },
     // class props (will not be displayed in the docs)
+    /** Class of the root element */
     rootClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when expanded */
     expandedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when type textarea */
     textareaClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the left icon space inside the input */
     iconLeftSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the right icon space inside the input */
     iconRightSpaceClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the native input element */
     inputClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when rounded */
     roundedClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of input when disabled */
     disabledClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the left icon */
     iconLeftClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the right icon */
     iconRightClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the counter element */
     counterClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input size */
     sizeClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
+    /** Class of the input variant */
     variantClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -478,6 +492,7 @@ const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
             :autocomplete="autocomplete"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"
@@ -495,6 +510,7 @@ const labelClasses = defineClasses(["labelClass", "o-radio__label"]);
             :style="computedStyles"
             :placeholder="placeholder"
             :disabled="disabled"
+            :aria-labelledby="ariaLabelledby"
             @blur="onBlur"
             @focus="onFocus"
             @invalid="onInvalid"

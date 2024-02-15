@@ -36,6 +36,9 @@ export interface PropBindingOptions<Passive extends boolean = false> {
     deep?: boolean;
 }
 
+/**
+ * @deprecated use native defineModel instead
+ */
 export function usePropBinding<T>(
     name: string,
     props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<any>>>,
@@ -43,6 +46,9 @@ export function usePropBinding<T>(
     options?: PropBindingOptions<false>,
 ): WritableComputedRef<T>;
 
+/**
+ * @deprecated use native defineModel instead
+ */
 export function usePropBinding<T>(
     name: string,
     props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<any>>>,
@@ -53,6 +59,8 @@ export function usePropBinding<T>(
 /**
  * Use two-way model binding in script setup syntax.
  * Adaption of {@link https://vueuse.org/core/useVModel/}.
+ * @deprecated use native defineModel instead
+ *
  * @param name Property name
  * @param props Readonly<ExtractPropTypes<ComponentObjectPropsOptions>>
  * @param emit EmitFn
@@ -104,6 +112,9 @@ export function usePropBinding<T, Passive extends boolean>(
     }
 }
 
+/**
+ * @deprecated use native defineModel instead
+ */
 export function useVModelBinding<T>(
     props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions>>,
     emit: {
@@ -113,6 +124,9 @@ export function useVModelBinding<T>(
     options?: PropBindingOptions<false>,
 ): WritableComputedRef<T>;
 
+/**
+ * @deprecated use native defineModel instead
+ */
 export function useVModelBinding<T>(
     props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions>>,
     emit: {
@@ -125,6 +139,8 @@ export function useVModelBinding<T>(
 /**
  * Use two-way binded modelValue property in script setup syntax.
  * Adaption of {@link https://vueuse.org/core/useVModel/}.
+ * @deprecated use native defineModel instead
+ *
  * @param props Readonly<ExtractPropTypes<ComponentObjectPropsOptions>>
  * @param emit EmitFn
  * @param options Extened usage options
