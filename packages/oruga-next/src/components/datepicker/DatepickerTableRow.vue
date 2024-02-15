@@ -10,7 +10,7 @@ import {
 
 import { defineClasses } from "@/composables";
 
-import { useDatepickerMixin } from "./useDatepickerMixin";
+import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weeksInYear, firstWeekOffset } from "./utils";
 import type { DatepickerProps, DatepickerEvent } from "./types";
 import type { ClassBind } from "@/types";
@@ -43,7 +43,7 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerMixin(props.pickerProps);
+const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
 
 const datepicker = computed<DatepickerProps>(() => props.pickerProps);
 

@@ -10,9 +10,9 @@ import { isMobileAgent } from "@/utils/helpers";
 import { defineClasses, useInputHandler, usePropBinding } from "@/composables";
 
 import { matchWithGroups } from "../datepicker/utils";
-import type { DatepickerProps } from "../datepicker/useDatepickerShare";
-import type { TimepickerProps } from "../timepicker/useTimepickerShare";
 
+import type { DatepickerProps } from "../datepicker/types";
+import type { TimepickerProps } from "../timepicker/types";
 import type { ComponentClass } from "@/types";
 
 /**

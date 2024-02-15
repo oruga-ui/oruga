@@ -13,7 +13,7 @@ import {
     getActiveClasses,
 } from "@/composables";
 
-import { useTimepickerMixins } from "./useTimepickerShare";
+import { useTimepickerMixins } from "./useTimepickerMixins";
 
 import type { ComponentClass } from "@/types";
 

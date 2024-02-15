@@ -6,7 +6,7 @@ import ODatepickerTableRow from "./DatepickerTableRow.vue";
 import { isDefined } from "@/utils/helpers";
 import { defineClasses } from "@/composables";
 
-import { useDatepickerMixin } from "./useDatepickerMixin";
+import { useDatepickerMixins } from "./useDatepickerMixins";
 import { weekBuilder } from "./utils";
 import type { DatepickerProps, DatepickerEvent, FocusedDate } from "./types";
 
@@ -39,7 +39,7 @@ const emits = defineEmits<{
     (e: "week-number-click", value: number): void;
 }>();
 
-const { isDateSelectable } = useDatepickerMixin(props.pickerProps);
+const { isDateSelectable } = useDatepickerMixins(props.pickerProps);
 
 const focusedDateModel = defineModel<FocusedDate>("focusedDate");
 

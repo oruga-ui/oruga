@@ -10,7 +10,7 @@ import ODatepickerMonth from "./DatepickerMonth.vue";
 import { getOption } from "@/utils/config";
 import { defineClasses, getActiveClasses, useMatchMedia } from "@/composables";
 
-import { useDatepickerMixin } from "./useDatepickerMixin";
+import { useDatepickerMixins } from "./useDatepickerMixins";
 import { getMonthNames, getWeekdayNames } from "./utils";
 
 import type { DatepickerEvent, FocusedDate } from "./types";
@@ -591,7 +591,7 @@ const emits = defineEmits<{
     (e: "icon-right-click", event: Event): void;
 }>();
 
-const { defaultDateFormatter, defaultDateParser } = useDatepickerMixin(props);
+const { defaultDateFormatter, defaultDateParser } = useDatepickerMixins(props);
 
 const { isMobile } = useMatchMedia(props.mobileBreakpoint);
 
