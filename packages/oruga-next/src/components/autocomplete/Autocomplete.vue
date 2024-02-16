@@ -674,12 +674,15 @@ function handleFocus(event: Event): void {
     onFocus(event);
 }
 
+function focus(): void {
+    inputRef.value.focus();
+}
+
 /**
  * Blur listener.
  * Close on blur.
  */
 function handleBlur(event: Event): void {
-    console.warn("???blur");
     isActive.value = false;
     onBlur(event);
 }
@@ -721,7 +724,7 @@ function rightIconClick(event: Event): void {
     if (props.clearable) {
         vmodel.value = "";
         setSelected(null, false);
-        if (props.openOnFocus) inputRef.value.$el.focus();
+        if (props.openOnFocus) focus();
     } else emits("icon-right-click", event);
 }
 
@@ -798,6 +801,10 @@ function itemOptionClasses(option): ClassBind[] {
 
     return [...itemClasses.value, ...optionClasses.value];
 }
+
+defineExpose({
+    focus,
+});
 </script>
 
 <template>
