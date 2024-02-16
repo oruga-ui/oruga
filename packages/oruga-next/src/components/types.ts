@@ -731,6 +731,12 @@ but will set body to position fixed, might break some layouts. */
                 ariaCloseLabel: string;
                 /** Class of the element when positioned */
                 positionClass: ClassDefinition;
+                /** Root class of the notice */
+                noticeClass: ClassDefinition;
+                /** Class of the notice when positioned */
+                noticePositionClass: ClassDefinition;
+                /** Class of the custom container element */
+                noticeCustomContainerClass: ClassDefinition;
             }>;
         pagination?: ComponentConfigBase &
             Partial<{
