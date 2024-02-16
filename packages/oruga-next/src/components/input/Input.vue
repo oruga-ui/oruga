@@ -467,14 +467,6 @@ defineExpose({
 
 <template>
     <div data-oruga="input" :class="rootClasses">
-        <o-icon
-            v-if="icon"
-            :class="iconLeftClasses"
-            :clickable="iconClickable"
-            :icon="icon"
-            :pack="iconPack"
-            :size="size"
-            @click="iconClick('icon-click', $event)" />
 
         <input
             v-if="type !== 'textarea'"
@@ -510,6 +502,15 @@ defineExpose({
             @focus="onFocus"
             @invalid="onInvalid"
             @input="onInput" />
+
+        <o-icon
+            v-if="icon"
+            :class="iconLeftClasses"
+            :clickable="iconClickable"
+            :icon="icon"
+            :pack="iconPack"
+            :size="size"
+            @click="iconClick('icon-click', $event)" />
 
         <o-icon
             v-if="hasIconRight"
