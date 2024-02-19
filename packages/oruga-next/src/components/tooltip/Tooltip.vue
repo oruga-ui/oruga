@@ -162,9 +162,9 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    positionClassOnRoot: {
-        type: Boolean,
-        default: () => getOption("tooltip.positionClassOnRoot", false),
+    rootPositionClass: {
+        type: [String, Array, Function] as PropType<ComponentClass>,
+        default: undefined,
     },
 });
 
@@ -299,13 +299,6 @@ function onClose(): void {
 
 // --- Computed Component Classes ---
 
-const positionComputedClass: ComputedClass = [
-    "positionClass",
-    "o-tip__content--",
-    autoPosition,
-    computed(() => !!autoPosition.value),
-];
-
 const rootClasses = defineClasses(
     ["rootClass", "o-tip"],
     [
@@ -314,7 +307,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => !!props.teleport),
     ],
-    props.positionClassOnRoot ? positionComputedClass : undefined,
+    [
+        "rootPositionClass",
+        "o-tip--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
 );
 
 const triggerClasses = defineClasses(["triggerClass", "o-tip__trigger"]);
@@ -337,7 +335,12 @@ const arrowClasses = defineClasses(
 
 const contentClasses = defineClasses(
     ["contentClass", "o-tip__content"],
-    props.positionClassOnRoot ? undefined : positionComputedClass,
+    [
+        "positionClass",
+        "o-tip__content--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
     [
         "variantClass",
         "o-tip__content--",
