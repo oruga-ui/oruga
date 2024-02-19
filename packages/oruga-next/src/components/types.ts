@@ -862,8 +862,8 @@ but will set body to position fixed, might break some layouts. */
                 placeholderClass: ClassDefinition;
                 /** Class of the select arrow */
                 arrowClass: ClassDefinition;
-                /** Whether to display the variant class on the root element rather than the select element */
-                variantClassOnRoot: boolean;
+                /** Variant class for the root element. The prop is a prefix, the variant suffix is applied automatically. */
+                rootVariantClass: ClassDefinition;
             }>;
         sidebar?: ComponentConfigBase &
             Partial<{

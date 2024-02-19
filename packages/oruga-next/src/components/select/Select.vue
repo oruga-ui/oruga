@@ -184,9 +184,9 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    variantClassOnRoot: {
+    rootVariantClass: {
         type: Boolean,
-        default: () => getOption("select.variantClassOnRoot", false),
+        default: () => getOption("select.rootVariantClass", false),
     },
 });
 
@@ -297,13 +297,6 @@ function rightIconClick(event): void {
 
 // --- Computed Component Classes ---
 
-const variantComputedClass: ComputedClass = [
-    "variantClass",
-    "o-sel--",
-    computed(() => statusVariant.value || props.variant),
-    computed(() => !!statusVariant.value || !!props.variant),
-];
-
 const rootClasses = defineClasses(
     ["rootClass", "o-ctrl-sel"],
     [
@@ -312,7 +305,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    props.variantClassOnRoot ? variantComputedClass : undefined,
+    [
+        "variantClass",
+        "o-ctrl-sel--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
 );
 
 const selectClasses = defineClasses(
@@ -325,7 +323,12 @@ const selectClasses = defineClasses(
         computed(() => props.size),
         computed(() => !!props.size),
     ],
-    props.variantClassOnRoot ? undefined : variantComputedClass,
+    [
+        "variantClass",
+        "o-sel--",
+        computed(() => statusVariant.value || props.variant),
+        computed(() => !!statusVariant.value || !!props.variant),
+    ],
     ["disabledClass", "o-sel--disabled", null, computed(() => props.disabled)],
     [
         "iconLeftSpaceClass",
