@@ -306,7 +306,7 @@ const rootClasses = defineClasses(
         computed(() => props.expanded),
     ],
     [
-        "variantClass",
+        "rootVariantClass",
         "o-ctrl-sel--",
         computed(() => statusVariant.value || props.variant),
         computed(() => !!statusVariant.value || !!props.variant),
