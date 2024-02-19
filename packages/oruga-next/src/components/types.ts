@@ -996,8 +996,8 @@ but will set body to position fixed, might break some layouts. */
                 tickHiddenClass: ClassDefinition;
                 /** Class of tick label */
                 tickLabelClass: ClassDefinition;
-                /** Whether to place the dragging class on the wrapper rather than the thumb */
-                draggingClassOnWrapper: boolean;
+                /** Dragging class to place on wrapper */
+                thumbWrapperDraggingClass: ClassDefinition;
             }>;
         steps?: ComponentConfigBase &
             Partial<{

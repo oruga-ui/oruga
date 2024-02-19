@@ -15,7 +15,6 @@ import {
     useEventListener,
     usePropBinding,
     useClickOutside,
-    type ComputedClass,
 } from "@/composables";
 
 import { provideDropdown } from "./useDropdownShare";

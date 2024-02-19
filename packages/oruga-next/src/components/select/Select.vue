@@ -9,7 +9,6 @@ import {
     defineClasses,
     useVModelBinding,
     useInputHandler,
-    type ComputedClass,
 } from "@/composables";
 
 import { injectField } from "../field/useFieldShare";

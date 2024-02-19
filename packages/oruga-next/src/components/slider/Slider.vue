@@ -6,7 +6,6 @@ import OSliderTick from "./SliderTick.vue";
 
 import { getOption } from "@/utils/config";
 import {
-    type ComputedClass,
     defineClasses,
     useProviderParent,
 } from "@/composables";
@@ -173,9 +172,9 @@ const props = defineProps({
         type: [String, Function, Array] as PropType<ComponentClass>,
         default: undefined,
     },
-    draggingClassOnWrapper: {
-        type: Boolean,
-        default: () => getOption("slider.draggingClassOnWrapper", false),
+    thumbWrapperDraggingClass: {
+        type: [String, Function, Array] as PropType<ComponentClass>,
+        default: undefined,
     },
 });
 
@@ -374,16 +373,9 @@ const fillClasses = defineClasses(
     ],
 );
 
-const draggingComputedClass: ComputedClass = [
-    "thumbDraggingClass",
-    "o-slide__thumb--dragging",
-    null,
-    dragging,
-];
-
 const thumbClasses = defineClasses(
     ["thumbClass", "o-slide__thumb"],
-    props.draggingClassOnWrapper ? undefined : draggingComputedClass,
+    ["thumbDraggingClass", "o-slide__thumb--dragging", null, dragging],
     [
         "thumbRoundedClass",
         "o-slide__thumb--rounded",
@@ -394,7 +386,12 @@ const thumbClasses = defineClasses(
 
 const thumbWrapperClasses = defineClasses(
     ["thumbWrapperClass", "o-slide__thumb-wrapper"],
-    props.draggingClassOnWrapper ? draggingComputedClass : undefined,
+    [
+        "thumbWrapperDraggingClass",
+        "o-slide__thumb-wrapper--dragging",
+        null,
+        dragging,
+    ],
 );
 </script>
 

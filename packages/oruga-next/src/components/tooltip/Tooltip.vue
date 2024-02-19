@@ -10,7 +10,6 @@ import {
     usePropBinding,
     useEventListener,
     useClickOutside,
-    type ComputedClass,
 } from "@/composables";
 
 import type { ComponentClass, DynamicComponent } from "@/types";
