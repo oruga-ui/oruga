@@ -5,10 +5,7 @@ import OSliderThumb from "./SliderThumb.vue";
 import OSliderTick from "./SliderTick.vue";
 
 import { getOption } from "@/utils/config";
-import {
-    defineClasses,
-    useProviderParent,
-} from "@/composables";
+import { defineClasses, useProviderParent } from "@/composables";
 
 import type { SliderComponent } from "./types";
 import type { ComponentClass } from "@/types";

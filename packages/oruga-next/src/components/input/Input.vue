@@ -408,7 +408,12 @@ const rootClasses = defineClasses(
         null,
         computed(() => props.expanded),
     ],
-    ["hasIconRightClass", "", null, hasIconRight],
+    [
+        "hasIconRightClass",
+        "o-input__wrapper--has-icon-right",
+        null,
+        hasIconRight,
+    ],
 );
 
 const inputClasses = defineClasses(
@@ -467,7 +472,6 @@ defineExpose({
 
 <template>
     <div data-oruga="input" :class="rootClasses">
-
         <input
             v-if="type !== 'textarea'"
             v-bind="$attrs"
