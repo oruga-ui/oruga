@@ -538,9 +538,9 @@ function onChangeNativePicker(event: Event): void {
         const minutes = parseInt(s[4], 10);
         // Seconds are omitted intentionally; they are unsupported by input
         // type=datetime-local and cause the control to fail native validation
-        vmodel.value = new Date(year, month, day, hours, minutes);
+        updateVModel(new Date(year, month, day, hours, minutes));
     } else {
-        vmodel.value = null;
+        updateVModel(null);
     }
 }
 
