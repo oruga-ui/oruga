@@ -51,8 +51,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --quiet --ignore-path .gitignore",
     "gen-volar-dts": "node ../../.scripts/gen-volar-dts.mjs --bundle --platform=node",
     "gen-comp-types": "node ../../.scripts/gen-comp-types.mjs --bundle --platform=node",
-    "update": "ncu -u",
-    "pack:lib": "echo \"$PWD/$(npm pack)\""
+    "update": "ncu -u"
   },
   "keywords": [
     "oruga",
