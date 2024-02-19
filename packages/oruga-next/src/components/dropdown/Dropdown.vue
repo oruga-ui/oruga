@@ -224,10 +224,6 @@ const props = defineProps({
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
     },
-    useRootPositionClass: {
-        type: Boolean,
-        default: () => getOption("dropdown.useRootPositionClass", false),
-    },
     rootPositionClass: {
         type: [String, Array, Function] as PropType<ComponentClass>,
         default: undefined,
@@ -506,20 +502,6 @@ provideDropdown(provideData);
 
 // --- Computed Component Classes ---
 
-const rootPositionComputedClass: ComputedClass = [
-    "rootPositionClass",
-    "is-",
-    autoPosition,
-    computed(() => !!autoPosition.value),
-];
-
-const menuPositionComputedClass: ComputedClass = [
-    "menuPositionClass",
-    "o-drop__menu--",
-    autoPosition,
-    computed(() => !!autoPosition.value),
-];
-
 const rootClasses = defineClasses(
     ["rootClass", "o-drop"],
     ["disabledClass", "o-drop--disabled", null, computed(() => props.disabled)],
@@ -531,10 +513,15 @@ const rootClasses = defineClasses(
         null,
         computed(() => isMobileModal.value && !hoverable.value),
     ],
-    props.useRootPositionClass ? rootPositionComputedClass : undefined,
+    [
+        "rootPositionClass",
+        "o-drop--position-",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
     [
         "rootActiveClass",
-        "",
+        "o-drop--active",
         null,
         computed(() => isActive.value || props.inline),
     ],
@@ -557,7 +544,12 @@ const menuMobileOverlayClasses = defineClasses([
 
 const menuClasses = defineClasses(
     ["menuClass", "o-drop__menu"],
-    props.useRootPositionClass ? undefined : menuPositionComputedClass,
+    [
+        "menuPositionClass",
+        "o-drop__menu--",
+        autoPosition,
+        computed(() => !!autoPosition.value),
+    ],
     [
         "menuActiveClass",
         "o-drop__menu--active",

@@ -472,8 +472,6 @@ Use menuitem only in situations where your dropdown is related to a navigation m
                 itemClickableClass: ClassDefinition;
                 /** Class of the dropdown item when disabled */
                 itemDisabledClass: ClassDefinition;
-                /**  Whether to display the position class on the root element rather than the menu */
-                useRootPositionClass: boolean;
                 /** Class prefix used when position is applied to root element */
                 rootPositionClass: ClassDefinition;
                 /** Active class for root element */
